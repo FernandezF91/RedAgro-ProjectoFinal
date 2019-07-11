@@ -20,7 +20,7 @@ public class UsuarioControlador {
 	UsuarioRepositorio usuarioRepositorio;
 
 	    @CrossOrigin(origins = "http://localhost:3000")
-	    @GetMapping(path = "/api/usuarios")
+	    @GetMapping(path = "redAgro/usuarios")
 	    public List<Usuario> getAllusuarios(){
 	        List<Usuario> usuarios = new ArrayList<>();
 	        usuarioRepositorio.findAll().forEach(usuarios :: add);
@@ -28,14 +28,14 @@ public class UsuarioControlador {
 	    }
 
 	    @CrossOrigin(origins = "http://localhost:3000")
-	    @PostMapping(path = "/api/usuarios")
+	    @PostMapping(path = "redAgro/usuario")
 	    public Usuario addItem(@RequestBody Usuario usuario){
 	        usuarioRepositorio.save(usuario);
 	        return usuario;
 	    }
 
 	    @CrossOrigin(origins = "http://localhost:3000")
-	    @DeleteMapping(path = "/api/usuarios/{id}")
+	    @DeleteMapping(path = "redAgro/borrar_usuario/{id}")
 	    public void deleteItem(@PathVariable int id){
 	    	usuarioRepositorio.deleteById(id);
 	    }
