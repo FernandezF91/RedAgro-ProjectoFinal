@@ -1,0 +1,61 @@
+.navbar img{
+
+margin-left:17.2%;
+
+}
+
+.contenedor{
+
+background-color: whitesmoke;
+height: 534px;
+overflow:auto;
+
+}
+
+.formularioLogin{
+
+justify-content: center;
+text-align:center;
+margin-top: 5%
+
+}
+
+.form-control[type=email], .form-control[type=password]{
+
+width: 40%;
+
+}
+
+.formularioLogin{
+
+margin-top:6%;
+
+}
+
+.encabezadoLogin{
+
+margin-top:4%;
+margin-left:33%;
+
+}
+
+.usuario{
+
+	margin-top:5%;
+
+}
+
+.password{
+
+	margin-top:4%;
+	margin-left: -2%;
+
+}
+
+.botonesYolvide{
+
+margin-top:2%;
+font-size: 15px;
+
+}
+

@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import FormPage from './login';
-import FormRegistro from './registro';
+import LoginForm from './Login';
+import RegistroForm from './Registro';
+import HomePage from './Home';
+import NotFound from './NotFound';
 import './index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
@@ -12,8 +14,10 @@ import 'mdbreact/dist/css/mdb.css';
 ReactDOM.render(
     <BrowserRouter>
     <Switch>
-    <Route path="/login" component={FormPage}/>
-    <Route path="/" component={FormRegistro}/>
+	<Route path="/home" component={HomePage}/>
+    <Route path="/login" component={LoginForm}/>
+	<Route path="/registro" component={RegistroForm}/>
+	<Route path="*" component={NotFound}/>
     </Switch>
     </BrowserRouter>,
     document.getElementById('root')
