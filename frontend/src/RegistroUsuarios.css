@@ -12,7 +12,7 @@ overflow:auto;
 
 }
 
-.formularioLogin{
+.formularioRegistro{
 
 justify-content: center;
 text-align:center;
@@ -26,13 +26,13 @@ width: 40%;
 
 }
 
-.formularioLogin{
+.formularioRegistro{
 
-margin-top:6%;
+margin-top:1%;
 
 }
 
-.encabezadoLogin{
+.encabezadoRegistro{
 
 margin-top:4%;
 margin-left:33%;
@@ -54,19 +54,9 @@ margin-left:33%;
 
 .botones{
 
+margin-top:2%;
+font-size: 15px;
 
-}
-
-.boton1{
-
-	margin-left:-14.5%;
-}
-
-.boton2{
-
-	margin-left:20%;
-	margin-top:-5.95%;
-	margin-right:6%;
 }
 
 .error{

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import LoginForm from './Login';
-import RegistroForm from './Registro';
+import RegistroForm from './RegistroUsuarios';
 import HomePage from './Home';
 import NotFound from './NotFound';
 import './index.css';
@@ -14,7 +14,7 @@ import 'mdbreact/dist/css/mdb.css';
 ReactDOM.render(
     <BrowserRouter>
     <Switch>
-	<Route path="/home" component={HomePage}/>
+	<Route exact path="/" component={HomePage}/>
     <Route path="/login" component={LoginForm}/>
 	<Route path="/registro" component={RegistroForm}/>
 	<Route path="*" component={NotFound}/>

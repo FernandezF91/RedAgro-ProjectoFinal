@@ -23,7 +23,7 @@ class HomePage extends Component {
 						<div className="textos">
 							<Nav>
 								<Nav.Link href='/login'>Ingresar</Nav.Link>
-								<Nav.Link href="#features">Creá tu cuenta</Nav.Link>
+								<Nav.Link href='/registro'>Creá tu cuenta</Nav.Link>
 							</Nav>
 						</div>
 					</Navbar>
