@@ -1,2 +1,0 @@
-# RedAgro-ProjectoFinal
-Red agroecológicos

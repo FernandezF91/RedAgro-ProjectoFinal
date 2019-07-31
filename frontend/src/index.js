@@ -9,7 +9,6 @@ import './index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import Recuperacionemail from './recuperacionemail';
 
 
 ReactDOM.render(
@@ -18,7 +17,6 @@ ReactDOM.render(
 	<Route exact path="/" component={HomePage}/>
     <Route path="/login" component={LoginForm}/>
 	<Route path="/registro" component={RegistroForm}/>
-	<Route path="/recupero_email" component={Recuperacionemail}/>
 	<Route path="*" component={NotFound}/>
     </Switch>
     </BrowserRouter>,
