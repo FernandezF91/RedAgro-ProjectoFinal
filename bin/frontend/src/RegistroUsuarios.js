@@ -7,10 +7,10 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
-import './Login.css';
+import './RegistroUsuarios.css';
 
 
-class LoginForm extends Component {
+class RegistroForm extends Component {
 
 	constructor(props) {
 
@@ -63,8 +63,8 @@ class LoginForm extends Component {
 		}
 
 		this.setState({
-			errores
-		})
+				errores
+			})
 
 	}
 
@@ -78,9 +78,9 @@ class LoginForm extends Component {
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
-					<div className="formularioLogin">
-						<h2>Acceso de usuarios</h2>
-						<div className="encabezadoLogin">
+					<div className="formularioRegistro">
+						<h2>Registro de usuarios</h2>
+						<div className="encabezadoRegistro">
 							<Form>
 								<div className="usuario">
 									<Form.Group as={Row} controlId="formHorizontalEmail">
@@ -108,9 +108,11 @@ class LoginForm extends Component {
 							</Form>
 						</div>
 						<div className="botones">
-							<Nav.Link className="boton1" href=''><Button variant="success" onClick={this.validarDatos}>Ingresar</Button></Nav.Link>
-							<Nav.Link className="boton2" href='/registro'><Button variant="success">Registrar</Button></Nav.Link>
-							<a href="/recupero_email"><p>olvidé mi contraseña</p></a>
+						<Row>
+							<Nav.Link href='/login'><Button variant="success">Atrás</Button></Nav.Link>
+							<Button variant="success">Crear</Button>
+							<Button variant="success">Limpiar</Button>
+						</Row>
 						</div>
 					</div>
 				</Container>
@@ -119,4 +121,4 @@ class LoginForm extends Component {
 	};
 }
 
-export default LoginForm;
+export default RegistroForm;

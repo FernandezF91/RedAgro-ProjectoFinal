@@ -1,0 +1,35 @@
+.barraBusqueda {
+
+	width:40%;
+	margin-left: 2%;
+
+}
+
+
+.textos {
+
+margin-left:2%;
+
+}
+
+.nav-link{
+
+font-weight: 400;
+
+}
+
+.culturaVerde {
+
+margin-right:3%;
+margin-left:15.4%;
+background-color: white;
+
+}
+
+.contenedor{
+
+background-color: whitesmoke;
+height: 534px;
+overflow:auto;
+
+}
