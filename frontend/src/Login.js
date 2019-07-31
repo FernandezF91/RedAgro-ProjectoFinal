@@ -111,7 +111,7 @@ class LoginForm extends Component {
 						<div className="botonesLogin">
 							<Nav.Link className="boton1" href=''><Button variant="success" onClick={this.validarDatos}>Ingresar</Button></Nav.Link>
 							<Nav.Link className="boton2" href='/registro'><Button variant="success">Registrar</Button></Nav.Link>
-							<a href="#"><p>olvidé mi contraseña</p></a>
+							<a href="/recupero_email"><p>olvidé mi contraseña</p></a>
 						</div>
 					</div>
 				</Container>
