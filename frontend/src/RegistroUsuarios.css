@@ -52,10 +52,11 @@ margin-left:33%;
 
 }
 
-.botones{
+.botonesRegistro{
 
-margin-top:2%;
+margin-top:20%;
 font-size: 15px;
+margin-left:34.6%;
 
 }
 
@@ -64,5 +65,12 @@ font-size: 15px;
 color: #cc0000;
 font-size: 13px;
 position: absolute;
+
+}
+
+.botonAtras{
+
+margin-top:-0.9%;
+margin-right: -1.8%;
 
 }

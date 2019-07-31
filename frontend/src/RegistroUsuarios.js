@@ -107,11 +107,17 @@ class RegistroForm extends Component {
 								</div>
 							</Form>
 						</div>
-						<div className="botones">
+						<div className="botonesRegistro">
 						<Row>
+							<div className="botonAtras">
 							<Nav.Link href='/login'><Button variant="success">Atrás</Button></Nav.Link>
+							</div>
+							<div className="botonCrear">
 							<Button variant="success">Crear</Button>
+							</div>
+							<div className="botonLimpiar">
 							<Button variant="success">Limpiar</Button>
+							</div>
 						</Row>
 						</div>
 					</div>
