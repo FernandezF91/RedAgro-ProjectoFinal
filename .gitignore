@@ -100,3 +100,4 @@ typings/
 .jar
 .properties
 .
+bin/target/classes/META-INF/MANIFEST.MF
