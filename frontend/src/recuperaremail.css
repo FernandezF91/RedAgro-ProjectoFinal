@@ -1,0 +1,29 @@
+.contenedorrecu{
+
+background-color: whitesmoke;
+height: 534px;
+overflow:auto;
+
+}
+
+.formularioRecuContra{
+
+justify-content: center;
+text-align:center;
+margin-top: 5%
+
+}
+
+.encabezadoRecucontra{
+
+margin-top:4%;
+margin-left:33%;
+
+}
+
+.Correoelectronico{
+
+	margin-top:5%;
+
+}
+
