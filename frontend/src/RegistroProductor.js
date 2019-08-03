@@ -66,9 +66,16 @@ class RegistroProductor extends Component {
 				</div>
 				<Container fluid className="contenedor">
 					<div className="formularioRegistro">
+						<div className = "titulos">
+						<Form.Group as={Row}>
 						<div className = "cuentaCulturaProd">
 							<p>Creá tu cuenta en culturaVerde</p>
 							</div>
+							<div className = "cuentaConsumidor">
+							<a href="/registroUsuario"><p>Creá tu cuenta de consumidor</p></a>
+							</div>
+						</Form.Group>
+						</div>
 						<div className="contenidoRegistroProductor">
 							<Form noValidate validated={this.state.validated} onSubmit={(e) => this.limpiarCampos(e)}>
 								<div className="nombre">
@@ -169,7 +176,7 @@ class RegistroProductor extends Component {
 								<div className="botonesRegistro">
 									<Row>
 										<div className="botonAtras">
-											<Nav.Link href='/registro'><Button variant="success">Atrás</Button></Nav.Link>
+											<Nav.Link href='/login'><Button variant="success">Atrás</Button></Nav.Link>
 										</div>
 										<div className="botonCrear">
 											<Button variant="success">Crear</Button>

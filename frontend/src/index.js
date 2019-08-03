@@ -18,7 +18,7 @@ ReactDOM.render(
     <Switch>
 	<Route exact path="/" component={HomePage}/>
     <Route path="/login" component={LoginForm}/>
-	<Route path="/registro" component={RegistroForm}/>
+	<Route path="/registroUsuario" component={RegistroForm}/>
 	<Route path="/recupero_email" component={Recuperaremail}/>
 	<Route path="/registroProductor" component={RegistroProductor}/>
 	<Route path="*" component={NotFound}/>
