@@ -67,7 +67,7 @@ class Recuperaremail extends Component {
 						<img src={culturaVerde} width="150px" height="60px"></img>
 					</Navbar>
 				</div>
-				<Container fluid className="contenedorrecu">
+				<Container fluid className="contenedor">
 					<div className="formularioRecuContra">
 						<h2>Recuperar Contraseña</h2>
 						<div className="encabezadoRecucontra">
