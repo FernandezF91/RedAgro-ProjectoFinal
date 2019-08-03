@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import './Login.css';
+import './estilosGlobales.css';
 
 
 class LoginForm extends Component {
