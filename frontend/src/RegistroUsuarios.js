@@ -10,7 +10,7 @@ import Nav from 'react-bootstrap/Nav';
 import './RegistroUsuarios.css';
 
 
-class RegistroForm extends Component {
+class RegistroConsumidor extends Component {
 
 
 	constructor() {
@@ -184,4 +184,4 @@ class RegistroForm extends Component {
 	};
 }
 
-export default RegistroForm;
+export default RegistroConsumidor;

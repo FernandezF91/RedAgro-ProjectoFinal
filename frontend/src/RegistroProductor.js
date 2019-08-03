@@ -72,7 +72,7 @@ class RegistroProductor extends Component {
 							<p>Creá tu cuenta en culturaVerde</p>
 							</div>
 							<div className = "cuentaConsumidor">
-							<a href="/registroUsuario"><p>Creá tu cuenta de consumidor</p></a>
+							<a href="/registroConsumidor"><p>Creá tu cuenta de consumidor</p></a>
 							</div>
 						</Form.Group>
 						</div>
