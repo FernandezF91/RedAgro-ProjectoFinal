@@ -163,10 +163,10 @@ class RegistroConsumidor extends Component {
 
 									</Form.Group>
 								</div>
-								<div className="botonesRegistro">
+								<div className="botones">
 									<Row>
 										<div className="botonAtras">
-											<Nav.Link href='/login'><Button variant="success">Atrás</Button></Nav.Link>
+											<a href='/login'><Button variant="success">Atrás</Button></a>
 										</div>
 										<div className="botonCrear">
 											<Button variant="success">Crear</Button>

@@ -41,8 +41,6 @@ margin-top:3.5%;
 margin-left:-4%;
 margin-top:3.5%;
 
-
-
 }
 
 .tel{
@@ -79,15 +77,6 @@ margin-top:3.5%;
 
 }
 
-
-.botonesRegistro{
-
-margin-top:3%;
-font-size: 15px;
-margin-left:3%;
-
-}
-
 .error{
 
 color: #cc0000;
@@ -95,14 +84,6 @@ font-size: 13px;
 position: absolute;
 
 }
-
-.botonAtras{
-
-margin-top:-0.9%;
-margin-right: -1.8%;
-
-}
-
 
 .cuentaCulturaProd{
 font-weight: 500;
