@@ -1,14 +1,15 @@
-.barraBusqueda {
+.form-control[type=barra]{
 
-	width:40%;
-	margin-left: 2%;
+width:500px;
+margin-left:3%;
+
+
 
 }
 
-
 .textos {
 
-margin-left:2%;
+margin-left:4%;
 
 }
 
@@ -22,9 +23,16 @@ font-weight: 400;
 
 margin-right:3%;
 margin-left:15.4%;
-background-color: white;
 
 }
+
+/*
+.iconoBusqueda{
+
+	margin-right:-1%;
+
+}
+*/
 
 .contenedor{
 

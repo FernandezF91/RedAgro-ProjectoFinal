@@ -7,10 +7,9 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
-import './RegistroUsuarios.css';
+import './RegistroProductor.css';
 
-
-class RegistroForm extends Component {
+class RegistroProductor extends Component {
 
 
 	constructor() {
@@ -67,17 +66,10 @@ class RegistroForm extends Component {
 				</div>
 				<Container fluid className="contenedor">
 					<div className="formularioRegistro">
-					<div className = "titulos">
-						<Form.Group as={Row}>
-						<div className = "cuentaCultura">
+						<div className = "cuentaCulturaProd">
 							<p>Creá tu cuenta en culturaVerde</p>
 							</div>
-							<div className = "cuentaProductor">
-							<a href="/registroProductor"><p>Creá tu cuenta productor</p></a>
-							</div>
-						</Form.Group>
-						</div>
-						<div className="contenidoRegistro">
+						<div className="contenidoRegistroProductor">
 							<Form noValidate validated={this.state.validated} onSubmit={(e) => this.limpiarCampos(e)}>
 								<div className="nombre">
 									<Form.Group as={Row} controlId="validationCustom01">
@@ -109,6 +101,17 @@ class RegistroForm extends Component {
 										</Col>
 									</Form.Group>
 								</div>
+								<div className="razonSocial">
+									<Form.Group as={Row}>
+										<Form.Label>
+											Razón social:
+                                </Form.Label>
+										<Col>
+											<Form.Control type="email" name="razonSocial" />
+										</Col>
+									</Form.Group>
+								</div>
+								
 								<div className="fechaNacimiento">
 									<Form.Group as={Row}>
 										<Form.Label>
@@ -120,6 +123,7 @@ class RegistroForm extends Component {
 
 									</Form.Group>
 								</div>
+								
 								<div className="tel">
 									<Form.Group as={Row} >
 										<Form.Label>
@@ -165,7 +169,7 @@ class RegistroForm extends Component {
 								<div className="botonesRegistro">
 									<Row>
 										<div className="botonAtras">
-											<Nav.Link href='/login'><Button variant="success">Atrás</Button></Nav.Link>
+											<Nav.Link href='/registro'><Button variant="success">Atrás</Button></Nav.Link>
 										</div>
 										<div className="botonCrear">
 											<Button variant="success">Crear</Button>
@@ -184,4 +188,4 @@ class RegistroForm extends Component {
 	};
 }
 
-export default RegistroForm;
+export default RegistroProductor;

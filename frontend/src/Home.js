@@ -3,7 +3,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
 import culturaVerde from './cultura-verde.png';
+import iconoBusqueda from './search-icon.png';
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 import './Home.css';
 
 class HomePage extends Component {
@@ -16,9 +18,9 @@ class HomePage extends Component {
 					<Navbar>
 						<div className="culturaVerde">
 							<img src={culturaVerde} width="150px" height="60px"></img>
-						</div>
+						</div>	
 						<div className="barraBusqueda">
-							<Form.Control size="sm" type="text" placeholder="Buscar productos y productores.. " />
+						<Form.Control size="sm" type="barra" placeholder="Buscar productos y productores.. "/>						
 						</div>
 						<div className="textos">
 							<Nav>

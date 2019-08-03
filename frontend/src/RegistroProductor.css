@@ -25,9 +25,9 @@ text-align: center;
 
 }
 
-.contenidoRegistro{
+.contenidoRegistroProductor{
 
-margin-top:1%;
+margin-top:2%;
 margin-left:33%;
 
 }
@@ -36,6 +36,15 @@ margin-left:33%;
 
 margin-left:-10.85%;
 margin-top:3.5%;
+
+}
+
+.razonSocial{
+
+margin-left:-4%;
+margin-top:3.5%;
+
+
 
 }
 
@@ -97,22 +106,10 @@ margin-right: -1.8%;
 
 }
 
-.titulos{
 
-margin-left:25%;
-margin-top: 2%;
+.cuentaCulturaProd{
 
-}
-
-.cuentaProductor{
-
-
-margin-left:20%;
-
-}
-
-.cuentaCultura{
-
+margin-top:2%;
 font-weight: 500;
 
 }
