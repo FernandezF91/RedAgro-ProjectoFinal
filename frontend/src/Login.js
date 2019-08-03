@@ -83,7 +83,7 @@ class LoginForm extends Component {
 					<div className="formularioLogin">
 						<h2>Acceso de usuarios</h2>
 						<div className="encabezadoLogin">
-							<Form>
+							<Form className="formulario">
 								<div className="usuario">
 									<Form.Group as={Row} controlId="formHorizontalEmail">
 										<Form.Label>
@@ -111,9 +111,9 @@ class LoginForm extends Component {
 						</div>
 						<div className="botonesLogin">
 							<Nav.Link className="boton1" href=''><Button variant="success" onClick={this.validarDatos}>Ingresar</Button></Nav.Link>
-							<Nav.Link className="boton2" href='/registroConsumidor'><Button variant="success">Registrar</Button></Nav.Link>
-							<a href="/recupero_email"><p>olvidé mi contraseña</p></a>
+							<Nav.Link className="boton2" href='/registroConsumidor'><Button variant="success">Registrar</Button></Nav.Link>						
 						</div>
+						<a href="/recupero_email"><p>olvidé mi contraseña</p></a>
 					</div>
 				</Container>
 			</body>

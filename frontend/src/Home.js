@@ -31,9 +31,6 @@ class HomePage extends Component {
 						</div>
 					</Navbar>
 				</div>
-				<Container fluid className="contenedor">
-
-				</Container>
 			</body>
 		);
 	}
