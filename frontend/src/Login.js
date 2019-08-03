@@ -72,7 +72,7 @@ class LoginForm extends Component {
 	render() {
 
 		return (
-			<body>
+			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
 						<img src={culturaVerde} width="150px" height="60px"></img>

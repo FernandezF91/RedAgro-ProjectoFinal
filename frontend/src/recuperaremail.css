@@ -1,11 +1,7 @@
 .contenedorrecu{
-
-background-color: whitesmoke;
-height: 534px;
 overflow:auto;
 
 }
-
 .formularioRecuContra{
 
 justify-content: center;
@@ -43,6 +39,5 @@ width: 50%;
 .botonconfrecu{
 
 	margin-left:55%;
-	margin-top:-5.50%;
 	margin-right:6%;
 }

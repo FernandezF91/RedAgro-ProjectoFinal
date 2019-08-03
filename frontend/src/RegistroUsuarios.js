@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import './RegistroUsuarios.css';
+import './estilosGlobales.css';
 
 
 class RegistroConsumidor extends Component {
@@ -59,7 +60,7 @@ class RegistroConsumidor extends Component {
 	render() {
 
 		return (
-			<body>
+			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
 						<img src={culturaVerde} width="150px" height="60px"></img>

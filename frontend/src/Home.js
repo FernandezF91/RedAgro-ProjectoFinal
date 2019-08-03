@@ -7,14 +7,15 @@ import iconoBusqueda from './search-icon.png';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import './Home.css';
+import './estilosGlobales.css';
 
 class HomePage extends Component {
 
 	render() {
 
 		return (
-			<body>
-				<div clasName="barraNavegacion">
+			<body className="fondo">
+				<div className="barraNavegacion">
 					<Navbar>
 						<div className="culturaVerde">
 							<img src={culturaVerde} width="150px" height="60px"></img>
