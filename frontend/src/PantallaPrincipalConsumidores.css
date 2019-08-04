@@ -4,6 +4,15 @@ margin-left:17.2%;
 
 }
 
+.contenedor{
+	
+overflow:auto;
+flex-direction: column;
+display: flex;
+justify-content: center;
+text-align:center;
+}
+
 .form-control[type=barra]{
 
 width:500px;

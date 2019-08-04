@@ -3,6 +3,7 @@ import './PantallaPrincipalConsumidores.css';
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
 import culturaVerde from './cultura-verde.png';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import { Dropdown } from 'react-bootstrap';
 
@@ -35,8 +36,8 @@ class PantallaPrincipalconsumidores extends Component {
 						</div>
 					</Navbar>
 				</div>
-
-				<div className="menuConsumidor">
+				<Container fluid className="contenedor">	
+					<div className="menuConsumidor">
 					<nav>
        	 				<ul>
             				<li><a href="#">Mi cuenta</a></li>
@@ -58,7 +59,9 @@ class PantallaPrincipalconsumidores extends Component {
         				</ul>
 					</nav>
 				</div>
+				</Container>	
 			</body>
+
 		);	
 	};		
 }
