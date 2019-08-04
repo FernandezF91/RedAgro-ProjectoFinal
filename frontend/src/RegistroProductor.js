@@ -10,6 +10,7 @@ import Nav from 'react-bootstrap/Nav';
 import './Registro.css';
 import './estilosGlobales.css';
 
+
 class RegistroProductor extends Component {
 
 
@@ -59,7 +60,7 @@ class RegistroProductor extends Component {
 	render() {
 
 		return (
-			<body className="fondo">
+			<body>
 				<div className="barraNavegacion">
 					<Navbar>
 						<img src={culturaVerde} width="150px" height="60px"></img>
@@ -174,7 +175,6 @@ class RegistroProductor extends Component {
 
 									</Form.Group>
 								</div>
-								
 							</Form>
 						</div>
 					</div>

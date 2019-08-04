@@ -7,19 +7,6 @@ margin-left:3%;
 
 }
 
-.barraBusqueda{
-
-	margin-left:4%;
-	
-}
-
-.barraNavegacion{
-
-
-justify-content:center;
-
-}
-
 .textos {
 
 margin-left:4%;
@@ -32,6 +19,12 @@ font-weight: 400;
 
 }
 
+.culturaVerde {
+
+margin-right:3%;
+margin-left:15.4%;
+
+}
 
 /*
 .iconoBusqueda{
@@ -43,6 +36,8 @@ font-weight: 400;
 
 .contenedor{
 
+background-color: whitesmoke;
+height: 534px;
 overflow:auto;
 
 }

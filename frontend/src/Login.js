@@ -9,7 +9,6 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import './Login.css';
-import './estilosGlobales.css';
 
 
 class LoginForm extends Component {
@@ -73,7 +72,7 @@ class LoginForm extends Component {
 	render() {
 
 		return (
-			<body className="fondo">
+			<body>
 				<div className="barraNavegacion">
 					<Navbar>
 						<img src={culturaVerde} width="150px" height="60px"></img>
@@ -83,7 +82,7 @@ class LoginForm extends Component {
 					<div className="formularioLogin">
 						<h2>Acceso de usuarios</h2>
 						<div className="encabezadoLogin">
-							<Form className="formulario">
+							<Form>
 								<div className="usuario">
 									<Form.Group as={Row} controlId="formHorizontalEmail">
 										<Form.Label>
@@ -111,9 +110,9 @@ class LoginForm extends Component {
 						</div>
 						<div className="botonesLogin">
 							<Nav.Link className="boton1" href=''><Button variant="success" onClick={this.validarDatos}>Ingresar</Button></Nav.Link>
-							<Nav.Link className="boton2" href='/registroConsumidor'><Button variant="success">Registrar</Button></Nav.Link>						
+							<Nav.Link className="boton2" href='/registroConsumidor'><Button variant="success">Registrar</Button></Nav.Link>
+							<a href="/recupero_email"><p>olvidé mi contraseña</p></a>
 						</div>
-						<a href="/recupero_email"><p>olvidé mi contraseña</p></a>
 					</div>
 				</Container>
 			</body>

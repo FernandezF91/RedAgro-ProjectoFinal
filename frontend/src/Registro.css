@@ -1,4 +1,3 @@
-
 .form-control[type=email], .form-control[type=password], .form-control[type=text] {
 
 width: 40%;
@@ -56,4 +55,12 @@ margin-top:3.5%;
 color: #cc0000;
 font-size: 13px;
 position: absolute;
+}
+
+
+.titulos{
+
+margin-left:25%;
+margin-top: 2%;
+
 }
