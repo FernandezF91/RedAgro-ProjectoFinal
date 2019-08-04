@@ -4,10 +4,7 @@ import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
 import culturaVerde from './cultura-verde.png';
 import Form from 'react-bootstrap/Form';
-import Dropdown from 'react-bootstrap/Dropdown';
-
-
-
+import { Dropdown } from 'react-bootstrap';
 
 
 class PantallaPrincipalconsumidores extends Component {
@@ -40,13 +37,26 @@ class PantallaPrincipalconsumidores extends Component {
 				</div>
 
 				<div className="menuConsumidor">
-			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-    <li><a tabindex="-1" href="#">Action</a></li>
-    <li><a tabindex="-1" href="#">Another action</a></li>
-    <li><a tabindex="-1" href="#">Something else here</a></li>
-    <li class="divider"></li>
-    <li><a tabindex="-1" href="#">Separated link</a></li>
-  </ul>
+					<nav>
+       	 				<ul>
+            				<li><a href="#">Mi cuenta</a></li>
+							<li><a href="#">Reservas</a></li>
+							<li><a href="#">Alertas</a></li>
+							<li><a href="#">Preferencias</a></li>
+            				<li><a href="#">Comprar</a>
+								<ul>
+                					<li><a href="#">Geolocalizacion</a></li>
+                					<li><a href="#">Categorias</a></li>
+            					</ul>
+							</li>
+            				<li><a href="#">Configuracion</a>
+								<ul>
+                					<li><a href="/login">editar datos usuario</a></li>
+                					<li><a href="/login">modificar contraseña</a></li>
+            					</ul>
+							</li>
+        				</ul>
+					</nav>
 				</div>
 			</body>
 		);	

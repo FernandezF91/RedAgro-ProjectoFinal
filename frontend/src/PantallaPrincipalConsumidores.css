@@ -24,10 +24,54 @@ a{
 
 .menuConsumidor {
 
-position: relative;
-margin-top: 2%;
-margin-right:5%;
-margin-left:5%;
-right: 2%;
-
-}
+	box-sizing:border-box;
+    margin-top: 0.5%;
+	margin-right:5%;
+	margin-left:5%;
+	right: 2%;
+	padding:0;
+	position: relative;
+	font-weight: bold;
+	list-style-type: none;
+	
+	
+	
+}    
+          
+    li{
+	list-style-type: none;	
+    position:relative;
+	width:200px;
+	
+	}
+	
+	li a{
+    text-decoration:none;
+    display:inline-block;
+    padding:5px 10px;
+    width:200px;
+    height:30px;
+    color:#000;
+	background-color:#fff;
+	list-style-type: none;
+	border: 1px solid #000;
+	
+    }
+                
+    
+            
+    li a:hover{
+    color:#000;
+    background-color:#fff;
+                
+    }
+    
+nav li ul{
+        display:none;
+        position:absolute;
+        top:0px;
+		left:160px;
+		
+    }
+            
+    nav li:hover ul{display:block;}
