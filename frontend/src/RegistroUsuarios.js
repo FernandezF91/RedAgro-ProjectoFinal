@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
-import './RegistroUsuarios.css';
+import './Registro.css';
 import './estilosGlobales.css';
 
 
@@ -67,13 +67,13 @@ class RegistroConsumidor extends Component {
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
-					<div className="formularioRegistro">
+					<div>
 					<div className = "titulos">
 						<Form.Group as={Row}>
 						<div className = "cuentaCultura">
 							<p>Creá tu cuenta en culturaVerde</p>
 							</div>
-							<div className = "cuentaProductor">
+							<div className = "cuentaUsuario">
 							<a href="/registroProductor"><p>Creá tu cuenta productor</p></a>
 							</div>
 						</Form.Group>
@@ -163,7 +163,11 @@ class RegistroConsumidor extends Component {
 
 									</Form.Group>
 								</div>
-								<div className="botones">
+								
+							</Form>
+						</div>
+					</div>
+					<div className="botones">
 									<Row>
 										<div className="botonAtras">
 											<a href='/login'><Button variant="success">Atrás</Button></a>
@@ -176,9 +180,6 @@ class RegistroConsumidor extends Component {
 										</div>
 									</Row>
 								</div>
-							</Form>
-						</div>
-					</div>
 				</Container>
 			</body>
 		);

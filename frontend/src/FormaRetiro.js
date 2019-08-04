@@ -6,11 +6,12 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
+import label from 'react-bootstrap/FormCheckLabel'
 import Nav from 'react-bootstrap/Nav';
-import './Registro.css';
+import './FormaRetiro.css';
 import './estilosGlobales.css';
 
-class RegistroProductor extends Component {
+class FormaRetiro extends Component {
 
 
 	constructor() {
@@ -66,19 +67,27 @@ class RegistroProductor extends Component {
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
-					<div>
-						<div className = "titulos">
-						<Form.Group as={Row}>
-						<div className = "cuentaCultura">
-							<p>Creá tu cuenta en culturaVerde</p>
+					<div className="formularioFormaRetiro">
+							<div className = "formaDeRetiro">
+								<h2>Selección de forma de retiro</h2>
+									
+									
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"></input>
+									<label class="form-check-label" for="inlineRadio1">Arreglar con el productor</label>
 							</div>
-							<div className = "cuentaUsuario">
-							<a href="/registroConsumidor"><p>Creá tu cuenta de consumidor</p></a>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"></input>
+									<label class="form-check-label" for="inlineRadio2">Retiro en punto de entrega</label>
+							</div>			
+								
+								<h3>Datos de quien retira</h3>
 							</div>
-						</Form.Group>
-						</div>
-						<div className="contenidoRegistro">
+					
+
+					<div className="contenidoFormaRetiro">
 							<Form noValidate validated={this.state.validated} onSubmit={(e) => this.limpiarCampos(e)}>
+								
 								<div className="nombre">
 									<Form.Group as={Row} controlId="validationCustom01">
 										<Form.Label>
@@ -109,28 +118,6 @@ class RegistroProductor extends Component {
 										</Col>
 									</Form.Group>
 								</div>
-								<div className="razonSocial">
-									<Form.Group as={Row}>
-										<Form.Label>
-											Razón social:
-                                </Form.Label>
-										<Col>
-											<Form.Control type="email" name="razonSocial" />
-										</Col>
-									</Form.Group>
-								</div>
-								
-								<div className="fechaNacimiento">
-									<Form.Group as={Row}>
-										<Form.Label>
-											Fecha de nacimiento:
-                                </Form.Label>
-										<Col>
-											<Form.Control type="email" name="fechaNacimiento" />
-										</Col>
-
-									</Form.Group>
-								</div>
 								
 								<div className="tel">
 									<Form.Group as={Row} >
@@ -142,54 +129,22 @@ class RegistroProductor extends Component {
 										</Col>
 									</Form.Group>
 								</div>
-								<div className="email">
-									<Form.Group as={Row}>
-										<Form.Label>
-											Email:
-                                </Form.Label>
-										<Col>
-											<Form.Control type="email" name="email" />
-										</Col>
-
-									</Form.Group>
-								</div>
-								<div className="password">
-									<Form.Group as={Row} >
-										<Form.Label>
-											Password:
-                                </Form.Label>
-										<Col>
-											<Form.Control type="password" name="password" />
-										</Col>
-									</Form.Group>
-								</div>
-								<div className="confirmaPassword">
-									<Form.Group as={Row}>
-										<Form.Label>
-											Confirmar password:
-                                </Form.Label>
-										<Col>
-											<Form.Control type="password" name="confirmaPassword" />
-										</Col>
-
-									</Form.Group>
-								</div>
 								
+								<div className="botonesRegistro">
+									<Row>
+										<div className="botonAtras">
+											<Nav.Link href='/login'><Button variant="success">Cancelar</Button></Nav.Link>
+										</div>
+										<div className="botonCrear">
+											<Button variant="success">Siguiente</Button>
+										</div>
+										<div className="botonLimpiar">
+											<Button variant="success" type="submit">Limpiar</Button>
+										</div>
+									</Row>
+								</div>
 							</Form>
 						</div>
-					</div>
-					<div className="botones">
-						<Row>
-							<div className="botonAtras">
-								<a href='/login'><Button variant="success">Atrás</Button></a>
-							</div>
-							<div className="botonCrear">
-								<Button variant="success">Crear</Button>
-							</div>
-							<div className="botonLimpiar">
-								<Button variant="success" type="submit">Limpiar</Button>
-							</div>
-						</Row>
 					</div>
 				</Container>
 			</body>
@@ -197,4 +152,4 @@ class RegistroProductor extends Component {
 	};
 }
 
-export default RegistroProductor;
+export default FormaRetiro;
