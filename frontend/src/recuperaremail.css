@@ -1,11 +1,7 @@
-.contenedorrecu{
-
-background-color: whitesmoke;
-height: 534px;
+.contenedor{
 overflow:auto;
 
 }
-
 .formularioRecuContra{
 
 justify-content: center;
@@ -17,8 +13,7 @@ margin-top: 5%
 .encabezadoRecucontra{
 
 margin-top:5%;
-margin-left:25%;
-
+margin-left:27%;
 }
 
 .Correoelectronico{
@@ -29,20 +24,6 @@ margin-left:25%;
 
 .form-control[type=recuemail]{
 
-width: 50%;
+width: 55%;
 
-}
-
-.botoncanrecup{
-
-	margin-left:33%;
-	margin-top:-0.3%;
-	margin-right:6%;
-}
-
-.botonconfrecu{
-
-	margin-left:55%;
-	margin-top:-5.50%;
-	margin-right:6%;
 }

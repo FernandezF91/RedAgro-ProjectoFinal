@@ -7,46 +7,60 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
-
 import './Registro.css';
 import './estilosGlobales.css';
 
+
 class RegistroConsumidor extends Component {
+
+
 	constructor() {
+
 		super()
+
 		this.state = {
 			campos: [],
 			validated: false
 		}
+
 	}
 
 	handleSubmit(e) {
+
 		const form = e.currentTarget;
 		if (form.checkValidity() === false) {
 			e.preventDefault();
 			e.stopPropagation();
 		}
+
 		this.setState({ validated: true });
+
 	};
 
 	detectarCambios(e) {
+
 		let campos = this.state.campos;
 		campos[e.target.name] = e.target.value;
 		this.setState({
 			campos
 		})
+
 	}
 
 	limpiarCampos(e) {
+
 		var form = e.target;
 		e.preventDefault();
+
 		form.reset();
+
 	}
 
 
 	render() {
+
 		return (
-			<body>
+			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
 						<img src={culturaVerde} width="150px" height="60px"></img>
@@ -148,15 +162,15 @@ class RegistroConsumidor extends Component {
 										</Col>
 
 									</Form.Group>
-								</div>								
+								</div>
+								
 							</Form>
 						</div>
 					</div>
 					<div className="botones">
-
 									<Row>
 										<div className="botonAtras">
-											<Nav.Link href='/login'><Button variant="success">Atrás</Button></Nav.Link>
+											<a href='/login'><Button variant="success">Atrás</Button></a>
 										</div>
 										<div className="botonCrear">
 											<Button variant="success">Crear</Button>

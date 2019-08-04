@@ -1,12 +1,5 @@
-.navbar img{
-
-margin-left:17.2%;
-
-}
-
 .contenedor{
-background-color: whitesmoke;
-height: 534px;
+
 overflow:auto;
 }
 
@@ -41,8 +34,6 @@ margin-top:3.5%;
 
 margin-left:-4%;
 margin-top:3.5%;
-
-
 
 }
 
@@ -80,15 +71,6 @@ margin-top:3.5%;
 
 }
 
-
-.botonesRegistro{
-
-margin-top:3%;
-font-size: 15px;
-margin-left:3%;
-
-}
-
 .error{
 
 color: #cc0000;
@@ -96,14 +78,6 @@ font-size: 13px;
 position: absolute;
 
 }
-
-.botonAtras{
-
-margin-top:-0.9%;
-margin-right: -1.8%;
-
-}
-
 
 .cuentaCulturaProd{
 font-weight: 500;

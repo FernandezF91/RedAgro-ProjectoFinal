@@ -1,34 +1,16 @@
-.navbar img{
-
-margin-left:17.2%;
-
-}
-
 .contenedor{
-
-background-color: whitesmoke;
-height: 534px;
+	
 overflow:auto;
-
-}
-
-.formularioLogin{
-
+flex-direction: column;
+display: flex;
 justify-content: center;
 text-align:center;
-margin-top: 5%
-
-}
-
-.form-control[type=email], .form-control[type=password]{
-
-width: 40%;
-
 }
 
 .formularioLogin{
 
-margin-top:6%;
+
+margin-top: 5%;
 
 }
 
@@ -39,35 +21,34 @@ margin-left:33%;
 
 }
 
-.usuario{
 
-	margin-top:5%;
+.form-control{
 
-}
-
-.password{
-
-	margin-top:4%;
-	margin-left: -2%;
+width: 40%;
 
 }
 
-.boton1{
+.botonesLogin{
 
-	margin-left:-14.5%;
+display:flex;
+flex-direction: row;
+display: flex;
+justify-content: center;
+
 }
 
-.boton2{
-
-	margin-left:20%;
-	margin-top:-5.95%;
-	margin-right:6%;
-}
 
 .error{
 
 color: #cc0000;
 font-size: 13px;
 position: absolute;
+
+}
+
+.form-control[type=password]{
+
+margin-left:-0.3%;
+
 
 }
