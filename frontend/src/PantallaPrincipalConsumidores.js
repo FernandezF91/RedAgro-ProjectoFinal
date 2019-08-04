@@ -37,15 +37,15 @@ class PantallaPrincipalconsumidores extends Component {
 							<Form.Control size="sm" type="barra" placeholder="Buscar productos y productores.. "/>						
 						</div>
 						
-						<div className="botonusuario">
+						<div className="botonusuario" class="dropdown">
 							<nav>
        	 						<ul>
-            						<li><c href="#"><img src={usuario} width="30px" height="19px"></img> Usuario</c>
+            						<li class="dropdown-header"><c href="#"><img src={usuario} width="30px" height="19px"></img> Usuario</c>
 										<ul>
                 							<li><c href="#">Mi cuenta</c></li>
                 							<li><c href="#">Salir</c></li>
             							</ul>
-									<img src={campanalertas} width="30px" height="30px"></img><img src={carrito} width="30px" height="30px"></img> 
+										<img src={campanalertas} width="30px" height="30px"></img><img src={carrito} width="30px" height="px"></img> 
 									</li>
         						</ul>
 								
