@@ -7,7 +7,8 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
-import './RegistroUsuarios.css';
+import './Registro.css';
+import './estilosGlobales.css';
 
 
 class RegistroConsumidor extends Component {
@@ -59,20 +60,20 @@ class RegistroConsumidor extends Component {
 	render() {
 
 		return (
-			<body>
+			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
 						<img src={culturaVerde} width="150px" height="60px"></img>
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
-					<div className="formularioRegistro">
+					<div>
 					<div className = "titulos">
 						<Form.Group as={Row}>
 						<div className = "cuentaCultura">
 							<p>Creá tu cuenta en culturaVerde</p>
 							</div>
-							<div className = "cuentaProductor">
+							<div className = "cuentaUsuario">
 							<a href="/registroProductor"><p>Creá tu cuenta productor</p></a>
 							</div>
 						</Form.Group>
@@ -162,10 +163,14 @@ class RegistroConsumidor extends Component {
 
 									</Form.Group>
 								</div>
-								<div className="botonesRegistro">
+								
+							</Form>
+						</div>
+					</div>
+					<div className="botones">
 									<Row>
 										<div className="botonAtras">
-											<Nav.Link href='/login'><Button variant="success">Atrás</Button></Nav.Link>
+											<a href='/login'><Button variant="success">Atrás</Button></a>
 										</div>
 										<div className="botonCrear">
 											<Button variant="success">Crear</Button>
@@ -175,9 +180,6 @@ class RegistroConsumidor extends Component {
 										</div>
 									</Row>
 								</div>
-							</Form>
-						</div>
-					</div>
 				</Container>
 			</body>
 		);

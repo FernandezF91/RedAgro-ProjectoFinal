@@ -11,8 +11,7 @@ import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import Recuperaremail from './Recuperaremail';
 import RegistroProductor from './RegistroProductor';
-import PantallaPrincipalConsumidores from './PantallaPrincipalConsumidores';
-import PantallaPrincipalProductores from './PantallaPrincipalProductores';
+import PantallaPrincipalProductores from './PantallaPrincipalProductores'
 
 
 ReactDOM.render(
@@ -23,7 +22,6 @@ ReactDOM.render(
 	<Route path="/registroConsumidor" component={RegistroConsumidor}/>
 	<Route path="/recupero_email" component={Recuperaremail}/>
 	<Route path="/registroProductor" component={RegistroProductor}/>
-	<Route path="/pantallaPrincipalConsumidores" component={PantallaPrincipalConsumidores}/>
 	<Route path="/principalProductores" component={PantallaPrincipalProductores}/>
 	<Route path="*" component={NotFound}/>
     </Switch>

@@ -14,6 +14,8 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 
+import './estilosGlobales.css';
+
 class Recuperaremail extends Component {
 
 	constructor(props) {
@@ -49,7 +51,7 @@ class Recuperaremail extends Component {
 		if (!this.state.fields["emailuser"]) {
 
 			errores["emailuser"] = "*Completar campo";
-		} 
+		}
 
 		this.setState({
 			errores
@@ -59,18 +61,18 @@ class Recuperaremail extends Component {
 	render() {
 
 		return (
-			<body>
+			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
 						<img src={culturaVerde} width="150px" height="60px"></img>
 					</Navbar>
 				</div>
-				<Container fluid className="contenedorrecu">
+				<Container fluid className="contenedor">
 					<div className="formularioRecuContra">
 						<h2>Recuperar Contraseña</h2>
-					<div className="encabezadoRecucontra">
-						<Form>
-							<div className="Correoelectronico">
+						<div className="encabezadoRecucontra">
+							<Form>
+								<div className="Correoelectronico">
 									<Form.Group as={Row} controlId="formHorizontalEmail">
 										<Form.Label>
 											Correo electronico:
@@ -80,17 +82,17 @@ class Recuperaremail extends Component {
 											<div className="error">{this.state.errores["emailuser"]}</div>
 										</Col>
 									</Form.Group>
-							</div>
-						</Form>
+								</div>
+							</Form>
+						</div>
 					</div>
-					</div>
-					<div className="botonesEmail">
+					<div className="botones">
 						<Nav.Link className="botoncanrecup" href='/login'><Button variant="success">Cancelar</Button></Nav.Link>
 						<Nav.Link className="botonconfrecu" href=''><Button variant="success" onClick={this.validarDatos}>Confirmar</Button></Nav.Link>
 					</div>
 				</Container>
 			</body>
-				);
+		);
 
 	};
 }
