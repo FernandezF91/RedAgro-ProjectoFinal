@@ -21,6 +21,23 @@ margin-left:3%;
 
 }
 
+.botonusuario {
+
+	
+    margin-top: 1.5%;
+	margin-right:5%;
+	margin-left:-0.5%;
+	right: 1%;
+	border: none;
+	width: 10px; 
+	
+}	
+
+c{
+  color: black;
+  
+}
+
 .ListadoDesplegablemicuenta {
 
 margin-right:3%;
@@ -31,6 +48,8 @@ margin-left:5%;
 a{
   color: black;
 }
+
+
 
 .menuConsumidor {
 
@@ -49,12 +68,12 @@ a{
 	
 }    
           
-    li{
+li{
 	list-style-type: none;	
     position:relative;
 	width:200px;
 	
-	}
+}
 	
 	li a{
     text-decoration:none;

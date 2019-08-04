@@ -2,13 +2,20 @@
 import './PantallaPrincipalConsumidores.css';
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
+
+//imagenes para barra
 import culturaVerde from './cultura-verde.png';
+import usuario from './usuario.png';
+import carrito from './carrito.png';
+
+//imagenes para menu desplegable
 import Micuenta from './Micuenta.png';
 import campanalertas from './campanalertas.png';
 import configuracion from './configuracion.png';
 import reservas from './reservas.png';
 import compras from './compras.png';
 import preferencias from './preferencias.png';
+
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import { Dropdown } from 'react-bootstrap';
@@ -29,17 +36,22 @@ class PantallaPrincipalconsumidores extends Component {
 						<div className="barraBusqueda">
 							<Form.Control size="sm" type="barra" placeholder="Buscar productos y productores.. "/>						
 						</div>
-						<div className="ListadoDesplegablemicuenta">
-							<Dropdown>
-  								<Dropdown.Toggle variant="success" id="dropdown-basic">
-    								Usuario
-  								</Dropdown.Toggle>
-  								<Dropdown.Menu>
-    								<Dropdown.Item href="">Mi cuenta</Dropdown.Item>
-    								<Dropdown.Item href="/login">Salir</Dropdown.Item>
-  								</Dropdown.Menu>
-							</Dropdown>		
+						
+						<div className="botonusuario">
+							<nav>
+       	 						<ul>
+            						<li><c href="#"><img src={usuario} width="30px" height="19px"></img> Usuario</c>
+										<ul>
+                							<li><c href="#">Mi cuenta</c></li>
+                							<li><c href="#">Salir</c></li>
+            							</ul>
+									<img src={campanalertas} width="30px" height="30px"></img><img src={carrito} width="30px" height="30px"></img> 
+									</li>
+        						</ul>
+								
+							</nav>
 						</div>
+
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">	
