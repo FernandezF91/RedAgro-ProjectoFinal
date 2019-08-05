@@ -26,7 +26,7 @@ margin-left:3%;
 .imagenUsuario{
 
 	top: 0.3%;
-	margin-left: 1%;
+	margin-left: 2%;
 	margin-right: -2%;
 }
 
@@ -48,8 +48,6 @@ a{
 }
 
 
-
-    
 liuser{
 	list-style-type: none;	
     position:relative;
@@ -67,6 +65,7 @@ liuser{
     color:#000;
 	background-color:none;
 	list-style-type: none;
+	border: 1px solid #fff;
 	
     }
                 
@@ -81,8 +80,8 @@ liuser{
 navuser liuser uluser{
         display:none;
         position:absolute;
-        top:25px;
-		left:20px;
+        top:0px;
+		left:100px;
 		
     }
             
