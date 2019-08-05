@@ -16,6 +16,7 @@ import reservas from './reservas.png';
 import compras from './compras.png';
 import preferencias from './preferencias.png';
 import flechadespliegaderecha from './flechadespliegaderecha.png';
+import flechadespliegabajo from './flechadespliegabajo.png';
 
 
 
@@ -42,7 +43,18 @@ class PantallaPrincipalconsumidores extends Component {
 						<div className="imagenUsuario">
 							<img src={usuario} width="30px" height="30px"></img>	
 						</div>
-
+						<div className="menuUsuario">
+							<navuser>
+       	 						<uluser>
+									<liuser><a href="#"> Usuario <img src={flechadespliegabajo} width="10px" height="10px"></img></a>
+										<uluser>
+                							<liuser><a href="#">Mi cuenta</a></liuser>
+                							<liuser><a href="/login">Salir</a></liuser>
+            							</uluser>
+									</liuser>
+            					</uluser>
+							</navuser>
+						</div>
 						<div className="imagencampanaalertas">
 							<img src={campanalertas} width="50px" height="50px"></img>	
 						</div>
@@ -60,13 +72,13 @@ class PantallaPrincipalconsumidores extends Component {
 							<li><a href="#"><img src={reservas} width="30px" height="25px"></img> Reservas</a></li>
 							<li><a href="#"><img src={campanalertas} width="30px" height="30px"></img> Alertas</a></li>
 							<li><a href="#"><img src={preferencias} width="30px" height="19px"></img> Preferencias</a></li>
-            				<li><a href="#"><img src={compras} width="30px" height="19px"></img> Comprar <img src={flechadespliegaderecha} width="10px" height="10px" position = "rigth" ></img></a>
+            				<li><a href="#"><img src={compras} width="30px" height="19px"></img> Comprar <img src={flechadespliegaderecha} width="10px" height="10px"></img></a>
 								<ul>
                 					<li><a href="#">Geolocalizacion</a></li>
                 					<li><a href="#">Categorias</a></li>
             					</ul>
 							</li>
-            				<li><a href="#"><img src={configuracion} width="30px" height="25px"></img> Configuracion</a>
+            				<li><a href="#"><img src={configuracion} width="30px" height="25px"></img> Configuracion <img src={flechadespliegaderecha} width="10px" height="10px"></img></a>
 								<ul>
                 					<li><a href="/login">editar datos usuario</a></li>
                 					<li><a href="/login">modificar contraseña</a></li>
