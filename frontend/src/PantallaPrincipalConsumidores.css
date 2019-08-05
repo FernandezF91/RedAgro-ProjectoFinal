@@ -1,3 +1,5 @@
+/* barra */
+
 .navbar img{
 
 margin-left:17.2%;
@@ -21,22 +23,40 @@ margin-left:3%;
 
 }
 
+.imagenUsuario{
+
+	top: 0.3%;
+	margin-left: 1%;
+	margin-right: 10%;
+}
+
+.imagencampanaalertas{
+
+	top: 10%;
+	
+}
+
+.imagencarrito{
+
+	top: 5%;
+}
+
 .botonusuario {
 
 	
-    margin-top: 1.5%;
+    box-sizing:border-box;
+    margin-top: 1.7%;
 	margin-right:5%;
-	margin-left:-0.5%;
-	right: 1%;
-	border: none;
-	width: 10px; 
+	margin-left:-2%;
+	right: -3.5%;
+	padding:0;
+	position: relative;
+	font-weight: bold;
+	list-style-type: none;
 	
 }	
 
-c{
-  color: black;
-  
-}
+/*menu desplegable*/
 
 .ListadoDesplegablemicuenta {
 

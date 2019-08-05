@@ -15,6 +15,9 @@ import configuracion from './configuracion.png';
 import reservas from './reservas.png';
 import compras from './compras.png';
 import preferencias from './preferencias.png';
+import flechadespliegaderecha from './flechadespliegaderecha.png';
+
+
 
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -36,24 +39,19 @@ class PantallaPrincipalconsumidores extends Component {
 						<div className="barraBusqueda">
 							<Form.Control size="sm" type="barra" placeholder="Buscar productos y productores.. "/>						
 						</div>
-						
-						<div className="botonusuario" class="dropdown">
-							<nav>
-       	 						<ul>
-            						<li class="dropdown-header"><c href="#"><img src={usuario} width="30px" height="19px"></img> Usuario</c>
-										<ul>
-                							<li><c href="#">Mi cuenta</c></li>
-                							<li><c href="#">Salir</c></li>
-            							</ul>
-										<img src={campanalertas} width="30px" height="30px"></img><img src={carrito} width="30px" height="px"></img> 
-									</li>
-        						</ul>
-								
-							</nav>
+						<div className="imagenUsuario">
+							<img src={usuario} width="30px" height="30px"></img>	
 						</div>
 
+						<div className="imagencampanaalertas">
+							<img src={campanalertas} width="50px" height="50px"></img>	
+						</div>
+						<div className="imagencarrito">
+							<img src={carrito} width="40px" height="40px"></img>	
+						</div>
 					</Navbar>
 				</div>
+
 				<Container fluid className="contenedor">	
 					<div className="menuConsumidor">
 					<nav>
@@ -62,7 +60,7 @@ class PantallaPrincipalconsumidores extends Component {
 							<li><a href="#"><img src={reservas} width="30px" height="25px"></img> Reservas</a></li>
 							<li><a href="#"><img src={campanalertas} width="30px" height="30px"></img> Alertas</a></li>
 							<li><a href="#"><img src={preferencias} width="30px" height="19px"></img> Preferencias</a></li>
-            				<li><a href="#"><img src={compras} width="30px" height="19px"></img> Comprar</a>
+            				<li><a href="#"><img src={compras} width="30px" height="19px"></img> Comprar <img src={flechadespliegaderecha} width="10px" height="10px" position = "rigth" ></img></a>
 								<ul>
                 					<li><a href="#">Geolocalizacion</a></li>
                 					<li><a href="#">Categorias</a></li>
