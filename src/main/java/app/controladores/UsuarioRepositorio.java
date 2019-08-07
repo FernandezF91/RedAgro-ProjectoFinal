@@ -2,8 +2,8 @@ package app.controladores;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import app.modelos.Usuario;
+import app.modelos.EntidadUsuario;
 
-public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
+public interface UsuarioRepositorio extends JpaRepository<EntidadUsuario, Integer> {
 
 }

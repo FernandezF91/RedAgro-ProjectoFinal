@@ -23,7 +23,7 @@ ReactDOM.render(
 	<Route path="/recupero_email" component={Recuperaremail}/>
 	<Route path="/registroProductor" component={RegistroProductor}/>
 	<Route path="/principalProductores" component={PantallaPrincipalProductores}/>
-	<Route path="/pantallaPrincipalConsumidores" component={PantallaPrincipalConsumidores}/>
+	<Route path="/principalConsumidores" component={PantallaPrincipalConsumidores}/>
 	<Route path="*" component={NotFound}/>
     </Switch>
     </BrowserRouter>,

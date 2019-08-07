@@ -83,8 +83,8 @@ class LoginForm extends Component {
 					<div className="formularioLogin">
 						<h2>Acceso de usuarios</h2>
 						<div className="encabezadoLogin">
-							<Form className="formulario">
-								<div className="usuario">
+							<Form className="formLogin">
+								<div className="usuarioLogin">
 									<Form.Group as={Row} controlId="formHorizontalEmail">
 										<Form.Label>
 											Usuario:
@@ -96,13 +96,13 @@ class LoginForm extends Component {
 
 									</Form.Group>
 								</div>
-								<div className="password">
+								<div className="passwordLogin">
 									<Form.Group as={Row} controlId="formHorizontalPassword" >
 										<Form.Label>
 											Password:
                                 </Form.Label>
 										<Col>
-											<Form.Control type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
+											<Form.Control className="passwordLogin" type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
 											<div className="error"> {this.state.errores["password"]} </div>
 										</Col>
 									</Form.Group>

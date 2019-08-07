@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.modelos.Usuario;
+import app.modelos.EntidadUsuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +23,15 @@ public class UsuarioControlador {
 
 	    @CrossOrigin(origins = "http://localhost:3000")
 	    @GetMapping(path = "redAgro/usuarios")
-	    public List<Usuario> getAllusuarios(){
-	        List<Usuario> usuarios = new ArrayList<>();
+	    public List<EntidadUsuario> getAllusuarios(){
+	        List<EntidadUsuario> usuarios = new ArrayList<>();
 	        usuarioRepositorio.findAll().forEach(usuarios :: add);
 	        return usuarios;
 	    }
 
 	    @CrossOrigin(origins = "http://localhost:3000")
 	    @PostMapping(path = "redAgro/usuario")
-	    public Usuario addItem(@RequestBody Usuario usuario){
+	    public EntidadUsuario addItem(@RequestBody EntidadUsuario usuario){
 	        usuarioRepositorio.save(usuario);
 	        return usuario;
 	    }
