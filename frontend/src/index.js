@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import LoginForm from './Login';
-import RegistroConsumidor from './RegistroUsuarios';
-import HomePage from './Home';
-import NotFound from './NotFound';
-import './index.css';
+import LoginForm from './pantallas/Login';
+import RegistroConsumidor from './pantallas/RegistroConsumidor';
+import HomePage from './pantallas/Home';
+import NotFound from './pantallas/NotFound';
+import './diseños/index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import Recuperaremail from './Recuperaremail';
-import RegistroProductor from './RegistroProductor';
-import PantallaPrincipalProductores from './PantallaPrincipalProductores'
-import PantallaPrincipalConsumidores from './PantallaPrincipalConsumidores'
+import Recuperaremail from './pantallas/Recuperaremail';
+import RegistroProductor from './pantallas/RegistroProductor';
+import PantallaPrincipalProductores from './pantallas/PantallaPrincipalProductores';
+import PantallaPrincipalConsumidores from './pantallas/PantallaPrincipalConsumidores';
 
 ReactDOM.render(
     <BrowserRouter>

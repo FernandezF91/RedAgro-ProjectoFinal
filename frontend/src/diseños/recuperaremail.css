@@ -1,12 +1,6 @@
-.contenedor{
-overflow:auto;
-
-}
 .formularioRecuContra{
 
-justify-content: center;
-text-align:center;
-margin-top: 5%
+margin-top: 10%
 
 }
 
@@ -25,5 +19,11 @@ margin-left:27%;
 .form-control[type=recuemail]{
 
 width: 55%;
+
+}
+
+.botones {
+
+margin-top:0%;
 
 }

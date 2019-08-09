@@ -1,10 +1,10 @@
 //este import para cabecera
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
-import culturaVerde from './cultura-verde.png';
+import culturaVerde from '../imagenes/cultura-verde.png';
 
 //este import para cuerpo   
-import './recuperaremail.css';
+import '../diseños/recuperaremail.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
@@ -14,7 +14,7 @@ import Col from 'react-bootstrap/Col';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 
-import './estilosGlobales.css';
+import '../diseños/estilosGlobales.css';
 
 class Recuperaremail extends Component {
 

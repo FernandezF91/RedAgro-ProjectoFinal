@@ -2,12 +2,9 @@ import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
-import culturaVerde from './cultura-verde.png';
-import iconoBusqueda from './search-icon.png';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import './Home.css';
-import './estilosGlobales.css';
+import culturaVerde from '../imagenes/cultura-verde.png';
+import '../diseños/Home.css';
+import '../diseños/estilosGlobales.css';
 
 class HomePage extends Component {
 

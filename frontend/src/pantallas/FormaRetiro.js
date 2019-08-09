@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
-import culturaVerde from './cultura-verde.png';
+import culturaVerde from '../imagenes/cultura-verde.png';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import label from 'react-bootstrap/FormCheckLabel'
 import Nav from 'react-bootstrap/Nav';
-import './FormaRetiro.css';
-import './estilosGlobales.css';
+import '../diseños/FormaRetiro.css';
+import '../diseños/estilosGlobales.css';
 
 class FormaRetiro extends Component {
 

@@ -1,15 +1,15 @@
     
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
-import culturaVerde from './cultura-verde.png';
+import culturaVerde from '../imagenes/cultura-verde.png';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
-import './Login.css';
-import './estilosGlobales.css';
+import '../diseños/Login.css';
+import '../diseños/estilosGlobales.css';
 
 
 class LoginForm extends Component {
@@ -46,17 +46,17 @@ class LoginForm extends Component {
 
 		if ((!this.state.fields["username"]) && (!this.state.fields["password"])) {
 
-			errores["username"] = "*Completar campo";
-			errores["password"] = "*Completar campo";
+			errores["username"] = "*Campo inválido";
+			errores["password"] = "*Campo inválido";
 
 
 		} else if (!this.state.fields["username"]) {
 
-			errores["username"] = "*Completar campo";
+			errores["username"] = "*Campo inválido";
 
 		} else if (!this.state.fields["password"]) {
 
-			errores["password"] = "*Completar campo";
+			errores["password"] = "*Campo inválido";
 
 		} else {
 
@@ -86,10 +86,10 @@ class LoginForm extends Component {
 							<Form className="formLogin">
 								<div className="usuarioLogin">
 									<Form.Group as={Row} controlId="formHorizontalEmail">
-										<Form.Label>
+										<Form.Label column sm={2}>
 											Usuario:
                                 </Form.Label>
-										<Col>
+										<Col sm={10}>
 											<Form.Control type="email" name="username" onChange={(e) => this.detectarCambios(e)} />
 											<div className="error">{this.state.errores["username"]}</div>
 										</Col>
@@ -98,11 +98,11 @@ class LoginForm extends Component {
 								</div>
 								<div className="passwordLogin">
 									<Form.Group as={Row} controlId="formHorizontalPassword" >
-										<Form.Label>
+										<Form.Label column sm={2} className ="passLabel">
 											Password:
                                 </Form.Label>
-										<Col>
-											<Form.Control className="passwordLogin" type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
+										<Col sm={10}>
+											<Form.Control type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
 											<div className="error"> {this.state.errores["password"]} </div>
 										</Col>
 									</Form.Group>

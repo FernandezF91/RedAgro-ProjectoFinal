@@ -1,19 +1,12 @@
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
-import culturaVerde from './cultura-verde.png';
+import culturaVerde from '../imagenes/cultura-verde.png';
 import Dropdown from 'react-bootstrap/Dropdown';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import SplitButton from 'react-bootstrap/SplitButton';
 
 
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import Nav from 'react-bootstrap/Nav';
-import './PantallaPrincipalProductores.css';
+import '../diseños/PantallaPrincipalProductores.css';
 
 class PantallaPrincipalProductores extends Component {
 
