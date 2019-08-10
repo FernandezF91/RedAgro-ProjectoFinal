@@ -23,12 +23,12 @@ margin-left:15.4%;
 }
 
 .contenedor{
-
+height: 100vh;
+width: 100vw;
 overflow:auto;
 background-color: whitesmoke;
 flex-direction: column;
 display: flex;
 justify-content: center;
 text-align:center;
-
 }
