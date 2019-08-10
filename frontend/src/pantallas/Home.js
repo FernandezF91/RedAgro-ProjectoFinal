@@ -5,6 +5,9 @@ import Form from 'react-bootstrap/Form';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/Home.css';
 import '../diseños/estilosGlobales.css';
+import { MDBIcon } from "mdbreact";
+import Row from 'react-bootstrap/Row';
+
 
 class HomePage extends Component {
 
@@ -16,9 +19,14 @@ class HomePage extends Component {
 					<Navbar>
 						<div className="culturaVerde">
 							<img src={culturaVerde} width="130px" height="50px"></img>
-						</div>	
+						</div>
 						<div className="barraBusqueda">
-						<Form.Control size="sm" type="barra" placeholder="Buscar productos y productores.. "/>						
+						<Row>
+								<span className="input-group-text grey lighten-3">
+									<MDBIcon className="text-black" icon="search" />
+								</span>
+								<Form.Control size="sm" type="barra" placeholder="Buscar productos y productores.. " />
+								</Row>						
 						</div>
 						<div className="textos">
 							<Nav>

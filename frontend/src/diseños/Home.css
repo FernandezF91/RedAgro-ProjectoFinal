@@ -3,13 +3,11 @@
 width:500px;
 margin-left:3%;
 
-
-
 }
 
 .barraBusqueda{
 
-	margin-left:4%;
+	margin-left:7%;
 	
 }
 
@@ -29,20 +27,6 @@ margin-left:4%;
 .nav-link{
 
 font-weight: 400;
-
-}
-
-
-/*
-.iconoBusqueda{
-
-	margin-right:-1%;
-
-}
-*/
-
-.contenedor{
-
-overflow:auto;
+color: white !important
 
 }
