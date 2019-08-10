@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
-import culturaVerde from '../imagenes/cultura-verde.png';
+import culturaVerde from '../imagenes/cultura-verde-2.png';
 import Container from 'react-bootstrap/Container';
 import '../diseños/PuntoDeEntrega.css';
 import '../diseños/estilosGlobales.css';
@@ -57,7 +57,7 @@ class FormaRetiro extends Component {
 			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
-						<img src={culturaVerde} width="150px" height="60px"></img>
+						<img src={culturaVerde} width="130px" height="50px"></img>
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">

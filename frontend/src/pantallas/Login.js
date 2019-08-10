@@ -1,7 +1,7 @@
     
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
-import culturaVerde from '../imagenes/cultura-verde.png';
+import culturaVerde from '../imagenes/cultura-verde-2.png';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
@@ -76,7 +76,7 @@ class LoginForm extends Component {
 			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
-						<img src={culturaVerde} width="150px" height="60px"></img>
+						<img src={culturaVerde} width="130px" height="50px"></img>
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
@@ -90,7 +90,7 @@ class LoginForm extends Component {
 											Usuario:
                                 </Form.Label>
 										<Col sm={10}>
-											<Form.Control type="email" name="username" onChange={(e) => this.detectarCambios(e)} />
+											<Form.Control className="formUser" type="email" name="username" onChange={(e) => this.detectarCambios(e)} />
 											<div className="error">{this.state.errores["username"]}</div>
 										</Col>
 
@@ -102,7 +102,7 @@ class LoginForm extends Component {
 											Password:
                                 </Form.Label>
 										<Col sm={10}>
-											<Form.Control type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
+											<Form.Control className="formPass" type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
 											<div className="error"> {this.state.errores["password"]} </div>
 										</Col>
 									</Form.Group>

@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
 
 //imagenes para barra
-import culturaVerde from '../imagenes/cultura-verde.png';
+import culturaVerde from '../imagenes/cultura-verde-2.png';
 import usuario from '../imagenes/usuario.png';
 import carrito from '../imagenes/carrito.png';
 
@@ -35,7 +35,7 @@ class PantallaPrincipalconsumidores extends Component {
 				
 				<div className="barraNavegacion">
 					<Navbar>
-						<img src={culturaVerde} width="150px" height="60px"></img>
+						<img src={culturaVerde} width="130px" height="50px"></img>
 						<div className="barraBusqueda">
 							<Form.Control size="sm" type="barra" placeholder="Buscar productos y productores.. "/>						
 						</div>

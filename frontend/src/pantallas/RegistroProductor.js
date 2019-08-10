@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
-import culturaVerde from '../imagenes/cultura-verde.png';
+import culturaVerde from '../imagenes/cultura-verde-2.png';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
@@ -8,8 +8,13 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import '../diseños/Registro.css';
 import '../diseños/estilosGlobales.css';
+import 'moment/locale/es';
+import { DatePickerInput } from 'rc-datepicker';
+import 'rc-datepicker/lib/style.css';
+import { isDate } from 'moment';
 
 class RegistroProductor extends Component {
+
 
 
 
@@ -19,23 +24,31 @@ class RegistroProductor extends Component {
 
 		this.state = {
 			campos: [],
-			validated: false
-			
+			errores: [],
+			validated: false,
 		}
 
 		this.limpiarCampos = this.limpiarCampos.bind(this);
+		this.validarFecha = this.validarFecha.bind(this);
 
 	}
+
 
 	handleSubmit(e) {
 
 		const form = e.currentTarget;
-		if (form.checkValidity() === false) {
+
+		if (form.checkValidity() === false)
+		
+		{
+			
 			e.preventDefault();
 			e.stopPropagation();
-		}
+	
+		} 
 
 		this.setState({ validated: true });
+
 
 	};
 
@@ -49,11 +62,37 @@ class RegistroProductor extends Component {
 
 	}
 
+	 cambiosFecha(e) {
+
+		let campos = this.state.campos;
+		campos["fecha_nac"] = e;
+
+	this.setState({campos})
+
+	 }
+
+
 	limpiarCampos() {
 
 		this.refs.form.reset();
 
 	}
+
+	validarFecha(){
+
+		let errores ={}
+
+		if((!this.state.campos["fecha_nac"])||(!isDate(this.state.campos["fecha_nac"]))){
+
+			errores["fecha_nac"]= "*Campo inválido";
+		}
+
+		this.setState({
+			errores
+		})
+
+		}
+
 
 
 	render() {
@@ -62,12 +101,12 @@ class RegistroProductor extends Component {
 			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
-						<img src={culturaVerde} width="150px" height="60px"></img>
+						<img src={culturaVerde} width="130px" height="50px"></img>
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
 					<div className="contenidoRegistro">
-						<Form noValidate validated={this.state.validated} ref="form" onSubmit={(e)=>this.handleSubmit(e)}>
+						<Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
 							<div className="titulos">
 								<Form.Group as={Row}>
 									<div className="cuentaCultura">
@@ -78,7 +117,7 @@ class RegistroProductor extends Component {
 									</div>
 								</Form.Group>
 							</div>
-							<div className="nombre">
+							<div className="nombre" >
 								<Form.Group as={Row} controlId="validationCustom01">
 									<Form.Label column sm={2}>
 										Nombre:
@@ -87,6 +126,8 @@ class RegistroProductor extends Component {
 										<Form.Control
 											required
 											type="text"
+											name="nombre"
+											pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
 										/>
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
@@ -101,20 +142,7 @@ class RegistroProductor extends Component {
 										Apellido:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="text" name="apellido" />
-										<Form.Control.Feedback className="errores" type="invalid">
-											*Campo inválido
-												</Form.Control.Feedback>
-									</Col>
-								</Form.Group>
-							</div>
-							<div className="razonSocial">
-								<Form.Group as={Row}>
-									<Form.Label column sm={2}>
-										Razón social:
-                                </Form.Label>
-									<Col sm={10}>
-										<Form.Control required type="text" name="razonSocial" />
+										<Form.Control required type="text" name="apellido" pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"/>
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
@@ -127,12 +155,28 @@ class RegistroProductor extends Component {
 										Fecha de nacimiento:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="text" name="fechaNacimiento" />
+										<DatePickerInput	
+										name ="fecha_nac"								
+										displayFormat='DD/MM/YYYY'
+											className = "calendario"	
+											onChange = {(e)=>this.cambiosFecha(e)}							
+										/>
+									<div className="errorConsu">{this.state.errores["fecha_nac"]}</div>
+									</Col>
+	
+								</Form.Group>
+							</div>
+							<div className="razonSocial">
+								<Form.Group as={Row}>
+									<Form.Label column sm={2}>
+										Razón social:
+                                </Form.Label>
+									<Col sm={10}>
+										<Form.Control required type="text" name="razonSocial"/>
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
-									</Col>
-
+									</Col>	
 								</Form.Group>
 							</div>
 							<div className="tel">
@@ -141,7 +185,7 @@ class RegistroProductor extends Component {
 										Teléfono:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="text" name="tel" />
+										<Form.Control required type="tel" name="tel" pattern="[0-9]{8,14}" />
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
@@ -176,28 +220,14 @@ class RegistroProductor extends Component {
 									</Col>
 								</Form.Group>
 							</div>
-							<div className="confirmaPassword">
-								<Form.Group as={Row}>
-									<Form.Label className="confirmaLabel" column sm={3}>
-										Confirmar password:
-                                </Form.Label>
-									<Col sm={10}>
-										<Form.Control required type="password" name="confirmaPassword" />
-										<Form.Control.Feedback className="errores" type="invalid">
-											*Campo inválido
-												</Form.Control.Feedback>
-									</Col>
-
-								</Form.Group>
-							</div>
-							<div className="botones">
+							<div className="botonesUsuarios">
 								<Col>
 									<Row>
 										<div className="botonAtras">
 											<a href='/login'><Button variant="success">Atrás</Button></a>
 										</div>
 										<div className="botonCrear">
-											<Button variant="success" type="submit">Crear</Button>
+											<Button variant="success" type="submit" onClick = {this.validarFecha}>Crear</Button>
 										</div>
 										<div className="botonLimpiar">
 											<Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>
@@ -212,6 +242,5 @@ class RegistroProductor extends Component {
 		);
 	};
 }
-
 
 export default RegistroProductor;

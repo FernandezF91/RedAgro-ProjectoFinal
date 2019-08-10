@@ -1,7 +1,7 @@
 //este import para cabecera
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
-import culturaVerde from '../imagenes/cultura-verde.png';
+import culturaVerde from '../imagenes/cultura-verde-2.png';
 
 //este import para cuerpo   
 import '../diseños/recuperaremail.css';
@@ -50,7 +50,7 @@ class Recuperaremail extends Component {
 
 		if (!this.state.fields["emailuser"]) {
 
-			errores["emailuser"] = "*Completar campo";
+			errores["emailuser"] = "*Campo inválido";
 		}
 
 		this.setState({
@@ -64,7 +64,7 @@ class Recuperaremail extends Component {
 			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
-						<img src={culturaVerde} width="150px" height="60px"></img>
+						<img src={culturaVerde} width="130px" height="50px"></img>
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">

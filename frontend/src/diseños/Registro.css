@@ -1,4 +1,4 @@
-.form-control[type="text"], .form-control[type="email"], .form-control[type="password"]{
+.form-control[type="text"], .form-control[type="email"], .form-control[type="password"], .form-control[type="tel"]{
 
 width:40%;
 
@@ -54,17 +54,6 @@ margin-top:3.5%;
 
 }
 
- .confirmaPassword{
-
-	margin-top:3.5%;
-
- }
-
-.confirmaLabel{
-
-margin-left:-8.5%;
-
-}
 
 .apellido{
 
@@ -72,15 +61,21 @@ margin-top:3.5%;
 
 }
 
-.razonSocial{
-
-margin-top:3.5%;
-}
 
 .error{
 color: #cc0000;
 font-size: 13px;
 position: absolute;
+}
+
+.errorConsu{
+
+color: #cc0000;
+font-size: 13px;
+position:absolute;
+margin-left:0.5%;
+margin-top:0.5%;
+
 }
 
 .errores{
@@ -95,5 +90,19 @@ position:absolute;
 .fechaLabel{
 
 margin-left:-8.4%;
+
+}
+
+.calendario{
+
+width:40%;
+
+}
+
+.botonesUsuarios{
+
+margin-top:2.5%;
+margin-left:5%;
+
 
 }

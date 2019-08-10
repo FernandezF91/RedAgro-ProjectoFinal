@@ -1,7 +1,7 @@
 .formularioLogin{
 
 
-margin-top: 5%;
+margin-top: 8%;
 
 }
 
@@ -42,4 +42,8 @@ margin-top:3%;
 
 }
 
+.formUser,.formPass{
 
+margin-left:-2%;
+
+}
