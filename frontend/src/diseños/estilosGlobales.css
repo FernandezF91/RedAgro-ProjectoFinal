@@ -1,6 +1,5 @@
 .fondo{
 	height: 100vh;
-	/*width: 100vw;*/
 	background-color: whitesmoke;
 }
 
@@ -24,6 +23,7 @@ margin-left:15.4%;
 
 .contenedor{
 height: 100vh;
+width: 100vw;
 overflow:auto;
 background-color: whitesmoke;
 flex-direction: column;
