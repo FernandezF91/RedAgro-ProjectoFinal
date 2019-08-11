@@ -1,161 +1,124 @@
-/* barra */
-
-.navbar img{
-
-margin-left:17.2%;
-
-}
-
-.form-control[type=barra]{
-
-width:500px;
-margin-left:3%;
-
-}
-
 .imagenUsuario{
 
-	top: 0.3%;
-	margin-left: 2%;
-	margin-right: -2%;
+	margin-left:-2%;
+	margin-top:5.2%;
+	flex:1;
+
 }
 
 .menuUsuario {
-	top: -50%;
-	box-sizing:border-box;
-    margin-top: 0.5%;
-	margin-right:5%;
-	margin-left:5%;
-	right: 1%;
-	padding:0;
-	position: relative;
-	font-weight: bold;
-	list-style-type: none;
-}
 
-a{
-  color: black;
-}
+	margin-left:-14px;
+	margin-top:3.5%;
+	flex:1;
 
-
-liuser{
-	list-style-type: none;	
-    position:relative;
-	width:100px;
-	
 }
 	
-	liuser a{
-    text-decoration:none;
-	text-align: left;
-	display:inline-block;
-    padding:5px 10px;
-    width:120px;
-    height:30px;
-    color:#000;
-	background-color:none;
-	list-style-type: none;
-	border: 1px solid #fff;
-	
-    }
-                
-    
-            
-    liuser a:hover{
-    color:#000;
-    background-color:#fff;
-                
-    }
-    
-navuser liuser uluser{
-        display:none;
-        position:absolute;
-        top:0px;
-		left:100px;
-		
-    }
-            
-navuser liuser:hover uluser{display:block;}
 
-.imagencampanaalertas{
+.alertas{
 
-	top: 10%;
+	margin-top:1.8%;
+margin-left:-15px;
+flex:1;
 	
 }
 
-.imagencarrito{
+.carrito{
 
-	top: 5%;
+margin-top:3%;
+margin-left:6px;
+flex:1;
+
 }	
 
-/*menu desplegable*/
+.iconos{
 
-.ListadoDesplegablemicuenta {
-
-margin-right:3%;
-margin-left:5%;
+margin-left:70px;
+display:flex;
+flex-direction: row;
+flex:1;
 
 }
 
-a{
-  color: black;
+#nav-dropdown{
+	color: black!important;
+	flex:1;
 }
 
+#config_drop, #compra_drop{
+
+color: black!important;
+font-weight: bold;
+margin-left:-10px;
+
+
+}
+
+.com_drop{
+
+margin-top:-4.5px;
+
+}
+
+.imagen_conf{
+
+margin-top:7px;
+
+}
 
 
 .menuConsumidor {
 
-	box-sizing:border-box;
-    margin-top: 0.5%;
-	margin-right:5%;
-	margin-left:5%;
-	right: 1%;
-	padding:0;
-	position: relative;
+    margin-top: 40px;
 	font-weight: bold;
-	list-style-type: none;
 	
 	
-	
-	
-}    
-          
-li{
-	list-style-type: none;	
-    position:relative;
-	width:200px;
 	
 }
+
+.reserva{
+
+
+margin-top:20px;
+
+}
+
+p {
+
+margin-left:6px;
+
+}
+
+h4{
+
+margin-left:6px;
+
+}
+
+.menuConsumidor{
+
+margin-left:10px;
+
+
+
+}
+
+.ruteo{
+
+	background-color:white;
 	
-	li a{
-    text-decoration:none;
-	text-align: left;
-	display:inline-block;
-    padding:5px 10px;
-    width:200px;
-    height:30px;
-    color:#000;
-	background-color:none;
-	list-style-type: none;
-	border: 1px solid #000;
-	
-    }
-                
-    
-            
-    li a:hover{
-    color:#000;
-    background-color:#fff;
-                
-    }
-    
-nav li ul{
-        display:none;
-        position:absolute;
-        top:0px;
-		left:160px;
-		
-    }
-            
-	nav li:hover ul{display:block;}
-	
+
+}
+
+.filaContenedora{
+
+height:100vh;
+
+
+}
+
+.divisor{
+
+	width:210px;
+	margin-left:-20px;
+}

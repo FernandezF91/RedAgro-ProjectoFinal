@@ -1,12 +1,16 @@
 //este import para cabecera
 import '../diseños/PantallaPrincipalConsumidores.css';
+import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react'
-import Navbar from 'react-bootstrap/Navbar';
+import { MDBIcon } from "mdbreact";
+import Row from 'react-bootstrap/Row';
+import { Navbar, NavDropdown } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 
 //imagenes para barra
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import usuario from '../imagenes/usuario.png';
-import carrito from '../imagenes/carrito.png';
+import carrito from '../imagenes/carrito2.png';
 
 //imagenes para menu desplegable
 import miCuenta from '../imagenes/Micuenta.png'
@@ -26,71 +30,114 @@ import Form from 'react-bootstrap/Form';
 
 class PantallaPrincipalconsumidores extends Component {
 
+
 	render() {
 
 		return (
-			
 
-			<body>
-				
+			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
-						<img src={culturaVerde} width="130px" height="50px"></img>
+						<div className="culturaVerde">
+							<img src={culturaVerde} width="130px" height="50px"></img>
+						</div>
 						<div className="barraBusqueda">
-							<Form.Control size="sm" type="barra" placeholder="Buscar productos y productores.. "/>						
+							<Row>
+							
+								<span className="input-group-text grey lighten-3">
+									<MDBIcon className="text-black" icon="search" />
+								</span>
+								
+								<Form.Control size="sm" type="barra" placeholder="Buscar productos y productores.. " />
+							</Row>
 						</div>
-						<div className="imagenUsuario">
-							<img src={usuario} width="30px" height="30px"></img>	
-						</div>
-						<div className="menuUsuario">
-							<navuser>
-       	 						<uluser>
-									<liuser><a href="#"> Usuario <img src={flechadespliegabajo} width="10px" height="10px"></img></a>
-										<uluser>
-                							<liuser><a href="#">Mi cuenta</a></liuser>
-                							<liuser><a href="/login">Salir</a></liuser>
-            							</uluser>
-									</liuser>
-            					</uluser>
-							</navuser>
-						</div>
-						<div className="imagencampanaalertas">
-							<img src={campanalertas} width="50px" height="50px"></img>	
-						</div>
-						<div className="imagencarrito">
-							<img src={carrito} width="40px" height="40px"></img>	
+						<div className="iconos">
+							<Row>
+								<div className="imagenUsuario">
+									<img src={usuario} width="30px" height="30px"></img>
+								</div>
+								<div className="menuUsuario">
+									<NavDropdown title="Usuario" id="nav-dropdown">
+										<NavDropdown.Item href="#action/3.1">Mi cuenta</NavDropdown.Item>
+										<NavDropdown.Divider />
+										<NavDropdown.Item href="#action/3.2">Salir</NavDropdown.Item>
+									</NavDropdown>
+								</div>
+								<div className="alertas">
+									<img src={campanalertas} width="50px" height="50px"></img>
+								</div>
+								<div className="carrito">
+									<img src={carrito} width="40px" height="40px"></img>
+								</div>
+							</Row>
 						</div>
 					</Navbar>
 				</div>
-
-				<Container fluid className="contenedor">	
-					<div className="menuConsumidor">
-					<nav>
-       	 				<ul>
-            				<li><a href="#"><img src={miCuenta} width="30px" height="25px"></img> Mi cuenta</a></li>
-							<li><a href="#"><img src={reservas} width="30px" height="25px"></img> Reservas</a></li>
-							<li><a href="#"><img src={campanalertas} width="30px" height="30px"></img> Alertas</a></li>
-							<li><a href="#"><img src={preferencias} width="30px" height="19px"></img> Preferencias</a></li>
-            				<li><a href="#"><img src={compras} width="30px" height="19px"></img> Comprar <img src={flechadespliegaderecha} width="10px" height="10px"></img></a>
-								<ul>
-                					<li><a href="#">Geolocalizacion</a></li>
-                					<li><a href="#">Categorias</a></li>
-            					</ul>
-							</li>
-            				<li><a href="#"><img src={configuracion} width="30px" height="25px"></img> Configuracion <img src={flechadespliegaderecha} width="10px" height="10px"></img></a>
-								<ul>
-                					<li><a href="/login">editar datos usuario</a></li>
-                					<li><a href="/login">modificar contraseña</a></li>
-            					</ul>
-							</li>
-        				</ul>
-					</nav>
-				</div>
-				</Container>	
+				<Container fluid className="contenedor">
+			
+					<Row className="filaContenedora">
+						<Col sm={2} className="menuConsumidor">
+							<div className="cuenta">
+								<Row>
+									<img src={miCuenta} width="30px" height="25px"></img> <h4>Mi cuenta</h4>
+								</Row>
+							</div>
+							<div className="divisor">
+							<NavDropdown.Divider/>
+							</div>
+							<div className="reserva">
+								<Row>
+									<img src={reservas} width="30px" height="25px"></img> <p>Reservas</p>
+								</Row>
+							</div>
+									<div className="alerta">
+								<Row>
+									<img src={campanalertas} width="30px" height="30px"></img><p>Alertas</p>
+								</Row>
+							</div>
+							<div className="preferencia">
+								<Row>
+									<img src={preferencias} width="30px" height="19px"></img><p>Preferencias</p>
+								</Row>
+							</div>
+							<div className="compra">
+								<Row>
+									<div className="imagen_compras">
+									<img src={compras} width="30px" height="19px"></img>
+									</div>
+									<div className="com_drop">
+									<NavDropdown title="Comprar" id="compra_drop">
+										<NavDropdown.Item href="#action/3.1">Geolocalización</NavDropdown.Item>
+										<NavDropdown.Divider />
+										<NavDropdown.Item href="#action/3.2">Categorias</NavDropdown.Item>
+									</NavDropdown>
+									</div>
+								</Row>
+							</div>
+								<div className="configuracion">
+									<Row>
+										<div className="imagen_conf">
+										<img src={configuracion} width="30px" height="19px"></img>
+										</div>
+										<div className="conf_drop">
+									<NavDropdown title="Configuración" id="config_drop">
+										<NavDropdown.Item href="#action/3.1">Editar mis datos</NavDropdown.Item>
+										<NavDropdown.Divider />
+										<NavDropdown.Item href="#action/3.2">Modificar contraseña</NavDropdown.Item>
+									</NavDropdown>
+									</div>
+									</Row>
+								</div>
+						</Col>
+						<Col className="ruteo">
+						</Col>
+					</Row>
+					
+				</Container>
 			</body>
 
-		);	
-	};		
+		);
+	};
 }
 
 export default PantallaPrincipalconsumidores;

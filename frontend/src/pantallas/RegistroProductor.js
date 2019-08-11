@@ -101,7 +101,9 @@ class RegistroProductor extends Component {
 			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
+						<div className="culturaVerde">
 						<img src={culturaVerde} width="130px" height="50px"></img>
+						</div>
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
