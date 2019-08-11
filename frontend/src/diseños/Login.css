@@ -13,15 +13,19 @@ margin-left:33%;
 }
 
 
-.form-control{
+.form-group{
 
-width: 40%;
+display: flex;
+  flex: 0 0 auto;
+  flex-flow: row wrap;
+  align-items: center;
+  margin-bottom: 0;
 
 }
 
+
 .botonesLogin{
 
-display:flex;
 flex-direction: row;
 display: flex;
 justify-content: center;
@@ -32,11 +36,5 @@ justify-content: center;
 .passwordLogin{
 
 margin-top:3%;
-
-}
-
-.formUser,.formPass{
-
-margin-left:-2%;
 
 }

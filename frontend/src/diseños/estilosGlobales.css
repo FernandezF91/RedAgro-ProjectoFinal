@@ -1,17 +1,15 @@
 .fondo{
+	background-color: whitesmoke;
 	height: 100vh;
 	width: 100vw;
-	background-color: whitesmoke;
-	flex:1;
 	
 }
 
+
 .barraBusqueda{
 
-	margin-left:7%;
-	
+	margin-left:100px;
 
-	
 }
 
 .form-control[type=barra]{
@@ -22,10 +20,20 @@ flex:1;
 
 }
 
+ @media (max-width: 1000px) {
+   .navbar {
+	  
+	overflow:auto!important;
+
+   }
+} 
+
+
+
 .barraNavegacion{
 
 background-color: #28a745;
-flex:1;
+
 
 }
 
@@ -40,6 +48,7 @@ flex:1;
 
 margin-left:15.4%;
 
+
 }
 
 .contenedor{
@@ -48,8 +57,10 @@ background-color: whitesmoke;
 flex-direction: column;
 display: flex;
 justify-content: center;
-text-align:center;
 align-content: center;
+text-align:center;
+
+
 }
 
 .input-group-text{
@@ -59,6 +70,8 @@ margin-left:-2.02%;
 margin-top:-0.03%;
 height: 5.1%;
 
+
+
 }
 
 .error{
@@ -66,3 +79,4 @@ color: #cc0000;
 font-size: 13px;
 position: absolute;
 }
+

@@ -19,13 +19,13 @@ import configuracion from '../imagenes/configuracion.png';
 import reservas from '../imagenes/reservas.png';
 import compras from '../imagenes/compras.png';
 import preferencias from '../imagenes/preferencias.png';
-import flechadespliegaderecha from '../imagenes/flechadespliegaderecha.png';
-import flechadespliegabajo from '../imagenes/flechadespliegabajo.png';
-
 
 
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import {BrowserRouter, Router, Route, Switch} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Reservas from '../pantallas/Reservas';
 
 
 class PantallaPrincipalconsumidores extends Component {
@@ -42,8 +42,7 @@ class PantallaPrincipalconsumidores extends Component {
 							<img src={culturaVerde} width="130px" height="50px"></img>
 						</div>
 						<div className="barraBusqueda">
-							<Row>
-							
+							<Row>						
 								<span className="input-group-text grey lighten-3">
 									<MDBIcon className="text-black" icon="search" />
 								</span>
@@ -87,7 +86,7 @@ class PantallaPrincipalconsumidores extends Component {
 							</div>
 							<div className="reserva">
 								<Row>
-									<img src={reservas} width="30px" height="25px"></img> <p>Reservas</p>
+									<img src={reservas} width="30px" height="25px"></img> <Link to={'/principalConsumidores/reservas'}><p>Reservas</p></Link> 
 								</Row>
 							</div>
 									<div className="alerta">
@@ -128,8 +127,9 @@ class PantallaPrincipalconsumidores extends Component {
 									</div>
 									</Row>
 								</div>
-						</Col>
+						</Col>						
 						<Col className="ruteo">
+								<Route path={'/principalConsumidores/reservas'} component={Reservas} />
 						</Col>
 					</Row>
 					

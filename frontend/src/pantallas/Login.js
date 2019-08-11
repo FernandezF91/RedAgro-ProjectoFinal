@@ -85,14 +85,14 @@ class LoginForm extends Component {
 					<div className="formularioLogin">
 						<h2>Acceso de usuarios</h2>
 						<div className="encabezadoLogin">
-							<Form className="formLogin">
+							<Form>
 								<div className="usuarioLogin">
 									<Form.Group as={Row} controlId="formHorizontalEmail">
 										<Form.Label column sm={2}>
 											Usuario:
                                 </Form.Label>
 										<Col sm={10}>
-											<Form.Control className="formUser" type="email" name="username" onChange={(e) => this.detectarCambios(e)} />
+											<Form.Control type="email" name="username" onChange={(e) => this.detectarCambios(e)} />
 											<div className="error">{this.state.errores["username"]}</div>
 										</Col>
 
@@ -100,11 +100,11 @@ class LoginForm extends Component {
 								</div>
 								<div className="passwordLogin">
 									<Form.Group as={Row} controlId="formHorizontalPassword" >
-										<Form.Label column sm={2} className ="passLabel">
+										<Form.Label column sm={2}>
 											Password:
                                 </Form.Label>
 										<Col sm={10}>
-											<Form.Control className="formPass" type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
+											<Form.Control type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
 											<div className="error"> {this.state.errores["password"]} </div>
 										</Col>
 									</Form.Group>
