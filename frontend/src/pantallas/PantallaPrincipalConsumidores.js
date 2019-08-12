@@ -43,11 +43,8 @@ class PantallaPrincipalconsumidores extends Component {
 						</div>
 						<div className="barraBusqueda">
 							<Row>						
-								<span className="input-group-text grey lighten-3">
-									<MDBIcon className="text-black" icon="search" />
-								</span>
-								
-								<Form.Control size="sm" type="barra" placeholder="Buscar productos y productores.. " />
+								<input type="text" placeholder="Buscar productos y productores.. " name="search"/>
+      							<button type="submit"><i class="fa fa-search"></i></button>
 							</Row>
 						</div>
 						<div className="iconos">

@@ -12,13 +12,21 @@
 
 }
 
-.form-control[type=barra]{
+input[type=text]{
 
 width:500px;
 margin-left:-0.35%;
 flex:1;
+border: 1.5px solid #ccc;
+border-radius: 6px;
+box-sizing: border-box;
+padding:0px 10px;
+font-size: 15px;
+font-weight: 400;
 
 }
+
+
 
  @media (max-width: 1000px) {
    .navbar {
