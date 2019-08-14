@@ -1,4 +1,4 @@
-package app.controladores;
+package app.daos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

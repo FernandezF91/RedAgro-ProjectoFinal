@@ -1,0 +1,143 @@
+
+.filaContenedora{
+
+height:100vh;
+
+}
+
+
+
+.imagenUsuario{
+
+	margin-left:-2%;
+	margin-top:5.2%;
+	flex:1;
+
+}
+
+.menuUsuario {
+
+	margin-left:-14px;
+	margin-top:3.5%;
+	flex:1;
+
+}
+	
+
+.alertas{
+
+	margin-top:1.8%;
+margin-left:-15px;
+flex:1;
+	
+}
+
+.carrito{
+
+margin-top:3%;
+margin-left:6px;
+flex:1;
+
+}	
+
+.iconos{
+
+margin-left:70px;
+flex-direction:column;
+
+}
+
+#nav-dropdown{
+	color: black!important;
+	flex:1;
+}
+
+.menuConsumidor {
+
+    margin-top: 40px;
+	font-weight: bold;
+	margin-left:10px;
+		
+}
+
+.divisor{
+
+	width:210px;
+	margin-left:-20px;
+}
+
+.subMenu{
+
+margin-top:13px;
+
+}
+
+p, h4{
+
+	margin-left:6.4px;
+
+}
+
+.alerta p{
+
+margin-top:5.5px;
+
+}
+
+#config_drop, #compra_drop, #producto_drop{
+
+color: black!important;
+font-weight: bold;
+margin-left:-10px;
+
+
+}
+
+#producto_drop{
+
+margin-top:-2px;
+
+}
+
+#config_drop{
+
+margin-top:-5.4px;
+
+}
+
+#compra_drop{
+
+margin-top:-4.5px;
+
+}
+
+.alerta{
+
+margin-top:-7.5px;
+
+}
+
+.compra{
+
+margin-top:-4px;
+
+}
+
+.configuracion{
+
+margin-top:6px;	
+
+}
+
+.productos{
+
+margin-top:-3.8px;	
+
+}
+
+.ruteo{
+
+	background-color:white;
+	
+}
+
