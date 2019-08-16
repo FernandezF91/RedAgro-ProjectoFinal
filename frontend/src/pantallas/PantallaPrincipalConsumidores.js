@@ -26,6 +26,7 @@ import Form from 'react-bootstrap/Form';
 import {BrowserRouter, Router, Route, Switch} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Reservas from '../pantallas/Reservas';
+import AlertaConsumidor from '../pantallas/AlertaConsumidor';
 
 
 class PantallaPrincipalconsumidores extends Component {
@@ -89,7 +90,7 @@ class PantallaPrincipalconsumidores extends Component {
 								</div>
 								<div className="alerta">
 									<Row>
-										<img src={campanalertas} width="30px" height="35px"></img><p>Alertas</p>
+										<img src={campanalertas} width="30px" height="35px"></img><Link to={'/principalConsumidores/Alertas'}><p>Alertas</p></Link>
 									</Row>
 								</div>
 								<div className="preferencia">
@@ -129,6 +130,7 @@ class PantallaPrincipalconsumidores extends Component {
 						</Col>
 						<Col className="ruteo">
 							<Route path={'/principalConsumidores/reservas'} component={Reservas} />
+							<Route path={'/principalConsumidores/Alertas'} component={AlertaConsumidor} />
 						</Col>
 					</Row>
 					

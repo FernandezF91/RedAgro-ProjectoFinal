@@ -1,0 +1,24 @@
+.radioButtons{
+	text-align: left;
+	line-height: 40px;
+}
+.radioButtons .radio1{
+	margin-left: 20px
+}
+
+.radioButtons .radio2{
+	margin-left: 40px
+}
+
+.radioButtons .radio3{
+	margin-left: 40px
+}
+
+.checkboxes{
+	text-align: left;
+}
+
+.checkbox{
+	margin-left: 20px;
+	line-height: 40px;
+}
