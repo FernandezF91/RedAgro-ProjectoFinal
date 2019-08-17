@@ -29,7 +29,6 @@ class RegistroConsumidor extends Component {
 		}
 
 		this.limpiarCampos = this.limpiarCampos.bind(this);
-		this.validarFecha = this.validarFecha.bind(this);
 
 	}
 
@@ -37,20 +36,48 @@ class RegistroConsumidor extends Component {
 	handleSubmit(e) {
 
 		const form = e.currentTarget;
-
-		if (form.checkValidity() === false)
 		
-		{
+		this.setState({
+			errores: []
+		})
+
+		let errores ={}
+
+		if((form.checkValidity() === false)&&((!this.state.campos["fecha_nac"])||(!isDate(this.state.campos["fecha_nac"])))){
+
+		errores["fecha_nac"]= "*Campo inválido";
+		this.setState({errores});
+        e.preventDefault();
+		e.stopPropagation();
+
+		} else if((!this.state.campos["fecha_nac"])||(!isDate(this.state.campos["fecha_nac"]))){
+
+		errores["fecha_nac"]= "*Campo inválido";
+		this.setState({errores});
+		e.preventDefault();
+		e.stopPropagation();
+		
+
+		}else if(form.checkValidity() === false){
 			
-			e.preventDefault();
-			e.stopPropagation();
-	
-		} 
+		e.preventDefault();
+		e.stopPropagation();
 
-		this.setState({ validated: true });
+		}else {
 
+			 this.setState({validated:true});
+			 this.crearUsuario();
+			 alert("Registro exitoso");
+			 this.props.history.push("/login");
 
-	};
+		}
+this.setState({validated:true});
+		
+	}
+
+		
+		
+
 
 	detectarCambios(e) {
 
@@ -78,22 +105,32 @@ class RegistroConsumidor extends Component {
 
 	}
 
-	validarFecha(){
+	crearUsuario(){
 
-		let errores ={}
-
-		if((!this.state.campos["fecha_nac"])||(!isDate(this.state.campos["fecha_nac"]))){
-
-			errores["fecha_nac"]= "*Campo inválido";
-		}
-
-		this.setState({
-			errores
+		fetch("http://localhost:3000/redAgro/usuario", {
+			method: "POST",
+			headers: {
+				'Content-type': 'application/json;charset=UTF-8',
+			},
+			body: JSON.stringify({  "nombre":this.state.campos["nombre"],
+			 						"apellido": this.state.campos["apellido"],
+			 						"usuario": this.state.campos["email"],
+			 						"contraseña": this.state.campos["password"],
+									 "fecha_nacimiento":this.state.campos["fecha_nac"],
+									 "telefono":this.state.campos["tel"],
+									"rol": "Consumidor"}),
 		})
+			.then((response) => response.status !==200? alert("Ocurrió algún problema") : response.json())
+			.then(
+				(result) => {
+		
+					
+				}
+			);
 
-		}
+			
 
-
+	}
 
 	render() {
 
@@ -130,6 +167,7 @@ class RegistroConsumidor extends Component {
 											type="text"
 											name="nombre"
 											pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+											onChange= {(e)=> this.detectarCambios(e)}
 										/>
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
@@ -144,7 +182,7 @@ class RegistroConsumidor extends Component {
 										Apellido:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="text" name="apellido" pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"/>
+										<Form.Control required type="text" name="apellido" pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*" onChange= {(e)=> this.detectarCambios(e)}/>
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
@@ -174,7 +212,7 @@ class RegistroConsumidor extends Component {
 										Teléfono:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="tel" name="tel" pattern="[0-9]{8,14}" />
+										<Form.Control required type="tel" name="tel" pattern="[0-9]{8,14}" onChange= {(e)=> this.detectarCambios(e)} />
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
@@ -187,7 +225,7 @@ class RegistroConsumidor extends Component {
 										Email:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="email" name="email" />
+										<Form.Control required type="email" name="email" onChange= {(e)=> this.detectarCambios(e)} />
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
@@ -202,7 +240,7 @@ class RegistroConsumidor extends Component {
 										Password:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="password" name="password" />
+										<Form.Control required type="password" name="password" onChange= {(e)=> this.detectarCambios(e)} />
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
@@ -216,7 +254,7 @@ class RegistroConsumidor extends Component {
 											<a href='/login'><Button variant="success">Atrás</Button></a>
 										</div>
 										<div className="botonCrear">
-											<Button variant="success" type="submit" onClick = {this.validarFecha}>Crear</Button>
+											<Button variant="success" type="submit">Crear</Button>
 										</div>
 										<div className="botonLimpiar">
 											<Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>
