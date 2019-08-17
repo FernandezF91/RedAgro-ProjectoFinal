@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.daos.UsuarioRepositorio;
+import app.daos.UsuarioDao;
 import app.modelos.EntidadUsuario;
 
 import java.util.ArrayList;
@@ -20,27 +20,27 @@ import java.util.List;
 public class UsuarioControlador {
 	
 	@Autowired
-	UsuarioRepositorio usuarioRepositorio;
+	UsuarioDao usuarioDao;
 
 	    @CrossOrigin(origins = "http://localhost:3000")
 	    @GetMapping(path = "redAgro/usuarios")
 	    public List<EntidadUsuario> getAllusuarios(){
 	        List<EntidadUsuario> usuarios = new ArrayList<>();
-	        usuarioRepositorio.findAll().forEach(usuarios :: add);
+	        usuarioDao.findAll().forEach(usuarios :: add);
 	        return usuarios;
 	    }
 
 	    @CrossOrigin(origins = "http://localhost:3000")
 	    @PostMapping(path = "redAgro/usuario")
 	    public EntidadUsuario addItem(@RequestBody EntidadUsuario usuario){
-	        usuarioRepositorio.save(usuario);
+	    	usuarioDao.save(usuario);
 	        return usuario;
 	    }
 
 	    @CrossOrigin(origins = "http://localhost:3000")
 	    @DeleteMapping(path = "redAgro/borrar_usuario/{id}")
-	    public void deleteItem(@PathVariable int id){
-	    	usuarioRepositorio.deleteById(id);
+	    public void deleteItem(@PathVariable long id){
+	    	usuarioDao.deleteById(id);
 	    }
 
 }

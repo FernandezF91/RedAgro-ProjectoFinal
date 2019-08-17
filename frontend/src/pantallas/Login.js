@@ -11,7 +11,6 @@ import Nav from 'react-bootstrap/Nav';
 import '../diseños/Login.css';
 import '../diseños/estilosGlobales.css';
 
-
 class LoginForm extends Component {
 
 	constructor(props) {
@@ -20,10 +19,13 @@ class LoginForm extends Component {
 
 		this.state = {
 			fields: [],
-			errores: []
+			errores: [],
+            usuario : {}
 		}
 
 		this.validarDatos = this.validarDatos.bind(this);
+		this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
+		this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
 	}
 
 	detectarCambios(e) {
@@ -37,6 +39,7 @@ class LoginForm extends Component {
 	}
 
 	validarDatos() {
+
 
 		this.setState({
 			errores: []
@@ -60,13 +63,97 @@ class LoginForm extends Component {
 
 		} else {
 
-			alert("Campos completos!")
+
+			const path_principal = "http://localhost:3000/redAgro/login?u=";
+
+			var username = this.state.fields["username"];
+
+			var password = this.state.fields["password"];
+
+			const final_path = path_principal+username+"&c="+password;
+
+		// var _this = this;
+
+		// fetch(final_path)  
+		//   .then(  
+		// 	function(response) {  
+		// 	  if (response.status !== 200) {  
+		// 		alert("Ocurrió algún problema. Intentelo nuevamente");  
+		// 		return;  
+		// 	  }
+		// 	  if(response===null){
+
+		// 		alert("jeje");
+
+		// 	  }
+		// 	  response.json().then(function(data) {  
+		// 		alert(data.nombre +" "+ data.apellido);
+        //        _this.setState({usuario:data});
+
+		// 	  });  
+		// 	} 
+		//   )  
+		//   .catch(function(err) {  
+		// 	alert("Cuenta inexistente o datos incorrectos");  
+        //     _this.setState({usuario: {}});
+		//   });
+
+
+		 	fetch(final_path, {
+			method: "GET",
+			headers: {
+				
+				'Content-type': 'application/json;charset=UTF-8',
+			
+			},
+		})
+			.then((response) => response.status !==200? alert("Ocurrió algún error inesperado. Intente nuevamente"):
+			response.text())
+			.then(
+				(text) => {
+				
+					if (text!==""){
+
+						this.setState({usuario:JSON.parse(text)});
+
+					if (this.state.usuario.rol === "productor") {
+
+						this.mostrarPantallaProductor();
+
+					} else {
+
+						this.mostrarPantallaConsumidor();
+
+					}
+
+				}else{
+
+					alert("Cuenta inexistente o datos incorrectos");
+				} 
+				
+			}
+
+			);		
 
 		}
 
 		this.setState({
 			errores
 		})
+
+
+
+	}
+
+	mostrarPantallaProductor(){
+
+	this.props.history.push("/principalProductores");
+
+	}
+
+	mostrarPantallaConsumidor(){
+
+	this.props.history.push("/principalConsumidores");
 
 	}
 
