@@ -25,7 +25,11 @@ import historico from '../imagenes/historico.png';
 
 
 import Container from 'react-bootstrap/Container';
+import {BrowserRouter, Router, Route, Switch} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+
+import AlertaProductor from '../pantallas/AlertaProductor';
 
 class PantallaPrincipalProductores extends Component 
 {
@@ -85,7 +89,7 @@ render()
 								</div>
 								<div className="alerta">
 									<Row>
-										<img src={campanalertas} width="30px" height="30px"></img><p>Alertas</p>
+										<img src={campanalertas} width="30px" height="30px"></img><Link to={'/principalProductores/Alertas'}><p>Alertas</p></Link>
 									</Row>
 								</div>
 								<div className="historico">
@@ -137,6 +141,7 @@ render()
 							</div>
 						</Col>
 						<Col className="ruteo">
+							<Route path={'/principalProductores/Alertas'} component={AlertaProductor} />
 						</Col>
 					</Row>
 
