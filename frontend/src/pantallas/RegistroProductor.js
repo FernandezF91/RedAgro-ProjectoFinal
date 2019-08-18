@@ -16,8 +16,6 @@ import { isDate } from 'moment';
 class RegistroProductor extends Component {
 
 
-
-
 	constructor() {
 
 		super()
@@ -29,28 +27,51 @@ class RegistroProductor extends Component {
 		}
 
 		this.limpiarCampos = this.limpiarCampos.bind(this);
-		this.validarFecha = this.validarFecha.bind(this);
-
 	}
 
 
 	handleSubmit(e) {
 
 		const form = e.currentTarget;
-
-		if (form.checkValidity() === false)
 		
-		{
+		this.setState({
+			errores: []
+		})
+
+		let errores ={}
+
+		if((form.checkValidity() === false)&&((!this.state.campos["fecha_nac"])||(!isDate(this.state.campos["fecha_nac"])))){
+
+		errores["fecha_nac"]= "*Campo inválido";
+		this.setState({errores});
+        e.preventDefault();
+		e.stopPropagation();
+
+		} else if((!this.state.campos["fecha_nac"])||(!isDate(this.state.campos["fecha_nac"]))){
+
+		errores["fecha_nac"]= "*Campo inválido";
+		this.setState({errores});
+		e.preventDefault();
+		e.stopPropagation();
+		
+
+		}else if(form.checkValidity() === false){
 			
-			e.preventDefault();
-			e.stopPropagation();
-	
-		} 
+		e.preventDefault();
+		e.stopPropagation();
 
-		this.setState({ validated: true });
+		}else {
 
+			 this.setState({validated:true});
+			 this.crearUsuario();
+			 alert("Registro exitoso");
+			
 
-	};
+		}
+		this.setState({validated:true});
+		
+	}
+
 
 	detectarCambios(e) {
 
@@ -62,14 +83,16 @@ class RegistroProductor extends Component {
 
 	}
 
-	 cambiosFecha(e) {
+	 
+		
+	cambiosFecha(e) {
 
 		let campos = this.state.campos;
 		campos["fecha_nac"] = e;
 
-	this.setState({campos})
+		this.setState({campos})
 
-	 }
+	}
 
 
 	limpiarCampos() {
@@ -78,25 +101,36 @@ class RegistroProductor extends Component {
 
 	}
 
-	validarFecha(){
 
-		let errores ={}
+	crearUsuario(){
 
-		if((!this.state.campos["fecha_nac"])||(!isDate(this.state.campos["fecha_nac"]))){
-
-			errores["fecha_nac"]= "*Campo inválido";
-		}
-
-		this.setState({
-			errores
+		fetch("http://localhost:3000/redAgro/usuario", {
+			method: "POST",
+			headers: {
+				'Content-type': 'application/json;charset=UTF-8',
+			},
+			body: JSON.stringify({  "nombre":this.state.campos["nombre"],
+			 						"apellido": this.state.campos["apellido"],
+			 						"usuario": this.state.campos["email"],
+			 						"contraseña": this.state.campos["password"],
+									 "fecha_nacimiento":this.state.campos["fecha_nac"],
+									 "telefono":this.state.campos["tel"],
+									"rol": "Consumidor"}),
 		})
+			.then((response) => response.status !==200? alert("Ocurrió algún problema") : response.json())
+			.then(
+				(result) => {
+		
+					
+				}
+			);
 
-		}
+			
 
+	}
 
 
 	render() {
-
 		return (
 			<body className="fondo">
 				<div className="barraNavegacion">
@@ -168,7 +202,7 @@ class RegistroProductor extends Component {
 	
 								</Form.Group>
 							</div>
-							<div className="razonSocial">
+							{/* <div className="razonSocial">
 								<Form.Group as={Row}>
 									<Form.Label column sm={2}>
 										Razón social:
@@ -180,7 +214,7 @@ class RegistroProductor extends Component {
 												</Form.Control.Feedback>
 									</Col>	
 								</Form.Group>
-							</div>
+							</div> */}
 							<div className="tel">
 								<Form.Group as={Row} >
 									<Form.Label column sm={2}>
@@ -229,7 +263,7 @@ class RegistroProductor extends Component {
 											<a href='/login'><Button variant="success">Atrás</Button></a>
 										</div>
 										<div className="botonCrear">
-											<Button variant="success" type="submit" onClick = {this.validarFecha}>Crear</Button>
+											<Button variant="success" type="submit">Crear</Button>
 										</div>
 										<div className="botonLimpiar">
 											<Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>

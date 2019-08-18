@@ -13,8 +13,6 @@ import { DatePickerInput } from 'rc-datepicker';
 import 'rc-datepicker/lib/style.css';
 import { isDate } from 'moment';
 
-
-
 class RegistroConsumidor extends Component {
 
 
@@ -71,12 +69,9 @@ class RegistroConsumidor extends Component {
 			 this.props.history.push("/login");
 
 		}
-this.setState({validated:true});
+		this.setState({validated:true});
 		
 	}
-
-		
-		
 
 
 	detectarCambios(e) {
@@ -88,6 +83,7 @@ this.setState({validated:true});
 		})
 
 	}
+
 
 	 cambiosFecha(e) {
 
