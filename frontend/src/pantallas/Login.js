@@ -116,7 +116,7 @@ class LoginForm extends Component {
 
 						this.setState({usuario:JSON.parse(text)});
 
-					if (this.state.usuario.rol === "productor") {
+					if (this.state.usuario.rol === "Productor") {
 
 						this.mostrarPantallaProductor();
 

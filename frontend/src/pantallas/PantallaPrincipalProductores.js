@@ -117,7 +117,7 @@ render()
 											<NavDropdown title="Productos" id="producto_drop">
 												<NavDropdown.Item href="#action/3.1">Listado de Productos</NavDropdown.Item>
 												<NavDropdown.Divider />
-												<NavDropdown.Item href="#action/3.2">Nuevo Producto</NavDropdown.Item>
+												<NavDropdown.Item href="/principalProductores/Alertas">Nuevo Producto</NavDropdown.Item>
 												<NavDropdown.Divider />
 												<NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
 											</NavDropdown>
