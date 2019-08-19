@@ -1,6 +1,7 @@
 import '../diseños/estilosGlobales.css';
 import '../diseños/Alertas.css';
 import React, { Component } from 'react';
+import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
@@ -11,11 +12,16 @@ class NuevoProducto extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			campos: [],
+			errores: [],
+			validated: false,
 			//Acá debería estar trayendo la opción que haya guardado
 			selectedRadioOption: "Nunca"
 		};
 
-		this.handleCheckChange = this.handleCheckChange.bind(this)
+		this.handleCheckChange = this.handleCheckChange.bind(this);
+		//this.limpiarCampos = this.limpiarCampos.bind(this)
+
 	}
 
 	handleRadioChange = changeEvent => {
@@ -36,73 +42,56 @@ class NuevoProducto extends Component {
 		
 	};
 
+	
 
 	render() {
+	
 
 		return (
 			<div className="container">
 				<form onSubmit={this.handleFormSubmit}>
 					<h1>Nuevo Producto</h1>
-					
-					<div className="radioButtons" align="left">	
-					
-					<h5>Notificarme:</h5>
 
-						<label className="radio1">
-							<input type="radio"
-								value="radio1"
-								checked={this.state.selectedRadioOption === "radio1"}
-								onChange={this.handleRadioChange}
-								className="radio-button-input"
-							/> Nunca
-						</label>
-
-						<label className="radio2">
-							<input type="radio"
-								value="radio2"
-								checked={this.state.selectedRadioOption === "radio2"}
-								onChange={this.handleRadioChange}
-								className="radio-button-input"
-							/> Diariamente
-						</label>
-
-						<label className="radio3">
-							<input type="radio"
-								value="radio3"
-								checked={this.state.selectedRadioOption === "radio3"}
-								onChange={this.handleRadioChange}
-								className="radio-button-input"
-							/> Semanalmente
-						</label>
-					</div>
-
-					<div className="checkboxes">
-
-					<h5>Alertarme sobre:</h5>	
-										
-						<div className="checkbox">
-							<label>
-								<input type="checkbox"
-									value="check1"
-									checked={this.state.selectedCheckOption}
-									onChange={this.handleCheckChange}
-									className="checkbox-input"
-								/> Nuevas reservas
-						</label>
+						<div className="nombre" >
+							<Form.Group as={Row} controlId="validationCustom01">
+								<Form.Label column sm={2}>
+									Nombre:
+									</Form.Label>
+								<Col sm={10}>
+									<Form.Control
+										required
+										type="text"
+										name="nombre"
+										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+										onChange= {(e)=> this.detectarCambios(e)}
+									/>
+									<Form.Control.Feedback className="errores" type="invalid">
+										*Campo inválido
+											</Form.Control.Feedback>
+								</Col>
+							</Form.Group>
 						</div>
 
-						<div className="checkbox">
-							<label>
-								<input type="checkbox"
-									value="check2"
-									checked={this.state.selectedCheckOption}
-									onChange={this.handleCheckChange}
-									className="checkbox-input"
-								/> Actualización de reservas
-						</label>
+						<div className="descripcion" >
+							<Form.Group as={Row} controlId="validationCustom01">
+								<Form.Label column sm={2}>
+									Nombre:
+									</Form.Label>
+								<Col sm={10}>
+									<Form.Control
+										required
+										type="text"
+										name="descripcion"
+										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+										onChange= {(e)=> this.detectarCambios(e)}
+									/>
+									<Form.Control.Feedback className="errores" type="invalid">
+										*Campo inválido
+											</Form.Control.Feedback>
+								</Col>
+							</Form.Group>
 						</div>
 
-					</div>
 
 					<div className="buttons">
 						<Col>

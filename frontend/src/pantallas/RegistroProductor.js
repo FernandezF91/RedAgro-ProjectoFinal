@@ -63,9 +63,10 @@ class RegistroProductor extends Component {
 		}else {
 
 			 this.setState({validated:true});
-			 this.crearUsuario();
+			 this.crearUsuarioP();
 			 alert("Registro exitoso");
-			
+			this.props.history.push("/login");
+
 
 		}
 		this.setState({validated:true});
@@ -102,7 +103,7 @@ class RegistroProductor extends Component {
 	}
 
 
-	crearUsuario(){
+	crearUsuarioP(){
 
 		fetch("http://localhost:3000/redAgro/usuario", {
 			method: "POST",

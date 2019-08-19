@@ -30,6 +30,8 @@ import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 
 import AlertaProductor from '../pantallas/AlertaProductor';
+import NuevoProducto from '../pantallas/NuevoProducto';
+import CargarHistorico from '../pantallas/CargarHistorico';
 
 class PantallaPrincipalProductores extends Component 
 {
@@ -94,7 +96,7 @@ render()
 								</div>
 								<div className="historico">
 									<Row>
-										<img src={historico} width="30px" height="25px"></img><p>Histórico</p>
+										<img src={historico} width="30px" height="25px"></img><Link to={'/principalProductores/CargarHistorico'}><p>Histórico</p></Link>
 									</Row>
 								</div>
 								<div className="planificacion">
@@ -117,7 +119,7 @@ render()
 											<NavDropdown title="Productos" id="producto_drop">
 												<NavDropdown.Item href="#action/3.1">Listado de Productos</NavDropdown.Item>
 												<NavDropdown.Divider />
-												<NavDropdown.Item href="/principalProductores/Alertas">Nuevo Producto</NavDropdown.Item>
+												<NavDropdown.Item href="/principalProductores/NuevoProducto">Nuevo Producto</NavDropdown.Item>
 												<NavDropdown.Divider />
 												<NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
 											</NavDropdown>
@@ -142,6 +144,8 @@ render()
 						</Col>
 						<Col className="ruteo">
 							<Route path={'/principalProductores/Alertas'} component={AlertaProductor} />
+							<Route path={'/principalProductores/NuevoProducto'} component={NuevoProducto} />
+							<Route path={'/principalProductores/CargarHistorico'} component={CargarHistorico} />
 						</Col>
 					</Row>
 
