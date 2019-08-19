@@ -1,146 +1,61 @@
-import '../diseños/estilosGlobales.css';
-import '../diseños/Alertas.css';
 import React, { Component } from 'react';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
+import Dropdown from "react-dropdown";
+
+// const options = [
+//   'one', 'two', 'three'
+// ]
+// const defaultOption = 'one'
 
 
 class CargarHistorico extends Component {
 
 	constructor(props) {
-		super(props);
-		this.state = {
-			//Acá debería estar trayendo la opción que haya guardado
-			selectedRadioOption: "Nunca"
-		};
+    super(props);
+    this.state = {value: 'coconut'};
 
-		this.handleCheckChange = this.handleCheckChange.bind(this)
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	handleRadioChange = changeEvent => {
-		this.setState({
-			selectedRadioOption: changeEvent.target.value
-		});
-	};
+	handleChange(event) {
+    this.setState({value: event.target.value});
+	}
 
-	handleCheckChange(e) {
-		this.setState({
-			[e.target.name]: e.target.checked
-		});
-	};
-
-	handleFormSubmit = formSubmitEvent => {
-		formSubmitEvent.preventDefault();
-		//  Chequear como lo guardo
-	
-	};
+	handleSubmit(event) {
+    	alert('Your favorite flavor is: ' + this.state.value);
+    	event.preventDefault();
+	}
 
 
-	render() {
-
+	render(){
 		return (
-			<div className="container">
+		<div className="container">
 				<form onSubmit={this.handleFormSubmit}>
-					<h1>Alertas</h1>
-					
-					<div className="radioButtons" align="left">	
-					
-					<h5>Notificarme:</h5>
-
-						<label className="radio1">
-							<input type="radio"
-								value="radio1"
-								checked={this.state.selectedRadioOption === "radio1"}
-								onChange={this.handleRadioChange}
-								className="radio-button-input"
-							/> Nunca
-						</label>
-
-						<label className="radio2">
-							<input type="radio"
-								value="radio2"
-								checked={this.state.selectedRadioOption === "radio2"}
-								onChange={this.handleRadioChange}
-								className="radio-button-input"
-							/> Diariamente
-						</label>
-
-						<label className="radio3">
-							<input type="radio"
-								value="radio3"
-								checked={this.state.selectedRadioOption === "radio3"}
-								onChange={this.handleRadioChange}
-								className="radio-button-input"
-							/> Semanalmente
-						</label>
-					</div>
-
-					<div className="checkboxes">
-
-					<h5>Alertarme sobre:</h5>	
-										
-						<div className="checkbox">
+					<h1>Nuevo Producto</h1>
+						<form onSubmit={this.handleSubmit}>
 							<label>
-								<input type="checkbox"
-									value="check1"
-									checked={this.state.selectedCheckOption}
-									onChange={this.handleCheckChange}
-									className="checkbox-input"
-								/> Modificaciones en reservas realizadas
-						</label>
-						</div>
+							Elija la categoría:
+							<select value={this.state.value} onChange={this.handleChange}>
+								<option value="tomate">Tomate</option>
+								<option value="zanahoria">Zanahoria</option>
+								<option value="lechuga">Lechuga</option>
+								<option value="acelga">Acelga</option>
+							</select>
+							</label>
+							<input type="submit" value="Submit" />
+						</form>
 
-						<div className="checkbox">
+						<form onSubmit={this.handleSubmit}>
 							<label>
-								<input type="checkbox"
-									value="check2"
-									checked={this.state.selectedCheckOption}
-									onChange={this.handleCheckChange}
-									className="checkbox-input"
-								/> Productos de interés
-						</label>
-						</div>
+							Upload file:
+							<input type="file" ref={this.fileInput} />
+							</label>
+							<br />
+							<button type="submit">Submit</button>
+						</form>
+					</form>
+				</div>
+		)}
 
-						<div className="checkbox">
-							<label>
-								<input type="checkbox"
-									value="check3"
-									checked={this.state.selectedCheckOption}
-									onChange={this.handleCheckChange}
-									className="checkbox-input"
-								/> Resumen de reservas vía correo electrónico
-						</label>
-						</div>
-
-						<div className="checkbox">
-							<label>
-								<input type="checkbox"
-									value="check4"
-									checked={this.state.selectedCheckOption}
-									onChange={this.handleCheckChange}
-									className="checkbox-input"
-								/> Cambio de estado en una reserva vía correo electrónico
-						</label>
-						</div>
-					</div>
-
-					<div className="buttons">
-						<Col>
-							<Row>
-								<div className="botonCrear">
-									<Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
-								</div>
-								<div className="botonAtras">
-									<a href='/principalProductores'><Button variant="success">Cancelar</Button></a>
-								</div>
-							</Row>
-						</Col>
-					</div>
-				</form>
-			</div>
-		);
-	};
 }
-
 export default CargarHistorico;

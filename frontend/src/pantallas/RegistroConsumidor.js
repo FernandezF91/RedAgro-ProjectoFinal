@@ -15,7 +15,6 @@ import { isDate } from 'moment';
 
 class RegistroConsumidor extends Component {
 
-
 	constructor() {
 
 		super()
@@ -85,14 +84,13 @@ class RegistroConsumidor extends Component {
 	}
 
 
-	 cambiosFecha(e) {
+	cambiosFecha(e) {
 
 		let campos = this.state.campos;
 		campos["fecha_nac"] = e;
 
 	this.setState({campos})
-
-	 }
+	}
 
 
 	limpiarCampos() {
