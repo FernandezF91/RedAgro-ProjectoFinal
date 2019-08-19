@@ -31,6 +31,18 @@ import AlertaConsumidor from '../pantallas/AlertaConsumidor';
 
 class PantallaPrincipalconsumidores extends Component {
 
+	constructor(props) {
+
+		super(props)
+
+		this.state = {
+			
+			usuario:{}
+
+		}
+
+	}
+
 
 	render() {
 

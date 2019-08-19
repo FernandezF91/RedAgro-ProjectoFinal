@@ -34,6 +34,18 @@ import AlertaProductor from '../pantallas/AlertaProductor';
 class PantallaPrincipalProductores extends Component 
 {
 
+	constructor(props) {
+
+		super(props)
+
+		this.state = {
+			
+			usuario:{}
+			
+		}
+
+	}
+
 
 render() 
 	{

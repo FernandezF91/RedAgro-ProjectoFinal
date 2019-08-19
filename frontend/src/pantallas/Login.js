@@ -147,13 +147,13 @@ class LoginForm extends Component {
 
 	mostrarPantallaProductor(){
 
-	this.props.history.push("/principalProductores");
+	this.props.history.push("/principalProductores", {usuario: this.state.usuario});
 
 	}
 
 	mostrarPantallaConsumidor(){
 
-	this.props.history.push("/principalConsumidores");
+	this.props.history.push("/principalConsumidores", {usuario: this.state.usuario});
 
 	}
 
