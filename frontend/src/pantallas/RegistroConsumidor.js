@@ -15,7 +15,6 @@ import { isDate } from 'moment';
 
 class RegistroConsumidor extends Component {
 
-
 	constructor() {
 
 		super()

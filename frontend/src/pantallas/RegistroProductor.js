@@ -116,7 +116,7 @@ class RegistroProductor extends Component {
 			 						"contraseña": this.state.campos["password"],
 									 "fecha_nacimiento":this.state.campos["fecha_nac"],
 									 "telefono":this.state.campos["tel"],
-									"rol": "Consumidor"}),
+									"rol": "productor"}),
 		})
 			.then((response) => response.status !==200? alert("Ocurrió algún problema") : response.json())
 			.then(

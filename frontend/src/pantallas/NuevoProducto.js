@@ -1,11 +1,17 @@
-import '../diseños/estilosGlobales.css';
-import '../diseños/Alertas.css';
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import Navbar from 'react-bootstrap/Navbar';
+import culturaVerde from '../imagenes/cultura-verde-2.png';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-
+import '../diseños/Registro.css';
+import '../diseños/estilosGlobales.css';
+import 'moment/locale/es';
+import { DatePickerInput } from 'rc-datepicker';
+import 'rc-datepicker/lib/style.css';
+import { isDate } from 'moment';
 
 class NuevoProducto extends Component {
 
@@ -15,43 +21,88 @@ class NuevoProducto extends Component {
 			campos: [],
 			errores: [],
 			validated: false,
-			//Acá debería estar trayendo la opción que haya guardado
-			selectedRadioOption: "Nunca"
-		};
+			value:'tipoProduccion',
+		}
 
-		this.handleCheckChange = this.handleCheckChange.bind(this);
-		//this.limpiarCampos = this.limpiarCampos.bind(this)
+		this.limpiarCampos = this.limpiarCampos.bind(this);
 
 	}
 
-	handleRadioChange = changeEvent => {
-		this.setState({
-			selectedRadioOption: changeEvent.target.value
-		});
-	};
+	//Control de cambio del DropDownList
+	handleChange(event) {
+    this.setState({value: event.target.value});
+	}
 
-	handleCheckChange(e) {
+	handleSubmit(e) {
+
+		const form = e.currentTarget;
+		
 		this.setState({
-			[e.target.name]: e.target.checked
-		});
-	};
+			errores: []
+		})
+
+		let errores ={}
+
+		if((form.checkValidity() === false)&&((!this.state.campos["fecha_nac"])||(!isDate(this.state.campos["fecha_nac"])))){
+
+		errores["fecha_nac"]= "*Campo inválido";
+		this.setState({errores});
+        e.preventDefault();
+		e.stopPropagation();
+
+		} else if((!this.state.campos["fecha_nac"])||(!isDate(this.state.campos["fecha_nac"]))){
+
+		errores["fecha_nac"]= "*Campo inválido";
+		this.setState({errores});
+		e.preventDefault();
+		e.stopPropagation();
+		
+
+		}else if(form.checkValidity() === false){
+			
+		e.preventDefault();
+		e.stopPropagation();
+
+		}else {
+
+			 this.setState({validated:true});
+			 //this.crearUsuario();
+			 alert("Registro exitoso");
+			 this.props.history.push("/login");
+
+		}
+		this.setState({validated:true});
+		
+	}
+
+	detectarCambios(e) {
+		let campos = this.state.campos;
+		campos[e.target.name] = e.target.value;
+		this.setState({
+			campos
+		})
+	}
 
 	handleFormSubmit = formSubmitEvent => {
 		formSubmitEvent.preventDefault();
-		//  Chequear como lo guardo
-		
+		//  Chequear como lo guarda	
 	};
-
 	
+	cambiosFecha(e) {
+		let campos = this.state.campos;
+		campos["fecha_nac"] = e;
+		this.setState({campos})
+	}
+	
+	limpiarCampos() {
+		this.refs.form.reset();
+	}
 
 	render() {
-	
-
 		return (
 			<div className="container">
-				<form onSubmit={this.handleFormSubmit}>
+				<Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
 					<h1>Nuevo Producto</h1>
-
 						<div className="nombre" >
 							<Form.Group as={Row} controlId="validationCustom01">
 								<Form.Label column sm={2}>
@@ -67,7 +118,7 @@ class NuevoProducto extends Component {
 									/>
 									<Form.Control.Feedback className="errores" type="invalid">
 										*Campo inválido
-											</Form.Control.Feedback>
+									</Form.Control.Feedback>
 								</Col>
 							</Form.Group>
 						</div>
@@ -75,7 +126,7 @@ class NuevoProducto extends Component {
 						<div className="descripcion" >
 							<Form.Group as={Row} controlId="validationCustom01">
 								<Form.Label column sm={2}>
-									Nombre:
+									Descripcion:
 									</Form.Label>
 								<Col sm={10}>
 									<Form.Control
@@ -92,20 +143,36 @@ class NuevoProducto extends Component {
 							</Form.Group>
 						</div>
 
+						{/* https://reactjs.org/docs/forms.html */}
+						<form onSubmit={this.handleSubmit}>
+							<label>Tipo de Producción:
+								<select value={this.state.value} onChange={this.handleChange}>
+									<option value="organica">Orgánica</option>
+									<option value="agroecologica">Agroecológica</option>
+								</select>
+							</label>
+							{/* <input type="submit" value="Submit" /> */}
+						</form>
 
-					<div className="buttons">
+					
+		
+
+					<div className="botonesProducto">
 						<Col>
 							<Row>
-								<div className="botonCrear">
-									<Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
-								</div>
 								<div className="botonAtras">
-									<a href='/principalProductores'><Button variant="success">Cancelar</Button></a>
+									<a href='/login'><Button variant="success">Atrás</Button></a>
+								</div>
+								<div className="botonCrear">
+									<Button variant="success" type="submit">Crear</Button>
+								</div>
+								<div className="botonLimpiar">
+									<Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>
 								</div>
 							</Row>
 						</Col>
 					</div>
-				</form>
+				</Form>
 			</div>
 		);
 	};
