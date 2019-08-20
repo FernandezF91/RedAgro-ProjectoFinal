@@ -42,7 +42,7 @@ class AlertaConsumidor extends Component {
 		return (
 			<div className="container">
 				<form onSubmit={this.handleFormSubmit}>
-					<h1>Alertas</h1>
+					<div className="titulosPrincipales">Alertas</div>
 					
 					<div className="radioButtons" align="left">	
 					

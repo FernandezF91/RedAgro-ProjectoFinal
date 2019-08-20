@@ -1,0 +1,25 @@
+.opciones{
+	display: flex;
+	flex-direction: row;
+}
+
+.tituloProductos{
+	width: 100px;
+	text-align: right;
+}
+
+.dropdownProductos{
+	width: 600px;
+	padding-left: 25px;
+}
+
+.botonesPreferencias{
+	font-size: 15px;
+	display: flex;
+	flex-direction: row;
+}
+
+.descripcionPagina{
+	text-align: left;
+	line-height: 40px;
+}

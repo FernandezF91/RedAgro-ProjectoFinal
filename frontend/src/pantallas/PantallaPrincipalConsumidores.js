@@ -27,6 +27,7 @@ import {BrowserRouter, Router, Route, Switch} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Reservas from '../pantallas/Reservas';
 import AlertaConsumidor from '../pantallas/AlertaConsumidor';
+import PreferenciasConsumidor from '../pantallas/PreferenciasConsumidor';
 
 
 class PantallaPrincipalconsumidores extends Component {
@@ -107,7 +108,7 @@ class PantallaPrincipalconsumidores extends Component {
 								</div>
 								<div className="preferencia">
 									<Row>
-										<img src={preferencias} width="30px" height="19px"></img><p>Preferencias</p>
+										<img src={preferencias} width="30px" height="19px"></img><Link to={'/principalConsumidores/PreferenciasConsumidor'}><p>Preferencias</p></Link>
 									</Row>
 								</div>
 								<div className="compra">
@@ -143,6 +144,7 @@ class PantallaPrincipalconsumidores extends Component {
 						<Col className="ruteo">
 							<Route path={'/principalConsumidores/reservas'} component={Reservas} />
 							<Route path={'/principalConsumidores/Alertas'} component={AlertaConsumidor} />
+							<Route path={'/principalConsumidores/PreferenciasConsumidor'} component={PreferenciasConsumidor} />
 						</Col>
 					</Row>
 					

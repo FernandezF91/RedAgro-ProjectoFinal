@@ -9,7 +9,7 @@ class Reservas extends Component {
 
 		return (
 
-				<h1>Reservass</h1>
+				<div className="titulosPrincipales">Reservas</div>
 
 		);
 	};
