@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import '../diseños/Login.css';
 import '../diseños/estilosGlobales.css';
+import Alert from 'react-bootstrap/Alert';
 
 class LoginForm extends Component {
 
@@ -26,7 +27,24 @@ class LoginForm extends Component {
 		this.validarDatos = this.validarDatos.bind(this);
 		this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
 		this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
+	//  this.showAlert = this.showAlert.bind(this);
 	}
+
+	// function Alert(){
+
+	// 	return(
+    //   <Alert variant="success">
+    //       Jeje
+    //   </Alert>
+	// 	);
+
+	// }
+
+	// showAlert() {
+
+	// 	render(<Alert/>)
+
+	// }
 
 	detectarCambios(e) {
 
@@ -111,7 +129,9 @@ class LoginForm extends Component {
 
 			if(response.status !==200){
 				
-			alert("Ocurrió algún error inesperado. Intente nuevamente");
+				alert("Ocurrió algún problema. Intente nuevamente");
+			// _this.showAlert();
+
 			return;
 			
 			}
@@ -164,6 +184,7 @@ class LoginForm extends Component {
 	this.props.history.push("/principalConsumidores", {usuario: this.state.usuario});
 
 	}
+
 
 	render() {
 

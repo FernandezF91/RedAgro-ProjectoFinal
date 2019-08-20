@@ -41,10 +41,10 @@ class AlertaConsumidor extends Component {
 
 		return (
 			<div className="container">
+			<div className="titulosPrincipales">Alertas</div>
 				<form onSubmit={this.handleFormSubmit}>
-					<div className="titulosPrincipales">Alertas</div>
 					
-					<div className="radioButtons" align="left">	
+					<div className="radioButtons">	
 					
 					<h5>Notificarme:</h5>
 
@@ -124,7 +124,6 @@ class AlertaConsumidor extends Component {
 						</label>
 						</div>
 					</div>
-
 					<div className="buttons">
 						<Col>
 							<Row>

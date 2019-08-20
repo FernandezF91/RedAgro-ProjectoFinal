@@ -41,8 +41,8 @@ class AlertaProductor extends Component {
 
 		return (
 			<div className="container">
+			<div className="titulosPrincipales">Alertas</div>
 				<form onSubmit={this.handleFormSubmit}>
-					<h1>Alertas</h1>
 					
 					<div className="radioButtons" align="left">	
 					
