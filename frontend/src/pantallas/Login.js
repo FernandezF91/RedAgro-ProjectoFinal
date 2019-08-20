@@ -72,7 +72,7 @@ class LoginForm extends Component {
 
 			const final_path = path_principal+username+"&c="+password;
 
-		// var _this = this;
+		    var _this = this;
 
 		// fetch(final_path)  
 		//   .then(  
@@ -107,22 +107,30 @@ class LoginForm extends Component {
 			
 			},
 		})
-			.then((response) => response.status !==200? alert("Ocurrió algún error inesperado. Intente nuevamente"):
-			response.text())
-			.then(
-				(text) => {
+			.then(function(response) {
+
+			if(response.status !==200){
 				
-					if (text!==""){
+			alert("Ocurrió algún error inesperado. Intente nuevamente");
+			return;
+			
+			}
 
-						this.setState({usuario:JSON.parse(text)});
+			response.text().then(
 
-					if (this.state.usuario.rol === "Productor") {
+				function(response) {
+				
+					if (response!==""){
 
-						this.mostrarPantallaProductor();
+						_this.setState({usuario:JSON.parse(response)});
+
+					if (_this.state.usuario.rol === "Productor") {
+
+						_this.mostrarPantallaProductor();
 
 					} else {
 
-						this.mostrarPantallaConsumidor();
+						_this.mostrarPantallaConsumidor();
 
 					}
 
@@ -131,9 +139,9 @@ class LoginForm extends Component {
 					alert("Cuenta inexistente o datos incorrectos");
 				} 
 				
-			}
+			});
 
-			);		
+			});		
 
 		}
 

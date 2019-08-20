@@ -69,7 +69,7 @@ class PantallaPrincipalconsumidores extends Component {
 									<NavDropdown title="Usuario" id="nav-dropdown">
 										<NavDropdown.Item href="#action/3.1">Mi cuenta</NavDropdown.Item>
 										<NavDropdown.Divider />
-										<NavDropdown.Item href="#action/3.2">Salir</NavDropdown.Item>
+										<NavDropdown.Item href="/login">Salir</NavDropdown.Item>
 									</NavDropdown>
 								</div>
 								<div className="alertas">

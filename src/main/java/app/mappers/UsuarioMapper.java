@@ -23,17 +23,20 @@ public class UsuarioMapper {
     }
 
 	
-//    @Override
-//    public EntidadUsuario mapToEntity(Usuario modelo) {
-//
-//        UsuarioEntity usuario = new UsuarioEntity();
-//        usuario.setMail(model.getMail());
-//        usuario.setPassword(model.getPassword());
-//        usuario.setSalt(model.getSalt());
-//        usuario.setUsername(model.getUsername());
-//        usuario.setId(model.getId());
-//
-//        return usuario;
-//    }
-	
+    public EntidadUsuario mapToEntity(Usuario modelo) {
+
+        EntidadUsuario usuario = new EntidadUsuario();
+        usuario.setId(modelo.getId());
+        usuario.setUsuario(modelo.getUsuario());
+        usuario.setContraseña(modelo.getContraseña());
+        usuario.setNombre(modelo.getNombre());
+        usuario.setApellido(modelo.getApellido());
+        usuario.setFecha_nacimiento(modelo.getFecha_nacimiento());
+        usuario.setRol(modelo.getRol());
+        usuario.setTelefono(modelo.getTelefono());
+        usuario.setAlertas(null);
+        return usuario;
+    
+    }
+        
 }

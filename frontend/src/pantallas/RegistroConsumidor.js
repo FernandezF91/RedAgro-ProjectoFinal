@@ -62,10 +62,8 @@ class RegistroConsumidor extends Component {
 
 		}else {
 
-			 this.setState({validated:true});
-			 this.crearUsuario();
-			 alert("Registro exitoso");
-			 this.props.history.push("/login");
+			 e.preventDefault();
+			 this.crearUsuario(e);
 
 		}
 		this.setState({validated:true});
@@ -87,6 +85,7 @@ class RegistroConsumidor extends Component {
 	cambiosFecha(e) {
 
 		let campos = this.state.campos;
+
 		campos["fecha_nac"] = e;
 
 	this.setState({campos})
@@ -99,7 +98,9 @@ class RegistroConsumidor extends Component {
 
 	}
 
-	crearUsuario(){
+	crearUsuario(e){
+
+		var _this = this;
 
 		fetch("http://localhost:3000/redAgro/usuario", {
 			method: "POST",
@@ -114,13 +115,27 @@ class RegistroConsumidor extends Component {
 									 "telefono":this.state.campos["tel"],
 									"rol": "Consumidor"}),
 		})
-			.then((response) => response.status !==200? alert("Ocurrió algún problema") : response.json())
-			.then(
-				(result) => {
-		
-					
-				}
-			);
+			
+			.then(function(response) {
+
+			if(response.status !==200){
+
+			alert("Ocurrió algún error inesperado. Intente nuevamente");
+			return;
+			
+			}
+
+			response.json().then(
+
+				function(response) {
+
+					_this.setState({validated:true});
+					 alert("Registro exitoso");
+			 _this.props.history.push("/login");				
+				
+			});
+
+			});		
 
 			
 
@@ -189,7 +204,8 @@ class RegistroConsumidor extends Component {
 										Fecha de nacimiento:
                                 </Form.Label>
 									<Col sm={10}>
-										<DatePickerInput	
+										<DatePickerInput
+										ref = "datePicker"	
 										name ="fecha_nac"								
 										displayFormat='DD/MM/YYYY'
 											className = "calendario"	

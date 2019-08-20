@@ -22,11 +22,11 @@ import javax.persistence.Table;
 public class EntidadProductor{
 
 	@Id
+	@Column(name = "id")
     private long id;
 		
 	@OneToOne
-    @JoinColumn(name = "id")
-    @MapsId
+	@MapsId
     private EntidadUsuario usuario;
 	
 	@OneToOne(mappedBy = "productor")
@@ -44,17 +44,17 @@ public class EntidadProductor{
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
     private List<EntidadProductoProductor> productos = new ArrayList<>();
 	        
-	    @OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
-	    private List<EntidadZona> zonas = new ArrayList<>();
+	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
+	private List<EntidadZona> zonas = new ArrayList<>();
     
-	    @OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
-	    private List<EntidadPuntoEntrega> puntos_entrega = new ArrayList<>();
+	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
+	private List<EntidadPuntoEntrega> puntos_entrega = new ArrayList<>();
 	    
-	    @OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
-	    private List<EntidadReserva> reservas = new ArrayList<>();
+	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
+	private List<EntidadReserva> reservas = new ArrayList<>();
 	    
-	    @Column(name = "razon_social", nullable = false)
-	    private String razon_social;
+	@Column(name = "razon_social", nullable = false)
+	private String razon_social;
 	    
 	public String getRazon_social() {
 			return razon_social;

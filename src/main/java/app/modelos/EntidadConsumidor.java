@@ -19,10 +19,10 @@ import javax.persistence.Table;
 public class EntidadConsumidor {
 
 	@Id
+	@Column(name = "id")
     private long id;
-		
-	@OneToOne
-    @JoinColumn(name = "id")
+	
+    @OneToOne
     @MapsId
     private EntidadUsuario usuario;
 	
@@ -41,6 +41,7 @@ public class EntidadConsumidor {
 
 	public void setUsuario(EntidadUsuario usuario) {
 		this.usuario = usuario;
+	
 	}
 
 	public List<EntidadPreferencia> getPreferencia() {

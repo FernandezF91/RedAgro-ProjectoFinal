@@ -62,11 +62,8 @@ class RegistroProductor extends Component {
 
 		}else {
 
-			 this.setState({validated:true});
-			 this.crearUsuarioP();
-			 alert("Registro exitoso");
-			this.props.history.push("/login");
-
+			 e.preventDefault();
+			 this.crearUsuario(e);
 
 		}
 		this.setState({validated:true});
@@ -103,9 +100,17 @@ class RegistroProductor extends Component {
 	}
 
 
-	crearUsuarioP(){
+	crearUsuario(e){
 
-		fetch("http://localhost:3000/redAgro/usuario", {
+		var _this = this;
+
+		const path_principal = "http://localhost:3000/redAgro/usuario?razon_social=";
+
+		var razonSocial = this.state.campos["razonSocial"];
+
+		const path_final = path_principal+razonSocial;
+
+		fetch(path_final, {
 			method: "POST",
 			headers: {
 				'Content-type': 'application/json;charset=UTF-8',
@@ -114,17 +119,31 @@ class RegistroProductor extends Component {
 			 						"apellido": this.state.campos["apellido"],
 			 						"usuario": this.state.campos["email"],
 			 						"contraseña": this.state.campos["password"],
-									 "fecha_nacimiento":this.state.campos["fecha_nac"],
-									 "telefono":this.state.campos["tel"],
-									"rol": "productor"}),
+									"fecha_nacimiento":this.state.campos["fecha_nac"],
+									"telefono":this.state.campos["tel"],
+									"rol": "Productor"}),
 		})
-			.then((response) => response.status !==200? alert("Ocurrió algún problema") : response.json())
-			.then(
-				(result) => {
-		
-					
-				}
-			);
+			
+			.then(function(response) {
+
+			if(response.status !==200){
+
+			alert("Ocurrió algún error inesperado. Intente nuevamente");
+			return;
+			
+			}
+
+			response.json().then(
+
+				function(response) {
+
+					_this.setState({validated:true});
+					 alert("Registro exitoso");
+			 _this.props.history.push("/login");				
+				
+			});
+
+			});	
 
 			
 
@@ -165,6 +184,7 @@ class RegistroProductor extends Component {
 											type="text"
 											name="nombre"
 											pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+											onChange= {(e)=> this.detectarCambios(e)}
 										/>
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
@@ -179,7 +199,7 @@ class RegistroProductor extends Component {
 										Apellido:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="text" name="apellido" pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"/>
+										<Form.Control required type="text" name="apellido" pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*" onChange= {(e)=> this.detectarCambios(e)}/>
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
@@ -203,26 +223,26 @@ class RegistroProductor extends Component {
 	
 								</Form.Group>
 							</div>
-							{/* <div className="razonSocial">
+							 <div className="razonSocial">
 								<Form.Group as={Row}>
 									<Form.Label column sm={2}>
 										Razón social:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="text" name="razonSocial"/>
+										<Form.Control required type="text" name="razonSocial" onChange= {(e)=> this.detectarCambios(e)}/>
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
 									</Col>	
 								</Form.Group>
-							</div> */}
+							</div> 
 							<div className="tel">
 								<Form.Group as={Row} >
 									<Form.Label column sm={2}>
 										Teléfono:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="tel" name="tel" pattern="[0-9]{8,14}" />
+										<Form.Control required type="tel" name="tel" pattern="[0-9]{8,14}" onChange= {(e)=> this.detectarCambios(e)} />
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
@@ -235,7 +255,7 @@ class RegistroProductor extends Component {
 										Email:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="email" name="email" />
+										<Form.Control required type="email" name="email" onChange= {(e)=> this.detectarCambios(e)}/>
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
@@ -250,7 +270,7 @@ class RegistroProductor extends Component {
 										Password:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="password" name="password" />
+										<Form.Control required type="password" name="password" onChange= {(e)=> this.detectarCambios(e)} />
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>

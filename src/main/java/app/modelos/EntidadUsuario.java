@@ -16,12 +16,16 @@ import javax.persistence.OneToOne;
 //import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity
 @Table(name = "Usuario")
 public class EntidadUsuario {
 
 	    @Id
-	    @GeneratedValue(strategy = GenerationType.AUTO)
+	    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	    @Column(name = "id")
 	    private Long id;
 	    
 	    @OneToOne(mappedBy = "usuario")
@@ -30,6 +34,7 @@ public class EntidadUsuario {
 	    @OneToOne(mappedBy = "usuario")
 	    private EntidadProductor productor;
 	    
+	    @Fetch(FetchMode.JOIN)
 	    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	    private List<EntidadAlerta> alertas = new ArrayList<>();
 	    
