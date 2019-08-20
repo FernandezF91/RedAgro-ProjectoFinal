@@ -2,18 +2,14 @@
 	background-color: whitesmoke;
 	height: 100vh;
 	width: 100vw;
-	
 }
 
 
 .barraBusqueda{
-
 	margin-left:100px;
-
 }
 
 input[type=text]{
-
 width:500px;
 margin-left:-0.35%;
 flex:1;
@@ -23,16 +19,13 @@ box-sizing: border-box;
 padding:0px 10px;
 font-size: 15px;
 font-weight: 400;
-
 }
 
 
 
  @media (max-width: 1000px) {
    .navbar {
-	  
 	overflow:auto!important;
-
    }
 } 
 
@@ -53,10 +46,7 @@ background-color: #28a745;
 }
 
 .culturaVerde {
-
 margin-left:15.4%;
-
-
 }
 
 .contenedor{
@@ -67,19 +57,12 @@ display: flex;
 justify-content: center;
 align-content: center;
 text-align:center;
-
-
 }
 
 .input-group-text{
-
-
 margin-left:-2.02%;
 margin-top:-0.03%;
 height: 5.1%;
-
-
-
 }
 
 .error{
@@ -92,4 +75,26 @@ position: absolute;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	font-size: 32px;
+}
+
+.descripcionPagina{
+	text-align: left;
+	line-height: 40px;
+}
+
+/* Estilos Productos */
+.tituloProductos{
+	width: 100px;
+	text-align: right;
+}
+
+.dropdownProductos{
+	width: 600px;
+	padding-left: 25px;
+}
+.dropdownOpciones{
+	margin-top:2%;
+	margin-bottom:2%;
+	display: flex;
+	flex-direction: row;
 }

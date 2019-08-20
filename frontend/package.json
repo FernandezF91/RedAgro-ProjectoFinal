@@ -24,7 +24,7 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
-    "react-select": "^2.0.0-beta.7",
+    "react-select": "^2.4.4",
     "react-widgets": "^4.4.11",
     "react-widgets-globalize": "^5.0.20",
     "yup": "^0.27.0"
