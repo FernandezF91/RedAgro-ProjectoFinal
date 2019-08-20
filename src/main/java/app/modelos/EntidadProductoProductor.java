@@ -30,7 +30,7 @@ public class EntidadProductoProductor {
 	@Column(name="descripcion",nullable = false)
 	private String descripcion;
 	
-	@Column(name="imagen",nullable = false)
+	@Column(name="imagen",nullable = true)
 	private String imagen;
 	
 	@Column(name="tipo_unidad",nullable = false)

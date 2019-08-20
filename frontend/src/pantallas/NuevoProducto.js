@@ -52,8 +52,7 @@ class NuevoProducto extends Component {
 		this.state = {
 			campos: [],
 			errores: [],
-			validated: false,
-			value:'tipoProduccion',
+			validated: false
 		}
 
 		this.limpiarCampos = this.limpiarCampos.bind(this);
@@ -68,10 +67,48 @@ class NuevoProducto extends Component {
 		})
 	}
 
-	handleFormSubmit = formSubmitEvent => {
-		formSubmitEvent.preventDefault();
-		//  Chequear como lo guarda	
-	};
+	handleSubmit (e){
+			
+		var _this = this;
+
+		const path_principal = "http://localhost:3000/redAgro/usuario/producto";
+
+		fetch(path_principal, {
+			method: "POST",
+			headers: {
+				'Content-type': 'application/json;charset=UTF-8',
+			},
+			body: JSON.stringify({  "nombre":this.state.campos["nombre"],
+			 						"apellido": this.state.campos["apellido"],
+			 						"usuario": this.state.campos["email"],
+			 						"contraseña": this.state.campos["password"],
+									"fecha_nacimiento":this.state.campos["fecha_nac"],
+									"telefono":this.state.campos["tel"],
+									"rol": "Productor"}),
+		})
+			
+			.then(function(response) {
+
+			if(response.status !==200){
+
+			alert("Ocurrió algún error inesperado. Intente nuevamente");
+			return;
+			
+			}
+
+			response.json().then(
+
+				function(response) {
+
+					_this.setState({validated:true});
+					 alert("Registro exitoso");
+			 _this.props.history.push("/login");				
+				
+			});
+
+			});	
+	
+	}
 	
 	cambiosFecha(e) {
 		let campos = this.state.campos;
@@ -86,20 +123,20 @@ class NuevoProducto extends Component {
 	render() {
 		return (
 			<div className="container">
-				<Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
-					
-					<div className="titulosPrincipales">Nuevo Producto</div>
-					<div className="descripcionPagina">
-					<h5>Agregue la información sobre el producto</h5>
-					</div>
-						<br /><br />
+			  {/* <div className="titulosPrincipales">Nuevo Producto</div>
+				 <Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
 							<div className="dropdownOpciones">
-								<div className="tituloProductos">Tipo de Producto</div>
+							<Form.Group as={Row}>
+								<Form.Label column sm={3}>
+								Tipo de Producto:
+								</Form.Label>
+								<Col sm={9}>
 								<Select className="dropdownProductos" options={productos} placeholder="Seleccione uno o varios items..." onChange={opt => console.log(opt.label, opt.value)} />
-							</div>
-						
+							</Col>
+							</Form.Group>
+							</div>					
 							<div className="descripcion" >
-							<Form.Group as={Row} controlId="validationCustom01">
+							<Form.Group as={Row}>
 								<Form.Label column sm={2}>
 									Descripcion:
 									</Form.Label>
@@ -111,44 +148,87 @@ class NuevoProducto extends Component {
 										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
 										onChange= {(e)=> this.detectarCambios(e)}
 									/>
-									<Form.Control.Feedback className="errores" type="invalid">
-										*Campo inválido
-											</Form.Control.Feedback>
 								</Col>
 							</Form.Group>
 						</div>
-
 							<div className="dropdownOpciones">
-								<div className="tituloProductos">Tipo de Unidad</div>
+							<Form.Group as={Row}>
+								<Form.Label column sm={3}>
+								Tipo de Unidad:
+								</Form.Label>
+								<Col sm={9}>
 								<Select className="dropdownProductos" options={unidades} placeholder="Seleccione uno o varios items..." onChange={opt => console.log(opt.label, opt.value)} />
-							</div>
-						
+							</Col>
+							</Form.Group>
+							</div>						
 							<div className="dropdownOpciones">
-								<div className="tituloProductos">Tipo de Producción</div>
+							<Form.Group as={Row}>
+							<Form.Label column sm={3}>
+								Tipo de Producción:
+								</Form.Label>
+								<Col sm={9}>
 								<Select className="dropdownProductos" options={tipoProduccion} placeholder="Seleccione uno o varios items..." onChange={opt => console.log(opt.label, opt.value)} />
-							</div>
-														
+							</Col>
+							</Form.Group>
+							</div>													
 						<div className="fechaVencimiento">
 								<Form.Group as={Row}>
 									<Form.Label className="fechaLabel" column sm={3}>
-										Fecha de nacimiento:
+										Fecha de vencimiento:
                                 </Form.Label>
 									<Col sm={10}>
 										<DatePickerInput
 										ref = "datePicker"	
-										name ="fecha_nac"								
+										name ="fecha_ven"								
 										displayFormat='DD/MM/YYYY'
 											className = "calendario"	
 											onChange = {(e)=>this.cambiosFecha(e)}							
 										/>
-									<div className="errorConsu">{this.state.errores["fecha_nac"]}</div>
-									</Col>
-	
+									</Col>	
 								</Form.Group>
 							</div>
-					
-				</Form>
-				
+							<div className="stock">
+							<Form.Group as={Row}>
+									<Form.Label column sm={2}>
+										Stock:
+                                </Form.Label>
+									<Col sm={10}>
+										<Form.Control
+										required
+										type="number"
+										name="stock"
+										onChange= {(e)=> this.detectarCambios(e)}
+									/>
+									</Col>
+								</Form.Group>
+							</div>
+									<Form.Group as={Row}>
+									<Form.Label column sm={2}>
+										Precio:
+                                </Form.Label>
+									<Col sm={10}>
+										<Form.Control
+										required
+										type="number"
+										name="precio"
+										onChange= {(e)=> this.detectarCambios(e)}
+									/>
+									</Col>
+								</Form.Group>
+								<Form.Group as={Row}>
+									<Form.Label column sm={2}>
+										Tiempo de preparación:
+                                </Form.Label>
+									<Col sm={10}>
+										<Form.Control
+										required
+										type="number"
+										name="tiempo_preparacion"
+										onChange= {(e)=> this.detectarCambios(e)}
+									/>
+									</Col>
+								</Form.Group>	
+				</Form>			 
 				<div className="botones">
 						<Col>
 							<Row>
@@ -158,12 +238,9 @@ class NuevoProducto extends Component {
 								<div className="botonCrear">
 									<Button variant="success" type="submit">Crear</Button>
 								</div>
-								{/* <div className="botonLimpiar">
-									<Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>
-								</div> */}
 							</Row>
 						</Col>
-					</div>
+				</div> */}
 			</div>
 		);
 	};

@@ -77,24 +77,11 @@ position: absolute;
 	font-size: 32px;
 }
 
-.descripcionPagina{
-	text-align: left;
-	line-height: 40px;
-}
-
-/* Estilos Productos */
-.tituloProductos{
-	width: 100px;
-	text-align: right;
-}
-
 .dropdownProductos{
 	width: 600px;
-	padding-left: 25px;
+
 }
 .dropdownOpciones{
-	margin-top:2%;
-	margin-bottom:2%;
 	display: flex;
 	flex-direction: row;
 }
