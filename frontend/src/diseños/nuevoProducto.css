@@ -1,0 +1,21 @@
+.botonesNuevoProducto {
+	font-size: 15px;
+	display: flex;
+	flex-direction: row;
+	margin-top:20px;
+	justify-content: center;
+
+}
+
+.form-control[type="desc"]{
+
+width:50%;
+height:100px;
+
+}
+
+.form-label{
+
+text-align:right;
+
+}

@@ -12,7 +12,7 @@ import 'rc-datepicker/lib/style.css';
 import { isDate } from 'moment';
 import Select from 'react-select';
 
-import '../diseños/Registro.css';
+import '../diseños/nuevoProducto.css';
 import '../diseños/estilosGlobales.css';
 
 
@@ -67,8 +67,8 @@ class NuevoProducto extends Component {
 		})
 	}
 
-	handleSubmit (e){
-			
+	handleSubmit(e) {
+
 		var _this = this;
 
 		const path_principal = "http://localhost:3000/redAgro/usuario/producto";
@@ -78,44 +78,46 @@ class NuevoProducto extends Component {
 			headers: {
 				'Content-type': 'application/json;charset=UTF-8',
 			},
-			body: JSON.stringify({  "nombre":this.state.campos["nombre"],
-			 						"apellido": this.state.campos["apellido"],
-			 						"usuario": this.state.campos["email"],
-			 						"contraseña": this.state.campos["password"],
-									"fecha_nacimiento":this.state.campos["fecha_nac"],
-									"telefono":this.state.campos["tel"],
-									"rol": "Productor"}),
+			body: JSON.stringify({
+				"nombre": this.state.campos["nombre"],
+				"apellido": this.state.campos["apellido"],
+				"usuario": this.state.campos["email"],
+				"contraseña": this.state.campos["password"],
+				"fecha_nacimiento": this.state.campos["fecha_nac"],
+				"telefono": this.state.campos["tel"],
+				"rol": "Productor"
+			}),
 		})
-			
-			.then(function(response) {
 
-			if(response.status !==200){
+			.then(function (response) {
 
-			alert("Ocurrió algún error inesperado. Intente nuevamente");
-			return;
-			
-			}
+				if (response.status !== 200) {
 
-			response.json().then(
+					alert("Ocurrió algún error inesperado. Intente nuevamente");
+					return;
 
-				function(response) {
+				}
 
-					_this.setState({validated:true});
-					 alert("Registro exitoso");
-			 _this.props.history.push("/login");				
-				
+				response.json().then(
+
+					function (response) {
+
+						_this.setState({ validated: true });
+						alert("Registro exitoso");
+						_this.props.history.push("/login");
+
+					});
+
 			});
 
-			});	
-	
 	}
-	
+
 	cambiosFecha(e) {
 		let campos = this.state.campos;
 		campos["fecha_nac"] = e;
-		this.setState({campos})
+		this.setState({ campos })
 	}
-	
+
 	limpiarCampos() {
 		this.refs.form.reset();
 	}
@@ -123,125 +125,113 @@ class NuevoProducto extends Component {
 	render() {
 		return (
 			<div className="container">
-			  {/* <div className="titulosPrincipales">Nuevo Producto</div>
-				 <Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
-							<div className="dropdownOpciones">
-							<Form.Group as={Row}>
-								<Form.Label column sm={3}>
-								Tipo de Producto:
-								</Form.Label>
-								<Col sm={9}>
-								<Select className="dropdownProductos" options={productos} placeholder="Seleccione uno o varios items..." onChange={opt => console.log(opt.label, opt.value)} />
-							</Col>
-							</Form.Group>
-							</div>					
-							<div className="descripcion" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={2}>
-									Descripcion:
-									</Form.Label>
-								<Col sm={10}>
-									<Form.Control
-										required
-										type="text"
-										name="descripcion"
-										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
-										onChange= {(e)=> this.detectarCambios(e)}
-									/>
-								</Col>
-							</Form.Group>
-						</div>
-							<div className="dropdownOpciones">
-							<Form.Group as={Row}>
-								<Form.Label column sm={3}>
-								Tipo de Unidad:
-								</Form.Label>
-								<Col sm={9}>
-								<Select className="dropdownProductos" options={unidades} placeholder="Seleccione uno o varios items..." onChange={opt => console.log(opt.label, opt.value)} />
-							</Col>
-							</Form.Group>
-							</div>						
-							<div className="dropdownOpciones">
-							<Form.Group as={Row}>
-							<Form.Label column sm={3}>
-								Tipo de Producción:
-								</Form.Label>
-								<Col sm={9}>
-								<Select className="dropdownProductos" options={tipoProduccion} placeholder="Seleccione uno o varios items..." onChange={opt => console.log(opt.label, opt.value)} />
-							</Col>
-							</Form.Group>
-							</div>													
-						<div className="fechaVencimiento">
+				<div className="titulosPrincipales">Nuevo Producto</div>
+				{/* <div className="contenidoFormulario"> */}
+					<Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+							<div className="dropdownTipoProducto">
 								<Form.Group as={Row}>
-									<Form.Label className="fechaLabel" column sm={3}>
-										Fecha de vencimiento:
-                                </Form.Label>
-									<Col sm={10}>
-										<DatePickerInput
-										ref = "datePicker"	
-										name ="fecha_ven"								
-										displayFormat='DD/MM/YYYY'
-											className = "calendario"	
-											onChange = {(e)=>this.cambiosFecha(e)}							
-										/>
-									</Col>	
+									<Form.Label column sm={4}>
+										Tipo de Producto:
+								</Form.Label>
+
+										<Select className="selectTipoProducto" options={productos} placeholder="Seleccione un item..." onChange={opt => console.log(opt.label, opt.value)} />
+
 								</Form.Group>
 							</div>
-							<div className="stock">
+							<div className="dropdownTipoUnidad">
+								<Form.Group as={Row}>
+									<Form.Label column sm={4}>
+										Tipo de Unidad:
+								</Form.Label>
+
+										<Select className="selectTipoUnidad" options={unidades} placeholder="Seleccione un item..." onChange={opt => console.log(opt.label, opt.value)} />
+
+								</Form.Group>
+							</div>
+							<div className="dropdownTipoProduccion">
+								<Form.Group as={Row}>
+									<Form.Label column sm={4}>
+										Tipo de Producción:
+								</Form.Label>
+										<Select className="selectTipoProduccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={opt => console.log(opt.label, opt.value)} />
+								</Form.Group>
+							</div>
+						<div className="descripcion" >
 							<Form.Group as={Row}>
-									<Form.Label column sm={2}>
-										Stock:
+								<Form.Label column sm={4}>
+									Descripción:
+									</Form.Label>
+									<Form.Control
+										required
+										type="desc"
+										name="descripcion"
+										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+										onChange={(e) => this.detectarCambios(e)}
+									/>
+							</Form.Group>
+						</div>
+						<div className="fechaVencimiento">
+							<Form.Group as={Row}>
+								<Form.Label column sm={4}>
+									Fecha de vencimiento:
                                 </Form.Label>
-									<Col sm={10}>
-										<Form.Control
+									<DatePickerInput
+										name="fecha_ven"
+										displayFormat='DD/MM/YYYY'
+										className="calendario"
+										onChange={(e) => this.cambiosFecha(e)}
+									/>
+							</Form.Group>
+						</div>
+						<div className="stock">
+							<Form.Group as={Row}>
+								<Form.Label column sm={4}>
+									Stock:
+                                </Form.Label>
+									<Form.Control
 										required
 										type="number"
 										name="stock"
-										onChange= {(e)=> this.detectarCambios(e)}
+										onChange={(e) => this.detectarCambios(e)}
 									/>
-									</Col>
-								</Form.Group>
-							</div>
-									<Form.Group as={Row}>
-									<Form.Label column sm={2}>
-										Precio:
+							</Form.Group>
+						</div>
+						<div className="precio">
+							<Form.Group as={Row}>
+								<Form.Label column sm={4}>
+									Precio:
                                 </Form.Label>
-									<Col sm={10}>
-										<Form.Control
+									<Form.Control
 										required
 										type="number"
 										name="precio"
-										onChange= {(e)=> this.detectarCambios(e)}
+										onChange={(e) => this.detectarCambios(e)}
 									/>
-									</Col>
-								</Form.Group>
-								<Form.Group as={Row}>
-									<Form.Label column sm={2}>
-										Tiempo de preparación:
+							</Form.Group>
+						</div>
+						<div className="tiempo_preparacion">
+							<Form.Group as={Row}>
+								<Form.Label column sm={4}>
+									Tiempo de preparación:
                                 </Form.Label>
-									<Col sm={10}>
-										<Form.Control
+									<Form.Control
 										required
 										type="number"
 										name="tiempo_preparacion"
-										onChange= {(e)=> this.detectarCambios(e)}
+										onChange={(e) => this.detectarCambios(e)}
 									/>
-									</Col>
-								</Form.Group>	
-				</Form>			 
-				<div className="botones">
-						<Col>
-							<Row>
-								<div className="botonAtras">
-									<a href='/principalProductores'><Button variant="success">Cancelar</Button></a>
-								</div>
-								<div className="botonCrear">
-									<Button variant="success" type="submit">Crear</Button>
-								</div>
-							</Row>
-						</Col>
-				</div> */}
-			</div>
+							</Form.Group>
+						</div>
+					</Form>
+				<div className="botonesNuevoProducto">
+							<div className="botonAtras">
+								<a href='/principalProductores'><Button variant="success">Cancelar</Button></a>
+							</div>
+							<div className="botonCrear">
+								<Button variant="success" type="submit">Crear</Button>
+							</div>
+				</div>
+			 </div>
 		);
 	};
 }

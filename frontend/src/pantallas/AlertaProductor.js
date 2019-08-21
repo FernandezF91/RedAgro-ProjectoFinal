@@ -103,20 +103,15 @@ class AlertaProductor extends Component {
 						</div>
 
 					</div>
-
-					<div className="buttons">
-						<Col>
-							<Row>
+				</form>
+				<div className="botones">
 								<div className="botonCrear">
 									<Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
 								</div>
 								<div className="botonAtras">
 									<a href='/principalProductores'><Button variant="success">Cancelar</Button></a>
 								</div>
-							</Row>
-						</Col>
 					</div>
-				</form>
 			</div>
 		);
 	};

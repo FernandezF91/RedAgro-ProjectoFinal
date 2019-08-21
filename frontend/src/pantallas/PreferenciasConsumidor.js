@@ -54,21 +54,21 @@ class PreferenciasConsumidor extends Component {
 			<div className="container">
 				<div className="titulosPrincipales">Preferencias</div>
 				<div className="descripcionPagina">
-					<h5>Seleccione tus productos de interés para recibir novedades sobre los mismos</h5>
+					<h5>Seleccione sus productos de interés para recibir novedades sobre los mismos:</h5>
 				</div>
 				<br />
 				<div className="opciones">
-					<div className="tituloProductos">Verduras</div>
+					<div className="tituloProductos">Verduras:</div>
 					<Select className="dropdownProductos" options={verduras} placeholder="Seleccione uno o varios items..." isMulti onChange={opt => console.log(opt.label, opt.value)} />
 				</div>
 				<br />
 				<div className="opciones">
-					<div className="tituloProductos">Frutas</div>
+					<div className="tituloProductos">Frutas:</div>
 					<Select className="dropdownProductos" options={frutas} placeholder="Seleccione uno o varios items..." isMulti onChange={opt => console.log(opt.label, opt.value)} />
 				</div>
 				<br />
 				<div className="opciones">
-					<div className="tituloProductos">Otros</div>
+					<div className="tituloProductos">Otros:</div>
 					<Select className="dropdownProductos" options={otros} placeholder="Seleccione uno o varios items..." isMulti onChange={opt => console.log(opt.label, opt.value)} />
 				</div>
 				<br />

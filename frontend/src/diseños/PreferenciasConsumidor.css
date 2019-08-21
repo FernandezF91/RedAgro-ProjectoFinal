@@ -1,11 +1,13 @@
 .opciones{
 	display: flex;
 	flex-direction: row;
+	justify-content:left;
 }
 
 .tituloProductos{
 	width: 100px;
 	text-align: right;
+	margin-top:5px;
 }
 
 .dropdownProductos{
@@ -17,9 +19,11 @@
 	font-size: 15px;
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
 }
 
 .descripcionPagina{
 	text-align: left;
 	line-height: 40px;
+	margin-top:20px;
 }

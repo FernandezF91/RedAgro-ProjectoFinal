@@ -153,18 +153,16 @@ class RegistroConsumidor extends Component {
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
-					<div className="contenidoRegistro">
+					<Row className= "titulos">
+						<div className="cuentaCultura">
+							<p>Creá tu cuenta en culturaVerde</p>
+						</div>
+						<div className="cuentaUsuario">
+							<a href="/registroProductor"><p>Creá tu cuenta productor</p></a>
+						</div>
+						</Row>			
+					<div className="contenidoRegistro">	
 						<Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
-							<div className="titulos">
-								<Form.Group as={Row}>
-									<div className="cuentaCultura">
-										<p>Creá tu cuenta en culturaVerde</p>
-									</div>
-									<div className="cuentaUsuario">
-										<a href="/registroProductor"><p>Creá tu cuenta productor</p></a>
-									</div>
-								</Form.Group>
-							</div>
 							<div className="nombre" >
 								<Form.Group as={Row} controlId="validationCustom01">
 									<Form.Label column sm={2}>
@@ -258,8 +256,6 @@ class RegistroConsumidor extends Component {
 								</Form.Group>
 							</div>
 							<div className="botonesUsuarios">
-								<Col>
-									<Row>
 										<div className="botonAtras">
 											<a href='/login'><Button variant="success">Atrás</Button></a>
 										</div>
@@ -269,9 +265,7 @@ class RegistroConsumidor extends Component {
 										<div className="botonLimpiar">
 											<Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>
 										</div>
-									</Row>
-								</Col>
-							</div>
+							</div>							
 						</Form>
 					</div>
 				</Container>

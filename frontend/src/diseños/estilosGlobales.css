@@ -2,6 +2,7 @@
 	background-color: whitesmoke;
 	height: 100vh;
 	width: 100vw;
+	overflow:auto
 }
 
 
@@ -50,12 +51,10 @@ margin-left:15.4%;
 }
 
 .contenedor{
-overflow:auto;
 background-color: whitesmoke;
 flex-direction: column;
 display: flex;
 justify-content: center;
-align-content: center;
 text-align:center;
 }
 
@@ -77,11 +76,15 @@ position: absolute;
 	font-size: 32px;
 }
 
-.dropdownProductos{
-	width: 600px;
+
+.form-control[type="text"], .form-control[type="email"], .form-control[type="password"], .form-control[type="tel"], .form-control[type="number"]{
+
+width:40%;
 
 }
-.dropdownOpciones{
-	display: flex;
-	flex-direction: row;
+
+.selectTipoProducto,.selectTipoUnidad,.selectTipoProduccion{
+	
+	width: 50%;
 }
+
