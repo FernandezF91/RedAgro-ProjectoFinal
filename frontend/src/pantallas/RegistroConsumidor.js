@@ -102,7 +102,7 @@ class RegistroConsumidor extends Component {
 
 		var _this = this;
 
-		fetch("http://localhost:3000/redAgro/usuario", {
+		fetch("http://localhost:3000/redAgro/usuario_consumidor", {
 			method: "POST",
 			headers: {
 				'Content-type': 'application/json;charset=UTF-8',

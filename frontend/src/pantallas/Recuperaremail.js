@@ -89,8 +89,8 @@ class Recuperaremail extends Component {
 						</div>
 					</div>
 					<div className="botones">
-						<Nav.Link className="botoncanrecup" href='/login'><Button variant="success">Cancelar</Button></Nav.Link>
-						<Nav.Link className="botonconfrecu" href=''><Button variant="success" onClick={this.validarDatos}>Confirmar</Button></Nav.Link>
+						<a href='/login'><Button variant="success">Cancelar</Button></a>
+						<Button variant="success" onClick={this.validarDatos}>Confirmar</Button>
 					</div>
 				</Container>
 			</body>

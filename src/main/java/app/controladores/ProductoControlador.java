@@ -18,7 +18,7 @@ public class ProductoControlador {
 	ProductoDao productoDao;
 	
 	@CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(path = "redAgro/usuario/producto")
+    @PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
     public EntidadProductoProductor agregarUsuario(@RequestBody EntidadProductoProductor producto){   	
     
     	return productoDao.save(producto);

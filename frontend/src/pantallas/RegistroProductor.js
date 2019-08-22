@@ -104,7 +104,7 @@ class RegistroProductor extends Component {
 
 		var _this = this;
 
-		const path_principal = "http://localhost:3000/redAgro/usuario?razon_social=";
+		const path_principal = "http://localhost:3000/redAgro/usuario_productor?razon_social=";
 
 		var razonSocial = this.state.campos["razonSocial"];
 

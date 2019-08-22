@@ -29,6 +29,19 @@ import java.util.List;
 @RestController
 public class UsuarioControlador {
 	
+//Los controladores son los que van a recibir la petición del front, es decir del fetch.
+//El path especificado en el fetch va a matchear con el metodo del controlador que tengan definida la misma URL.
+//Los controladores van a hablar con los dao, que son los que tienen los metodos para guardar, eliminar, modificar, borrar datos de las tablas, etc.
+//Yo lo que voy a guardar son las "entidades" que modelamos. Los modelos..
+//El @requestBody lo que define es que yo lo que paso desde el front va a ser un JSON, por eso yo en los body de los fetch lo defino.
+//El @requestParam lo que me dice es que en la url voy a especificar ciertos parametros. Por ejemplo en el caso de productor,
+//que aparte de todos los datos de un usuario, también tiene la razón social. Por eso se pasa como parámetro en la URL.
+//van a haber casos en los que yo voy a tener que hacer logica de negocio con los datos que mis controladores reciben,
+//y de eso se van a encargar las CLASES.
+//En el caso que yo quiera traer datos, necesito mappear esas entidades que yo recibo a una clase normal,
+//para luego yo poder devolver un JSON. Por eso estan los mappers que se encargan de mappear de una clase a una entidad,
+//y viceversa.
+	
 	@Autowired
 	UsuarioDao usuarioDao;
 	
@@ -38,22 +51,13 @@ public class UsuarioControlador {
 	@Autowired
 	ProductorDao productorDao;
 
-	    @CrossOrigin(origins = "http://localhost:3000")
-	    @GetMapping(path = "redAgro/usuarios")
-	    public List<EntidadUsuario> getAllusuarios(){
-	        List<EntidadUsuario> usuarios = new ArrayList<>();
-	        usuarioDao.findAll().forEach(usuarios :: add);
-	        return usuarios;
-	    }
 
 	    @CrossOrigin(origins = "http://localhost:3000")
-	    @PostMapping(path = "redAgro/usuario")
-	    public EntidadUsuario agregarUsuario(@RequestBody EntidadUsuario usuario, @RequestParam(required = false) String razon_social){
+	    @PostMapping(path = "redAgro/usuario_consumidor")
+	    public EntidadUsuario agregarUsuarioConsumidor(@RequestBody EntidadUsuario usuario){
 	    	
 	    	EntidadUsuario userNuevo = usuarioDao.save(usuario);
 	    	
-	    	if(razon_social==null) {
-	    		
 			EntidadConsumidor entidadConsumidor = new EntidadConsumidor();
 			
 			entidadConsumidor.setId(userNuevo.getId());
@@ -62,11 +66,17 @@ public class UsuarioControlador {
 	    	consumidorDao.save(entidadConsumidor);
 	    	
 	    	return userNuevo;
+	    		    	
+	    }
+	    
+	    @CrossOrigin(origins = "http://localhost:3000")
+	    @PostMapping(path = "redAgro/usuario_productor")
+	    public EntidadUsuario agregarUsuarioProductor(@RequestBody EntidadUsuario usuario, @RequestParam String razon_social){
 	    	
-	    	}
-    		
-	    	
+	    	EntidadUsuario userNuevo = usuarioDao.save(usuario);
+    			    	
 	    	EntidadProductor entidadProductor = new EntidadProductor();
+	    	
 	    	entidadProductor.setId(userNuevo.getId());
 	    	entidadProductor.setUsuario(userNuevo);
 	    	entidadProductor.setRazon_social(razon_social);

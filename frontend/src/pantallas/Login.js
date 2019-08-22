@@ -142,7 +142,7 @@ class LoginForm extends Component {
 				
 					if (response!==""){
 
-						_this.setState({usuario:JSON.parse(response)});
+						_this.setState({usuario:response});
 
 					if (_this.state.usuario.rol === "Productor") {
 
@@ -228,8 +228,8 @@ class LoginForm extends Component {
 							</Form>
 						</div>
 						<div className="botonesLogin">
-							<Nav.Link className="boton1" href=''><Button variant="success" onClick={this.validarDatos}>Ingresar</Button></Nav.Link>
-							<Nav.Link className="boton2" href='/registroConsumidor'><Button variant="success">Registrar</Button></Nav.Link>						
+							<Button variant="success" onClick={this.validarDatos}>Ingresar</Button>
+							<a href='/registroConsumidor'><Button variant="success">Registrar</Button></a>						
 						</div>
 						<a href="/recupero_email"><p>olvidé mi contraseña</p></a>
 					</div>
