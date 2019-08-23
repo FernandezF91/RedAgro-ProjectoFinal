@@ -16,21 +16,21 @@ import javax.persistence.Table;
 public class EntidadProductoProductor {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 	
 	@ManyToOne()
-    @JoinColumn(name = "productor_id", nullable = false)
+    @JoinColumn(name = "productor_id", nullable = true)
     private EntidadProductor productor;
 	
 	@ManyToOne()
-    @JoinColumn(name = "producto_id", nullable = false)
+    @JoinColumn(name = "producto_id", nullable = true)
     private EntidadProducto producto;
 	
 	@Column(name="descripcion",nullable = false)
 	private String descripcion;
 	
-	@Column(name="imagen",nullable = true)
+	@Column(name="imagen",nullable = false)
 	private String imagen;
 	
 	@Column(name="tipo_unidad",nullable = false)
@@ -38,9 +38,6 @@ public class EntidadProductoProductor {
 	
 	@Column(name="tipo_produccion",nullable = false)
 	private String tipo_produccion;
-	
-	@Column(name="tipo_certificacion",nullable = false)
-	private String tipo_certificacion;
 	
 	@Column(name="stock",nullable = false)
 	private int stock;
@@ -51,7 +48,7 @@ public class EntidadProductoProductor {
 	@Column(name="precio",nullable = false)
 	private int precio;
 	
-	@Column(name="tiemp_preparacion",nullable = false)
+	@Column(name="tiempo_preparacion",nullable = false)
 	private int tiempo_preparacion;
 
 	public Long getId() {
@@ -108,14 +105,6 @@ public class EntidadProductoProductor {
 
 	public void setTipo_produccion(String tipo_produccion) {
 		this.tipo_produccion = tipo_produccion;
-	}
-
-	public String getTipo_certificacion() {
-		return tipo_certificacion;
-	}
-
-	public void setTipo_certificacion(String tipo_certificacion) {
-		this.tipo_certificacion = tipo_certificacion;
 	}
 
 	public int getStock() {

@@ -12,30 +12,40 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "Producto")
 public class EntidadProducto {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 	
 	@Column(name="descripcion", nullable=false)
 	private String descripcion;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<EntidadOferta> ofertas = new ArrayList<>();
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<EntidadHistorico> historicos = new ArrayList<>();
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<EntidadPreferencia> preferencias = new ArrayList<>();
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<EntidadPreferencia> productos_productor = new ArrayList<>();
+    private List<EntidadProductoProductor> productos_productor = new ArrayList<>();
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<EntidadDetalleReserva> detallesReserva = new ArrayList<>();
 
@@ -43,8 +53,8 @@ public class EntidadProducto {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(long id_producto) {
+		this.id = id_producto;
 	}
 
 	public String getDescripcion() {
@@ -79,11 +89,11 @@ public class EntidadProducto {
 		this.preferencias = preferencias;
 	}
 
-	public List<EntidadPreferencia> getProductos_productor() {
+	public List<EntidadProductoProductor> getProductos_productor() {
 		return productos_productor;
 	}
 
-	public void setProductos_productor(List<EntidadPreferencia> productos_productor) {
+	public void setProductos_productor(List<EntidadProductoProductor> productos_productor) {
 		this.productos_productor = productos_productor;
 	}
 

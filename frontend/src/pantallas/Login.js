@@ -142,7 +142,7 @@ class LoginForm extends Component {
 				
 					if (response!==""){
 
-						_this.setState({usuario:response});
+						_this.setState({usuario:JSON.parse(response)});
 
 					if (_this.state.usuario.rol === "Productor") {
 

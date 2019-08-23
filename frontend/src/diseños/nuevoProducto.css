@@ -19,3 +19,24 @@ height:100px;
 text-align:right;
 
 }
+
+.botonUpload{
+
+height: 45px;
+margin-left:-300px;
+width: 120px;
+
+
+}
+
+[type="file"] {
+  pointer-events: none;
+  width: 300px;
+  outline: none;
+
+}
+  
+
+
+
+

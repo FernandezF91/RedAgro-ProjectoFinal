@@ -155,8 +155,10 @@ render()
 							</div>
 						</Col>
 						<Col className="ruteo">
-							<Route path={'/principalProductores/Alertas'} component={AlertaProductor} />
-							<Route path={'/principalProductores/NuevoProducto'} component={NuevoProducto} />
+							<Route path='/principalProductores/Alertas' component={AlertaProductor} />
+							<Route path="/principalProductores/NuevoProducto"
+								   render = {(props) => <NuevoProducto id_productor = {this.state.usuario.id} />}
+							/>
 							<Route path={'/principalProductores/CargarHistorico'} component={CargarHistorico} />
 						</Col>
 					</Row>

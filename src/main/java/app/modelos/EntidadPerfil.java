@@ -14,10 +14,10 @@ import javax.persistence.Table;
 public class EntidadPerfil {
 	
 	@Id
+	@Column(name = "id")
     private long id;
 		
 	@OneToOne
-    @JoinColumn(name = "id")
     @MapsId
     private EntidadProductor productor;
 	

@@ -14,6 +14,7 @@ import Select from 'react-select';
 
 import '../diseños/nuevoProducto.css';
 import '../diseños/estilosGlobales.css';
+import PantallaPrincipalProductores from './PantallaPrincipalProductores';
 
 
 const productos = [
@@ -52,6 +53,7 @@ class NuevoProducto extends Component {
 		this.state = {
 			campos: [],
 			errores: [],
+			files: [],
 			validated: false
 		}
 
@@ -69,46 +71,54 @@ class NuevoProducto extends Component {
 
 	handleSubmit(e) {
 
-		var _this = this;
+alert(this.props.id_productor);
 
-		const path_principal = "http://localhost:3000/redAgro/usuario/producto";
+		// var _this = this;
 
-		fetch(path_principal, {
-			method: "POST",
-			headers: {
-				'Content-type': 'application/json;charset=UTF-8',
-			},
-			body: JSON.stringify({
-				"nombre": this.state.campos["nombre"],
-				"apellido": this.state.campos["apellido"],
-				"usuario": this.state.campos["email"],
-				"contraseña": this.state.campos["password"],
-				"fecha_nacimiento": this.state.campos["fecha_nac"],
-				"telefono": this.state.campos["tel"],
-				"rol": "Productor"
-			}),
-		})
+		// const path_principal = "http://localhost:3000/redAgro/usuario_productor/nuevo_producto?id_productor=";
 
-			.then(function (response) {
+		// const id_productor = this.props.id_productor;
 
-				if (response.status !== 200) {
+		// const path_final = path_principal+id_productor+"&id_producto=1";
 
-					alert("Ocurrió algún error inesperado. Intente nuevamente");
-					return;
+		// fetch(path_final, {
+		// 	method: "POST",
+		// 	headers: {
+		// 		'Content-type': 'application/json;charset=UTF-8',
+		// 	},
+		// 	body: JSON.stringify({
+		// 		"descripcion": this.state.campos["descripcion"],
+		// 		"fecha_vencimiento": this.state.campos["fecha_ven"],
+		// 		"imagen": "null",
+		// 		"precio": this.state.campos["precio"],
+		// 		"stock": this.state.campos["stock"],
+		// 		"tiempo_preparacion": this.state.campos["tiempo_preparacion"],
+		// 		"tipo_unidad": this.state.campos["tipo_unidad"],
+		// 		"tipo_produccion": this.state.campos["tipo_produccion"]
+	
+		// 	}),
+		// })
 
-				}
+		// 	.then(function (response) {
 
-				response.json().then(
+		// 		if (response.status !== 200) {
 
-					function (response) {
+		// 			alert("Ocurrió algún error inesperado. Intente nuevamente");
+		// 			return;
 
-						_this.setState({ validated: true });
-						alert("Registro exitoso");
-						_this.props.history.push("/login");
+		// 		}
 
-					});
+		// 		response.json().then(
 
-			});
+		// 			function (response) {
+
+		// 				// _this.setState({ validated: true });
+		// 				alert("Registro exitoso");
+		// 				// _this.props.history.push("/login");
+
+		// 			});
+
+		// 	});
 
 	}
 
@@ -122,11 +132,24 @@ class NuevoProducto extends Component {
 		this.refs.form.reset();
 	}
 
+	fileSelectedHandler(e) {
+
+	this.setState({ files: [...this.state.files, ...e.target.files] })
+	
+  }
+
+  cambiosSelect(opt) {
+
+	let campos = this.state.campos;
+		campos[opt.name] = opt.value;
+		this.setState({ campos })
+	
+  }
+
 	render() {
 		return (
 			<div className="container">
 				<div className="titulosPrincipales">Nuevo Producto</div>
-				{/* <div className="contenidoFormulario"> */}
 					<Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
 							<div className="dropdownTipoProducto">
 								<Form.Group as={Row}>
@@ -134,7 +157,7 @@ class NuevoProducto extends Component {
 										Tipo de Producto:
 								</Form.Label>
 
-										<Select className="selectTipoProducto" options={productos} placeholder="Seleccione un item..." onChange={opt => console.log(opt.label, opt.value)} />
+										<Select className="selectTipoProducto" name="tipo_producto" options={productos} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
 
 								</Form.Group>
 							</div>
@@ -144,7 +167,7 @@ class NuevoProducto extends Component {
 										Tipo de Unidad:
 								</Form.Label>
 
-										<Select className="selectTipoUnidad" options={unidades} placeholder="Seleccione un item..." onChange={opt => console.log(opt.label, opt.value)} />
+										<Select className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
 
 								</Form.Group>
 							</div>
@@ -153,7 +176,7 @@ class NuevoProducto extends Component {
 									<Form.Label column sm={4}>
 										Tipo de Producción:
 								</Form.Label>
-										<Select className="selectTipoProduccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={opt => console.log(opt.label, opt.value)} />
+										<Select className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
 								</Form.Group>
 							</div>
 						<div className="descripcion" >
@@ -168,6 +191,15 @@ class NuevoProducto extends Component {
 										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
 										onChange={(e) => this.detectarCambios(e)}
 									/>
+							</Form.Group>
+						</div>
+						<div className="imagen" >
+							<Form.Group as={Row}>
+								<Form.Label column sm={4}>
+									Imagen:
+								</Form.Label>
+					<input type="file" multiple id="file" name="img" onChange={(e)=>this.fileSelectedHandler(e)} />
+					<Button variant="success" className="botonUpload"><label for="file">Elegir</label></Button>
 							</Form.Group>
 						</div>
 						<div className="fechaVencimiento">
@@ -230,7 +262,7 @@ class NuevoProducto extends Component {
 							<div className="botonCrear">
 								<Button variant="success" type="submit">Crear</Button>
 							</div>
-				</div>
+				</div> 
 			 </div>
 		);
 	};
