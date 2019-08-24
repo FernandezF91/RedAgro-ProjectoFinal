@@ -25,7 +25,7 @@ import historico from '../imagenes/historico.png';
 
 
 import Container from 'react-bootstrap/Container';
-import {BrowserRouter, Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 
@@ -33,24 +33,22 @@ import AlertaProductor from '../pantallas/AlertaProductor';
 import NuevoProducto from '../pantallas/NuevoProducto';
 import CargarHistorico from '../pantallas/CargarHistorico';
 
-class PantallaPrincipalProductores extends Component 
-{
+class PantallaPrincipalProductores extends Component {
 
 	constructor(props) {
 
 		super(props)
 
 		this.state = {
-			
-			usuario:{}
-			
+
+			usuario: {}
+
 		}
 
 	}
 
 
-render() 
-	{
+	render() {
 		return (
 			<body className="fondo">
 				<div className="barraNavegacion">
@@ -96,32 +94,6 @@ render()
 								<NavDropdown.Divider />
 							</div>
 							<div className="subMenu">
-								<div className="reserva">
-									<Row>
-										<img src={reservas} width="30px" height="25px"></img> <p>Reservas</p>
-									</Row>
-								</div>
-								<div className="alerta">
-									<Row>
-										<img src={campanalertas} width="30px" height="30px"></img><Link to={'/principalProductores/Alertas'}><p>Alertas</p></Link>
-									</Row>
-								</div>
-								<div className="historico">
-									<Row>
-										<img src={historico} width="30px" height="25px"></img><Link to={'/principalProductores/CargarHistorico'}><p>Histórico</p></Link>
-									</Row>
-								</div>
-								<div className="planificacion">
-									<Row>
-										<img src={planificacion} width="30px" height="25px"></img><p>Planificación</p>
-									</Row>
-								</div>
-								<div className="analytics">
-									<Row>
-										<img src={analytics} width="30px" height="19px"></img><p>Analitycs</p>
-									</Row>
-								</div>
-
 								<div className="productos">
 									<Row>
 										<div className="imagen_prod">
@@ -136,6 +108,31 @@ render()
 												<NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
 											</NavDropdown>
 										</div>
+									</Row>
+								</div>
+								<div className="reserva">
+									<Row>
+										<img src={reservas} width="30px" height="25px"></img> <p>Reservas</p>
+									</Row>
+								</div>
+								<div className="planificacion">
+									<Row>
+										<img src={planificacion} width="30px" height="25px"></img><p>Planificación</p>
+									</Row>
+								</div>
+								<div className="analytics">
+									<Row>
+										<img src={analytics} width="30px" height="19px"></img><p>Estadísticas</p>
+									</Row>
+								</div>
+								<div className="historico">
+									<Row>
+										<img src={historico} width="30px" height="25px"></img><Link to={'/principalProductores/CargarHistorico'}><p>Histórico</p></Link>
+									</Row>
+								</div>
+								<div className="alerta">
+									<Row>
+										<img src={campanalertas} width="30px" height="30px"></img><Link to={'/principalProductores/Alertas'}><p>Alertas</p></Link>
 									</Row>
 								</div>
 								<div className="configuracion">
@@ -157,7 +154,7 @@ render()
 						<Col className="ruteo">
 							<Route path='/principalProductores/Alertas' component={AlertaProductor} />
 							<Route path="/principalProductores/NuevoProducto"
-								   render = {(props) => <NuevoProducto id_productor = {this.state.usuario.id} />}
+								render={(props) => <NuevoProducto id_productor={this.state.usuario.id} />}
 							/>
 							<Route path={'/principalProductores/CargarHistorico'} component={CargarHistorico} />
 						</Col>
@@ -165,15 +162,7 @@ render()
 
 				</Container>
 			</body>
-
-
-
-
-
 		);
-
-
-
 	};
 }
 export default PantallaPrincipalProductores;
