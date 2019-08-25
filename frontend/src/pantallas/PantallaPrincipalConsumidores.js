@@ -107,7 +107,7 @@ class PantallaPrincipalconsumidores extends Component {
 								</div>
 								<div className="reserva">
 									<Row>
-										<img src={reservas} width="30px" height="25px"></img> <Link to={'/principalConsumidores/reservas'}><p>Reservas</p></Link>
+										<img src={reservas} width="30px" height="25px"></img> <Link to={'/principalConsumidores/Reservas'}><p>Reservas</p></Link>
 									</Row>
 								</div>
 								<div className="preferencia">
@@ -137,7 +137,7 @@ class PantallaPrincipalconsumidores extends Component {
 							</div>
 						</Col>
 						<Col className="ruteo">
-							<Route path={'/principalConsumidores/reservas'} component={Reservas} />
+							<Route path={'/principalConsumidores/Reservas'} component={Reservas} />
 							<Route path={'/principalConsumidores/Alertas'} component={AlertaConsumidor} />
 							<Route path={'/principalConsumidores/PreferenciasConsumidor'} component={PreferenciasConsumidor} />
 						</Col>
