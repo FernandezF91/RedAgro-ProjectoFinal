@@ -31,17 +31,28 @@ public class ProductoControlador {
 	
 	@CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
-    public EntidadProductoProductor agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor, @RequestParam long id_producto){   	
+    public EntidadProductor agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor, @RequestParam long id_producto){   	
     
 
 		EntidadProducto prod = productoDao.obtenerProducto(id_producto);
 		
 		EntidadProductor productor = productorDao.obtenerProductor(id_productor);
 				
-		producto.setProducto(prod);
-		producto.setProductor(productor);
-						
-        return productoProductorDao.save(producto);
+//		EntidadProductoProductor productoNuevo = new EntidadProductoProductor();
+//		productoNuevo.setTitulo(producto.getTitulo());
+//		productoNuevo.setDescripcion(producto.getDescripcion());
+//		productoNuevo.setFecha_vencimiento(producto.getFecha_vencimiento());
+//		productoNuevo.setPrecio(producto.getPrecio());
+//		productoNuevo.setStock(producto.getStock());
+//		productoNuevo.setTiempo_preparacion(producto.getTiempo_preparacion());
+//		productoNuevo.setTipo_produccion(producto.getTipo_produccion());
+//		productoNuevo.setTipo_unidad(producto.getTipo_unidad());
+//		productoNuevo.setProducto(prod);
+//		productoNuevo.setProductor(productor);
+//						
+        return productor;
+		
+//		productoProductorDao.save(productoNuevo);
     	
     	
     }

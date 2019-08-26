@@ -34,7 +34,7 @@ public class UsuarioMapper {
         usuario.setFecha_nacimiento(modelo.getFecha_nacimiento());
         usuario.setRol(modelo.getRol());
         usuario.setTelefono(modelo.getTelefono());
-        usuario.setAlertas(null);
+        usuario.setAlertas_usuario(null);
         return usuario;
     
     }

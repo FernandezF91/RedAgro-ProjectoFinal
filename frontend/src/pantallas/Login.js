@@ -10,7 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import '../diseños/Login.css';
 import '../diseños/estilosGlobales.css';
-import Alert from 'react-bootstrap/Alert';
+
 
 class LoginForm extends Component {
 
@@ -27,25 +27,10 @@ class LoginForm extends Component {
 		this.validarDatos = this.validarDatos.bind(this);
 		this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
 		this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
-	//  this.showAlert = this.showAlert.bind(this);
+	
 	}
 
-	// function Alert(){
-
-	// 	return(
-    //   <Alert variant="success">
-    //       Jeje
-    //   </Alert>
-	// 	);
-
-	// }
-
-	// showAlert() {
-
-	// 	render(<Alert/>)
-
-	// }
-
+	
 	detectarCambios(e) {
 
 		let fields = this.state.fields;
@@ -92,31 +77,6 @@ class LoginForm extends Component {
 
 		    var _this = this;
 
-		// fetch(final_path)  
-		//   .then(  
-		// 	function(response) {  
-		// 	  if (response.status !== 200) {  
-		// 		alert("Ocurrió algún problema. Intentelo nuevamente");  
-		// 		return;  
-		// 	  }
-		// 	  if(response===null){
-
-		// 		alert("jeje");
-
-		// 	  }
-		// 	  response.json().then(function(data) {  
-		// 		alert(data.nombre +" "+ data.apellido);
-        //        _this.setState({usuario:data});
-
-		// 	  });  
-		// 	} 
-		//   )  
-		//   .catch(function(err) {  
-		// 	alert("Cuenta inexistente o datos incorrectos");  
-        //     _this.setState({usuario: {}});
-		//   });
-
-
 		 	fetch(final_path, {
 			method: "GET",
 			headers: {
@@ -128,9 +88,8 @@ class LoginForm extends Component {
 			.then(function(response) {
 
 			if(response.status !==200){
-				
-				alert("Ocurrió algún problema. Intente nuevamente");
-			// _this.showAlert();
+
+			alert("Ocurrió algún problema. Intente nuevamente")
 
 			return;
 			
@@ -175,7 +134,10 @@ class LoginForm extends Component {
 
 	mostrarPantallaProductor(){
 
-	this.props.history.push("/principalProductores", {usuario: this.state.usuario});
+	this.props.history.push({
+	pathname:'/principalProductores',
+	state:{id:this.state.usuario.id}
+	})
 
 	}
 
@@ -229,7 +191,7 @@ class LoginForm extends Component {
 						</div>
 						<div className="botonesLogin">
 							<Button variant="success" onClick={this.validarDatos}>Ingresar</Button>
-							<a href='/registroConsumidor'><Button variant="success">Registrar</Button></a>						
+							<a href='/seleccionUsuario'><Button variant="success">Registrar</Button></a>						
 						</div>
 						<a href="/recupero_email"><p>olvidé mi contraseña</p></a>
 					</div>

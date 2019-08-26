@@ -12,10 +12,12 @@ class AlertaProductor extends Component {
 		super(props);
 		this.state = {
 			//Acá debería estar trayendo la opción que haya guardado
-			selectedRadioOption: "Nunca"
+			selectedRadioOption: "Nunca",
+			id:this.props.id_productor
 		};
 
-		this.handleCheckChange = this.handleCheckChange.bind(this)
+		this.handleCheckChange = this.handleCheckChange.bind(this);
+		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 	}
 
 	handleRadioChange = changeEvent => {
@@ -36,6 +38,20 @@ class AlertaProductor extends Component {
 		
 	};
 
+	componentDidMount(){
+
+alert(this.state.id);
+
+	}
+
+	mostrarPantallaPrincipal(){
+
+		this.props.history.push({
+	pathname:'/principalProductores',
+	state:{id:this.state.id}
+	})
+
+	}
 
 	render() {
 
@@ -105,11 +121,11 @@ class AlertaProductor extends Component {
 					</div>
 				</form>
 				<div className="botones">
+								<div className="botonAtras">
+									<Button variant="success" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+								</div>
 								<div className="botonCrear">
 									<Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
-								</div>
-								<div className="botonAtras">
-									<a href='/principalProductores'><Button variant="success">Cancelar</Button></a>
 								</div>
 					</div>
 			</div>

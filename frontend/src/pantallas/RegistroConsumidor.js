@@ -157,9 +157,6 @@ class RegistroConsumidor extends Component {
 						<div className="cuentaCultura">
 							<p>Creá tu cuenta en culturaVerde</p>
 						</div>
-						<div className="cuentaUsuario">
-							<a href="/registroProductor"><p>Creá tu cuenta productor</p></a>
-						</div>
 						</Row>			
 					<div className="contenidoRegistro">	
 						<Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
@@ -257,7 +254,7 @@ class RegistroConsumidor extends Component {
 							</div>
 							<div className="botonesUsuarios">
 										<div className="botonAtras">
-											<a href='/login'><Button variant="success">Atrás</Button></a>
+											<a href='/seleccionUsuario'><Button variant="success">Atrás</Button></a>
 										</div>
 										<div className="botonCrear">
 											<Button variant="success" type="submit">Crear</Button>

@@ -26,8 +26,11 @@ public class EntidadProducto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 	
-	@Column(name="descripcion", nullable=false)
-	private String descripcion;
+	@Column(name="categoria", nullable=false)
+	private String categoria;
+	
+	@Column(name="tipo", nullable=false)
+	private String tipo;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
@@ -57,12 +60,12 @@ public class EntidadProducto {
 		this.id = id_producto;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getCategoria() {
+		return categoria;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 	public List<EntidadPreferencia> getPreferencia() {
@@ -112,7 +115,14 @@ public class EntidadProducto {
 	public void setDetallesReserva(List<EntidadDetalleReserva> detallesReserva) {
 		this.detallesReserva = detallesReserva;
 	}
-	
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
 	
 	
 }

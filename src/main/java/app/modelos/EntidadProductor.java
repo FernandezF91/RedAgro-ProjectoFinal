@@ -15,6 +15,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import ch.qos.logback.core.subst.Token.Type;
+
 
 
 @Entity
@@ -24,32 +34,41 @@ public class EntidadProductor{
 	@Id
 	@Column(name = "id")
     private long id;
-		
+	
+	@JsonIgnore
 	@OneToOne
 	@MapsId
     private EntidadUsuario usuario;
 	
+	@JsonIgnore
 	@OneToOne(mappedBy = "productor")
     private EntidadPerfil perfil;
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
     private List<EntidadHistorico> historicos = new ArrayList<>();
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
     private List<EntidadOferta> ofertas = new ArrayList<>();
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
     private List<EntidadCalificacion> calificaciones = new ArrayList<>();
 	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
     private List<EntidadProductoProductor> productos = new ArrayList<>();
-	        
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
 	private List<EntidadZona> zonas = new ArrayList<>();
-    
+    	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
 	private List<EntidadPuntoEntrega> puntos_entrega = new ArrayList<>();
-	    
+	
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
 	private List<EntidadReserva> reservas = new ArrayList<>();
 	    

@@ -28,10 +28,16 @@ import Container from 'react-bootstrap/Container';
 import {BrowserRouter, Router, Route, Switch} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { withRouter } from 'react-router';
 
 import AlertaProductor from '../pantallas/AlertaProductor';
 import NuevoProducto from '../pantallas/NuevoProducto';
 import CargarHistorico from '../pantallas/CargarHistorico';
+
+
+const NuevoProductoRouter = withRouter(NuevoProducto);
+const AlertaProductorRouter = withRouter(AlertaProductor);
 
 class PantallaPrincipalProductores extends Component 
 {
@@ -42,11 +48,32 @@ class PantallaPrincipalProductores extends Component
 
 		this.state = {
 			
-			usuario:{}
+			id:this.props.location.state.id
 			
 		}
 
+		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+
 	}
+
+
+componentDidMount() {
+
+alert(this.state.id);
+
+}
+
+mostrarPantallaPrincipal(){
+
+
+this.props.history.push({
+	
+	pathname:'/principalProductores',
+	state:{id:this.state.id}
+	})
+
+	alert(this.state.id);
+}
 
 
 render() 
@@ -70,8 +97,8 @@ render()
 									<img src={usuario} width="30px" height="30px"></img>
 								</div>
 								<div className="menuUsuario">
-									<NavDropdown title="Usuario" id="nav-dropdown">
-										<NavDropdown.Item href="/principalProductores">Mi cuenta</NavDropdown.Item>
+									<NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown">
+										<NavDropdown.Item>Mi cuenta</NavDropdown.Item>
 										<NavDropdown.Divider />
 										<NavDropdown.Item href="/login">Salir</NavDropdown.Item>
 									</NavDropdown>
@@ -98,7 +125,7 @@ render()
 							<div className="subMenu">
 								<div className="reserva">
 									<Row>
-										<img src={reservas} width="30px" height="25px"></img> <p>Reservas</p>
+										<img src={reservas} width="30px" height="25px"></img><p>Reservas</p>
 									</Row>
 								</div>
 								<div className="alerta">
@@ -131,7 +158,7 @@ render()
 											<NavDropdown title="Productos" id="producto_drop">
 												<NavDropdown.Item href="#action/3.1">Listado de Productos</NavDropdown.Item>
 												<NavDropdown.Divider />
-												<NavDropdown.Item href="/principalProductores/NuevoProducto">Nuevo Producto</NavDropdown.Item>
+												<NavDropdown.Item><Link to="/principalProductores/NuevoProducto">Nuevo Producto</Link></NavDropdown.Item>
 												<NavDropdown.Divider />
 												<NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
 											</NavDropdown>
@@ -155,11 +182,13 @@ render()
 							</div>
 						</Col>
 						<Col className="ruteo">
-							<Route path='/principalProductores/Alertas' component={AlertaProductor} />
-							<Route path="/principalProductores/NuevoProducto"
-								   render = {(props) => <NuevoProducto id_productor = {this.state.usuario.id} />}
+							<Route path='/principalProductores/Alertas'
+							render = {(props) => <AlertaProductorRouter id_productor={this.state.id}/>}
 							/>
-							<Route path={'/principalProductores/CargarHistorico'} component={CargarHistorico} />
+							<Route path='/principalProductores/NuevoProducto'
+							render = {(props) => <NuevoProductoRouter id_productor={this.state.id}/>} 
+							/>
+							<Route path='/principalProductores/CargarHistorico' component={CargarHistorico} />
 						</Col>
 					</Row>
 

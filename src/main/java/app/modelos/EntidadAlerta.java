@@ -1,12 +1,17 @@
 package app.modelos;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -17,15 +22,11 @@ public class EntidadAlerta {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	
-	@ManyToOne()
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private EntidadUsuario usuario;
+	@Column(name = "nombre", nullable = false)
+	private String nombre;
 	
-	@Column(name = "frecuencia", nullable = false)
-	private String frecuencia;
-	
-	@Column(name = "tipo", nullable = false)
-	private String tipo;
+	@OneToMany(mappedBy = "alerta")
+    private List<EntidadAlertaUsuario> alertas_usuario = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -35,29 +36,22 @@ public class EntidadAlerta {
 		this.id = id;
 	}
 
-	public EntidadUsuario getUsuario() {
-		return usuario;
+	public List<EntidadAlertaUsuario> getAlertas_usuario() {
+		return alertas_usuario;
 	}
 
-	public void setUsuario(EntidadUsuario usuario) {
-		this.usuario = usuario;
+	public void setAlertas_usuario(List<EntidadAlertaUsuario> alertas_usuario) {
+		this.alertas_usuario = alertas_usuario;
 	}
 
-	public String getFrecuencia() {
-		return frecuencia;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setFrecuencia(String frecuencia) {
-		this.frecuencia = frecuencia;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
+	
 	
 	
 

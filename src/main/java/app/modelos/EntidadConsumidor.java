@@ -14,6 +14,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Consumidor")
 public class EntidadConsumidor {
@@ -22,16 +27,20 @@ public class EntidadConsumidor {
 	@Column(name = "id")
     private long id;
 	
+	@JsonIgnore
     @OneToOne
     @MapsId
     private EntidadUsuario usuario;
 	
+    @LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL)
     private List<EntidadPreferencia> preferencia = new ArrayList<>();
 	
+    @LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL)
     private List<EntidadReserva> reservas = new ArrayList<>();
 	
+    @LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL)
     private List<EntidadCalificacion> calificaciones = new ArrayList<>();
 	

@@ -46,18 +46,23 @@ const tipoProduccion = [
 	{ label: "Agroecológica", value: 2 },
 ];
 
+
 class NuevoProducto extends Component {
 
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			campos: [],
 			errores: [],
 			files: [],
-			validated: false
+			validated: false,
+			id:this.props.id_productor
 		}
 
 		this.limpiarCampos = this.limpiarCampos.bind(this);
+		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+		
 
 	}
 
@@ -71,54 +76,64 @@ class NuevoProducto extends Component {
 
 	handleSubmit(e) {
 
-alert(this.props.id_productor);
+	var _this = this;
 
-		// var _this = this;
+		const path_principal = "http://localhost:3000/redAgro/usuario_productor/nuevo_producto?id_productor=";
 
-		// const path_principal = "http://localhost:3000/redAgro/usuario_productor/nuevo_producto?id_productor=";
+		const id_productor = this.props.id_productor;
 
-		// const id_productor = this.props.id_productor;
+		const path_final = path_principal+id_productor+"&id_producto=1";
 
-		// const path_final = path_principal+id_productor+"&id_producto=1";
+		alert(path_final);
 
-		// fetch(path_final, {
-		// 	method: "POST",
-		// 	headers: {
-		// 		'Content-type': 'application/json;charset=UTF-8',
-		// 	},
-		// 	body: JSON.stringify({
-		// 		"descripcion": this.state.campos["descripcion"],
-		// 		"fecha_vencimiento": this.state.campos["fecha_ven"],
-		// 		"imagen": "null",
-		// 		"precio": this.state.campos["precio"],
-		// 		"stock": this.state.campos["stock"],
-		// 		"tiempo_preparacion": this.state.campos["tiempo_preparacion"],
-		// 		"tipo_unidad": this.state.campos["tipo_unidad"],
-		// 		"tipo_produccion": this.state.campos["tipo_produccion"]
+		fetch(path_final, {
+			method: "POST",
+			headers: {
+				'Content-type': 'application/json;charset=UTF-8',
+			},
+			body: JSON.stringify({
+				"titulo": "Lechuga mantecosa recien hecha",
+				"descripcion": "Lechuga",
+				"fecha_vencimiento": "1991-08-12",
+				"imagen": "null",
+				"precio": "15",
+				"stock": "10",
+				"tiempo_preparacion": "25",
+				"tipo_unidad": "Bolson",
+				"tipo_produccion": "Agro"
+				// "titulo"://this.state.campos["titulo"],
+				// "descripcion": //this.state.campos["descripcion"],
+				// "fecha_vencimiento": //this.state.campos["fecha_ven"],
+				// "imagen": //"null",
+				// "precio": //this.state.campos["precio"],
+				// "stock": //this.state.campos["stock"],
+				// "tiempo_preparacion": //this.state.campos["tiempo_preparacion"],
+				// "tipo_unidad": //this.state.campos["tipo_unidad"],
+				// "tipo_produccion": //this.state.campos["tipo_produccion"]
 	
-		// 	}),
-		// })
+			}),
+		})
 
-		// 	.then(function (response) {
+			.then(function (response) {
 
-		// 		if (response.status !== 200) {
+				if (response.status !== 200) {
 
-		// 			alert("Ocurrió algún error inesperado. Intente nuevamente");
-		// 			return;
+					alert("Ocurrió algún error inesperado. Intente nuevamente");
+					return;
 
-		// 		}
+				}
 
-		// 		response.json().then(
+				response.json().then(
 
-		// 			function (response) {
+					function (response) {
 
-		// 				// _this.setState({ validated: true });
-		// 				alert("Registro exitoso");
-		// 				// _this.props.history.push("/login");
+						// _this.setState({ validated: true });
+						alert("Registro exitoso");
+						// _this.props.history.push("/login");
 
-		// 			});
+					});
 
-		// 	});
+			});
 
 	}
 
@@ -146,39 +161,61 @@ alert(this.props.id_productor);
 	
   }
 
+  componentDidMount(){
+
+alert(this.state.id);
+
+	}
+
+	mostrarPantallaPrincipal(){
+
+		this.props.history.push({
+	pathname:'/principalProductores',
+	state:{id:this.state.id}
+	})
+
+
+	}
+
 	render() {
 		return (
 			<div className="container">
 				<div className="titulosPrincipales">Nuevo Producto</div>
 					<Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+							<div className="dropdownCategoria">
+								<Form.Group as={Row}>
+									<Form.Label column sm={4}>
+										Categoria:
+								</Form.Label>
+
+										<Select className="selectCategoria" name="categoria" options={productos} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
+
+								</Form.Group>
+							</div>
 							<div className="dropdownTipoProducto">
 								<Form.Group as={Row}>
 									<Form.Label column sm={4}>
-										Tipo de Producto:
+										Tipo de producto:
 								</Form.Label>
 
 										<Select className="selectTipoProducto" name="tipo_producto" options={productos} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
 
 								</Form.Group>
 							</div>
-							<div className="dropdownTipoUnidad">
-								<Form.Group as={Row}>
-									<Form.Label column sm={4}>
-										Tipo de Unidad:
-								</Form.Label>
-
-										<Select className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
-
-								</Form.Group>
-							</div>
-							<div className="dropdownTipoProduccion">
-								<Form.Group as={Row}>
-									<Form.Label column sm={4}>
-										Tipo de Producción:
-								</Form.Label>
-										<Select className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
-								</Form.Group>
-							</div>
+							<div className="titulo" >
+							<Form.Group as={Row}>
+								<Form.Label column sm={4}>
+									Título:
+									</Form.Label>
+									<Form.Control
+										required
+										type="titulo"
+										name="titulo"
+										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+										onChange={(e) => this.detectarCambios(e)}
+									/>
+							</Form.Group>
+						</div>
 						<div className="descripcion" >
 							<Form.Group as={Row}>
 								<Form.Label column sm={4}>
@@ -202,6 +239,25 @@ alert(this.props.id_productor);
 					<Button variant="success" className="botonUpload"><label for="file">Elegir</label></Button>
 							</Form.Group>
 						</div>
+						
+							<div className="dropdownTipoUnidad">
+								<Form.Group as={Row}>
+									<Form.Label column sm={4}>
+										Tipo de Unidad:
+								</Form.Label>
+
+										<Select className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
+
+								</Form.Group>
+							</div>
+							<div className="dropdownTipoProduccion">
+								<Form.Group as={Row}>
+									<Form.Label column sm={4}>
+										Tipo de Producción:
+								</Form.Label>
+										<Select className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
+								</Form.Group>
+							</div>
 						<div className="fechaVencimiento">
 							<Form.Group as={Row}>
 								<Form.Label column sm={4}>
@@ -257,10 +313,10 @@ alert(this.props.id_productor);
 					</Form>
 				<div className="botonesNuevoProducto">
 							<div className="botonAtras">
-								<a href='/principalProductores'><Button variant="success">Cancelar</Button></a>
+								<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
 							</div>
 							<div className="botonCrear">
-								<Button variant="success" type="submit">Crear</Button>
+								<Button variant="success" type="submit" onClick={(e)=>this.handleSubmit(e)}>Crear</Button>
 							</div>
 				</div> 
 			 </div>

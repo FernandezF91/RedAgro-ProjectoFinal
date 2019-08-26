@@ -1,7 +1,10 @@
 package app.modelos;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "Producto_productor")
@@ -20,18 +29,22 @@ public class EntidadProductoProductor {
     private long id;
 	
 	@ManyToOne()
-    @JoinColumn(name = "productor_id", nullable = true)
+    @JoinColumn(name = "productor_id", nullable = false)
     private EntidadProductor productor;
 	
 	@ManyToOne()
-    @JoinColumn(name = "producto_id", nullable = true)
+    @JoinColumn(name = "producto_id", nullable = false)
     private EntidadProducto producto;
+	
+	@Column(name="titulo",nullable = false)
+	private String titulo;
 	
 	@Column(name="descripcion",nullable = false)
 	private String descripcion;
 	
-	@Column(name="imagen",nullable = false)
-	private String imagen;
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "producto_productor", cascade = CascadeType.ALL)
+    private List<EntidadImagen> imagenes = new ArrayList<>();
 	
 	@Column(name="tipo_unidad",nullable = false)
 	private String tipo_unidad;
@@ -83,14 +96,6 @@ public class EntidadProductoProductor {
 		this.descripcion = descripcion;
 	}
 
-	public String getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(String imagen) {
-		this.imagen = imagen;
-	}
-
 	public String getTipo_unidad() {
 		return tipo_unidad;
 	}
@@ -138,7 +143,26 @@ public class EntidadProductoProductor {
 	public void setTiempo_preparacion(int tiempo_preparacion) {
 		this.tiempo_preparacion = tiempo_preparacion;
 	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public List<EntidadImagen> getImagenes() {
+		return imagenes;
+	}
+
+	public void setImagenes(List<EntidadImagen> imagenes) {
+		this.imagenes = imagenes;
+	}
 		
-	
 	
 }
