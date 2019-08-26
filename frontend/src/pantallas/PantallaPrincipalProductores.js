@@ -25,7 +25,7 @@ import historico from '../imagenes/historico.png';
 
 
 import Container from 'react-bootstrap/Container';
-import {BrowserRouter, Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -39,14 +39,16 @@ import CargarHistorico from '../pantallas/CargarHistorico';
 const NuevoProductoRouter = withRouter(NuevoProducto);
 const AlertaProductorRouter = withRouter(AlertaProductor);
 
-class PantallaPrincipalProductores extends Component 
-{
+
+class PantallaPrincipalProductores extends Component {
+
 
 	constructor(props) {
 
 		super(props)
 
 		this.state = {
+
 			
 			id:this.props.location.state.id
 			
@@ -76,8 +78,8 @@ this.props.history.push({
 }
 
 
-render() 
-	{
+	render() {
+
 		return (
 			<body className="fondo">
 				<div className="barraNavegacion">
@@ -123,32 +125,6 @@ render()
 								<NavDropdown.Divider />
 							</div>
 							<div className="subMenu">
-								<div className="reserva">
-									<Row>
-										<img src={reservas} width="30px" height="25px"></img><p>Reservas</p>
-									</Row>
-								</div>
-								<div className="alerta">
-									<Row>
-										<img src={campanalertas} width="30px" height="30px"></img><Link to={'/principalProductores/Alertas'}><p>Alertas</p></Link>
-									</Row>
-								</div>
-								<div className="historico">
-									<Row>
-										<img src={historico} width="30px" height="25px"></img><Link to={'/principalProductores/CargarHistorico'}><p>Histórico</p></Link>
-									</Row>
-								</div>
-								<div className="planificacion">
-									<Row>
-										<img src={planificacion} width="30px" height="25px"></img><p>Planificación</p>
-									</Row>
-								</div>
-								<div className="analytics">
-									<Row>
-										<img src={analytics} width="30px" height="19px"></img><p>Analitycs</p>
-									</Row>
-								</div>
-
 								<div className="productos">
 									<Row>
 										<div className="imagen_prod">
@@ -158,11 +134,36 @@ render()
 											<NavDropdown title="Productos" id="producto_drop">
 												<NavDropdown.Item href="#action/3.1">Listado de Productos</NavDropdown.Item>
 												<NavDropdown.Divider />
-												<NavDropdown.Item><Link to="/principalProductores/NuevoProducto">Nuevo Producto</Link></NavDropdown.Item>
+												<NavDropdown.Item href="/principalProductores/NuevoProducto">Nuevo Producto</NavDropdown.Item>
 												<NavDropdown.Divider />
 												<NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
 											</NavDropdown>
 										</div>
+									</Row>
+								</div>
+								<div className="reserva">
+									<Row>
+										<img src={reservas} width="30px" height="25px"></img> <p>Reservas</p>
+									</Row>
+								</div>
+								<div className="planificacion">
+									<Row>
+										<img src={planificacion} width="30px" height="25px"></img><p>Planificación</p>
+									</Row>
+								</div>
+								<div className="analytics">
+									<Row>
+										<img src={analytics} width="30px" height="19px"></img><p>Estadísticas</p>
+									</Row>
+								</div>
+								<div className="historico">
+								<Row>
+										<img src={historico} width="30px" height="25px"></img><Link to={'/principalProductores/CargarHistorico'}><p>Histórico</p></Link>
+								</Row>
+								</div>
+								<div className="alerta">
+									<Row>
+										<img src={campanalertas} width="30px" height="30px"></img><Link to={'/principalProductores/Alertas'}><p>Alertas</p></Link>
 									</Row>
 								</div>
 								<div className="configuracion">
@@ -194,15 +195,7 @@ render()
 
 				</Container>
 			</body>
-
-
-
-
-
 		);
-
-
-
 	};
 }
 export default PantallaPrincipalProductores;

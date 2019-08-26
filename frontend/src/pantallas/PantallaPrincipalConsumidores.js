@@ -6,6 +6,9 @@ import { MDBIcon } from "mdbreact";
 import Row from 'react-bootstrap/Row';
 import { Navbar, NavDropdown } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import { BrowserRouter, Router, Route, Switch, Link } from 'react-router-dom';
 
 //imagenes para barra
 import culturaVerde from '../imagenes/cultura-verde-2.png';
@@ -20,11 +23,6 @@ import reservas from '../imagenes/reservas.png';
 import compras from '../imagenes/compras.png';
 import preferencias from '../imagenes/preferencias.png';
 
-
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import {BrowserRouter, Router, Route, Switch} from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import Reservas from '../pantallas/Reservas';
 import AlertaConsumidor from '../pantallas/AlertaConsumidor';
 import PreferenciasConsumidor from '../pantallas/PreferenciasConsumidor';
@@ -37,8 +35,8 @@ class PantallaPrincipalconsumidores extends Component {
 		super(props)
 
 		this.state = {
-			
-			usuario:{}
+
+			usuario: {}
 
 		}
 
@@ -46,9 +44,7 @@ class PantallaPrincipalconsumidores extends Component {
 
 
 	render() {
-
 		return (
-
 			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
@@ -84,7 +80,6 @@ class PantallaPrincipalconsumidores extends Component {
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
-
 					<Row className="filaContenedora">
 						<Col sm={2} className="menuConsumidor">
 							<div className="cuenta">
@@ -96,21 +91,6 @@ class PantallaPrincipalconsumidores extends Component {
 								<NavDropdown.Divider />
 							</div>
 							<div className="subMenu">
-								<div className="reserva">
-									<Row>
-										<img src={reservas} width="30px" height="25px"></img> <Link to={'/principalConsumidores/reservas'}><p>Reservas</p></Link>
-									</Row>
-								</div>
-								<div className="alerta">
-									<Row>
-										<img src={campanalertas} width="30px" height="35px"></img><Link to={'/principalConsumidores/Alertas'}><p>Alertas</p></Link>
-									</Row>
-								</div>
-								<div className="preferencia">
-									<Row>
-										<img src={preferencias} width="30px" height="19px"></img><Link to={'/principalConsumidores/PreferenciasConsumidor'}><p>Preferencias</p></Link>
-									</Row>
-								</div>
 								<div className="compra">
 									<Row>
 										<div className="imagen_compras">
@@ -123,6 +103,21 @@ class PantallaPrincipalconsumidores extends Component {
 												<NavDropdown.Item href="#action/3.2">Categorias</NavDropdown.Item>
 											</NavDropdown>
 										</div>
+									</Row>
+								</div>
+								<div className="reserva">
+									<Row>
+										<img src={reservas} width="30px" height="25px"></img> <Link to={'/principalConsumidores/Reservas'}><p>Reservas</p></Link>
+									</Row>
+								</div>
+								<div className="preferencia">
+									<Row>
+										<img src={preferencias} width="30px" height="19px"></img><Link to={'/principalConsumidores/PreferenciasConsumidor'}><p>Preferencias</p></Link>
+									</Row>
+								</div>
+								<div className="alerta">
+									<Row>
+										<img src={campanalertas} width="30px" height="35px"></img><Link to={'/principalConsumidores/Alertas'}><p>Alertas</p></Link>
 									</Row>
 								</div>
 								<div className="configuracion">
@@ -142,15 +137,13 @@ class PantallaPrincipalconsumidores extends Component {
 							</div>
 						</Col>
 						<Col className="ruteo">
-							<Route path={'/principalConsumidores/reservas'} component={Reservas} />
+							<Route path={'/principalConsumidores/Reservas'} component={Reservas} />
 							<Route path={'/principalConsumidores/Alertas'} component={AlertaConsumidor} />
 							<Route path={'/principalConsumidores/PreferenciasConsumidor'} component={PreferenciasConsumidor} />
 						</Col>
 					</Row>
-					
 				</Container>
 			</body>
-
 		);
 	};
 }
