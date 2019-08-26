@@ -80,11 +80,17 @@ p, h4{
 
 .alerta p{
 
-margin-top:5.5px;
+margin-top:7px;
 
 }
 
-#config_drop, #compra_drop, #producto_drop{
+.planificacion p{
+
+margin-top:2.4px;
+
+}
+
+#compra_drop, #producto_drop{
 
 color: black!important;
 font-weight: bold;
@@ -92,6 +98,15 @@ margin-left:-10px;
 
 
 }
+
+#config_drop{
+
+color: black!important;
+font-weight: bold;
+margin-left:-5px;
+
+}
+
 
 #producto_drop{
 
@@ -105,15 +120,26 @@ margin-top:-5.4px;
 
 }
 
+#config_dropConsu{
+
+margin-top:-7.5px;
+color: black!important;
+font-weight: bold;
+margin-left:-10px;
+
+
+}
+
+
 #compra_drop{
 
-margin-top:-4.5px;
+margin-top:-4px;
 
 }
 
 .alerta{
 
-margin-top:-7.5px;
+margin-top:-7px;
 
 }
 
@@ -125,13 +151,19 @@ margin-top:-4px;
 
 .configuracion{
 
-margin-top:6px;	
+margin-top:-3.8px;	
 
 }
 
 .productos{
 
 margin-top:-3.8px;	
+
+}
+
+.reserva{
+
+margin-top:7px;	
 
 }
 

@@ -120,13 +120,13 @@ class PantallaPrincipalconsumidores extends Component {
 										<img src={campanalertas} width="30px" height="35px"></img><Link to={'/principalConsumidores/Alertas'}><p>Alertas</p></Link>
 									</Row>
 								</div>
-								<div className="configuracion">
+								<div className="configuracionConsu">
 									<Row>
 										<div className="imagen_conf">
 											<img src={configuracion} width="30px" height="19px"></img>
 										</div>
 										<div className="conf_drop">
-											<NavDropdown title="Configuración" id="config_drop">
+											<NavDropdown title="Configuración" id="config_dropConsu">
 												<NavDropdown.Item href="#action/3.1">Editar mis datos</NavDropdown.Item>
 												<NavDropdown.Divider />
 												<NavDropdown.Item href="#action/3.2">Modificar contraseña</NavDropdown.Item>

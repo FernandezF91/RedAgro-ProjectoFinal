@@ -134,7 +134,7 @@ this.props.history.push({
 											<NavDropdown title="Productos" id="producto_drop">
 												<NavDropdown.Item href="#action/3.1">Listado de Productos</NavDropdown.Item>
 												<NavDropdown.Divider />
-												<NavDropdown.Item href="/principalProductores/NuevoProducto">Nuevo Producto</NavDropdown.Item>
+												<NavDropdown.Item><Link to="/principalProductores/NuevoProducto">Nuevo Producto</Link></NavDropdown.Item>
 												<NavDropdown.Divider />
 												<NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
 											</NavDropdown>
