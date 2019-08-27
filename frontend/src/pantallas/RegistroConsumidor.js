@@ -12,6 +12,7 @@ import 'moment/locale/es';
 import { DatePickerInput } from 'rc-datepicker';
 import 'rc-datepicker/lib/style.css';
 import { isDate } from 'moment';
+import Modal from 'react-awesome-modal';
 
 class RegistroConsumidor extends Component {
 
@@ -22,10 +23,14 @@ class RegistroConsumidor extends Component {
 		this.state = {
 			campos: [],
 			errores: [],
+			visible:false,
+			mensaje:"",
+			titulo:"Error",
 			validated: false,
 		}
 
 		this.limpiarCampos = this.limpiarCampos.bind(this);
+		this.mostrarLogin = this.mostrarLogin.bind(this);
 
 	}
 
@@ -81,6 +86,11 @@ class RegistroConsumidor extends Component {
 
 	}
 
+	 closeModal() {
+        this.setState({
+            visible : false
+        });
+    }
 
 	cambiosFecha(e) {
 
@@ -98,6 +108,15 @@ class RegistroConsumidor extends Component {
 
 	}
 
+
+	mostrarLogin(){
+
+		 window.setTimeout(() => {
+       this.props.history.push('/login')
+       // history is available by design in this.props when using react-router
+    }, 3000);
+
+	}
 	crearUsuario(e){
 
 		var _this = this;
@@ -120,7 +139,9 @@ class RegistroConsumidor extends Component {
 
 			if(response.status !==200){
 
-			alert("Ocurrió algún error inesperado. Intente nuevamente");
+			let mensaje = "Ocurrió algun problema, intente nuevamente"
+			_this.setState({visible:true,
+			mensaje:mensaje});
 			return;
 			
 			}
@@ -129,10 +150,15 @@ class RegistroConsumidor extends Component {
 
 				function(response) {
 
-					_this.setState({validated:true});
-					 alert("Registro exitoso");
-			 _this.props.history.push("/login");				
-				
+					 let mensaje = "Serás redireccionado directamente hacia el acceso de usuarios"
+			_this.setState({
+			validated:true,
+			visible:true,
+			mensaje:mensaje,
+			titulo:"Registro exitoso!"});
+			
+			_this.mostrarLogin();
+			
 			});
 
 			});		
@@ -265,6 +291,21 @@ class RegistroConsumidor extends Component {
 							</div>							
 						</Form>
 					</div>
+					<section>
+                <Modal 
+                    visible={this.state.visible}
+                    width="460"
+                    height="120"
+                    effect="fadeInUp"
+                    onClickAway={() => this.closeModal()}
+                >
+                    <div>						
+                        <h1>{this.state.titulo}</h1>
+                        <p>{this.state.mensaje}</p>
+                        <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
+                    </div>
+                </Modal>
+            </section>
 				</Container>
 			</body>
 		);

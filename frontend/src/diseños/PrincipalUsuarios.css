@@ -15,6 +15,14 @@ height:100vh;
 
 }
 
+.imagenUsuarioProd{
+
+	margin-left:-2%;
+	margin-top:6%;
+	flex:1;
+
+}
+
 .menuUsuario {
 
 	margin-left:-14px;
@@ -43,6 +51,12 @@ flex:1;
 .iconos{
 
 margin-left:70px;
+flex-direction:column;
+
+}
+
+.iconosProd{
+margin-left:672px;
 flex-direction:column;
 
 }
@@ -86,7 +100,7 @@ margin-top:7px;
 
 .planificacion p{
 
-margin-top:2.4px;
+margin-top:1px;
 
 }
 
@@ -173,3 +187,7 @@ margin-top:7px;
 	
 }
 
+.imgA{
+
+	margin-top:3.1px;
+}

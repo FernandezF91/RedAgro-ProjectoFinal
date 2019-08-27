@@ -87,15 +87,9 @@ this.props.history.push({
 						<div className="culturaVerde">
 							<img src={culturaVerde} width="130px" height="50px"></img>
 						</div>
-						<div className="barraBusqueda">
+						<div className="iconosProd">
 							<Row>
-								<input type="text" placeholder="Buscar productos y productores.. " name="search" />
-								<button type="submit"><i class="fa fa-search"></i></button>
-							</Row>
-						</div>
-						<div className="iconos">
-							<Row>
-								<div className="imagenUsuario">
+								<div className="imagenUsuarioProd">
 									<img src={usuario} width="30px" height="30px"></img>
 								</div>
 								<div className="menuUsuario">
@@ -163,7 +157,7 @@ this.props.history.push({
 								</div>
 								<div className="alerta">
 									<Row>
-										<img src={campanalertas} width="30px" height="30px"></img><Link to={'/principalProductores/Alertas'}><p>Alertas</p></Link>
+										<img src={campanalertas} className="imgA" width="30px" height="30px"></img><Link to={'/principalProductores/Alertas'}><p>Alertas</p></Link>
 									</Row>
 								</div>
 								<div className="configuracion">

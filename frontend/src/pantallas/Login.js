@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import '../diseños/Login.css';
 import '../diseños/estilosGlobales.css';
+import Modal from 'react-awesome-modal';
 
 
 class LoginForm extends Component {
@@ -21,7 +22,9 @@ class LoginForm extends Component {
 		this.state = {
 			fields: [],
 			errores: [],
-            usuario : {}
+			usuario : {},
+			visible : false,
+			mensajeError:""
 		}
 
 		this.validarDatos = this.validarDatos.bind(this);
@@ -40,6 +43,13 @@ class LoginForm extends Component {
 		})
 
 	}
+
+    closeModal() {
+        this.setState({
+            visible : false
+        });
+    }
+
 
 	validarDatos() {
 
@@ -89,7 +99,11 @@ class LoginForm extends Component {
 
 			if(response.status !==200){
 
-			alert("Ocurrió algún problema. Intente nuevamente")
+			// alert("Ocurrió algún problema. Intente nuevamente")
+
+			let mensajeError = "Ocurrió algun problema, intente nuevamente"
+			_this.setState({visible:true,
+			mensajeError:mensajeError});
 
 			return;
 			
@@ -115,7 +129,9 @@ class LoginForm extends Component {
 
 				}else{
 
-					alert("Cuenta inexistente o datos incorrectos");
+					let mensajeError = "Cuenta inexistente o datos incorrectos";
+			_this.setState({visible:true,
+			mensajeError:mensajeError});
 				} 
 				
 			});
@@ -195,6 +211,21 @@ class LoginForm extends Component {
 						</div>
 						<a href="/recupero_email"><p>olvidé mi contraseña</p></a>
 					</div>
+					<section>
+                <Modal 
+                    visible={this.state.visible}
+                    width="400"
+                    height="120"
+                    effect="fadeInUp"
+                    onClickAway={() => this.closeModal()}
+                >
+                    <div>
+                        <h1>Error</h1>
+                        <p>{this.state.mensajeError}</p>
+                        <a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
+                    </div>
+                </Modal>
+            </section>
 				</Container>
 			</body>
 		);
