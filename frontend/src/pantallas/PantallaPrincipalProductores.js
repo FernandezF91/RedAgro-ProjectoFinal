@@ -38,6 +38,7 @@ import ModificarContraseña from '../pantallas/ModificarContraseña';
 import DatosDeUsuario from '../pantallas/DatosDeUsuario';
 
 
+//hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 
 const NuevoProductoRouter = withRouter(NuevoProducto);
 const AlertaProductorRouter = withRouter(AlertaProductor);
@@ -54,7 +55,7 @@ class PantallaPrincipalProductores extends Component {
 		this.state = {
 
 			
-			id:this.props.location.state.id
+			id:this.props.location.state.id //paso id de usuario desde el LOGIN
 			
 		}
 

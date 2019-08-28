@@ -14,6 +14,8 @@ import 'rc-datepicker/lib/style.css';
 import { isDate } from 'moment';
 import Modal from 'react-awesome-modal';
 
+const maxDate = new Date();
+
 class RegistroConsumidor extends Component {
 
 	constructor() {
@@ -229,6 +231,7 @@ class RegistroConsumidor extends Component {
 										ref = "datePicker"	
 										name ="fecha_nac"								
 										displayFormat='DD/MM/YYYY'
+										maxDate={maxDate}
 											className = "calendario"	
 											onChange = {(e)=>this.cambiosFecha(e)}							
 										/>

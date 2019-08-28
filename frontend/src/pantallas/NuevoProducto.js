@@ -16,6 +16,7 @@ import '../diseños/nuevoProducto.css';
 import '../diseños/estilosGlobales.css';
 import PantallaPrincipalProductores from './PantallaPrincipalProductores';
 
+const minDate=new Date();
 
 const productos = [
 	{ label: "Tomate perita", value: 1 },
@@ -266,6 +267,7 @@ alert(this.state.id);
 									<DatePickerInput
 										name="fecha_ven"
 										displayFormat='DD/MM/YYYY'
+										minDate={minDate}
 										className="calendario"
 										onChange={(e) => this.cambiosFecha(e)}
 									/>

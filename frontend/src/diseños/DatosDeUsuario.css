@@ -6,12 +6,25 @@ margin-left:11.2%;
 
 .calend{
 
-	width:45%;
+	width:39.5%;
 }
 
-.form-control[type="nom"],.form-control[type="ap"]{
+.nom,.ap{
 
-width:40%;
+width:35%;
 
+
+}
+
+.contenidoDU{
+
+margin-top:20px;
+
+}
+
+.form-control[type="ap"],.form-control[type="nom"],.form-control[type="tel"],.form-control[type="mail"]{
+
+
+width: 35%;
 
 }

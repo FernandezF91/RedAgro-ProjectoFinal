@@ -1,5 +1,10 @@
 .form-control[type="mf"]{
 
-width:40%;
+width:35%;
 
+}
+
+.contenidoMF{
+
+	margin-top:20px;
 }

@@ -26,7 +26,7 @@ class ModificarContraseña extends Component {
 			usuario : {},
 			visible : false,
 			mensajeError:"",
-			id:this.props.id_productor
+			id:this.props.id_productor //para ir pasando el ID del usuario de pantalla a pantalla
 		}
 
 		this.validarDatos = this.validarDatos.bind(this);
@@ -180,6 +180,7 @@ class ModificarContraseña extends Component {
 		return (
 			<div>
 				<div className="titulosPrincipales">Modificar contraseña</div>
+				<div className="contenidoMF">
 					<div className="contraseñaActual" >
 							<Form.Group as={Row}>
 								<Form.Label column sm={4}>
@@ -227,6 +228,7 @@ class ModificarContraseña extends Component {
 								<Button variant="success" type="submit" onClick={(e)=>this.handleSubmit(e)}>Crear</Button>
 							</div>
 				</div> 
+				</div>
 			</div>
 		);
 	};

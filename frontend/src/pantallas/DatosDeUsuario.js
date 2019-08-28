@@ -8,12 +8,13 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
-import '../diseños/estilosGlobales.css';
+// import '../diseños/estilosGlobales.css';
 import '../diseños/DatosDeUsuario.css';
 import '../diseños/Registro.css';
 import Modal from 'react-awesome-modal';
 import { DatePickerInput } from 'rc-datepicker';
 
+const maxDate = new Date();
 
 class DatosDeUsuario extends Component {
 
@@ -27,7 +28,7 @@ class DatosDeUsuario extends Component {
 			usuario : {},
 			visible : false,
 			mensajeError:"",
-			id:this.props.id_productor
+			id:this.props.id_productor //para ir pasando el ID del usuario de pantalla a pantalla
 		}
 
 		this.validarDatos = this.validarDatos.bind(this);
@@ -47,6 +48,14 @@ class DatosDeUsuario extends Component {
 		})
 
 	}
+
+cambiosFecha(e) {
+
+		let fields = this.state.fields;
+
+		fields["fecha_nac"] = e;
+
+}
 
     closeModal() {
         this.setState({
@@ -181,6 +190,7 @@ class DatosDeUsuario extends Component {
 		return (
 			<div>
 				<div className="titulosPrincipales">Datos de usuario</div>
+				<div className= "contenidoDU">
 					<div className="nombreDU" >
 							<Form.Group as={Row}>
 								<Form.Label column sm={4}>
@@ -218,6 +228,7 @@ class DatosDeUsuario extends Component {
 										ref = "datePicker"	
 										name ="fecha_nac"								
 										displayFormat='DD/MM/YYYY'
+										maxDate={maxDate}
 											className = "calend"	
 											onChange = {(e)=>this.cambiosFecha(e)}							
 										/>
@@ -231,7 +242,7 @@ class DatosDeUsuario extends Component {
 									</Form.Label>
 									<Form.Control
 										required
-										type="number"
+										type="tel"
 										name="telefono"
 										pattern="[0-9]{8,14}"
 										onChange={(e) => this.detectarCambios(e)}
@@ -245,7 +256,7 @@ class DatosDeUsuario extends Component {
 									</Form.Label>
 									<Form.Control
 										required
-										type="email"
+										type="mail"
 										name="mail"
 										onChange={(e) => this.detectarCambios(e)}
 									/>
@@ -258,7 +269,8 @@ class DatosDeUsuario extends Component {
 							<div className="botonCrear">
 								<Button variant="success" type="submit" onClick={(e)=>this.handleSubmit(e)}>Crear</Button>
 							</div>
-				</div> 
+				</div>
+				</div>
 			</div>
 		);
 	};

@@ -26,6 +26,7 @@ ReactDOM.render(
 	<Route path="/registroProductor" component={RegistroProductor}/>
 	<Route path="/principalProductores" component={PantallaPrincipalProductores}/>
 	<Route path="/principalConsumidores" component={PantallaPrincipalConsumidores}/>
+	<Route path="/seleccionUsuario" component={SeleccionUsuario}/>
 	<Route path="*" component={NotFound}/>
     </Switch>
     </BrowserRouter>,
