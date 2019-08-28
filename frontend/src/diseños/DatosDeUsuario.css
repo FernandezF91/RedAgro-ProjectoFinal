@@ -1,0 +1,17 @@
+.fechaNac{
+ 
+margin-left:11.2%;
+
+}
+
+.calend{
+
+	width:45%;
+}
+
+.form-control[type="nom"],.form-control[type="ap"]{
+
+width:40%;
+
+
+}

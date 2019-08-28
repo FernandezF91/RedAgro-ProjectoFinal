@@ -14,6 +14,7 @@ import RegistroProductor from './pantallas/RegistroProductor';
 import PantallaPrincipalProductores from './pantallas/PantallaPrincipalProductores';
 import PantallaPrincipalConsumidores from './pantallas/PantallaPrincipalConsumidores';
 import SeleccionUsuario from './pantallas/SeleccionUsuario';
+import ModificarContraseña from './pantallas/ModificarContraseña';
 
 ReactDOM.render(
     <BrowserRouter>
@@ -25,7 +26,6 @@ ReactDOM.render(
 	<Route path="/registroProductor" component={RegistroProductor}/>
 	<Route path="/principalProductores" component={PantallaPrincipalProductores}/>
 	<Route path="/principalConsumidores" component={PantallaPrincipalConsumidores}/>
-	<Route path="/seleccionUsuario" component={SeleccionUsuario}/>
 	<Route path="*" component={NotFound}/>
     </Switch>
     </BrowserRouter>,

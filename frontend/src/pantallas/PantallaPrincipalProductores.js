@@ -34,11 +34,15 @@ import { withRouter } from 'react-router';
 import AlertaProductor from '../pantallas/AlertaProductor';
 import NuevoProducto from '../pantallas/NuevoProducto';
 import CargarHistorico from '../pantallas/CargarHistorico';
+import ModificarContraseña from '../pantallas/ModificarContraseña';
+import DatosDeUsuario from '../pantallas/DatosDeUsuario';
+
 
 
 const NuevoProductoRouter = withRouter(NuevoProducto);
 const AlertaProductorRouter = withRouter(AlertaProductor);
-
+const ModificarContraseñaRouter = withRouter(ModificarContraseña);
+const EditarDatosRouter = withRouter(DatosDeUsuario);
 
 class PantallaPrincipalProductores extends Component {
 
@@ -167,9 +171,9 @@ this.props.history.push({
 										</div>
 										<div className="conf_drop">
 											<NavDropdown title="Configuración" id="config_drop">
-												<NavDropdown.Item href="#action/3.1">Editar mis datos</NavDropdown.Item>
+												<NavDropdown.Item><Link to="/principalProductores/EditarDatos">Editar mis datos</Link></NavDropdown.Item>
 												<NavDropdown.Divider />
-												<NavDropdown.Item href="#action/3.2">Modificar contraseña</NavDropdown.Item>
+												<NavDropdown.Item><Link to="/principalProductores/ModificarContraseña">Modificar contraseña</Link></NavDropdown.Item>
 											</NavDropdown>
 										</div>
 									</Row>
@@ -184,6 +188,12 @@ this.props.history.push({
 							render = {(props) => <NuevoProductoRouter id_productor={this.state.id}/>} 
 							/>
 							<Route path='/principalProductores/CargarHistorico' component={CargarHistorico} />
+							<Route path='/principalProductores/modificarContraseña' 
+							render = {(props) => <ModificarContraseñaRouter id_productor={this.state.id}/>}
+							/>
+							<Route path='/principalProductores/EditarDatos' 
+							render = {(props) => <EditarDatosRouter id_productor={this.state.id}/>}
+							/>
 						</Col>
 					</Row>
 
