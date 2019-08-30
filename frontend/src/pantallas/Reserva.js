@@ -4,10 +4,10 @@ import { Nav, Link, Route, withRouter } from 'react-router-dom';
 //import Pagination from "react-js-pagination";
 import { Table, Row, Col } from 'react-bootstrap';
 
-const Reserva = ({ listaDeReservas, currentPage, itemsPerPage }) => {
+const Reserva = ({ listaDeReservas, currentPage, reservasPerPage }) => {
 
-	const indexOfLastReserva = currentPage * itemsPerPage;
-	const indexOfFirstReserva = indexOfLastReserva - itemsPerPage;
+	const indexOfLastReserva = currentPage * reservasPerPage;
+	const indexOfFirstReserva = indexOfLastReserva - reservasPerPage;
 	const lista = listaDeReservas.slice(indexOfFirstReserva, indexOfLastReserva);
 
 	return (

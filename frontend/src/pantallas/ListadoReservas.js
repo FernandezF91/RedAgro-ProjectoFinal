@@ -109,7 +109,7 @@ class ListadoReservas extends Component {
 				}
 			],
 			currentPage: 1,
-			itemsPerPage: 4			
+			reservasPerPage: 4			
 		};
 	}
 
@@ -119,8 +119,8 @@ class ListadoReservas extends Component {
 
 	render() {
 
-		const {reservasRealizadas, currentPage, itemsPerPage } = this.state;
-		const numberOfPages = Math.ceil(reservasRealizadas.length / itemsPerPage);
+		const {reservasRealizadas, currentPage, reservasPerPage } = this.state;
+		const numberOfPages = Math.ceil(reservasRealizadas.length / reservasPerPage);
 
 		return (
 
@@ -129,9 +129,9 @@ class ListadoReservas extends Component {
 
 				<Reserva listaDeReservas={reservasRealizadas}
 					currentPage={currentPage}
-					itemsPerPage={itemsPerPage} />
+					reservasPerPage={reservasPerPage} />
 				{
-					reservasRealizadas.length > itemsPerPage ? 
+					reservasRealizadas.length > reservasPerPage ? 
 					<PaginacionDeReservas 
 						pages = {numberOfPages}
 						nextPage = {this.nextPage}
