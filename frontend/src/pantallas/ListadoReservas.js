@@ -82,6 +82,31 @@ class ListadoReservas extends Component {
 					produtor_telefono: '111234569',
 					estado: 'Cancelado',
 					punto_entrega: 'Feria vecinal'
+				},
+				{
+					id: '7',
+					fecha: '26/08/2019',
+					forma_retiro: 'Personal',
+					persona_retiro: 'Paloma',
+					total_reserva: '650',
+					consumidor: 'Pepe',
+					productor: 'Fernando Molina',
+					produtor_telefono: '111234569',
+					estado: 'Disponible',
+					punto_entrega: 'Feria Barrial'
+				},
+
+				{
+					id: '8',
+					fecha: '26/08/2019',
+					forma_retiro: 'Personal',
+					persona_retiro: 'Paloma',
+					total_reserva: '650',
+					consumidor: 'Pepe',
+					productor: 'Fernando Molina',
+					produtor_telefono: '111234569',
+					estado: 'Cancelado',
+					punto_entrega: 'Feria vecinal'
 				}
 
 			],
@@ -97,7 +122,7 @@ class ListadoReservas extends Component {
 	render() {
 
 		const {reservasRealizadas, currentPage, itemsPerPage } = this.state;
-		const numberOfPages = Math.floor(reservasRealizadas.length / itemsPerPage);
+		const numberOfPages = Math.ceil(reservasRealizadas.length / itemsPerPage);
 
 		return (
 
