@@ -95,7 +95,6 @@ class ListadoReservas extends Component {
 					estado: 'Disponible',
 					punto_entrega: 'Feria Barrial'
 				},
-
 				{
 					id: '8',
 					fecha: '26/08/2019',
@@ -108,10 +107,9 @@ class ListadoReservas extends Component {
 					estado: 'Cancelado',
 					punto_entrega: 'Feria vecinal'
 				}
-
 			],
 			currentPage: 1,
-			itemsPerPage: 3			
+			itemsPerPage: 4			
 		};
 	}
 
@@ -132,9 +130,8 @@ class ListadoReservas extends Component {
 				<Reserva listaDeReservas={reservasRealizadas}
 					currentPage={currentPage}
 					itemsPerPage={itemsPerPage} />
-
 				{
-					reservasRealizadas.length > 1 ? 
+					reservasRealizadas.length > itemsPerPage ? 
 					<PaginacionDeReservas 
 						pages = {numberOfPages}
 						nextPage = {this.nextPage}
