@@ -9,7 +9,7 @@ const PaginacionDeReservas = (props) => {
   }
 
   return (
-    <div className="pagination">
+    <div className="pagination paginado">
       <MDBRow center>
         <MDBCol bottom>
           <MDBPagination circle color="teal">

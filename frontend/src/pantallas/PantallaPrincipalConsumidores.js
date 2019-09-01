@@ -3,11 +3,7 @@ import '../diseños/PrincipalUsuarios.css';
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react'
 import { MDBIcon } from "mdbreact";
-import Row from 'react-bootstrap/Row';
-import { Navbar, NavDropdown } from 'react-bootstrap';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
+import { Navbar, NavDropdown, Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter, Router, Route, Switch, Link } from 'react-router-dom';
 
 //imagenes para barra
@@ -26,7 +22,6 @@ import preferencias from '../imagenes/preferencias.png';
 import ListadoReservas from '../pantallas/ListadoReservas';
 import AlertaConsumidor from '../pantallas/AlertaConsumidor';
 import PreferenciasConsumidor from '../pantallas/PreferenciasConsumidor';
-
 
 class PantallaPrincipalconsumidores extends Component {
 
@@ -59,9 +54,7 @@ class PantallaPrincipalconsumidores extends Component {
 						</div>
 						<div className="iconos">
 							<Row>
-								<div className="imagenUsuario">
-									<img src={usuario} width="30px" height="30px"></img>
-								</div>
+								<i class="fas fa-user iconosBarra"></i>
 								<div className="menuUsuario">
 									<NavDropdown title="Usuario" id="nav-dropdown">
 										<NavDropdown.Item href="/principalConsumidores">Mi cuenta</NavDropdown.Item>
@@ -69,12 +62,8 @@ class PantallaPrincipalconsumidores extends Component {
 										<NavDropdown.Item href="/login">Salir</NavDropdown.Item>
 									</NavDropdown>
 								</div>
-								<div className="alertas">
-									<img src={campanalertas} width="50px" height="50px"></img>
-								</div>
-								<div className="carrito">
-									<img src={carrito} width="40px" height="40px"></img>
-								</div>
+								<i class="fas fa-bell iconosBarra"></i>
+								<i class="fas fa-shopping-cart iconosBarra"></i>
 							</Row>
 						</div>
 					</Navbar>

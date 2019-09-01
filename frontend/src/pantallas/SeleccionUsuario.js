@@ -14,7 +14,7 @@ class SeleccionUsuario extends Component {
 		super()
 
 		this.state = {
-	
+
 		}
 
 
@@ -28,23 +28,23 @@ class SeleccionUsuario extends Component {
 				<div className="barraNavegacion">
 					<Navbar>
 						<div className="culturaVerde">
-						<img src={culturaVerde} width="130px" height="50px"></img>
+							<img src={culturaVerde} width="130px" height="50px"></img>
 						</div>
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
-				<div className = "contenidoSeleccion">
-				<div className="tituloSeleccion">
-				<h3>Selecciona un tipo de usuario:</h3>
-				</div>
-					<div className = "botonesRegistro">
-					<Button variant="success" href="/registroProductor">Soy productor</Button>
-					<Button variant="success" href="/registroConsumidor">Soy consumidor</Button>
+					<div className="contenidoSeleccion">
+						<div className="tituloSeleccion">
+							<h3>Selecciona un tipo de usuario</h3>
+						</div>
+						<div className="botonesRegistro">
+							<Button variant="success" href="/registroProductor">Soy productor</Button>
+							<Button variant="success" href="/registroConsumidor">Soy consumidor</Button>
+						</div>
+						<div className="atras">
+							<Button variant="success" href="/login">Atras</Button>
+						</div>
 					</div>
-					<div className="atras">
-					<Button variant="success" href="/login">Atras</Button>
-					</div>
-				</div>			
 				</Container>
 			</body>
 		);

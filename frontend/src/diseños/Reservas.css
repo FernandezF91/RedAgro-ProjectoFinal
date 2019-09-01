@@ -184,5 +184,27 @@ th.react-bs-table-expand-cell>div{
 }
  */
 
-.react-bootstrap-table table { table-layout: auto !important; }
+.react-bootstrap-table table {
+	table-layout: auto !important;
+}
 
+.paginado {
+	justify-content: center;
+}
+
+.linksReservas {
+	display: flex;
+}
+
+.iconoMenu {
+	margin-left: 5px;
+	margin-top: 3px;
+}
+
+.iconoGrande {
+	color: #79CB79;
+	font-size: 250px;
+}
+
+.sinReservas {
+}

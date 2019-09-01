@@ -9,7 +9,7 @@ class ListadoReservas extends Component {
 	constructor() {
 		super();
 		this.state = {
-			reservasRealizadas:[
+			reservasRealizadas: [
 				{
 					id: '1',
 					fecha: '20/08/2019',
@@ -109,7 +109,7 @@ class ListadoReservas extends Component {
 				}
 			],
 			currentPage: 1,
-			reservasPerPage: 4			
+			reservasPerPage: 4
 		};
 	}
 
@@ -119,7 +119,7 @@ class ListadoReservas extends Component {
 
 	render() {
 
-		const {reservasRealizadas, currentPage, reservasPerPage } = this.state;
+		const { reservasRealizadas, currentPage, reservasPerPage } = this.state;
 		const numberOfPages = Math.ceil(reservasRealizadas.length / reservasPerPage);
 
 		return (
@@ -131,13 +131,13 @@ class ListadoReservas extends Component {
 					currentPage={currentPage}
 					reservasPerPage={reservasPerPage} />
 				{
-					reservasRealizadas.length > reservasPerPage ? 
-					<PaginacionDeReservas 
-						pages = {numberOfPages}
-						nextPage = {this.nextPage}
-						currentPage = {this.state.currentPage} /> 
-					
-					: ''
+					reservasRealizadas.length > reservasPerPage ?
+						<PaginacionDeReservas
+							pages={numberOfPages}
+							nextPage={this.nextPage}
+							currentPage={this.state.currentPage} />
+
+						: ''
 				}
 			</div>
 		);

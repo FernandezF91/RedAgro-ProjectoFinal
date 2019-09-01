@@ -3,9 +3,7 @@ import '../diseños/PrincipalUsuarios.css';
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react'
 import { MDBIcon } from "mdbreact";
-import Row from 'react-bootstrap/Row';
-import { Navbar, NavDropdown } from 'react-bootstrap';
-import Col from 'react-bootstrap/Col';
+import { Navbar, NavDropdown, Col, Row, Form, Button, Container } from 'react-bootstrap';
 
 //imagenes para barra
 import culturaVerde from '../imagenes/cultura-verde-2.png';
@@ -23,12 +21,7 @@ import planificacion from '../imagenes/planificacion.png';
 import preferencias from '../imagenes/preferencias.png';
 import historico from '../imagenes/historico.png';
 
-
-import Container from 'react-bootstrap/Container';
-import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { BrowserRouter, Router, Route, Switch, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
 import AlertaProductor from '../pantallas/AlertaProductor';
@@ -36,7 +29,6 @@ import NuevoProducto from '../pantallas/NuevoProducto';
 import CargarHistorico from '../pantallas/CargarHistorico';
 import ModificarContraseña from '../pantallas/ModificarContraseña';
 import DatosDeUsuario from '../pantallas/DatosDeUsuario';
-
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 
@@ -54,9 +46,9 @@ class PantallaPrincipalProductores extends Component {
 
 		this.state = {
 
-			
-			id:this.props.location.state.id //paso id de usuario desde el LOGIN
-			
+
+			id: this.props.location.state.id //paso id de usuario desde el LOGIN
+
 		}
 
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
@@ -64,23 +56,23 @@ class PantallaPrincipalProductores extends Component {
 	}
 
 
-componentDidMount() {
+	componentDidMount() {
 
-alert(this.state.id);
+		alert(this.state.id);
 
-}
+	}
 
-mostrarPantallaPrincipal(){
+	mostrarPantallaPrincipal() {
 
 
-this.props.history.push({
-	
-	pathname:'/principalProductores',
-	state:{id:this.state.id}
-	})
+		this.props.history.push({
 
-	alert(this.state.id);
-}
+			pathname: '/principalProductores',
+			state: { id: this.state.id }
+		})
+
+		alert(this.state.id);
+	}
 
 
 	render() {
@@ -94,9 +86,7 @@ this.props.history.push({
 						</div>
 						<div className="iconosProd">
 							<Row>
-								<div className="imagenUsuarioProd">
-									<img src={usuario} width="30px" height="30px"></img>
-								</div>
+								<i class="fas fa-user iconosBarra"></i>
 								<div className="menuUsuario">
 									<NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown">
 										<NavDropdown.Item>Mi cuenta</NavDropdown.Item>
@@ -104,9 +94,7 @@ this.props.history.push({
 										<NavDropdown.Item href="/login">Salir</NavDropdown.Item>
 									</NavDropdown>
 								</div>
-								<div className="alertas">
-									<img src={campanalertas} width="50px" height="50px"></img>
-								</div>
+								<i class="fas fa-bell iconosBarra"></i>
 							</Row>
 						</div>
 					</Navbar>
@@ -156,9 +144,9 @@ this.props.history.push({
 									</Row>
 								</div>
 								<div className="historico">
-								<Row>
+									<Row>
 										<img src={historico} width="30px" height="25px"></img><Link to={'/principalProductores/CargarHistorico'}><p>Histórico</p></Link>
-								</Row>
+									</Row>
 								</div>
 								<div className="alerta">
 									<Row>
@@ -183,17 +171,17 @@ this.props.history.push({
 						</Col>
 						<Col className="ruteo">
 							<Route path='/principalProductores/Alertas'
-							render = {(props) => <AlertaProductorRouter id_productor={this.state.id}/>}
+								render={(props) => <AlertaProductorRouter id_productor={this.state.id} />}
 							/>
 							<Route path='/principalProductores/NuevoProducto'
-							render = {(props) => <NuevoProductoRouter id_productor={this.state.id}/>} 
+								render={(props) => <NuevoProductoRouter id_productor={this.state.id} />}
 							/>
 							<Route path='/principalProductores/CargarHistorico' component={CargarHistorico} />
-							<Route path='/principalProductores/modificarContraseña' 
-							render = {(props) => <ModificarContraseñaRouter id_productor={this.state.id}/>}
+							<Route path='/principalProductores/modificarContraseña'
+								render={(props) => <ModificarContraseñaRouter id_productor={this.state.id} />}
 							/>
-							<Route path='/principalProductores/EditarDatos' 
-							render = {(props) => <EditarDatosRouter id_productor={this.state.id}/>}
+							<Route path='/principalProductores/EditarDatos'
+								render={(props) => <EditarDatosRouter id_productor={this.state.id} />}
 							/>
 						</Col>
 					</Row>

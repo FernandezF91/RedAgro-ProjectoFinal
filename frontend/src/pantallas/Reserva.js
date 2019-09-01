@@ -39,11 +39,14 @@ const Reserva = ({ listaDeReservas, currentPage, reservasPerPage }) => {
 							</Col>
 
 							<Col xs={7} md={3}>
+								<div className="linksReservas">
 								<nav>
 									<Link to="principalConsumidores/Reserva/DetalleReserva" className='text-primary mb-3'><p>Ver Detalle</p></Link>
 									{/* <Route path='principalConsumidores/Reserva/DetalleReserva'
 									render={(props) => <DetalleDeReserva reserva_Id={item.id} />} /> */}
 								</nav>
+								<i class="fas fa-ellipsis-v iconoMenu"></i>
+								</div>
 							</Col>
 						</Row>
 					</Table>
@@ -51,6 +54,7 @@ const Reserva = ({ listaDeReservas, currentPage, reservasPerPage }) => {
 
 				<div className="sinReservas">
 					{/* 			Version para consumidores */}
+					<i class="fas fa-receipt iconoGrande"></i>
 					<h5>Ups...</h5>
 					<h6>No tenes reservas!</h6>
 					<h6>Probá buscando productos por <Link to={''}>acá</Link> </h6>
