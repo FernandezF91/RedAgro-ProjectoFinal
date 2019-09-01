@@ -42,7 +42,40 @@ width: 120px;
 
 }
   
+.condicionesInputs{
+
+margin-left:-15%;
+color: #cc0000;
+font-size: 13px;
+
+}
+
+.condicionesInputsImg{
+
+margin-left:-17%;
+color: #cc0000;
+font-size: 13px;
+
+}
+
+.condicionesInputTP{
+
+margin-left:-25%;
+color: #cc0000;
+font-size: 13px;
+
+}
+
+#number{
 
 
+	width: 16%;
+}
 
 
+.calen{
+
+	width: 16%;
+
+
+}

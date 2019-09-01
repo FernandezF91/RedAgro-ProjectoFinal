@@ -47,7 +47,6 @@ const tipoProduccion = [
 	{ label: "Agroecológica", value: 2 },
 ];
 
-
 class NuevoProducto extends Component {
 
 	constructor(props) {
@@ -57,7 +56,6 @@ class NuevoProducto extends Component {
 			campos: [],
 			errores: [],
 			files: [],
-			validated: false,
 			id:this.props.id_productor
 		}
 
@@ -76,6 +74,8 @@ class NuevoProducto extends Component {
 	}
 
 	handleSubmit(e) {
+
+alert("jej");
 
 	var _this = this;
 
@@ -145,7 +145,10 @@ class NuevoProducto extends Component {
 	}
 
 	limpiarCampos() {
+
 		this.refs.form.reset();
+		let campos ={}
+		this.setState({campos:campos});
 	}
 
 	fileSelectedHandler(e) {
@@ -154,10 +157,10 @@ class NuevoProducto extends Component {
 	
   }
 
-  cambiosSelect(opt) {
+  cambiosSelect(opt,a) {
 
 	let campos = this.state.campos;
-		campos[opt.name] = opt.value;
+		campos[a.name] = opt.label;
 		this.setState({ campos })
 	
   }
@@ -165,6 +168,8 @@ class NuevoProducto extends Component {
   componentDidMount(){
 
 alert(this.state.id);
+
+
 
 	}
 
@@ -182,14 +187,14 @@ alert(this.state.id);
 		return (
 			<div className="container">
 				<div className="titulosPrincipales">Nuevo Producto</div>
-					<Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+					<Form ref="form" onSubmit={(e)=>this.handleSubmit(e)}>
 							<div className="dropdownCategoria">
 								<Form.Group as={Row}>
 									<Form.Label column sm={4}>
 										Categoria:
 								</Form.Label>
 
-										<Select className="selectCategoria" name="categoria" options={productos} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
+										<Select className="selectCategoria" name="categoria" options={productos} placeholder="Seleccione un item..." onChange={(opt,a) => this.cambiosSelect(opt,a)}  />
 
 								</Form.Group>
 							</div>
@@ -199,7 +204,7 @@ alert(this.state.id);
 										Tipo de producto:
 								</Form.Label>
 
-										<Select className="selectTipoProducto" name="tipo_producto" options={productos} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
+										<Select className="selectTipoProducto" name="tipo_producto" options={productos} placeholder="Seleccione un item..." onChange={(opt,a)=>this.cambiosSelect(opt,a)} />
 
 								</Form.Group>
 							</div>
@@ -212,10 +217,11 @@ alert(this.state.id);
 										required
 										type="titulo"
 										name="titulo"
-										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+										pattern="([A-Z]|[a-z]|[A-Z][a-z]){1,100}"
 										onChange={(e) => this.detectarCambios(e)}
 									/>
 							</Form.Group>
+							<div><p className="condicionesInputs">(*)100 caractéres como máximo</p></div>
 						</div>
 						<div className="descripcion" >
 							<Form.Group as={Row}>
@@ -226,10 +232,11 @@ alert(this.state.id);
 										required
 										type="desc"
 										name="descripcion"
-										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+										pattern="([A-Z]|[a-z]|[A-Z][a-z]){1,255}"
 										onChange={(e) => this.detectarCambios(e)}
 									/>
 							</Form.Group>
+							<div><p className="condicionesInputs">(*)255 caractéres como máximo</p></div>
 						</div>
 						<div className="imagen" >
 							<Form.Group as={Row}>
@@ -239,6 +246,7 @@ alert(this.state.id);
 					<input type="file" multiple id="file" name="img" onChange={(e)=>this.fileSelectedHandler(e)} />
 					<Button variant="success" className="botonUpload"><label for="file">Elegir</label></Button>
 							</Form.Group>
+							<div><p className="condicionesInputsImg">(*)5 imágenes como máximo</p></div>
 						</div>
 						
 							<div className="dropdownTipoUnidad">
@@ -247,7 +255,7 @@ alert(this.state.id);
 										Tipo de Unidad:
 								</Form.Label>
 
-										<Select className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
+										<Select className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt,a)=>this.cambiosSelect(opt,a)} />
 
 								</Form.Group>
 							</div>
@@ -256,7 +264,7 @@ alert(this.state.id);
 									<Form.Label column sm={4}>
 										Tipo de Producción:
 								</Form.Label>
-										<Select className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt)=>this.cambiosSelect(opt)} />
+										<Select className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt,a)=>this.cambiosSelect(opt,a)} />
 								</Form.Group>
 							</div>
 						<div className="fechaVencimiento">
@@ -264,11 +272,12 @@ alert(this.state.id);
 								<Form.Label column sm={4}>
 									Fecha de vencimiento:
                                 </Form.Label>
-									<DatePickerInput
+									<DatePickerInput								
 										name="fecha_ven"
 										displayFormat='DD/MM/YYYY'
 										minDate={minDate}
-										className="calendario"
+										className="calen"
+										value={this.state.campos["fecha_nac"]}
 										onChange={(e) => this.cambiosFecha(e)}
 									/>
 							</Form.Group>
@@ -278,7 +287,7 @@ alert(this.state.id);
 								<Form.Label column sm={4}>
 									Stock:
                                 </Form.Label>
-									<Form.Control
+									<Form.Control id="number"
 										required
 										type="number"
 										name="stock"
@@ -291,7 +300,7 @@ alert(this.state.id);
 								<Form.Label column sm={4}>
 									Precio:
                                 </Form.Label>
-									<Form.Control
+									<Form.Control id="number"
 										required
 										type="number"
 										name="precio"
@@ -305,22 +314,27 @@ alert(this.state.id);
 									Tiempo de preparación:
                                 </Form.Label>
 									<Form.Control
+									id="number"
 										required
 										type="number"
 										name="tiempo_preparacion"
 										onChange={(e) => this.detectarCambios(e)}
 									/>
 							</Form.Group>
+							<div><p className="condicionesInputTP">(*)Valor en días</p></div>
 						</div>
-					</Form>
-				<div className="botonesNuevoProducto">
+						<div className="botonesNuevoProducto">
 							<div className="botonAtras">
 								<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
 							</div>
 							<div className="botonCrear">
-								<Button variant="success" type="submit" onClick={(e)=>this.handleSubmit(e)}>Crear</Button>
+								<Button variant="success" type="submit">Crear</Button>
+							</div>
+							<div className="botonLimpiar">
+								<Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>
 							</div>
 				</div> 
+					</Form>
 			 </div>
 		);
 	};

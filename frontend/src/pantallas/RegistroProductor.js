@@ -107,6 +107,8 @@ class RegistroProductor extends Component {
 	limpiarCampos() {
 
 		this.refs.form.reset();
+		let campos ={}
+		this.setState({campos:campos});
 
 	}
 
@@ -238,7 +240,8 @@ class RegistroProductor extends Component {
 										displayFormat='DD/MM/YYYY'
 											className = "calendario"
 											maxDate={maxDate}
-											onChange = {(e)=>this.cambiosFecha(e)}							
+											onChange = {(e)=>this.cambiosFecha(e)}
+											value={this.state.campos["fecha_nac"]}						
 										/>
 									<div className="errorConsu">{this.state.errores["fecha_nac"]}</div>
 									</Col>
@@ -264,7 +267,7 @@ class RegistroProductor extends Component {
 										Teléfono:
                                 </Form.Label>
 									<Col sm={10}>
-										<Form.Control required type="tel" name="tel" pattern="[0-9]{8,14}" onChange= {(e)=> this.detectarCambios(e)} />
+										<Form.Control required type="telR" name="tel" pattern="[0-9]{8,14}" onChange= {(e)=> this.detectarCambios(e)} />
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
 												</Form.Control.Feedback>
