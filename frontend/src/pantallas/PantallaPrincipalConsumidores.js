@@ -23,7 +23,7 @@ import reservas from '../imagenes/reservas.png';
 import compras from '../imagenes/compras.png';
 import preferencias from '../imagenes/preferencias.png';
 
-import Reservas from '../pantallas/Reservas';
+import ListadoReservas from '../pantallas/ListadoReservas';
 import AlertaConsumidor from '../pantallas/AlertaConsumidor';
 import PreferenciasConsumidor from '../pantallas/PreferenciasConsumidor';
 
@@ -107,7 +107,7 @@ class PantallaPrincipalconsumidores extends Component {
 								</div>
 								<div className="reserva">
 									<Row>
-										<img src={reservas} width="30px" height="25px"></img> <Link to={'/principalConsumidores/Reservas'}><p>Reservas</p></Link>
+										<img src={reservas} width="30px" height="25px"></img> <Link to={'/principalConsumidores/ListadoReservas'}><p>Reservas</p></Link>
 									</Row>
 								</div>
 								<div className="preferencia">
@@ -137,7 +137,7 @@ class PantallaPrincipalconsumidores extends Component {
 							</div>
 						</Col>
 						<Col className="ruteo">
-							<Route path={'/principalConsumidores/Reservas'} component={Reservas} />
+							<Route path={'/principalConsumidores/ListadoReservas'} component={ListadoReservas} />
 							<Route path={'/principalConsumidores/Alertas'} component={AlertaConsumidor} />
 							<Route path={'/principalConsumidores/PreferenciasConsumidor'} component={PreferenciasConsumidor} />
 						</Col>
