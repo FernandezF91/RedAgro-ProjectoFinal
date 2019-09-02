@@ -15,7 +15,7 @@ class ListadoReservas extends Component {
 					fecha: '20/08/2019',
 					forma_retiro: 'Personal',
 					persona_retiro: 'Brenda',
-					total_reserva: '120',
+					total_reserva: '1200,20',
 					consumidor: 'Pepe',
 					productor: 'Vanesa Molina',
 					produtor_telefono: '11123456',

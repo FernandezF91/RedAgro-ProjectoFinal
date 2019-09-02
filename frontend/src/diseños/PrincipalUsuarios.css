@@ -4,8 +4,6 @@
 
 }
 
-
-
 .imagenUsuario {
 
 	margin-left: -2%;
@@ -51,7 +49,7 @@
 
 .menuConsumidor {
 
-	margin-top: 40px;
+	margin-top: 25px;
 	font-weight: bold;
 	margin-left: 10px;
 
@@ -76,18 +74,6 @@ h4 {
 
 }
 
-.alerta p {
-
-	margin-top: 7px;
-
-}
-
-.planificacion p {
-
-	margin-top: 1px;
-
-}
-
 #compra_drop,
 #producto_drop {
 
@@ -105,7 +91,6 @@ h4 {
 	margin-left: -5px;
 
 }
-
 
 #producto_drop {
 
@@ -140,12 +125,6 @@ h4 {
 
 }
 
-.compra {
-
-	margin-top: -4px;
-
-}
-
 .configuracion {
 
 	margin-top: -3.8px;
@@ -172,4 +151,26 @@ h4 {
 .imgA {
 
 	margin-top: 3.1px;
+}
+
+.iconosMenuLateral {
+	color: #000;
+	font-size: 20px;
+	margin-left: 3px;
+	margin-right: 7px;
+	margin-top: 3px;
+	width: 25px;
+}
+
+.itemsMenu {
+	flex-direction: row;
+	display: flex;
+}
+
+.iconoMiCuenta {
+	color: #000;
+	font-size: 22px;
+	margin-left: 3px;
+	margin-right: 7px;
+	margin-top: 3px;
 }

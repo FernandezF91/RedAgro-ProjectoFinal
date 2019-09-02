@@ -22,15 +22,15 @@ input[type=text] {
 	font-weight: 400;
 }
 
-
-
 @media (max-width: 1000px) {
 	.navbar {
 		overflow: auto !important;
 	}
 }
 
-
+.sombraBarra {
+	z-index: 1;
+}
 
 .barraNavegacion {
 

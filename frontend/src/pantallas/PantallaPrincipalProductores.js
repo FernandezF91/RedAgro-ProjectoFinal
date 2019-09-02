@@ -80,7 +80,7 @@ class PantallaPrincipalProductores extends Component {
 		return (
 			<body className="fondo">
 				<div className="barraNavegacion">
-					<Navbar>
+					<Navbar className="sombraBarra">
 						<div className="culturaVerde">
 							<img src={culturaVerde} width="130px" height="50px"></img>
 						</div>
@@ -105,18 +105,16 @@ class PantallaPrincipalProductores extends Component {
 						<Col sm={2} className="menuConsumidor">
 							<div className="cuenta">
 								<Row>
-									<img src={miCuenta} width="30px" height="25px"></img> <h4>Mi cuenta</h4>
+									<i class="fas fa-bars iconoMiCuenta"></i><h4>Mi cuenta</h4>
 								</Row>
 							</div>
 							<div className="divisor">
 								<NavDropdown.Divider />
 							</div>
 							<div className="subMenu">
-								<div className="productos">
+								<div className="itemsMenu">
 									<Row>
-										<div className="imagen_prod">
-											<img src={productos} width="30px" height="30px"></img>
-										</div>
+										<i class="fas fa-store iconosMenuLateral"></i>
 										<div className="prod_drop">
 											<NavDropdown title="Productos" id="producto_drop">
 												<NavDropdown.Item href="#action/3.1">Listado de Productos</NavDropdown.Item>
@@ -128,36 +126,34 @@ class PantallaPrincipalProductores extends Component {
 										</div>
 									</Row>
 								</div>
-								<div className="reserva">
+								<div className="itemsMenu">
 									<Row>
-										<img src={reservas} width="30px" height="25px"></img> <p>Reservas</p>
+										<i class="fas fa-tasks iconosMenuLateral"></i><p>Reservas</p>
 									</Row>
 								</div>
-								<div className="planificacion">
+								<div className="itemsMenu">
 									<Row>
-										<img src={planificacion} width="30px" height="25px"></img><p>Planificación</p>
+										<i class="fas fa-clipboard-list iconosMenuLateral"></i><p>Planificación</p>
 									</Row>
 								</div>
-								<div className="analytics">
+								<div className="itemsMenu">
 									<Row>
-										<img src={analytics} width="30px" height="19px"></img><p>Estadísticas</p>
+										<i class="fas fa-chart-line iconosMenuLateral"></i><p>Estadísticas</p>
 									</Row>
 								</div>
-								<div className="historico">
+								<div className="itemsMenu">
 									<Row>
-										<img src={historico} width="30px" height="25px"></img><Link to={'/principalProductores/CargarHistorico'}><p>Histórico</p></Link>
+										<i class="fas fa-history iconosMenuLateral"></i><Link to={'/principalProductores/CargarHistorico'}><p>Histórico</p></Link>
 									</Row>
 								</div>
-								<div className="alerta">
+								<div className="itemsMenu">
 									<Row>
-										<img src={campanalertas} className="imgA" width="30px" height="30px"></img><Link to={'/principalProductores/Alertas'}><p>Alertas</p></Link>
+										<i class="fas fa-bell iconosMenuLateral"></i><Link to={'/principalProductores/Alertas'}><p>Alertas</p></Link>
 									</Row>
 								</div>
-								<div className="configuracion">
+								<div className="itemsMenu">
 									<Row>
-										<div className="imagen_conf">
-											<img src={configuracion} width="25px" height="19px"></img>
-										</div>
+										<i class="fas fa-cogs iconosMenuLateral"></i>
 										<div className="conf_drop">
 											<NavDropdown title="Configuración" id="config_drop">
 												<NavDropdown.Item><Link to="/principalProductores/EditarDatos">Editar mis datos</Link></NavDropdown.Item>

@@ -42,7 +42,7 @@ class PantallaPrincipalconsumidores extends Component {
 		return (
 			<body className="fondo">
 				<div className="barraNavegacion">
-					<Navbar>
+					<Navbar className="sombraBarra">
 						<div className="culturaVerde">
 							<img src={culturaVerde} width="130px" height="50px"></img>
 						</div>
@@ -73,18 +73,16 @@ class PantallaPrincipalconsumidores extends Component {
 						<Col sm={2} className="menuConsumidor">
 							<div className="cuenta">
 								<Row>
-									<img src={miCuenta} width="30px" height="25px"></img> <h4>Mi cuenta</h4>
+									<i class="fas fa-bars iconoMiCuenta"></i><h4>Mi cuenta</h4>
 								</Row>
 							</div>
 							<div className="divisor">
 								<NavDropdown.Divider />
 							</div>
 							<div className="subMenu">
-								<div className="compra">
+								<div className="itemsMenu">
 									<Row>
-										<div className="imagen_compras">
-											<img src={compras} width="30px" height="19px"></img>
-										</div>
+										<i class="fas fa-shopping-basket iconosMenuLateral"></i>
 										<div className="com_drop">
 											<NavDropdown title="Comprar" id="compra_drop">
 												<NavDropdown.Item href="#action/3.1">Geolocalización</NavDropdown.Item>
@@ -94,26 +92,24 @@ class PantallaPrincipalconsumidores extends Component {
 										</div>
 									</Row>
 								</div>
-								<div className="reserva">
+								<div className="itemsMenu">
 									<Row>
-										<img src={reservas} width="30px" height="25px"></img> <Link to={'/principalConsumidores/ListadoReservas'}><p>Reservas</p></Link>
+										<i class="fas fa-tasks iconosMenuLateral"></i><Link to={'/principalConsumidores/ListadoReservas'}><p>Reservas</p></Link>
 									</Row>
 								</div>
-								<div className="preferencia">
+								<div className="itemsMenu">
 									<Row>
-										<img src={preferencias} width="30px" height="19px"></img><Link to={'/principalConsumidores/PreferenciasConsumidor'}><p>Preferencias</p></Link>
+										<i class="fas fa-user-edit iconosMenuLateral"></i><Link to={'/principalConsumidores/PreferenciasConsumidor'}><p>Preferencias</p></Link>
 									</Row>
 								</div>
-								<div className="alerta">
+								<div className="itemsMenu">
 									<Row>
-										<img src={campanalertas} width="30px" height="35px"></img><Link to={'/principalConsumidores/Alertas'}><p>Alertas</p></Link>
+										<i class="fas fa-bell iconosMenuLateral"></i><Link to={'/principalConsumidores/Alertas'}><p>Alertas</p></Link>
 									</Row>
 								</div>
-								<div className="configuracionConsu">
+								<div className="itemsMenu">
 									<Row>
-										<div className="imagen_conf">
-											<img src={configuracion} width="30px" height="19px"></img>
-										</div>
+										<i class="fas fa-cogs iconosMenuLateral"></i>
 										<div className="conf_drop">
 											<NavDropdown title="Configuración" id="config_dropConsu">
 												<NavDropdown.Item href="#action/3.1">Editar mis datos</NavDropdown.Item>

@@ -203,8 +203,9 @@ th.react-bs-table-expand-cell>div{
 
 .iconoGrande {
 	color: #79CB79;
-	font-size: 250px;
+	font-size: 175px;
 }
 
 .sinReservas {
+	margin-top: 15px;
 }
