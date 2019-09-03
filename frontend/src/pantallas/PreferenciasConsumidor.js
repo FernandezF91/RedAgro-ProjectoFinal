@@ -38,10 +38,24 @@ class PreferenciasConsumidor extends Component {
 
 	constructor(props) {
 		super(props)
+		
 		this.state = {
-			active: []
+			active: [],
+			id: this.props.id_consumidor,
 		}
+
+		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 	}
+
+	mostrarPantallaPrincipal() {
+
+		this.props.history.push({
+			pathname: '/principalConsumidores',
+			state: { id: this.state.id }
+		})
+
+	}
+	
 	onChange(value, key) {
 		this.setState({
 			[key]: value

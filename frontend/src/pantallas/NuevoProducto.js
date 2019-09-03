@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
 import 'moment/locale/es';
 import { DatePickerInput } from 'rc-datepicker';
 import 'rc-datepicker/lib/style.css';
@@ -16,7 +11,7 @@ import '../diseños/nuevoProducto.css';
 import '../diseños/estilosGlobales.css';
 import PantallaPrincipalProductores from './PantallaPrincipalProductores';
 
-const minDate=new Date();
+const minDate = new Date();
 
 const productos = [
 	{ label: "Tomate perita", value: 1 },
@@ -56,12 +51,11 @@ class NuevoProducto extends Component {
 			campos: [],
 			errores: [],
 			files: [],
-			id:this.props.id_productor
+			id: this.props.id_productor
 		}
 
 		this.limpiarCampos = this.limpiarCampos.bind(this);
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-		
 
 	}
 
@@ -75,15 +69,15 @@ class NuevoProducto extends Component {
 
 	handleSubmit(e) {
 
-alert("jej");
+		alert("jej");
 
-	var _this = this;
+		var _this = this;
 
 		const path_principal = "http://localhost:3000/redAgro/usuario_productor/nuevo_producto?id_productor=";
 
 		const id_productor = this.props.id_productor;
 
-		const path_final = path_principal+id_productor+"&id_producto=1";
+		const path_final = path_principal + id_productor + "&id_producto=1";
 
 		alert(path_final);
 
@@ -111,7 +105,7 @@ alert("jej");
 				// "tiempo_preparacion": //this.state.campos["tiempo_preparacion"],
 				// "tipo_unidad": //this.state.campos["tipo_unidad"],
 				// "tipo_produccion": //this.state.campos["tipo_produccion"]
-	
+
 			}),
 		})
 
@@ -147,39 +141,36 @@ alert("jej");
 	limpiarCampos() {
 
 		this.refs.form.reset();
-		let campos ={}
-		this.setState({campos:campos});
+		let campos = {}
+		this.setState({ campos: campos });
 	}
 
 	fileSelectedHandler(e) {
 
-	this.setState({ files: [...this.state.files, ...e.target.files] })
-	
-  }
-
-  cambiosSelect(opt,a) {
-
-	let campos = this.state.campos;
-		campos[a.name] = opt.label;
-		this.setState({ campos })
-	
-  }
-
-  componentDidMount(){
-
-alert(this.state.id);
-
-
+		this.setState({ files: [...this.state.files, ...e.target.files] })
 
 	}
 
-	mostrarPantallaPrincipal(){
+	cambiosSelect(opt, a) {
+
+		let campos = this.state.campos;
+		campos[a.name] = opt.label;
+		this.setState({ campos })
+
+	}
+
+	componentDidMount() {
+
+		alert(this.state.id);
+
+	}
+
+	mostrarPantallaPrincipal() {
 
 		this.props.history.push({
-	pathname:'/principalProductores',
-	state:{id:this.state.id}
-	})
-
+			pathname: '/principalProductores',
+			state: { id: this.state.id }
+		})
 
 	}
 
@@ -187,155 +178,155 @@ alert(this.state.id);
 		return (
 			<div className="container">
 				<div className="titulosPrincipales">Nuevo Producto</div>
-					<Form ref="form" onSubmit={(e)=>this.handleSubmit(e)}>
-							<div className="dropdownCategoria">
-								<Form.Group as={Row}>
-									<Form.Label column sm={4}>
-										Categoria:
+				<Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+					<div className="dropdownCategoria">
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Categoria:
 								</Form.Label>
 
-										<Select className="selectCategoria" name="categoria" options={productos} placeholder="Seleccione un item..." onChange={(opt,a) => this.cambiosSelect(opt,a)}  />
+							<Select className="selectCategoria" name="categoria" options={productos} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelect(opt, a)} />
 
-								</Form.Group>
-							</div>
-							<div className="dropdownTipoProducto">
-								<Form.Group as={Row}>
-									<Form.Label column sm={4}>
-										Tipo de producto:
+						</Form.Group>
+					</div>
+					<div className="dropdownTipoProducto">
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Tipo de producto:
 								</Form.Label>
 
-										<Select className="selectTipoProducto" name="tipo_producto" options={productos} placeholder="Seleccione un item..." onChange={(opt,a)=>this.cambiosSelect(opt,a)} />
+							<Select className="selectTipoProducto" name="tipo_producto" options={productos} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelect(opt, a)} />
 
-								</Form.Group>
-							</div>
-							<div className="titulo" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Título:
+						</Form.Group>
+					</div>
+					<div className="titulo" >
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Título:
 									</Form.Label>
-									<Form.Control
-										required
-										type="titulo"
-										name="titulo"
-										pattern="([A-Z]|[a-z]|[A-Z][a-z]){1,100}"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
-							<div><p className="condicionesInputs">(*)100 caractéres como máximo</p></div>
-						</div>
-						<div className="descripcion" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Descripción:
+							<Form.Control
+								required
+								type="titulo"
+								name="titulo"
+								pattern="([A-Z]|[a-z]|[A-Z][a-z]){1,100}"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+						<div><p className="condicionesInputs">(*)100 caractéres como máximo</p></div>
+					</div>
+					<div className="descripcion" >
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Descripción:
 									</Form.Label>
-									<Form.Control
-										required
-										type="desc"
-										name="descripcion"
-										pattern="([A-Z]|[a-z]|[A-Z][a-z]){1,255}"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
-							<div><p className="condicionesInputs">(*)255 caractéres como máximo</p></div>
-						</div>
-						<div className="imagen" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Imagen:
+							<Form.Control
+								required
+								type="desc"
+								name="descripcion"
+								pattern="([A-Z]|[a-z]|[A-Z][a-z]){1,255}"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+						<div><p className="condicionesInputs">(*)255 caractéres como máximo</p></div>
+					</div>
+					<div className="imagen" >
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Imagen:
 								</Form.Label>
-					<input type="file" multiple id="file" name="img" onChange={(e)=>this.fileSelectedHandler(e)} />
-					<Button variant="success" className="botonUpload"><label for="file">Elegir</label></Button>
-							</Form.Group>
-							<div><p className="condicionesInputsImg">(*)5 imágenes como máximo</p></div>
-						</div>
-						
-							<div className="dropdownTipoUnidad">
-								<Form.Group as={Row}>
-									<Form.Label column sm={4}>
-										Tipo de Unidad:
+							<input type="file" multiple id="file" name="img" onChange={(e) => this.fileSelectedHandler(e)} />
+							<Button variant="success" className="botonUpload"><label for="file">Elegir</label></Button>
+						</Form.Group>
+						<div><p className="condicionesInputsImg">(*)5 imágenes como máximo</p></div>
+					</div>
+
+					<div className="dropdownTipoUnidad">
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Tipo de Unidad:
 								</Form.Label>
 
-										<Select className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt,a)=>this.cambiosSelect(opt,a)} />
+							<Select className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelect(opt, a)} />
 
-								</Form.Group>
-							</div>
-							<div className="dropdownTipoProduccion">
-								<Form.Group as={Row}>
-									<Form.Label column sm={4}>
-										Tipo de Producción:
+						</Form.Group>
+					</div>
+					<div className="dropdownTipoProduccion">
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Tipo de Producción:
 								</Form.Label>
-										<Select className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt,a)=>this.cambiosSelect(opt,a)} />
-								</Form.Group>
-							</div>
-						<div className="fechaVencimiento">
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Fecha de vencimiento:
+							<Select className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelect(opt, a)} />
+						</Form.Group>
+					</div>
+					<div className="fechaVencimiento">
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Fecha de vencimiento:
                                 </Form.Label>
-									<DatePickerInput								
-										name="fecha_ven"
-										displayFormat='DD/MM/YYYY'
-										minDate={minDate}
-										className="calen"
-										value={this.state.campos["fecha_nac"]}
-										onChange={(e) => this.cambiosFecha(e)}
-									/>
-							</Form.Group>
-						</div>
-						<div className="stock">
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Stock:
+							<DatePickerInput
+								name="fecha_ven"
+								displayFormat='DD/MM/YYYY'
+								minDate={minDate}
+								className="calen"
+								value={this.state.campos["fecha_nac"]}
+								onChange={(e) => this.cambiosFecha(e)}
+							/>
+						</Form.Group>
+					</div>
+					<div className="stock">
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Stock:
                                 </Form.Label>
-									<Form.Control id="number"
-										required
-										type="number"
-										name="stock"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
-						</div>
-						<div className="precio">
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Precio:
+							<Form.Control id="number"
+								required
+								type="number"
+								name="stock"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+					</div>
+					<div className="precio">
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Precio:
                                 </Form.Label>
-									<Form.Control id="number"
-										required
-										type="number"
-										name="precio"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
-						</div>
-						<div className="tiempo_preparacion">
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Tiempo de preparación:
+							<Form.Control id="number"
+								required
+								type="number"
+								name="precio"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+					</div>
+					<div className="tiempo_preparacion">
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Tiempo de preparación:
                                 </Form.Label>
-									<Form.Control
-									id="number"
-										required
-										type="number"
-										name="tiempo_preparacion"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
-							<div><p className="condicionesInputTP">(*)Valor en días</p></div>
+							<Form.Control
+								id="number"
+								required
+								type="number"
+								name="tiempo_preparacion"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+						<div><p className="condicionesInputTP">(*)Valor en días</p></div>
+					</div>
+					<div className="botonesNuevoProducto">
+						<div className="botonAtras">
+							<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
 						</div>
-						<div className="botonesNuevoProducto">
-							<div className="botonAtras">
-								<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
-							</div>
-							<div className="botonCrear">
-								<Button variant="success" type="submit">Crear</Button>
-							</div>
-							<div className="botonLimpiar">
-								<Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>
-							</div>
-				</div> 
-					</Form>
-			 </div>
+						<div className="botonCrear">
+							<Button variant="success" type="submit">Crear</Button>
+						</div>
+						<div className="botonLimpiar">
+							<Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>
+						</div>
+					</div>
+				</Form>
+			</div>
 		);
 	};
 }

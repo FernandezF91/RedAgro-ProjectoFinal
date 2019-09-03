@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { MDBIcon } from "mdbreact";
 import { Navbar, NavDropdown, Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter, Router, Route, Switch, Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 //imagenes para barra
 import culturaVerde from '../imagenes/cultura-verde-2.png';
@@ -23,6 +24,10 @@ import ListadoReservas from '../pantallas/ListadoReservas';
 import AlertaConsumidor from '../pantallas/AlertaConsumidor';
 import PreferenciasConsumidor from '../pantallas/PreferenciasConsumidor';
 
+const ListadoReservasRouter = withRouter(ListadoReservas);
+const AlertaConsumidorRouter = withRouter(AlertaConsumidor);
+const PreferenciasConsumidorRouter = withRouter(PreferenciasConsumidor);
+
 class PantallaPrincipalconsumidores extends Component {
 
 	constructor(props) {
@@ -31,10 +36,30 @@ class PantallaPrincipalconsumidores extends Component {
 
 		this.state = {
 
-			usuario: {}
+			id: this.props.location.state.id //paso id de usuario desde el LOGIN
 
 		}
 
+		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+
+	}
+
+	componentDidMount() {
+
+		alert(this.state.id);
+
+	}
+
+	mostrarPantallaPrincipal() {
+
+
+		this.props.history.push({
+
+			pathname: '/principalConsumidores',
+			state: { id: this.state.id }
+		})
+
+		alert(this.state.id);
 	}
 
 
@@ -122,9 +147,12 @@ class PantallaPrincipalconsumidores extends Component {
 							</div>
 						</Col>
 						<Col className="ruteo">
-							<Route path={'/principalConsumidores/ListadoReservas'} component={ListadoReservas} />
-							<Route path={'/principalConsumidores/Alertas'} component={AlertaConsumidor} />
-							<Route path={'/principalConsumidores/PreferenciasConsumidor'} component={PreferenciasConsumidor} />
+							<Route path={'/principalConsumidores/ListadoReservas'}
+								render={(props) => <ListadoReservasRouter id_consumidor={this.state.id} />} />
+							<Route path={'/principalConsumidores/Alertas'}
+								render={(props) => <AlertaConsumidorRouter id_consumidor={this.state.id} />} />
+							<Route path={'/principalConsumidores/PreferenciasConsumidor'}
+								render={(props) => <PreferenciasConsumidorRouter id_consumidor={this.state.id} />} />
 						</Col>
 					</Row>
 				</Container>

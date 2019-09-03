@@ -6,9 +6,16 @@ import PaginacionDeReservas from './PaginacionDeReservas';
 
 class ListadoReservas extends Component {
 
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+		
 		this.state = {
+			campos: [],
+			errores: [],
+			files: [],
+			//Para el ruteo
+			id: this.props.id_consumidor,
+			//A partir de aca, datos para el listado de reservas
 			reservasRealizadas: [
 				{
 					id: '1',
@@ -110,11 +117,22 @@ class ListadoReservas extends Component {
 			],
 			currentPage: 1,
 			reservasPerPage: 4
-		};
+		}
+
+		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 	}
 
 	nextPage = (pageNumber) => {
 		this.setState({ currentPage: pageNumber });
+	}
+
+	mostrarPantallaPrincipal() {
+
+		this.props.history.push({
+			pathname: '/principalConsumidores',
+			state: { id: this.state.id }
+		})
+
 	}
 
 	render() {
