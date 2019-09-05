@@ -15,18 +15,14 @@ const ItemCarrito = (props) => {
                 <span className="item-title"><h5>{props.productoSeleccionado.titulo}</h5></span>
                 <span className="item-description">{props.productoSeleccionado.descripcion}</span>
                 <span className="item-description">Producido por {props.productoSeleccionado.productor}</span>
-                <span className="item-description">x {props.productoSeleccionado.tipo_unidad}</span>
             </div>
             <div className="columns">
                 <span className="item-quantity"> Cantidad </span>
                 <span className="item-quantity"> {props.productoSeleccionado.cantidad}</span>
-
             </div>
             <div className="columns">
-                <span className="item-quantity"> Precio Unitario </span>
-                <span className="item-quantity">
-                    <NumberFormat value={props.productoSeleccionado.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
-                </span>
+                <span className="item-quantity"> Precio por {props.productoSeleccionado.tipo_unidad} </span>
+                <NumberFormat value={props.productoSeleccionado.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
             </div>
             <div className="columns">
                 <span className="item-quantity"> Subtotal </span>
