@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import NumberFormat from 'react-number-format';
 import ItemCarrito from '../pantallas/ItemCarrito';
 import _ from 'lodash';
 import '../diseños/estilosGlobales.css';
@@ -54,7 +55,7 @@ class Carrito extends Component {
     }
 
     getTotalCarrito() {
-        return _.sumBy(this.state.productosSeleccionados, function (o) { return o.cantidad*o.precio; });;
+        return _.sumBy(this.state.productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
     }
 
     render() {
@@ -66,22 +67,25 @@ class Carrito extends Component {
                         this.state.productosSeleccionados.map((producto, index) =>
                             <ItemCarrito productoSeleccionado={producto}
                                 key={index} />
+                            <div classname="fotter">
+                                <ul>
+                                    <span className="total"><h5>Total estimado</h5>
+                                        <h4 classname="totalCarrito">
+                                            <NumberFormat value={this.getTotalCarrito()} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                        </h4>
+                                    </span>
+                                </ul>
+                            </div>
                         )
                         :
                         <div className="sinProductos">
-                            {/*}  <i class="fas fa-tasks iconoGrande"></i> */}
+                            <i class="fas fa-shopping-cart iconoGrande"></i>
                             <br />
                             <br />
                             <h5>Ups! Tu carrito esta vacío! </h5>
                             <h6>Probá buscando productos por <Link to={''}>acá</Link> </h6>
                         </div>
                     }
-                    <div classname="fotter">
-                        <ul>
-                        <span className="total"><h5>Total estimado</h5>
-                        <h4 classname="totalCarrito"> $ {this.getTotalCarrito()}</h4></span>
-                        </ul>
-                    </div>
                 </ul>
             </div>
         );

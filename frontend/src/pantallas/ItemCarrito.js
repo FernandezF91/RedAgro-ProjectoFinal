@@ -1,4 +1,6 @@
 import React from 'react';
+import NumberFormat from 'react-number-format';
+
 const ItemCarrito = (props) => {
 
     var itemSubTotal = props.productoSeleccionado.precio * props.productoSeleccionado.cantidad;
@@ -18,15 +20,19 @@ const ItemCarrito = (props) => {
             <div className="columns">
                 <span className="item-quantity"> Cantidad </span>
                 <span className="item-quantity"> {props.productoSeleccionado.cantidad}</span>
-                
+
             </div>
             <div className="columns">
                 <span className="item-quantity"> Precio Unitario </span>
-                <span className="item-quantity"> ${props.productoSeleccionado.precio}</span>
+                <span className="item-quantity">
+                    <NumberFormat value={props.productoSeleccionado.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                </span>
             </div>
             <div className="columns">
                 <span className="item-quantity"> Subtotal </span>
-                <span className="item-quantity"> ${itemSubTotal}</span>
+                <span className="item-quantity">
+                    <NumberFormat value={itemSubTotal} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                </span>
             </div>
             <button className="remove" onClick={() => props.quitarProducto(props.key)}>
                 <i className="fas fa-times"></i>
