@@ -13,15 +13,13 @@ const ItemCarrito = (props) => {
                 <span className="item-title"><h5>{props.productoSeleccionado.titulo}</h5></span>
                 <span className="item-description">{props.productoSeleccionado.descripcion}</span>
                 <span className="item-description">Producido por {props.productoSeleccionado.productor}</span>
-                <span className="item-description">x {props.productoSeleccionado.tipo_unidad}</span>
             </div>
             <div className="columns">
                 <span className="item-quantity"> Cantidad </span>
                 <span className="item-quantity"> {props.productoSeleccionado.cantidad}</span>
-                
             </div>
             <div className="columns">
-                <span className="item-quantity"> Precio Unitario </span>
+                <span className="item-quantity"> Precio por {props.productoSeleccionado.tipo_unidad} </span>
                 <span className="item-quantity"> ${props.productoSeleccionado.precio}</span>
             </div>
             <div className="columns">
