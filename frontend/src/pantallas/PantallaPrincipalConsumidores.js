@@ -22,6 +22,7 @@ import preferencias from '../imagenes/preferencias.png';
 
 import ListadoReservas from '../pantallas/ListadoReservas';
 import AlertaConsumidor from '../pantallas/AlertaConsumidor';
+import Carrito from '../pantallas/Carrito';
 import PreferenciasConsumidor from '../pantallas/PreferenciasConsumidor';
 
 const ListadoReservasRouter = withRouter(ListadoReservas);
@@ -88,7 +89,7 @@ class PantallaPrincipalconsumidores extends Component {
 									</NavDropdown>
 								</div>
 								<i class="fas fa-bell iconosBarra"></i>
-								<i class="fas fa-shopping-cart iconosBarra"></i>
+								<Link to={'/principalConsumidores/Carrito'}><i class="fas fa-shopping-cart iconosBarra"></i></Link>
 							</Row>
 						</div>
 					</Navbar>
@@ -153,6 +154,8 @@ class PantallaPrincipalconsumidores extends Component {
 								render={(props) => <AlertaConsumidorRouter id_consumidor={this.state.id} />} />
 							<Route path={'/principalConsumidores/PreferenciasConsumidor'}
 								render={(props) => <PreferenciasConsumidorRouter id_consumidor={this.state.id} />} />
+							<Route path={'/principalConsumidores/Carrito'}
+								render={(props) => <Carrito id_consumidor={this.state.id} />} />
 						</Col>
 					</Row>
 				</Container>
