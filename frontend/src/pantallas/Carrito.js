@@ -65,16 +65,18 @@ class Carrito extends Component {
                 <ul className="listado">
                     {this.state.productosSeleccionados.length >= 1 ?
                         this.state.productosSeleccionados.map((producto, index) =>
-                            <ItemCarrito productoSeleccionado={producto}
-                                key={index} />
-                            <div classname="fotter">
-                                <ul>
-                                    <span className="total"><h5>Total estimado</h5>
-                                        <h4 classname="totalCarrito">
-                                            <NumberFormat value={this.getTotalCarrito()} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
-                                        </h4>
-                                    </span>
-                                </ul>
+                            <div>
+                                <ItemCarrito productoSeleccionado={producto}
+                                    key={index} />
+                                <div classname="fotter">
+                                    <ul>
+                                        <span className="total"><h5>Total estimado</h5>
+                                            <h4 classname="totalCarrito">
+                                                <NumberFormat value={this.getTotalCarrito()} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                            </h4>
+                                        </span>
+                                    </ul>
+                                </div>
                             </div>
                         )
                         :
