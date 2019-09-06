@@ -54,20 +54,20 @@ class Carrito extends Component {
         this.setState({ productosSeleccionados: nuevaLista });
     }
 
-    getTotalCarrito() {
-        return _.sumBy(this.state.productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
+    getTotalCarrito(productosSeleccionados) {
+        return _.sumBy(productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
     }
 
     render() {
+        const { productosSeleccionados } = this.state;
         return (
             <div className="carrito">
                 <div className="titulosPrincipales">Mi carrito</div>
                 <ul className="listado">
                     {this.state.productosSeleccionados.length >= 1 ?
-                        this.state.productosSeleccionados.map((producto, index) =>
-                            <ItemCarrito productoSeleccionado={producto}
-                                key={index} />
-                        )
+                        <ItemCarrito listaDeReservas={productosSeleccionados} 
+                                     quitarProducto = {this.quitarProducto}
+                                     getTotalCarrito={this.getTotalCarrito}/>
                         :
                         <div className="sinProductos">
                             <i class="fas fa-shopping-cart iconoGrande"></i>
@@ -77,15 +77,6 @@ class Carrito extends Component {
                             <h6>Probá buscando productos por <Link to={''}>acá</Link> </h6>
                         </div>
                     }
-                    <div classname="fotter">
-                        <ul>
-                            <span className="total"><h5>Total estimado</h5>
-                                <h4 classname="totalCarrito">
-                                    <NumberFormat value={this.getTotalCarrito()} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
-                                </h4>
-                            </span>
-                        </ul>
-                    </div>
                 </ul>
             </div>
         );
