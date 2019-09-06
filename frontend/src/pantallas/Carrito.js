@@ -59,13 +59,12 @@ class Carrito extends Component {
     }
 
     render() {
-        const { productosSeleccionados } = this.state;
         return (
             <div className="carrito">
                 <div className="titulosPrincipales">Mi carrito</div>
                 <ul className="listado">
                     {this.state.productosSeleccionados.length >= 1 ?
-                        <ItemCarrito listaDeReservas={productosSeleccionados} 
+                        <ItemCarrito listaDeReservas={this.state.productosSeleccionados} 
                                      quitarProducto = {this.quitarProducto}
                                      getTotalCarrito={this.getTotalCarrito}/>
                         :
