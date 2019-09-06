@@ -46,13 +46,10 @@ class PantallaPrincipalconsumidores extends Component {
 	}
 
 	componentDidMount() {
-
 		alert(this.state.id);
-
 	}
 
 	mostrarPantallaPrincipal() {
-
 
 		this.props.history.push({
 
@@ -63,14 +60,13 @@ class PantallaPrincipalconsumidores extends Component {
 		alert(this.state.id);
 	}
 
-
 	render() {
 		return (
 			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar className="sombraBarra">
 						<div className="culturaVerde">
-							<img src={culturaVerde} width="130px" height="50px"></img>
+							<Link to={'/'}><img src={culturaVerde} width="130px" height="50px"></img></Link>
 						</div>
 						<div className="barraBusqueda">
 							<Row>
