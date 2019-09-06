@@ -71,6 +71,22 @@
     font-size: 20px;
   }
   
+  .listado .iconosListado{
+    padding-left: 10px;
+    padding-right: 10px; 
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border:0px;
+    background-color: transparent;
+  }
+
+  .listado li .iconosListado i{
+    color: #979797;
+    font-size: 20px;
+  }
+
   button.add-button{
     background-color: #69B614;
     width: 129px;
@@ -103,3 +119,5 @@
     flex-direction: row;
     justify-content: right;
   }
+
+  

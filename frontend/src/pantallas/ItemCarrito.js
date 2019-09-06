@@ -1,7 +1,8 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import { Table } from 'react-bootstrap';
-const ItemCarrito = ({ listaDeReservas, quitarProducto, getTotalCarrito }) => {
+
+const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarProducto, getTotalCarrito }) => {
 
     return (
         < div >
@@ -22,7 +23,7 @@ const ItemCarrito = ({ listaDeReservas, quitarProducto, getTotalCarrito }) => {
                             <tr>
                                 <td>
                                     {/*Puse eso de ejemplo, pero deberia ir la foto que suban del producto*/}
-                                    <i class="fas fa-lemon"></i>
+                                    <i class="fas fa-lemon" />
                                 </td>
                                 <td>
                                     <h5>{producto.titulo}</h5>
@@ -30,7 +31,13 @@ const ItemCarrito = ({ listaDeReservas, quitarProducto, getTotalCarrito }) => {
                                     <p>Producido por {producto.productor}</p>
                                 </td>
                                 <td>
-                                    <span className="item-quantity"> {producto.cantidad}</span>
+                                    <button className="iconosListado" onClick={() => restarProducto(index)}>
+                                        <i class="fas fa-minus" />
+                                    </button>
+                                    <span className="item-quantity">{producto.cantidad}</span>
+                                    <button className="iconosListado" onClick={() => sumarProducto(index)}>
+                                        <i class="fas fa-plus" />
+                                    </button>
                                 </td>
                                 <td>
                                     <NumberFormat value={producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
@@ -48,8 +55,8 @@ const ItemCarrito = ({ listaDeReservas, quitarProducto, getTotalCarrito }) => {
                     }
                     <tr>
                         <td colSpan="6" align="right">
-                            <h5>Total estimado
-                            <NumberFormat value={getTotalCarrito(listaDeReservas)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                            <h5>Total 
+                            <NumberFormat value={getTotalCarrito(listaDeReservas)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix=" $ " decimalScale={2} fixedDecimalScale={true} />
                             </h5>
                         </td>
                     </tr>
