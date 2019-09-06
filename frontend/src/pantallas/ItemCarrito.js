@@ -27,7 +27,7 @@ const ItemCarrito = ({ listaDeReservas, quitarProducto, getTotalCarrito }) => {
                                 <td>
                                     <h5>{producto.titulo}</h5>
                                     <p>{producto.descripcion}</p>
-                                    <p>Producido por {producto.productor}</p>      
+                                    <p>Producido por {producto.productor}</p>
                                 </td>
                                 <td>
                                     <span className="item-quantity"> {producto.cantidad}</span>
@@ -55,7 +55,6 @@ const ItemCarrito = ({ listaDeReservas, quitarProducto, getTotalCarrito }) => {
                     </tr>
                 </tbody>
             </Table>
-
         </div >
     )
 }
