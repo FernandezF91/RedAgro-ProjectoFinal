@@ -29,7 +29,7 @@ public class PreferenciaControlador {
 
 	@ResponseBody
 	public ArrayList<Preferencia> obtenerPreferencias(@RequestParam Long id) {
-		ArrayList<EntidadPreferencia> resultados = preferenciaDao.obtenerPreferenciaDeUsuario(id);
+		ArrayList<EntidadPreferencia> resultados = preferenciaDao.obtenerPreferenciasConsumidor(id);
 		PreferenciaMapper mapeoDePreferencia = new PreferenciaMapper();
 		ArrayList<Preferencia> preferencias = new ArrayList<Preferencia>();
 
