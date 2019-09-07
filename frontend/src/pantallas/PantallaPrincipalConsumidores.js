@@ -24,10 +24,16 @@ import ListadoReservas from '../pantallas/ListadoReservas';
 import AlertaConsumidor from '../pantallas/AlertaConsumidor';
 import Carrito from '../pantallas/Carrito';
 import PreferenciasConsumidor from '../pantallas/PreferenciasConsumidor';
+import DatosDeUsuario from '../pantallas/DatosDeUsuario';
+import ModificarContraseña from '../pantallas/ModificarContraseña';
 
+//hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const ListadoReservasRouter = withRouter(ListadoReservas);
 const AlertaConsumidorRouter = withRouter(AlertaConsumidor);
 const PreferenciasConsumidorRouter = withRouter(PreferenciasConsumidor);
+const EditarDatosRouter = withRouter(DatosDeUsuario);
+const ModificarContraseñaRouter = withRouter(ModificarContraseña);
+
 
 class PantallaPrincipalconsumidores extends Component {
 
@@ -134,9 +140,9 @@ class PantallaPrincipalconsumidores extends Component {
 										<i class="fas fa-cogs iconosMenuLateral"></i>
 										<div className="conf_drop">
 											<NavDropdown title="Configuración" id="config_dropConsu">
-												<NavDropdown.Item href="#action/3.1">Editar mis datos</NavDropdown.Item>
+												<NavDropdown.Item><Link to="/principalConsumidores/EditarDatos">Editar mis datos</Link></NavDropdown.Item>
 												<NavDropdown.Divider />
-												<NavDropdown.Item href="#action/3.2">Modificar contraseña</NavDropdown.Item>
+												<NavDropdown.Item><Link to="/principalConsumidores/modificarContraseña">Modificar Contraseña</Link></NavDropdown.Item>
 											</NavDropdown>
 										</div>
 									</Row>
@@ -152,6 +158,11 @@ class PantallaPrincipalconsumidores extends Component {
 								render={(props) => <PreferenciasConsumidorRouter id_consumidor={this.state.id} />} />
 							<Route path={'/principalConsumidores/Carrito'}
 								render={(props) => <Carrito id_consumidor={this.state.id} />} />
+							<Route path={'/principalConsumidores/EditarDatos'}
+								render={(props) => <EditarDatosRouter id_consumidor={this.state.id} />} />
+							<Route path={'/principalConsumidores/modificarContraseña'}
+								render={(props) => <ModificarContraseñaRouter id_consumidor={this.state.id} />} />
+
 						</Col>
 					</Row>
 				</Container>

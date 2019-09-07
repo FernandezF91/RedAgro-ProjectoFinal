@@ -1,62 +1,53 @@
 import React, { Component } from 'react';
-import Dropdown from "react-dropdown";
-import { FilePond, registerPlugin } from 'react-filepond';
-// Import FilePond styles
-import 'filepond/dist/filepond.min.css';
-
-// Import the Image EXIF Orientation and Image Preview plugins
-// Note: These need to be installed separately
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondTypeValidate from "filepond-plugin-file-validate-type";
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';;
-
-// const options = [
-//   'one', 'two', 'three'
-// ]
-// const defaultOption = 'one'
+import Files from 'react-files';
 
 
 class CargarHistorico extends Component {
 
 	constructor(props) {
     super(props);
-    this.state = {value: 'coconut'};
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+	this.handleSubmit = this.handleSubmit.bind(this);
+	this.fileInput = React.createRef();
 	}
-
-	handleChange(event) {
-    this.setState({value: event.target.value});
-	}
-
 	handleSubmit(event) {
-    	alert('Your favorite flavor is: ' + this.state.value);
-    	event.preventDefault();
+		// highlight-range{4}
+		event.preventDefault();
+		alert(
+		`Selected file - ${this.fileInput.current.files[0].name}`
+		);
 	}
-
 
 	render(){
 		return (
+	<div>
 		<div className="container">
-				<form onSubmit={this.handleFormSubmit}>
-					<h1>Cargar Histórico</h1>
-						<div clasName="imagenes">
-							<div className ="tituloImagen">
-								*Imágenes:
-								</div>
-								<FilePond allowMultiple={true}  maxFiles={5} imagePreviewHeight={150} acceptedFileTypes="image/jpeg, image/png, image/jpg" labelIdle={"Arrastre o suba sus imágenes aquí"}
-								onupdatefiles={(fileItems) => {
-                              // Set current file objects to this.state
-                              this.setState({
-                                  files: fileItems.map(fileItem => fileItem.file)
-                              });
-                          }}/>
-							</div>
-							<div className="condicionesInputsImg">(*) 5 imágenes como máximo</div>
-					</form>
-				</div>
-		)}
+			<form onSubmit={this.handleSubmit}>
+			<label>
+			Upload file:
+			<input type="file" ref={this.fileInput} />
+			</label>
+			<br />
+			<button type="submit">Submit</button>
+			</form>
+		</div>
 
+		<div className="files">
+        <Files
+          className='files-dropzone'
+          onChange={this.onFilesChange}
+          onError={this.onFilesError}
+          accepts={['image/png', '.pdf', 'audio/*']}
+          multiple
+          maxFiles={3}
+          maxFileSize={10000000}
+          minFileSize={0}
+          clickable
+        >
+          Drop files here or click to upload
+        </Files>
+      </div>
+	</div>
+		)}
+	
 }
 export default CargarHistorico;
