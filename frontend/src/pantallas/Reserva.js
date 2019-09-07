@@ -1,6 +1,6 @@
 import '../diseños/Reservas.css';
 import React from 'react';
-import { Nav, Link, Route, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //import Pagination from "react-js-pagination";
 import { Table, Row, Col } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';

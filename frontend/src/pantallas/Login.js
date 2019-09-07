@@ -1,17 +1,9 @@
-    
 import React, { Component } from 'react'
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, Container, Form, Col, Row, Button, Nav } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import Nav from 'react-bootstrap/Nav';
 import '../diseños/Login.css';
 import '../diseños/estilosGlobales.css';
 import Modal from 'react-awesome-modal';
-
 
 class LoginForm extends Component {
 
@@ -22,18 +14,17 @@ class LoginForm extends Component {
 		this.state = {
 			fields: [],
 			errores: [],
-			usuario : {},
-			visible : false,
-			mensajeError:""
+			usuario: {},
+			visible: false,
+			mensajeError: ""
 		}
 
 		this.validarDatos = this.validarDatos.bind(this);
 		this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
 		this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
-	
+
 	}
 
-	
 	detectarCambios(e) {
 
 		let fields = this.state.fields;
@@ -44,15 +35,14 @@ class LoginForm extends Component {
 
 	}
 
-    closeModal() {
-        this.setState({
-            visible : false
-        });
-    }
+	closeModal() {
+		this.setState({
+			visible: false
+		});
+	}
 
 
 	validarDatos() {
-
 
 		this.setState({
 			errores: []
@@ -83,60 +73,64 @@ class LoginForm extends Component {
 
 			var password = this.state.fields["password"];
 
-			const final_path = path_principal+username+"&c="+password;
+			const final_path = path_principal + username + "&c=" + password;
 
-		    var _this = this;
+			var _this = this;
 
-		 	fetch(final_path, {
-			method: "GET",
-			headers: {
-				
-				'Content-type': 'application/json;charset=UTF-8',
-			
-			},
-		})
-			.then(function(response) {
+			fetch(final_path, {
+				method: "GET",
+				headers: {
 
-			if(response.status !==200){
+					'Content-type': 'application/json;charset=UTF-8',
 
-			// alert("Ocurrió algún problema. Intente nuevamente")
+				},
+			})
+				.then(function (response) {
 
-			let mensajeError = "Ocurrió algun problema, intente nuevamente"
-			_this.setState({visible:true,
-			mensajeError:mensajeError});
+					if (response.status !== 200) {
 
-			return;
-			
-			}
+						// alert("Ocurrió algún problema. Intente nuevamente")
 
-			response.text().then(
+						let mensajeError = "Ocurrió algun problema, intente nuevamente"
+						_this.setState({
+							visible: true,
+							mensajeError: mensajeError
+						});
 
-				function(response) {
-				
-					if (response!==""){
-
-						_this.setState({usuario:JSON.parse(response)});
-
-					if (_this.state.usuario.rol === "Productor") {
-
-						_this.mostrarPantallaProductor();
-
-					} else {
-
-						_this.mostrarPantallaConsumidor();
+						return;
 
 					}
 
-				}else{
+					response.text().then(
 
-					let mensajeError = "Cuenta inexistente o datos incorrectos";
-			_this.setState({visible:true,
-			mensajeError:mensajeError});
-				} 
-				
-			});
+						function (response) {
 
-			});		
+							if (response !== "") {
+
+								_this.setState({ usuario: JSON.parse(response) });
+
+								if (_this.state.usuario.rol === "Productor") {
+
+									_this.mostrarPantallaProductor();
+
+								} else {
+
+									_this.mostrarPantallaConsumidor();
+
+								}
+
+							} else {
+
+								let mensajeError = "Cuenta inexistente o datos incorrectos";
+								_this.setState({
+									visible: true,
+									mensajeError: mensajeError
+								});
+							}
+
+						});
+
+				});
 
 		}
 
@@ -144,34 +138,35 @@ class LoginForm extends Component {
 			errores
 		})
 
+	}
 
+	mostrarPantallaProductor() {
+
+		this.props.history.push({
+			pathname: '/principalProductores',
+			state: { id: this.state.usuario.id }
+		})
 
 	}
 
-	mostrarPantallaProductor(){
+	mostrarPantallaConsumidor() {
 
-	this.props.history.push({
-	pathname:'/principalProductores',
-	state:{id:this.state.usuario.id}
-	})
+		this.props.history.push({
+			pathname: '/principalConsumidores',
+			state: { id: this.state.usuario.id }
 
-	}
-
-	mostrarPantallaConsumidor(){
-
-	this.props.history.push("/principalConsumidores", {usuario: this.state.usuario});
+		})
 
 	}
-
 
 	render() {
 
 		return (
-			<body className="fondo">
+			<body className="fondo" >
 				<div className="barraNavegacion">
 					<Navbar>
 						<div className="culturaVerde">
-						<img src={culturaVerde} width="130px" height="50px"></img>
+							<img src={culturaVerde} width="130px" height="50px"></img>
 						</div>
 					</Navbar>
 				</div>
@@ -207,25 +202,25 @@ class LoginForm extends Component {
 						</div>
 						<div className="botonesLogin">
 							<Button variant="success" onClick={this.validarDatos}>Ingresar</Button>
-							<a href='/seleccionUsuario'><Button variant="success">Registrar</Button></a>						
+							<a href='/seleccionUsuario'><Button variant="success">Registrar</Button></a>
 						</div>
 						<a href="/recupero_email"><p>olvidé mi contraseña</p></a>
 					</div>
 					<section>
-                <Modal 
-                    visible={this.state.visible}
-                    width="400"
-                    height="120"
-                    effect="fadeInUp"
-                    onClickAway={() => this.closeModal()}
-                >
-                    <div>
-                        <h1>Error</h1>
-                        <p>{this.state.mensajeError}</p>
-                        <a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
-                    </div>
-                </Modal>
-            </section>
+						<Modal
+							visible={this.state.visible}
+							width="400"
+							height="120"
+							effect="fadeInUp"
+							onClickAway={() => this.closeModal()}
+						>
+							<div>
+								<h1>Error</h1>
+								<p>{this.state.mensajeError}</p>
+								<a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
+							</div>
+						</Modal>
+					</section>
 				</Container>
 			</body>
 		);

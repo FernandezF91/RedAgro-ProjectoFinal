@@ -1,21 +1,30 @@
 import '../diseños/estilosGlobales.css';
 import '../diseños/Alertas.css';
 import React, { Component } from 'react';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-
+import { Button } from 'react-bootstrap';
 
 class AlertaConsumidor extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
+			id: this.props.id_consumidor,
 			//Acá debería estar trayendo la opción que haya guardado
 			selectedRadioOption: "Nunca"
 		};
 
 		this.handleCheckChange = this.handleCheckChange.bind(this)
+
+		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+	}
+
+	mostrarPantallaPrincipal() {
+
+		this.props.history.push({
+			pathname: '/principalConsumidores',
+			state: { id: this.state.id }
+		})
+
 	}
 
 	handleRadioChange = changeEvent => {
@@ -33,7 +42,6 @@ class AlertaConsumidor extends Component {
 	handleFormSubmit = formSubmitEvent => {
 		formSubmitEvent.preventDefault();
 		//  Chequear como lo guardo
-	
 	};
 
 
@@ -41,12 +49,12 @@ class AlertaConsumidor extends Component {
 
 		return (
 			<div className="container">
-			<div className="titulosPrincipales">Alertas</div>
+				<div className="titulosPrincipales">Alertas</div>
 				<form onSubmit={this.handleFormSubmit}>
-					
-					<div className="radioButtons">	
-					
-					<h5>Notificarme:</h5>
+
+					<div className="radioButtons">
+
+						<h5>Notificarme:</h5>
 
 						<label className="radio1">
 							<input type="radio"
@@ -78,8 +86,8 @@ class AlertaConsumidor extends Component {
 
 					<div className="checkboxes">
 
-					<h5>Alertarme sobre:</h5>	
-										
+						<h5>Alertarme sobre:</h5>
+
 						<div className="checkbox">
 							<label>
 								<input type="checkbox"
@@ -126,13 +134,13 @@ class AlertaConsumidor extends Component {
 					</div>
 				</form>
 				<div className="botones">
-								<div className="botonCrear">
-									<Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
-								</div>
-								<div className="botonAtras">
-									<a href='/principalConsumidores'><Button variant="success">Cancelar</Button></a>
-								</div>
+					<div className="botonCrear">
+						<Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
 					</div>
+					<div className="botonAtras">
+						<a href='/principalConsumidores'><Button variant="success">Cancelar</Button></a>
+					</div>
+				</div>
 			</div>
 		);
 	};

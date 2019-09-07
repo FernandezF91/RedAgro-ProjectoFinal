@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
 import 'moment/locale/es';
 import { DatePickerInput } from 'rc-datepicker';
 import 'rc-datepicker/lib/style.css';
@@ -29,7 +24,6 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';;
 
 const minDate=new Date();
 registerPlugin(FilePondPluginImagePreview,FilePondTypeValidate,);
-
 
 const categorias = [
 	{ label: "Frutas", value: 1 },
@@ -66,7 +60,6 @@ class NuevoProducto extends Component {
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 		this.obtenerTiposProducto = this.obtenerTiposProducto.bind(this);
 		this.validarCampos = this.validarCampos.bind(this);
-		
 
 	}
 
@@ -127,15 +120,17 @@ return true;
 				'Content-type': 'application/json;charset=UTF-8',
 			},
 			body: JSON.stringify({
-				"titulo": _this.state.campos["titulo"],
-				"descripcion": _this.state.campos["descripcion"],
-				"fecha_vencimiento": _this.state.campos["fecha_ven"],
-				"precio": _this.state.campos["precio"],
-				"stock": _this.state.campos["stock"],
-				"tiempo_preparacion": _this.state.campos["tiempo_preparacion"],
-				"tipo_unidad": _this.state.campos["tipo_unidad"],
-				"tipo_produccion": _this.state.campos["tipo_produccion"]
-	
+
+				"titulo": this.state.campos["titulo"],
+				"descripcion": this.state.campos["descripcion"],
+				"fecha_vencimiento": this.state.campos["fecha_ven"],
+				"precio": this.state.campos["precio"],
+				"stock": this.state.campos["stock"],
+				"tiempo_preparacion": this.state.campos["tiempo_preparacion"],
+				"tipo_unidad": this.state.campos["tipo_unidad"],
+				"tipo_produccion": this.state.campos["tipo_produccion"]
+
+		
 			}),
 		})
 
@@ -185,23 +180,23 @@ return true;
 	limpiarCampos() {
 
 		this.refs.form.reset();
-		let campos ={}
-		this.setState({campos:campos});
+		let campos = {}
+		this.setState({ campos: campos });
 	}
 
 	fileSelectedHandler(e) {
 
-	this.setState({ files: [...this.state.files, ...e.target.files] })
-	
-  }
+		this.setState({ files: [...this.state.files, ...e.target.files] })
 
-  cambiosSelect(opt,a) {
+	}
 
-	let campos = this.state.campos;
+	cambiosSelect(opt, a) {
+
+		let campos = this.state.campos;
 		campos[a.name] = opt.label;
 		this.setState({ campos })
-	
-  }
+
+	}
 
    cambiosSelectTipoProducto(opt,a) {
 
@@ -266,13 +261,12 @@ return true;
   }
 
 
-	mostrarPantallaPrincipal(){
+	mostrarPantallaPrincipal() {
 
 		this.props.history.push({
-	pathname:'/principalProductores',
-	state:{id:this.state.id}
-	})
-
+			pathname: '/principalProductores',
+			state: { id: this.state.id }
+		})
 
 	}
 
@@ -281,8 +275,7 @@ return true;
 			<div className="container">
 				<div className="titulosPrincipales">Nuevo Producto</div>
 				<div className="condicionesInputsCO">(*) Campos obligatorios</div>
-				<Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
-				
+				<Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>			
 					<div className="titulo" >
 						<Form.Group as={Row}>
 							<Form.Label column sm={4}>
@@ -320,16 +313,14 @@ return true;
 								*Categoria:
 								</Form.Label>
 							<Select className="selectCategoria" name="categoria" options={categorias} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelectCategoria(opt, a)} />
-						</Form.Group>
-					</div>
+				</Form.Group>
+				</div>
 					<div className="dropdownTipoProducto">
 						<Form.Group as={Row}>
 							<Form.Label column sm={4}>
 								*Tipo de producto:
 								</Form.Label>
-
 							<Select className="selectTipoProducto" name="tipo_producto" options={this.state.tipos_producto} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelectTipoProducto(opt, a)} />
-
 						</Form.Group>
 					</div>
 					<div className="dropdownTipoUnidad">
@@ -337,7 +328,6 @@ return true;
 							<Form.Label column sm={4}>
 								*Tipo de Unidad:
 								</Form.Label>
-
 							<Select className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelect(opt, a)} />
 
 						</Form.Group>
@@ -371,7 +361,6 @@ return true;
 								*Stock:
                                 </Form.Label>
 							<Form.Control id="number"
-
 								type="number"
 								name="stock"
 								onChange={(e) => this.detectarCambios(e)}
@@ -384,7 +373,6 @@ return true;
 								*Precio:
                                 </Form.Label>
 							<Form.Control id="number"
-
 								type="number"
 								name="precio"
 								onChange={(e) => this.detectarCambios(e)}
@@ -398,7 +386,6 @@ return true;
                                 </Form.Label>
 							<Form.Control
 								id="number"
-
 								type="number"
 								name="tiempo_preparacion"
 								onChange={(e) => this.detectarCambios(e)}

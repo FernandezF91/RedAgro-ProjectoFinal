@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.ArrayList;
 
 import app.clases.Producto;
 import app.daos.ProductoDao;
@@ -22,19 +23,21 @@ import app.mappers.ProductoMapper;
 import app.modelos.EntidadProducto;
 import app.modelos.EntidadProductoProductor;
 import app.modelos.EntidadProductor;
+import app.mappers.ProductoMapper;
+import app.clases.Producto;
 
 @RestController
 public class ProductoControlador {
-	
+
 	@Autowired
 	ProductoProductorDao productoProductorDao;
-	
+
 	@Autowired
 	ProductoDao productoDao;
-	
+
 	@Autowired
 	ProductorDao productorDao;
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "redAgro/obtenerTiposProducto")
     public List<Producto> obtenerTiposdeProducto(@RequestParam String categoria_producto){   	
@@ -50,5 +53,19 @@ public class ProductoControlador {
         return productosMapeados;
 		
     }
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/obtener_tipo_productos")
+	public ArrayList<Producto> obtenerTipoProducto(@RequestParam String categoria) {
 
+		ArrayList<EntidadProducto> entidadProductos = productoDao.obtenerTipoProductos(categoria);
+		ProductoMapper mapeoDeProducto = new ProductoMapper();
+		ArrayList<Producto> productos = new ArrayList<Producto>();
+
+		for (EntidadProducto prod : entidadProductos) {
+			productos.add(mapeoDeProducto.mapFromEntity(prod));
+		}
+		
+		return productos;
+	}
 }
