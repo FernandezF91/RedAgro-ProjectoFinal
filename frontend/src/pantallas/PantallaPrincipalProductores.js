@@ -126,7 +126,7 @@ class PantallaPrincipalProductores extends Component {
 										</div>
 									</Row>
 								</div>
-								<div className="itemsMenu">
+								<div className="itemsMenuReservas">
 									<Row>
 										<i class="fas fa-tasks iconosMenuLateral"></i><p>Reservas</p>
 									</Row>
@@ -151,7 +151,7 @@ class PantallaPrincipalProductores extends Component {
 										<i class="fas fa-bell iconosMenuLateral"></i><Link to={'/principalProductores/Alertas'}><p>Alertas</p></Link>
 									</Row>
 								</div>
-								<div className="itemsMenu">
+								<div className="itemsMenuConfig">
 									<Row>
 										<i class="fas fa-cogs iconosMenuLateral"></i>
 										<div className="conf_drop">

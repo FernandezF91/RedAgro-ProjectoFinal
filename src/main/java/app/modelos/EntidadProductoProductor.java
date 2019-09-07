@@ -55,7 +55,7 @@ public class EntidadProductoProductor {
 	@Column(name="stock",nullable = false)
 	private int stock;
 	
-	@Column(name="fecha_vencimiento",nullable = false)
+	@Column(name="fecha_vencimiento",nullable = true)
 	private Date fecha_vencimiento;
 	
 	@Column(name="precio",nullable = false)

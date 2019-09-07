@@ -92,7 +92,7 @@ class PantallaPrincipalconsumidores extends Component {
 										</div>
 									</Row>
 								</div>
-								<div className="itemsMenu">
+								<div className="itemsMenuReservas">
 									<Row>
 										<i class="fas fa-tasks iconosMenuLateral"></i><Link to={'/principalConsumidores/ListadoReservas'}><p>Reservas</p></Link>
 									</Row>

@@ -1,18 +1,24 @@
 package app.controladores;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.clases.Producto;
 import app.daos.ProductoDao;
 import app.daos.ProductoProductorDao;
 import app.daos.ProductorDao;
+import app.mappers.ProductoMapper;
 import app.modelos.EntidadProducto;
 import app.modelos.EntidadProductoProductor;
 import app.modelos.EntidadProductor;
@@ -30,34 +36,19 @@ public class ProductoControlador {
 	ProductorDao productorDao;
 	
 	@CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
-    public EntidadProductor agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor, @RequestParam long id_producto){   	
+    @GetMapping(path = "redAgro/obtenerTiposProducto")
+    public List<Producto> obtenerTiposdeProducto(@RequestParam String categoria_producto){   	
     
-
-		EntidadProducto prod = productoDao.obtenerProducto(id_producto);
+		List<EntidadProducto> tipos_de_producto = new ArrayList<EntidadProducto>();
+		List<Producto> productosMapeados = new ArrayList<Producto>();
+		ProductoMapper productoMapper = new ProductoMapper();
 		
-		EntidadProductor productor = productorDao.obtenerProductor(id_productor);
-				
-//		EntidadProductoProductor productoNuevo = new EntidadProductoProductor();
-//		productoNuevo.setTitulo(producto.getTitulo());
-//		productoNuevo.setDescripcion(producto.getDescripcion());
-//		productoNuevo.setFecha_vencimiento(producto.getFecha_vencimiento());
-//		productoNuevo.setPrecio(producto.getPrecio());
-//		productoNuevo.setStock(producto.getStock());
-//		productoNuevo.setTiempo_preparacion(producto.getTiempo_preparacion());
-//		productoNuevo.setTipo_produccion(producto.getTipo_produccion());
-//		productoNuevo.setTipo_unidad(producto.getTipo_unidad());
-//		productoNuevo.setProducto(prod);
-//		productoNuevo.setProductor(productor);
-//						
-        return productor;
+		tipos_de_producto = productoDao.obtenerTiposProducto(categoria_producto);
 		
-//		productoProductorDao.save(productoNuevo);
-    	
-    	
+		productosMapeados = tipos_de_producto.stream().map(entidadProducto -> productoMapper.mapFromEntity(entidadProducto)).collect(Collectors.toList());
+								
+        return productosMapeados;
+		
     }
-	
-	
-	
 
 }
