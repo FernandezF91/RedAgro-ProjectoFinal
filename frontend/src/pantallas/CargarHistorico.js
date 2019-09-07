@@ -31,7 +31,7 @@ class CargarHistorico extends Component {
 		return (
 		<div className="container">
 				<form onSubmit={this.handleFormSubmit}>
-					<h1>Nuevo Producto</h1>
+					<h1>Cargar Histórico</h1>
 						<form onSubmit={this.handleSubmit}>
 							<label>
 							Elija la categoría:
