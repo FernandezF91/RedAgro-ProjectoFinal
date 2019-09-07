@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 import Dropdown from "react-dropdown";
+import { FilePond, registerPlugin } from 'react-filepond';
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css';
+
+// Import the Image EXIF Orientation and Image Preview plugins
+// Note: These need to be installed separately
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import FilePondTypeValidate from "filepond-plugin-file-validate-type";
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';;
 
 // const options = [
 //   'one', 'two', 'three'
@@ -32,27 +41,19 @@ class CargarHistorico extends Component {
 		<div className="container">
 				<form onSubmit={this.handleFormSubmit}>
 					<h1>Cargar Histórico</h1>
-						<form onSubmit={this.handleSubmit}>
-							<label>
-							Elija la categoría:
-							<select value={this.state.value} onChange={this.handleChange}>
-								<option value="tomate">Tomate</option>
-								<option value="zanahoria">Zanahoria</option>
-								<option value="lechuga">Lechuga</option>
-								<option value="acelga">Acelga</option>
-							</select>
-							</label>
-							<input type="submit" value="Submit" />
-						</form>
-
-						<form onSubmit={this.handleSubmit}>
-							<label>
-							Upload file:
-							<input type="file" ref={this.fileInput} />
-							</label>
-							<br />
-							<button type="submit">Submit</button>
-						</form>
+						<div clasName="imagenes">
+							<div className ="tituloImagen">
+								*Imágenes:
+								</div>
+								<FilePond allowMultiple={true}  maxFiles={5} imagePreviewHeight={150} acceptedFileTypes="image/jpeg, image/png, image/jpg" labelIdle={"Arrastre o suba sus imágenes aquí"}
+								onupdatefiles={(fileItems) => {
+                              // Set current file objects to this.state
+                              this.setState({
+                                  files: fileItems.map(fileItem => fileItem.file)
+                              });
+                          }}/>
+							</div>
+							<div className="condicionesInputsImg">(*) 5 imágenes como máximo</div>
 					</form>
 				</div>
 		)}
