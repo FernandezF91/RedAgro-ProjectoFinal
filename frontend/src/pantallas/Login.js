@@ -78,9 +78,9 @@ class LoginForm extends Component {
 				.then(function (response) {
 					if (response.status !== 200) {
 
-						// alert("Ocurrió algún problema. Intente nuevamente")
+						// alert("Ocurrió algún problema. Intenta nuevamente")
 
-						let mensajeError = "Ocurrió algun problema, intente nuevamente"
+						let mensajeError = "Ocurrió algun problema, intenta nuevamente"
 						_this.setState({
 							visible: true,
 							mensajeError: mensajeError
@@ -157,7 +157,7 @@ class LoginForm extends Component {
 								<div className="usuarioLogin">
 									<Form.Group as={Row} controlId="formHorizontalEmail">
 										<Form.Label column sm={2}>
-											Usuario:
+											Usuario
                                 </Form.Label>
 										<Col sm={10}>
 											<Form.Control type="email" name="username" onChange={(e) => this.detectarCambios(e)} />
@@ -169,7 +169,7 @@ class LoginForm extends Component {
 								<div className="passwordLogin">
 									<Form.Group as={Row} controlId="formHorizontalPassword" >
 										<Form.Label column sm={2}>
-											Password:
+											Password
                                 </Form.Label>
 										<Col sm={10}>
 											<Form.Control type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
