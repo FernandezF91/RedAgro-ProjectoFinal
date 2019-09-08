@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/Registro.css';
 import '../diseños/estilosGlobales.css';
@@ -215,7 +216,7 @@ class RegistroProductor extends Component {
 				<div className="barraNavegacion">
 					<Navbar>
 						<div className="culturaVerde">
-							<img src={culturaVerde} width="130px" height="50px"></img>
+						<Link to={'/'}><img src={culturaVerde} width="130px" height="50px"></img></Link>
 						</div>
 					</Navbar>
 				</div>
