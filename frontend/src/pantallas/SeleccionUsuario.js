@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
+import { Link } from 'react-router-dom';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -10,16 +11,13 @@ import '../diseños/seleccionUsuario.css';
 class SeleccionUsuario extends Component {
 
 	constructor() {
-
 		super()
 
 		this.state = {
 
 		}
 
-
 	}
-
 
 	render() {
 
@@ -28,7 +26,7 @@ class SeleccionUsuario extends Component {
 				<div className="barraNavegacion">
 					<Navbar>
 						<div className="culturaVerde">
-							<img src={culturaVerde} width="130px" height="50px"></img>
+						<Link to={'/'}><img src={culturaVerde} width="130px" height="50px"></img></Link>
 						</div>
 					</Navbar>
 				</div>
