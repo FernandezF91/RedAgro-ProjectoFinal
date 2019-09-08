@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
 import '../diseños/Registro.css';
 import '../diseños/estilosGlobales.css';
 import 'moment/locale/es';
@@ -19,7 +14,6 @@ const maxDate = new Date();
 class RegistroConsumidor extends Component {
 
 	constructor() {
-
 		super()
 
 		this.state = {
@@ -33,12 +27,9 @@ class RegistroConsumidor extends Component {
 
 		this.limpiarCampos = this.limpiarCampos.bind(this);
 		this.mostrarLogin = this.mostrarLogin.bind(this);
-
 	}
 
-
 	handleSubmit(e) {
-
 		const form = e.currentTarget;
 
 		this.setState({
@@ -48,44 +39,42 @@ class RegistroConsumidor extends Component {
 		let errores = {}
 
 		if ((form.checkValidity() === false) && ((!this.state.campos["fecha_nac"]) || (!isDate(this.state.campos["fecha_nac"])))) {
-
 			errores["fecha_nac"] = "*Campo inválido";
 			this.setState({ errores });
 			e.preventDefault();
 			e.stopPropagation();
 
 		} else if ((!this.state.campos["fecha_nac"]) || (!isDate(this.state.campos["fecha_nac"]))) {
-
 			errores["fecha_nac"] = "*Campo inválido";
 			this.setState({ errores });
 			e.preventDefault();
 			e.stopPropagation();
 
-
 		} else if (form.checkValidity() === false) {
-
 			e.preventDefault();
 			e.stopPropagation();
 
 		} else {
-
-			e.preventDefault();
-			this.crearUsuario(e);
-
+			this.validarDuplicado();
+			if (this.state.mensaje === "Ok") {
+				e.preventDefault();
+				this.crearUsuario(e);
+			} else {
+				this.setState({ errores });
+				e.preventDefault();
+				e.stopPropagation();
+				errores = [];
+			}
 		}
 		this.setState({ validated: true });
-
 	}
 
-
 	detectarCambios(e) {
-
 		let campos = this.state.campos;
 		campos[e.target.name] = e.target.value;
 		this.setState({
 			campos
 		})
-
 	}
 
 	closeModal() {
@@ -95,36 +84,71 @@ class RegistroConsumidor extends Component {
 	}
 
 	cambiosFecha(e) {
-
 		let campos = this.state.campos;
-
 		campos["fecha_nac"] = e;
-
 		this.setState({ campos })
 	}
 
-
 	limpiarCampos() {
-
 		this.refs.form.reset();
 		let campos = {}
 		this.setState({ campos: campos });
-
 	}
 
-
 	mostrarLogin() {
-
 		window.setTimeout(() => {
 			this.props.history.push('/login')
 			// history is available by design in this.props when using react-router
 		}, 3000);
-
 	}
-	crearUsuario(e) {
 
+	validarDuplicado() {
 		var _this = this;
 
+		const path_principal = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
+		const final_path = path_principal + this.state.campos["email"];
+
+		fetch(final_path, {
+			method: "GET",
+			headers: {
+				'Content-type': 'application/json;charset=UTF-8',
+			},
+		})
+			.then(function (response) {
+				if (response.status !== 200) {
+					_this.setState({
+						visible: true,
+						mensaje: "Ocurrió algun problema, intenta nuevamente"
+					});
+					return;
+				}
+				response.text().then(
+					function (response) {
+						if (response === "Productor") {
+							_this.setState({
+								visible: true,
+								mensaje: "Ya existe un usuario productor registrado con este mail"
+							});
+							return;
+						} else if (response === "Consumidor") {
+							_this.setState({
+								visible: true,
+								mensaje: "Ya existe un usuario consumidor registrado con este mail"
+							});
+							return;
+						} else {
+							_this.setState({
+								mensaje: "Ok"
+							});
+							return;
+						}
+					}
+				);
+			});
+	}
+
+	crearUsuario(e) {
+		var _this = this;
 		fetch("http://localhost:3000/redAgro/usuario_consumidor", {
 			method: "POST",
 			headers: {
@@ -142,22 +166,17 @@ class RegistroConsumidor extends Component {
 		})
 
 			.then(function (response) {
-
 				if (response.status !== 200) {
-
 					let mensaje = "Ocurrió algun problema, intenta nuevamente"
 					_this.setState({
 						visible: true,
 						mensaje: mensaje
 					});
 					return;
-
 				}
 
 				response.json().then(
-
 					function (response) {
-
 						let mensaje = "Serás redireccionado directamente hacia el acceso de usuarios"
 						_this.setState({
 							validated: true,
@@ -165,15 +184,9 @@ class RegistroConsumidor extends Component {
 							mensaje: mensaje,
 							titulo: "Registro exitoso!"
 						});
-
 						_this.mostrarLogin();
-
 					});
-
 			});
-
-
-
 	}
 
 	render() {

@@ -23,29 +23,26 @@ import app.modelos.EntidadUsuario;
 @RestController
 public class LoginControlador {
 
-		@Autowired
-		UsuarioDao usuarioDAO;
+	@Autowired
+	UsuarioDao usuarioDAO;
 
-			@CrossOrigin(origins = "http://localhost:3000")
-		    @GetMapping(path = "redAgro/login")
-			@ResponseBody
-		    public Usuario autenticacion(@RequestParam String u, @RequestParam String c){
-				
-				UsuarioMapper userMapper = new UsuarioMapper();
-			
-				EntidadUsuario usuario = usuarioDAO.autenticaUsuario(u,c);
-				
-				if(usuario==null) {
-					
-					
-					return null;
-					
-				}
-				
-				return userMapper.mapFromEntity(usuario);
-		    	
-			    
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/login")
+	@ResponseBody
+	public Usuario autenticacion(@RequestParam String u, @RequestParam String c) {
+
+		UsuarioMapper userMapper = new UsuarioMapper();
+
+		EntidadUsuario usuario = usuarioDAO.autenticaUsuario(u, c);
+
+		if (usuario == null) {
+
+			return null;
+
+		}
+
+		return userMapper.mapFromEntity(usuario);
+
+	}
+	
 }
-
-}
-

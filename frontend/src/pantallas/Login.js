@@ -22,7 +22,6 @@ class LoginForm extends Component {
 		this.validarDatos = this.validarDatos.bind(this);
 		this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
 		this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
-
 	}
 
 	detectarCambios(e) {
@@ -51,26 +50,19 @@ class LoginForm extends Component {
 		let errores = {};
 
 		if ((!this.state.fields["username"]) && (!this.state.fields["password"])) {
-
 			errores["username"] = "*Campo inválido";
 			errores["password"] = "*Campo inválido";
 
-
 		} else if (!this.state.fields["username"]) {
-
 			errores["username"] = "*Campo inválido";
 
 		} else if (!this.state.fields["password"]) {
-
 			errores["password"] = "*Campo inválido";
 
 		} else {
-
-
 			const path_principal = "http://localhost:3000/redAgro/login?u=";
 
 			var username = this.state.fields["username"];
-
 			var password = this.state.fields["password"];
 
 			const final_path = path_principal + username + "&c=" + password;
@@ -80,13 +72,10 @@ class LoginForm extends Component {
 			fetch(final_path, {
 				method: "GET",
 				headers: {
-
 					'Content-type': 'application/json;charset=UTF-8',
-
 				},
 			})
 				.then(function (response) {
-
 					if (response.status !== 200) {
 
 						// alert("Ocurrió algún problema. Intente nuevamente")
@@ -102,25 +91,16 @@ class LoginForm extends Component {
 					}
 
 					response.text().then(
-
 						function (response) {
-
 							if (response !== "") {
-
 								_this.setState({ usuario: JSON.parse(response) });
-
 								if (_this.state.usuario.rol === "Productor") {
-
 									_this.mostrarPantallaProductor();
-
 								} else {
-
 									_this.mostrarPantallaConsumidor();
-
 								}
 
 							} else {
-
 								let mensajeError = "Cuenta inexistente o datos incorrectos";
 								_this.setState({
 									visible: true,
@@ -141,7 +121,6 @@ class LoginForm extends Component {
 	}
 
 	mostrarPantallaProductor() {
-
 		this.props.history.push({
 			pathname: '/principalProductores',
 			state: { id: this.state.usuario.id }

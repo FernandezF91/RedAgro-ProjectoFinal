@@ -75,13 +75,11 @@ input[type=text] {
 	font-size: 32px;
 }
 
-
 .form-control[type="text"],
 .form-control[type="email"],
 .form-control[type="password"],
 .form-control[type="telR"],
 .form-control[type="number"] {
-
 	width: 40%;
 
 }
@@ -90,12 +88,11 @@ input[type=text] {
 .selectTipoUnidad,
 .selectTipoProduccion,
 .selectCategoria {
-
 	width: 50%;
 }
 
 .iconosBarra {
-	color: #000;
+	color: darkgreen;
 	font-size: 28px;
 	margin-top: 13px;
 	margin-left: 7px;

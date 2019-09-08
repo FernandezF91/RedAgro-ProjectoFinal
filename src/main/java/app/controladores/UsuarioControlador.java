@@ -2,7 +2,6 @@ package app.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.clases.Usuario;
@@ -25,10 +25,9 @@ import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @RestController
 public class UsuarioControlador {
-	
+
 //Los controladores son los que van a recibir la petición del front, es decir del fetch.
 //El path especificado en el fetch va a matchear con el metodo del controlador que tengan definida la misma URL.
 //Los controladores van a hablar con los dao, que son los que tienen los metodos para guardar, eliminar, modificar, borrar datos de las tablas, etc.
@@ -41,57 +40,71 @@ public class UsuarioControlador {
 //En el caso que yo quiera traer datos, necesito mappear esas entidades que yo recibo a una clase normal,
 //para luego yo poder devolver un JSON. Por eso estan los mappers que se encargan de mappear de una clase a una entidad,
 //y viceversa.
-	
-	@Autowired
-	UsuarioDao usuarioDao;
-	
-	@Autowired
-	ConsumidorDao consumidorDao;
-	
-	@Autowired
-	ProductorDao productorDao;
 
+	@Autowired
+	UsuarioDao usuarioDAO;
 
-	    @CrossOrigin(origins = "http://localhost:3000")
-	    @PostMapping(path = "redAgro/usuario_consumidor")
-	    public EntidadUsuario agregarUsuarioConsumidor(@RequestBody EntidadUsuario usuario){
-	    	
-	    	EntidadUsuario userNuevo = usuarioDao.save(usuario);
-	    	
-			EntidadConsumidor entidadConsumidor = new EntidadConsumidor();
-			
-			entidadConsumidor.setId(userNuevo.getId());
-			entidadConsumidor.setUsuario(userNuevo);
-	  	    	
-			consumidorDao.save(entidadConsumidor);
-	    	
-	    	return userNuevo;
-	    		    	
-	    }
-	    
-	    @CrossOrigin(origins = "http://localhost:3000")
-	    @PostMapping(path = "redAgro/usuario_productor")
-	    public EntidadUsuario agregarUsuarioProductor(@RequestBody EntidadUsuario usuario, @RequestParam String razon_social){
-	    	
-	    	EntidadUsuario userNuevo = usuarioDao.save(usuario);
-    			    	
-	    	EntidadProductor entidadProductor = new EntidadProductor();
-	    	
-	    	entidadProductor.setId(userNuevo.getId());
-	    	entidadProductor.setUsuario(userNuevo);
-	    	entidadProductor.setRazon_social(razon_social);
-	    	
-	    	productorDao.save(entidadProductor);
-	    	
-	    	return userNuevo;
-	    	
-	    	
-	    }
+	@Autowired
+	ConsumidorDao consumidorDAO;
 
-	    @CrossOrigin(origins = "http://localhost:3000")
-	    @DeleteMapping(path = "redAgro/borrar_usuario/{id}")
-	    public void deleteItem(@PathVariable long id){
-	    	usuarioDao.deleteById(id);
-	    }
+	@Autowired
+	ProductorDao productorDAO;
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PostMapping(path = "redAgro/usuario_consumidor")
+	public EntidadUsuario agregarUsuarioConsumidor(@RequestBody EntidadUsuario usuario) {
+
+		EntidadUsuario userNuevo = usuarioDAO.save(usuario);
+
+		EntidadConsumidor entidadConsumidor = new EntidadConsumidor();
+
+		entidadConsumidor.setId(userNuevo.getId());
+		entidadConsumidor.setUsuario(userNuevo);
+
+		consumidorDAO.save(entidadConsumidor);
+
+		return userNuevo;
+
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PostMapping(path = "redAgro/usuario_productor")
+	public EntidadUsuario agregarUsuarioProductor(@RequestBody EntidadUsuario usuario,
+			@RequestParam String razon_social) {
+
+		EntidadUsuario userNuevo = usuarioDAO.save(usuario);
+
+		EntidadProductor entidadProductor = new EntidadProductor();
+
+		entidadProductor.setId(userNuevo.getId());
+		entidadProductor.setUsuario(userNuevo);
+		entidadProductor.setRazon_social(razon_social);
+
+		productorDAO.save(entidadProductor);
+
+		return userNuevo;
+
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/validar_usuario_duplicado")
+	@ResponseBody
+	public String validarUsuarioDuplicado(@RequestParam String mail) {
+		UsuarioMapper userMapper = new UsuarioMapper();
+		EntidadUsuario usuario = usuarioDAO.validarUsuarioDuplicado(mail);
+
+		if (usuario == null) {
+			return null;
+		}
+
+		userMapper.mapFromEntity(usuario);
+		return usuario.getRol();
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@DeleteMapping(path = "redAgro/borrar_usuario/{id}")
+	public void deleteItem(@PathVariable long id) {
+		usuarioDAO.deleteById(id);
+	}
 
 }

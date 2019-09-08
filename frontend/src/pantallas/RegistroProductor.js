@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
 import '../diseños/Registro.css';
 import '../diseños/estilosGlobales.css';
 import 'moment/locale/es';
@@ -18,9 +13,7 @@ const maxDate = new Date();
 
 class RegistroProductor extends Component {
 
-
 	constructor() {
-
 		super()
 
 		this.state = {
@@ -72,51 +65,88 @@ class RegistroProductor extends Component {
 			e.stopPropagation();
 
 		} else {
-
-			e.preventDefault();
-			this.crearUsuario(e);
-
+			this.validarDuplicado();
+			if (this.state.mensaje === "Ok") {
+				e.preventDefault();
+				this.crearUsuario(e);
+			} else {
+				this.setState({ errores });
+				e.preventDefault();
+				e.stopPropagation();
+				errores = [];
+			}
 		}
 		this.setState({ validated: true });
-
 	}
 
-
 	detectarCambios(e) {
-
 		let campos = this.state.campos;
 		campos[e.target.name] = e.target.value;
 		this.setState({
 			campos
 		})
-
 	}
 
-
-
 	cambiosFecha(e) {
-
 		let campos = this.state.campos;
 		campos["fecha_nac"] = e;
 
 		this.setState({ campos })
-
 	}
 
-
 	limpiarCampos() {
-
 		this.refs.form.reset();
 		let campos = {}
 		this.setState({ campos: campos });
-
 	}
 
-
-	crearUsuario(e) {
-
+	validarDuplicado() {
 		var _this = this;
 
+		const path_principal = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
+		const final_path = path_principal + this.state.campos["email"];
+
+		fetch(final_path, {
+			method: "GET",
+			headers: {
+				'Content-type': 'application/json;charset=UTF-8',
+			},
+		})
+			.then(function (response) {
+				if (response.status !== 200) {
+					_this.setState({
+						visible: true,
+						mensaje: "Ocurrió algun problema, intenta nuevamente"
+					});
+					return;
+				}
+				response.text().then(
+					function (response) {
+						if (response === "Productor") {
+							_this.setState({
+								visible: true,
+								mensaje: "Ya existe un usuario productor registrado con este mail"
+							});
+							return;
+						} else if (response === "Consumidor") {
+							_this.setState({
+								visible: true,
+								mensaje: "Ya existe un usuario consumidor registrado con este mail"
+							});
+							return;
+						} else {
+							_this.setState({
+								mensaje: "Ok"
+							});
+							return;
+						}
+					}
+				);
+			});
+	}
+
+	crearUsuario(e) {
+		var _this = this;
 		const path_principal = "http://localhost:3000/redAgro/usuario_productor?razon_social=";
 
 		var razonSocial = this.state.campos["razonSocial"];
@@ -169,13 +199,9 @@ class RegistroProductor extends Component {
 					});
 
 			});
-
-
-
 	}
 
 	mostrarLogin() {
-
 		window.setTimeout(() => {
 			this.props.history.push('/login')
 			// history is available by design in this.props when using react-router
