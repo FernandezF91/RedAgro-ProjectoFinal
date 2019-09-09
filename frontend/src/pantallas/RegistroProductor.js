@@ -66,16 +66,8 @@ class RegistroProductor extends Component {
 			e.stopPropagation();
 
 		} else {
-			this.validarDuplicado();
-			if (this.state.mensaje === "Ok") {
-				e.preventDefault();
-				this.crearUsuario(e);
-			} else {
-				this.setState({ errores });
-				e.preventDefault();
-				e.stopPropagation();
-				errores = [];
-			}
+			e.preventDefault();
+			this.crearUsuario(e);
 		}
 		this.setState({ validated: true });
 	}
@@ -101,104 +93,75 @@ class RegistroProductor extends Component {
 		this.setState({ campos: campos });
 	}
 
-	validarDuplicado() {
+	crearUsuario(e) {
 		var _this = this;
+		var path = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
+		path = path + _this.state.campos["email"];
 
-		const path_principal = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
-		const final_path = path_principal + this.state.campos["email"];
-
-		fetch(final_path, {
+		fetch(path, {
 			method: "GET",
 			headers: {
 				'Content-type': 'application/json;charset=UTF-8',
 			},
 		})
 			.then(function (response) {
-				if (response.status !== 200) {
+				if (response.status === 400) {
+					response.text().then(
+						function (response) {
+							_this.setState({
+								visible: true,
+								mensaje: response,
+								titulo: "Error"
+							})
+							return;
+						}
+					)
+				} else if (response.status === 200) {
+					var pathCrear = "http://localhost:3000/redAgro/usuario_productor?razon_social=";
+					pathCrear = pathCrear + _this.state.campos["razonSocial"];
+
+					fetch(pathCrear, {
+						method: "POST",
+						headers: {
+							'Content-type': 'application/json;charset=UTF-8',
+						},
+						body: JSON.stringify({
+							"nombre": _this.state.campos["nombre"],
+							"apellido": _this.state.campos["apellido"],
+							"usuario": _this.state.campos["email"],
+							"contraseña": _this.state.campos["password"],
+							"fecha_nacimiento": _this.state.campos["fecha_nac"],
+							"telefono": _this.state.campos["tel"],
+							"rol": "Productor"
+						}),
+					})
+						.then(function (response) {
+							if (response.status !== 200) {
+								_this.setState({
+									visible: true,
+									mensaje: "Ocurrió algun problema, intenta nuevamente"
+								});
+								return;
+							}
+
+							response.json().then(
+								function (response) {
+									_this.setState({
+										validated: true,
+										visible: true,
+										mensaje: "Serás redireccionado directamente hacia el acceso de usuarios",
+										titulo: "Registro exitoso!"
+									});
+									_this.mostrarLogin();
+								});
+						});
+				} else {
 					_this.setState({
 						visible: true,
 						mensaje: "Ocurrió algun problema, intenta nuevamente"
-					});
+					})
 					return;
 				}
-				response.text().then(
-					function (response) {
-						if (response === "Productor") {
-							_this.setState({
-								visible: true,
-								mensaje: "Ya existe un usuario productor registrado con este mail"
-							});
-							return;
-						} else if (response === "Consumidor") {
-							_this.setState({
-								visible: true,
-								mensaje: "Ya existe un usuario consumidor registrado con este mail"
-							});
-							return;
-						} else {
-							_this.setState({
-								mensaje: "Ok"
-							});
-							return;
-						}
-					}
-				);
-			});
-	}
-
-	crearUsuario(e) {
-		var _this = this;
-		const path_principal = "http://localhost:3000/redAgro/usuario_productor?razon_social=";
-
-		var razonSocial = this.state.campos["razonSocial"];
-
-		const path_final = path_principal + razonSocial;
-
-		fetch(path_final, {
-			method: "POST",
-			headers: {
-				'Content-type': 'application/json;charset=UTF-8',
-			},
-			body: JSON.stringify({
-				"nombre": this.state.campos["nombre"],
-				"apellido": this.state.campos["apellido"],
-				"usuario": this.state.campos["email"],
-				"contraseña": this.state.campos["password"],
-				"fecha_nacimiento": this.state.campos["fecha_nac"],
-				"telefono": this.state.campos["tel"],
-				"rol": "Productor"
-			}),
-		})
-
-			.then(function (response) {
-
-				if (response.status !== 200) {
-
-					let mensaje = "Ocurrió algun problema, intenta nuevamente"
-					_this.setState({
-						visible: true,
-						mensaje: mensaje
-					});
-					return;
-
-				}
-
-				response.json().then(
-
-					function (response) {
-
-						let mensaje = "Serás redireccionado directamente hacia el acceso de usuarios"
-						_this.setState({
-							validated: true,
-							visible: true,
-							mensaje: mensaje,
-							titulo: "Registro exitoso!"
-						});
-
-						_this.mostrarLogin();
-
-					});
-
 			});
 	}
 
@@ -207,7 +170,6 @@ class RegistroProductor extends Component {
 			this.props.history.push('/login')
 			// history is available by design in this.props when using react-router
 		}, 3000);
-
 	}
 
 	render() {
@@ -216,7 +178,7 @@ class RegistroProductor extends Component {
 				<div className="barraNavegacion">
 					<Navbar>
 						<div className="culturaVerde">
-						<Link to={'/'}><img src={culturaVerde} width="130px" height="50px"></img></Link>
+							<Link to={'/'}><img src={culturaVerde} width="130px" height="50px"></img></Link>
 						</div>
 					</Navbar>
 				</div>

@@ -1,7 +1,8 @@
 package app.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -88,17 +89,23 @@ public class UsuarioControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/validar_usuario_duplicado")
-	@ResponseBody
-	public String validarUsuarioDuplicado(@RequestParam String mail) {
+	public ResponseEntity<String> validarUsuarioDuplicado(@RequestParam String mail) {
 		UsuarioMapper userMapper = new UsuarioMapper();
 		EntidadUsuario usuario = usuarioDAO.validarUsuarioDuplicado(mail);
 
 		if (usuario == null) {
-			return null;
+			return new ResponseEntity<>("", HttpStatus.OK);
 		}
 
 		userMapper.mapFromEntity(usuario);
-		return usuario.getRol();
+		String rol = usuario.getRol();
+		
+		
+		if (rol.equals("Productor")) {
+			return new ResponseEntity<>("Ya existe un usuario productor registrado con este mail", HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<>("Ya existe un usuario consumidor registrado con este mail", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")

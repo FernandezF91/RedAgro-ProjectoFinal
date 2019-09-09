@@ -31,9 +31,10 @@ class RegistroConsumidor extends Component {
 	}
 
 	handleSubmit(e) {
+		var _this = this;
 		const form = e.currentTarget;
 
-		this.setState({
+		_this.setState({
 			errores: []
 		})
 
@@ -41,13 +42,13 @@ class RegistroConsumidor extends Component {
 
 		if ((form.checkValidity() === false) && ((!this.state.campos["fecha_nac"]) || (!isDate(this.state.campos["fecha_nac"])))) {
 			errores["fecha_nac"] = "*Campo inválido";
-			this.setState({ errores });
+			_this.setState({ errores });
 			e.preventDefault();
 			e.stopPropagation();
 
 		} else if ((!this.state.campos["fecha_nac"]) || (!isDate(this.state.campos["fecha_nac"]))) {
 			errores["fecha_nac"] = "*Campo inválido";
-			this.setState({ errores });
+			_this.setState({ errores });
 			e.preventDefault();
 			e.stopPropagation();
 
@@ -56,18 +57,10 @@ class RegistroConsumidor extends Component {
 			e.stopPropagation();
 
 		} else {
-			this.validarDuplicado();
-			if (this.state.mensaje === "Ok") {
-				e.preventDefault();
-				this.crearUsuario(e);
-			} else {
-				this.setState({ errores });
-				e.preventDefault();
-				e.stopPropagation();
-				errores = [];
-			}
+			e.preventDefault();
+			this.crearUsuario(e);
 		}
-		this.setState({ validated: true });
+		_this.setState({ validated: true });
 	}
 
 	detectarCambios(e) {
@@ -103,90 +96,71 @@ class RegistroConsumidor extends Component {
 		}, 3000);
 	}
 
-	validarDuplicado() {
+	crearUsuario(e) {
 		var _this = this;
+		var path = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
+		path = path + _this.state.campos["email"];
 
-		const path_principal = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
-		const final_path = path_principal + this.state.campos["email"];
-
-		fetch(final_path, {
+		fetch(path, {
 			method: "GET",
 			headers: {
 				'Content-type': 'application/json;charset=UTF-8',
 			},
 		})
 			.then(function (response) {
-				if (response.status !== 200) {
+				if (response.status === 400) {
+					response.text().then(
+						function (response) {
+							_this.setState({
+								visible: true,
+								mensaje: response,
+								titulo: "Error"
+							})
+							return;
+						}
+					)
+				} else if (response.status === 200) {
+					fetch("http://localhost:3000/redAgro/usuario_consumidor", {
+						method: "POST",
+						headers: {
+							'Content-type': 'application/json;charset=UTF-8',
+						},
+						body: JSON.stringify({
+							"nombre": _this.state.campos["nombre"],
+							"apellido": _this.state.campos["apellido"],
+							"usuario": _this.state.campos["email"],
+							"contraseña": _this.state.campos["password"],
+							"fecha_nacimiento": _this.state.campos["fecha_nac"],
+							"telefono": _this.state.campos["tel"],
+							"rol": "Consumidor"
+						}),
+					})
+						.then(function (response) {
+							if (response.status !== 200) {
+								_this.setState({
+									visible: true,
+									mensaje: "Ocurrió algun problema, intenta nuevamente"
+								});
+								return;
+							}
+							response.json().then(
+								function (response) {
+									_this.setState({
+										validated: true,
+										visible: true,
+										mensaje: "Serás redireccionado directamente hacia el acceso de usuarios",
+										titulo: "Registro exitoso!"
+									});
+									_this.mostrarLogin();
+								});
+						});
+				} else {
 					_this.setState({
 						visible: true,
 						mensaje: "Ocurrió algun problema, intenta nuevamente"
-					});
+					})
 					return;
 				}
-				response.text().then(
-					function (response) {
-						if (response === "Productor") {
-							_this.setState({
-								visible: true,
-								mensaje: "Ya existe un usuario productor registrado con este mail"
-							});
-							return;
-						} else if (response === "Consumidor") {
-							_this.setState({
-								visible: true,
-								mensaje: "Ya existe un usuario consumidor registrado con este mail"
-							});
-							return;
-						} else {
-							_this.setState({
-								mensaje: "Ok"
-							});
-							return;
-						}
-					}
-				);
-			});
-	}
-
-	crearUsuario(e) {
-		var _this = this;
-		fetch("http://localhost:3000/redAgro/usuario_consumidor", {
-			method: "POST",
-			headers: {
-				'Content-type': 'application/json;charset=UTF-8',
-			},
-			body: JSON.stringify({
-				"nombre": this.state.campos["nombre"],
-				"apellido": this.state.campos["apellido"],
-				"usuario": this.state.campos["email"],
-				"contraseña": this.state.campos["password"],
-				"fecha_nacimiento": this.state.campos["fecha_nac"],
-				"telefono": this.state.campos["tel"],
-				"rol": "Consumidor"
-			}),
-		})
-
-			.then(function (response) {
-				if (response.status !== 200) {
-					let mensaje = "Ocurrió algun problema, intenta nuevamente"
-					_this.setState({
-						visible: true,
-						mensaje: mensaje
-					});
-					return;
-				}
-
-				response.json().then(
-					function (response) {
-						let mensaje = "Serás redireccionado directamente hacia el acceso de usuarios"
-						_this.setState({
-							validated: true,
-							visible: true,
-							mensaje: mensaje,
-							titulo: "Registro exitoso!"
-						});
-						_this.mostrarLogin();
-					});
 			});
 	}
 
@@ -197,7 +171,7 @@ class RegistroConsumidor extends Component {
 				<div className="barraNavegacion">
 					<Navbar>
 						<div className="culturaVerde">
-						<Link to={'/'}><img src={culturaVerde} width="130px" height="50px"></img></Link>
+							<Link to={'/'}><img src={culturaVerde} width="130px" height="50px"></img></Link>
 						</div>
 					</Navbar>
 				</div>
@@ -269,7 +243,7 @@ class RegistroConsumidor extends Component {
 										<Form.Control required type="telR" name="tel" pattern="[0-9]{8,14}" onChange={(e) => this.detectarCambios(e)} />
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
-												</Form.Control.Feedback>
+										</Form.Control.Feedback>
 									</Col>
 								</Form.Group>
 							</div>
@@ -285,7 +259,6 @@ class RegistroConsumidor extends Component {
 												</Form.Control.Feedback>
 
 									</Col>
-
 								</Form.Group>
 							</div>
 							<div className="password">
