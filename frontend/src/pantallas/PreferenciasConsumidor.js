@@ -16,18 +16,19 @@ class PreferenciasConsumidor extends Component {
 		this.state = {
 			active: [],
 			id: this.props.id_consumidor,
-			preferencias: [],
 			seleccionados: {
 				verduras: [],
 				frutas: [],
 				otros: [],
 			},
+			preferencias: [],
 			otros: [],
 			verduras: [],
 			frutas: []
 		};
 
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+		this.savePreferences = this.savePreferences.bind(this);
 	}
 
 	mostrarPantallaPrincipal() {
@@ -37,15 +38,9 @@ class PreferenciasConsumidor extends Component {
 		})
 	}
 
-	onChange(value, key) {
-		this.setState({
-			[key]: value
-		})
-	}
-
 	addNewPreferencia(categoria, newPreferencia) {
 		if (categoria === "verduras") {
-			this.setState({ seleccionados: {...this.state.seleccionados, verduras: newPreferencia } });
+			this.setState({ seleccionados: { ...this.state.seleccionados, verduras: newPreferencia } });
 		}
 		if (categoria === "frutas") {
 			this.setState({ seleccionados: { ...this.state.seleccionados, frutas: newPreferencia } });
@@ -73,6 +68,65 @@ class PreferenciasConsumidor extends Component {
 		return itemList;
 	}
 
+	checkSelectedItems(preferencias, listado, categoria) {
+		if (listado.length > 0) {
+			listado.map(item => {
+				preferencias.push({
+					consumidor: {
+						id: this.state.id,
+					},
+					producto: {
+						id: item.value,
+						categoria: categoria,
+						tipo: item.label,
+					}
+				});
+			})
+		}
+		return preferencias;
+	}
+
+	savePreferences(e) {
+		var preferenciasAGuardar = [];
+		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.verduras, "Verduras");
+		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.frutas, "Frutas");
+		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.otros, "Otros");
+
+		//Get preferencias
+		var path = "http://localhost:3000/redAgro/preferencia_consumidor?id=" + this.state.id;
+		fetch(path, {
+			method: "GET",
+			headers: { 'Content-type': 'application/json;charset=UTF-8' },
+		})
+			.then(response => { return response.json(); })
+			.then(data => {
+				this.setState({
+					preferencias: data
+				});
+			})
+		//Borro las preferencias que ya tenia el usuario
+		if (this.state.preferencias.length > 0) {
+			fetch("http://localhost:3000/redAgro/borrar_preferencias_consumidor", {
+				method: "DELETE",
+				headers: { 'Content-type': 'application/json;charset=UTF-8' },
+				body: JSON.stringify(this.state.preferencias)
+			})
+		}
+
+		//Guardo las nuevas preferencias
+		fetch("http://localhost:3000/redAgro/preferencias_consumidor", {
+			method: "POST",
+			headers: { 'Content-type': 'application/json;charset=UTF-8' },
+			body: JSON.stringify(preferenciasAGuardar)
+		})
+			.then(function (response) {
+				if (response !== 200) {
+					console.log("SE cagó");
+					return;
+				}
+			})
+	}
+
 	componentDidMount() {
 		//Obtengo las preferencias del Consumidor
 		var path = "http://localhost:3000/redAgro/preferencia_consumidor?id=" + this.state.id;
@@ -86,13 +140,7 @@ class PreferenciasConsumidor extends Component {
 						frutas: this.getPreferencesSaved(data, "Frutas"),
 						otros: this.getPreferencesSaved(data, "Otros")
 					},
-					preferencias: data.map((item) => {
-						return {
-							categoria: item.producto.categoria,
-							tipo: item.producto.tipo,
-							id: item.producto.id
-						}
-					})
+					//preferencias: data
 				});
 			})
 		//Cargo los productos 'Frutas'
@@ -147,7 +195,6 @@ class PreferenciasConsumidor extends Component {
 					<h5>Seleccione sus productos de interés para recibir novedades sobre los mismos:</h5>
 				</div>
 				<br />
-
 				<div className="opciones">
 					<div className="tituloProductos">Verduras:</div>
 					<Select className="dropdownProductos"
@@ -155,24 +202,19 @@ class PreferenciasConsumidor extends Component {
 						options={this.state.verduras}
 						placeholder="Seleccione uno o varios items..."
 						isMulti
-						//newPreferencia.label, newPreferencia.value)} />
 						onChange={newVerdura => this.addNewPreferencia("verduras", newVerdura)} />
 				</div>
 				<br />
-
 				<div className="opciones">
 					<div className="tituloProductos">Frutas:</div>
 					<Select className="dropdownProductos"
-						//	defaultValue={this.state.frutasSelect}
 						value={this.state.seleccionados.frutas}
 						options={this.state.frutas}
 						placeholder="Seleccione uno o varios items..."
 						isMulti
-						//onChange={opt => console.log(opt.label, opt.value)} />
 						onChange={newFruta => this.addNewPreferencia("frutas", newFruta)} />
 				</div>
 				<br />
-
 				<div className="opciones">
 					<div className="tituloProductos">Otros:</div>
 					<Select className="dropdownProductos"
@@ -180,14 +222,12 @@ class PreferenciasConsumidor extends Component {
 						options={this.state.otros}
 						placeholder="Seleccione uno o varios items..."
 						isMulti
-						//	onChange={opt => console.log(opt.label, opt.value)} />
 						onChange={newOtros => this.addNewPreferencia("otros", newOtros)} />
 				</div>
-
 				<br />
 				<div className="botonesPreferencias">
 					<div className="botonCrear">
-						<Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
+						<Button variant="success" type="submit" onClick={this.savePreferences}>Guardar</Button>
 					</div>
 					<div className="botonAtras">
 						<a href='/principalConsumidores'><Button variant="success">Cancelar</Button></a>
