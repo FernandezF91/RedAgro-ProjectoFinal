@@ -63,7 +63,7 @@ class PreferenciasConsumidor extends Component {
 		).map(function (item) {
 			return {
 				label: item.producto.tipo,
-				value: true
+				value: item.producto.id
 			}
 		});
 
