@@ -51,7 +51,7 @@ class PreferenciasConsumidor extends Component {
 			this.setState({ seleccionados: { ...this.state.seleccionados, frutas: newPreferencia } });
 		}
 		if (categoria === "otros") {
-			this.setState({ seleccionados: { ...this.state.seleccionados, frutas: newPreferencia } });
+			this.setState({ seleccionados: { ...this.state.seleccionados, otros: newPreferencia } });
 		}
 	}
 
