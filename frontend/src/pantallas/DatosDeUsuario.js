@@ -1,4 +1,4 @@
-    
+
 import React, { Component } from 'react'
 import Navbar from 'react-bootstrap/Navbar';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
@@ -25,20 +25,20 @@ class DatosDeUsuario extends Component {
 		this.state = {
 			fields: [],
 			errores: [],
-			usuario : {},
-			visible : false,
-			mensajeError:"",
-			id:this.props.id_productor //para ir pasando el ID del usuario de pantalla a pantalla
+			usuario: {},
+			visible: false,
+			mensajeError: "",
+			id: this.props.id_productor //para ir pasando el ID del usuario de pantalla a pantalla
 		}
 
 		this.validarDatos = this.validarDatos.bind(this);
 		this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
 		this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-	
+
 	}
 
-	
+
 	detectarCambios(e) {
 
 		let fields = this.state.fields;
@@ -49,19 +49,19 @@ class DatosDeUsuario extends Component {
 
 	}
 
-cambiosFecha(e) {
+	cambiosFecha(e) {
 
 		let fields = this.state.fields;
 
 		fields["fecha_nac"] = e;
 
-}
+	}
 
-    closeModal() {
-        this.setState({
-            visible : false
-        });
-    }
+	closeModal() {
+		this.setState({
+			visible: false
+		});
+	}
 
 
 	validarDatos() {
@@ -96,60 +96,64 @@ cambiosFecha(e) {
 
 			var password = this.state.fields["password"];
 
-			const final_path = path_principal+username+"&c="+password;
+			const final_path = path_principal + username + "&c=" + password;
 
-		    var _this = this;
+			var _this = this;
 
-		 	fetch(final_path, {
-			method: "GET",
-			headers: {
-				
-				'Content-type': 'application/json;charset=UTF-8',
-			
-			},
-		})
-			.then(function(response) {
+			fetch(final_path, {
+				method: "GET",
+				headers: {
 
-			if(response.status !==200){
+					'Content-type': 'application/json;charset=UTF-8',
 
-			// alert("Ocurrió algún problema. Intente nuevamente")
+				},
+			})
+				.then(function (response) {
 
-			let mensajeError = "Ocurrió algun problema, intente nuevamente"
-			_this.setState({visible:true,
-			mensajeError:mensajeError});
+					if (response.status !== 200) {
 
-			return;
-			
-			}
+						// alert("Ocurrió algún problema. Intenta nuevamente")
 
-			response.text().then(
+						let mensajeError = "Ocurrió algun problema, intenta nuevamente"
+						_this.setState({
+							visible: true,
+							mensajeError: mensajeError
+						});
 
-				function(response) {
-				
-					if (response!==""){
-
-						_this.setState({usuario:JSON.parse(response)});
-
-					if (_this.state.usuario.rol === "Productor") {
-
-						_this.mostrarPantallaProductor();
-
-					} else {
-
-						_this.mostrarPantallaConsumidor();
+						return;
 
 					}
 
-				}else{
+					response.text().then(
 
-					let mensajeError = "Cuenta inexistente o datos incorrectos";
-			_this.setState({visible:true,
-			mensajeError:mensajeError});
-				} 
-				
-			});
+						function (response) {
 
-			});		
+							if (response !== "") {
+
+								_this.setState({ usuario: JSON.parse(response) });
+
+								if (_this.state.usuario.rol === "Productor") {
+
+									_this.mostrarPantallaProductor();
+
+								} else {
+
+									_this.mostrarPantallaConsumidor();
+
+								}
+
+							} else {
+
+								let mensajeError = "Cuenta inexistente o datos incorrectos";
+								_this.setState({
+									visible: true,
+									mensajeError: mensajeError
+								});
+							}
+
+						});
+
+				});
 
 		}
 
@@ -161,26 +165,26 @@ cambiosFecha(e) {
 
 	}
 
-	mostrarPantallaPrincipal(){
+	mostrarPantallaPrincipal() {
 
 		this.props.history.push({
-	pathname:'/principalProductores',
-	state:{id:this.state.id}
-	})
-}
+			pathname: '/principalProductores',
+			state: { id: this.state.id }
+		})
+	}
 
-	mostrarPantallaProductor(){
+	mostrarPantallaProductor() {
 
-	this.props.history.push({
-	pathname:'/principalProductores',
-	state:{id:this.state.usuario.id}
-	})
+		this.props.history.push({
+			pathname: '/principalProductores',
+			state: { id: this.state.usuario.id }
+		})
 
 	}
 
-	mostrarPantallaConsumidor(){
+	mostrarPantallaConsumidor() {
 
-	this.props.history.push("/principalConsumidores", {usuario: this.state.usuario});
+		this.props.history.push("/principalConsumidores", { usuario: this.state.usuario });
 
 	}
 
@@ -190,86 +194,86 @@ cambiosFecha(e) {
 		return (
 			<div>
 				<div className="titulosPrincipales">Datos de usuario</div>
-				<div className= "contenidoDU">
+				<div className="contenidoDU">
 					<div className="nombreDU" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Nombre:
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Nombre:
 									</Form.Label>
-									<Form.Control
-										required
-										type="nom"
-										name="nombre"
-										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
-						</div>
-						<div className="apellidoDU" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Apellido:
+							<Form.Control
+								required
+								type="nom"
+								name="nombre"
+								pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+					</div>
+					<div className="apellidoDU" >
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Apellido:
 									</Form.Label>
-									<Form.Control
-										required
-										type="ap"
-										name="apellido"
-										pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
-						</div>
-						<div className="fechaNac">
-								<Form.Group as={Row}>
-									<Form.Label column sm={3}>
-										Fecha de nacimiento:
+							<Form.Control
+								required
+								type="ap"
+								name="apellido"
+								pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+					</div>
+					<div className="fechaNac">
+						<Form.Group as={Row}>
+							<Form.Label column sm={3}>
+								Fecha de nacimiento:
                                 </Form.Label>
-										<DatePickerInput
-										ref = "datePicker"	
-										name ="fecha_nac"								
-										displayFormat='DD/MM/YYYY'
-										maxDate={maxDate}
-											className = "calend"	
-											onChange = {(e)=>this.cambiosFecha(e)}							
-										/>
-									<div className="errorConsu">{this.state.errores["fecha_nac"]}</div>	
-								</Form.Group>
-							</div>
-						<div className="telefonoDU" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Teléfono:
+							<DatePickerInput
+								ref="datePicker"
+								name="fecha_nac"
+								displayFormat='DD/MM/YYYY'
+								maxDate={maxDate}
+								className="calend"
+								onChange={(e) => this.cambiosFecha(e)}
+							/>
+							<div className="errorConsu">{this.state.errores["fecha_nac"]}</div>
+						</Form.Group>
+					</div>
+					<div className="telefonoDU" >
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Teléfono:
 									</Form.Label>
-									<Form.Control
-										required
-										type="tel"
-										name="telefono"
-										pattern="[0-9]{8,14}"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
-						</div>
-						<div className="emailDU" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Mail:
+							<Form.Control
+								required
+								type="tel"
+								name="telefono"
+								pattern="[0-9]{8,14}"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+					</div>
+					<div className="emailDU" >
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Mail:
 									</Form.Label>
-									<Form.Control
-										required
-										type="mail"
-										name="mail"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
+							<Form.Control
+								required
+								type="mail"
+								name="mail"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+					</div>
+					<div className="botones">
+						<div className="botonAtras">
+							<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
 						</div>
-						<div className="botones">
-							<div className="botonAtras">
-								<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
-							</div>
-							<div className="botonCrear">
-								<Button variant="success" type="submit" onClick={(e)=>this.handleSubmit(e)}>Crear</Button>
-							</div>
-				</div>
+						<div className="botonCrear">
+							<Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Crear</Button>
+						</div>
+					</div>
 				</div>
 			</div>
 		);

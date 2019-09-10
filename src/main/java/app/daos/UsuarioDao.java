@@ -10,5 +10,8 @@ public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 
 	@Query("select u from EntidadUsuario u where u.usuario = ?1 and u.contraseña = ?2")
 	EntidadUsuario autenticaUsuario(String u, String c);
-			
+
+	@Query("SELECT u FROM EntidadUsuario u WHERE u.usuario = ?1")
+	EntidadUsuario validarUsuarioDuplicado(String mail);
 }
+

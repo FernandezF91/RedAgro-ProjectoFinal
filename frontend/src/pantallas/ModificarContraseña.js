@@ -1,18 +1,11 @@
-    
+
 import React, { Component } from 'react'
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, Container, Form, Col, Row, Button, Nav } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import Nav from 'react-bootstrap/Nav';
 import '../diseños/Login.css';
 import '../diseños/estilosGlobales.css';
 import '../diseños/ModificarContraseña.css';
 import Modal from 'react-awesome-modal';
-
 
 class ModificarContraseña extends Component {
 
@@ -23,20 +16,19 @@ class ModificarContraseña extends Component {
 		this.state = {
 			fields: [],
 			errores: [],
-			usuario : {},
-			visible : false,
-			mensajeError:"",
-			id:this.props.id_productor //para ir pasando el ID del usuario de pantalla a pantalla
+			usuario: {},
+			visible: false,
+			mensajeError: "",
+			id: this.props.id_productor //para ir pasando el ID del usuario de pantalla a pantalla
 		}
 
 		this.validarDatos = this.validarDatos.bind(this);
 		this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
 		this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-	
+
 	}
 
-	
 	detectarCambios(e) {
 
 		let fields = this.state.fields;
@@ -47,16 +39,13 @@ class ModificarContraseña extends Component {
 
 	}
 
-    closeModal() {
-        this.setState({
-            visible : false
-        });
-    }
-
+	closeModal() {
+		this.setState({
+			visible: false
+		});
+	}
 
 	validarDatos() {
-
-
 		this.setState({
 			errores: []
 		})
@@ -67,7 +56,6 @@ class ModificarContraseña extends Component {
 
 			errores["username"] = "*Campo inválido";
 			errores["password"] = "*Campo inválido";
-
 
 		} else if (!this.state.fields["username"]) {
 
@@ -86,91 +74,92 @@ class ModificarContraseña extends Component {
 
 			var password = this.state.fields["password"];
 
-			const final_path = path_principal+username+"&c="+password;
+			const final_path = path_principal + username + "&c=" + password;
 
-		    var _this = this;
+			var _this = this;
 
-		 	fetch(final_path, {
-			method: "GET",
-			headers: {
-				
-				'Content-type': 'application/json;charset=UTF-8',
-			
-			},
-		})
-			.then(function(response) {
+			fetch(final_path, {
+				method: "GET",
+				headers: {
 
-			if(response.status !==200){
+					'Content-type': 'application/json;charset=UTF-8',
 
-			// alert("Ocurrió algún problema. Intente nuevamente")
+				},
+			})
+				.then(function (response) {
 
-			let mensajeError = "Ocurrió algun problema, intente nuevamente"
-			_this.setState({visible:true,
-			mensajeError:mensajeError});
+					if (response.status !== 200) {
 
-			return;
-			
-			}
+						// alert("Ocurrió algún problema. Intenta nuevamente")
 
-			response.text().then(
+						let mensajeError = "Ocurrió algun problema, intenta nuevamente"
+						_this.setState({
+							visible: true,
+							mensajeError: mensajeError
+						});
 
-				function(response) {
-				
-					if (response!==""){
-
-						_this.setState({usuario:JSON.parse(response)});
-
-					if (_this.state.usuario.rol === "Productor") {
-
-						_this.mostrarPantallaProductor();
-
-					} else {
-
-						_this.mostrarPantallaConsumidor();
+						return;
 
 					}
 
-				}else{
+					response.text().then(
 
-					let mensajeError = "Cuenta inexistente o datos incorrectos";
-			_this.setState({visible:true,
-			mensajeError:mensajeError});
-				} 
-				
-			});
+						function (response) {
 
-			});		
+							if (response !== "") {
+
+								_this.setState({ usuario: JSON.parse(response) });
+
+								if (_this.state.usuario.rol === "Productor") {
+
+									_this.mostrarPantallaProductor();
+
+								} else {
+
+									_this.mostrarPantallaConsumidor();
+
+								}
+
+							} else {
+
+								let mensajeError = "Cuenta inexistente o datos incorrectos";
+								_this.setState({
+									visible: true,
+									mensajeError: mensajeError
+								});
+							}
+
+						});
+
+				});
 
 		}
 
 		this.setState({
 			errores
 		})
-
-
-
 	}
 
-	mostrarPantallaPrincipal(){
+	mostrarPantallaPrincipal() {
 
 		this.props.history.push({
-	pathname:'/principalProductores',
-	state:{id:this.state.id}
-	})
-}
+			pathname: '/principalProductores',
+			state: { id: this.state.id }
+		})
+	}
 
-	mostrarPantallaProductor(){
+	mostrarPantallaProductor() {
 
-	this.props.history.push({
-	pathname:'/principalProductores',
-	state:{id:this.state.usuario.id}
-	})
+		this.props.history.push({
+			pathname: '/principalProductores',
+			state: { id: this.state.usuario.id }
+		})
 
 	}
 
-	mostrarPantallaConsumidor(){
+	mostrarPantallaConsumidor() {
 
-	this.props.history.push("/principalConsumidores", {usuario: this.state.usuario});
+		this.props.history.push("/principalConsumidores", { usuario: this.state.usuario });
 
 	}
 
@@ -182,52 +171,52 @@ class ModificarContraseña extends Component {
 				<div className="titulosPrincipales">Modificar contraseña</div>
 				<div className="contenidoMF">
 					<div className="contraseñaActual" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Contraseña actual:
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Contraseña actual
 									</Form.Label>
-									<Form.Control
-										required
-										type="mf"
-										name="contraseñaActual"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
-						</div>
-						<div className="contraseñaNueva" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Contraseña nueva:
+							<Form.Control
+								required
+								type="mf"
+								name="contraseñaActual"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+					</div>
+					<div className="contraseñaNueva" >
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Contraseña nueva
 									</Form.Label>
-									<Form.Control
-										required
-										type="mf"
-										name="contraseñaNueva"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
-						</div>
-						<div className="ConfirmarContraseña" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={4}>
-									Confirmar contraseña:
+							<Form.Control
+								required
+								type="mf"
+								name="contraseñaNueva"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+					</div>
+					<div className="ConfirmarContraseña" >
+						<Form.Group as={Row}>
+							<Form.Label column sm={4}>
+								Confirmar contraseña
 									</Form.Label>
-									<Form.Control
-										required
-										type="mf"
-										name="confirmarContraseña"
-										onChange={(e) => this.detectarCambios(e)}
-									/>
-							</Form.Group>
+							<Form.Control
+								required
+								type="mf"
+								name="confirmarContraseña"
+								onChange={(e) => this.detectarCambios(e)}
+							/>
+						</Form.Group>
+					</div>
+					<div className="botonesNuevoProducto">
+						<div className="botonAtras">
+							<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
 						</div>
-						<div className="botonesNuevoProducto">
-							<div className="botonAtras">
-								<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
-							</div>
-							<div className="botonCrear">
-								<Button variant="success" type="submit" onClick={(e)=>this.handleSubmit(e)}>Crear</Button>
-							</div>
-				</div> 
+						<div className="botonCrear">
+							<Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Crear</Button>
+						</div>
+					</div>
 				</div>
 			</div>
 		);

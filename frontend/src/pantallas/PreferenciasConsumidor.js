@@ -8,62 +8,186 @@ import Button from 'react-bootstrap/Button';
 //https://alligator.io/react/react-select/
 //Por si les hace falta: npm install react-select@next
 
-const frutas = [
-	{ label: "Manzana", value: 1 },
-	{ label: "Naranja", value: 2 },
-	{ label: "Pomelo blanco", value: 3 },
-	{ label: "Pomelo rosado", value: 4 },
-	{ label: "Sandia", value: 5 },
-	{ label: "Melon", value: 6 },
-];
-
-const verduras = [
-	{ label: "Tomate perita", value: 1 },
-	{ label: "Tomate cherry", value: 2 },
-	{ label: "Pepino", value: 3 },
-	{ label: "Lechuga", value: 4 },
-	{ label: "Repollo", value: 5 },
-	{ label: "Zapallo", value: 6 },
-];
-
-const otros = [
-	{ label: "Aceitunas negras", value: 1 },
-	{ label: "Aceituas verdes", value: 2 },
-	{ label: "Miel", value: 3 },
-	{ label: "Pickles", value: 4 },
-];
-
-
 class PreferenciasConsumidor extends Component {
 
 	constructor(props) {
 		super(props)
-		
+
 		this.state = {
 			active: [],
 			id: this.props.id_consumidor,
-		}
+			seleccionados: {
+				verduras: [],
+				frutas: [],
+				otros: [],
+			},
+			preferencias: [],
+			otros: [],
+			verduras: [],
+			frutas: []
+		};
 
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+		this.savePreferences = this.savePreferences.bind(this);
 	}
 
 	mostrarPantallaPrincipal() {
-
 		this.props.history.push({
 			pathname: '/principalConsumidores',
 			state: { id: this.state.id }
 		})
-
 	}
-	
-	onChange(value, key) {
-		this.setState({
-			[key]: value
+
+	addNewPreferencia(categoria, newPreferencia) {
+		if (categoria === "verduras") {
+			this.setState({ seleccionados: { ...this.state.seleccionados, verduras: newPreferencia } });
+		}
+		if (categoria === "frutas") {
+			this.setState({ seleccionados: { ...this.state.seleccionados, frutas: newPreferencia } });
+		}
+		if (categoria === "otros") {
+			this.setState({ seleccionados: { ...this.state.seleccionados, otros: newPreferencia } });
+		}
+	}
+
+	getPreferencesSaved(data, categoria) {
+		var itemList = [];
+		var dataFiltered = data.filter(function (item) {
+			return item.producto.categoria === categoria
+		}
+		).map(function (item) {
+			return {
+				label: item.producto.tipo,
+				value: item.producto.id
+			}
+		});
+
+		if (dataFiltered.length > 0) {
+			itemList = dataFiltered;
+		}
+		return itemList;
+	}
+
+	checkSelectedItems(preferencias, listado, categoria) {
+		if (listado.length > 0) {
+			listado.map(item => {
+				preferencias.push({
+					consumidor: {
+						id: this.state.id,
+					},
+					producto: {
+						id: item.value,
+						categoria: categoria,
+						tipo: item.label,
+					}
+				});
+			})
+		}
+		return preferencias;
+	}
+
+	savePreferences(e) {
+		var preferenciasAGuardar = [];
+		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.verduras, "Verduras");
+		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.frutas, "Frutas");
+		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.otros, "Otros");
+
+		//Get preferencias
+		var path = "http://localhost:3000/redAgro/preferencia_consumidor?id=" + this.state.id;
+		fetch(path, {
+			method: "GET",
+			headers: { 'Content-type': 'application/json;charset=UTF-8' },
 		})
+			.then(response => { return response.json(); })
+			.then(data => {
+				this.setState({
+					preferencias: data
+				});
+			})
+		//Borro las preferencias que ya tenia el usuario
+		if (this.state.preferencias.length > 0) {
+			fetch("http://localhost:3000/redAgro/borrar_preferencias_consumidor", {
+				method: "DELETE",
+				headers: { 'Content-type': 'application/json;charset=UTF-8' },
+				body: JSON.stringify(this.state.preferencias)
+			})
+		}
+
+		//Guardo las nuevas preferencias
+		fetch("http://localhost:3000/redAgro/preferencias_consumidor", {
+			method: "POST",
+			headers: { 'Content-type': 'application/json;charset=UTF-8' },
+			body: JSON.stringify(preferenciasAGuardar)
+		})
+			.then(function (response) {
+				if (response !== 200) {
+					console.log("SE cagó");
+					return;
+				}
+			})
+	}
+
+	componentDidMount() {
+		//Obtengo las preferencias del Consumidor
+		var path = "http://localhost:3000/redAgro/preferencia_consumidor?id=" + this.state.id;
+		fetch(path)
+			.catch(err => console.error(err))
+			.then(response => { return response.json(); })
+			.then(data => {
+				this.setState({
+					seleccionados: {
+						verduras: this.getPreferencesSaved(data, "Verduras"),
+						frutas: this.getPreferencesSaved(data, "Frutas"),
+						otros: this.getPreferencesSaved(data, "Otros")
+					},
+					//preferencias: data
+				});
+			})
+		//Cargo los productos 'Frutas'
+		fetch('http://localhost:3000/redAgro/obtener_tipo_productos?categoria=frutas')
+			.catch(err => console.error(err))
+			.then(response => { return response.json(); })
+			.then(data => {
+				this.setState({
+					frutas: data.map((item) => {
+						return {
+							label: item.tipo,
+							value: item.id
+						}
+					})
+				});
+			})
+		//Cargo los productos 'verduras'
+		fetch('http://localhost:3000/redAgro/obtener_tipo_productos?categoria=verduras')
+			.catch(err => console.error(err))
+			.then(response => { return response.json(); })
+			.then(data => {
+				this.setState({
+					verduras: data.map((item) => {
+						return {
+							label: item.tipo,
+							value: item.id
+						}
+					})
+				});
+			})
+		//Cargo los productos 'Otros'
+		fetch('http://localhost:3000/redAgro/obtener_tipo_productos?categoria=otros')
+			.catch(err => console.error(err))
+			.then(response => { return response.json(); })
+			.then(data => {
+				this.setState({
+					otros: data.map((item) => {
+						return {
+							label: item.tipo,
+							value: item.id
+						}
+					})
+				});
+			})
 	}
 
 	render() {
-
 		return (
 			<div className="container">
 				<div className="titulosPrincipales">Preferencias</div>
@@ -73,22 +197,37 @@ class PreferenciasConsumidor extends Component {
 				<br />
 				<div className="opciones">
 					<div className="tituloProductos">Verduras:</div>
-					<Select className="dropdownProductos" options={verduras} placeholder="Seleccione uno o varios items..." isMulti onChange={opt => console.log(opt.label, opt.value)} />
+					<Select className="dropdownProductos"
+						value={this.state.seleccionados.verduras}
+						options={this.state.verduras}
+						placeholder="Seleccione uno o varios items..."
+						isMulti
+						onChange={newVerdura => this.addNewPreferencia("verduras", newVerdura)} />
 				</div>
 				<br />
 				<div className="opciones">
 					<div className="tituloProductos">Frutas:</div>
-					<Select className="dropdownProductos" options={frutas} placeholder="Seleccione uno o varios items..." isMulti onChange={opt => console.log(opt.label, opt.value)} />
+					<Select className="dropdownProductos"
+						value={this.state.seleccionados.frutas}
+						options={this.state.frutas}
+						placeholder="Seleccione uno o varios items..."
+						isMulti
+						onChange={newFruta => this.addNewPreferencia("frutas", newFruta)} />
 				</div>
 				<br />
 				<div className="opciones">
 					<div className="tituloProductos">Otros:</div>
-					<Select className="dropdownProductos" options={otros} placeholder="Seleccione uno o varios items..." isMulti onChange={opt => console.log(opt.label, opt.value)} />
+					<Select className="dropdownProductos"
+						value={this.state.seleccionados.otros}
+						options={this.state.otros}
+						placeholder="Seleccione uno o varios items..."
+						isMulti
+						onChange={newOtros => this.addNewPreferencia("otros", newOtros)} />
 				</div>
 				<br />
 				<div className="botonesPreferencias">
 					<div className="botonCrear">
-						<Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
+						<Button variant="success" type="submit" onClick={this.savePreferences}>Guardar</Button>
 					</div>
 					<div className="botonAtras">
 						<a href='/principalConsumidores'><Button variant="success">Cancelar</Button></a>
@@ -98,5 +237,4 @@ class PreferenciasConsumidor extends Component {
 		)
 	};
 }
-
 export default PreferenciasConsumidor;
