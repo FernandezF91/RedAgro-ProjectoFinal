@@ -28,7 +28,7 @@ class PreferenciasConsumidor extends Component {
 		};
 
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-		this.savePreferences = this.savePreferences.bind(this);
+		this.guardarPreferencias = this.guardarPreferencias.bind(this);
 	}
 
 	mostrarPantallaPrincipal() {
@@ -38,7 +38,7 @@ class PreferenciasConsumidor extends Component {
 		})
 	}
 
-	addNewPreferencia(categoria, newPreferencia) {
+	agregarNuevaPreferencia(categoria, newPreferencia) {
 		if (categoria === "verduras") {
 			this.setState({ seleccionados: { ...this.state.seleccionados, verduras: newPreferencia } });
 		}
@@ -50,7 +50,7 @@ class PreferenciasConsumidor extends Component {
 		}
 	}
 
-	getPreferencesSaved(data, categoria) {
+	getPreferenciasGuardadas(data, categoria) {
 		var itemList = [];
 		var dataFiltered = data.filter(function (item) {
 			return item.producto.categoria === categoria
@@ -68,7 +68,7 @@ class PreferenciasConsumidor extends Component {
 		return itemList;
 	}
 
-	checkSelectedItems(preferencias, listado, categoria) {
+	generarListadoSeleccionado(preferencias, listado, categoria) {
 		if (listado.length > 0) {
 			listado.map(item => {
 				preferencias.push({
@@ -86,13 +86,14 @@ class PreferenciasConsumidor extends Component {
 		return preferencias;
 	}
 
-	savePreferences(e) {
+	guardarPreferencias() {
 		var preferenciasAGuardar = [];
-		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.verduras, "Verduras");
-		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.frutas, "Frutas");
-		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.otros, "Otros");
+		preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.verduras, "Verduras");
+		preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.frutas, "Frutas");
+		preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.otros, "Otros");
 
 		//Borro las preferencias que ya tenia el usuario
+		//Validar si no conviente tener un Campo ACTIVO en la tabla
 		var path = "http://localhost:3000/redAgro/borrar_preferencias/" + this.state.id;
 		fetch(path, {
 			method: "DELETE",
@@ -128,9 +129,9 @@ class PreferenciasConsumidor extends Component {
 			.then(data => {
 				this.setState({
 					seleccionados: {
-						verduras: this.getPreferencesSaved(data, "Verduras"),
-						frutas: this.getPreferencesSaved(data, "Frutas"),
-						otros: this.getPreferencesSaved(data, "Otros")
+						verduras: this.getPreferenciasGuardadas(data, "Verduras"),
+						frutas: this.getPreferenciasGuardadas(data, "Frutas"),
+						otros: this.getPreferenciasGuardadas(data, "Otros")
 					},
 					//preferencias: data
 				});
@@ -194,7 +195,7 @@ class PreferenciasConsumidor extends Component {
 						options={this.state.verduras}
 						placeholder="Seleccione uno o varios items..."
 						isMulti
-						onChange={newVerdura => this.addNewPreferencia("verduras", newVerdura)} />
+						onChange={newVerdura => this.agregarNuevaPreferencia("verduras", newVerdura)} />
 				</div>
 				<br />
 				<div className="opciones">
@@ -204,7 +205,7 @@ class PreferenciasConsumidor extends Component {
 						options={this.state.frutas}
 						placeholder="Seleccione uno o varios items..."
 						isMulti
-						onChange={newFruta => this.addNewPreferencia("frutas", newFruta)} />
+						onChange={newFruta => this.agregarNuevaPreferencia("frutas", newFruta)} />
 				</div>
 				<br />
 				<div className="opciones">
@@ -214,12 +215,12 @@ class PreferenciasConsumidor extends Component {
 						options={this.state.otros}
 						placeholder="Seleccione uno o varios items..."
 						isMulti
-						onChange={newOtros => this.addNewPreferencia("otros", newOtros)} />
+						onChange={newOtros => this.agregarNuevaPreferencia("otros", newOtros)} />
 				</div>
 				<br />
 				<div className="botonesPreferencias">
 					<div className="botonCrear">
-						<Button variant="success" type="submit" onClick={this.savePreferences}>Guardar</Button>
+						<Button variant="success" type="submit" onClick={this.guardarPreferencias}>Guardar</Button>
 					</div>
 					<div className="botonAtras">
 						<a href='/principalConsumidores'><Button variant="success">Cancelar</Button></a>
