@@ -41,6 +41,16 @@ const tipoProduccion = [
 	{ label: "Agroecológica", value: 2 },
 ];
 
+// FilePond.setOptions({
+//     server: {
+//         process: './process',
+//         revert: './revert',
+//         restore: './restore/',
+//         load: './load/',
+//         fetch: './fetch/'
+//     }
+// });
+
 class NuevoProducto extends Component {
 
 	constructor(props) {
@@ -48,7 +58,7 @@ class NuevoProducto extends Component {
 
 		this.state = {
 			campos: [],
-			files: [],
+			files: "",
 			titulo:"",
 			visible: false,
 			mensaje:"",
@@ -60,6 +70,7 @@ class NuevoProducto extends Component {
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 		this.obtenerTiposProducto = this.obtenerTiposProducto.bind(this);
 		this.validarCampos = this.validarCampos.bind(this);
+		this.subirArchivos = this.subirArchivos.bind(this);
 
 	}
 
@@ -150,17 +161,47 @@ return true;
 					function (response) {
 
 
+          _this.subirArchivos(response);
+
+
 					});
-
-
-					_this.mostrarMensajeOk();
-					_this.subirArchivos();
+                     
+					 _this.mostrarMensajeOk();
+					
 						
 			});
 
 		}
 
 	}
+
+	
+  subirArchivos(producto_productor){
+
+		const path = "http://localhost:3000/redAgro/subir_archivos?producto_productor=";
+	
+		this.state.files.forEach((fileItem) =>{
+
+		let data = new FormData();
+    data.append('file', fileItem);
+		data.append('name', fileItem.name);
+		
+		const path_final = path+producto_productor
+
+fetch(path_final, {
+      method: 'POST',
+			body: data
+			      
+    }).then(response => {
+      
+    }).catch(err => {
+      
+    });
+
+		})
+
+  }
+
 
 	mostrarMensajeOk(){
 
@@ -213,50 +254,6 @@ return true;
 
 	this.obtenerTiposProducto(this.state.campos["categoria"]);
 	
-  }
-
-  subirArchivos(){
-
-// var _this = this;
-
-// 		const path_principal = "http://localhost:3000/redAgro/subir_archivos";
-
-// 		fetch(path_principal, {
-// 			method: "POST",
-// 			headers: {
-// 				'Content-type': 'application/json;charset=UTF-8',
-// 			},
-// 			body: JSON.stringify({
-
-// 				"imagenes": this.state.files,
-
-// 			}),
-
-// 		})
-
-// 			.then(function (response) {
-
-// 				if (response.status !== 200) {
-
-// 					_this.setState({visible:true,
-// 									titulo:"Error",
-// 								   mensaje:"Ocurrió algún error inesperado. Intente nuevamente"});
-// 					return;
-
-// 				}
-
-// 				response.json().then(
-
-
-// 					function (response) {
-	
-					
-// 					});
-
-// 			});
-
-
-
   }
 
   obtenerTiposProducto(categoria){
@@ -441,7 +438,8 @@ return true;
 							<div className ="tituloImagen">
 								*Imágenes:
 								</div>
-								<FilePond allowMultiple={true} maxFiles={5} server="http://192.168.0.163" imagePreviewHeight={150} acceptedFileTypes="image/jpeg, image/png, image/jpg" labelIdle={"Arrastre o suba sus imágenes aquí"}
+								<FilePond ref="filep"
+						 allowMultiple={true} maxFiles={5} imagePreviewHeight={150} acceptedFileTypes="image/jpeg, image/png, image/jpg" labelIdle={"Arrastre o suba sus imágenes aquí"}
 								onupdatefiles={(fileItems) => {
                               // Set current file objects to this.state
                               this.setState({

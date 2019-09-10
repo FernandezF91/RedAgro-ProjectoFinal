@@ -49,7 +49,7 @@ class PantallaPrincipalProductores extends Component {
 		this.state = {
 
 
-			id: this.props.location.state.id //paso id de usuario desde el LOGIN
+			 id: this.props.location.state.id //paso id de usuario desde el LOGIN
 
 		}
 

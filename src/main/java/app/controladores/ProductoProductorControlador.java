@@ -37,7 +37,7 @@ public class ProductoProductorControlador {
 	
 	@CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
-    public EntidadProductoProductor agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor, @RequestParam long id_producto){   	
+    public Long agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor, @RequestParam long id_producto){   	
     
 
 		EntidadProducto prod = productoDao.obtenerProducto(id_producto);
@@ -57,7 +57,7 @@ public class ProductoProductorControlador {
 		productoNuevo.setProducto(prod);
 	    productoNuevo.setProductor(productor);
 	    
-	    return productoProductorDao.save(productoNuevo);
+	    return productoProductorDao.save(productoNuevo).getId();
 						 	
     	
     }
