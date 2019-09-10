@@ -44,7 +44,6 @@ public class PreferenciaControlador {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/preferencias_consumidor")
 	public boolean guardarPreferencias(@RequestBody ArrayList<EntidadPreferencia> preferencias) {
-
 		try {
 			preferenciaDao.saveAll(preferencias);
 			return true;
@@ -52,10 +51,17 @@ public class PreferenciaControlador {
 			return false;
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
-	@DeleteMapping(path = "redAgro/borrar_preferencias_consumidor")
-	public void deletePreferencias(@RequestBody ArrayList<EntidadPreferencia> preferencias ) {
-		preferenciaDao.deleteAll(preferencias);
+	@DeleteMapping(path = "redAgro/borrar_preferencias/{consumidorId}")
+	public boolean deletePreferencias(@PathVariable long consumidorId) {
+		// preferenciaDao.deleteAll(preferencias);
+		try {
+			preferenciaDao.deleteByConsumidorId(consumidorId);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
+
 }

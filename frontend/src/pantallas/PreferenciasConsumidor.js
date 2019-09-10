@@ -92,26 +92,18 @@ class PreferenciasConsumidor extends Component {
 		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.frutas, "Frutas");
 		preferenciasAGuardar = this.checkSelectedItems(preferenciasAGuardar, this.state.seleccionados.otros, "Otros");
 
-		//Get preferencias
-		var path = "http://localhost:3000/redAgro/preferencia_consumidor?id=" + this.state.id;
-		fetch(path, {
-			method: "GET",
-			headers: { 'Content-type': 'application/json;charset=UTF-8' },
-		})
-			.then(response => { return response.json(); })
-			.then(data => {
-				this.setState({
-					preferencias: data
-				});
-			})
 		//Borro las preferencias que ya tenia el usuario
-		if (this.state.preferencias.length > 0) {
-			fetch("http://localhost:3000/redAgro/borrar_preferencias_consumidor", {
-				method: "DELETE",
-				headers: { 'Content-type': 'application/json;charset=UTF-8' },
-				body: JSON.stringify(this.state.preferencias)
+		var path = "http://localhost:3000/redAgro/borrar_preferencias/" + this.state.id;
+		fetch(path, {
+			method: "DELETE",
+			headers: { 'Content-type': 'application/json;charset=UTF-8' }
+		})
+			.then(function (response) {
+				if (response !== 200) {
+					console.log("Ups");
+					return;
+				}
 			})
-		}
 
 		//Guardo las nuevas preferencias
 		fetch("http://localhost:3000/redAgro/preferencias_consumidor", {
@@ -121,7 +113,7 @@ class PreferenciasConsumidor extends Component {
 		})
 			.then(function (response) {
 				if (response !== 200) {
-					console.log("SE cagó");
+					console.log("Ups");
 					return;
 				}
 			})
