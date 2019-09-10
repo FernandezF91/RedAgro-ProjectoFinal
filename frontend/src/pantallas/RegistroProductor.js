@@ -169,7 +169,8 @@ class RegistroProductor extends Component {
 		window.setTimeout(() => {
 			this.props.history.push('/login')
 			// history is available by design in this.props when using react-router
-		}, 3000);
+		}, 2000);
+
 	}
 
 	render() {
