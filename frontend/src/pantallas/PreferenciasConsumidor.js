@@ -72,9 +72,8 @@ class PreferenciasConsumidor extends Component {
 		if (listado.length > 0) {
 			listado.map(item => {
 				preferencias.push({
-					consumidor: {
-						id: this.state.id,
-					},
+					id: "0",
+					consumidor: this.state.id, //{},
 					producto: {
 						id: item.value,
 						categoria: categoria,
@@ -92,29 +91,20 @@ class PreferenciasConsumidor extends Component {
 		preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.frutas, "Frutas");
 		preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.otros, "Otros");
 
-		//Borro las preferencias que ya tenia el usuario
-		//Validar si no conviente tener un Campo ACTIVO en la tabla
-		var path = "http://localhost:3000/redAgro/borrar_preferencias/" + this.state.id;
-		fetch(path, {
-			method: "DELETE",
-			headers: { 'Content-type': 'application/json;charset=UTF-8' }
-		})
-			.then(function (response) {
-				if (response !== 200) {
-					console.log("Ups");
-					return;
-				}
-			})
-
 		//Guardo las nuevas preferencias
-		fetch("http://localhost:3000/redAgro/preferencias_consumidor", {
+		var path = "http://localhost:3000/redAgro/preferencias_consumidor?id=" + this.state.id;
+		fetch(path, {
 			method: "POST",
 			headers: { 'Content-type': 'application/json;charset=UTF-8' },
 			body: JSON.stringify(preferenciasAGuardar)
 		})
 			.then(function (response) {
-				if (response !== 200) {
-					console.log("Ups");
+				if (response == 200) {
+					console.log("Se aplicaron los cambios");
+					return;
+				}
+				else {
+					console.log("No se aplicaron los cambios");
 					return;
 				}
 			})
@@ -189,7 +179,7 @@ class PreferenciasConsumidor extends Component {
 				</div>
 				<br />
 				<div className="opciones">
-					<div className="tituloProductos">Verduras</div>
+					<div className="tituloProductos">Verduras:</div>
 					<Select className="dropdownProductos"
 						value={this.state.seleccionados.verduras}
 						options={this.state.verduras}
@@ -199,7 +189,7 @@ class PreferenciasConsumidor extends Component {
 				</div>
 				<br />
 				<div className="opciones">
-					<div className="tituloProductos">Frutas</div>
+					<div className="tituloProductos">Frutas:</div>
 					<Select className="dropdownProductos"
 						value={this.state.seleccionados.frutas}
 						options={this.state.frutas}
@@ -209,7 +199,7 @@ class PreferenciasConsumidor extends Component {
 				</div>
 				<br />
 				<div className="opciones">
-					<div className="tituloProductos">Otros</div>
+					<div className="tituloProductos">Otros:</div>
 					<Select className="dropdownProductos"
 						value={this.state.seleccionados.otros}
 						options={this.state.otros}
