@@ -189,7 +189,7 @@ class PreferenciasConsumidor extends Component {
 				</div>
 				<br />
 				<div className="opciones">
-					<div className="tituloProductos">Verduras:</div>
+					<div className="tituloProductos">Verduras</div>
 					<Select className="dropdownProductos"
 						value={this.state.seleccionados.verduras}
 						options={this.state.verduras}
@@ -199,7 +199,7 @@ class PreferenciasConsumidor extends Component {
 				</div>
 				<br />
 				<div className="opciones">
-					<div className="tituloProductos">Frutas:</div>
+					<div className="tituloProductos">Frutas</div>
 					<Select className="dropdownProductos"
 						value={this.state.seleccionados.frutas}
 						options={this.state.frutas}
@@ -209,7 +209,7 @@ class PreferenciasConsumidor extends Component {
 				</div>
 				<br />
 				<div className="opciones">
-					<div className="tituloProductos">Otros:</div>
+					<div className="tituloProductos">Otros</div>
 					<Select className="dropdownProductos"
 						value={this.state.seleccionados.otros}
 						options={this.state.otros}
