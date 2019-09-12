@@ -31,6 +31,7 @@ import ModificarContraseña from '../pantallas/ModificarContraseña';
 import DatosDeUsuario from '../pantallas/DatosDeUsuario';
 import ListadoReservas from '../pantallas/ListadoReservas';
 import ListadoProductos from '../pantallas/ListadoProductos';
+import Estadisticas from '../pantallas/Estadisticas';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const NuevoProductoRouter = withRouter(NuevoProducto);
@@ -39,6 +40,7 @@ const ModificarContraseñaRouter = withRouter(ModificarContraseña);
 const EditarDatosRouter = withRouter(DatosDeUsuario);
 const ListadoReservasRouter = withRouter(ListadoReservas);
 const ListadoProductosRouter = withRouter(ListadoProductos);
+const EstadisticasRouter = withRouter(Estadisticas);
 
 class PantallaPrincipalProductores extends Component {
 
@@ -125,7 +127,10 @@ class PantallaPrincipalProductores extends Component {
 								</div>
 								<div className="itemsMenu">
 									<Row>
-										<i class="fas fa-chart-line iconosMenuLateral"></i><p>Estadísticas</p>
+										<i class="fas fa-chart-line iconosMenuLateral" />
+										<Link to={'/principalProductores/Estadisticas'}>
+											<p>Estadísticas</p>
+										</Link>
 									</Row>
 								</div>
 								<div className="itemsMenu">
@@ -166,6 +171,8 @@ class PantallaPrincipalProductores extends Component {
 								render={(props) => <ListadoReservasRouter id_productor={this.state.id} />} />
 							<Route path='/principalProductores/ListadoProductos'
 								render={(props) => <ListadoProductosRouter id_productor={this.state.id} />} />
+							<Route path='/principalProductores/Estadisticas'
+								render={(props) => <EstadisticasRouter id_productor={this.state.id} />} />
 						</Col>
 					</Row>
 

@@ -1,0 +1,18 @@
+.graficosPorFila {
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.graficos1 {
+    width: 500px;
+    height: 280px;
+    margin: 5px;
+}
+
+.graficos2 {
+    width: 1100px;
+    height: 280px;
+    margin: 5px;
+}
