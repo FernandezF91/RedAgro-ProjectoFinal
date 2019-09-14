@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import NumberFormat from 'react-number-format';
 import ItemCarrito from '../pantallas/ItemCarrito';
 import _ from 'lodash';
 import '../diseños/estilosGlobales.css';
@@ -68,7 +67,7 @@ class Carrito extends Component {
         //Falta la validación y actualización por stock
         let { productosSeleccionados } = this.state;
         var productoSeleccionado = productosSeleccionados[position];
-        if ((parseInt(productoSeleccionado.cantidad) - 1) == 0) {
+        if ((parseInt(productoSeleccionado.cantidad) - 1) === 0) {
             //ver de usar la funcion de quitar producto para no repetir codigo
             let nuevaLista = [
                 ...productosSeleccionados.slice(0, position),
