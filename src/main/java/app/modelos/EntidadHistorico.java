@@ -27,8 +27,8 @@ public class EntidadHistorico {
 	@JoinColumn(name = "producto_id", nullable = false)
 	private EntidadProducto producto;
 
-	@Column(name = "tipo_produccion", nullable = false)
-	private String tipo_produccion;
+	@Column(name = "tipo_producto", nullable = false)
+	private String tipo_producto;
 
 	@Column(name = "tipo_certificacion", nullable = false)
 	private String tipo_certificacion;
@@ -61,11 +61,11 @@ public class EntidadHistorico {
 	}
 
 	public String getTipo_produccion() {
-		return tipo_produccion;
+		return tipo_producto;
 	}
 
 	public void setTipo_produccion(String tipo_produccion) {
-		this.tipo_produccion = tipo_produccion;
+		this.tipo_producto = tipo_produccion;
 	}
 
 	public String getTipo_certificacion() {
