@@ -57,7 +57,7 @@ class FormaRetiro extends Component {
 			<body className="fondo">
 				<div className="barraNavegacion">
 					<Navbar>
-						<img src={culturaVerde} width="130px" height="50px"></img>
+						<img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">

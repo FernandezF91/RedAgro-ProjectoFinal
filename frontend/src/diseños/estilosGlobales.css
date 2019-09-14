@@ -5,7 +5,6 @@
 	overflow: auto
 }
 
-
 .barraBusqueda {
 	margin-left: 100px;
 }
@@ -33,9 +32,7 @@ input[type=text] {
 }
 
 .barraNavegacion {
-
 	background-color: #28a745;
-
 }
 
 .botones {

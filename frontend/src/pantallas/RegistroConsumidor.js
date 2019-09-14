@@ -172,7 +172,7 @@ class RegistroConsumidor extends Component {
 				<div className="barraNavegacion">
 					<Navbar>
 						<div className="culturaVerde">
-							<Link to={'/'}><img src={culturaVerde} width="130px" height="50px"></img></Link>
+							<Link to={'/'}><img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" /></Link>
 						</div>
 					</Navbar>
 				</div>

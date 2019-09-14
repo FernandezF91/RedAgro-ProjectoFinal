@@ -45,7 +45,7 @@ class PantallaPrincipalconsumidores extends Component {
 
 		this.state = {
 
-			//  id: this.props.location.state.id //paso id de usuario desde el LOGIN
+			id: this.props.location.state.id //paso id de usuario desde el LOGIN
 
 		}
 
@@ -74,7 +74,7 @@ class PantallaPrincipalconsumidores extends Component {
 				<div className="barraNavegacion">
 					<Navbar className="sombraBarra">
 						<div className="culturaVerde">
-							<Link to={'/'}><img src={culturaVerde} width="130px" height="50px"></img></Link>
+							<Link to={'/'}><img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" /></Link>
 						</div>
 						<div className="barraBusqueda">
 							<Row>

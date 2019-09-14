@@ -18,7 +18,7 @@ class HomePage extends Component {
 				<div className="barraNavegacion">
 					<Navbar>
 						<div className="culturaVerde">
-							<img src={culturaVerde} width="130px" height="50px"></img>
+							<img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
 						</div>
 						<div className="barraBusqueda">
 						<Row>
