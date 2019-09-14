@@ -1,0 +1,40 @@
+.botonesnuevopuntoentrega {
+	font-size: 15px;
+	display: flex;
+	flex-direction: row;
+	margin-top:20px;
+	margin-bottom:20px;
+	justify-content: center;
+
+}
+
+.form-control[type="domicilio"]{
+
+width:50%;
+
+}
+
+.form-control[type="numero"]{
+
+width:16%;
+
+}
+
+.form-control[type="localidad"]{
+
+width:50%;
+
+}
+
+.form-control[type="provincia"]{
+
+width:50%;
+
+}
+
+.condicionesInputsCO{
+
+margin-left:-12%;
+color: #cc0000;
+font-size: 13px;
+}

@@ -20,6 +20,7 @@ import analytics from '../imagenes/analytics.png';
 import planificacion from '../imagenes/planificacion.png';
 import preferencias from '../imagenes/preferencias.png';
 import historico from '../imagenes/historico.png';
+import puntodeentrega from '../imagenes/puntodeentrega.png';
 
 import { BrowserRouter, Router, Route, Switch, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
@@ -30,6 +31,7 @@ import CargarHistorico from '../pantallas/CargarHistorico';
 import ModificarContraseña from '../pantallas/ModificarContraseña';
 import DatosDeUsuario from '../pantallas/DatosDeUsuario';
 import ListadoReservas from '../pantallas/ListadoReservas';
+import IngresarPuntoEntrega from '../pantallas/IngresarPuntoEntrega';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 
@@ -38,6 +40,7 @@ const AlertaProductorRouter = withRouter(AlertaProductor);
 const ModificarContraseñaRouter = withRouter(ModificarContraseña);
 const EditarDatosRouter = withRouter(DatosDeUsuario);
 const ListadoReservasRouter = withRouter(ListadoReservas);
+const IngresarPuntoEntregaRouter = withRouter(IngresarPuntoEntrega);
 
 class PantallaPrincipalProductores extends Component {
 
@@ -128,6 +131,19 @@ class PantallaPrincipalProductores extends Component {
 										</div>
 									</Row>
 								</div>
+								<div className="itemsMenu">
+									<Row>
+										<i class="fas fa-map-marker-alt iconosMenuLateral"></i>
+										<div className="puntoentrega_drop">
+											<NavDropdown title="Puntos de Entrega" id="puntoentrega_drop">
+												<NavDropdown.Item href="#action/3.1">Desactivar Puntos de entrega</NavDropdown.Item>
+												<NavDropdown.Divider />
+												<NavDropdown.Item><Link to="/principalProductores/IngresarPuntoEntrega">Nuevo Punto de entrega</Link></NavDropdown.Item>
+												<NavDropdown.Divider />
+											</NavDropdown>
+										</div>
+									</Row>
+								</div>
 								<div className="itemsMenuReservas">
 									<Row>
 										<i class="fas fa-tasks iconosMenuLateral"></i><Link to={'/principalProductores/ListadoReservas'}><p>Reservas</p></Link>
@@ -182,7 +198,10 @@ class PantallaPrincipalProductores extends Component {
 								render={(props) => <EditarDatosRouter id_productor={this.state.id} />}
 							/>
 							<Route path={'/principalProductores/ListadoReservas'}
-								render={(props) => <ListadoReservasRouter id_productor={this.state.id} />} />
+								render={(props) => <ListadoReservasRouter id_productor={this.state.id} />} 
+							/>
+							<Route path={'/principalProductores/IngresarPuntoEntrega'}
+								render={(props) => <IngresarPuntoEntregaRouter id_productor={this.state.id} />} />
 						</Col>
 					</Row>
 
