@@ -229,7 +229,7 @@ class DatosDeUsuario extends Component {
 							<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
 						</div>
 						<div className="botonCrear">
-							<Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Crear</Button>
+							<Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Guardar</Button>
 						</div>
 					</div>
 				</div>
