@@ -8,113 +8,15 @@ class ListadoReservas extends Component {
 
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			campos: [],
 			errores: [],
 			files: [],
 			//Para el ruteo
-			id: this.props.id_consumidor,
+			id: this.props.id_usuario,
 			//A partir de aca, datos para el listado de reservas
-			reservasRealizadas: [
-				{
-					id: '1',
-					fecha: '20/08/2019',
-					forma_retiro: 'Personal',
-					persona_retiro: 'Brenda',
-					total_reserva: '1200,20',
-					consumidor: 'Pepe',
-					productor: 'Vanesa Molina',
-					produtor_telefono: '11123456',
-					estado: 'Finalizada',
-					punto_entrega: 'Casa'
-				},
-				{
-					id: '2',
-					fecha: '21/08/2019',
-					forma_retiro: 'Personal',
-					persona_retiro: 'Pepe',
-					total_reserva: '150',
-					consumidor: 'Pepe',
-					productor: 'Vanesa Molina',
-					produtor_telefono: '11123456',
-					estado: 'En Proceso',
-					punto_entrega: 'Feria de las americas'
-				},
-				{
-					id: '3',
-					fecha: '23/08/2019',
-					forma_retiro: 'Personal',
-					persona_retiro: 'Elvira',
-					total_reserva: '450',
-					consumidor: 'Pepe',
-					productor: 'Gonzalo Molina',
-					produtor_telefono: '111234569',
-					estado: 'Disponible para Retiro',
-					punto_entrega: 'Feria Parque Rivadavia'
-				},
-				{
-					id: '4',
-					fecha: '23/08/2019',
-					forma_retiro: 'Personal',
-					persona_retiro: 'Jorge',
-					total_reserva: '650',
-					consumidor: 'Pepe',
-					productor: 'Fernando Molina',
-					produtor_telefono: '111234569',
-					estado: 'Disponible para Retiro',
-					punto_entrega: 'Feria vecinal'
-				},
-				{
-					id: '5',
-					fecha: '26/08/2019',
-					forma_retiro: 'Personal',
-					persona_retiro: 'Paloma',
-					total_reserva: '650',
-					consumidor: 'Pepe',
-					productor: 'Fernando Molina',
-					produtor_telefono: '111234569',
-					estado: 'Disponible',
-					punto_entrega: 'Feria Barrial'
-				},
-
-				{
-					id: '6',
-					fecha: '26/08/2019',
-					forma_retiro: 'Personal',
-					persona_retiro: 'Paloma',
-					total_reserva: '650',
-					consumidor: 'Pepe',
-					productor: 'Fernando Molina',
-					produtor_telefono: '111234569',
-					estado: 'Cancelado',
-					punto_entrega: 'Feria vecinal'
-				},
-				{
-					id: '7',
-					fecha: '26/08/2019',
-					forma_retiro: 'Personal',
-					persona_retiro: 'Paloma',
-					total_reserva: '650',
-					consumidor: 'Pepe',
-					productor: 'Fernando Molina',
-					produtor_telefono: '111234569',
-					estado: 'Disponible',
-					punto_entrega: 'Feria Barrial'
-				},
-				{
-					id: '8',
-					fecha: '26/08/2019',
-					forma_retiro: 'Personal',
-					persona_retiro: 'Paloma',
-					total_reserva: '650',
-					consumidor: 'Pepe',
-					productor: 'Fernando Molina',
-					produtor_telefono: '111234569',
-					estado: 'Cancelado',
-					punto_entrega: 'Feria vecinal'
-				}
-			],
+			reservasRealizadas: [],
 			currentPage: 1,
 			reservasPerPage: 4
 		}
@@ -133,6 +35,30 @@ class ListadoReservas extends Component {
 			state: { id: this.state.id }
 		})
 
+	}
+
+	componentDidMount() {
+		var path_usuario = "http://localhost:3000/redAgro/get_reservas_usuario?id=" + this.state.id;
+		fetch(path_usuario)
+			.catch(err => console.error(err))
+			.then(response => { return response.json(); })
+			.then(data => {
+				this.setState({
+					reservasRealizadas: data.map((item) => {
+						return {
+							id: item.id,
+							fecha: item.fecha,
+							forma_retiro: item.forma_retiro,
+							persona_retiro: item.persona_retiro,
+							punto_entrega: item.punto_entrega.direccion + " " + item.punto_entrega.cod_postal + " " + item.punto_entrega.localidad,
+							consumidor: item.consumidor.id, //Chequear
+							productor: item.productor.razon_social,
+							estado: item.estado_reserva.nombre,
+							total_reserva: item.total_reserva
+						}
+					})
+				})
+			})
 	}
 
 	render() {

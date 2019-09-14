@@ -1,6 +1,5 @@
 package app.modelos;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class EntidadZona {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
 	@ManyToOne()
@@ -49,7 +48,5 @@ public class EntidadZona {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	
+	}	
 }

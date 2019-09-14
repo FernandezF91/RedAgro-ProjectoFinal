@@ -21,40 +21,40 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "Reserva")
 public class EntidadReserva {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
-    private List<EntidadDetalleReserva> detallesReserva = new ArrayList<>();
-	
+	private List<EntidadDetalleReserva> detallesReserva = new ArrayList<>();
+
 	@ManyToOne()
-    @JoinColumn(name = "productor_id", nullable = false)
-    private EntidadProductor productor;
-	
+	@JoinColumn(name = "productor_id", nullable = false)
+	private EntidadProductor productor;
+
 	@ManyToOne()
-    @JoinColumn(name = "consumidor_id", nullable = false)
-    private EntidadConsumidor consumidor;
-	
+	@JoinColumn(name = "consumidor_id", nullable = false)
+	private EntidadConsumidor consumidor;
+
 	@ManyToOne()
-    @JoinColumn(name = "punto_entrega_id", nullable = false)
-    private EntidadPuntoEntrega punto_entrega;
-	
+	@JoinColumn(name = "punto_entrega_id", nullable = false)
+	private EntidadPuntoEntrega punto_entrega;
+
 	@OneToOne
 	@JoinColumn(name = "estado_id", nullable = false)
-    private EntidadEstadoReserva estado_reserva;
-	
-	@Column(name="fecha",nullable = false)
+	private EntidadEstadoReserva estado_reserva;
+
+	@Column(name = "fecha", nullable = false)
 	private Date fecha;
-	
-	@Column(name="total_reserva",nullable = false)
+
+	@Column(name = "total_reserva", nullable = false)
 	private int total_reserva;
-	
-	@Column(name="forma_retiro",nullable = false)
+
+	@Column(name = "forma_retiro", nullable = false)
 	private String forma_retiro;
-	
-	@Column(name="persona_retiro",nullable = false)
+
+	@Column(name = "persona_retiro", nullable = false)
 	private String persona_retiro;
 
 	public Long getId() {
@@ -136,7 +136,4 @@ public class EntidadReserva {
 	public void setDetallesReserva(List<EntidadDetalleReserva> detallesReserva) {
 		this.detallesReserva = detallesReserva;
 	}
-	
-	
-
 }

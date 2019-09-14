@@ -13,33 +13,32 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-
 @Entity
 @Table(name = "Oferta")
 public class EntidadOferta {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@ManyToOne()
-    @JoinColumn(name = "productor_id", nullable = false)
-    private EntidadProductor productor;
-	
+	@JoinColumn(name = "productor_id", nullable = false)
+	private EntidadProductor productor;
+
 	@ManyToOne()
-    @JoinColumn(name = "producto_id", nullable = false)
-    private EntidadProducto producto;
-	
-	@Column(name="stock",nullable = false)
+	@JoinColumn(name = "producto_id", nullable = false)
+	private EntidadProducto producto;
+
+	@Column(name = "stock", nullable = false)
 	private int stock;
-	
-	@Column(name="fecha_inicio",nullable = false)
+
+	@Column(name = "fecha_inicio", nullable = false)
 	private Date fecha_inicio;
-	
-	@Column(name="fecha_fin",nullable = false)
+
+	@Column(name = "fecha_fin", nullable = false)
 	private Date fecha_fin;
-	
-	@Column(name="precio",nullable = false)
+
+	@Column(name = "precio", nullable = false)
 	private int precio;
 
 	public long getId() {
@@ -101,6 +100,4 @@ public class EntidadOferta {
 	public void setPrecio(int precio) {
 		this.precio = precio;
 	}
-	
-	
 }

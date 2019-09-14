@@ -1,13 +1,7 @@
 
 import React, { Component } from 'react'
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, Container, Form, Col, Row, Button, Nav } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import Nav from 'react-bootstrap/Nav';
 // import '../diseños/estilosGlobales.css';
 import '../diseños/DatosDeUsuario.css';
 import '../diseños/Registro.css';
@@ -35,12 +29,9 @@ class DatosDeUsuario extends Component {
 		this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
 		this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-
 	}
 
-
 	detectarCambios(e) {
-
 		let fields = this.state.fields;
 		fields[e.target.name] = e.target.value;
 		this.setState({
@@ -52,7 +43,6 @@ class DatosDeUsuario extends Component {
 	cambiosFecha(e) {
 
 		let fields = this.state.fields;
-
 		fields["fecha_nac"] = e;
 
 	}
@@ -65,8 +55,6 @@ class DatosDeUsuario extends Component {
 
 
 	validarDatos() {
-
-
 		this.setState({
 			errores: []
 		})
@@ -74,26 +62,19 @@ class DatosDeUsuario extends Component {
 		let errores = {};
 
 		if ((!this.state.fields["username"]) && (!this.state.fields["password"])) {
-
 			errores["username"] = "*Campo inválido";
 			errores["password"] = "*Campo inválido";
 
-
 		} else if (!this.state.fields["username"]) {
-
 			errores["username"] = "*Campo inválido";
 
 		} else if (!this.state.fields["password"]) {
-
 			errores["password"] = "*Campo inválido";
 
 		} else {
-
-
 			const path_principal = "http://localhost:3000/redAgro/login?u=";
 
 			var username = this.state.fields["username"];
-
 			var password = this.state.fields["password"];
 
 			const final_path = path_principal + username + "&c=" + password;
@@ -125,48 +106,31 @@ class DatosDeUsuario extends Component {
 					}
 
 					response.text().then(
-
 						function (response) {
-
 							if (response !== "") {
-
 								_this.setState({ usuario: JSON.parse(response) });
-
 								if (_this.state.usuario.rol === "Productor") {
-
 									_this.mostrarPantallaProductor();
-
 								} else {
-
 									_this.mostrarPantallaConsumidor();
-
 								}
-
 							} else {
-
 								let mensajeError = "Cuenta inexistente o datos incorrectos";
 								_this.setState({
 									visible: true,
 									mensajeError: mensajeError
 								});
 							}
-
 						});
-
 				});
-
 		}
 
 		this.setState({
 			errores
 		})
-
-
-
 	}
 
 	mostrarPantallaPrincipal() {
-
 		this.props.history.push({
 			pathname: '/principalProductores',
 			state: { id: this.state.id }
@@ -174,23 +138,17 @@ class DatosDeUsuario extends Component {
 	}
 
 	mostrarPantallaProductor() {
-
 		this.props.history.push({
 			pathname: '/principalProductores',
 			state: { id: this.state.usuario.id }
 		})
-
 	}
 
 	mostrarPantallaConsumidor() {
-
 		this.props.history.push("/principalConsumidores", { usuario: this.state.usuario });
-
 	}
 
-
 	render() {
-
 		return (
 			<div>
 				<div className="titulosPrincipales">Datos de usuario</div>
@@ -198,7 +156,7 @@ class DatosDeUsuario extends Component {
 					<div className="nombreDU" >
 						<Form.Group as={Row}>
 							<Form.Label column sm={4}>
-								Nombre:
+								Nombre
 									</Form.Label>
 							<Form.Control
 								required
@@ -212,7 +170,7 @@ class DatosDeUsuario extends Component {
 					<div className="apellidoDU" >
 						<Form.Group as={Row}>
 							<Form.Label column sm={4}>
-								Apellido:
+								Apellido
 									</Form.Label>
 							<Form.Control
 								required
@@ -226,7 +184,7 @@ class DatosDeUsuario extends Component {
 					<div className="fechaNac">
 						<Form.Group as={Row}>
 							<Form.Label column sm={3}>
-								Fecha de nacimiento:
+								Fecha de nacimiento
                                 </Form.Label>
 							<DatePickerInput
 								ref="datePicker"
@@ -242,7 +200,7 @@ class DatosDeUsuario extends Component {
 					<div className="telefonoDU" >
 						<Form.Group as={Row}>
 							<Form.Label column sm={4}>
-								Teléfono:
+								Teléfono
 									</Form.Label>
 							<Form.Control
 								required
@@ -256,7 +214,7 @@ class DatosDeUsuario extends Component {
 					<div className="emailDU" >
 						<Form.Group as={Row}>
 							<Form.Label column sm={4}>
-								Mail:
+								Mail
 									</Form.Label>
 							<Form.Control
 								required

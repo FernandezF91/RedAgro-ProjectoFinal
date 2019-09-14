@@ -13,5 +13,8 @@ public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 
 	@Query("SELECT u FROM EntidadUsuario u WHERE u.usuario = ?1")
 	EntidadUsuario validarUsuarioDuplicado(String mail);
+	
+	@Query(value="SELECT rol FROM Usuario  WHERE id = ?1", nativeQuery = true)
+	String obtenerTipoUsuario(long id);
 }
 

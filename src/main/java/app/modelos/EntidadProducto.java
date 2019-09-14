@@ -17,7 +17,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 @Entity
 @Table(name = "Producto")
 public class EntidadProducto {
@@ -123,6 +122,4 @@ public class EntidadProducto {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
-	
 }

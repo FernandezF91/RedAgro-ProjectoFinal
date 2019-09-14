@@ -13,27 +13,26 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Imagen")
 public class EntidadImagen {
-	
+
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Long id;
+
 	@ManyToOne()
-    @JoinColumn(name = "producto_id", nullable = true)
-    private EntidadProductoProductor producto_productor;
-	
-	@Column(name = "image",nullable=true)
+	@JoinColumn(name = "producto_id", nullable = true)
+	private EntidadProductoProductor producto_productor;
+
+	@Column(name = "image", nullable = true)
 	@Lob
 	private byte[] image;
-	
-	@Column(name = "nombre",nullable=false)
+
+	@Column(name = "nombre", nullable = false)
 	private String nombre;
-	
-	@Column(name = "tipo_contenido",nullable=false)
+
+	@Column(name = "tipo_contenido", nullable = false)
 	private String tipo_contenido;
 
-	
 	public String getNombre() {
 		return nombre;
 	}
@@ -73,6 +72,4 @@ public class EntidadImagen {
 	public void setTipo_contenido(String tipo_contenido) {
 		this.tipo_contenido = tipo_contenido;
 	}
-		
-
 }

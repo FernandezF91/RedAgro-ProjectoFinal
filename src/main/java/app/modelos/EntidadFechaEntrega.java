@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class EntidadFechaEntrega {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
 	@ManyToOne()
@@ -60,7 +60,4 @@ public class EntidadFechaEntrega {
 	public void setHorario(Calendar horario) {
 		this.horario = horario;
 	}
-	
-	
-	
 }

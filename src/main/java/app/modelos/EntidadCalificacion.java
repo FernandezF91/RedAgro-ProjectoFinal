@@ -11,13 +11,12 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-
 @Entity
 @Table(name = "Calificacion")
 public class EntidadCalificacion {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
 	@ManyToOne()
@@ -73,8 +72,4 @@ public class EntidadCalificacion {
 	public void setProductor(EntidadProductor productor) {
 		this.productor = productor;
 	}
-	
-
-	
-	
 }

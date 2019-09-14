@@ -14,26 +14,26 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "Historico_venta")
 public class EntidadHistorico {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@ManyToOne()
-    @JoinColumn(name = "productor_id", nullable = false)
-    private EntidadProductor productor;
-	
+	@JoinColumn(name = "productor_id", nullable = false)
+	private EntidadProductor productor;
+
 	@ManyToOne()
-    @JoinColumn(name = "producto_id", nullable = false)
-    private EntidadProducto producto;
-	
-	@Column(name="tipo_produccion",nullable = false)
+	@JoinColumn(name = "producto_id", nullable = false)
+	private EntidadProducto producto;
+
+	@Column(name = "tipo_produccion", nullable = false)
 	private String tipo_produccion;
-	
-	@Column(name="tipo_certificacion",nullable = false)
+
+	@Column(name = "tipo_certificacion", nullable = false)
 	private String tipo_certificacion;
-	
-	@Column(name="cantidad_vendida",nullable = false)
+
+	@Column(name = "cantidad_vendida", nullable = false)
 	private int cantidad_vendida;
 
 	public Long getId() {
@@ -83,7 +83,4 @@ public class EntidadHistorico {
 	public void setCantidad_vendida(int cantidad_vendida) {
 		this.cantidad_vendida = cantidad_vendida;
 	}
-
-	
-	
 }
