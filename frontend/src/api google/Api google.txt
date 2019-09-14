@@ -1,3 +1,0 @@
-Api key google: AIzaSyAKxBrG2z8psH-fGJfFDXI-Arn-LkniaqI
-
-Para usar esta clave en tu aplicación, transfiérela con el parámetro key=CLAVE_API.
