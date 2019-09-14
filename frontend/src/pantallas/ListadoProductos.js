@@ -30,7 +30,7 @@ class ListadoProductos extends Component {
                 this.setState({
                     productos: data.map((item) => {
                         return {
-                            id: item.id,
+ //                           id: item.id,
                             Categoría: item.producto.categoria,
                             Tipo: item.producto.tipo,
                             Titulo: item.titulo,
