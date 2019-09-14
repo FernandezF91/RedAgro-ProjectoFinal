@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.clases.Producto;
+import app.clases.ProductoProductor;
 import app.daos.ProductoDao;
 import app.daos.ProductoProductorDao;
 import app.daos.ProductorDao;
-import app.mappers.ProductoMapper;
+import app.mappers.ProductoProductorMapper;
 import app.modelos.EntidadProducto;
 import app.modelos.EntidadProductoProductor;
 import app.modelos.EntidadProductor;
@@ -39,7 +40,6 @@ public class ProductoProductorControlador {
     @PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
     public Long agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor, @RequestParam long id_producto){   	
     
-
 		EntidadProducto prod = productoDao.obtenerProducto(id_producto);
 		
 		EntidadProductor productor = productorDao.obtenerProductor(id_productor);
@@ -57,9 +57,16 @@ public class ProductoProductorControlador {
 		productoNuevo.setProducto(prod);
 	    productoNuevo.setProductor(productor);
 	    
-	    return productoProductorDao.save(productoNuevo).getId();
-						 	
-    	
+	    return productoProductorDao.save(productoNuevo).getId();	
     }
-
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(path = "redAgro/obtenerProductosProductor")
+    public List<ProductoProductor> obtenerTiposdeProducto(@RequestParam Long id){   	
+    
+		List<EntidadProductoProductor> listaProductos = productoProductorDao.obtenerProductosByProductor(id);
+		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
+		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos) ;								
+        return productosMapeados;
+    }
 }
