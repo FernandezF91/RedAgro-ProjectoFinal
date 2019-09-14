@@ -2,21 +2,21 @@ package app.clases;
 
 public class Preferencia {
 
-	public Preferencia(long ID, Consumidor consumidor, Producto producto) {
-		this.setId(ID);
+	public Preferencia(long id, Consumidor consumidor, Producto producto) {
+		this.setId(id);
 		this.setConsumidor(consumidor);
 		this.setProducto(producto);
 	}
 
-	private Long id;
+	private long id;
 	private Consumidor consumidor;
 	private Producto producto;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

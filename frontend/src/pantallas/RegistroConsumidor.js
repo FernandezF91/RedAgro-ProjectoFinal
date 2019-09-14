@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
-import Navbar from 'react-bootstrap/Navbar';
+import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
 import '../diseños/Registro.css';
 import '../diseños/estilosGlobales.css';
 import 'moment/locale/es';
@@ -19,7 +15,6 @@ const maxDate = new Date();
 class RegistroConsumidor extends Component {
 
 	constructor() {
-
 		super()
 
 		this.state = {
@@ -33,59 +28,47 @@ class RegistroConsumidor extends Component {
 
 		this.limpiarCampos = this.limpiarCampos.bind(this);
 		this.mostrarLogin = this.mostrarLogin.bind(this);
-
 	}
 
-
 	handleSubmit(e) {
-
+		var _this = this;
 		const form = e.currentTarget;
 
-		this.setState({
+		_this.setState({
 			errores: []
 		})
 
 		let errores = {}
 
 		if ((form.checkValidity() === false) && ((!this.state.campos["fecha_nac"]) || (!isDate(this.state.campos["fecha_nac"])))) {
-
 			errores["fecha_nac"] = "*Campo inválido";
-			this.setState({ errores });
+			_this.setState({ errores });
 			e.preventDefault();
 			e.stopPropagation();
 
 		} else if ((!this.state.campos["fecha_nac"]) || (!isDate(this.state.campos["fecha_nac"]))) {
-
 			errores["fecha_nac"] = "*Campo inválido";
-			this.setState({ errores });
+			_this.setState({ errores });
 			e.preventDefault();
 			e.stopPropagation();
 
-
 		} else if (form.checkValidity() === false) {
-
 			e.preventDefault();
 			e.stopPropagation();
 
 		} else {
-
 			e.preventDefault();
 			this.crearUsuario(e);
-
 		}
-		this.setState({ validated: true });
-
+		_this.setState({ validated: true });
 	}
 
-
 	detectarCambios(e) {
-
 		let campos = this.state.campos;
 		campos[e.target.name] = e.target.value;
 		this.setState({
 			campos
 		})
-
 	}
 
 	closeModal() {
@@ -95,85 +78,91 @@ class RegistroConsumidor extends Component {
 	}
 
 	cambiosFecha(e) {
-
 		let campos = this.state.campos;
-
 		campos["fecha_nac"] = e;
-
 		this.setState({ campos })
 	}
 
-
 	limpiarCampos() {
-
 		this.refs.form.reset();
 		let campos = {}
 		this.setState({ campos: campos });
-
 	}
 
-
 	mostrarLogin() {
-
 		window.setTimeout(() => {
 			this.props.history.push('/login')
 			// history is available by design in this.props when using react-router
-		}, 3000);
+		}, 2000);
 
 	}
+
 	crearUsuario(e) {
-
 		var _this = this;
+		var path = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
+		path = path + _this.state.campos["email"];
 
-		fetch("http://localhost:3000/redAgro/usuario_consumidor", {
-			method: "POST",
+		fetch(path, {
+			method: "GET",
 			headers: {
 				'Content-type': 'application/json;charset=UTF-8',
 			},
-			body: JSON.stringify({
-				"nombre": this.state.campos["nombre"],
-				"apellido": this.state.campos["apellido"],
-				"usuario": this.state.campos["email"],
-				"contraseña": this.state.campos["password"],
-				"fecha_nacimiento": this.state.campos["fecha_nac"],
-				"telefono": this.state.campos["tel"],
-				"rol": "Consumidor"
-			}),
 		})
-
 			.then(function (response) {
-
-				if (response.status !== 200) {
-
-					let mensaje = "Ocurrió algun problema, intenta nuevamente"
+				if (response.status === 400) {
+					response.text().then(
+						function (response) {
+							_this.setState({
+								visible: true,
+								mensaje: response,
+								titulo: "Error"
+							})
+							return;
+						}
+					)
+				} else if (response.status === 200) {
+					fetch("http://localhost:3000/redAgro/usuario_consumidor", {
+						method: "POST",
+						headers: {
+							'Content-type': 'application/json;charset=UTF-8',
+						},
+						body: JSON.stringify({
+							"nombre": _this.state.campos["nombre"],
+							"apellido": _this.state.campos["apellido"],
+							"usuario": _this.state.campos["email"],
+							"contraseña": _this.state.campos["password"],
+							"fecha_nacimiento": _this.state.campos["fecha_nac"],
+							"telefono": _this.state.campos["tel"],
+							"rol": "Consumidor"
+						}),
+					})
+						.then(function (response) {
+							if (response.status !== 200) {
+								_this.setState({
+									visible: true,
+									mensaje: "Ocurrió algun problema, intenta nuevamente"
+								});
+								return;
+							}
+							response.json().then(
+								function (response) {
+									_this.setState({
+										validated: true,
+										visible: true,
+										mensaje: "Serás redireccionado directamente hacia el acceso de usuarios",
+										titulo: "Registro exitoso!"
+									});
+									_this.mostrarLogin();
+								});
+						});
+				} else {
 					_this.setState({
 						visible: true,
-						mensaje: mensaje
-					});
+						mensaje: "Ocurrió algun problema, intenta nuevamente"
+					})
 					return;
-
 				}
-
-				response.json().then(
-
-					function (response) {
-
-						let mensaje = "Serás redireccionado directamente hacia el acceso de usuarios"
-						_this.setState({
-							validated: true,
-							visible: true,
-							mensaje: mensaje,
-							titulo: "Registro exitoso!"
-						});
-
-						_this.mostrarLogin();
-
-					});
-
 			});
-
-
-
 	}
 
 	render() {
@@ -183,7 +172,7 @@ class RegistroConsumidor extends Component {
 				<div className="barraNavegacion">
 					<Navbar>
 						<div className="culturaVerde">
-							<img src={culturaVerde} width="130px" height="50px"></img>
+							<Link to={'/'}><img src={culturaVerde} width="130px" height="50px"></img></Link>
 						</div>
 					</Navbar>
 				</div>
@@ -255,7 +244,7 @@ class RegistroConsumidor extends Component {
 										<Form.Control required type="telR" name="tel" pattern="[0-9]{8,14}" onChange={(e) => this.detectarCambios(e)} />
 										<Form.Control.Feedback className="errores" type="invalid">
 											*Campo inválido
-												</Form.Control.Feedback>
+										</Form.Control.Feedback>
 									</Col>
 								</Form.Group>
 							</div>
@@ -271,7 +260,6 @@ class RegistroConsumidor extends Component {
 												</Form.Control.Feedback>
 
 									</Col>
-
 								</Form.Group>
 							</div>
 							<div className="password">

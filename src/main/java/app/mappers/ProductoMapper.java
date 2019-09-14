@@ -11,7 +11,7 @@ public class ProductoMapper {
 		return mapeoDeProducto;
 	}
 
-	public EntidadProducto maptoEntity(Producto modelo) {
+	public EntidadProducto mapToEntity(Producto modelo) {
 
 		EntidadProducto mapeoAProducto = new EntidadProducto();
 		mapeoAProducto.setId(modelo.getId());

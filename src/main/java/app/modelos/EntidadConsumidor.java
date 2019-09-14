@@ -25,32 +25,32 @@ public class EntidadConsumidor {
 
 	@Id
 	@Column(name = "id")
-    private long id;
-	
+	private long id;
+
 	@JsonIgnore
-    @OneToOne
-    @MapsId
-    private EntidadUsuario usuario;
-	
-    @LazyCollection(LazyCollectionOption.FALSE)
+	@OneToOne
+	@MapsId
+	private EntidadUsuario usuario;
+
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL)
-    private List<EntidadPreferencia> preferencia = new ArrayList<>();
-	
-    @LazyCollection(LazyCollectionOption.FALSE)
+	private List<EntidadPreferencia> preferencia = new ArrayList<>();
+
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL)
-    private List<EntidadReserva> reservas = new ArrayList<>();
-	
-    @LazyCollection(LazyCollectionOption.FALSE)
+	private List<EntidadReserva> reservas = new ArrayList<>();
+
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL)
-    private List<EntidadCalificacion> calificaciones = new ArrayList<>();
-	
+	private List<EntidadCalificacion> calificaciones = new ArrayList<>();
+
 	public EntidadUsuario getUsuario() {
 		return usuario;
 	}
 
 	public void setUsuario(EntidadUsuario usuario) {
 		this.usuario = usuario;
-	
+
 	}
 
 	public List<EntidadPreferencia> getPreferencia() {
@@ -84,6 +84,4 @@ public class EntidadConsumidor {
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	
 }

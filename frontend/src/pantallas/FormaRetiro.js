@@ -90,7 +90,7 @@ class FormaRetiro extends Component {
 								<div className="nombre">
 									<Form.Group as={Row} controlId="validationCustom01">
 										<Form.Label>
-											Nombre:
+											Nombre
                                 		</Form.Label>
 										<Col>
 											<Form.Control
@@ -110,7 +110,7 @@ class FormaRetiro extends Component {
 								<div className="apellido">
 									<Form.Group as={Row}>
 										<Form.Label>
-											Apellido:
+											Apellido
                                 </Form.Label>
 										<Col>
 											<Form.Control type="email" name="apellido" />
@@ -121,7 +121,7 @@ class FormaRetiro extends Component {
 								<div className="tel">
 									<Form.Group as={Row} >
 										<Form.Label>
-											Teléfono:
+											Teléfono
                                 </Form.Label>
 										<Col>
 											<Form.Control type="email" name="tel" />

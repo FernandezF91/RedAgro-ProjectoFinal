@@ -32,56 +32,45 @@ import ModificarContraseña from '../pantallas/ModificarContraseña';
 import DatosDeUsuario from '../pantallas/DatosDeUsuario';
 import ListadoReservas from '../pantallas/ListadoReservas';
 import IngresarPuntoEntrega from '../pantallas/IngresarPuntoEntrega';
+import ListadoProductos from '../pantallas/ListadoProductos';
+import Estadisticas from '../pantallas/Estadisticas';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
-
 const NuevoProductoRouter = withRouter(NuevoProducto);
 const AlertaProductorRouter = withRouter(AlertaProductor);
 const ModificarContraseñaRouter = withRouter(ModificarContraseña);
 const EditarDatosRouter = withRouter(DatosDeUsuario);
 const ListadoReservasRouter = withRouter(ListadoReservas);
 const IngresarPuntoEntregaRouter = withRouter(IngresarPuntoEntrega);
+const ListadoProductosRouter = withRouter(ListadoProductos);
+const EstadisticasRouter = withRouter(Estadisticas);
+
 
 class PantallaPrincipalProductores extends Component {
 
 
 	constructor(props) {
-
 		super(props)
 
 		this.state = {
-
-
 			id: this.props.location.state.id //paso id de usuario desde el LOGIN
-
 		}
-
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-
 	}
 
-
 	componentDidMount() {
-
 		alert(this.state.id);
-
 	}
 
 	mostrarPantallaPrincipal() {
-
-
 		this.props.history.push({
-
 			pathname: '/principalProductores',
 			state: { id: this.state.id }
 		})
-
 		alert(this.state.id);
 	}
 
-
 	render() {
-
 		return (
 			<body className="fondo">
 				<div className="barraNavegacion">
@@ -105,7 +94,6 @@ class PantallaPrincipalProductores extends Component {
 					</Navbar>
 				</div>
 				<Container fluid className="contenedor">
-
 					<Row className="filaContenedora">
 						<Col sm={2} className="menuConsumidor">
 							<div className="cuenta">
@@ -122,7 +110,7 @@ class PantallaPrincipalProductores extends Component {
 										<i class="fas fa-store iconosMenuLateral"></i>
 										<div className="prod_drop">
 											<NavDropdown title="Productos" id="producto_drop">
-												<NavDropdown.Item href="#action/3.1">Listado de Productos</NavDropdown.Item>
+												<NavDropdown.Item><Link to="/principalProductores/ListadoProductos">Listado de Productos</Link></NavDropdown.Item>
 												<NavDropdown.Divider />
 												<NavDropdown.Item><Link to="/principalProductores/NuevoProducto">Nuevo Producto</Link></NavDropdown.Item>
 												<NavDropdown.Divider />
@@ -156,7 +144,10 @@ class PantallaPrincipalProductores extends Component {
 								</div>
 								<div className="itemsMenu">
 									<Row>
-										<i class="fas fa-chart-line iconosMenuLateral"></i><p>Estadísticas</p>
+										<i class="fas fa-chart-line iconosMenuLateral" />
+										<Link to={'/principalProductores/Estadisticas'}>
+											<p>Estadísticas</p>
+										</Link>
 									</Row>
 								</div>
 								<div className="itemsMenu">
@@ -185,23 +176,23 @@ class PantallaPrincipalProductores extends Component {
 						</Col>
 						<Col className="ruteo">
 							<Route path='/principalProductores/Alertas'
-								render={(props) => <AlertaProductorRouter id_productor={this.state.id} />}
-							/>
+								render={(props) => <AlertaProductorRouter id_productor={this.state.id} />} />
 							<Route path='/principalProductores/NuevoProducto'
-								render={(props) => <NuevoProductoRouter id_productor={this.state.id} />}
-							/>
+								render={(props) => <NuevoProductoRouter id_productor={this.state.id} />} />
 							<Route path='/principalProductores/CargarHistorico' component={CargarHistorico} />
 							<Route path='/principalProductores/modificarContraseña'
-								render={(props) => <ModificarContraseñaRouter id_productor={this.state.id} />}
-							/>
+								render={(props) => <ModificarContraseñaRouter id_productor={this.state.id} />} />
 							<Route path='/principalProductores/EditarDatos'
-								render={(props) => <EditarDatosRouter id_productor={this.state.id} />}
-							/>
+								render={(props) => <EditarDatosRouter id_productor={this.state.id} />} />
 							<Route path={'/principalProductores/ListadoReservas'}
 								render={(props) => <ListadoReservasRouter id_productor={this.state.id} />} 
 							/>
 							<Route path={'/principalProductores/IngresarPuntoEntrega'}
 								render={(props) => <IngresarPuntoEntregaRouter id_productor={this.state.id} />} />
+							<Route path='/principalProductores/ListadoProductos'
+								render={(props) => <ListadoProductosRouter id_productor={this.state.id} />} />
+							<Route path='/principalProductores/Estadisticas'
+								render={(props) => <EstadisticasRouter id_productor={this.state.id} />} />
 						</Col>
 					</Row>
 

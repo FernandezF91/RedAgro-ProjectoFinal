@@ -25,43 +25,43 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class EntidadProductoProductor {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
 	@ManyToOne()
-    @JoinColumn(name = "productor_id", nullable = false)
-    private EntidadProductor productor;
-	
+	@JoinColumn(name = "productor_id", nullable = false)
+	private EntidadProductor productor;
+
 	@ManyToOne()
-    @JoinColumn(name = "producto_id", nullable = false)
-    private EntidadProducto producto;
-	
-	@Column(name="titulo",nullable = false)
+	@JoinColumn(name = "producto_id", nullable = false)
+	private EntidadProducto producto;
+
+	@Column(name = "titulo", nullable = false)
 	private String titulo;
-	
-	@Column(name="descripcion",nullable = false)
+
+	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
-	
+
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto_productor", cascade = CascadeType.ALL)
-    private List<EntidadImagen> imagenes = new ArrayList<>();
-	
-	@Column(name="tipo_unidad",nullable = false)
+	private List<EntidadImagen> imagenes = new ArrayList<>();
+
+	@Column(name = "tipo_unidad", nullable = false)
 	private String tipo_unidad;
-	
-	@Column(name="tipo_produccion",nullable = false)
+
+	@Column(name = "tipo_produccion", nullable = false)
 	private String tipo_produccion;
-	
-	@Column(name="stock",nullable = false)
+
+	@Column(name = "stock", nullable = false)
 	private int stock;
-	
-	@Column(name="fecha_vencimiento",nullable = true)
+
+	@Column(name = "fecha_vencimiento", nullable = true)
 	private Date fecha_vencimiento;
-	
-	@Column(name="precio",nullable = false)
+
+	@Column(name = "precio", nullable = false)
 	private int precio;
-	
-	@Column(name="tiempo_preparacion",nullable = false)
+
+	@Column(name = "tiempo_preparacion", nullable = false)
 	private int tiempo_preparacion;
 
 	public Long getId() {
@@ -163,6 +163,4 @@ public class EntidadProductoProductor {
 	public void setImagenes(List<EntidadImagen> imagenes) {
 		this.imagenes = imagenes;
 	}
-		
-	
 }

@@ -24,10 +24,18 @@ import ListadoReservas from '../pantallas/ListadoReservas';
 import AlertaConsumidor from '../pantallas/AlertaConsumidor';
 import Carrito from '../pantallas/Carrito';
 import PreferenciasConsumidor from '../pantallas/PreferenciasConsumidor';
+import DatosDeUsuario from '../pantallas/DatosDeUsuario';
+import ModificarContraseña from '../pantallas/ModificarContraseña';
+import Geolocalizacion from '../pantallas/Geolocalizacion';
 
+//hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const ListadoReservasRouter = withRouter(ListadoReservas);
 const AlertaConsumidorRouter = withRouter(AlertaConsumidor);
 const PreferenciasConsumidorRouter = withRouter(PreferenciasConsumidor);
+const EditarDatosRouter = withRouter(DatosDeUsuario);
+const ModificarContraseñaRouter = withRouter(ModificarContraseña);
+const GeolocalizacionRouter = withRouter(Geolocalizacion);
+
 
 class PantallaPrincipalconsumidores extends Component {
 
@@ -37,7 +45,7 @@ class PantallaPrincipalconsumidores extends Component {
 
 		this.state = {
 
-			id: this.props.location.state.id //paso id de usuario desde el LOGIN
+			// id: this.props.location.state.id //paso id de usuario desde el LOGIN
 
 		}
 
@@ -107,7 +115,7 @@ class PantallaPrincipalconsumidores extends Component {
 										<i class="fas fa-shopping-basket iconosMenuLateral"></i>
 										<div className="com_drop">
 											<NavDropdown title="Comprar" id="compra_drop">
-												<NavDropdown.Item href="#action/3.1">Geolocalización</NavDropdown.Item>
+												<NavDropdown.Item><Link to ="/principalConsumidores/Geolocalizacion">Geolocalización</Link></NavDropdown.Item>
 												<NavDropdown.Divider />
 												<NavDropdown.Item href="#action/3.2">Categorias</NavDropdown.Item>
 											</NavDropdown>
@@ -134,9 +142,9 @@ class PantallaPrincipalconsumidores extends Component {
 										<i class="fas fa-cogs iconosMenuLateral"></i>
 										<div className="conf_drop">
 											<NavDropdown title="Configuración" id="config_dropConsu">
-												<NavDropdown.Item href="#action/3.1">Editar mis datos</NavDropdown.Item>
+												<NavDropdown.Item><Link to="/principalConsumidores/EditarDatos">Editar mis datos</Link></NavDropdown.Item>
 												<NavDropdown.Divider />
-												<NavDropdown.Item href="#action/3.2">Modificar contraseña</NavDropdown.Item>
+												<NavDropdown.Item><Link to="/principalConsumidores/modificarContraseña">Modificar Contraseña</Link></NavDropdown.Item>
 											</NavDropdown>
 										</div>
 									</Row>
@@ -145,13 +153,21 @@ class PantallaPrincipalconsumidores extends Component {
 						</Col>
 						<Col className="ruteo">
 							<Route path={'/principalConsumidores/ListadoReservas'}
-								render={(props) => <ListadoReservasRouter id_consumidor={this.state.id} />} />
+								render={(props) => <ListadoReservasRouter id_usuario={this.state.id} />} />
 							<Route path={'/principalConsumidores/Alertas'}
 								render={(props) => <AlertaConsumidorRouter id_consumidor={this.state.id} />} />
 							<Route path={'/principalConsumidores/PreferenciasConsumidor'}
 								render={(props) => <PreferenciasConsumidorRouter id_consumidor={this.state.id} />} />
 							<Route path={'/principalConsumidores/Carrito'}
 								render={(props) => <Carrito id_consumidor={this.state.id} />} />
+							<Route path={'/principalConsumidores/EditarDatos'}
+								render={(props) => <EditarDatosRouter id_consumidor={this.state.id} />} />
+							<Route path={'/principalConsumidores/modificarContraseña'}
+								render={(props) => <ModificarContraseñaRouter id_consumidor={this.state.id} />} />
+								<Route path={'/principalConsumidores/Geolocalizacion'}
+								render={(props) => <GeolocalizacionRouter id_consumidor={this.state.id} />} />
+
+
 						</Col>
 					</Row>
 				</Container>
