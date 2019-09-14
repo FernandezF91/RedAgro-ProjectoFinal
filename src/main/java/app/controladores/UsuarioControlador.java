@@ -107,6 +107,13 @@ public class UsuarioControlador {
 			return new ResponseEntity<>("Ya existe un usuario consumidor registrado con este mail", HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/get_tipo_usuario")
+	public String obtenerTipoUsuario(@RequestParam long id) {
+		String tipoUsuario = usuarioDAO.obtenerTipoUsuario(id);
+		return tipoUsuario;
+	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@DeleteMapping(path = "redAgro/borrar_usuario/{id}")

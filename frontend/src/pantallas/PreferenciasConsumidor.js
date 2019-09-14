@@ -123,7 +123,6 @@ class PreferenciasConsumidor extends Component {
 						frutas: this.getPreferenciasGuardadas(data, "Frutas"),
 						otros: this.getPreferenciasGuardadas(data, "Otros")
 					},
-					//preferencias: data
 				});
 			})
 		//Cargo los productos 'Frutas'

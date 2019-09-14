@@ -151,7 +151,7 @@ class PantallaPrincipalconsumidores extends Component {
 						</Col>
 						<Col className="ruteo">
 							<Route path={'/principalConsumidores/ListadoReservas'}
-								render={(props) => <ListadoReservasRouter id_consumidor={this.state.id} />} />
+								render={(props) => <ListadoReservasRouter id_usuario={this.state.id} />} />
 							<Route path={'/principalConsumidores/Alertas'}
 								render={(props) => <AlertaConsumidorRouter id_consumidor={this.state.id} />} />
 							<Route path={'/principalConsumidores/PreferenciasConsumidor'}

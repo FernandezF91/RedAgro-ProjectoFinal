@@ -14,24 +14,38 @@ import javax.persistence.Query;
 
 import app.clases.Reserva;
 import app.daos.ReservaDao;
+import app.daos.UsuarioDao;
 import app.modelos.EntidadReserva;
 import app.mappers.ReservaMapper;
 
 @RestController
 public class ReservaControlador {
-	
+
 	@Autowired
 	ReservaDao reservaDao;
-	
+
+	@Autowired
+	UsuarioDao usuarioDAO;
+
 	@CrossOrigin(origins = "http://localhost:3000")
-	@GetMapping(path = "redAgro/get_reservas_consumidor")
-	
+	@GetMapping(path = "redAgro/get_reservas_usuario")
+
 	@ResponseBody
-	public List<Reserva> obtenerReservasByConsumidor(@RequestParam Long id){
+	public List<Reserva> obtenerReservasByUsuario(@RequestParam Long id) {
+
+		String tipoUsuario = usuarioDAO.obtenerTipoUsuario(id);
+		ReservaMapper mapeoReservas = new ReservaMapper();
+		List<EntidadReserva> resultados = new ArrayList<>();
 		
-		ReservaMapper mapeoReservas = new ReservaMapper();		
-		List<EntidadReserva> resultados = reservaDao.obtenerReservasByConsumidor(id);
+		if(tipoUsuario.equals("Consumidor")) {
+			resultados = reservaDao.obtenerReservasByConsumidor(id);
+		}
+		else {
+			if(tipoUsuario.equals("Productor")) {
+				resultados = reservaDao.obtenerReservasByProductor(id);
+			}
+		}
 		List<Reserva> reservas = mapeoReservas.mapFromEntity(resultados);
-		return reservas;		
+		return reservas;
 	}
 }

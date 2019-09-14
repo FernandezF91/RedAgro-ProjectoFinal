@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Reserva {
 
-	public Reserva(long id, List<DetalleReserva> detalleReserva, Productor productor, Consumidor consumidor,
+	public Reserva(long id, Productor productor, Consumidor consumidor,
 			PuntoEntrega punto_entrega, EstadoReserva estado_reserva, Date fecha, int total_reserva,
 			String forma_retiro, String persona_retiro) {
 
 		this.setId(id);
-		this.setDetalleReserva(detalleReserva);
+		//this.setDetalleReserva(detalleReserva);
 		this.setProductor(productor);
 		this.setConsumidor(consumidor);
 		this.setPunto_entrega(punto_entrega);
@@ -24,7 +24,7 @@ public class Reserva {
 
 	private long id;
 
-	private List<DetalleReserva> detalleReserva;
+//	private List<DetalleReserva> detalleReserva;
 
 	private Productor productor;
 
@@ -114,11 +114,11 @@ public class Reserva {
 		this.persona_retiro = persona_retiro;
 	}
 
-	public List<DetalleReserva> getDetalleReserva() {
-		return detalleReserva;
-	}
+//	public List<DetalleReserva> getDetalleReserva() {
+//		return detalleReserva;
+//	}
 
-	public void setDetalleReserva(List<DetalleReserva> detalleReserva) {
-		this.detalleReserva = detalleReserva;
-	}
+//	public void setDetalleReserva(List<DetalleReserva> detalleReserva) {
+//		this.detalleReserva = detalleReserva;
+//	}
 }

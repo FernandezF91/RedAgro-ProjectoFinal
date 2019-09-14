@@ -16,7 +16,7 @@ public class DetalleReserva {
 	private long id_producto;
 	private int cantidad;
 	private int precio_por_unidad;
-	private Boolean activo;
+	private boolean activo;
 
 	public long getId_reserva() {
 		return id_reserva;

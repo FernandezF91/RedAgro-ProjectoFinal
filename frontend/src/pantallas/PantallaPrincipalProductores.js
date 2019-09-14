@@ -168,7 +168,7 @@ class PantallaPrincipalProductores extends Component {
 							<Route path='/principalProductores/EditarDatos'
 								render={(props) => <EditarDatosRouter id_productor={this.state.id} />} />
 							<Route path={'/principalProductores/ListadoReservas'}
-								render={(props) => <ListadoReservasRouter id_productor={this.state.id} />} />
+								render={(props) => <ListadoReservasRouter id_usuario={this.state.id} />} />
 							<Route path='/principalProductores/ListadoProductos'
 								render={(props) => <ListadoProductosRouter id_productor={this.state.id} />} />
 							<Route path='/principalProductores/Estadisticas'
