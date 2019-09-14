@@ -46,7 +46,7 @@ public class PreferenciaMapper {
 		EntidadConsumidor entidadConsumidor = mapeoConsumidor.mapToEntity(modelo.getConsumidor());
 		
 		ProductoMapper  mapeoProducto = new ProductoMapper();
-		EntidadProducto entidadProducto = mapeoProducto.maptoEntity(modelo.getProducto()); 
+		EntidadProducto entidadProducto = mapeoProducto.mapToEntity(modelo.getProducto()); 
 		
 		EntidadPreferencia mapeoAPreferencia = new EntidadPreferencia ();
 		mapeoAPreferencia.setId(modelo.getId());
@@ -64,7 +64,7 @@ public class PreferenciaMapper {
 			EntidadConsumidor entidadConsumidor = mapeoConsumidor.mapToEntity(unModelo.getConsumidor());
 			
 			ProductoMapper  mapeoProducto = new ProductoMapper();
-			EntidadProducto entidadProducto = mapeoProducto.maptoEntity(unModelo.getProducto()); 
+			EntidadProducto entidadProducto = mapeoProducto.mapToEntity(unModelo.getProducto()); 
 			
 			EntidadPreferencia preferencia = new EntidadPreferencia ();
 			preferencia.setId(unModelo.getId());

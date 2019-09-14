@@ -83,5 +83,4 @@ public class EntidadDetalleReserva implements Serializable{
 		this.activo = activo;
 	}
 
-
 }
