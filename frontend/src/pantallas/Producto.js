@@ -291,7 +291,7 @@ const TablePage = (props) => {
   return (
     <MDBTable striped autoWidth>
       <MDBTableHead columns = {columns} />
-      <MDBTableBody rows={rows} />
+      <MDBTableBody rows={props.productos} />
     </MDBTable >
   );
 }

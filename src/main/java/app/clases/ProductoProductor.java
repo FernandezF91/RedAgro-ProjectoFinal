@@ -5,12 +5,13 @@ import java.util.List;
 
 public class ProductoProductor {
 
-	public ProductoProductor(long id, Productor productor, Producto producto, String titulo, List<Imagen> imagenes, String tipo_unidad,
+	public ProductoProductor(long id, Productor productor, Producto producto, String titulo, String descripcion, List<Imagen> imagenes, String tipo_unidad,
 							 String tipo_produccion, int stock, Date fecha_vencimiento, int precio, int tiempo_preparacion) {
 		this.setId(id);
 		this.setProductor(productor);
 		this.setProducto(producto);
 		this.setTitulo(titulo);
+		this.setDescripcion(descripcion);
 		this.setImagenes(imagenes);
 		this.setTipo_unidad(tipo_unidad);
 		this.setTipo_produccion(tipo_produccion);
@@ -24,6 +25,7 @@ public class ProductoProductor {
 	private Productor productor;
 	private Producto producto;
 	private String titulo;
+	private String descripcion;
 	private List<Imagen> imagenes;
 	private String tipo_unidad;
 	private String tipo_produccion;
@@ -118,5 +120,13 @@ public class ProductoProductor {
 
 	public void setTiempo_preparacion(int tiempo_preparacion) {
 		this.tiempo_preparacion = tiempo_preparacion;
+	}
+	
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 }
