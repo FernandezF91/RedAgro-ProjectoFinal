@@ -21,11 +21,11 @@ public class EntidadPreferencia {
     private Long id;
 	
 	@ManyToOne()
-    @JoinColumn(name = "id_consumidor", nullable = false)
+    @JoinColumn(name = "consumidor_id", nullable = false)
     private EntidadConsumidor consumidor;
 	
 	@ManyToOne()
-    @JoinColumn(name = "id_producto", nullable = false)
+    @JoinColumn(name = "producto_id", nullable = false)
     private EntidadProducto producto;
 
 	public Long getId() {
@@ -51,6 +51,4 @@ public class EntidadPreferencia {
 	public void setProducto(EntidadProducto producto) {
 		this.producto = producto;
 	}
-	
-	
 }

@@ -17,16 +17,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Alerta")
 public class EntidadAlerta {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
-	
+
 	@OneToMany(mappedBy = "alerta")
-    private List<EntidadAlertaUsuario> alertas_usuario = new ArrayList<>();
+	private List<EntidadAlertaUsuario> alertas_usuario = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -51,8 +51,4 @@ public class EntidadAlerta {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	
-	
-
 }

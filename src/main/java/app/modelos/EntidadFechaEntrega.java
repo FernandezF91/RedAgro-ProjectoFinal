@@ -60,7 +60,4 @@ public class EntidadFechaEntrega {
 	public void setHorario(Calendar horario) {
 		this.horario = horario;
 	}
-	
-	
-	
 }

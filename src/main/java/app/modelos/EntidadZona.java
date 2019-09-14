@@ -1,6 +1,5 @@
 package app.modelos;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,7 +48,5 @@ public class EntidadZona {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	
+	}	
 }

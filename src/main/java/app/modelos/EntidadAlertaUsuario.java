@@ -11,23 +11,23 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Alerta_usuario")
 public class EntidadAlertaUsuario {
-	
+
 	@Id
 	@Column(name = "id")
-    private long id;
-	
+	private long id;
+
 	@ManyToOne
-    @MapsId("id")
-    @JoinColumn(name = "usuario_id")
-    EntidadUsuario usuario;
- 
-    @ManyToOne
-    @MapsId("id")
-    @JoinColumn(name = "alerta_id")
-    EntidadAlerta alerta;
-    
-    @Column(name="frecuencia")
-    private String frecuencia;
+	@MapsId("id")
+	@JoinColumn(name = "usuario_id")
+	EntidadUsuario usuario;
+
+	@ManyToOne
+	@MapsId("id")
+	@JoinColumn(name = "alerta_id")
+	EntidadAlerta alerta;
+
+	@Column(name = "frecuencia")
+	private String frecuencia;
 
 	public long getId() {
 		return id;
@@ -60,6 +60,4 @@ public class EntidadAlertaUsuario {
 	public void setFrecuencia(String frecuencia) {
 		this.frecuencia = frecuencia;
 	}
-       
-
 }

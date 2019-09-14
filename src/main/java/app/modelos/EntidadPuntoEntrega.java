@@ -121,7 +121,4 @@ public class EntidadPuntoEntrega {
 	public void setReservas(List<EntidadReserva> reservas) {
 		this.reservas = reservas;
 	}
-	
-	
-
 }
