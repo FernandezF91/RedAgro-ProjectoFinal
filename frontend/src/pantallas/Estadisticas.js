@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GraficoPie from './GraficoPie';
 import GraficoLine from './GraficoLine';
+import GraficoBar from './GraficoBar';
 import '../diseños/Graficos.css';
 
 class Estadisticas extends Component {
@@ -27,17 +28,17 @@ class Estadisticas extends Component {
                 <div className="titulosPrincipales">Estadísticas</div>
                 <div className="graficosPorFila">
                     <div className="graficos1">
-                        <h5>Reservas por estados</h5>
+                        <h5>Reservas por estados (en los últimos 90 días)</h5>
                         <GraficoPie />
                     </div>
                     <div className="graficos1">
-                        <h5>Productos disponibles a la venta</h5>
-                        <GraficoPie />
+                        <h5>Productos vendidos (en los últimos 90 días)</h5>
+                        <GraficoBar />
                     </div>
                 </div>
                 <div className="graficosPorFila">
                     <div className="graficos2">
-                        <h5>Reservas por fecha</h5>
+                        <h5>Total de reservas concretadas en el ultimo año</h5>
                         <GraficoLine />
                     </div>
                 </div>
@@ -48,7 +49,7 @@ class Estadisticas extends Component {
 export default Estadisticas;
 /*
 Serán los siguientes gráficos:
-Reservas agrupadas por estados. --> Grafico torta
-Reservas agrupadas por fecha de la operación --> Grafico linea
-Productos disponibles --> Grafico torta
+Reservas agrupadas por estados en los ultimos 90 dias --> Grafico torta
+Total de reservas concretadas agrupadas por mes en los ultimos 12 meses-> Grafico linea
+Total de productos vendidos en los ultimos 90 dias --> Grafico barras
 Se podrán divisar diferenciaciones entre los diferentes estados de las reservas en los gráficos que no sean específicamente de estados. */
