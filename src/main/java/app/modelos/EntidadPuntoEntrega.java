@@ -22,8 +22,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class EntidadPuntoEntrega {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	
 	@ManyToOne()
     @JoinColumn(name = "productor_id", nullable = false)
