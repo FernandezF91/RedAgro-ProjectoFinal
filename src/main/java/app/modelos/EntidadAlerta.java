@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class EntidadAlerta {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "nombre", nullable = false)

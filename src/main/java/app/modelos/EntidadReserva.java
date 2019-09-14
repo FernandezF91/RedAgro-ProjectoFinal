@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class EntidadReserva {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
