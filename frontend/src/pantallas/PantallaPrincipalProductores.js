@@ -22,7 +22,7 @@ import Estadisticas from '../pantallas/Estadisticas';
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const NuevoProductoRouter = withRouter(NuevoProducto);
 const AlertaProductorRouter = withRouter(AlertaProductor);
-const ModificarContraseñaRouter = withRouter(ModificarContraseña);
+const ModificarContraseniaRouter = withRouter(ModificarContraseña);
 const EditarDatosRouter = withRouter(DatosDeUsuario);
 const ListadoReservasRouter = withRouter(ListadoReservas);
 const IngresarPuntoEntregaRouter = withRouter(IngresarPuntoEntrega);
@@ -184,11 +184,11 @@ class PantallaPrincipalProductores extends Component {
                             <Route path='/principalProductores/CargarHistorico'
                                 render={(props) => <HitoricoRouter id_productor={this.state.id} />} />
                             <Route path='/principalProductores/modificarContraseña'
-                                render={(props) => <ModificarContraseñaRouter id_productor={this.state.id} />} />
+                                render={(props) => <ModificarContraseniaRouter id_productor={this.state.id} />} />
                             <Route path='/principalProductores/EditarDatos'
                                 render={(props) => <EditarDatosRouter id_productor={this.state.id} />} />
                             <Route path={'/principalProductores/ListadoReservas'}
-                                render={(props) => <ListadoReservasRouter id_productor={this.state.id} />} />
+                                render={(props) => <ListadoReservasRouter id_usuario={this.state.id} />} />
                             <Route path={'/principalProductores/IngresarPuntoEntrega'}
                                 render={(props) => <IngresarPuntoEntregaRouter id_productor={this.state.id} />} />
                             <Route path='/principalProductores/ListadoProductos'

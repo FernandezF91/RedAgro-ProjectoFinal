@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Form from 'react-bootstrap/Form';
+import { Navbar, Nav, Row } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/Home.css';
 import '../diseños/estilosGlobales.css';
-import { MDBIcon } from "mdbreact";
-import Row from 'react-bootstrap/Row';
-
 
 class HomePage extends Component {
-
 	render() {
-
 		return (
 			<body className="fondo">
 				<div className="barraNavegacion">
@@ -23,7 +16,9 @@ class HomePage extends Component {
 						<div className="barraBusqueda">
 						<Row>
 								<input type="text" placeholder="Buscar productos y productores.. " name="search"/>
-      							<button type="submit"><i class="fa fa-search"></i></button>
+      							<button type="submit">
+                                      <i class="fa fa-search" />
+                                  </button>
 								</Row>						
 						</div>
 						<div className="textos">
