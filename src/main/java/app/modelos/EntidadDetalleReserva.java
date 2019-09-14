@@ -34,6 +34,9 @@ public class EntidadDetalleReserva implements Serializable{
 	
 	@Column(name="activo",nullable = false)
 	private Boolean activo;
+	
+	@Column(name = "precio_por_unidad", nullable = false)
+	private int precio_por_unidad;
 
 	public long getId_reserva() {
 		return id_reserva;
@@ -55,6 +58,10 @@ public class EntidadDetalleReserva implements Serializable{
 		return id_producto;
 	}
 
+	public int getPrecio_por_unidad() {
+		return precio_por_unidad;
+	}
+	
 	public void setId_producto(long id_producto) {
 		this.id_producto = id_producto;
 	}
@@ -82,5 +89,8 @@ public class EntidadDetalleReserva implements Serializable{
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
 	}
-
+	
+	public void setPrecio_por_unidad(int precio_por_unidad) {
+		this.precio_por_unidad = precio_por_unidad;
+	}
 }

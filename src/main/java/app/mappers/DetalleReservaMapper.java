@@ -9,7 +9,7 @@ public class DetalleReservaMapper {
 
 	public DetalleReserva mapFromEntity(EntidadDetalleReserva entidad) {
 		DetalleReserva detalle = new DetalleReserva(entidad.getId_reserva(), entidad.getId_producto(),
-				entidad.getCantidad(), entidad.getActivo());
+				entidad.getCantidad(), entidad.getPrecio_por_unidad(), entidad.getActivo());
 		return detalle;
 	}
 
@@ -19,7 +19,7 @@ public class DetalleReservaMapper {
 
 		for (EntidadDetalleReserva entidad : listaEntidadReservas) {
 			DetalleReserva detalle = new DetalleReserva(entidad.getId_reserva(), entidad.getId_producto(),
-														entidad.getCantidad(), entidad.getActivo());
+														entidad.getCantidad(), entidad.getPrecio_por_unidad(), entidad.getActivo());
 			listaReservas.add(detalle);			
 		}
 		return listaReservas;
@@ -30,6 +30,7 @@ public class DetalleReservaMapper {
 		entidad.setId_reserva(modelo.getId_reserva());
 		entidad.setId_producto(modelo.getId_producto());
 		entidad.setCantidad(modelo.getCantidad());
+		entidad.setPrecio_por_unidad(modelo.getPrecio_por_unidad());
 		entidad.setActivo(modelo.getActivo());
 		return entidad;
 	}
@@ -43,6 +44,7 @@ public class DetalleReservaMapper {
 			entidad.setId_reserva(modelo.getId_reserva());
 			entidad.setId_producto(modelo.getId_producto());
 			entidad.setCantidad(modelo.getCantidad());
+			entidad.setPrecio_por_unidad(modelo.getPrecio_por_unidad());
 			entidad.setActivo(modelo.getActivo());
 			listaEntidadReservas.add(entidad);			
 		}

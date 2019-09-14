@@ -4,16 +4,18 @@ import app.modelos.EntidadReserva;
 
 public class DetalleReserva {
 
-	public DetalleReserva(long id, long id_producto, int cantidad, boolean activo) {
+	public DetalleReserva(long id, long id_producto, int cantidad, int precio_por_unidad, boolean activo) {
 		this.setId_reserva(id);
 		this.setId_producto(id_producto);
 		this.setCantidad(cantidad);
+		this.setPrecio_por_unidad(precio_por_unidad);
 		this.setActivo(activo);
 	}
 
 	private long id_reserva;
 	private long id_producto;
 	private int cantidad;
+	private int precio_por_unidad;
 	private Boolean activo;
 
 	public long getId_reserva() {
@@ -46,5 +48,13 @@ public class DetalleReserva {
 
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
+	}
+	
+	public int getPrecio_por_unidad() {
+		return precio_por_unidad;
+	}
+
+	public void setPrecio_por_unidad(int precio_por_unidad) {
+		this.precio_por_unidad = precio_por_unidad;
 	}
 }
