@@ -44,6 +44,17 @@ class AlertaConsumidor extends Component {
 		//  Chequear como lo guardo
 	};
 
+mostrarPantallaPrincipal() {
+
+		this.props.history.push({
+
+			pathname: '/principalConsumidores',
+			state: { id: this.state.id }
+		})
+
+  }
+
+
 
 	render() {
 
@@ -138,7 +149,7 @@ class AlertaConsumidor extends Component {
 						<Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
 					</div>
 					<div className="botonAtras">
-						<a href='/principalConsumidores'><Button variant="success">Cancelar</Button></a>
+						<Button variant="success" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
 					</div>
 				</div>
 			</div>

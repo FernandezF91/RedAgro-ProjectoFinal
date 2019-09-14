@@ -45,7 +45,7 @@ class PantallaPrincipalconsumidores extends Component {
 
 		this.state = {
 
-			// id: this.props.location.state.id //paso id de usuario desde el LOGIN
+			//  id: this.props.location.state.id //paso id de usuario desde el LOGIN
 
 		}
 
@@ -86,8 +86,8 @@ class PantallaPrincipalconsumidores extends Component {
 							<Row>
 								<i class="fas fa-user iconosBarra"></i>
 								<div className="menuUsuario">
-									<NavDropdown title="Usuario" id="nav-dropdown">
-										<NavDropdown.Item href="/principalConsumidores">Mi cuenta</NavDropdown.Item>
+									<NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown">
+										<NavDropdown.Item>Mi cuenta</NavDropdown.Item>
 										<NavDropdown.Divider />
 										<NavDropdown.Item href="/login">Salir</NavDropdown.Item>
 									</NavDropdown>

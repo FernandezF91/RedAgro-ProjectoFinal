@@ -49,6 +49,12 @@ public class EntidadPuntoEntrega {
 	
 	@Column(name = "direccion", nullable = false)
     private String direccion;
+	
+	@Column(name = "latitud", nullable = false)
+    private int latitud;
+	
+	@Column(name = "longitud", nullable = false)
+    private int longitud;
 
 	public Long getId() {
 		return id;
@@ -121,4 +127,22 @@ public class EntidadPuntoEntrega {
 	public void setReservas(List<EntidadReserva> reservas) {
 		this.reservas = reservas;
 	}
+
+	public int getLatitud() {
+		return latitud;
+	}
+
+	public void setLatitud(int latitud) {
+		this.latitud = latitud;
+	}
+
+	public int getLongitud() {
+		return longitud;
+	}
+
+	public void setLongitud(int longitud) {
+		this.longitud = longitud;
+	}
+	
+	
 }

@@ -1,11 +1,17 @@
 .contenedorMapa{
 
-margin-top:20px;
-margin-left:24.2%;
+}
+
+.descripcionPagina{
+
+margin-bottom: 20px;
 
 }
 
-.containerGeneral{
+.botonVolver{
+
+position:absolute;
+margin-top:37%;
+margin-left:42%;
 
 }
-
