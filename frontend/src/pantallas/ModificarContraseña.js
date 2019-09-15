@@ -1,16 +1,13 @@
 
 import React, { Component } from 'react'
-import { Navbar, Container, Form, Col, Row, Button, Nav } from 'react-bootstrap';
-import culturaVerde from '../imagenes/cultura-verde-2.png';
+import { Form, Row, Button } from 'react-bootstrap';
 import '../diseños/Login.css';
 import '../diseños/estilosGlobales.css';
 import '../diseños/ModificarContraseña.css';
-import Modal from 'react-awesome-modal';
 
 class ModificarContraseña extends Component {
 
 	constructor(props) {
-
 		super(props)
 
 		this.state = {
@@ -26,17 +23,14 @@ class ModificarContraseña extends Component {
 		this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
 		this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-
 	}
 
 	detectarCambios(e) {
-
 		let fields = this.state.fields;
 		fields[e.target.name] = e.target.value;
 		this.setState({
 			fields
 		})
-
 	}
 
 	closeModal() {
@@ -53,25 +47,19 @@ class ModificarContraseña extends Component {
 		let errores = {};
 
 		if ((!this.state.fields["username"]) && (!this.state.fields["password"])) {
-
 			errores["username"] = "*Campo inválido";
 			errores["password"] = "*Campo inválido";
 
 		} else if (!this.state.fields["username"]) {
-
 			errores["username"] = "*Campo inválido";
 
 		} else if (!this.state.fields["password"]) {
-
 			errores["password"] = "*Campo inválido";
 
 		} else {
-
-
 			const path_principal = "http://localhost:3000/redAgro/login?u=";
 
 			var username = this.state.fields["username"];
-
 			var password = this.state.fields["password"];
 
 			const final_path = path_principal + username + "&c=" + password;
@@ -107,7 +95,6 @@ class ModificarContraseña extends Component {
 						function (response) {
 
 							if (response !== "") {
-
 								_this.setState({ usuario: JSON.parse(response) });
 
 								if (_this.state.usuario.rol === "Productor") {
@@ -130,9 +117,7 @@ class ModificarContraseña extends Component {
 							}
 
 						});
-
 				});
-
 		}
 
 		this.setState({
@@ -141,7 +126,6 @@ class ModificarContraseña extends Component {
 	}
 
 	mostrarPantallaPrincipal() {
-
 		this.props.history.push({
 			pathname: '/principalProductores',
 			state: { id: this.state.id }
@@ -149,7 +133,6 @@ class ModificarContraseña extends Component {
 	}
 
 	mostrarPantallaProductor() {
-
 		this.props.history.push({
 			pathname: '/principalProductores',
 			state: { id: this.state.usuario.id }
@@ -158,11 +141,8 @@ class ModificarContraseña extends Component {
 	}
 
 	mostrarPantallaConsumidor() {
-
 		this.props.history.push("/principalConsumidores", { usuario: this.state.usuario });
-
 	}
-
 
 	render() {
 
@@ -211,7 +191,9 @@ class ModificarContraseña extends Component {
 					</div>
 					<div className="botonesNuevoProducto">
 						<div className="botonAtras">
-							<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
+							<a onClick={this.mostrarPantallaPrincipal}>
+                                <Button variant="success">Cancelar</Button>
+                            </a>
 						</div>
 						<div className="botonCrear">
 							<Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Crear</Button>

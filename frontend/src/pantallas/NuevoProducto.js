@@ -134,7 +134,7 @@ class NuevoProducto extends Component {
                         _this.setState({
                             visible: true,
                             titulo: "Error",
-                            mensaje: "Ocurrió algún error inesperado. Intente nuevamente"
+                            mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
                         });
                         return;
                     }
@@ -231,7 +231,7 @@ class NuevoProducto extends Component {
                     _this.setState({
                         visible: true,
                         titulo: "Error",
-                        mensaje: "Ocurrió algún error inesperado. Intente nuevamente"
+                        mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
                     });
                     return;
                 }

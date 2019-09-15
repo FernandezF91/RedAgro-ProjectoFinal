@@ -21,6 +21,7 @@ class ListadoProductos extends Component {
             state: { id: this.state.id }
         })
     }
+    
     componentDidMount() {
         var path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + this.state.id;
         fetch(path)

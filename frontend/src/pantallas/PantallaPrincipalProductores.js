@@ -94,11 +94,11 @@ class PantallaPrincipalProductores extends Component {
                                         <div className="prod_drop">
                                             <NavDropdown title="Productos" id="producto_drop">
                                                 <NavDropdown.Item>
-                                                    <Link to="/principalProductores/ListadoProductos">Listado de Productos</Link>
+                                                    <Link to="/principalProductores/ListadoProductos">Listado de productos</Link>
                                                 </NavDropdown.Item>
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item>
-                                                    <Link to="/principalProductores/NuevoProducto">Nuevo Producto</Link>
+                                                    <Link to="/principalProductores/NuevoProducto">Nuevo producto</Link>
                                                 </NavDropdown.Item>
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
@@ -111,10 +111,10 @@ class PantallaPrincipalProductores extends Component {
                                         <i class="fas fa-map-marker-alt iconosMenuLateral" />
                                         <div className="puntoentrega_drop">
                                             <NavDropdown title="Puntos de Entrega" id="puntoentrega_drop">
-                                                <NavDropdown.Item href="#action/3.1">Desactivar Puntos de entrega</NavDropdown.Item>
+                                                <NavDropdown.Item href="#action/3.1">Desactivar puntos de entrega</NavDropdown.Item>
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item>
-                                                    <Link to="/principalProductores/IngresarPuntoEntrega">Nuevo Punto de entrega</Link>
+                                                    <Link to="/principalProductores/IngresarPuntoEntrega">Nuevo punto de entrega</Link>
                                                 </NavDropdown.Item>
                                             </NavDropdown>
                                         </div>
