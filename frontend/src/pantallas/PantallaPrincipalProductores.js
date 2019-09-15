@@ -16,6 +16,7 @@ import ModificarContraseña from '../pantallas/ModificarContraseña';
 import DatosDeUsuario from '../pantallas/DatosDeUsuario';
 import ListadoReservas from '../pantallas/ListadoReservas';
 import IngresarPuntoEntrega from '../pantallas/IngresarPuntoEntrega';
+import ListadoPuntosEntrega from '../pantallas/ListadoPuntosEntrega';
 import ListadoProductos from '../pantallas/ListadoProductos';
 import Estadisticas from '../pantallas/Estadisticas';
 
@@ -111,7 +112,9 @@ class PantallaPrincipalProductores extends Component {
                                         <i class="fas fa-map-marker-alt iconosMenuLateral" />
                                         <div className="puntoentrega_drop">
                                             <NavDropdown title="Puntos de Entrega" id="puntoentrega_drop">
-                                                <NavDropdown.Item href="#action/3.1">Desactivar puntos de entrega</NavDropdown.Item>
+                                                <NavDropdown.Item> 
+                                                    <Link to="/principalProductores/ListadoPuntosEntrega">Desactivar puntos de entrega</Link>
+                                                </NavDropdown.Item>
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item>
                                                     <Link to="/principalProductores/IngresarPuntoEntrega">Nuevo punto de entrega</Link>
@@ -191,6 +194,8 @@ class PantallaPrincipalProductores extends Component {
                                 render={(props) => <ListadoReservasRouter id_usuario={this.state.id} />} />
                             <Route path={'/principalProductores/IngresarPuntoEntrega'}
                                 render={(props) => <IngresarPuntoEntregaRouter id_productor={this.state.id} />} />
+                            <Route path={'/principalProductores/ListadoPuntosEntrega'}
+                                render={(props) => <ListadoPuntosEntrega id_productor={this.state.id} />} />
                             <Route path='/principalProductores/ListadoProductos'
                                 render={(props) => <ListadoProductosRouter id_productor={this.state.id} />} />
                             <Route path='/principalProductores/Estadisticas'

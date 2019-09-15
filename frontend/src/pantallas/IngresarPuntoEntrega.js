@@ -1,48 +1,42 @@
 import React, { Component } from 'react';
-import { Form, Row, Button } from 'react-bootstrap';
-
+import { Form, Button } from 'react-bootstrap';
+import { Autocomplete, LoadScript, GoogleApiWrapper, GoogleMap, ScriptLoaded    } from 'google-maps-react';
 
 import '../diseños/Nuevopuntoentrega.css';
 import '../diseños/estilosGlobales.css';
 
 class IngresarPuntoEntrega extends Component {
+	
+	constructor (props) {
+    	super(props)
 
-	constructor(props) {
-    	super(props);
-		
 		this.state = {
-			campos: [],
-			files: [],
-			titulo:"",
-			visible: false,
-			mensaje:"",
-			id:this.props.id_productor
-		}
-
-    	this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		
-		this.limpiarCampos = this.limpiarCampos.bind(this);
+	  					direccion: ' ',
+						id:this.props.id_productor
+						
+    				}
+    
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 		
-	}
+		this.autocomplete = null
 
-	handleChange(event) {
-    this.setState({value: event.target.value});
-	}
+    	this.onLoad = this.onLoad.bind(this)
+    	this.onPlaceChanged = this.onPlaceChanged(this)
+  }
 
-	handleSubmit(event) {
-    	alert('Your favorite flavor is: ' + this.state.value);
-    	event.preventDefault();
-	}
+  onLoad (autocomplete) {
+    console.log('autocomplete: ', autocomplete)
 
-	detectarCambios(e) {
-		let campos = this.state.campos;
-		campos[e.target.name] = e.target.value;
-		this.setState({
-			campos
-		})
-	}
+    this.autocomplete = autocomplete
+  	}
+
+  	onPlaceChanged () {	
+    	if (this.autocomplete !== null) {
+      		console.log(this.autocomplete.getPlace())
+    	} else {
+      		console.log('Autocomplete is not loaded yet!')
+    	}
+  	}
 
 	mostrarPantallaPrincipal() {
 
@@ -53,13 +47,6 @@ class IngresarPuntoEntrega extends Component {
 
 	}
 
-	limpiarCampos() {
-
-		this.refs.form.reset();
-		let campos = {}
-		this.setState({ campos: campos });
-	}
-
 	render() {
 		return (
 			<div className="container">
@@ -67,78 +54,42 @@ class IngresarPuntoEntrega extends Component {
 				<div className="condicionesInputsCO">Todos los campos son obligatorios</div>
 				<Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
 					<div className="domicilio" >
-						<Form.Group as={Row}>
-							<Form.Label column sm={3}>
-								Domicilio:
-									</Form.Label>
-							<Form.Control
-								type="domicilio"
-								name="domicilio"
-								pattern="{1,100}"
-							/>
-						</Form.Group>
+						<ScriptLoaded>
+        					<GoogleMap
+          						id="searchbox-example"
+          						mapContainerStyle={{
+            										height: "400px",
+            										width: "800px"
+          											}}
+          						zoom={2.5}
+          						center={{
+            							lat: 38.685,
+            							lng: -115.234
+          								}}
+        					>
+          						<Autocomplete onLoad={this.onLoad} onPlacesChanged={this.onPlaceChanged}>
+									<input type="text" placeholder="Ingrese direccion" name="search" />  
+          						</Autocomplete>
+        					</GoogleMap>
+      					</ScriptLoaded>
 					</div>
-					<div className="numero" >
-							<Form.Group as={Row}>
-								<Form.Label column sm={3}>
-									Nro:
-									</Form.Label>
-									<Form.Control
-										required
-										type="numero"
-										name="numero"
-										pattern="[0-9]{8,14}"
-										
-									/>
-							</Form.Group>
-					</div>
-					<div className="localidad" >
-						<Form.Group as={Row}>
-							<Form.Label column sm={3}>
-								Localidad:
-									</Form.Label>
-							<Form.Control
-								type="localidad"
-								name="localidad"
-								pattern="{1,100}"
-								
-							/>
-						</Form.Group>
-					</div>
-					<div className="provincia" >
-						<Form.Group as={Row}>
-							<Form.Label column sm={3}>
-								Provincia:
-									</Form.Label>
-							<Form.Control
-								type="provincia"
-								name="provincia"
-								pattern="{1,100}"
-								
-							/>
-						</Form.Group>
-					</div>
-				</Form>	
+
+				</Form>
+
 				<div className="botonesnuevopuntoentrega">
-					<div className="botonAtras">
-						<a onClick={this.mostrarPantallaPrincipal}><Button variant="success">Cancelar</Button></a>
+					<div className="botonGuardar">
+						<Button variant="success" type="submit">Guardar</Button>
 					</div>
-					<div className="botonCrear">
-						<Button variant="success" type="submit">Crear</Button>
-					</div>
-					<div className="botonLimpiar">
-						<Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>
+					<div className="botonCancelar">
+						<Button variant="success" onClick={this.limpiarCampos}>Cancelar</Button>
 					</div>		
 				</div>
-						
 			</div>
-
 			
-
-		)}
-
-		
-
-
+		);
+	};
 }
-export default IngresarPuntoEntrega;
+
+export default GoogleApiWrapper({
+  apiKey: 'AIzaSyAKxBrG2z8psH-fGJfFDXI-Arn-LkniaqI'
+})(IngresarPuntoEntrega);
