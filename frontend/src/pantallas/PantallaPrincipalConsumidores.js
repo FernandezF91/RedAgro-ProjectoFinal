@@ -16,6 +16,7 @@ import PreferenciasConsumidor from '../pantallas/PreferenciasConsumidor';
 import DatosDeUsuario from '../pantallas/DatosDeUsuario';
 import ModificarContraseña from '../pantallas/ModificarContraseña';
 import Geolocalizacion from '../pantallas/Geolocalizacion';
+import BarraNavegacion from './BarraNavegacion';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const ListadoReservasRouter = withRouter(ListadoReservas);
@@ -32,7 +33,7 @@ class PantallaPrincipalconsumidores extends Component {
         super(props)
 
         this.state = {
-            // id: this.props.location.state.id //paso id de usuario desde el LOGIN
+             id: 2 // this.props.location.state.id //paso id de usuario desde el LOGIN
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 
@@ -54,7 +55,7 @@ class PantallaPrincipalconsumidores extends Component {
     render() {
         return (
             <body className="fondo">
-                <div className="barraNavegacion">
+               {/*  <div className="barraNavegacion">
                     <Navbar className="sombraBarra">
                         <div className="culturaVerde">
                             <Link to={'/'}>
@@ -86,7 +87,8 @@ class PantallaPrincipalconsumidores extends Component {
                             </Row>
                         </div>
                     </Navbar>
-                </div>
+                </div> */}
+                <BarraNavegacion />
                 <Container fluid className="contenedor">
                     <Row className="filaContenedora">
                         <Col sm={2} className="menuConsumidor">
