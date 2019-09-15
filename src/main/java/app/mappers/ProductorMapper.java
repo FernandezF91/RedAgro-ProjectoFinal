@@ -6,7 +6,10 @@ import app.clases.Productor;
 public class ProductorMapper {
 	
 	public Productor mapFromEntity( EntidadProductor entidad) {
-		Productor modelo = new Productor (entidad.getId(), entidad.getRazon_social());
+		
+		UsuarioMapper user_mapper = new UsuarioMapper();
+		
+		Productor modelo = new Productor (entidad.getId(),entidad.getRazon_social(),user_mapper.mapFromEntity(entidad.getUsuario()));
 		return modelo;
 	}
 	

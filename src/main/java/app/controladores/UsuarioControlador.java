@@ -1,5 +1,7 @@
 package app.controladores;
 
+import org.hibernate.transform.ToListResultTransformer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,7 @@ import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class UsuarioControlador {
@@ -118,6 +121,8 @@ public class UsuarioControlador {
 			return new ResponseEntity<>("Ya existe un usuario consumidor registrado con este mail", HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	
 	
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/get_tipo_usuario")

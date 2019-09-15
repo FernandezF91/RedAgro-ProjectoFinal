@@ -14,7 +14,7 @@ public class PuntoEntregaMapper {
 		Productor productor = mapeoProductor.mapFromEntity(entidad.getProductor());
 		
 		PuntoEntrega entrega = new PuntoEntrega(entidad.getId(), productor,  entidad.getPais(), entidad.getProvincia(), 
-												entidad.getLocalidad(), entidad.getCod_postal(), entidad.getDireccion());
+												entidad.getLocalidad(), entidad.getCod_postal(), entidad.getDireccion(), entidad.getLatitud(), entidad.getLongitud());
 		return entrega;
 	}
 	
@@ -32,6 +32,8 @@ public class PuntoEntregaMapper {
 		entidad.setLocalidad(modelo.getLocalidad());
 		entidad.setCod_postal(modelo.getCod_postal());
 		entidad.setDireccion(modelo.getDireccion());
+		entidad.setLatitud(modelo.getLatitud());
+		entidad.setLongitud(modelo.getLongitud());
 		
 		return entidad;
 	}

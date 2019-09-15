@@ -23,12 +23,11 @@ this.state = {
     activeMarker: {},          //Shows the active marker upon click
     selectedPlace: {},          //Shows the infoWindow to the selected place upon a marker
     google:this.props.google,
-      stores: [{latitude: -1.2884,
-         longitude: 36.8233}]
+      markers: []
 
     }
     
-    this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+    this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);;
   }
 
 
@@ -48,9 +47,52 @@ onMarkerClick = (props, marker, e) =>
     }
   };
 
-  displayMarkers = () => {
-    return <Marker onClick={this.onMarkerClick} name={'jeje'} position={{lat:-34.4975073,lng:-58.52011629999999}}/>
+  componentDidMount(){
+
+    var _this=this;
+
+  fetch("http://localhost:3000/redAgro/puntos_entrega_productor", {
+            method: "GET",
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+            }
+        })
+            .then(function (response) {
+                if (response.status !== 200) {
+                    // _this.setState({
+                    //     visible: true,
+                    //     titulo: "Error",
+                    //     mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                    // });
+                    alert("todo mal");
+                    return;
+                }
+
+                response.json().then(
+                    function (response) {
+           
+                      _this.setState({markers:response});
+
+                    });
+            });
+
+
+
   }
+
+  displayMarkers = () => {
+
+
+			  return this.state.markers.map(marker => {
+                         return <Marker onClick={this.onMarkerClick} 
+                         name={marker.productor.usuario.nombre+" "+marker.productor.usuario.apellido}
+                         id={marker.productor.id}
+                         link={"Mis productos"}
+                         position={{lat:marker.latitud,lng:marker.longitud}}/>                     
+                    });
+	
+
+ }
 
   mostrarPantallaPrincipal() {
 
@@ -82,9 +124,8 @@ onMarkerClick = (props, marker, e) =>
           fillOpacity: .7,
           scale: 10,
           strokeColor: 'white',
-          strokeWeight: .20}}>
+          strokeWeight: .5}}>
       </Marker>
-    
       {this.displayMarkers()}
         <InfoWindow
           marker={this.state.activeMarker}
@@ -92,7 +133,10 @@ onMarkerClick = (props, marker, e) =>
           onClose={this.onClose}
         >
           <div>
-            <h4>{this.state.selectedPlace.name}</h4>
+            {this.state.selectedPlace.name}
+          </div>
+          <div>
+            <a href="/login">{this.state.selectedPlace.link}</a>
           </div>
         </InfoWindow>
       </CurrentLocation>

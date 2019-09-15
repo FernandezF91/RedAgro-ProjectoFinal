@@ -2,13 +2,15 @@ package app.clases;
 
 public class Productor {
 
-	public Productor(long id, String razon_social) {
+	public Productor(long id, String razon_social, Usuario usuario) {
 		this.setId(id);
 		this.setRazon_social(razon_social);
+		this.setUsuario(usuario);
 	}
 
 	private long id;
 	private String razon_social;
+	private Usuario usuario;
 
 	public long getId() {
 		return id;
@@ -26,4 +28,13 @@ public class Productor {
 		this.razon_social = razon_social;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	
 }
