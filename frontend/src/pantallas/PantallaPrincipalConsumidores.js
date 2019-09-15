@@ -32,7 +32,7 @@ class PantallaPrincipalconsumidores extends Component {
         super(props)
 
         this.state = {
-            id: this.props.location.state.id //paso id de usuario desde el LOGIN
+            // id: this.props.location.state.id //paso id de usuario desde el LOGIN
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 
