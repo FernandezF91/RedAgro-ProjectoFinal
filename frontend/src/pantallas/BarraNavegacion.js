@@ -1,6 +1,8 @@
+import '../diseños/PrincipalUsuarios.css';
+import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react';
-import { Navbar, NavDropdown, Container, Row, Col, Badge, Nav } from 'react-bootstrap';
-import { Route, Link } from 'react-router-dom';
+import { Navbar, NavDropdown,  Badge, Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 
@@ -20,7 +22,7 @@ class BarraNavegacion extends Component {
 
     render() {
         return (
-            <Navbar collapseOnSelect expand="lg" className="barraNavegacion" >
+            <Navbar collapseOnSelect expand="lg" className="barraNavegacion sombraBarra" >
                 <Navbar.Brand className="culturaVerde" href="/">
                     <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
                 </Navbar.Brand>
@@ -37,18 +39,18 @@ class BarraNavegacion extends Component {
                     <Nav className="iconos">
                         <Nav className="menuUsuario">
                             <i class="fas fa-user iconosBarra" />
-                            <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown">
+                            <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown" className="subMenu">
                                 <NavDropdown.Item>Mi cuenta</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="/login">Salir</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
 
-                        <Nav>
+                        <Nav className="menuUsuario">
                             <i class="fas fa-bell iconosBarra" />
                         </Nav>
 
-                        <Nav.Item>
+                        <Nav.Item className="menuUsuario">
                             <Link to={'/principalConsumidores/Carrito'}>
                                 <i class="fas fa-shopping-cart iconosBarra" />
                                 <Badge>1</Badge>
