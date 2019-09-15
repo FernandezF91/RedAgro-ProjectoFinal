@@ -104,3 +104,7 @@ INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Miel");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Pickles");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Aceitunas negras");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Aceitunas verdes");
+INSERT INTO redagro.usuario (id,apellido, contraseña, 	fecha_nacimiento, nombre, rol, telefono, usuario) VALUES (10,"bosso", "1", "1982-06-03","ezequiel", "Productor", "23456723456", "e@e.com");
+INSERT INTO redagro.usuario (id,apellido, contraseña, 	fecha_nacimiento, nombre, rol, telefono, usuario) VALUES (11,"papu", "1", "1982-06-03","pepe", "Consumidor", "23456723456", "a@a.com");
+INSERT INTO redagro.punto_entrega (id,cod_postal,direccion,latitud,localidad,longitud,pais,provincia,productor_id) VALUES (10,"1686","asamblea 3154", "-54.23456","hurlingham","38.45678", "argentina", "Buenos Aires", "1");
+INSERT INTO redagro.punto_entrega (id,cod_postal,direccion,latitud,localidad,longitud,pais,provincia,productor_id) VALUES (12,"1686","asamblea 3154", "-32.23456","marcos paz","20.45678", "argentina", "Buenos Aires", "1");
