@@ -1,6 +1,7 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import { Button } from 'react-bootstrap';
 
 const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarProducto, getTotalCarrito }) => {
 
@@ -73,8 +74,9 @@ const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarPro
                 <tr>
                     <td colSpan="6" align="right">
                         <h5>Total
-                           <NumberFormat value={getTotalCarrito(listaDeReservas)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix=" $ " decimalScale={2} fixedDecimalScale={true} />
+                           <NumberFormat value={getTotalCarrito(listaDeReservas)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix=" $ " decimalScale={2} fixedDecimalScale={true} /> 
                         </h5>
+                        <Button variant="success" type="submit">Finalizar Reserva</Button>
                     </td>
                 </tr>
             </MDBTableBody>
