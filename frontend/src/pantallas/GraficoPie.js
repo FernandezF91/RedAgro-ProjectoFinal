@@ -1,32 +1,31 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 
-const GraficoPie = () => {
-    const data = {
-        labels: [
-            'Red',
-            'Green',
-            'Yellow'
-        ],
-        datasets: [{
-            data: [300, 50, 100],
-            backgroundColor: [
+const GraficoPie = ({ totalesGraficoPie }) => {
+    const data = totalesGraficoPie.map(item => item.cantidad);
+    const labels = totalesGraficoPie.map(item => item.estado);
+    const grafico = {
+        labels, datasets: [{
+            data, backgroundColor: [
                 '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
+                '#FFCE56',
+                '#D960BD',
+                '#6081D9',
+                '#60D97B'
             ],
             hoverBackgroundColor: [
                 '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
+                '#FFCE56',
+                '#D960BD',
+                '#6081D9',
+                '#60D97B'
             ]
         }]
     };
 
     return (
-
         <Pie
-            data={data}
+            data={grafico}
             options={{
                 maintainAspectRatio: true,
                 legend: {
@@ -35,7 +34,7 @@ const GraficoPie = () => {
                     fullWidth: true,
                     reverse: false,
                     labels: {
-                        fontColor: 'rgb(255, 99, 132)'
+                        fontColor: 'rgb(0, 0, 0)'
                     }
                 }
             }}

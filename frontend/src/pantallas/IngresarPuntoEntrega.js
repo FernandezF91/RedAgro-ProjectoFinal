@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { Autocomplete, LoadScript, GoogleApiWrapper, GoogleMap, ScriptLoaded    } from 'google-maps-react';
+import { Autocomplete, GoogleApiWrapper, GoogleMap, ScriptLoaded    } from 'google-maps-react';
 
 import '../diseños/Nuevopuntoentrega.css';
 import '../diseños/estilosGlobales.css';
@@ -11,9 +11,9 @@ class IngresarPuntoEntrega extends Component {
     	super(props)
 
 		this.state = {
-	  					direccion: ' ',
-						id:this.props.id_productor
-						
+	  					campos: [],
+						id:this.props.id_productor,
+						google:this.props.google
     				}
     
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
@@ -53,27 +53,26 @@ class IngresarPuntoEntrega extends Component {
 				<div className="titulosPrincipales">Nuevo punto de entrega</div>
 				<div className="condicionesInputsCO">Todos los campos son obligatorios</div>
 				<Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
-					<div className="domicilio" >
-						<ScriptLoaded>
-        					<GoogleMap
-          						id="searchbox-example"
-          						mapContainerStyle={{
-            										height: "400px",
-            										width: "800px"
-          											}}
-          						zoom={2.5}
-          						center={{
-            							lat: 38.685,
-            							lng: -115.234
-          								}}
+					<ScriptLoaded>
+        				<GoogleMap
+          					id="searchbox-example"
+          					mapContainerStyle={{
+            									height: "400px",
+            									width: "800px"
+          										}}
+          					zoom={2.5}
+          					center={{
+            						lat: 38.685,
+            						lng: -115.234
+          							}}
         					>
-          						<Autocomplete onLoad={this.onLoad} onPlacesChanged={this.onPlaceChanged}>
-									<input type="text" placeholder="Ingrese direccion" name="search" />  
-          						</Autocomplete>
-        					</GoogleMap>
-      					</ScriptLoaded>
-					</div>
-
+          					<Autocomplete onLoad={this.onLoad} onPlacesChanged={this.onPlaceChanged}>
+								<div className="domicilio" >
+									<input type="text" placeholder="Ingrese direccion" name="search" />
+								</div>  	
+          					</Autocomplete>
+        				</GoogleMap>
+      				</ScriptLoaded>
 				</Form>
 
 				<div className="botonesnuevopuntoentrega">
