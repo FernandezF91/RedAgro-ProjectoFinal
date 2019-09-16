@@ -79,105 +79,77 @@ class PantallaPrincipalProductores extends Component {
                 <Container fluid className="contenedor">
                     <Row className="filaContenedora">
                         <Col sm={2} className="menuConsumidor">
-                            <div className="cuenta">
-                                <Row>
-                                    <i class="fas fa-bars iconoMiCuenta" />
-                                    <h4>Mi cuenta</h4>
-                                </Row>
-                            </div>
-                            <div className="divisor">
-                                <NavDropdown.Divider />
-                            </div>
-                            <div className="subMenu">
-                                <div className="itemsMenu">
-                                    <Row>
-                                        <i class="fas fa-store iconosMenuLateral" />
-                                        <div className="prod_drop">
-                                            <NavDropdown title="Productos" id="producto_drop">
-                                                <NavDropdown.Item>
-                                                    <Link to="/principalProductores/ListadoProductos">Listado de productos</Link>
-                                                </NavDropdown.Item>
-                                                <NavDropdown.Divider />
-                                                <NavDropdown.Item>
-                                                    <Link to="/principalProductores/NuevoProducto">Nuevo producto</Link>
-                                                </NavDropdown.Item>
-                                                <NavDropdown.Divider />
-                                                <NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
-                                            </NavDropdown>
-                                        </div>
-                                    </Row>
-                                </div>
-                                <div className="itemsMenu">
-                                    <Row>
-                                        <i class="fas fa-map-marker-alt iconosMenuLateral" />
-                                        <div className="puntoentrega_drop">
-                                            <NavDropdown title="Puntos de Entrega" id="puntoentrega_drop">
-                                                <NavDropdown.Item> 
-                                                    <Link to="/principalProductores/ListadoPuntosEntrega">Desactivar puntos de entrega</Link>
-                                                </NavDropdown.Item>
-                                                <NavDropdown.Divider />
-                                                <NavDropdown.Item>
-                                                    <Link to="/principalProductores/IngresarPuntoEntrega">Nuevo punto de entrega</Link>
-                                                </NavDropdown.Item>
-                                            </NavDropdown>
-                                        </div>
-                                    </Row>
-                                </div>
-                                <div className="itemsMenuReservas">
-                                    <Row>
-                                        <i class="fas fa-tasks iconosMenuLateral" />
-                                        <Link to={'/principalProductores/ListadoReservas'}>
-                                            <p>Reservas</p>
-                                        </Link>
-                                    </Row>
-                                </div>
-                                <div className="itemsMenu">
-                                    <Row>
-                                        <i class="fas fa-clipboard-list iconosMenuLateral" />
-                                        <p>Planificación</p>
-                                    </Row>
-                                </div>
-                                <div className="itemsMenu">
-                                    <Row>
-                                        <i class="fas fa-chart-line iconosMenuLateral" />
-                                        <Link to={'/principalProductores/Estadisticas'}>
-                                            <p>Estadísticas</p>
-                                        </Link>
-                                    </Row>
-                                </div>
-                                <div className="itemsMenu">
-                                    <Row>
-                                        <i class="fas fa-history iconosMenuLateral" />
-                                        <Link to={'/principalProductores/CargarHistorico'}>
-                                            <p>Histórico</p>
-                                        </Link>
-                                    </Row>
-                                </div>
-                                <div className="itemsMenu">
-                                    <Row>
-                                        <i class="fas fa-bell iconosMenuLateral" />
-                                        <Link to={'/principalProductores/Alertas'}>
-                                            <p>Alertas</p>
-                                        </Link>
-                                    </Row>
-                                </div>
-                                <div className="itemsMenuConfig">
-                                    <Row>
-                                        <i class="fas fa-cogs iconosMenuLateral" />
-                                        <div className="conf_drop">
-                                            <NavDropdown title="Configuración" id="config_drop">
-                                                <NavDropdown.Item>
-                                                    <Link to="/principalProductores/EditarDatos">Editar mis datos</Link>
-                                                </NavDropdown.Item>
-                                                <NavDropdown.Divider />
-                                                <NavDropdown.Item>
-                                                    <Link to="/principalProductores/ModificarContraseña">Modificar contraseña</Link>
-                                                </NavDropdown.Item>
-                                            </NavDropdown>
-                                        </div>
-                                    </Row>
-                                </div>
-                            </div>
+                            <Row className="cuenta">
+                                <i class="fas fa-bars iconoMiCuenta" />
+                                <h4>Mi cuenta</h4>
+                            </Row>
+                            <NavDropdown.Divider className="divisor" />
+                            <Row className="itemsMenu">
+                                <i class="fas fa-store iconosMenuLateral" />
+                                <NavDropdown title="Productos" id="producto_drop">
+                                    <NavDropdown.Item>
+                                        <Link to="/principalProductores/ListadoProductos">Listado de productos</Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item>
+                                        <Link to="/principalProductores/NuevoProducto">Nuevo producto</Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
+                                </NavDropdown>
+                            </Row>
+                            <Row className="itemsMenu">
+                                <i class="fas fa-map-marker-alt iconosMenuLateral" />
+                                <NavDropdown title="Puntos de Entrega" id="puntoentrega_drop">
+                                    <NavDropdown.Item>
+                                        <Link to="/principalProductores/ListadoPuntosEntrega">Desactivar puntos de entrega</Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item>
+                                        <Link to="/principalProductores/IngresarPuntoEntrega">Nuevo punto de entrega</Link>
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            </Row>
+                            <Row className="itemsMenuReservas">
+                                <i class="fas fa-tasks iconosMenuLateral" />
+                                <Link to={'/principalProductores/ListadoReservas'}>
+                                    <p>Reservas</p>
+                                </Link>
+                            </Row>
+                            <Row className="itemsMenu">
+                                <i class="fas fa-clipboard-list iconosMenuLateral" />
+                                <p>Planificación</p>
+                            </Row>
+                            <Row className="itemsMenu">
+                                <i class="fas fa-chart-line iconosMenuLateral" />
+                                <Link to={'/principalProductores/Estadisticas'}>
+                                    <p>Estadísticas</p>
+                                </Link>
+                            </Row>
+                            <Row className="itemsMenu">
+                                <i class="fas fa-history iconosMenuLateral" />
+                                <Link to={'/principalProductores/CargarHistorico'}>
+                                    <p>Histórico</p>
+                                </Link>
+                            </Row>
+                            <Row className="itemsMenu">
+                                <i class="fas fa-bell iconosMenuLateral" />
+                                <Link to={'/principalProductores/Alertas'}>
+                                    <p>Alertas</p>
+                                </Link>
+                            </Row>
+                            <Row className="itemsMenu">
+                                <i class="fas fa-cogs iconosMenuLateral" />
+                                <NavDropdown title="Configuración" id="config_drop" className="conf_drop">
+                                    <NavDropdown.Item>
+                                        <Link to="/principalProductores/EditarDatos">Editar mis datos</Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item>
+                                        <Link to="/principalProductores/ModificarContraseña">Modificar contraseña</Link>
+                                    </NavDropdown.Item>
+                                </NavDropdown>
+                            </Row>
                         </Col>
                         <Col className="ruteo">
                             <Route path='/principalProductores/Alertas'
@@ -203,7 +175,7 @@ class PantallaPrincipalProductores extends Component {
                         </Col>
                     </Row>
                 </Container>
-            </body>
+            </body >
         );
     };
 }

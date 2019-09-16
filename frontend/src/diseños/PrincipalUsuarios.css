@@ -170,15 +170,3 @@ h4 {
 	margin-right: 7px;
 	margin-top: 3px;
 }
-
-.itemsMenuReservas {
-	flex-direction: row;
-	display: flex;
-	margin-top:8px;
-}
-
-.itemsMenuConfig {
-	flex-direction: row;
-	display: flex;
-	margin-top:-1.3px;
-}

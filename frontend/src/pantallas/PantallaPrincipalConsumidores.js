@@ -61,71 +61,53 @@ class PantallaPrincipalconsumidores extends Component {
                 <Container fluid className="contenedor">
                     <Row className="filaContenedora">
                         <Col sm={2} className="menuConsumidor">
-                            <div className="cuenta">
-                                <Row>
-                                    <i class="fas fa-bars iconoMiCuenta" />
-                                    <h4>Mi cuenta</h4>
-                                </Row>
-                            </div>
-                            <div className="divisor">
-                                <NavDropdown.Divider />
-                            </div>
-                            <div className="subMenu">
-                                <div className="itemsMenu">
-                                    <Row>
-                                        <i class="fas fa-shopping-basket iconosMenuLateral" />
-                                        <div className="com_drop">
-                                            <NavDropdown title="Comprar" id="compra_drop">
-                                                <NavDropdown.Item>
-                                                    <Link to="/principalConsumidores/Geolocalizacion">Geolocalización</Link>
-                                                </NavDropdown.Item>
-                                                <NavDropdown.Divider />
-                                                <NavDropdown.Item href="#action/3.2">Categorias</NavDropdown.Item>
-                                            </NavDropdown>
-                                        </div>
-                                    </Row>
+                            <Row className="cuenta">
+                                <i class="fas fa-bars iconoMiCuenta" />
+                                <h4>Mi cuenta</h4>
+                            </Row>
+                            <NavDropdown.Divider className="divisor" />
+                            <Row className="itemsMenu itemsSubmenu">
+                                <i class="fas fa-shopping-basket iconosMenuLateral" />
+                                <NavDropdown title="Comprar" id="compra_drop" className="com_drop">
+                                    <NavDropdown.Item>
+                                        <Link to="/principalConsumidores/Geolocalizacion">Geolocalización</Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item href="#action/3.2">Categorias</NavDropdown.Item>
+                                </NavDropdown>
+                            </Row>
+                            <Row className="itemsMenuReservas">
+                                <i class="fas fa-tasks iconosMenuLateral" />
+                                <Link to={'/principalConsumidores/ListadoReservas'}>
+                                    <p>Reservas</p>
+                                </Link>
+                            </Row>
+                            <Row className="itemsMenu">
+                                <i class="fas fa-user-edit iconosMenuLateral" />
+                                <Link to={'/principalConsumidores/PreferenciasConsumidor'}>
+                                    <p>Preferencias</p>
+                                </Link>
+                            </Row>
+                            <Row className="itemsMenu">
+                                <i class="fas fa-bell iconosMenuLateral" />
+                                <Link to={'/principalConsumidores/Alertas'}>
+                                    <p>Alertas</p>
+                                </Link>
+                            </Row>
+                            <Row className="itemsMenu itemsSubmenu">
+                                <i class="fas fa-cogs iconosMenuLateral" />
+                                <div className="conf_drop">
+                                    <NavDropdown title="Configuración" id="config_dropConsu">
+                                        <NavDropdown.Item>
+                                            <Link to="/principalConsumidores/EditarDatos">Editar mis datos</Link>
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item>
+                                            <Link to="/principalConsumidores/modificarContraseña">Modificar Contraseña</Link>
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
                                 </div>
-                                <div className="itemsMenuReservas">
-                                    <Row>
-                                        <i class="fas fa-tasks iconosMenuLateral" />
-                                        <Link to={'/principalConsumidores/ListadoReservas'}>
-                                            <p>Reservas</p>
-                                        </Link>
-                                    </Row>
-                                </div>
-                                <div className="itemsMenu">
-                                    <Row>
-                                        <i class="fas fa-user-edit iconosMenuLateral" />
-                                        <Link to={'/principalConsumidores/PreferenciasConsumidor'}>
-                                            <p>Preferencias</p>
-                                        </Link>
-                                    </Row>
-                                </div>
-                                <div className="itemsMenu">
-                                    <Row>
-                                        <i class="fas fa-bell iconosMenuLateral" />
-                                        <Link to={'/principalConsumidores/Alertas'}>
-                                            <p>Alertas</p>
-                                        </Link>
-                                    </Row>
-                                </div>
-                                <div className="itemsMenu">
-                                    <Row>
-                                        <i class="fas fa-cogs iconosMenuLateral" />
-                                        <div className="conf_drop">
-                                            <NavDropdown title="Configuración" id="config_dropConsu">
-                                                <NavDropdown.Item>
-                                                    <Link to="/principalConsumidores/EditarDatos">Editar mis datos</Link>
-                                                </NavDropdown.Item>
-                                                <NavDropdown.Divider />
-                                                <NavDropdown.Item>
-                                                    <Link to="/principalConsumidores/modificarContraseña">Modificar Contraseña</Link>
-                                                </NavDropdown.Item>
-                                            </NavDropdown>
-                                        </div>
-                                    </Row>
-                                </div>
-                            </div>
+                            </Row>
                         </Col>
                         <Col className="ruteo">
                             <Route path={'/principalConsumidores/ListadoReservas'}
@@ -149,7 +131,7 @@ class PantallaPrincipalconsumidores extends Component {
                         </Col>
                     </Row>
                 </Container>
-            </body>
+            </body >
         );
     };
 }
