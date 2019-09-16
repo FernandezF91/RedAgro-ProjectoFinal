@@ -12,7 +12,7 @@ const PaginacionDeReservas = (props) => {
     <div className="pagination paginado">
       <MDBRow center>
         <MDBCol bottom>
-          <MDBPagination circle color="teal">
+          <MDBPagination className="mb-5" color="teal">
             {
               props.currentPage > 1 ?
                 <MDBPageItem>
