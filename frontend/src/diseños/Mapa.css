@@ -1,4 +1,25 @@
-.contenedorMapa{
+.name{
+
+color:green;
+font-weight: normal;
+
+}
+
+.direcc,.localidad,.productos{
+
+text-align: left;
+
+}
+
+.direcc,.productos{
+
+font-weight: 550;
+
+}
+
+.localidad,.productos{
+
+margin-top: 3px;
 
 }
 

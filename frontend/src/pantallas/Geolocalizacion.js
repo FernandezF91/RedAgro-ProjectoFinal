@@ -87,6 +87,8 @@ onMarkerClick = (props, marker, e) =>
                          return <Marker onClick={this.onMarkerClick} 
                          name={marker.productor.usuario.nombre+" "+marker.productor.usuario.apellido}
                          id={marker.productor.id}
+                         direccion={marker.direccion}
+                         localidad={marker.localidad}
                          link={"Mis productos"}
                          position={{lat:marker.latitud,lng:marker.longitud}}/>                     
                     });
@@ -133,9 +135,17 @@ onMarkerClick = (props, marker, e) =>
           onClose={this.onClose}
         >
           <div>
+            <h5 className="name">
             {this.state.selectedPlace.name}
+            </h5>
           </div>
-          <div>
+          <div className="direcc">
+            {this.state.selectedPlace.direccion}
+          </div>
+          <div className="localidad">
+            {this.state.selectedPlace.localidad}
+          </div>
+          <div className="productos">
             <a href="/login">{this.state.selectedPlace.link}</a>
           </div>
         </InfoWindow>
