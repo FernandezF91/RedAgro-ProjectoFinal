@@ -11,28 +11,7 @@ class Carrito extends Component {
 
         this.state = {
             id: this.props.id_consumidor,
-            productosSeleccionados: [
-                {
-                    id: "1",
-                    titulo: "Tomate redondo",
-                    descripcion: "Tomate agroecologico",
-                    fecha_vencimiento: "10/09/2019",
-                    precio: "150",
-                    tipo_unidad: "KG",
-                    cantidad: "2",
-                    productor: "Vanesa Molina"
-                },
-                {
-                    id: "2",
-                    titulo: "Pomelo rosado",
-                    descripcion: "Pomelo organico",
-                    fecha_vencimiento: "11/09/2019",
-                    precio: "350",
-                    tipo_unidad: "KG",
-                    cantidad: "10",
-                    productor: "Vanesa Molina"
-                }
-            ]
+            productosSeleccionados: this.props.productosSeleccionados,
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }

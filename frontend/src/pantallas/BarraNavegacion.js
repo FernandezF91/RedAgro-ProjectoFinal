@@ -10,8 +10,9 @@ class BarraNavegacion extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            id: '',
+            productosSeleccionados: this.props.productosSeleccionados,
         }
+
     }
 
     onKeyPress = (e) => {
@@ -54,7 +55,7 @@ class BarraNavegacion extends Component {
                         <Nav.Item className="menuUsuario">
                             <Link to={'/principalConsumidores/Carrito'}>
                                 <i class="fas fa-shopping-cart iconosBarra" />
-                                <Badge>1</Badge>
+                                <Badge>{this.state.productosSeleccionados.length}</Badge>
                             </Link>
                         </Nav.Item>
                     </Nav>

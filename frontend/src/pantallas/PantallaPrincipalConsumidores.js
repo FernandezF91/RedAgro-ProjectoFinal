@@ -17,6 +17,8 @@ import DatosDeUsuario from '../pantallas/DatosDeUsuario';
 import ModificarContraseña from '../pantallas/ModificarContraseña';
 import Geolocalizacion from '../pantallas/Geolocalizacion';
 import BarraNavegacion from './BarraNavegacion';
+import ResultadoBusqueda from './ResultadoBusqueda';
+import VistaPreviaCarrito from './VistaPreviaCarrito';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const ListadoReservasRouter = withRouter(ListadoReservas);
@@ -25,18 +27,18 @@ const PreferenciasConsumidorRouter = withRouter(PreferenciasConsumidor);
 const EditarDatosRouter = withRouter(DatosDeUsuario);
 const ModificarContraseniaRouter = withRouter(ModificarContraseña);
 const GeolocalizacionRouter = withRouter(Geolocalizacion);
+const ResultadoBusquedaRouter = withRouter(ResultadoBusqueda);
 
 class PantallaPrincipalconsumidores extends Component {
 
     constructor(props) {
-
         super(props)
 
         this.state = {
-             id: 2 // this.props.location.state.id //paso id de usuario desde el LOGIN
+            id: 2, // this.props.location.state.id //paso id de usuario desde el LOGIN
+            productosSeleccionados: [],
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-
     }
 
     componentDidMount() {
@@ -55,40 +57,7 @@ class PantallaPrincipalconsumidores extends Component {
     render() {
         return (
             <body className="fondo">
-               {/*  <div className="barraNavegacion">
-                    <Navbar className="sombraBarra">
-                        <div className="culturaVerde">
-                            <Link to={'/'}>
-                                <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                            </Link>
-                        </div>
-                        <div className="barraBusqueda">
-                            <Row>
-                                <input type="text" placeholder="Buscar productos y productores.. " name="search" />
-                                <button type="submit">
-                                    <i class="fa fa-search" />
-                                </button>
-                            </Row>
-                        </div>
-                        <div className="iconos">
-                            <Row>
-                                <i class="fas fa-user iconosBarra" />
-                                <div className="menuUsuario">
-                                    <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown">
-                                        <NavDropdown.Item>Mi cuenta</NavDropdown.Item>
-                                        <NavDropdown.Divider />
-                                        <NavDropdown.Item href="/login">Salir</NavDropdown.Item>
-                                    </NavDropdown>
-                                </div>
-                                <i class="fas fa-bell iconosBarra" />
-                                <Link to={'/principalConsumidores/Carrito'}>
-                                    <i class="fas fa-shopping-cart iconosBarra" />
-                                </Link>
-                            </Row>
-                        </div>
-                    </Navbar>
-                </div> */}
-                <BarraNavegacion />
+                <BarraNavegacion productosSeleccionados={this.state.productosSeleccionados} />
                 <Container fluid className="contenedor">
                     <Row className="filaContenedora">
                         <Col sm={2} className="menuConsumidor">
@@ -166,13 +135,17 @@ class PantallaPrincipalconsumidores extends Component {
                             <Route path={'/principalConsumidores/PreferenciasConsumidor'}
                                 render={(props) => <PreferenciasConsumidorRouter id_consumidor={this.state.id} />} />
                             <Route path={'/principalConsumidores/Carrito'}
-                                render={(props) => <Carrito id_consumidor={this.state.id} />} />
+                                render={(props) => <Carrito id_consumidor={this.state.id}
+                                    productosSeleccionados={this.state.productosSeleccionados} />} />
                             <Route path={'/principalConsumidores/EditarDatos'}
                                 render={(props) => <EditarDatosRouter id_consumidor={this.state.id} />} />
                             <Route path={'/principalConsumidores/modificarContraseña'}
                                 render={(props) => <ModificarContraseniaRouter id_consumidor={this.state.id} />} />
                             <Route path={'/principalConsumidores/Geolocalizacion'}
                                 render={(props) => <GeolocalizacionRouter id_consumidor={this.state.id} />} />
+                            <Route path={'/principalConsumidores/ResultadoBusqueda'}
+                                render={(props) => <ResultadoBusquedaRouter id_consumidor={this.state.id}
+                                    productosSeleccionados={this.state.productosSeleccionados} />} />
                         </Col>
                     </Row>
                 </Container>
@@ -180,5 +153,4 @@ class PantallaPrincipalconsumidores extends Component {
         );
     };
 }
-
 export default PantallaPrincipalconsumidores;
