@@ -1,7 +1,7 @@
 import '../diseños/PrincipalUsuarios.css';
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react';
-import { Navbar, NavDropdown,  Badge, Nav } from 'react-bootstrap';
+import { Navbar, NavDropdown, Badge, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import culturaVerde from '../imagenes/cultura-verde-2.png';
@@ -31,9 +31,10 @@ class BarraNavegacion extends Component {
                 <Navbar.Collapse id="responsive-navbar-nav">
 
                     <Nav className="BarraBusqueda">
-                        <input type="text" placeholder="Buscar productos y productores.. " name="search"
-                            onKeyPress={this.onKeyPress} />
-                        <button type="submit"> <i class="fa fa-search" /> </button>
+                        <input type="text" placeholder="Buscar productos y productores.. " name="search" onKeyPress={this.onKeyPress} />
+                        <button type="submit" className="botonBusqueda">
+                            <i class="fa fa-search" />
+                        </button>
                     </Nav>
 
                     <Nav className="iconos">
