@@ -10,6 +10,9 @@ class Estadisticas extends Component {
 
         this.state = {
             id: this.props.id_productor,
+            totalesGraficoPie: [],
+            totalesGraficoLine: [],
+            totalesGraficoBar: []
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
@@ -21,6 +24,56 @@ class Estadisticas extends Component {
         })
     }
 
+    componentDidMount() {
+        //GraficoPie
+        var path = "http://localhost:3000/redAgro/obtenerMetricasReservasPorEstado?id_usuario=" + this.state.id;
+        fetch(path)
+            .catch(err => console.error(err))
+            .then(response => { return response.json(); })
+            .then(data => {
+                this.setState({
+                    totalesGraficoPie: data.map((item) => {
+                        return {
+                            estado: item.clave,
+                            cantidad: item.cantidad,
+                        }
+                    })
+                })
+            })
+
+        //GraficoBar
+        path = "http://localhost:3000/redAgro/obtenerMetricasReservasPorEstado?id_usuario=" + this.state.id;
+        fetch(path)
+            .catch(err => console.error(err))
+            .then(response => { return response.json(); })
+            .then(data => {
+                this.setState({
+                    totalesGraficoBar: data.map((item) => {
+                        return {
+                            estado: item.clave,
+                            cantidad: item.cantidad,
+                        }
+                    })
+                })
+            })
+
+        //GraficoLine
+        path = "http://localhost:3000/redAgro/obtenerMetricasReservasPorEstado?id_usuario=" + this.state.id;
+        fetch(path)
+            .catch(err => console.error(err))
+            .then(response => { return response.json(); })
+            .then(data => {
+                this.setState({
+                    totalesGraficoLine: data.map((item) => {
+                        return {
+                            estado: item.clave,
+                            cantidad: item.cantidad,
+                        }
+                    })
+                })
+            })
+    }
+
     render() {
         return (
 
@@ -29,27 +82,23 @@ class Estadisticas extends Component {
                 <div className="graficosPorFila">
                     <div className="graficos1">
                         <h5>Reservas por estados (en los últimos 90 días)</h5>
-                        <GraficoPie />
+                        <GraficoPie totalesGraficoPie={this.state.totalesGraficoPie} />
                     </div>
                     <div className="graficos1">
-                        <h5>Productos vendidos (en los últimos 90 días)</h5>
-                        <GraficoBar />
+                        <h5>Total de reservas concretadas (en los ultimos 6 meses)</h5>
+                        {/* <GraficoLine graficoLine={this.state.graficoLine} /> */}
+                        <GraficoLine />
                     </div>
                 </div>
                 <div className="graficosPorFila">
                     <div className="graficos2">
-                        <h5>Total de reservas concretadas en el ultimo año</h5>
-                        <GraficoLine />
+                        <h5>Productos vendidos (en los últimos 90 días)</h5>
+                        {/* <GraficoBar graficoBar={this.state.graficoBar} /> */}
+                        <GraficoBar />
                     </div>
                 </div>
-            </div>
+            </div >
         );
     };
 }
 export default Estadisticas;
-/*
-Serán los siguientes gráficos:
-Reservas agrupadas por estados en los ultimos 90 dias --> Grafico torta
-Total de reservas concretadas agrupadas por mes en los ultimos 12 meses-> Grafico linea
-Total de productos vendidos en los ultimos 90 dias --> Grafico barras
-Se podrán divisar diferenciaciones entre los diferentes estados de las reservas en los gráficos que no sean específicamente de estados. */

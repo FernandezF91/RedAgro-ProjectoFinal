@@ -2,8 +2,6 @@ package app.controladores;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
 
 import java.math.BigInteger;
 
@@ -18,9 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.persistence.Query;
-
 import app.clases.Reserva;
+import app.clases.ResultadosEstadisticas;
 import app.daos.ReservaDao;
 import app.daos.UsuarioDao;
 import app.modelos.EntidadReserva;
@@ -58,16 +55,15 @@ public class ReservaControlador {
 	// Solo contabiliza los ultimos 3 meses
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "redAgro/obtenerMetricasReservasPorEstado", method = RequestMethod.GET)
-	public Map<String, BigInteger> obtenerMetricasReservasPorEstado(@RequestParam Long id_usuario) {
+	public List<ResultadosEstadisticas> obtenerMetricasReservasPorEstado(@RequestParam Long id_usuario) {	
 		List<Object[]> resultados = reservaDao.obtenerMetricasReservasPorEstado(id_usuario);
-		
-		Map<String, BigInteger> map = null;
+		List<ResultadosEstadisticas> estadisticas = new ArrayList<>();
+
 		if (resultados != null && !resultados.isEmpty()) {
-			map = new HashMap<String, BigInteger>();
 			for (Object[] object : resultados) {
-				map.put(((String) object[0]), ((BigInteger)object[1]));
+				estadisticas.add(new ResultadosEstadisticas((String) object[0], (BigInteger) object[1]));
 			}
 		}
-		return map;
+		return estadisticas;
 	}
 }
