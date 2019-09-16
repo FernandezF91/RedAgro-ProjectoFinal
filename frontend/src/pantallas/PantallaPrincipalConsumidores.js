@@ -18,7 +18,7 @@ import ModificarContraseña from '../pantallas/ModificarContraseña';
 import Geolocalizacion from '../pantallas/Geolocalizacion';
 import BarraNavegacion from './BarraNavegacion';
 import ResultadoBusqueda from './ResultadoBusqueda';
-import VistaPreviaCarrito from './VistaPreviaCarrito';
+
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const ListadoReservasRouter = withRouter(ListadoReservas);
