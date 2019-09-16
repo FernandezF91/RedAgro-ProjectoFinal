@@ -18,7 +18,7 @@ import ModificarContraseña from '../pantallas/ModificarContraseña';
 import Geolocalizacion from '../pantallas/Geolocalizacion';
 import BarraNavegacion from './BarraNavegacion';
 import ResultadoBusqueda from './ResultadoBusqueda';
-
+import Checkout from './Checkout';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const ListadoReservasRouter = withRouter(ListadoReservas);
@@ -28,6 +28,7 @@ const EditarDatosRouter = withRouter(DatosDeUsuario);
 const ModificarContraseniaRouter = withRouter(ModificarContraseña);
 const GeolocalizacionRouter = withRouter(Geolocalizacion);
 const ResultadoBusquedaRouter = withRouter(ResultadoBusqueda);
+const CheckoutRouter = withRouter(Checkout);
 
 class PantallaPrincipalconsumidores extends Component {
 
@@ -127,6 +128,9 @@ class PantallaPrincipalconsumidores extends Component {
                                 render={(props) => <GeolocalizacionRouter id_consumidor={this.state.id} />} />
                             <Route path={'/principalConsumidores/ResultadoBusqueda'}
                                 render={(props) => <ResultadoBusquedaRouter id_consumidor={this.state.id}
+                                    productosSeleccionados={this.state.productosSeleccionados} />} />
+                            <Route path={'/principalConsumidores/Checkout'}
+                                render={(props) => <CheckoutRouter id_consumidor={this.state.id}
                                     productosSeleccionados={this.state.productosSeleccionados} />} />
                         </Col>
                     </Row>
