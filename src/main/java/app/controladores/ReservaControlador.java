@@ -55,7 +55,7 @@ public class ReservaControlador {
 	// Solo contabiliza los ultimos 3 meses
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "redAgro/obtenerMetricasReservasPorEstado", method = RequestMethod.GET)
-	public List<ResultadosEstadisticas> obtenerMetricasReservasPorEstado(@RequestParam Long id_usuario) {	
+	public List<ResultadosEstadisticas> obtenerMetricasReservasPorEstado(@RequestParam Long id_usuario) {
 		List<Object[]> resultados = reservaDao.obtenerMetricasReservasPorEstado(id_usuario);
 		List<ResultadosEstadisticas> estadisticas = new ArrayList<>();
 
@@ -66,4 +66,36 @@ public class ReservaControlador {
 		}
 		return estadisticas;
 	}
+
+	// Solo contabiliza los ultimos 3 meses
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(value = "redAgro/obtenerMetricasProductosVendidos", method = RequestMethod.GET)
+	public List<ResultadosEstadisticas> obtenerMetricasProductosVendidos(@RequestParam Long id_usuario) {
+		List<Object[]> resultados = reservaDao.obtenerMetricasProductosVendidos(id_usuario);
+		List<ResultadosEstadisticas> estadisticas = new ArrayList<>();
+
+		if (resultados != null && !resultados.isEmpty()) {
+			for (Object[] object : resultados) {
+				estadisticas.add(new ResultadosEstadisticas((String) object[0], (BigInteger) object[1]));
+			}
+		}
+		return estadisticas;
+	}
+
+	// Solo contabiliza los ultimos 3 meses
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(value = "redAgro/obtenerMetricasReservasPorMes", method = RequestMethod.GET)
+	public List<ResultadosEstadisticas> obtenerMetricasReservasPorMes(@RequestParam Long id_usuario) {
+		List<Object[]> resultados = reservaDao.obtenerMetricasReservasPorMes(id_usuario);
+		List<ResultadosEstadisticas> estadisticas = new ArrayList<>();
+
+		if (resultados != null && !resultados.isEmpty()) {
+			for (Object[] object : resultados) {
+				estadisticas.add(
+						new ResultadosEstadisticas((String) object[0], (int) object[1], (BigInteger) object[2]));
+			}
+		}
+		return estadisticas;
+	}
+
 }
