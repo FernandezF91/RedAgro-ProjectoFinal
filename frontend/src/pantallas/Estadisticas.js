@@ -42,7 +42,7 @@ class Estadisticas extends Component {
             })
 
         //GraficoBar
-        path = "http://localhost:3000/redAgro/obtenerMetricasReservasPorEstado?id_usuario=" + this.state.id;
+        path = "http://localhost:3000/redAgro/obtenerMetricasProductosVendidos?id_usuario=" + this.state.id;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })
@@ -58,7 +58,7 @@ class Estadisticas extends Component {
             })
 
         //GraficoLine
-        path = "http://localhost:3000/redAgro/obtenerMetricasReservasPorEstado?id_usuario=" + this.state.id;
+        path = "http://localhost:3000/redAgro/obtenerMetricasReservasPorMes?id_usuario=" + this.state.id;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })
@@ -67,6 +67,7 @@ class Estadisticas extends Component {
                     totalesGraficoLine: data.map((item) => {
                         return {
                             estado: item.clave,
+                            mes: item.segundaClave,
                             cantidad: item.cantidad,
                         }
                     })
@@ -86,16 +87,12 @@ class Estadisticas extends Component {
                     </div>
                     <div className="graficos1">
                         <h5>Total de reservas concretadas (en los ultimos 6 meses)</h5>
-                        {/* <GraficoLine graficoLine={this.state.graficoLine} /> */}
-                        <GraficoLine />
+                        {/* <GraficoLine totalesGraficoLine={this.state.totalesGraficoLine} /> */}
                     </div>
                 </div>
-                <div className="graficosPorFila">
-                    <div className="graficos2">
-                        <h5>Productos vendidos (en los últimos 90 días)</h5>
-                        {/* <GraficoBar graficoBar={this.state.graficoBar} /> */}
-                        <GraficoBar />
-                    </div>
+                <div className="graficosPorFila graficos2">
+                    <h5>Productos vendidos (en los últimos 90 días)</h5>
+                    <GraficoBar totalesGraficoBar={this.state.totalesGraficoBar} />
                 </div>
             </div >
         );
