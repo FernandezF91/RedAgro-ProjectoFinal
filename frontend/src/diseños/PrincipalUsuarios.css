@@ -23,7 +23,8 @@
 .menuUsuario {
 
 	margin-left: -14px;
-    margin-right: 20px;
+	margin-right: 20px;
+	
 
 }
 
@@ -41,8 +42,14 @@
 }
 
 #nav-dropdown {
-	color: black !important;
+	color: white !important;
 	flex: 1;
+	margin-left:6.5px;
+}
+
+#nav-dropdown.item {
+	color: black !important;
+
 }
 
 .menuConsumidor {
@@ -69,6 +76,8 @@ p,
 h4 {
 
 	margin-left: 6.4px;
+	margin-top:700px;
+	color:black !important;
 
 }
 
@@ -163,10 +172,39 @@ h4 {
 	display: flex;
 }
 
+.itemsMenuReservas {
+	margin-top:7.5px;
+}
+
 .iconoMiCuenta {
 	color: #000;
 	font-size: 22px;
 	margin-left: 3px;
 	margin-right: 7px;
 	margin-top: 3px;
+}
+
+#market{
+
+margin-top:8px;
+
+}
+
+#alert{
+
+margin-left:-16px;
+
+}
+
+#items{
+
+color:black !important;
+
+}
+
+.items{
+
+color:black !important;
+
+
 }

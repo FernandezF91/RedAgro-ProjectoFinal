@@ -65,13 +65,13 @@ class PantallaPrincipalProductores extends Component {
                             <Row>
                                 <i class="fas fa-user iconosBarra" />
                                 <div className="menuUsuario">
-                                    <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown">
+                                    <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown" className="subMenu">
                                         <NavDropdown.Item>Mi cuenta</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item href="/login">Salir</NavDropdown.Item>
                                     </NavDropdown>
                                 </div>
-                                <i class="fas fa-bell iconosBarra" />
+                                <i class="fas fa-bell iconosBarra" id="alert"/>
                             </Row>
                         </div>
                     </Navbar>
@@ -87,26 +87,26 @@ class PantallaPrincipalProductores extends Component {
                             <Row className="itemsMenu">
                                 <i class="fas fa-store iconosMenuLateral" />
                                 <NavDropdown title="Productos" id="producto_drop">
-                                    <NavDropdown.Item>
-                                        <Link to="/principalProductores/ListadoProductos">Listado de productos</Link>
+                                    <NavDropdown.Item id="items">
+                                        <Link to="/principalProductores/ListadoProductos" id="items">Listado de productos</Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item>
-                                        <Link to="/principalProductores/NuevoProducto">Nuevo producto</Link>
+                                    <NavDropdown.Item id="items">
+                                        <Link to="/principalProductores/NuevoProducto" id="items">Nuevo producto</Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
                                 </NavDropdown>
                             </Row>
                             <Row className="itemsMenu">
-                                <i class="fas fa-map-marker-alt iconosMenuLateral" />
-                                <NavDropdown title="Puntos de Entrega" id="puntoentrega_drop">
-                                    <NavDropdown.Item>
-                                        <Link to="/principalProductores/ListadoPuntosEntrega">Desactivar puntos de entrega</Link>
+                                <i class="fas fa-map-marker-alt iconosMenuLateral" id="market" />
+                                <NavDropdown title="Puntos de Entrega" id="puntoentrega_drop" className="iconoEntrega">
+                                    <NavDropdown.Item id="items">
+                                        <Link to="/principalProductores/ListadoPuntosEntrega" id="items">Desactivar puntos de entrega</Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item>
-                                        <Link to="/principalProductores/IngresarPuntoEntrega">Nuevo punto de entrega</Link>
+                                    <NavDropdown.Item id="items">
+                                        <Link to="/principalProductores/IngresarPuntoEntrega" id="items">Nuevo punto de entrega</Link>
                                     </NavDropdown.Item>
                                 </NavDropdown>
                             </Row>
@@ -142,11 +142,11 @@ class PantallaPrincipalProductores extends Component {
                                 <i class="fas fa-cogs iconosMenuLateral" />
                                 <NavDropdown title="Configuración" id="config_drop" className="conf_drop">
                                     <NavDropdown.Item>
-                                        <Link to="/principalProductores/EditarDatos">Editar mis datos</Link>
+                                        <Link to="/principalProductores/EditarDatos" id="items">Editar mis datos</Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item>
-                                        <Link to="/principalProductores/ModificarContraseña">Modificar contraseña</Link>
+                                        <Link to="/principalProductores/ModificarContraseña" id="items">Modificar contraseña</Link>
                                     </NavDropdown.Item>
                                 </NavDropdown>
                             </Row>

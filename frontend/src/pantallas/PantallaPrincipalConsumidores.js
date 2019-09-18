@@ -71,10 +71,10 @@ class PantallaPrincipalconsumidores extends Component {
                                 <i class="fas fa-shopping-basket iconosMenuLateral" />
                                 <NavDropdown title="Comprar" id="compra_drop" className="com_drop">
                                     <NavDropdown.Item>
-                                        <Link to="/principalConsumidores/Geolocalizacion">Geolocalización</Link>
+                                        <Link to="/principalConsumidores/Geolocalizacion" id="items">Geolocalización</Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action/3.2">Categorias</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.2" id="items">Categorias</NavDropdown.Item>
                                 </NavDropdown>
                             </Row>
                             <Row className="itemsMenuReservas">
@@ -100,11 +100,11 @@ class PantallaPrincipalconsumidores extends Component {
                                 <div className="conf_drop">
                                     <NavDropdown title="Configuración" id="config_dropConsu">
                                         <NavDropdown.Item>
-                                            <Link to="/principalConsumidores/EditarDatos">Editar mis datos</Link>
+                                            <Link to="/principalConsumidores/EditarDatos" id="items">Editar mis datos</Link>
                                         </NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item>
-                                            <Link to="/principalConsumidores/modificarContraseña">Modificar Contraseña</Link>
+                                            <Link to="/principalConsumidores/modificarContraseña" id="items">Modificar Contraseña</Link>
                                         </NavDropdown.Item>
                                     </NavDropdown>
                                 </div>
