@@ -39,7 +39,7 @@ const Reserva = ({ listaDeReservas, currentPage, reservasPerPage }) => {
 	return (
 
 		<div>
-			{lista.length > 1 ?
+			{lista.length > 0 ?
 				<MDBTable responsive hover striped>
 					<MDBTableHead columns={columnas} />
 					<MDBTableBody>
