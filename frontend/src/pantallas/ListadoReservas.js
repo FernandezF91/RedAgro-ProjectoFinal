@@ -45,9 +45,10 @@ class ListadoReservas extends Component {
 			.then(data => {
 				this.setState({
 					reservasRealizadas: data.map((item) => {
+						var fecha = new Date (item.fecha);
 						return {
 							id: item.id,
-							fecha: item.fecha,
+							fecha: fecha.getDate().toString() +"/" + (fecha.getMonth()+1).toString() +"/"+ fecha.getFullYear().toString(),
 							forma_retiro: item.forma_retiro,
 							persona_retiro: item.persona_retiro,
 							punto_entrega: item.punto_entrega.direccion + " " + item.punto_entrega.cod_postal + " " + item.punto_entrega.localidad,
@@ -70,8 +71,7 @@ class ListadoReservas extends Component {
 
 			<div>
 				<div className="titulosPrincipales">Reservas</div>
-
-				<Reserva listaDeReservas={reservasRealizadas}
+				 <Reserva listaDeReservas={reservasRealizadas}
 					currentPage={currentPage}
 					reservasPerPage={reservasPerPage} />
 				{
@@ -82,7 +82,7 @@ class ListadoReservas extends Component {
 							currentPage={this.state.currentPage} />
 
 						: ''
-				}
+				} 
 			</div>
 		);
 	};

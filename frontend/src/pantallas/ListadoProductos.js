@@ -30,6 +30,7 @@ class ListadoProductos extends Component {
             .then(data => {
                 this.setState({
                     productos: data.map((item) => {
+                        var fecha = new Date (item.fecha_vencimiento);
                         return {
  //                           id: item.id,
                             Categoría: item.producto.categoria,
@@ -40,7 +41,7 @@ class ListadoProductos extends Component {
                             TipoDeUnidad: item.tipo_unidad,
                             TipoDeProduccion: item.tipo_produccion,
                             Precio: item.precio,
-                            FechaDeVencimiento: item.fecha_vencimiento,
+                            FechaDeVencimiento: fecha.getDate().toString() +"/" + (fecha.getMonth() + 1).toString() +"/"+ fecha.getFullYear().toString(),
                             TiempoDePreparacion: item.tiempo_preparacion,
                         }
                     })
