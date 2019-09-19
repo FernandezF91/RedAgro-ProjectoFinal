@@ -10,9 +10,9 @@ class BarraNavegacion extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            rolUsuario: this.props.rolUsuario,
             productosSeleccionados: this.props.productosSeleccionados,
         }
-
     }
 
     onKeyPress = (e) => {
@@ -22,6 +22,8 @@ class BarraNavegacion extends Component {
     }
 
     render() {
+        const rolDeUsuario = this.state.rolUsuario;
+
         return (
             <Navbar collapseOnSelect expand="lg" className="barraNavegacion sombraBarra" >
                 <Navbar.Brand className="culturaVerde" href="/">
@@ -30,35 +32,57 @@ class BarraNavegacion extends Component {
 
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
-
-                    <Nav className="BarraBusqueda">
-                        <input type="text" placeholder="Buscar productos y productores.. " name="search" onKeyPress={this.onKeyPress} />
-                        <button type="submit" className="botonBusqueda">
-                            <i class="fa fa-search" />
-                        </button>
-                    </Nav>
-
-                    <Nav className="iconos">
-                        <Nav className="menuUsuario">
-                            <i class="fas fa-user iconosBarra" />
-                            <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown" className="subMenu">
-                                <NavDropdown.Item>Mi cuenta</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="/login">Salir</NavDropdown.Item>
-                            </NavDropdown>
+                    {rolDeUsuario === "Consumidor" &&
+                        <Nav className="BarraBusqueda">
+                            <input type="text" placeholder="Buscar productos y productores.. " name="search" onKeyPress={this.onKeyPress} />
+                            <button type="submit" className="botonBusqueda">
+                                <i class="fa fa-search" />
+                            </button>
                         </Nav>
 
-                        <Nav className="menuUsuario">
-                            <i class="fas fa-bell iconosBarra" />
-                        </Nav>
+                    }
+                    {(rolDeUsuario === "Consumidor") ? (
+                        <Nav className="iconos">
+                            <Nav className="menuUsuario">
+                                <i class="fas fa-user iconosBarra" />
+                                <NavDropdown title="Usuario" id="nav-dropdown" className="subMenu">
+                                    <NavDropdown.Item>
+                                        <Link to={'/principalConsumidores'}>Mi cuenta</Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item href="/login">Salir</NavDropdown.Item>
+                                </NavDropdown>
+                            </Nav>
 
-                        <Nav.Item className="menuUsuario">
-                            <Link to={'/principalConsumidores/Carrito'}>
-                                <i class="fas fa-shopping-cart iconosBarra" />
-                                <Badge>{this.state.productosSeleccionados.length}</Badge>
-                            </Link>
-                        </Nav.Item>
-                    </Nav>
+                            <Nav className="menuUsuario">
+                                <i class="fas fa-bell iconosBarra" />
+                            </Nav>
+
+                            <Nav.Item className="menuUsuario">
+                                <Link to={'/principalConsumidores/Carrito'}>
+                                    <i class="fas fa-shopping-cart iconosBarra" />
+                                    <Badge>{this.state.productosSeleccionados.length}</Badge>
+                                </Link>
+                            </Nav.Item>
+                        </Nav>
+                    ) : (
+                            <Nav className="iconosProd">
+                                <Nav className="menuUsuario">
+                                    <i class="fas fa-user iconosBarra" />
+                                    <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown" className="subMenu">
+                                        <NavDropdown.Item>
+                                            <Link to={'/principalProductores'}>Mi cuenta</Link>
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item href="/login">Salir</NavDropdown.Item>
+                                    </NavDropdown>
+                                </Nav>
+
+                                <Nav className="menuUsuario">
+                                    <i class="fas fa-bell iconosBarra" />
+                                </Nav>
+                            </Nav>
+                        )}
                 </Navbar.Collapse>
             </Navbar>
         )
