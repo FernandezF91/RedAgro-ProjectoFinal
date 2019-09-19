@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import app.modelos.EntidadUsuario;
+import app.clases.Usuario;
 
 public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 
@@ -24,4 +25,7 @@ public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 	
 	@Query(value="SELECT rol FROM Usuario  WHERE id = ?1", nativeQuery = true)
 	String obtenerTipoUsuario(long id);
+	
+	@Query(value="SELECT * FROM Usuario  WHERE id = ?1", nativeQuery = true)
+	Usuario obtenerDatosUsuario(long id);
 }

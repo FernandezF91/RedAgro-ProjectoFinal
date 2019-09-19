@@ -16,7 +16,8 @@ class LoginForm extends Component {
             errores: [],
             usuario: {},
             visible: false,
-            mensajeError: ""
+            mensajeError: "",
+            rolUsuario: ""
         }
 
         this.validarDatos = this.validarDatos.bind(this);
@@ -117,8 +118,7 @@ class LoginForm extends Component {
     mostrarPantallaProductor() {
         this.props.history.push({
             pathname: '/principalProductores',
-            state: { id: this.state.usuario.id , user:this.state.usuario}
-            
+            state: { id: this.state.usuario.id , user:this.state.usuario, rolUsuario: this.state.usuario.rol}
         })
 
     }
@@ -126,21 +126,21 @@ class LoginForm extends Component {
     mostrarPantallaConsumidor() {
         this.props.history.push({
             pathname: '/principalConsumidores',
-            state: { id: this.state.usuario.id }
+            state: {
+                id: this.state.usuario.id,
+                rolUsuario: this.state.usuario.rol
+            }
         })
     }
 
     render() {
-
         return (
             <div className="fondo" >
                 <div className="barraNavegacion">
                     <Navbar>
-                        <div className="culturaVerde">
-                            <Link to={'/'}>
-                                <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                            </Link>
-                        </div>
+                        <Link to={'/'} className="culturaVerde">
+                            <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
+                        </Link>
                     </Navbar>
                 </div>
                 <Container fluid className="contenedor">
@@ -184,7 +184,7 @@ class LoginForm extends Component {
                             </a>
                         </div>
                         <a href="/recupero_email">
-                            <p>olvidé mi contraseña</p>
+                            olvidé mi contraseña
                         </a>
                     </div>
                     <section>
