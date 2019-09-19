@@ -378,7 +378,7 @@ class NuevoProducto extends Component {
                             />
                         </Form.Group>
                     </div>
-                    <div clasName="imagenes">
+                    <div className="imagenes">
                         <div className="tituloImagen">
                             *Imágenes
 								</div>

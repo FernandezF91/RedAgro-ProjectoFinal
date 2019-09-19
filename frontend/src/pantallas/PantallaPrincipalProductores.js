@@ -57,7 +57,7 @@ class PantallaPrincipalProductores extends Component {
  
     render() {
         return (
-            <body className="fondo">
+            <div className="fondo">
                 <BarraNavegacion rolUsuario={this.state.rolUsuario} />
                 <Container fluid className="contenedor">
                     <Row className="filaContenedora">
@@ -158,7 +158,7 @@ class PantallaPrincipalProductores extends Component {
                         </Col>
                     </Row>
                 </Container>
-            </body >
+            </div >
         );
     };
 }

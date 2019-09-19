@@ -17,14 +17,12 @@ class SeleccionUsuario extends Component {
 
     render() {
         return (
-            <body className="fondo">
+            <div className="fondo">
                 <div className="barraNavegacion">
                     <Navbar>
-                        <div className="culturaVerde">
-                            <Link to={'/'}>
-                                <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                            </Link>
-                        </div>
+                        <Link to={'/'} className="culturaVerde">
+                            <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
+                        </Link>
                     </Navbar>
                 </div>
                 <Container fluid className="contenedor">
@@ -36,12 +34,10 @@ class SeleccionUsuario extends Component {
                             <Button variant="success" href="/registroProductor">Soy productor</Button>
                             <Button variant="success" href="/registroConsumidor">Soy consumidor</Button>
                         </div>
-                        <div className="atras">
-                            <Button variant="success" href="/login">Atras</Button>
-                        </div>
+                        <Button variant="success" href="/login" className="atras">Atras</Button>
                     </div>
                 </Container>
-            </body>
+            </div>
         );
     };
 }

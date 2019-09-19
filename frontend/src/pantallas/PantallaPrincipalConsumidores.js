@@ -58,7 +58,7 @@ class PantallaPrincipalconsumidores extends Component {
  
     render() {
         return (
-            <body className="fondo">
+            <div className="fondo">
                 <BarraNavegacion productosSeleccionados={this.state.productosSeleccionados} rolUsuario={this.state.rolUsuario} />
                 <Container fluid className="contenedor">
                     <Row className="filaContenedora">
@@ -136,7 +136,7 @@ class PantallaPrincipalconsumidores extends Component {
                         </Col>
                     </Row>
                 </Container>
-            </body >
+            </div >
         );
     };
 }

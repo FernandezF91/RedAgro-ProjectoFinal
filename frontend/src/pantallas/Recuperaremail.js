@@ -1,5 +1,6 @@
 //este import para cabecera
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 import { Navbar, Container, Row, Form, Col, Button } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/recuperaremail.css';
@@ -45,12 +46,12 @@ class Recuperaremail extends Component {
     render() {
 
         return (
-            <body className="fondo">
+            <div className="fondo">
                 <div className="barraNavegacion">
                     <Navbar>
-                        <div className="culturaVerde">
+                        <Link to={'/'} className="culturaVerde">
                             <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                        </div>
+                        </Link>
                     </Navbar>
                 </div>
                 <Container fluid className="contenedor">
@@ -81,9 +82,8 @@ class Recuperaremail extends Component {
                         <Button variant="success" onClick={this.validarDatos}>Confirmar</Button>
                     </div>
                 </Container>
-            </body>
+            </div>
         );
-
     };
 }
 
