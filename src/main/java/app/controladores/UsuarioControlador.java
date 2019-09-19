@@ -93,11 +93,10 @@ public class UsuarioControlador {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:3000")
-	@PutMapping(path = "redAgro/update_usuario/")
+	@PutMapping(path = "redAgro/update_usuario")
 	public void updateUsuarioConsumidor(@RequestBody EntidadUsuario usuario, @RequestParam long id) {
 	
 		 usuarioDAO.actualizaUsuario(usuario.getNombre(),usuario.getApellido(),usuario.getTelefono(),usuario.getFecha_nacimiento(), id);
-
 	}
 	
 

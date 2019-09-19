@@ -36,13 +36,11 @@ class PantallaPrincipalProductores extends Component {
         super(props)
 
         this.state = {
-            id: this.props.location.state.id //paso id de usuario desde el LOGIN
+            id: this.props.location.state.id, //paso id de usuario desde el LOGIN
+            user:this.props.location.state.user//paso el usuario desde el LOGIN
         }
+        alert(this.state.user);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-    }
-
-    componentDidMount() {
-        alert(this.state.id);
     }
 
     mostrarPantallaPrincipal() {
@@ -161,7 +159,7 @@ class PantallaPrincipalProductores extends Component {
                             <Route path='/principalProductores/modificarContraseña'
                                 render={(props) => <ModificarContraseniaRouter id_productor={this.state.id} />} />
                             <Route path='/principalProductores/EditarDatos'
-                                render={(props) => <EditarDatosRouter id_productor={this.state.id} />} />
+                                render={(props) => <EditarDatosRouter usuario={this.state.user} />} />
                             <Route path={'/principalProductores/ListadoReservas'}
                                 render={(props) => <ListadoReservasRouter id_usuario={this.state.id} />} />
                             <Route path={'/principalProductores/IngresarPuntoEntrega'}
