@@ -52,8 +52,18 @@ class ListadoReservas extends Component {
 							forma_retiro: item.forma_retiro,
 							persona_retiro: item.persona_retiro,
 							punto_entrega: item.punto_entrega.direccion + " " + item.punto_entrega.cod_postal + " " + item.punto_entrega.localidad,
-							consumidor: item.consumidor.id, //Chequear
-							productor: item.productor.razon_social,
+							consumidor: { 
+								id: item.consumidor.id,
+								nombre: item.consumidor.usuario.nombre,
+								apellido: item.consumidor.usuario.apellido,
+								telefono: item.consumidor.usuario.telefono,
+							},
+							productor: {
+								razon_social: item.productor.razon_social,
+								nombre: item.productor.usuario.nombre,
+								apellido: item.productor.usuario.apellido,
+								telefono: item.productor.usuario.telefono,
+							},
 							estado: item.estado_reserva.nombre,
 							total_reserva: item.total_reserva
 						}
