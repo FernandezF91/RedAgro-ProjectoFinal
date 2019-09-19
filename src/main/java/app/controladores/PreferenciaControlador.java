@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import app.daos.PreferenciaDao;
+import app.daos.UsuarioDao;
 import app.modelos.EntidadPreferencia;
 import app.mappers.PreferenciaMapper;
 import app.clases.Consumidor;
@@ -27,6 +28,8 @@ public class PreferenciaControlador {
 
 	@Autowired
 	PreferenciaDao preferenciaDao;
+	@Autowired
+	UsuarioDao usuarioDAO;
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/preferencia_consumidor")
@@ -60,9 +63,10 @@ public class PreferenciaControlador {
 //			Tengo que borrar las prefencias que sacó
 			ArrayList<Producto> productoABorrar = productosActuales;
 			productoABorrar.removeAll(newProductos);
+			
 			ArrayList<Preferencia> preferenciasABorrar = new ArrayList<Preferencia>();
 			for (Producto producto : productoABorrar) {
-				Consumidor consumidor = new Consumidor(id);
+				Consumidor consumidor = new Consumidor(id, usuarioDAO.obtenerDatosUsuario(id));
 				Preferencia preferenciaAborrar = new Preferencia(0, consumidor, producto);
 				preferenciasABorrar.add(preferenciaAborrar);
 			}
@@ -74,7 +78,7 @@ public class PreferenciaControlador {
 		newProductos.removeAll(productosActuales);
 		newPreferencias.clear();
 		for (Producto producto : newProductos) {
-			Consumidor consumidor = new Consumidor(id);
+			Consumidor consumidor = new Consumidor(id, usuarioDAO.obtenerDatosUsuario(id));
 			Preferencia preferencia = new Preferencia(0, consumidor, producto);
 			newPreferencias.add(preferencia);
 		}
