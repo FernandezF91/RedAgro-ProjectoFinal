@@ -35,17 +35,17 @@ class PantallaPrincipalProductores extends Component {
  
         this.state = {
             id: this.props.location.state.id, //paso id de usuario desde el LOGIN
-            user:this.props.location.state.user//paso el usuario desde el LOGIN
-            rolUsuario: this.props.location.state.rolUsuario,
+            user:this.props.location.state.user,//paso el usuario desde el LOGIN
+            rolUsuario: this.props.location.state.rolUsuario
         }
-        alert(this.state.user);
+       // alert(this.state.user);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
  
-    componentDidMount() {
-        alert(this.state.id);
+/*    componentDidMount() {
+    alert(this.state.id);
     }
- 
+ */
     mostrarPantallaPrincipal() {
         this.props.history.push({
             pathname: '/principalProductores',

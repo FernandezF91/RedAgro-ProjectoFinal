@@ -28,7 +28,7 @@ class DatosDeUsuario extends Component {
         this.state.campos["telefono"]= this.state.usuario.telefono;
         this.state.campos["fecha_nacimiento"]= this.state.usuario.fecha_nacimiento;
 
-        alert(this.state.usuario);
+//       alert(this.state.usuario);
 //        this.validarDatos = this.validarDatos.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);   
         this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
