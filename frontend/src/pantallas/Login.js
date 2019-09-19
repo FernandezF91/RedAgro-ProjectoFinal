@@ -183,7 +183,7 @@ class LoginForm extends Component {
                             </a>
                         </div>
                         <a href="/recupero_email">
-                            <p>olvidé mi contraseña</p>
+                            olvidé mi contraseña
                         </a>
                     </div>
                     <section>
