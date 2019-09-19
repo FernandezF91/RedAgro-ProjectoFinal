@@ -52,7 +52,7 @@ const Reserva = ({ listaDeReservas, currentPage, reservasPerPage }) => {
 									<td>{item.fecha}</td>
 									<td>{item.estado}</td>
 									<td>Retira <i>{item.persona_retiro}</i> por <i>{item.punto_entrega}</i></td>
-									<td>{item.productor}<p>Tel: {item.produtor_telefono}</p>
+									<td>{item.productor.nombre + " " + item.productor.apellido}<p>Tel: {item.productor.telefono}</p>
 										<Link to={''} className='text-primary mb-3'>Ver Mensajes</Link>
 									</td>
 									<td> <NumberFormat value={item.total_reserva} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
