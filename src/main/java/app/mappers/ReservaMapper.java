@@ -30,7 +30,7 @@ public class ReservaMapper {
 		EstadoReserva estado = mapeoEstado.mapFromEntity(entidad.getEstado_reserva());
 		
 		Reserva reserva = new Reserva(entidad.getId(),
-	//								  listaDetalle,
+									  listaDetalle,
 									  productor, 
 									  consumidor, 
 									  ptoEntrega,
@@ -53,7 +53,7 @@ public class ReservaMapper {
 		
 		for(EntidadReserva entidad : listaEntidadReserva) {
 			Reserva reserva = new Reserva(entidad.getId(),
-	//				  mapeoDetalle.mapFromEntity(entidad.getDetallesReserva()),
+					  mapeoDetalle.mapFromEntity(entidad.getDetallesReserva()),
 					  mapeoProductor.mapFromEntity(entidad.getProductor()), 
 					  mapeoConsumidor.mapFromEntity(entidad.getConsumidor()), 
 					  mapeoPtoEntrega.mapFromEntity(entidad.getPunto_entrega()),
@@ -77,7 +77,7 @@ public class ReservaMapper {
 		EstadoReservaMapper mapeoEstado = new EstadoReservaMapper();
 				
 		entidad.setId(modelo.getId());
-	//	entidad.setDetallesReserva(mapeoDetalle.mapToEntity(modelo.getDetalleReserva()));
+		entidad.setDetallesReserva(mapeoDetalle.mapToEntity(modelo.getDetalleReserva()));
 		entidad.setProductor(mapeoProductor.mapToEntity(modelo.getProductor()));
 		entidad.setConsumidor(mapeoConsumidor.mapToEntity(modelo.getConsumidor()));
 		entidad.setPunto_entrega(mapeoPtoEntrega.mapToEntity(modelo.getPunto_entrega()));
@@ -102,7 +102,7 @@ public class ReservaMapper {
 		for(Reserva modelo: listaReservas) {
 			EntidadReserva entidad = new EntidadReserva();
 			entidad.setId(modelo.getId());
-//			entidad.setDetallesReserva(mapeoDetalle.mapToEntity(modelo.getDetalleReserva()));
+			entidad.setDetallesReserva(mapeoDetalle.mapToEntity(modelo.getDetalleReserva()));
 			entidad.setProductor(mapeoProductor.mapToEntity(modelo.getProductor()));
 			entidad.setConsumidor(mapeoConsumidor.mapToEntity(modelo.getConsumidor()));
 			entidad.setPunto_entrega(mapeoPtoEntrega.mapToEntity(modelo.getPunto_entrega()));
