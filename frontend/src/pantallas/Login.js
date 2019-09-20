@@ -128,6 +128,7 @@ class LoginForm extends Component {
             pathname: '/principalConsumidores',
             state: {
                 id: this.state.usuario.id,
+                user:this.state.usuario,
                 rolUsuario: this.state.usuario.rol
             }
         })

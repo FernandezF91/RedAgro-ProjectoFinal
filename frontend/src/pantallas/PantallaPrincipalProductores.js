@@ -146,7 +146,7 @@ class PantallaPrincipalProductores extends Component {
                             <Route path='/principalProductores/CargarHistorico'
                                 render={(props) => <HitoricoRouter id_productor={this.state.id} />} />
                             <Route path='/principalProductores/modificarContraseña'
-                                render={(props) => <ModificarContraseniaRouter id={this.state.id} />} />
+                                render={(props) => <ModificarContraseniaRouter usuario={this.state.user} />} />
                             <Route path='/principalProductores/EditarDatos'
                                 render={(props) => <EditarDatosRouter usuario={this.state.user} />} />
                             <Route path={'/principalProductores/ListadoReservas'}

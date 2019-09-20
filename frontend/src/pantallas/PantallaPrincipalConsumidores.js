@@ -34,6 +34,7 @@ class PantallaPrincipalconsumidores extends Component {
  
         this.state = {
             id: this.props.location.state.id, //paso id de usuario desde el LOGIN
+            user:this.props.location.state.user,
             rolUsuario: this.props.location.state.rolUsuario,
             productosSeleccionados: [],
         }
@@ -122,9 +123,9 @@ class PantallaPrincipalconsumidores extends Component {
                                 render={(props) => <Carrito id_consumidor={this.state.id}
                                     productosSeleccionados={this.state.productosSeleccionados} />} />
                             <Route path={'/principalConsumidores/EditarDatos'}
-                                render={(props) => <EditarDatosRouter id={this.state.id} />} />
+                                render={(props) => <EditarDatosRouter usuario={this.state.user} />} />
                             <Route path={'/principalConsumidores/modificarContraseña'}
-                                render={(props) => <ModificarContraseniaRouter id={this.state.id} />} />
+                                render={(props) => <ModificarContraseniaRouter usuario={this.state.user} />} />
                             <Route path={'/principalConsumidores/Geolocalizacion'}
                                 render={(props) => <GeolocalizacionRouter id_consumidor={this.state.id} />} />
                             <Route path={'/principalConsumidores/ResultadoBusqueda'}

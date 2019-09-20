@@ -16,12 +16,10 @@ class ModificarContraseña extends Component {
 			usuario: {},
 			visible: false,
 			mensajeError: "",
-			id: this.props.id //para ir pasando el ID del usuario de pantalla a pantalla
+			user: this.props.usuario //para ir pasando el ID del usuario de pantalla a pantalla
 		}
 
 		this.validarDatos = this.validarDatos.bind(this);
-		this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
-		this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 	}
 
@@ -126,22 +124,17 @@ class ModificarContraseña extends Component {
 	}
 
 	mostrarPantallaPrincipal() {
+
+		this.state.user.rol=="Productor"?
+
 		this.props.history.push({
 			pathname: '/principalProductores',
-			state: { id: this.state.id }
+			state: { id: this.state.user.id }
 		})
-	}
+		:
+  
+		this.props.history.push("/principalConsumidores", { id: this.state.user.id });
 
-	mostrarPantallaProductor() {
-		this.props.history.push({
-			pathname: '/principalProductores',
-			state: { id: this.state.usuario.id }
-		})
-
-	}
-
-	mostrarPantallaConsumidor() {
-		this.props.history.push("/principalConsumidores", { usuario: this.state.usuario });
 	}
 
 	render() {

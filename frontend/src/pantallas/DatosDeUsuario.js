@@ -31,8 +31,6 @@ class DatosDeUsuario extends Component {
 //       alert(this.state.usuario);
 //        this.validarDatos = this.validarDatos.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);   
-        this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
-        this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
 
@@ -134,23 +132,19 @@ class DatosDeUsuario extends Component {
         })
     }
 
-    mostrarPantallaPrincipal() {
-        this.props.history.push({
-            pathname: '/principalProductores',
-            state: { id: this.state.id }
-        })
-    }
+   mostrarPantallaPrincipal() {
 
-    mostrarPantallaProductor() {
-        this.props.history.push({
-            pathname: '/principalProductores',
-            state: { id: this.state.usuario.id }
-        })
-    }
+		this.state.usuario.rol=="Productor"?
 
-    mostrarPantallaConsumidor() {
-        this.props.history.push("/principalConsumidores", { usuario: this.state.usuario });
-    }
+		this.props.history.push({
+			pathname: '/principalProductores',
+			state: { id: this.state.usuario.id }
+		})
+		:
+  
+		this.props.history.push("/principalConsumidores", { id: this.state.usuario.id });
+
+	}
 
     handleSubmit(e) {
         var _this = this;
