@@ -8,12 +8,12 @@ const GraficoBar = ({ totalesGraficoBar }) => {
         labels, datasets: [
             {
                 data,
-                label: 'My First dataset',
-                backgroundColor: 'rgba(255,99,132,0.2)',
-                borderColor: 'rgba(255,99,132,1)',
+                label: 'Productos vendidos',
+                backgroundColor: '#60D97B',
+                borderColor: '#60D97B',
                 borderWidth: 1,
-                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                hoverBorderColor: 'rgba(255,99,132,1)'
+                hoverBackgroundColor: '#60D97B',
+                hoverBorderColor: '#60D97B'
             }
         ]
     };
@@ -22,7 +22,7 @@ const GraficoBar = ({ totalesGraficoBar }) => {
 
         <Bar
             data={grafico}
-            width={100}
+            width={50}
             height={50}
             options={{
                 maintainAspectRatio: false
