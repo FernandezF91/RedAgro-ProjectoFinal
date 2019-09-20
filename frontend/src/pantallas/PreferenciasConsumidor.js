@@ -72,13 +72,9 @@ class PreferenciasConsumidor extends Component {
         if (listado.length > 0) {
             listado.map(item => {
                 preferencias.push({
-                    id: "0",
-                    consumidor: this.state.id, //{},
-                    producto: {
-                        id: item.value,
-                        categoria: categoria,
-                        tipo: item.label,
-                    }
+                    id: item.value,
+                    categoria: categoria,
+                    tipo: item.label,
                 });
             })
         }
