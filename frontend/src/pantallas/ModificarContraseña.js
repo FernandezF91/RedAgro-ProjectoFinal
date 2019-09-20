@@ -1,8 +1,7 @@
 
 import React, { Component } from 'react'
 import { Form, Row, Button } from 'react-bootstrap';
-import '../diseños/Login.css';
-import '../diseños/estilosGlobales.css';
+import Modal from 'react-awesome-modal';
 import '../diseños/ModificarContraseña.css';
 
 class ModificarContraseña extends Component {
@@ -15,7 +14,8 @@ class ModificarContraseña extends Component {
             errores: [],
             usuario: {},
             visible: false,
-            mensajeError: "",
+            mensaje: "",
+            titulo:"",
             user: this.props.usuario //para ir pasando el ID del usuario de pantalla a pantalla
         }
 
@@ -37,35 +37,46 @@ class ModificarContraseña extends Component {
         });
     }
 
-    validarDatos() {
-        this.setState({
-            errores: []
-        })
 
-        let errores = {};
+   validarDatos(){
 
-        if ((!this.state.fields["username"]) && (!this.state.fields["password"])) {
-            errores["username"] = "*Campo inválido";
-            errores["password"] = "*Campo inválido";
 
-        } else if (!this.state.fields["username"]) {
-            errores["username"] = "*Campo inválido";
+   if((!this.state.fields["contraseñaNueva"] || !this.state.fields["contraseñaActual"] || !this.state.fields["confirmarContraseña"]) ||
+      ((this.state.fields["contraseñaNueva"])!==(this.state.fields["confirmarContraseña"])) ||
+       ((this.state.fields["contraseñaActual"])!==(this.state.user.contraseña))){
 
-        } else if (!this.state.fields["password"]) {
-            errores["password"] = "*Campo inválido";
+        // alert(this.state.user.contraseña);
+        // alert(this.state.fields["contraseñaActual"]);
+        // alert(this.state.fields["contraseñaNueva"]);
+        // alert(this.state.fields["confirmarContraseña"]);
 
-        } else {
-            const path_principal = "http://localhost:3000/redAgro/login?u=";
+        this.setState({titulo:"Error",
+                       mensaje:"Datos incompletos o incorrectos",
+                       visible:true});
 
-            var username = this.state.fields["username"];
-            var password = this.state.fields["password"];
+                       return false;
 
-            const final_path = path_principal + username + "&c=" + password;
+       }
+
+       return true;
+
+   }
+
+    modificarContraseña() {
+    
+            const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
+
+            var password = this.state.fields["contraseñaNueva"];
+
+            const final_path = path_principal + password;
 
             var _this = this;
 
+
+            if(_this.validarDatos()){
+
             fetch(final_path, {
-                method: "GET",
+                method: "PUT",
                 headers: {
 
                     'Content-type': 'application/json;charset=UTF-8',
@@ -79,49 +90,36 @@ class ModificarContraseña extends Component {
                         // alert("Ocurrió algún problema. Intenta nuevamente")
 
                         let mensajeError = "Ocurrió algun problema, intenta nuevamente"
+                        
                         _this.setState({
                             visible: true,
-                            mensajeError: mensajeError
+                            titulo:"Error",
+                            mensaje: mensajeError
                         });
 
                         return;
 
                     }
 
-                    response.text().then(
+                    response.json().then(
 
                         function (response) {
 
-                            if (response !== "") {
-                                _this.setState({ usuario: JSON.parse(response) });
-
-                                if (_this.state.usuario.rol === "Productor") {
-
-                                    _this.mostrarPantallaProductor();
-
-                                } else {
-
-                                    _this.mostrarPantallaConsumidor();
-
-                                }
-
-                            } else {
-
-                                let mensajeError = "Cuenta inexistente o datos incorrectos";
+                                let mensaje = "Cuenta inexistente o datos incorrectos";
                                 _this.setState({
                                     visible: true,
-                                    mensajeError: mensajeError
+                                    titulo:"Modificación exitosa",
+                                    mensaje:""
                                 });
-                            }
+                            
 
                         });
                 });
+            }
         }
 
-        this.setState({
-            errores
-        })
-    }
+  
+    
 
     mostrarPantallaPrincipal() {
 
@@ -169,7 +167,7 @@ class ModificarContraseña extends Component {
                             />
                         </Form.Group>
                     </div>
-                    <div className="ConfirmarContraseña" >
+                    <div className="confirmarContraseña" >
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
                                 Confirmar contraseña
@@ -189,10 +187,25 @@ class ModificarContraseña extends Component {
                             </a>
                         </div>
                         <div className="botonCrear">
-                            <Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Crear</Button>
+                            <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Crear</Button>
                         </div>
                     </div>
                 </div>
+                <section>
+                        <Modal
+                            visible={this.state.visible}
+                            width="460"
+                            height="120"
+                            effect="fadeInUp"
+                            onClickAway={() => this.closeModal()}
+                        >
+                            <div>
+                                <h1>{this.state.titulo}</h1>
+                                <p>{this.state.mensaje}</p>
+                                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
+                            </div>
+                        </Modal>
+                    </section>
             </div>
         );
     };

@@ -18,9 +18,9 @@ class CargarHistorico extends Component {
 		this.state = {
 			campos: [],
 			files: "",
-			id:this.props.id_producto,
+			id:this.props.id_productor,
 		}
-	this.subirArchivos = this.subirArchivos.bind(this);
+	// this.subirArchivos = this.subirArchivos.bind(this);
 	}
 
 
@@ -30,10 +30,8 @@ class CargarHistorico extends Component {
 		<div className="container">
 			
 				<div clasName="imagenes">
-							<div className ="tituloHistorico">
-								<p></p>
-								<h1>*Cargar Archivos Históricos:</h1>
-								<p></p>
+							<div className ="titulosPrincipales">
+								Cargar archivos históricos
 								</div>
 								<FilePond ref="filep"
 						 allowMultiple={false} maxFiles={1} labelIdle={"Arrastre o suba sus archivos aquí"}

@@ -121,6 +121,14 @@ public class UsuarioControlador {
 		}
 	}
 	
+//	@CrossOrigin(origins = "http://localhost:3000")
+//	@GetMapping(path = "redAgro/modificar_contraseña")
+//	public ResponseEntity<String> modificacionContraseña(@RequestParam String c, @RequestParam Long id) {
+//		
+//		usuarioDAO.modificarContraseña(c, id);
+//		
+//		
+//	}
 	
 	
 	@CrossOrigin(origins = "http://localhost:3000")

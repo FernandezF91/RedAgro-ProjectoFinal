@@ -33,10 +33,6 @@ class AlertaProductor extends Component {
         //  Chequear como lo guardo		
     };
 
-    componentDidMount() {
-        alert(this.state.id);
-    }
-
     mostrarPantallaPrincipal() {
         this.props.history.push({
             pathname: '/principalProductores',
