@@ -122,9 +122,9 @@ class PantallaPrincipalconsumidores extends Component {
                                 render={(props) => <Carrito id_consumidor={this.state.id}
                                     productosSeleccionados={this.state.productosSeleccionados} />} />
                             <Route path={'/principalConsumidores/EditarDatos'}
-                                render={(props) => <EditarDatosRouter id_consumidor={this.state.id} />} />
+                                render={(props) => <EditarDatosRouter id={this.state.id} />} />
                             <Route path={'/principalConsumidores/modificarContraseña'}
-                                render={(props) => <ModificarContraseniaRouter id_consumidor={this.state.id} />} />
+                                render={(props) => <ModificarContraseniaRouter id={this.state.id} />} />
                             <Route path={'/principalConsumidores/Geolocalizacion'}
                                 render={(props) => <GeolocalizacionRouter id_consumidor={this.state.id} />} />
                             <Route path={'/principalConsumidores/ResultadoBusqueda'}

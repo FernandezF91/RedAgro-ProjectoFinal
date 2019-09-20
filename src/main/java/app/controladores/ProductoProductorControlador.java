@@ -62,7 +62,7 @@ public class ProductoProductorControlador {
 	
 	@CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "redAgro/obtenerProductosProductor")
-    public List<ProductoProductor> obtenerTiposdeProducto(@RequestParam Long id){   	
+    public List<ProductoProductor> obtenerProductosProductor(@RequestParam Long id){   	
     
 		List<EntidadProductoProductor> listaProductos = productoProductorDao.obtenerProductosByProductor(id);
 		ProductoProductorMapper productoMapper = new ProductoProductorMapper();

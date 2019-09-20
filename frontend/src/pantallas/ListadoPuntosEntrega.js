@@ -10,7 +10,8 @@ class ListadoPuntosEntrega extends Component {
 		
 		this.state = {
 			selectedRadioOption: "Nunca",
-			id: this.props.id_productor
+			id: this.props.id_productor,
+			imagenes:[]
 					}
 					
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
@@ -21,12 +22,46 @@ class ListadoPuntosEntrega extends Component {
             pathname: '/principalProductores',
             state: { id: this.state.id }
         })
-    }
+	}
+	 
+
+componentDidMount(){
+
+
+var _this=this;
+	 
+			//  var myImage = document.querySelector("#jeje");
+
+				fetch("http://localhost:3000/redAgro/obtener_imagen?id=2")
+				.then(response => response.blob())
+				.then(function(myBlob) {
+
+				var objectURL = URL.createObjectURL(myBlob);
+
+				_this.setState({imagenes:[objectURL]})
+				//  myImage.src = objectURL;
+
+				});
+
+	}
+
+mostrarImagenes = () =>{
+
+return this.state.imagenes.map(url=>{
+
+return <img src={url}/>;
+
+})
+
+}
 
 	render() {
 		return (
 			<div className="container">
 				<div className="titulosPrincipales">Listado Puntos de entrega</div>
+				<div className="imagenes">
+				{this.mostrarImagenes()}
+				</div>
 			</div>
 		);
 

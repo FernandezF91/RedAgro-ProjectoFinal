@@ -16,7 +16,7 @@ class ModificarContraseña extends Component {
 			usuario: {},
 			visible: false,
 			mensajeError: "",
-			id: this.props.id_productor //para ir pasando el ID del usuario de pantalla a pantalla
+			id: this.props.id //para ir pasando el ID del usuario de pantalla a pantalla
 		}
 
 		this.validarDatos = this.validarDatos.bind(this);

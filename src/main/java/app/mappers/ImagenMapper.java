@@ -10,6 +10,8 @@ public class ImagenMapper {
 // Falta agregar ProductoProductor -> Revisar!
 
 	public Imagen mapFromEntity(EntidadImagen entidad) {
+		
+		
 		Imagen estado = new Imagen(entidad.getId(), entidad.getImage(), entidad.getNombre(),
 				entidad.getTipo_contenido());
 		return estado;
@@ -20,8 +22,7 @@ public class ImagenMapper {
 		List<Imagen> listaImagenes = new ArrayList<>();
 		
 		for (EntidadImagen entidad : listaEntidadImagen) {
-			Imagen imagen = new Imagen(entidad.getId(), entidad.getImage(), entidad.getNombre(),
-					entidad.getTipo_contenido());
+			Imagen imagen = new Imagen(entidad.getId(), entidad.getImage(), entidad.getNombre(), entidad.getTipo_contenido());
 			listaImagenes.add(imagen);
 		}
 		return listaImagenes;

@@ -1,5 +1,7 @@
 package app.clases;
 
+import app.modelos.EntidadProductoProductor;
+
 public class Imagen {
 	
 	public Imagen (Long id, byte[] image, String nombre, String tipo_contenido) {
@@ -7,10 +9,10 @@ public class Imagen {
 		this.setImage(image);
 		this.setNombre(nombre);
 		this.setTipo_contenido(tipo_contenido);
+
 	}
 	
 	private Long id;
-	//private ProductoProductor producto_productor; Lo dejo comentado por ahora
 	private byte[] image;
 	private String nombre;
 	private String tipo_contenido;
@@ -39,4 +41,6 @@ public class Imagen {
 	public void setTipo_contenido(String tipo_contenido) {
 		this.tipo_contenido = tipo_contenido;
 	}
+	
+	
 }
