@@ -135,8 +135,6 @@ class LoginForm extends Component {
     }
 
     render() {
-        const { data, loading } = this.state
-
         return (
             <div className="fondo">
                 <Navbar className="barraNavegacion">
