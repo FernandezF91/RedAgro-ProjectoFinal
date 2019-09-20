@@ -99,6 +99,7 @@ class RegistroConsumidor extends Component {
 
     crearUsuario(e) {
         var _this = this;
+
         var path = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
         path = path + _this.state.campos["email"];
 
@@ -225,7 +226,6 @@ class RegistroConsumidor extends Component {
                                 </Form.Label>
                                     <Col sm={10}>
                                         <DatePickerInput
-                                            ref="datePicker"
                                             name="fecha_nac"
                                             displayFormat='DD/MM/YYYY'
                                             maxDate={maxDate}
