@@ -21,17 +21,18 @@ public interface ReservaDao extends JpaRepository<EntidadReserva, Long> {
 			+ "GROUP BY ER.nombre", nativeQuery = true)
 	List<Object[]> obtenerMetricasReservasPorEstado(long usuario_id);
 
-	@Query(value = "SELECT P.tipo, count(DR.cantidad) AS contador FROM producto P JOIN detalle_reserva DR "
+	@Query(value = "SELECT P.tipo, SUM(DR.cantidad) AS contador FROM producto P JOIN detalle_reserva DR "
 			+ "	ON P.id = DR.id_producto JOIN reserva R ON DR.id_reserva = R.id "
 			+ " JOIN estado_reserva ER ON R.estado_id = ER.id "
 			+ " WHERE R.Fecha BETWEEN DATE_ADD(CURDATE(), INTERVAL -90 DAY) AND CURDATE()  "
 			+ " AND ER.nombre = 'Finalizado' AND R.productor_id = ?1 GROUP BY P.tipo ", nativeQuery = true)
 	List<Object[]> obtenerMetricasProductosVendidos(long usuario_id);
 
-	@Query(value = " SELECT ER.nombre AS estado, Month(R.fecha) AS mes, count(R.id) AS cantidad "
+	//@Query(value = " SELECT ER.nombre AS estado, Month(R.fecha) AS mes, count(R.id) AS cantidad "
+	@Query(value = " SELECT Month(R.fecha) AS mes, count(R.id) AS cantidad "
 			+ " FROM reserva R JOIN estado_reserva ER ON R.estado_id = ER.id "
-			+ " WHERE R.Fecha BETWEEN DATE_ADD(CURDATE(), INTERVAL -365 DAY) AND CURDATE() "
-			+ " AND ER.nombre IN ('Finalizado', 'Cancelado') AND R.productor_id = ?1 "
-			+ " GROUP BY ER.nombre, Month(r.fecha) ", nativeQuery = true)
+			+ " WHERE R.Fecha BETWEEN DATE_ADD(CURDATE(), INTERVAL -180 DAY) AND CURDATE() "
+			+ " AND ER.nombre = ('Finalizado') AND R.productor_id = ?1 "
+			+ " GROUP BY Month(R.fecha) ORDER BY Month(R.fecha) ", nativeQuery = true)
 	List<Object[]> obtenerMetricasReservasPorMes(long usuario_id);
 }

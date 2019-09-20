@@ -8,11 +8,12 @@
 .graficos1 {
     width: 400px;
     height: 280px;
-    margin: 5px;
+    margin: 7px;
 }
 
 .graficos2 {
     width: 800px;
     height: 280px;
     margin: 5px;
+    margin-top: 60px;
 }

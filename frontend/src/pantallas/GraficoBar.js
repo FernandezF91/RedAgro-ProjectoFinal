@@ -22,10 +22,27 @@ const GraficoBar = ({ totalesGraficoBar }) => {
 
         <Bar
             data={grafico}
-            width={50}
-            height={50}
+            legend={{
+                display: false
+            }}
             options={{
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [
+                        {
+                            offset: true
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            offset: true,
+                            ticks: {
+                                display: true,
+                                beginAtZero: true
+                            },
+                        }
+                    ]
+                }
             }}
         />
     );

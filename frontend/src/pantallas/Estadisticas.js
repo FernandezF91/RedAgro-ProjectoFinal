@@ -51,7 +51,7 @@ class Estadisticas extends Component {
                     totalesGraficoBar: data.map((item) => {
                         return {
                             estado: item.clave,
-                            cantidad: item.cantidad,
+                            cantidad: item.cantidadSum,
                         }
                     })
                 })
@@ -66,8 +66,7 @@ class Estadisticas extends Component {
                 this.setState({
                     totalesGraficoLine: data.map((item) => {
                         return {
-                            /*estado: item.clave,*/
-                            mes: item.segundaClave,
+                            estado: item.clave,
                             cantidad: item.cantidad,
                         }
                     })
@@ -87,7 +86,7 @@ class Estadisticas extends Component {
                     </div>
                     <div className="graficos1">
                         <h5>Total de reservas concretadas (en los ultimos 6 meses)</h5>
-                        {/*<GraficoLine totalesGraficoLine={this.state.totalesGraficoLine} /> */}
+                        <GraficoLine totalesGraficoLine={this.state.totalesGraficoLine} />
                     </div>
                 </div>
                 <div className="graficosPorFila">
