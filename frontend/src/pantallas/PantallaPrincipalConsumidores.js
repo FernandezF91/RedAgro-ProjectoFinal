@@ -34,7 +34,7 @@ class PantallaPrincipalconsumidores extends Component {
  
         this.state = {
             id: this.props.location.state.id, //paso id de usuario desde el LOGIN
-            user:this.props.location.state.user,
+            user: this.props.location.state.user,
             rolUsuario: this.props.location.state.rolUsuario,
             productosSeleccionados: [],
         }
