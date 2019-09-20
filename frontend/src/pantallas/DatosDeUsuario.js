@@ -14,23 +14,22 @@ class DatosDeUsuario extends Component {
 
         super(props)
 
-
         this.state = {
             campos: [],
             errores: [],
-            usuario:this.props.usuario,
+            usuario: this.props.usuario,
             visible: false,
             mensajeError: "",
             id: this.props.usuario.id, //para ir pasando el ID del usuario de pantalla a pantalla
         }
-        this.state.campos["nombre"]= this.state.usuario.nombre;
-        this.state.campos["apellido"]= this.state.usuario.apellido;
-        this.state.campos["telefono"]= this.state.usuario.telefono;
-        this.state.campos["fecha_nacimiento"]= this.state.usuario.fecha_nacimiento;
+        this.state.campos["nombre"] = this.state.usuario.nombre;
+        this.state.campos["apellido"] = this.state.usuario.apellido;
+        this.state.campos["telefono"] = this.state.usuario.telefono;
+        this.state.campos["fecha_nacimiento"] = this.state.usuario.fecha_nacimiento;
 
-//       alert(this.state.usuario);
-//        this.validarDatos = this.validarDatos.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);   
+        //       alert(this.state.usuario);
+        //        this.validarDatos = this.validarDatos.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
 
@@ -128,23 +127,23 @@ class DatosDeUsuario extends Component {
         // }
 
         this.setState({
-           errores
+            errores
         })
     }
 
-   mostrarPantallaPrincipal() {
+    mostrarPantallaPrincipal() {
 
-		this.state.usuario.rol=="Productor"?
+        this.state.usuario.rol === "Productor" ?
 
-		this.props.history.push({
-			pathname: '/principalProductores',
-			state: { id: this.state.usuario.id }
-		})
-		:
-  
-		this.props.history.push("/principalConsumidores", { id: this.state.usuario.id });
+            this.props.history.push({
+                pathname: '/principalProductores',
+                state: { id: this.state.usuario.id }
+            })
+            :
 
-	}
+            this.props.history.push("/principalConsumidores", { id: this.state.usuario.id });
+
+    }
 
     handleSubmit(e) {
         var _this = this;
@@ -154,7 +153,7 @@ class DatosDeUsuario extends Component {
 
             var id_productor = _this.props.id_productor;
             var path_principal = "http://localhost:3000/redAgro/update_usuario?id=";
-            
+
             var path_final = path_principal + id_productor;
 
             fetch(path_final, {
@@ -163,10 +162,10 @@ class DatosDeUsuario extends Component {
                     'Content-type': 'application/json;charset=UTF-8',
                 },
                 body: JSON.stringify({
-							"nombre":this.state.campos["nombre"],
-							"apellido": this.state.campos["apellido"],
-                            "telefono": this.state.campos["telefono"],
-                            "fecha_nacimiento": this.state.campos["fecha_nacimiento"],
+                    "nombre": this.state.campos["nombre"],
+                    "apellido": this.state.campos["apellido"],
+                    "telefono": this.state.campos["telefono"],
+                    "fecha_nacimiento": this.state.campos["fecha_nacimiento"],
                 }),
             })
                 .then(function (response) {
@@ -187,7 +186,7 @@ class DatosDeUsuario extends Component {
                     _this.mostrarMensajeOk();
                 });
         }
-   }
+    }
 
 
 

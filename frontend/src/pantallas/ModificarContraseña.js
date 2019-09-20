@@ -7,195 +7,195 @@ import '../diseños/ModificarContraseña.css';
 
 class ModificarContraseña extends Component {
 
-	constructor(props) {
-		super(props)
+    constructor(props) {
+        super(props)
 
-		this.state = {
-			fields: [],
-			errores: [],
-			usuario: {},
-			visible: false,
-			mensajeError: "",
-			user: this.props.usuario //para ir pasando el ID del usuario de pantalla a pantalla
-		}
+        this.state = {
+            fields: [],
+            errores: [],
+            usuario: {},
+            visible: false,
+            mensajeError: "",
+            user: this.props.usuario //para ir pasando el ID del usuario de pantalla a pantalla
+        }
 
-		this.validarDatos = this.validarDatos.bind(this);
-		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-	}
+        this.validarDatos = this.validarDatos.bind(this);
+        this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+    }
 
-	detectarCambios(e) {
-		let fields = this.state.fields;
-		fields[e.target.name] = e.target.value;
-		this.setState({
-			fields
-		})
-	}
+    detectarCambios(e) {
+        let fields = this.state.fields;
+        fields[e.target.name] = e.target.value;
+        this.setState({
+            fields
+        })
+    }
 
-	closeModal() {
-		this.setState({
-			visible: false
-		});
-	}
+    closeModal() {
+        this.setState({
+            visible: false
+        });
+    }
 
-	validarDatos() {
-		this.setState({
-			errores: []
-		})
+    validarDatos() {
+        this.setState({
+            errores: []
+        })
 
-		let errores = {};
+        let errores = {};
 
-		if ((!this.state.fields["username"]) && (!this.state.fields["password"])) {
-			errores["username"] = "*Campo inválido";
-			errores["password"] = "*Campo inválido";
+        if ((!this.state.fields["username"]) && (!this.state.fields["password"])) {
+            errores["username"] = "*Campo inválido";
+            errores["password"] = "*Campo inválido";
 
-		} else if (!this.state.fields["username"]) {
-			errores["username"] = "*Campo inválido";
+        } else if (!this.state.fields["username"]) {
+            errores["username"] = "*Campo inválido";
 
-		} else if (!this.state.fields["password"]) {
-			errores["password"] = "*Campo inválido";
+        } else if (!this.state.fields["password"]) {
+            errores["password"] = "*Campo inválido";
 
-		} else {
-			const path_principal = "http://localhost:3000/redAgro/login?u=";
+        } else {
+            const path_principal = "http://localhost:3000/redAgro/login?u=";
 
-			var username = this.state.fields["username"];
-			var password = this.state.fields["password"];
+            var username = this.state.fields["username"];
+            var password = this.state.fields["password"];
 
-			const final_path = path_principal + username + "&c=" + password;
+            const final_path = path_principal + username + "&c=" + password;
 
-			var _this = this;
+            var _this = this;
 
-			fetch(final_path, {
-				method: "GET",
-				headers: {
+            fetch(final_path, {
+                method: "GET",
+                headers: {
 
-					'Content-type': 'application/json;charset=UTF-8',
+                    'Content-type': 'application/json;charset=UTF-8',
 
-				},
-			})
-				.then(function (response) {
+                },
+            })
+                .then(function (response) {
 
-					if (response.status !== 200) {
+                    if (response.status !== 200) {
 
-						// alert("Ocurrió algún problema. Intenta nuevamente")
+                        // alert("Ocurrió algún problema. Intenta nuevamente")
 
-						let mensajeError = "Ocurrió algun problema, intenta nuevamente"
-						_this.setState({
-							visible: true,
-							mensajeError: mensajeError
-						});
+                        let mensajeError = "Ocurrió algun problema, intenta nuevamente"
+                        _this.setState({
+                            visible: true,
+                            mensajeError: mensajeError
+                        });
 
-						return;
+                        return;
 
-					}
+                    }
 
-					response.text().then(
+                    response.text().then(
 
-						function (response) {
+                        function (response) {
 
-							if (response !== "") {
-								_this.setState({ usuario: JSON.parse(response) });
+                            if (response !== "") {
+                                _this.setState({ usuario: JSON.parse(response) });
 
-								if (_this.state.usuario.rol === "Productor") {
+                                if (_this.state.usuario.rol === "Productor") {
 
-									_this.mostrarPantallaProductor();
+                                    _this.mostrarPantallaProductor();
 
-								} else {
+                                } else {
 
-									_this.mostrarPantallaConsumidor();
+                                    _this.mostrarPantallaConsumidor();
 
-								}
+                                }
 
-							} else {
+                            } else {
 
-								let mensajeError = "Cuenta inexistente o datos incorrectos";
-								_this.setState({
-									visible: true,
-									mensajeError: mensajeError
-								});
-							}
+                                let mensajeError = "Cuenta inexistente o datos incorrectos";
+                                _this.setState({
+                                    visible: true,
+                                    mensajeError: mensajeError
+                                });
+                            }
 
-						});
-				});
-		}
+                        });
+                });
+        }
 
-		this.setState({
-			errores
-		})
-	}
+        this.setState({
+            errores
+        })
+    }
 
-	mostrarPantallaPrincipal() {
+    mostrarPantallaPrincipal() {
 
-		this.state.user.rol=="Productor"?
+        this.state.user.rol === "Productor" ?
 
-		this.props.history.push({
-			pathname: '/principalProductores',
-			state: { id: this.state.user.id }
-		})
-		:
-  
-		this.props.history.push("/principalConsumidores", { id: this.state.user.id });
+            this.props.history.push({
+                pathname: '/principalProductores',
+                state: { id: this.state.user.id }
+            })
+            :
 
-	}
+            this.props.history.push("/principalConsumidores", { id: this.state.user.id });
 
-	render() {
+    }
 
-		return (
-			<div>
-				<div className="titulosPrincipales">Modificar contraseña</div>
-				<div className="contenidoMF">
-					<div className="contraseñaActual" >
-						<Form.Group as={Row}>
-							<Form.Label column sm={4}>
-								Contraseña actual
+    render() {
+
+        return (
+            <div>
+                <div className="titulosPrincipales">Modificar contraseña</div>
+                <div className="contenidoMF">
+                    <div className="contraseñaActual" >
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Contraseña actual
 									</Form.Label>
-							<Form.Control
-								required
-								type="mf"
-								name="contraseñaActual"
-								onChange={(e) => this.detectarCambios(e)}
-							/>
-						</Form.Group>
-					</div>
-					<div className="contraseñaNueva" >
-						<Form.Group as={Row}>
-							<Form.Label column sm={4}>
-								Contraseña nueva
+                            <Form.Control
+                                required
+                                type="mf"
+                                name="contraseñaActual"
+                                onChange={(e) => this.detectarCambios(e)}
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="contraseñaNueva" >
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Contraseña nueva
 									</Form.Label>
-							<Form.Control
-								required
-								type="mf"
-								name="contraseñaNueva"
-								onChange={(e) => this.detectarCambios(e)}
-							/>
-						</Form.Group>
-					</div>
-					<div className="ConfirmarContraseña" >
-						<Form.Group as={Row}>
-							<Form.Label column sm={4}>
-								Confirmar contraseña
+                            <Form.Control
+                                required
+                                type="mf"
+                                name="contraseñaNueva"
+                                onChange={(e) => this.detectarCambios(e)}
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="ConfirmarContraseña" >
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Confirmar contraseña
 									</Form.Label>
-							<Form.Control
-								required
-								type="mf"
-								name="confirmarContraseña"
-								onChange={(e) => this.detectarCambios(e)}
-							/>
-						</Form.Group>
-					</div>
-					<div className="botonesNuevoProducto">
-						<div className="botonAtras">
-							<a onClick={this.mostrarPantallaPrincipal}>
+                            <Form.Control
+                                required
+                                type="mf"
+                                name="confirmarContraseña"
+                                onChange={(e) => this.detectarCambios(e)}
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="botonesNuevoProducto">
+                        <div className="botonAtras">
+                            <a onClick={this.mostrarPantallaPrincipal}>
                                 <Button variant="success">Cancelar</Button>
                             </a>
-						</div>
-						<div className="botonCrear">
-							<Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Crear</Button>
-						</div>
-					</div>
-				</div>
-			</div>
-		);
-	};
+                        </div>
+                        <div className="botonCrear">
+                            <Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Crear</Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
 }
 
 export default ModificarContraseña;

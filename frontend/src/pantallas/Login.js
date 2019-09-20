@@ -118,7 +118,7 @@ class LoginForm extends Component {
     mostrarPantallaProductor() {
         this.props.history.push({
             pathname: '/principalProductores',
-            state: { id: this.state.usuario.id , user:this.state.usuario, rolUsuario: this.state.usuario.rol}
+            state: { id: this.state.usuario.id, user: this.state.usuario, rolUsuario: this.state.usuario.rol }
         })
 
     }
@@ -128,22 +128,22 @@ class LoginForm extends Component {
             pathname: '/principalConsumidores',
             state: {
                 id: this.state.usuario.id,
-                user:this.state.usuario,
+                user: this.state.usuario,
                 rolUsuario: this.state.usuario.rol
             }
         })
     }
 
     render() {
+        const { data, loading } = this.state
+
         return (
-            <div className="fondo" >
-                <div className="barraNavegacion">
-                    <Navbar>
-                        <Link to={'/'} className="culturaVerde">
-                            <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                        </Link>
-                    </Navbar>
-                </div>
+            <div className="fondo">
+                <Navbar className="barraNavegacion">
+                    <Link to={'/'} className="culturaVerde">
+                        <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
+                    </Link>
+                </Navbar>
                 <Container fluid className="contenedor">
                     <div className="formularioLogin">
                         <h2>Acceso de usuarios</h2>
