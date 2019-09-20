@@ -27,5 +27,5 @@ public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 	String obtenerTipoUsuario(long id);
 	
 	@Query(value="SELECT * FROM Usuario  WHERE id = ?1", nativeQuery = true)
-	Usuario obtenerDatosUsuario(long id);
+	EntidadUsuario obtenerDatosUsuario(long id);
 }
