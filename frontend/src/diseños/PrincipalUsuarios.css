@@ -1,6 +1,6 @@
 .filaContenedora {
-
-	height: 100vh;
+    /*78 px es el tamaño que ocupa la nav-bar*/
+	min-height: calc(100vh - 78px);
 
 }
 
@@ -25,7 +25,6 @@
 	margin-left: -14px;
 	margin-right: 20px;
 	
-
 }
 
 .iconos {
@@ -89,7 +88,6 @@ h4 {
 	font-weight: bold;
 	margin-left: -10px;
 
-
 }
 
 #config_drop {
@@ -107,13 +105,13 @@ h4 {
 
 }
 
-
 #config_dropConsu {
 
 	margin-top: -7.5px;
 	color: black !important;
 	font-weight: bold;
-	margin-left: -10px;
+    margin-left: -10px;
+    
 }
 
 
@@ -186,25 +184,25 @@ h4 {
 
 #market{
 
-margin-top:8px;
+    margin-top:8px;
 
 }
 
 #alert{
 
-margin-left:-16px;
+    margin-left:-16px;
 
 }
 
 #items{
-
-color:black !important;
+    
+    color:black !important;
 
 }
 
 .items{
 
-color:black !important;
+    color:black !important;
 
 
 }

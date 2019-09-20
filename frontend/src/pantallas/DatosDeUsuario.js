@@ -14,16 +14,23 @@ class DatosDeUsuario extends Component {
 
         super(props)
 
+
         this.state = {
             campos: [],
             errores: [],
-            usuario: {},
+            usuario:this.props.usuario,
             visible: false,
             mensajeError: "",
-            id: this.props.id_productor //para ir pasando el ID del usuario de pantalla a pantalla
+            id: this.props.usuario.id, //para ir pasando el ID del usuario de pantalla a pantalla
         }
+        this.state.campos["nombre"]= this.state.usuario.nombre;
+        this.state.campos["apellido"]= this.state.usuario.apellido;
+        this.state.campos["telefono"]= this.state.usuario.telefono;
+        this.state.campos["fecha_nacimiento"]= this.state.usuario.fecha_nacimiento;
 
-        this.validarDatos = this.validarDatos.bind(this);
+//       alert(this.state.usuario);
+//        this.validarDatos = this.validarDatos.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);   
         this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
         this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
@@ -41,7 +48,7 @@ class DatosDeUsuario extends Component {
     cambiosFecha(e) {
 
         let campos = this.state.campos;
-        campos["fecha_nac"] = e;
+        campos["fecha_nacimiento"] = e;
 
     }
 
@@ -51,12 +58,12 @@ class DatosDeUsuario extends Component {
         });
     }
 
-    validarDatos() {
-        // this.setState({
-        //     errores: []
-        // })
+    validarCampos() {
+        this.setState({
+            errores: []
+        })
 
-        // let errores = {};
+        let errores = {};
 
         // if ((!this.state.fields["username"]) && (!this.state.fields["password"])) {
         //     errores["username"] = "*Campo inválido";
@@ -123,7 +130,7 @@ class DatosDeUsuario extends Component {
         // }
 
         this.setState({
-           // errores
+           errores
         })
     }
 
@@ -149,7 +156,7 @@ class DatosDeUsuario extends Component {
         var _this = this;
         e.preventDefault();
 
-        //if (_this.validarCampos()) {
+        if (this.validarCampos()) {
 
             var id_productor = _this.props.id_productor;
             var path_principal = "http://localhost:3000/redAgro/update_usuario?id=";
@@ -162,10 +169,10 @@ class DatosDeUsuario extends Component {
                     'Content-type': 'application/json;charset=UTF-8',
                 },
                 body: JSON.stringify({
-							"nombre": _this.state.campos["nombre"],
-							"apellido": _this.state.campos["apellido"],
-                            "telefono": _this.state.campos["tel"],
-                            "fecha_nacimiento": _this.state.campos["fecha_nac"],
+							"nombre":this.state.campos["nombre"],
+							"apellido": this.state.campos["apellido"],
+                            "telefono": this.state.campos["telefono"],
+                            "fecha_nacimiento": this.state.campos["fecha_nacimiento"],
                 }),
             })
                 .then(function (response) {
@@ -186,7 +193,7 @@ class DatosDeUsuario extends Component {
                     _this.mostrarMensajeOk();
                 });
         }
-   // }
+   }
 
 
 
@@ -204,6 +211,7 @@ class DatosDeUsuario extends Component {
                                 required
                                 type="nom"
                                 name="nombre"
+                                value={this.state.campos["nombre"]}
                                 pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
@@ -218,6 +226,7 @@ class DatosDeUsuario extends Component {
                                 required
                                 type="ap"
                                 name="apellido"
+                                value={this.state.campos["apellido"]}
                                 pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
@@ -231,6 +240,7 @@ class DatosDeUsuario extends Component {
                             <DatePickerInput
                                 ref="datePicker"
                                 name="fecha_nac"
+                                value={this.state.campos["fecha_nacimiento"]}
                                 displayFormat='DD/MM/YYYY'
                                 maxDate={maxDate}
                                 className="calend"
@@ -250,24 +260,12 @@ class DatosDeUsuario extends Component {
                                 required
                                 type="tel"
                                 name="telefono"
+                                value={this.state.campos["telefono"]}
                                 pattern="[0-9]{8,14}"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
                     </div>
-                    {/* <div className="emailDU" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Mail
-									</Form.Label>
-                            <Form.Control
-                                required
-                                type="mail"
-                                name="mail"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                        </Form.Group>
-                    </div> */}
                     <div className="botones">
                         <div className="botonAtras">
                             <a onClick={this.mostrarPantallaPrincipal}>

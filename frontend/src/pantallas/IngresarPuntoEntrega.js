@@ -17,25 +17,13 @@ class IngresarPuntoEntrega extends Component {
     				}
     
 		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-		
 		this.autocomplete = null
-
-    	this.onLoad = this.onLoad.bind(this)
     	this.onPlaceChanged = this.onPlaceChanged(this)
   }
 
-  onLoad (autocomplete) {
-    console.log('autocomplete: ', autocomplete)
 
-    this.autocomplete = autocomplete
-  	}
-
-  	onPlaceChanged () {	
-    	if (this.autocomplete !== null) {
-      		console.log(this.autocomplete.getPlace())
-    	} else {
-      		console.log('Autocomplete is not loaded yet!')
-    	}
+  	onPlaceChanged (place) {	
+    	alert(place.formatted_address);
   	}
 
 	mostrarPantallaPrincipal() {
@@ -66,7 +54,7 @@ class IngresarPuntoEntrega extends Component {
             						lng: -115.234
           							}}
         					>
-          					<Autocomplete onLoad={this.onLoad} onPlacesChanged={this.onPlaceChanged}>
+          					<Autocomplete onPlacesSelected={this.onPlaceChanged}>
 								<div className="domicilio" >
 									<input type="text" placeholder="Ingrese direccion" name="search" />
 								</div>  	

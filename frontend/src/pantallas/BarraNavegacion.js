@@ -50,7 +50,7 @@ class BarraNavegacion extends Component {
                                         <Link to={'/principalConsumidores'}>Mi cuenta</Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item href="/login">Salir</NavDropdown.Item>
+                                    <NavDropdown.Item href="/">Salir</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
 
@@ -74,7 +74,7 @@ class BarraNavegacion extends Component {
                                             <Link to={'/principalProductores'}>Mi cuenta</Link>
                                         </NavDropdown.Item>
                                         <NavDropdown.Divider />
-                                        <NavDropdown.Item href="/login">Salir</NavDropdown.Item>
+                                        <NavDropdown.Item href="/">Salir</NavDropdown.Item>
                                     </NavDropdown>
                                 </Nav>
 
