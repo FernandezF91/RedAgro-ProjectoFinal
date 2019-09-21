@@ -85,7 +85,7 @@ class Estadisticas extends Component {
                         <GraficoPie totalesGraficoPie={this.state.totalesGraficoPie} />
                     </div>
                     <div className="graficos1">
-                        <h5>Total de reservas concretadas (en los ultimos 6 meses)</h5>
+                        <h5>Total de reservas concretadas (en los últimos 6 meses)</h5>
                         <GraficoLine totalesGraficoLine={this.state.totalesGraficoLine} />
                     </div>
                 </div>

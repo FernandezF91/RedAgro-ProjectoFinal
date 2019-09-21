@@ -275,7 +275,7 @@ class NuevoProducto extends Component {
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
-                        <div className="condicionesInputs">(*) 100 caractéres como máximo</div>
+                        <div className="condicionesInputs">(*) 100 caracteres como máximo</div>
                     </div>
                     <div className="descripcion" >
                         <Form.Group as={Row}>
@@ -291,7 +291,7 @@ class NuevoProducto extends Component {
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
-                        <div className="condicionesInputs">(*) 255 caractéres como máximo</div>
+                        <div className="condicionesInputs">(*) 255 caracteres como máximo</div>
                     </div>
                     <div className="dropdownCategoria">
                         <Form.Group as={Row}>
