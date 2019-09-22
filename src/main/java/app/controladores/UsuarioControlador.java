@@ -94,7 +94,7 @@ public class UsuarioControlador {
 	
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping(path = "redAgro/update_usuario")
-	public void updateUsuarioConsumidor(@RequestBody EntidadUsuario usuario, @RequestParam long id) {
+	public void updateUsuario(@RequestBody EntidadUsuario usuario, @RequestParam Long id) {
 	
 		 usuarioDAO.actualizaUsuario(usuario.getNombre(),usuario.getApellido(),usuario.getTelefono(),usuario.getFecha_nacimiento(), id);
 	}
@@ -121,14 +121,14 @@ public class UsuarioControlador {
 		}
 	}
 	
-//	@CrossOrigin(origins = "http://localhost:3000")
-//	@GetMapping(path = "redAgro/modificar_contraseña")
-//	public ResponseEntity<String> modificacionContraseña(@RequestParam String c, @RequestParam Long id) {
-//		
-//		usuarioDAO.modificarContraseña(c, id);
-//		
-//		
-//	}
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PutMapping(path = "redAgro/modificar_contraseña")
+	public void modificacionContraseña(@RequestParam String c, @RequestParam Long id) {
+		
+		usuarioDAO.modificarContraseña(c, id);
+		
+		
+	}
 	
 	
 	@CrossOrigin(origins = "http://localhost:3000")

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component,useState } from 'react'
 import { Form, Row, Button } from 'react-bootstrap';
 import 'moment/locale/es';
 import { DatePickerInput } from 'rc-datepicker';
@@ -38,15 +38,6 @@ const tipoProduccion = [
     { label: "Agroecológica", value: 2 },
 ];
 
-// FilePond.setOptions({
-//     server: {
-//         process: './process',
-//         revert: './revert',
-//         restore: './restore/',
-//         load: './load/',
-//         fetch: './fetch/'
-//     }
-// });
 
 class NuevoProducto extends Component {
     constructor(props) {
@@ -59,6 +50,8 @@ class NuevoProducto extends Component {
             visible: false,
             mensaje: "",
             tipos_producto: [],
+            formOk:false,
+            visibleOk:false,
             id: this.props.id_productor
         }
 
@@ -94,12 +87,30 @@ class NuevoProducto extends Component {
         return true;
     }
 
-    closeModal() {
-        this.setState({
-            visible: false
-        });
+    closeModalSeguirCargando(){
+
+    this.setState({visibleOk:false})
+
+    this.props.history.push({
+            pathname: '/principalProductores/NuevoProducto',
+            state: { id: this.state.id }
+        })
+    
+
     }
 
+    closeModal() {
+
+       if(this.state.formOk===true){
+
+        this.mostrarPantallaPrincipal();
+
+        }
+
+        this.setState({
+            visible:false
+        });
+    }
 
     handleSubmit(e) {
         var _this = this;
@@ -173,11 +184,11 @@ class NuevoProducto extends Component {
     }
 
     mostrarMensajeOk() {
-        this.setState({
-            titulo: "Ok",
-            visible: true,
-            mensaje: "Producto guardado!"
-        });
+
+        this.setState({formOk:true,
+                       visibleOk:true});
+
+  
     }
 
     cambiosFecha(e) {
@@ -418,6 +429,23 @@ class NuevoProducto extends Component {
                             <h1>{this.state.titulo}</h1>
                             <p>{this.state.mensaje}</p>
                             <a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
+                        </div>
+                    </Modal>
+                    <Modal
+                        visible={this.state.visibleOk}
+                        width="400"
+                        height="160"
+                        effect="fadeInUp"
+                    >
+                        <div>
+                            <h1>Producto Guardado</h1>
+                            <p>¿Querés seguir cargando productos?</p>
+                             <Button variant="success" onClick={() => this.closeModalSeguirCargando()}>
+                                Si
+                            </Button>
+                            <Button variant="success" onClick={() => this.closeModal()}>
+                                No
+                             </Button>
                         </div>
                     </Modal>
                 </section>

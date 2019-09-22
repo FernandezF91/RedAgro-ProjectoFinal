@@ -20,7 +20,9 @@ public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 	@Query("update EntidadUsuario u set u.nombre = ?1, u.apellido= ?2, u.telefono= ?3, u.fecha_nacimiento= ?4  where u.id = ?5")
 	void actualizaUsuario(String nombre, String apellido, String telefono, Date fecha_nac, long id);
 	
-	@Query("UPDATE EntidadUsuario u SET contraseña =?1 WHERE u.usuario = ?2")
+	@Transactional
+	@Modifying
+	@Query("UPDATE EntidadUsuario u SET u.contraseña =?1 WHERE u.id =?2")
 	void modificarContraseña(String c, Long id);
 	
 	@Query("SELECT u FROM EntidadUsuario u WHERE u.usuario = ?1")

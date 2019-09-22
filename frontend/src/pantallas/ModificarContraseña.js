@@ -16,6 +16,7 @@ class ModificarContraseña extends Component {
             visible: false,
             mensaje: "",
             titulo:"",
+            formOk:false,
             user: this.props.usuario //para ir pasando el ID del usuario de pantalla a pantalla
         }
 
@@ -32,9 +33,23 @@ class ModificarContraseña extends Component {
     }
 
     closeModal() {
+
+        if(this.state.formOk===false){
+        
         this.setState({
             visible: false
         });
+
+        return;
+
+    }
+
+        this.setState({
+            visible: false
+        });
+
+        this.mostrarPantallaPrincipal();
+        
     }
 
 
@@ -45,16 +60,23 @@ class ModificarContraseña extends Component {
       ((this.state.fields["contraseñaNueva"])!==(this.state.fields["confirmarContraseña"])) ||
        ((this.state.fields["contraseñaActual"])!==(this.state.user.contraseña))){
 
-        // alert(this.state.user.contraseña);
-        // alert(this.state.fields["contraseñaActual"]);
-        // alert(this.state.fields["contraseñaNueva"]);
-        // alert(this.state.fields["confirmarContraseña"]);
-
         this.setState({titulo:"Error",
                        mensaje:"Datos incompletos o incorrectos",
                        visible:true});
 
                        return false;
+
+       }
+
+       if(this.state.fields["contraseñaActual"]===this.state.fields["contraseñaNueva"]){
+
+
+      this.setState({titulo:"Error",
+                       mensaje:"No modificaste tu contraseña",
+                       visible:true});
+
+                       return false;
+
 
        }
 
@@ -68,7 +90,11 @@ class ModificarContraseña extends Component {
 
             var password = this.state.fields["contraseñaNueva"];
 
-            const final_path = path_principal + password;
+            var id = this.state.user.id;
+
+            const final_path = path_principal + password + "&id="+id;
+
+           console.log(final_path);
 
             var _this = this;
 
@@ -77,11 +103,11 @@ class ModificarContraseña extends Component {
 
             fetch(final_path, {
                 method: "PUT",
-                headers: {
+                // headers: {
 
-                    'Content-type': 'application/json;charset=UTF-8',
+                //     'Content-type': 'application/json;charset=UTF-8',
 
-                },
+                // },
             })
                 .then(function (response) {
 
@@ -101,15 +127,15 @@ class ModificarContraseña extends Component {
 
                     }
 
-                    response.json().then(
+                    response.text().then(
 
                         function (response) {
 
-                                let mensaje = "Cuenta inexistente o datos incorrectos";
                                 _this.setState({
                                     visible: true,
                                     titulo:"Modificación exitosa",
-                                    mensaje:""
+                                    mensaje:"",
+                                    formOk:true
                                 });
                             
 
@@ -118,8 +144,6 @@ class ModificarContraseña extends Component {
             }
         }
 
-  
-    
 
     mostrarPantallaPrincipal() {
 
@@ -148,7 +172,7 @@ class ModificarContraseña extends Component {
 									</Form.Label>
                             <Form.Control
                                 required
-                                type="mf"
+                                type="password"
                                 name="contraseñaActual"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
@@ -161,7 +185,7 @@ class ModificarContraseña extends Component {
 									</Form.Label>
                             <Form.Control
                                 required
-                                type="mf"
+                                type="password"
                                 name="contraseñaNueva"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
@@ -174,7 +198,7 @@ class ModificarContraseña extends Component {
 									</Form.Label>
                             <Form.Control
                                 required
-                                type="mf"
+                                type="password"
                                 name="confirmarContraseña"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
@@ -187,7 +211,7 @@ class ModificarContraseña extends Component {
                             </a>
                         </div>
                         <div className="botonCrear">
-                            <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Crear</Button>
+                            <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
                         </div>
                     </div>
                 </div>

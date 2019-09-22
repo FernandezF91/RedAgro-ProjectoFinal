@@ -40,14 +40,11 @@ class PantallaPrincipalProductores extends Component {
             rolUsuario: this.props.location.state.rolUsuario
 
         }
-       // alert(this.state.user);
+
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
  
-/*    componentDidMount() {
-    alert(this.state.id);
-    }
- */
+
     mostrarPantallaPrincipal() {
         this.props.history.push({
             pathname: '/principalProductores',
@@ -56,7 +53,7 @@ class PantallaPrincipalProductores extends Component {
                 rolUsuario: this.state.rolUsuario 
             }
         })
-        alert(this.state.id);
+    
     }
  
     render() {

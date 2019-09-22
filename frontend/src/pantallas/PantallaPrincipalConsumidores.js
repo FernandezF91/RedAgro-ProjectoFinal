@@ -41,9 +41,6 @@ class PantallaPrincipalconsumidores extends Component {
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
  
-    componentDidMount() {
-        alert(this.state.id);
-    }
  
     mostrarPantallaPrincipal() {
         this.props.history.push({
@@ -54,7 +51,6 @@ class PantallaPrincipalconsumidores extends Component {
              }
         })
  
-        alert(this.state.id);
     }
  
     render() {
@@ -106,7 +102,7 @@ class PantallaPrincipalconsumidores extends Component {
                                         </NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item>
-                                            <Link to="/principalConsumidores/modificarContraseña" id="items">Modificar Contraseña</Link>
+                                            <Link to="/principalConsumidores/modificarContraseña" id="items">Modificar contraseña</Link>
                                         </NavDropdown.Item>
                                     </NavDropdown>
                                 </div>

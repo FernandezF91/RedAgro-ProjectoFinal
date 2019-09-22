@@ -3,10 +3,16 @@ import React, { Component } from 'react'
 import { Form, Row, Button } from 'react-bootstrap';
 // import '../diseños/estilosGlobales.css';
 import '../diseños/DatosDeUsuario.css';
-import '../diseños/Registro.css';
 import { DatePickerInput } from 'rc-datepicker';
+import Modal from 'react-awesome-modal';
+import { isDate } from 'moment';
 
 const maxDate = new Date();
+
+const regularExp = {
+        onlyLetters : /^[A-Za-z]+$/,
+        onlyNumbers : /^[0-9]+$/
+    }
 
 class DatosDeUsuario extends Component {
 
@@ -19,18 +25,26 @@ class DatosDeUsuario extends Component {
             errores: [],
             usuario: this.props.usuario,
             visible: false,
-            mensajeError: "",
-            id: this.props.usuario.id, //para ir pasando el ID del usuario de pantalla a pantalla
+            mensaje: "",
+            titulo:"",
+            formOk:false,
+            id: this.props.usuario.id //para ir pasando el ID del usuario de pantalla a pantalla
         }
-        this.state.campos["nombre"] = this.state.usuario.nombre;
-        this.state.campos["apellido"] = this.state.usuario.apellido;
-        this.state.campos["telefono"] = this.state.usuario.telefono;
-        this.state.campos["fecha_nacimiento"] = this.state.usuario.fecha_nacimiento;
 
-        //       alert(this.state.usuario);
-        //        this.validarDatos = this.validarDatos.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+    }
+
+    componentDidMount(){
+
+        let campos={}
+
+    campos["nombre"] = this.state.usuario.nombre;
+    campos["apellido"] = this.state.usuario.apellido;
+    campos["fecha_nac"] = new Date(this.state.usuario.fecha_nacimiento);
+    campos["telefono"] = this.state.usuario.telefono;
+
+    this.setState({campos:campos});
+
     }
 
     detectarCambios(e) {
@@ -42,94 +56,34 @@ class DatosDeUsuario extends Component {
 
     }
 
-    cambiosFecha(e) {
-
+   cambiosFecha(e) {
         let campos = this.state.campos;
-        campos["fecha_nacimiento"] = e;
-
+        campos["fecha_nac"] = e;
+        this.setState({ campos })
     }
 
+
     closeModal() {
+
+        if(this.state.formOk===false){
+        
         this.setState({
             visible: false
         });
+
+        return;
+
     }
 
-    validarCampos() {
         this.setState({
-            errores: []
-        })
+            visible: false
+        });
 
-        let errores = {};
-
-        // if ((!this.state.fields["username"]) && (!this.state.fields["password"])) {
-        //     errores["username"] = "*Campo inválido";
-        //     errores["password"] = "*Campo inválido";
-
-        // } else if (!this.state.fields["username"]) {
-        //     errores["username"] = "*Campo inválido";
-
-        // } else if (!this.state.fields["password"]) {
-        //     errores["password"] = "*Campo inválido";
-
-        // } else {
-        //     const path_principal = "http://localhost:3000/redAgro/login?u=";
-
-        //     var username = this.state.fields["username"];
-        //     var password = this.state.fields["password"];
-
-        //     const final_path = path_principal + username + "&c=" + password;
-
-        //     var _this = this;
-
-        //     fetch(final_path, {
-        //         method: "GET",
-        //         headers: {
-
-        //             'Content-type': 'application/json;charset=UTF-8',
-
-        //         },
-        //     })
-        //         .then(function (response) {
-
-        //             if (response.status !== 200) {
-
-        //                 // alert("Ocurrió algún problema. Intenta nuevamente")
-
-        //                 let mensajeError = "Ocurrió algun problema, intenta nuevamente"
-        //                 _this.setState({
-        //                     visible: true,
-        //                     mensajeError: mensajeError
-        //                 });
-
-        //                 return;
-
-        //             }
-
-        //             response.text().then(
-        //                 function (response) {
-        //                     if (response !== "") {
-        //                         _this.setState({ usuario: JSON.parse(response) });
-        //                         if (_this.state.usuario.rol === "Productor") {
-        //                             _this.mostrarPantallaProductor();
-        //                         } else {
-        //                             _this.mostrarPantallaConsumidor();
-        //                         }
-        //                     } else {
-        //                         let mensajeError = "Cuenta inexistente o datos incorrectos";
-        //                         _this.setState({
-        //                             visible: true,
-        //                             mensajeError: mensajeError
-        //                         });
-        //                     }
-        //                 });
-        //         });
-        // }
-
-        this.setState({
-            errores
-        })
+        this.mostrarPantallaPrincipal();
+        
     }
+
+    
 
     mostrarPantallaPrincipal() {
 
@@ -145,16 +99,51 @@ class DatosDeUsuario extends Component {
 
     }
 
+validarCampos() {
+
+    
+   if((!this.state.campos["nombre"]) || (!this.state.campos["apellido"]) || (!this.state.campos["telefono"]) || (!this.state.campos["fecha_nac"]) ||
+      (!regularExp.onlyLetters.test(this.state.campos["nombre"])) || (!regularExp.onlyLetters.test(this.state.campos["apellido"])) || (!isDate(this.state.campos["fecha_nac"])) ||
+       (!regularExp.onlyNumbers.test(this.state.campos["telefono"])) || (this.state.campos["telefono"].length<8) || (this.state.campos["telefono"].length>14)){
+
+
+        this.setState({titulo:"Error",
+                       mensaje:"Datos incompletos o incorrectos",
+                       visible:true});
+
+                       return false;
+
+       }
+
+        if((this.state.campos["nombre"]=== this.state.usuario.nombre) &&
+       (this.state.campos["apellido"]=== this.state.usuario.apellido) &&
+       (this.state.campos["telefono"]=== this.state.usuario.telefono) &&
+       (this.state.campos["fecha_nac"].getTime() === new Date(this.state.usuario.fecha_nacimiento).getTime())){
+
+       
+          this.setState({titulo:"Error",
+                       mensaje:"No modificaste ningún dato",
+                       visible:true});
+
+                       return false;
+
+
+       }
+
+
+       return true;
+
+        
+    }
+
     handleSubmit(e) {
         var _this = this;
-        e.preventDefault();
-
-        if (this.validarCampos()) {
-
-            var id_productor = _this.props.id_productor;
+   
+        if (_this.validarCampos()) {
+       
             var path_principal = "http://localhost:3000/redAgro/update_usuario?id=";
 
-            var path_final = path_principal + id_productor;
+            var path_final = path_principal + _this.state.id;
 
             fetch(path_final, {
                 method: "PUT",
@@ -165,7 +154,7 @@ class DatosDeUsuario extends Component {
                     "nombre": this.state.campos["nombre"],
                     "apellido": this.state.campos["apellido"],
                     "telefono": this.state.campos["telefono"],
-                    "fecha_nacimiento": this.state.campos["fecha_nacimiento"],
+                    "fecha_nacimiento": this.state.campos["fecha_nac"]
                 }),
             })
                 .then(function (response) {
@@ -178,12 +167,19 @@ class DatosDeUsuario extends Component {
                         return;
                     }
 
-                    response.json().then(
+                    response.text().then(
                         function (response) {
-                            _this.subirArchivos(response);
+
+                             _this.setState({
+                            visible: true,
+                            titulo: "Modificación exitosa",
+                            mensaje: "",
+                            formOk:true
                         });
 
-                    _this.mostrarMensajeOk();
+                        });
+
+                   
                 });
         }
     }
@@ -204,7 +200,7 @@ class DatosDeUsuario extends Component {
                                 required
                                 type="nom"
                                 name="nombre"
-                                value={this.state.campos["nombre"]}
+                                defaultValue={this.state.usuario.nombre}
                                 pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
@@ -219,7 +215,7 @@ class DatosDeUsuario extends Component {
                                 required
                                 type="ap"
                                 name="apellido"
-                                value={this.state.campos["apellido"]}
+                                defaultValue={this.state.usuario.apellido}
                                 pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
@@ -233,15 +229,12 @@ class DatosDeUsuario extends Component {
                             <DatePickerInput
                                 ref="datePicker"
                                 name="fecha_nac"
-                                value={this.state.campos["fecha_nacimiento"]}
+                                defaultValue={this.state.usuario.fecha_nacimiento}
                                 displayFormat='DD/MM/YYYY'
                                 maxDate={maxDate}
                                 className="calend"
                                 onChange={(e) => this.cambiosFecha(e)}
                             />
-                            <div className="errorConsu">
-                                {this.state.errores["fecha_nac"]}
-                            </div>
                         </Form.Group>
                     </div>
                     <div className="telefonoDU" >
@@ -253,7 +246,7 @@ class DatosDeUsuario extends Component {
                                 required
                                 type="tel"
                                 name="telefono"
-                                value={this.state.campos["telefono"]}
+                                defaultValue={this.state.usuario.telefono}
                                 pattern="[0-9]{8,14}"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
@@ -270,6 +263,21 @@ class DatosDeUsuario extends Component {
                         </div>
                     </div>
                 </div>
+                <section>
+                        <Modal
+                            visible={this.state.visible}
+                            width="460"
+                            height="120"
+                            effect="fadeInUp"
+                            onClickAway={() => this.closeModal()}
+                        >
+                            <div>
+                                <h1>{this.state.titulo}</h1>
+                                <p>{this.state.mensaje}</p>
+                                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
+                            </div>
+                        </Modal>
+                    </section>
             </div>
         );
     };
