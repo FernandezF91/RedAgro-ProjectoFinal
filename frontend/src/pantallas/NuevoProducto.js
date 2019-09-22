@@ -17,7 +17,8 @@ import 'filepond/dist/filepond.min.css';
 // Note: These need to be installed separately
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondTypeValidate from "filepond-plugin-file-validate-type";
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';;
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';import { isDate } from 'moment';
+;
 
 const minDate = new Date();
 registerPlugin(FilePondPluginImagePreview, FilePondTypeValidate);
@@ -44,7 +45,7 @@ class NuevoProducto extends Component {
         super(props);
 
         this.state = {
-            campos: [],
+            campos: {},
             files: "",
             titulo: "",
             visible: false,
@@ -52,10 +53,14 @@ class NuevoProducto extends Component {
             tipos_producto: [],
             formOk:false,
             visibleOk:false,
+            valueCat:[],
+            valueTp:[],
+            valueTprod:[],
+            valueTu:[],
             id: this.props.id_productor
         }
 
-        this.limpiarCampos = this.limpiarCampos.bind(this);
+        this.featurePond = React.createRef();
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.obtenerTiposProducto = this.obtenerTiposProducto.bind(this);
         this.validarCampos = this.validarCampos.bind(this);
@@ -70,12 +75,20 @@ class NuevoProducto extends Component {
         })
     }
 
+   validarFecha(){
+
+    return !isDate(this.state.campos["fecha_ven"]);
+
+
+   }
+
     validarCampos() {
 
         if ((!this.state.campos["categoria"]) || (!this.state.campos["tipo_unidad"]) || (!this.state.campos["tipo_producto"])
             || (!this.state.campos["tipo_produccion"]) || (!this.state.campos["stock"]) || (!this.state.campos["precio"])
             || (!this.state.campos["tiempo_preparacion"]) || ((!this.state.campos["descripcion"]) || (this.state.campos["descripcion"].length > 255))
-            || ((!this.state.campos["titulo"]) || (this.state.campos["titulo"].length > 100)) || (this.state.files.length === 0)) {
+            || ((!this.state.campos["titulo"]) || (this.state.campos["titulo"].length > 100)) || (this.state.files.length === 0) ||
+            (!this.state.campos["fecha_ven"]? false : this.validarFecha())) {
 
             this.setState({
                 visible: true,
@@ -89,13 +102,9 @@ class NuevoProducto extends Component {
 
     closeModalSeguirCargando(){
 
-    this.setState({visibleOk:false})
+    this.setState({visibleOk:false,formOk:false})
 
-    this.props.history.push({
-            pathname: '/principalProductores/NuevoProducto',
-            state: { id: this.state.id }
-        })
-    
+    this.limpiarCampos();
 
     }
 
@@ -198,28 +207,58 @@ class NuevoProducto extends Component {
     }
 
     limpiarCampos() {
-        this.refs.form.reset();
-        let campos = {}
-        this.setState({ campos: campos });
+
+       let files=[];
+       let campos = this.state.campos;
+       campos["titulo"] = "";
+       campos["descripcion"] = "";
+       campos["categoria"] = "";
+       campos["tipo_producto"] = "";
+       campos["tipo_unidad"] = "";
+       campos["tipo_produccion"] = "";
+       campos["fecha_ven"] = "";
+       campos["stock"] = "";
+       campos["precio"] = "";
+       campos["tiempo_preparacion"] = "";
+       
+
+       this.featurePond.current.getFiles().forEach(file=>{
+
+           this.featurePond.current.removeFile(file);
+    });
+
+        this.setState({campos:campos,
+             files:files, valueCat:[],valueTp:[],valueTprod:[],valueTu:[]});
+        
+
     }
 
-    fileSelectedHandler(e) {
-        this.setState({ files: [...this.state.files, ...e.target.files] })
-    }
 
-    cambiosSelect(opt, a) {
+    cambiosSelect(opt, a, value) {
+       
+        a.name==="tipo_produccion"?
+
+        this.setState({valueTprod:value})
+
+        :
+
+        this.setState({valueTu:value});
+
         let campos = this.state.campos;
         campos[a.name] = opt.label;
         this.setState({ campos })
     }
 
-    cambiosSelectTipoProducto(opt, a) {
+    cambiosSelectTipoProducto(opt, a, value) {
+
+        this.setState({valueTp:value});
         let campos = this.state.campos;
         campos[a.name] = opt.value;
         this.setState({ campos })
     }
 
-    cambiosSelectCategoria(opt, a) {
+    cambiosSelectCategoria(opt, a, value) {
+        this.setState({valueCat:value});
         let campos = this.state.campos;
         campos[a.name] = opt.label;
         this.obtenerTiposProducto(this.state.campos["categoria"]);
@@ -280,9 +319,9 @@ class NuevoProducto extends Component {
                                 *Título
 									</Form.Label>
                             <Form.Control
+                            value={this.state.campos["titulo"]}
                                 type="titulo"
                                 name="titulo"
-                                pattern="{1,100}"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
@@ -294,11 +333,11 @@ class NuevoProducto extends Component {
                                 *Descripción
 									</Form.Label>
                             <Form.Control
+                            value={this.state.campos["descripcion"]}
                                 as="textarea"
                                 rows="3"
                                 type="desc"
                                 name="descripcion"
-                                pattern="{1,255}"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
@@ -309,7 +348,7 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Categoria
 								</Form.Label>
-                            <Select className="selectCategoria" name="categoria" options={categorias} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelectCategoria(opt, a)} />
+                            <Select value={this.state.valueCat} className="selectCategoria" name="categoria" options={categorias} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectCategoria(opt, a, value)} />
                         </Form.Group>
                     </div>
                     <div className="dropdownTipoProducto">
@@ -317,7 +356,7 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Tipo de producto
 								</Form.Label>
-                            <Select className="selectTipoProducto" name="tipo_producto" options={this.state.tipos_producto} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelectTipoProducto(opt, a)} />
+                            <Select value={this.state.valueTp} className="selectTipoProducto" name="tipo_producto" options={this.state.tipos_producto} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectTipoProducto(opt, a, value)} />
                         </Form.Group>
                     </div>
                     <div className="dropdownTipoUnidad">
@@ -325,7 +364,7 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Tipo de Unidad
 								</Form.Label>
-                            <Select className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelect(opt, a)} />
+                            <Select value={this.state.valueTu} className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelect(opt, a, value)} />
 
                         </Form.Group>
                     </div>
@@ -334,7 +373,7 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Tipo de Producción
 								</Form.Label>
-                            <Select className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt, a) => this.cambiosSelect(opt, a)} />
+                            <Select value={this.state.valueTprod} className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelect(opt, a, value)} />
                         </Form.Group>
                     </div>
                     <div className="fechaVencimiento">
@@ -357,9 +396,11 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Stock
                                 </Form.Label>
-                            <Form.Control id="number"
+                            <Form.Control
+                            value={this.state.campos["stock"]}
                                 type="number"
                                 name="stock"
+                                min="1"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
@@ -369,8 +410,10 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Precio
                                 </Form.Label>
-                            <Form.Control id="number"
+                            <Form.Control
+                            value={this.state.campos["precio"]}
                                 type="number"
+                                min="1"
                                 name="precio"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
@@ -382,8 +425,9 @@ class NuevoProducto extends Component {
                                 *Tiempo de preparación (en días)
                                 </Form.Label>
                             <Form.Control
-                                id="number"
+                                value={this.state.campos["tiempo_preparacion"]}
                                 type="number"
+                                min="1"
                                 name="tiempo_preparacion"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
@@ -393,7 +437,8 @@ class NuevoProducto extends Component {
                         <div className="tituloImagen">
                             *Imágenes
 								</div>
-                        <FilePond ref="filep"
+                        <FilePond
+                            ref={this.featurePond}
                             allowMultiple={true} maxFiles={5} imagePreviewHeight={150} acceptedFileTypes="image/jpeg, image/png, image/jpg" labelIdle={"Arrastre o suba sus imágenes aquí"}
                             onupdatefiles={(fileItems) => {
                                 // Set current file objects to this.state
@@ -413,7 +458,7 @@ class NuevoProducto extends Component {
                             <Button variant="success" type="submit">Crear</Button>
                         </div>
                         <div className="botonLimpiar">
-                            <Button variant="success" onClick={this.limpiarCampos}>Limpiar</Button>
+                            <Button variant="success" onClick={()=> this.limpiarCampos()}>Limpiar</Button>
                         </div>
                     </div>
                 </Form>
