@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.math.BigInteger;
+import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -76,13 +77,13 @@ public class ReservaControlador {
 
 		if (resultados != null && !resultados.isEmpty()) {
 			for (Object[] object : resultados) {
-				estadisticas.add(new ResultadosEstadisticas((String) object[0], (BigInteger) object[1]));
+				estadisticas.add(new ResultadosEstadisticas((String) object[0], (BigDecimal) object[1]));
 			}
 		}
 		return estadisticas;
 	}
 
-	// Solo contabiliza los ultimos 3 meses
+	
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "redAgro/obtenerMetricasReservasPorMes", method = RequestMethod.GET)
 	public List<ResultadosEstadisticas> obtenerMetricasReservasPorMes(@RequestParam Long id_usuario) {
@@ -91,8 +92,48 @@ public class ReservaControlador {
 
 		if (resultados != null && !resultados.isEmpty()) {
 			for (Object[] object : resultados) {
-				estadisticas.add(
-						new ResultadosEstadisticas((String) object[0], (int) object[1], (BigInteger) object[2]));
+				String mes = "";
+				switch ((int) object[0]) {
+				  case 1:
+					  mes = "Enero";
+				    break;
+				  case 2:
+					  mes = "Febrero";
+				    break;
+				  case 3:
+					  mes = "Marzo";
+				    break;
+				  case 4:
+					  mes = "Abril";
+				    break;
+				  case 5:
+					  mes = "Mayo";
+				    break;
+				  case 6:
+					  mes = "Junio";
+				    break;
+				  case 7:
+					  mes = "Julio";
+				    break;
+				  case 8:
+					  mes = "Agosto";
+				    break;
+				  case 9:
+					  mes = "Septiembre";
+				    break;
+				  case 10:
+					  mes = "Octubre";
+				    break;
+				  case 11:
+					  mes = "Noviembre";
+				    break;
+				  case 12:
+					  mes = "Diciembre";
+				    break;
+				}
+				estadisticas.add(new ResultadosEstadisticas(mes , (BigInteger) object[1]));
+				/*estadisticas.add(
+						new ResultadosEstadisticas((String) object[0], (int) object[1], (BigInteger) object[2]));*/
 			}
 		}
 		return estadisticas;
