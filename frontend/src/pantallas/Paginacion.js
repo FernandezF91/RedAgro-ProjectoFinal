@@ -2,7 +2,7 @@ import React from "react";
 import '../diseños/Reservas.css';
 import { MDBPagination, MDBPageItem, MDBPageNav, MDBCol, MDBRow } from "mdbreact";
 
-const PaginacionDeReservas = (props) => {
+const Paginacion = (props) => {
   const pageNumbers = [];
   for (let i = 1; i <= props.pages; i++) {
     pageNumbers.push(i);
@@ -59,4 +59,4 @@ const PaginacionDeReservas = (props) => {
 
   )
 }
-export default PaginacionDeReservas;
+export default Paginacion;

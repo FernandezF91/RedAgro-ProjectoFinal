@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 import Reserva from '../pantallas/Reserva';
 import DetalleReserva from '../pantallas/DetalleReserva';
-import PaginacionDeReservas from './PaginacionDeReservas';
-
+import Paginacion from './Paginacion';
 
 class ListadoReservas extends Component {
 
@@ -129,7 +128,7 @@ class ListadoReservas extends Component {
 				<Reserva lista={body}/>
 				{
 					reservasRealizadas.length > reservasPerPage ?
-						<PaginacionDeReservas
+						<Paginacion
 							pages={numberOfPages}
 							nextPage={this.nextPage}
 							currentPage={this.state.currentPage} />
