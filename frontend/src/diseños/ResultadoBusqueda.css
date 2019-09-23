@@ -15,3 +15,16 @@
     border:0px;
     background-color: transparent;
   }
+
+  .cantidadProductos{
+    width: 150px;
+    margin-left: 900px;
+  }
+
+  .opcionesCantidad{
+    display: flex;
+    flex-direction: row;
+    justify-content:left;
+    align-content: "right";
+    margin-bottom: 20px;
+  }
