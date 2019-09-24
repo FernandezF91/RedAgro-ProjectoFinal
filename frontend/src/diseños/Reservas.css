@@ -185,27 +185,32 @@ th.react-bs-table-expand-cell>div{
  */
 
 .react-bootstrap-table table {
-	table-layout: auto !important;
+    table-layout: auto !important;
 }
 
 .paginado {
-	justify-content: center;
+    justify-content: center;
 }
 
 .linksReservas {
-	display: flex;
+    display: flex;
 }
 
 .iconoMenu {
-	margin-left: 5px;
-	margin-top: 3px;
+    margin-left: 5px;
+    margin-top: 3px;
 }
 
 .iconoGrande {
-	color: #79CB79;
-	font-size: 175px;
+    color: #79CB79;
+    font-size: 175px;
 }
 
 .sinReservas {
-	margin-top: 15px;
+    margin-top: 15px;
+}
+
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
 }
