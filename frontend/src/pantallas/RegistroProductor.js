@@ -258,7 +258,7 @@ class RegistroProductor extends Component {
                             <div className="tel">
                                 <Form.Group as={Row} >
                                     <Form.Label column sm={2}>
-                                        Teléfono
+                                        Teléfono de contacto
                                 </Form.Label>
                                     <Col sm={10}>
                                         <Form.Control required type="telR" name="tel" pattern="[0-9]{8,14}" onChange={(e) => this.detectarCambios(e)} />
