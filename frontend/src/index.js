@@ -17,6 +17,7 @@ import './diseños/index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
+import ConfirmacionCuenta from './pantallas/ConfirmacionCuenta';
 
 ReactDOM.render(
     <BrowserRouter>
@@ -29,6 +30,7 @@ ReactDOM.render(
             <Route path="/principalProductores" component={PantallaPrincipalProductores} />
             <Route path="/principalConsumidores" component={PantallaPrincipalConsumidores} />
             <Route path="/seleccionUsuario" component={SeleccionUsuario} />
+            <Route path="/confirmar_cuenta/:id" component={ConfirmacionCuenta} />
             <Route path="*" component={NotFound} />
         </Switch>
     </BrowserRouter>,

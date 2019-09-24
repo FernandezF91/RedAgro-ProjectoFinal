@@ -1,20 +1,19 @@
 package app.clases;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 public class MailConfirmacion extends MailSender{
 	
 public MailConfirmacion(String to) {
-	
-	
-		
+			
 		this.setTo(to);
-		this.setFrom("confirmacion-cuenta@culturaverde.com.ar");
 		this.setContenido_email(
-				"<div> <h1>Bienvenido a culturaVerde!,</h1>"
+				"<div> <h1>Bienvenido a culturaVerde!</h1>"
+				+"Gracias por registrarte en nuestra sistema."
 				+ "<br>"
-				+"gracias por registrarte en nuestra sistema."
 				+ "<br>"
-				+ "<br>"
-				+ "Para poder utilizar nuestra p"+"&aacute"+"gina, confirm"+"&aacute"+" tu cuenta por favor."
+				+ "Para poder utilizar nuestra página, confirmá tu cuenta por favor."
 				+"<br>"
 				+"<br>"
 				+"<a href="+"http://localhost:3000/login>"+"<button "+"class="+"button "+"style="+
@@ -27,11 +26,11 @@ public MailConfirmacion(String to) {
 				+"Equipo de culturaVerde"
 				
 				);
-		this.setAsunto("Confirmación de cuenta en culturaVerde");	
+		this.setAsunto("Confirmación de cuenta");	
 		
 	}
 
-public void enviarMail() {
+public void enviarMail() throws AddressException, MessagingException {
 	
 	super.enviarMail();
 	

@@ -60,6 +60,7 @@ public class UsuarioControlador {
 	@PostMapping(path = "redAgro/usuario_consumidor")
 	public EntidadUsuario agregarUsuarioConsumidor(@RequestBody EntidadUsuario usuario) {
 
+		usuario.setActivo(false);
 		EntidadUsuario userNuevo = usuarioDAO.save(usuario);
 
 		EntidadConsumidor entidadConsumidor = new EntidadConsumidor();
@@ -78,6 +79,7 @@ public class UsuarioControlador {
 	public EntidadUsuario agregarUsuarioProductor(@RequestBody EntidadUsuario usuario,
 			@RequestParam String razon_social) {
 
+		usuario.setActivo(false);
 		EntidadUsuario userNuevo = usuarioDAO.save(usuario);
 
 		EntidadProductor entidadProductor = new EntidadProductor();
@@ -143,5 +145,14 @@ public class UsuarioControlador {
 	public void deleteItem(@PathVariable long id) {
 		usuarioDAO.deleteById(id);
 	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PutMapping(path = "redAgro/confirmar_cuenta")
+	public void confirmarCuenta(@RequestParam Long id) {
+		
+		usuarioDAO.confirmarCuenta(id);
+			
+	}
+	
 
 }

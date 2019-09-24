@@ -12,7 +12,7 @@ import app.clases.Usuario;
 
 public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 
-	@Query("select u from EntidadUsuario u where u.usuario = ?1 and u.contraseña = ?2")
+	@Query("select u from EntidadUsuario u where u.usuario = ?1 and u.contraseña = ?2 and u.activo=true")
 	EntidadUsuario autenticaUsuario(String u, String c);
 	
 	@Transactional
@@ -24,6 +24,11 @@ public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 	@Modifying
 	@Query("UPDATE EntidadUsuario u SET u.contraseña =?1 WHERE u.id =?2")
 	void modificarContraseña(String c, Long id);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE EntidadUsuario u SET u.activo=true WHERE u.id =?1")
+	void confirmarCuenta(Long id);
 	
 	@Query("SELECT u FROM EntidadUsuario u WHERE u.usuario = ?1")
 	EntidadUsuario validarUsuarioDuplicado(String mail);
