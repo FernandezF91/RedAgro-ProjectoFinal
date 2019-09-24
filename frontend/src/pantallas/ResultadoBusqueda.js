@@ -135,6 +135,7 @@ class ResultadoBusqueda extends Component {
 				{
 					resultadoBusqueda.length > 0 ?
 						<div className="opcionesCantidad">
+                            <span className="tituloCantidad">Resultados por página</span>
 							<Select className="cantidadProductos"
 								value={defaultListado}
 								options={tamañosListado}

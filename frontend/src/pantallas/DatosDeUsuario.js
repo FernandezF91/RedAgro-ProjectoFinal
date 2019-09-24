@@ -240,7 +240,7 @@ validarCampos() {
                     <div className="telefonoDU" >
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
-                                Teléfono
+                                Teléfono de contacto
 									</Form.Label>
                             <Form.Control
                                 required
