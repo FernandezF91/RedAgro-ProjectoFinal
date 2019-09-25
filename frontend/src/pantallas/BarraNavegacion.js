@@ -61,11 +61,13 @@ class BarraNavegacion extends Component {
                                 placeholder="Buscar productos y productores.. "
                                 name="search"
                                 onKeyPress={this.onKeyPress}
-                               // onChange={this.handleInputChange2}
+                                // onChange={this.handleInputChange2}
                                 ref={input => (this.busqueda = input)}
                             />
                             <button type="submit" className="botonBusqueda" onClick={this.handleInputChange}>
-                                <Link to="/principalConsumidores/ResultadoBusqueda"><i class="fa fa-search" /></Link>
+                                <Link to="/principalConsumidores/ResultadoBusqueda">
+                                    <i className="fa fa-search iconoBusqueda" />
+                                </Link>
                             </button>
                         </Nav>
                     }
@@ -73,7 +75,7 @@ class BarraNavegacion extends Component {
                     {(rolDeUsuario === "Consumidor") ? (
                         <Nav className="iconos">
                             <Nav className="menuUsuario">
-                                <i class="fas fa-user iconosBarra" />
+                                <i className="fas fa-user iconosBarra" />
                                 <NavDropdown title="Usuario" id="nav-dropdown" className="subMenu">
                                     <NavDropdown.Item>
                                         <Link to={'/principalConsumidores'}>Mi cuenta</Link>
@@ -84,12 +86,12 @@ class BarraNavegacion extends Component {
                             </Nav>
 
                             <Nav className="menuUsuario">
-                                <i class="fas fa-bell iconosBarra" />
+                                <i className="fas fa-bell iconosBarra" />
                             </Nav>
 
                             <Nav.Item className="menuUsuario">
                                 <Link to={'/principalConsumidores/Carrito'}>
-                                    <i class="fas fa-shopping-cart iconosBarra" />
+                                    <i className="fas fa-shopping-cart iconosBarra" />
                                     <Badge>{this.props.productosSeleccionados.length}</Badge>
                                 </Link>
                             </Nav.Item>
@@ -97,7 +99,7 @@ class BarraNavegacion extends Component {
                     ) : (
                             <Nav className="iconosProd">
                                 <Nav className="menuUsuario">
-                                    <i class="fas fa-user iconosBarra" />
+                                    <i className="fas fa-user iconosBarra" />
                                     <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown" className="subMenu">
                                         <NavDropdown.Item>
                                             <Link to={'/principalProductores'}>Mi cuenta</Link>
@@ -108,7 +110,7 @@ class BarraNavegacion extends Component {
                                 </Nav>
 
                                 <Nav className="menuUsuario">
-                                    <i class="fas fa-bell iconosBarra" />
+                                    <i className="fas fa-bell iconosBarra" />
                                 </Nav>
                             </Nav>
                         )}

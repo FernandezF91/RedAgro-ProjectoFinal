@@ -42,7 +42,6 @@ class FormaRetiro extends Component {
 
     }
 
-
     render() {
         return (
             <div className="fondo">
@@ -53,13 +52,13 @@ class FormaRetiro extends Component {
                     <div className="formularioFormaRetiro">
                         <div className="formaDeRetiro">
                             <h2>Selección de forma de retiro</h2>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"></input>
-                                <label class="form-check-label" for="inlineRadio1">Arreglar con el productor</label>
+                            <div className="form-check form-check-inline">
+                                <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"></input>
+                                <label className="form-check-label" for="inlineRadio1">Arreglar con el productor</label>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"></input>
-                                <label class="form-check-label" for="inlineRadio2">Retiro en punto de entrega</label>
+                            <div className="form-check form-check-inline">
+                                <input className="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"></input>
+                                <label className="form-check-label" for="inlineRadio2">Retiro en punto de entrega</label>
                             </div>
                             <h3>Datos de quien retira</h3>
                         </div>

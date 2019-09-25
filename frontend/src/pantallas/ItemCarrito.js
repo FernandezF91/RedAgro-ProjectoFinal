@@ -41,7 +41,7 @@ const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarPro
                         <tr>
                             <td>
                                 {/*Puse eso de ejemplo, pero deberia ir la foto que suban del producto*/}
-                                <i class="fas fa-lemon" />
+                                <i className="fas fa-lemon" />
                             </td>
                             <td>
                                 <h5>{producto.titulo}</h5>
@@ -50,11 +50,11 @@ const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarPro
                             </td>
                             <td>
                                 <button className="iconosListado" onClick={() => restarProducto(index)}>
-                                    <i class="fas fa-minus" />
+                                    <i className="fas fa-minus" />
                                 </button>
                                 <span className="item-quantity">{producto.cantidad}</span>
                                 <button className="iconosListado" onClick={() => sumarProducto(index)}>
-                                    <i class="fas fa-plus" />
+                                    <i className="fas fa-plus" />
                                 </button>
                             </td>
                             <td>
@@ -65,7 +65,7 @@ const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarPro
                             </td>
                             <td>
                                 <button className="remove" onClick={() => quitarProducto(index)}>
-                                    <i className="fas fa-times"></i>
+                                    <i className="fas fa-times" />
                                 </button>
                             </td>
                         </tr>

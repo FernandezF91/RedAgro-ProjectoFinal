@@ -46,7 +46,7 @@ const Reserva = ({ lista }) => {
 				:
 				<div className="sinReservas">
 					{/* 			Version para consumidores */}
-					<i class="fas fa-tasks iconoGrande"></i>
+					<i className="fas fa-tasks iconoGrande"></i>
 					<br />
 					<br />
 					<h5>Ups! No tenes reservas! </h5>

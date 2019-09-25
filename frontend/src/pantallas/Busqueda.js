@@ -39,11 +39,11 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                             </MDBCardText>
                                             <MDBCardFooter className="px-1">
                                                 <button className="iconosListado" onClick={() => restarProducto(index)}>
-                                                    <i class="fas fa-minus" />
+                                                    <i className="fas fa-minus" />
                                                 </button>
                                                 <span className="float-center">{item.cantidad}</span>
                                                 <button className="iconosListado" onClick={() => sumarProducto(index)}>
-                                                    <i class="fas fa-plus" />
+                                                    <i className="fas fa-plus" />
                                                 </button>
                                             </MDBCardFooter>
                                             <MDBBtn outline color="green" size="sm" onClick={() => agregarAlCarrito(index)}>
@@ -55,7 +55,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                         </MDBRow>
                     </MDBContainer> :
                     <div className="notFound">
-                        <i class="fas fa-tasks iconoGrande"></i>
+                        <i className="fas fa-tasks iconoGrande"></i>
                         <br />
                         <br />
                         <h5>Ups! No se encontraron productos para tu busqueda! </h5>

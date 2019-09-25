@@ -71,12 +71,12 @@ class PantallaPrincipalconsumidores extends Component {
                     <Row className="filaContenedora">
                         <Col sm={2} className="menuConsumidor">
                             <Row className="cuenta">
-                                <i class="fas fa-bars iconoMiCuenta" />
+                                <i className="fas fa-bars iconoMiCuenta" />
                                 <h4>Mi cuenta</h4>
                             </Row>
                             <NavDropdown.Divider className="divisor" />
                             <Row className="itemsMenu itemsSubmenu">
-                                <i class="fas fa-shopping-basket iconosMenuLateral" />
+                                <i className="fas fa-shopping-basket iconosMenuLateral" />
                                 <NavDropdown title="Comprar" id="compra_drop" className="com_drop">
                                     <NavDropdown.Item>
                                         <Link to="/principalConsumidores/Geolocalizacion" id="items">Geolocalización</Link>
@@ -86,25 +86,25 @@ class PantallaPrincipalconsumidores extends Component {
                                 </NavDropdown>
                             </Row>
                             <Row className="itemsMenuReservas">
-                                <i class="fas fa-tasks iconosMenuLateral" />
+                                <i className="fas fa-tasks iconosMenuLateral" />
                                 <Link to={'/principalConsumidores/ListadoReservas'}>
                                     <p>Reservas</p>
                                 </Link>
                             </Row>
                             <Row className="itemsMenu">
-                                <i class="fas fa-user-edit iconosMenuLateral" />
+                                <i className="fas fa-user-edit iconosMenuLateral" />
                                 <Link to={'/principalConsumidores/PreferenciasConsumidor'}>
                                     <p>Preferencias</p>
                                 </Link>
                             </Row>
                             <Row className="itemsMenu">
-                                <i class="fas fa-bell iconosMenuLateral" />
+                                <i className="fas fa-bell iconosMenuLateral" />
                                 <Link to={'/principalConsumidores/Alertas'}>
                                     <p>Alertas</p>
                                 </Link>
                             </Row>
                             <Row className="itemsMenu itemsSubmenu">
-                                <i class="fas fa-cogs iconosMenuLateral" />
+                                <i className="fas fa-cogs iconosMenuLateral" />
                                 <div className="conf_drop">
                                     <NavDropdown title="Configuración" id="config_dropConsu">
                                         <NavDropdown.Item>

@@ -78,11 +78,11 @@ class Carrito extends Component {
                             getTotalCarrito={this.getTotalCarrito} />
                         :
                         <div className="sinProductos">
-                            <i class="fas fa-shopping-cart iconoGrande"></i>
+                            <i className="fas fa-shopping-cart iconoGrande" />
                             <br />
                             <br />
-                            <h5>Ups! Tu carrito esta vacío! </h5>
-                            <h6>Probá buscando productos por <Link to={''}>acá</Link> </h6>
+                            <h5>Ups! Tu carrito esta vacío!</h5>
+                            <h6>Probá buscando productos por <Link to={''}>acá</Link></h6>
                         </div>
                     }
                 </ul>
