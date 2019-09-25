@@ -1,29 +1,52 @@
 import '../diseños/PrincipalUsuarios.css';
 import '../diseños/estilosGlobales.css';
+import culturaVerde from '../imagenes/cultura-verde-2.png';
 import React, { Component } from 'react';
 import { Navbar, NavDropdown, Badge, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-
-import culturaVerde from '../imagenes/cultura-verde-2.png';
 
 class BarraNavegacion extends Component {
     constructor(props) {
         super(props)
         this.state = {
             rolUsuario: this.props.rolUsuario,
-            productosSeleccionados: this.props.productosSeleccionados,
+            busqueda: '',
+        }
+        this.onKeyPress = this.onKeyPress.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.updateParametroBusqueda = this.updateParametroBusqueda.bind(this);
+    }
+
+    onKeyPress = e => {
+        if (e.key === 'Enter') {
+            console.log("Esta funcionando el enter");
+            if (this.busqueda.value.length > 0) {
+                this.setState(
+                    { busqueda: this.busqueda.value },
+                    this.updateParametroBusqueda
+                )
+            }
         }
     }
 
-    onKeyPress = (e) => {
-        if (e.which === 13) {
-            console.log("Esta levantando el enter");
-        }
+    updateParametroBusqueda() {
+        this.props.handleNuevaBusqueda(this.state.busqueda);
     }
+
+    handleInputChange = e => {
+        this.setState(
+            { busqueda: this.busqueda.value },
+            this.updateParametroBusqueda
+        );
+    }
+
+    // handleInputChange2 = e => {
+    //     this.setState({ busqueda: e.target.value},
+    //         this.updateParametroBusqueda );
+    // }
 
     render() {
         const rolDeUsuario = this.state.rolUsuario;
-
         return (
             <Navbar collapseOnSelect expand="lg" className="barraNavegacion sombraBarra" >
                 <Navbar.Brand className="culturaVerde" href="/">
@@ -34,13 +57,19 @@ class BarraNavegacion extends Component {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     {rolDeUsuario === "Consumidor" &&
                         <Nav className="BarraBusqueda">
-                            <input type="text" placeholder="Buscar productos y productores.. " name="search" onKeyPress={this.onKeyPress} />
-                            <button type="submit" className="botonBusqueda">
-                                <i class="fa fa-search" />
+                            <input type="text"
+                                placeholder="Buscar productos y productores.. "
+                                name="search"
+                                onKeyPress={this.onKeyPress}
+                               // onChange={this.handleInputChange2}
+                                ref={input => (this.busqueda = input)}
+                            />
+                            <button type="submit" className="botonBusqueda" onClick={this.handleInputChange}>
+                                <Link to="/principalConsumidores/ResultadoBusqueda"><i class="fa fa-search" /></Link>
                             </button>
                         </Nav>
-
                     }
+
                     {(rolDeUsuario === "Consumidor") ? (
                         <Nav className="iconos">
                             <Nav className="menuUsuario">
@@ -61,7 +90,7 @@ class BarraNavegacion extends Component {
                             <Nav.Item className="menuUsuario">
                                 <Link to={'/principalConsumidores/Carrito'}>
                                     <i class="fas fa-shopping-cart iconosBarra" />
-                                    <Badge>{this.state.productosSeleccionados.length}</Badge>
+                                    <Badge>{this.props.productosSeleccionados.length}</Badge>
                                 </Link>
                             </Nav.Item>
                         </Nav>
@@ -85,7 +114,7 @@ class BarraNavegacion extends Component {
                         )}
                 </Navbar.Collapse>
             </Navbar>
-        )
+        );
     }
 }
 export default BarraNavegacion;

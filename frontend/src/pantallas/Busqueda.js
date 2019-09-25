@@ -59,7 +59,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                         <br />
                         <br />
                         <h5>Ups! No se encontraron productos para tu busqueda! </h5>
-                        <h6>Probá cambiando la descripción por acá <Link to={''}>acá</Link> </h6>
+                        <h6>Probá cambiando la descripción por acá <Link to={'/principalConsumidores'}>acá</Link> </h6>
                     </div>
             }
         </div>
