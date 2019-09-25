@@ -36,13 +36,12 @@ class ResultadoBusqueda extends Component {
         this.state = {
             id: this.props.id_usuario,
             resultadoBusqueda: [],
-            productosSeleccionados: this.props.productosSeleccionados,
             tamañoListado: 12, //Valor predeterminado
             paginaActual: 1,
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-        this.actualizarPropsCarrito = this.actualizarPropsCarrito.bind(this);
-    }   
+        this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
+    }
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
@@ -65,7 +64,9 @@ class ResultadoBusqueda extends Component {
     }
 
     componentDidMount() {
-        this.realizarBusqueda(this.props.busqueda)
+        if (this.state.resultadoBusqueda.length === 0) {
+            this.realizarBusqueda(this.props.busqueda)
+        }
     }
 
     realizarBusqueda(busqueda) {
@@ -99,6 +100,7 @@ class ResultadoBusqueda extends Component {
     restarProducto = (position) => {
         //Falta la validación y actualización por stock
         let { resultadoBusqueda } = this.state;
+        //  let productosSeleccionados = this.props.productosSeleccionados;
         var productoSeleccionado = resultadoBusqueda[position];
         if ((parseInt(productoSeleccionado.cantidad) - 1) >= 0) {
             let productoActualizado = [
@@ -120,10 +122,27 @@ class ResultadoBusqueda extends Component {
 
     agregarAlCarrito = (position) => {
         let { resultadoBusqueda } = this.state;
-        let { productosSeleccionados } = this.state;
+        let productosSeleccionados = this.props.productosSeleccionados;
         var producto = resultadoBusqueda[position];
         if (parseInt(producto.cantidad) > 0) {
-            this.setState({ productosSeleccionados: productosSeleccionados.push(producto) });
+
+            let chequeoProducto = productosSeleccionados.filter(function (item) {
+                return item.id === producto.id;
+            });
+
+            if (chequeoProducto.length > 0) {
+                var index = productosSeleccionados.findIndex(item => item.id === chequeoProducto[0].id);
+                let nuevaLista = [
+                    ...productosSeleccionados.slice(0, index),
+                    chequeoProducto[0],
+                    ...productosSeleccionados.slice(index + 1)
+                ];
+                productosSeleccionados = nuevaLista;
+            }
+            else {
+                productosSeleccionados.push(producto);
+            }
+            this.setState(this.actualizarPropsSeleccionados(productosSeleccionados));
         }
     }
 
@@ -138,8 +157,8 @@ class ResultadoBusqueda extends Component {
         defaultListado = actualizarListado;
     }
 
-    actualizarPropsCarrito(){
-
+    actualizarPropsSeleccionados(productosSeleccionados) {
+        this.props.actualizarProductosSeleccionados(productosSeleccionados);
     }
 
     render() {

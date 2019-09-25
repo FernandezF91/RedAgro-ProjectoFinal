@@ -41,6 +41,7 @@ class PantallaPrincipalconsumidores extends Component {
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.handleNuevaBusqueda = this.handleNuevaBusqueda.bind(this);
+        this.actualizarProductosSeleccionados = this.actualizarProductosSeleccionados.bind(this);
     }
 
     mostrarPantallaPrincipal() {
@@ -57,6 +58,10 @@ class PantallaPrincipalconsumidores extends Component {
         this.setState({ busqueda },
             () => { console.log("Actualiza campo busqueda con: " + busqueda) } // Lo dejo solo para loggear
         );
+    }
+
+    actualizarProductosSeleccionados(productos) {
+        this.setState({ productosSeleccionados: productos })
     }
 
     render() {
@@ -119,30 +124,46 @@ class PantallaPrincipalconsumidores extends Component {
                             </Row>
                         </Col>
                         <Col className="ruteo">
-                            <Route path={'/principalConsumidores/ListadoReservas'}
-                                render={(props) => <ListadoReservasRouter id_usuario={this.state.id} />} />
-                            <Route path={'/principalConsumidores/Alertas'}
-                                render={(props) => <AlertaConsumidorRouter id_consumidor={this.state.id} />} />
-                            <Route path={'/principalConsumidores/PreferenciasConsumidor'}
-                                render={(props) => <PreferenciasConsumidorRouter id_consumidor={this.state.id} />} />
-                            <Route path={'/principalConsumidores/Carrito'}
-                                render={(props) => <Carrito id_consumidor={this.state.id}
-                                    productosSeleccionados={this.state.productosSeleccionados} />} />
-                            <Route path={'/principalConsumidores/EditarDatos'}
-                                render={(props) => <EditarDatosRouter usuario={this.state.user} />} />
-                            <Route path={'/principalConsumidores/modificarContraseña'}
-                                render={(props) => <ModificarContraseniaRouter usuario={this.state.user} />} />
-                            <Route path={'/principalConsumidores/Geolocalizacion'}
-                                render={(props) => <GeolocalizacionRouter id_consumidor={this.state.id} />} />
+                            <Route path={'/principalConsumidores/ListadoReservas'} render={(props) =>
+                                <ListadoReservasRouter
+                                    id_usuario={this.state.id} />} />
+
+                            <Route path={'/principalConsumidores/Alertas'} render={(props) =>
+                                <AlertaConsumidorRouter
+                                    id_consumidor={this.state.id} />} />
+
+                            <Route path={'/principalConsumidores/PreferenciasConsumidor'} render={(props) =>
+                                <PreferenciasConsumidorRouter
+                                    id_consumidor={this.state.id} />} />
+
+                            <Route path={'/principalConsumidores/Carrito'} render={(props) =>
+                                <Carrito
+                                    id_consumidor={this.state.id}
+                                    productosSeleccionados={this.state.productosSeleccionados}
+                                    actualizarProductosSeleccionados={this.actualizarProductosSeleccionados} />} />
+
+                            <Route path={'/principalConsumidores/EditarDatos'} render={(props) =>
+                                <EditarDatosRouter
+                                    usuario={this.state.user} />} />
+
+                            <Route path={'/principalConsumidores/modificarContraseña'} render={(props) =>
+                                <ModificarContraseniaRouter
+                                    usuario={this.state.user} />} />
+
+                            <Route path={'/principalConsumidores/Geolocalizacion'} render={(props) =>
+                                <GeolocalizacionRouter
+                                    id_consumidor={this.state.id} />} />
 
                             <Route path={'/principalConsumidores/ResultadoBusqueda'} render={(props) =>
                                 <ResultadoBusquedaRouter
                                     id_consumidor={this.state.id}
                                     productosSeleccionados={this.state.productosSeleccionados}
-                                    busqueda={this.state.busqueda} />} />
+                                    busqueda={this.state.busqueda}
+                                    actualizarProductosSeleccionados={this.actualizarProductosSeleccionados} />} />
 
                             <Route path={'/principalConsumidores/Checkout'} render={(props) =>
-                                <CheckoutRouter id_consumidor={this.state.id}
+                                <CheckoutRouter
+                                    id_consumidor={this.state.id}
                                     productosSeleccionados={this.state.productosSeleccionados} />} />
                         </Col>
                     </Row>
