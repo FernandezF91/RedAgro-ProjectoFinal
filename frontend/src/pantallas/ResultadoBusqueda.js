@@ -41,7 +41,8 @@ class ResultadoBusqueda extends Component {
             paginaActual: 1,
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-    }
+        this.actualizarPropsCarrito = this.actualizarPropsCarrito.bind(this);
+    }   
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
@@ -102,7 +103,7 @@ class ResultadoBusqueda extends Component {
             let productoActualizado = [
                 ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) - 1).toString(),
             ]
-            this.setState({ productoSeleccionado: productoActualizado });
+            this.setState({ productosSeleccionado: productoActualizado });
         }
     }
 
@@ -113,7 +114,7 @@ class ResultadoBusqueda extends Component {
         let productoActualizado = [
             ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) + 1).toString(),
         ]
-        this.setState({ productoSeleccionado: productoActualizado });
+        this.setState({ productosSeleccionado: productoActualizado });
     }
 
     agregarAlCarrito = (position) => {
@@ -134,6 +135,10 @@ class ResultadoBusqueda extends Component {
         }
         actualizarListado.push(tamaño);
         defaultListado = actualizarListado;
+    }
+
+    actualizarPropsCarrito(){
+
     }
 
     render() {
