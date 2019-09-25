@@ -9,7 +9,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
     return (
         <div>
             {
-                listaDeProductos.length > 1 ?
+                listaDeProductos.length > 0 ?
                     <MDBContainer >
                         <MDBRow>
                             {listaDeProductos.map((item, index) => (
