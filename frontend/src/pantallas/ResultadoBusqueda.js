@@ -65,6 +65,7 @@ class ResultadoBusqueda extends Component {
     }
 
     componentDidMount() {
+        this.realizarBusqueda(this.props.busqueda)
     }
 
     realizarBusqueda(busqueda) {
