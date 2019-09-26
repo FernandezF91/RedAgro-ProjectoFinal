@@ -62,7 +62,8 @@ class ListadoReservas extends Component {
                 <td>{item.productor.nombre + " " + item.productor.apellido}<p>Tel: {item.productor.telefono}</p>
                     <Link to={''} className='text-primary mb-3'>Ver Mensajes</Link>
                 </td>
-                <td> <NumberFormat value={item.total_reserva} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                <td>
+                    <NumberFormat value={item.total_reserva} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                 </td>
             </tr>
         ];
