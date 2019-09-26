@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.clases.MailConfirmacion;
 import app.clases.Usuario;
 import app.daos.ConsumidorDao;
 import app.daos.ProductorDao;
@@ -30,6 +31,9 @@ import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 @RestController
 public class UsuarioControlador {
@@ -58,7 +62,7 @@ public class UsuarioControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/usuario_consumidor")
-	public EntidadUsuario agregarUsuarioConsumidor(@RequestBody EntidadUsuario usuario) {
+	public void agregarUsuarioConsumidor(@RequestBody EntidadUsuario usuario) {
 
 		usuario.setActivo(false);
 		EntidadUsuario userNuevo = usuarioDAO.save(usuario);
@@ -69,28 +73,52 @@ public class UsuarioControlador {
 		entidadConsumidor.setUsuario(userNuevo);
 
 		consumidorDAO.save(entidadConsumidor);
+		
+		MailConfirmacion mc = new MailConfirmacion(userNuevo.getUsuario(), userNuevo.getId());
+		
+		
+			try {
+				mc.enviarMail();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-		return userNuevo;
 
+		
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/usuario_productor")
-	public EntidadUsuario agregarUsuarioProductor(@RequestBody EntidadUsuario usuario,
-			@RequestParam String razon_social) {
-
-		usuario.setActivo(false);
-		EntidadUsuario userNuevo = usuarioDAO.save(usuario);
-
+	public void agregarUsuarioProductor(@RequestBody EntidadUsuario usuario,
+			@RequestParam String razon_social){
+		
+		EntidadUsuario userNuevo = new EntidadUsuario();
 		EntidadProductor entidadProductor = new EntidadProductor();
+		
+		usuario.setActivo(false);
+				
+		userNuevo = usuarioDAO.save(usuario);
 
 		entidadProductor.setId(userNuevo.getId());
 		entidadProductor.setUsuario(userNuevo);
 		entidadProductor.setRazon_social(razon_social);
 
 		productorDAO.save(entidadProductor);
+		
+		MailConfirmacion mc = new MailConfirmacion(userNuevo.getUsuario(), userNuevo.getId());
+		
+	
+			try {
+				mc.enviarMail();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+	
 
-		return userNuevo;
+
 
 	}
 	

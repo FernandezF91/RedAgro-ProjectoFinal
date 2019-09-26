@@ -144,12 +144,12 @@ class RegistroProductor extends Component {
                                 return;
                             }
 
-                            response.json().then(
+                            response.text().then(
                                 function (response) {
                                     _this.setState({
                                         validated: true,
                                         visible: true,
-                                        mensaje: "Serás redireccionado directamente hacia el acceso de usuarios",
+                                        mensaje: "Se te envió un mail para que puedas confirmar tu cuenta",
                                         titulo: "Registro exitoso!"
                                     });
                                     _this.mostrarLogin();
@@ -169,7 +169,7 @@ class RegistroProductor extends Component {
         window.setTimeout(() => {
             this.props.history.push('/login')
             // history is available by design in this.props when using react-router
-        }, 2000);
+        }, 3000);
 
     }
 
@@ -309,7 +309,6 @@ class RegistroProductor extends Component {
                             width="460"
                             height="120"
                             effect="fadeInUp"
-                            onClickAway={() => this.closeModal()}
                         >
                             <div>
                                 <h1>{this.state.titulo}</h1>

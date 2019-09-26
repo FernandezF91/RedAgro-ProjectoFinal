@@ -17,7 +17,6 @@ public class RedAgroApplication {
 	public static void main(String[] args){
 		SpringApplication.run(RedAgroApplication.class, args);
 
-		
 	}
 
 }

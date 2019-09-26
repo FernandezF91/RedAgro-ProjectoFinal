@@ -26,7 +26,8 @@ registerPlugin(FilePondPluginImagePreview, FilePondTypeValidate);
 const categorias = [
     { label: "Frutas", value: 1 },
     { label: "Verduras", value: 2 },
-    { label: "Otros", value: 3 },
+    { label: "Variado", value: 3 },
+    { label: "Otros", value: 4 }
 ];
 
 const unidades = [
@@ -56,7 +57,7 @@ class NuevoProducto extends Component {
             valueCat:[],
             valueTp:[],
             valueTprod:[],
-            valueTu:[],
+            disabled:false,
             id: this.props.id_productor
         }
 
@@ -84,8 +85,8 @@ class NuevoProducto extends Component {
 
     validarCampos() {
 
-        if ((!this.state.campos["categoria"]) || (!this.state.campos["tipo_unidad"]) || (!this.state.campos["tipo_producto"])
-            || (!this.state.campos["tipo_produccion"]) || (!this.state.campos["stock"]) || (!this.state.campos["precio"])
+        if ((!this.state.campos["categoria"])|| (!this.state.campos["tipo_produccion"]) || (!this.state.campos["peso"]) 
+            || (!this.state.campos["stock"]) || (!this.state.campos["precio"])
             || (!this.state.campos["tiempo_preparacion"]) || ((!this.state.campos["descripcion"]) || (this.state.campos["descripcion"].length > 255))
             || ((!this.state.campos["titulo"]) || (this.state.campos["titulo"].length > 100)) || (this.state.files.length === 0) ||
             (!this.state.campos["fecha_ven"]? false : this.validarFecha())) {
@@ -132,6 +133,8 @@ class NuevoProducto extends Component {
             var id_producto = _this.state.campos["tipo_producto"];
             var path_final = path_principal + id_productor + "&id_producto=" + id_producto;
 
+            alert(path_final);
+
             fetch(path_final, {
                 method: "POST",
                 headers: {
@@ -144,8 +147,8 @@ class NuevoProducto extends Component {
                     "fecha_vencimiento": this.state.campos["fecha_ven"],
                     "precio": this.state.campos["precio"],
                     "stock": this.state.campos["stock"],
+                    "peso": this.state.campos["peso"],
                     "tiempo_preparacion": this.state.campos["tiempo_preparacion"],
-                    "tipo_unidad": this.state.campos["tipo_unidad"],
                     "tipo_produccion": this.state.campos["tipo_produccion"]
                 }),
             })
@@ -214,12 +217,12 @@ class NuevoProducto extends Component {
        campos["descripcion"] = "";
        campos["categoria"] = "";
        campos["tipo_producto"] = "";
-       campos["tipo_unidad"] = "";
        campos["tipo_produccion"] = "";
        campos["fecha_ven"] = "";
        campos["stock"] = "";
        campos["precio"] = "";
        campos["tiempo_preparacion"] = "";
+       campos["peso"]= "";
        
 
        this.featurePond.current.getFiles().forEach(file=>{
@@ -228,7 +231,7 @@ class NuevoProducto extends Component {
     });
 
         this.setState({campos:campos,
-             files:files, valueCat:[],valueTp:[],valueTprod:[],valueTu:[]});
+             files:files, valueCat:[],valueTp:[],valueTprod:[]});
         
 
     }
@@ -236,17 +239,10 @@ class NuevoProducto extends Component {
 
     cambiosSelect(opt, a, value) {
        
-        a.name==="tipo_produccion"?
-
-        this.setState({valueTprod:value})
-
-        :
-
-        this.setState({valueTu:value});
-
+ 
         let campos = this.state.campos;
         campos[a.name] = opt.label;
-        this.setState({ campos })
+        this.setState({ campos,valueTprod:value })
     }
 
     cambiosSelectTipoProducto(opt, a, value) {
@@ -258,10 +254,21 @@ class NuevoProducto extends Component {
     }
 
     cambiosSelectCategoria(opt, a, value) {
-        this.setState({valueCat:value});
+        
+        this.setState({valueCat:value, valueTp:"",tipos_producto:[],disabled:false});
         let campos = this.state.campos;
         campos[a.name] = opt.label;
+        
+        if(this.state.campos["categoria"]==="Variado"){
+
+        this.setState({disabled:true})
+
+        }
+
+
         this.obtenerTiposProducto(this.state.campos["categoria"]);
+
+
     }
 
     obtenerTiposProducto(categoria) {
@@ -289,6 +296,14 @@ class NuevoProducto extends Component {
                 response.json().then(
                     function (response) {
                         _this.setState({ tipos_producto: [] })
+
+                        if(_this.state.campos["categoria"]==="Variado"){
+
+                        _this.state.campos["tipo_producto"] = response[0].id
+                    
+                        return;
+
+                        }
 
                         response.forEach(producto => _this.setState({
                             tipos_producto: [..._this.state.tipos_producto, {
@@ -354,18 +369,9 @@ class NuevoProducto extends Component {
                     <div className="dropdownTipoProducto">
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
-                                *Tipo de producto
+                                Tipo de producto
 								</Form.Label>
-                            <Select value={this.state.valueTp} className="selectTipoProducto" name="tipo_producto" options={this.state.tipos_producto} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectTipoProducto(opt, a, value)} />
-                        </Form.Group>
-                    </div>
-                    <div className="dropdownTipoUnidad">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Tipo de Unidad
-								</Form.Label>
-                            <Select value={this.state.valueTu} className="selectTipoUnidad" name="tipo_unidad" options={unidades} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelect(opt, a, value)} />
-
+                            <Select isDisabled={this.state.disabled} value={this.state.valueTp} className="selectTipoProducto" name="tipo_producto" options={this.state.tipos_producto} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectTipoProducto(opt, a, value)} />
                         </Form.Group>
                     </div>
                     <div className="dropdownTipoProduccion">
@@ -376,18 +382,17 @@ class NuevoProducto extends Component {
                             <Select value={this.state.valueTprod} className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelect(opt, a, value)} />
                         </Form.Group>
                     </div>
-                    <div className="fechaVencimiento">
+                    <div className="peso">
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
-                                Fecha de vencimiento
+                                *Peso (en kg)
                                 </Form.Label>
-                            <DatePickerInput
-                                name="fecha_ven"
-                                displayFormat='DD/MM/YYYY'
-                                minDate={minDate}
-                                className="calen"
-                                value={this.state.campos["fecha_ven"]}
-                                onChange={(e) => this.cambiosFecha(e)}
+                            <Form.Control
+                            value={this.state.campos["peso"]}
+                                type="number"
+                                name="peso"
+                                min="1"
+                                onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
                     </div>
@@ -430,6 +435,22 @@ class NuevoProducto extends Component {
                                 min="1"
                                 name="tiempo_preparacion"
                                 onChange={(e) => this.detectarCambios(e)}
+                            />
+                        </Form.Group>
+                    </div>
+                    
+                    <div className="fechaVencimiento">
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Fecha de vencimiento
+                                </Form.Label>
+                            <DatePickerInput
+                                name="fecha_ven"
+                                displayFormat='DD/MM/YYYY'
+                                minDate={minDate}
+                                className="calen"
+                                value={this.state.campos["fecha_ven"]}
+                                onChange={(e) => this.cambiosFecha(e)}
                             />
                         </Form.Group>
                     </div>

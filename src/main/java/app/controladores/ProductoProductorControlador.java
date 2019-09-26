@@ -53,7 +53,7 @@ public class ProductoProductorControlador {
 		productoNuevo.setImagenes(null);
 		productoNuevo.setTiempo_preparacion(producto.getTiempo_preparacion());
 		productoNuevo.setTipo_produccion(producto.getTipo_produccion());
-		productoNuevo.setTipo_unidad(producto.getTipo_unidad());
+		productoNuevo.setPeso(producto.getPeso());
 		productoNuevo.setProducto(prod);
 	    productoNuevo.setProductor(productor);
 	    

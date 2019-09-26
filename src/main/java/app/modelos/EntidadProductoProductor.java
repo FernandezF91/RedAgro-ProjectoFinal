@@ -46,9 +46,6 @@ public class EntidadProductoProductor {
 	@OneToMany(mappedBy = "producto_productor", cascade = CascadeType.ALL)
 	private List<EntidadImagen> imagenes = new ArrayList<>();
 
-	@Column(name = "tipo_unidad", nullable = false)
-	private String tipo_unidad;
-
 	@Column(name = "tipo_produccion", nullable = false)
 	private String tipo_produccion;
 
@@ -57,6 +54,9 @@ public class EntidadProductoProductor {
 
 	@Column(name = "fecha_vencimiento", nullable = true)
 	private Date fecha_vencimiento;
+	
+	@Column(name = "peso", nullable = false)
+	private int peso;
 
 	@Column(name = "precio", nullable = false)
 	private int precio;
@@ -94,14 +94,6 @@ public class EntidadProductoProductor {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-
-	public String getTipo_unidad() {
-		return tipo_unidad;
-	}
-
-	public void setTipo_unidad(String tipo_unidad) {
-		this.tipo_unidad = tipo_unidad;
 	}
 
 	public String getTipo_produccion() {
@@ -163,4 +155,14 @@ public class EntidadProductoProductor {
 	public void setImagenes(List<EntidadImagen> imagenes) {
 		this.imagenes = imagenes;
 	}
+
+	public int getPeso() {
+		return peso;
+	}
+
+	public void setPeso(int peso) {
+		this.peso = peso;
+	}
+	
+	
 }

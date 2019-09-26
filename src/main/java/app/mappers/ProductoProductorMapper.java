@@ -16,8 +16,8 @@ public class ProductoProductorMapper {
 		ProductoProductor producto = new ProductoProductor(entidad.getId(),
 				mapeoProductor.mapFromEntity(entidad.getProductor()),
 				mapeoProducto.mapFromEntity(entidad.getProducto()), entidad.getTitulo(), entidad.getDescripcion(),
-				mapeoImagen.mapFromEntity(entidad.getImagenes()), entidad.getTipo_unidad(),
-				entidad.getTipo_produccion(), entidad.getStock(), entidad.getFecha_vencimiento(), entidad.getPrecio(),
+				mapeoImagen.mapFromEntity(entidad.getImagenes()),
+				entidad.getTipo_produccion(), entidad.getStock(), entidad.getFecha_vencimiento(), entidad.getPeso(), entidad.getPrecio(),
 				entidad.getTiempo_preparacion());
 		return producto;
 	}
@@ -33,8 +33,8 @@ public class ProductoProductorMapper {
 			ProductoProductor producto = new ProductoProductor(entidad.getId(),
 					mapeoProductor.mapFromEntity(entidad.getProductor()),
 					mapeoProducto.mapFromEntity(entidad.getProducto()), entidad.getTitulo(), entidad.getDescripcion(),
-					mapeoImagen.mapFromEntity(entidad.getImagenes()), entidad.getTipo_unidad(),
-					entidad.getTipo_produccion(), entidad.getStock(), entidad.getFecha_vencimiento(),
+					mapeoImagen.mapFromEntity(entidad.getImagenes()),
+					entidad.getTipo_produccion(), entidad.getStock(), entidad.getFecha_vencimiento(), entidad.getPeso(),
 					entidad.getPrecio(), entidad.getTiempo_preparacion());
 			listaProdProductor.add(producto);
 		}
@@ -53,10 +53,10 @@ public class ProductoProductorMapper {
 		entidad.setTitulo(modelo.getTitulo());
 		entidad.setDescripcion(modelo.getDescripcion());
 		entidad.setImagenes(mapeoImagen.mapToEntity(modelo.getImagenes()));
-		entidad.setTipo_unidad(modelo.getTipo_unidad());
 		entidad.setTipo_produccion(modelo.getTipo_produccion());
 		entidad.setStock(modelo.getStock());
 		entidad.setFecha_vencimiento(modelo.getFecha_vencimiento());
+		entidad.setPeso(modelo.getPeso());
 		entidad.setPrecio(modelo.getPrecio());
 		entidad.setTiempo_preparacion(modelo.getTiempo_preparacion());
 		return entidad;		
@@ -76,10 +76,10 @@ public class ProductoProductorMapper {
 			entidad.setTitulo(modelo.getTitulo());
 			entidad.setDescripcion(modelo.getDescripcion());
 			entidad.setImagenes(mapeoImagen.mapToEntity(modelo.getImagenes()));
-			entidad.setTipo_unidad(modelo.getTipo_unidad());
 			entidad.setTipo_produccion(modelo.getTipo_produccion());
 			entidad.setStock(modelo.getStock());
 			entidad.setFecha_vencimiento(modelo.getFecha_vencimiento());
+			entidad.setPeso(modelo.getPeso());
 			entidad.setPrecio(modelo.getPrecio());
 			entidad.setTiempo_preparacion(modelo.getTiempo_preparacion());
 			listaEntidad.add(entidad);

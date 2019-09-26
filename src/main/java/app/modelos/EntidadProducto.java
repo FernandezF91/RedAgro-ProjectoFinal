@@ -28,7 +28,7 @@ public class EntidadProducto {
 	@Column(name="categoria", nullable=false)
 	private String categoria;
 	
-	@Column(name="tipo", nullable=false)
+	@Column(name="tipo", nullable=true)
 	private String tipo;
 	
 	@LazyCollection(LazyCollectionOption.FALSE)
