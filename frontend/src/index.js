@@ -12,12 +12,12 @@ import PantallaPrincipalProductores from './pantallas/PantallaPrincipalProductor
 import PantallaPrincipalConsumidores from './pantallas/PantallaPrincipalConsumidores';
 import SeleccionUsuario from './pantallas/SeleccionUsuario';
 import ModificarContraseña from './pantallas/ModificarContraseña';
+import ConfirmacionCuenta from './pantallas/ConfirmacionCuenta';
 
 import './diseños/index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import ConfirmacionCuenta from './pantallas/ConfirmacionCuenta';
 
 ReactDOM.render(
     <BrowserRouter>

@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { NavDropdown, Col, Row, Container } from 'react-bootstrap';
 import { Route, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-  
+
 import AlertaProductor from '../pantallas/AlertaProductor';
 import NuevoProducto from '../pantallas/NuevoProducto';
 import CargarHistorico from '../pantallas/CargarHistorico';
@@ -17,7 +17,7 @@ import ListadoPuntosEntrega from '../pantallas/ListadoPuntosEntrega';
 import ListadoProductos from '../pantallas/ListadoProductos';
 import Estadisticas from '../pantallas/Estadisticas';
 import BarraNavegacion from './BarraNavegacion';
- 
+
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const NuevoProductoRouter = withRouter(NuevoProducto);
 const AlertaProductorRouter = withRouter(AlertaProductor);
@@ -28,34 +28,34 @@ const IngresarPuntoEntregaRouter = withRouter(IngresarPuntoEntrega);
 const ListadoProductosRouter = withRouter(ListadoProductos);
 const EstadisticasRouter = withRouter(Estadisticas);
 const HitoricoRouter = withRouter(CargarHistorico);
- 
+
 class PantallaPrincipalProductores extends Component {
     constructor(props) {
         super(props)
- 
+
         this.state = {
 
             id: this.props.location.state.id, //paso id de usuario desde el LOGIN
-            user:this.props.location.state.user,//paso el usuario desde el LOGIN
+            user: this.props.location.state.user,//paso el usuario desde el LOGIN
             rolUsuario: this.props.location.state.rolUsuario
 
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
- 
+
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
             pathname: '/principalProductores',
-            state: { 
+            state: {
                 id: this.state.id,
-                rolUsuario: this.state.rolUsuario 
+                rolUsuario: this.state.rolUsuario
             }
         })
-    
+
     }
- 
+
     render() {
         return (
             <div className="fondo">
@@ -64,12 +64,12 @@ class PantallaPrincipalProductores extends Component {
                     <Row className="filaContenedora">
                         <Col sm={2} className="menuConsumidor">
                             <Row className="cuenta">
-                                <i class="fas fa-bars iconoMiCuenta" />
+                                <i className="fas fa-bars iconoMiCuenta" />
                                 <h4>Mi cuenta</h4>
                             </Row>
                             <NavDropdown.Divider className="divisor" />
                             <Row className="itemsMenu">
-                                <i class="fas fa-store iconosMenuLateral" />
+                                <i className="fas fa-store iconosMenuLateral" />
                                 <NavDropdown title="Productos" id="producto_drop">
                                     <NavDropdown.Item id="items">
                                         <Link to="/principalProductores/ListadoProductos" id="items">Listado de productos</Link>
@@ -83,7 +83,7 @@ class PantallaPrincipalProductores extends Component {
                                 </NavDropdown>
                             </Row>
                             <Row className="itemsMenu">
-                                <i class="fas fa-map-marker-alt iconosMenuLateral" id="market" />
+                                <i className="fas fa-map-marker-alt iconosMenuLateral" id="market" />
                                 <NavDropdown title="Puntos de Entrega" id="puntoentrega_drop" className="iconoEntrega">
                                     <NavDropdown.Item id="items">
                                         <Link to="/principalProductores/ListadoPuntosEntrega" id="items">Desactivar puntos de entrega</Link>
@@ -95,35 +95,35 @@ class PantallaPrincipalProductores extends Component {
                                 </NavDropdown>
                             </Row>
                             <Row className="itemsMenuReservas">
-                                <i class="fas fa-tasks iconosMenuLateral" />
+                                <i className="fas fa-tasks iconosMenuLateral" />
                                 <Link to={'/principalProductores/ListadoReservas'}>
                                     <p>Reservas</p>
                                 </Link>
                             </Row>
                             <Row className="itemsMenu">
-                                <i class="fas fa-clipboard-list iconosMenuLateral" />
+                                <i className="fas fa-clipboard-list iconosMenuLateral" />
                                 <p>Planificación</p>
                             </Row>
                             <Row className="itemsMenu">
-                                <i class="fas fa-chart-line iconosMenuLateral" />
+                                <i className="fas fa-chart-line iconosMenuLateral" />
                                 <Link to={'/principalProductores/Estadisticas'}>
                                     <p>Estadísticas</p>
                                 </Link>
                             </Row>
                             <Row className="itemsMenu">
-                                <i class="fas fa-history iconosMenuLateral" />
+                                <i className="fas fa-history iconosMenuLateral" />
                                 <Link to={'/principalProductores/CargarHistorico'}>
                                     <p>Histórico</p>
                                 </Link>
                             </Row>
                             <Row className="itemsMenu">
-                                <i class="fas fa-bell iconosMenuLateral" />
+                                <i className="fas fa-bell iconosMenuLateral" />
                                 <Link to={'/principalProductores/Alertas'}>
                                     <p>Alertas</p>
                                 </Link>
                             </Row>
                             <Row className="itemsMenu">
-                                <i class="fas fa-cogs iconosMenuLateral" />
+                                <i className="fas fa-cogs iconosMenuLateral" />
                                 <NavDropdown title="Configuración" id="config_drop" className="conf_drop">
                                     <NavDropdown.Item>
                                         <Link to="/principalProductores/EditarDatos" id="items">Editar mis datos</Link>

@@ -100,3 +100,7 @@ input[type=text] {
     width: 30px;
     height: 30px;
 }
+
+.iconoBusqueda {
+    color: black;
+}

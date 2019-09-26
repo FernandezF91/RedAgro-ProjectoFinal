@@ -3,7 +3,7 @@ import NumberFormat from 'react-number-format';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { Button } from 'react-bootstrap';
 
-const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarProducto, getTotalCarrito }) => {
+const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarProducto, getTotalCarrito }) => {
 
     const columns = [
         {
@@ -37,11 +37,11 @@ const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarPro
             <MDBTableHead columns={columns} />
             <MDBTableBody>
                 {
-                    listaDeReservas.map((producto, index) =>
+                    listaDeProductos.map((producto, index) =>
                         <tr>
                             <td>
                                 {/*Puse eso de ejemplo, pero deberia ir la foto que suban del producto*/}
-                                <i class="fas fa-lemon" />
+                                <i className="fas fa-lemon" />
                             </td>
                             <td>
                                 <h5>{producto.titulo}</h5>
@@ -50,11 +50,11 @@ const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarPro
                             </td>
                             <td>
                                 <button className="iconosListado" onClick={() => restarProducto(index)}>
-                                    <i class="fas fa-minus" />
+                                    <i className="fas fa-minus" />
                                 </button>
                                 <span className="item-quantity">{producto.cantidad}</span>
                                 <button className="iconosListado" onClick={() => sumarProducto(index)}>
-                                    <i class="fas fa-plus" />
+                                    <i className="fas fa-plus" />
                                 </button>
                             </td>
                             <td>
@@ -65,7 +65,7 @@ const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarPro
                             </td>
                             <td>
                                 <button className="remove" onClick={() => quitarProducto(index)}>
-                                    <i className="fas fa-times"></i>
+                                    <i className="fas fa-times" />
                                 </button>
                             </td>
                         </tr>
@@ -74,7 +74,7 @@ const ItemCarrito = ({ listaDeReservas, sumarProducto, restarProducto, quitarPro
                 <tr>
                     <td colSpan="6" align="right">
                         <h5>Total
-                           <NumberFormat value={getTotalCarrito(listaDeReservas)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix=" $ " decimalScale={2} fixedDecimalScale={true} /> 
+                           <NumberFormat value={getTotalCarrito(listaDeProductos)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix=" $ " decimalScale={2} fixedDecimalScale={true} /> 
                         </h5>
                         <Button variant="success" type="submit">Finalizar Reserva</Button>
                     </td>
