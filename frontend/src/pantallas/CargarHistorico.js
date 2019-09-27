@@ -1,3 +1,4 @@
+import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react';
 import Files from 'react-files';
 import { FilePond, registerPlugin } from 'react-filepond';
@@ -10,7 +11,6 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondTypeValidate from "filepond-plugin-file-validate-type";
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
-
 class CargarHistorico extends Component {
 
 	constructor(props) {
@@ -18,36 +18,31 @@ class CargarHistorico extends Component {
 		this.state = {
 			campos: [],
 			files: "",
-			id:this.props.id_productor,
+			id: this.props.id_productor,
 		}
-	// this.subirArchivos = this.subirArchivos.bind(this);
+		// this.subirArchivos = this.subirArchivos.bind(this);
 	}
 
-
-	render(){
+	render() {
 		return (
-	<div>
-		<div className="container">
-			
+			<div className="container">
 				<div clasName="imagenes">
-							<div className ="titulosPrincipales">
-								Cargar archivos históricos
-								</div>
-								<FilePond ref="filep"
-						 allowMultiple={false} maxFiles={1} labelIdle={"Arrastre o suba sus archivos aquí"}
-								onupdatefiles={(fileItems) => {
-                              // Set current file objects to this.state
-                              this.setState({
-                                  files: fileItems.map(fileItem => fileItem.file)
-                              });
+					<div className="titulosPrincipales">Cargar archivos históricos</div>
+					<FilePond
+						className="cursorCajaArchivos"
+						ref="filep"
+						allowMultiple={false} maxFiles={1} labelIdle={"Arrastre o suba sus archivos aquí"}
+						onupdatefiles={(fileItems) => {
+							// Set current file objects to this.state
+							this.setState({
+								files: fileItems.map(fileItem => fileItem.file)
+							});
 
-                          }}/>
-							</div>
+						}} />
+				</div>
+			</div>
+		)
+	}
 
-		</div>
-
-	</div>
-		)}
-	
 }
 export default CargarHistorico;

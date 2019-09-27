@@ -1,4 +1,4 @@
-import React, { Component,useState } from 'react'
+import React, { Component, useState } from 'react'
 import { Form, Row, Button } from 'react-bootstrap';
 import 'moment/locale/es';
 import { DatePickerInput } from 'rc-datepicker';
@@ -17,7 +17,7 @@ import 'filepond/dist/filepond.min.css';
 // Note: These need to be installed separately
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondTypeValidate from "filepond-plugin-file-validate-type";
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';import { isDate } from 'moment';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'; import { isDate } from 'moment';
 ;
 
 const minDate = new Date();
@@ -52,12 +52,12 @@ class NuevoProducto extends Component {
             visible: false,
             mensaje: "",
             tipos_producto: [],
-            formOk:false,
-            visibleOk:false,
-            valueCat:[],
-            valueTp:[],
-            valueTprod:[],
-            disabled:false,
+            formOk: false,
+            visibleOk: false,
+            valueCat: [],
+            valueTp: [],
+            valueTprod: [],
+            disabled: false,
             id: this.props.id_productor
         }
 
@@ -76,20 +76,20 @@ class NuevoProducto extends Component {
         })
     }
 
-   validarFecha(){
+    validarFecha() {
 
-    return !isDate(this.state.campos["fecha_ven"]);
+        return !isDate(this.state.campos["fecha_ven"]);
 
 
-   }
+    }
 
     validarCampos() {
 
-        if ((!this.state.campos["categoria"])|| (!this.state.campos["tipo_produccion"]) || (!this.state.campos["peso"]) 
+        if ((!this.state.campos["categoria"]) || (!this.state.campos["tipo_produccion"]) || (!this.state.campos["peso"])
             || (!this.state.campos["stock"]) || (!this.state.campos["precio"])
             || (!this.state.campos["tiempo_preparacion"]) || ((!this.state.campos["descripcion"]) || (this.state.campos["descripcion"].length > 255))
             || ((!this.state.campos["titulo"]) || (this.state.campos["titulo"].length > 100)) || (this.state.files.length === 0) ||
-            (!this.state.campos["fecha_ven"]? false : this.validarFecha())) {
+            (!this.state.campos["fecha_ven"] ? false : this.validarFecha())) {
 
             this.setState({
                 visible: true,
@@ -101,24 +101,24 @@ class NuevoProducto extends Component {
         return true;
     }
 
-    closeModalSeguirCargando(){
+    closeModalSeguirCargando() {
 
-    this.setState({visibleOk:false,formOk:false})
+        this.setState({ visibleOk: false, formOk: false })
 
-    this.limpiarCampos();
+        this.limpiarCampos();
 
     }
 
     closeModal() {
 
-       if(this.state.formOk===true){
+        if (this.state.formOk === true) {
 
-        this.mostrarPantallaPrincipal();
+            this.mostrarPantallaPrincipal();
 
         }
 
         this.setState({
-            visible:false
+            visible: false
         });
     }
 
@@ -197,10 +197,12 @@ class NuevoProducto extends Component {
 
     mostrarMensajeOk() {
 
-        this.setState({formOk:true,
-                       visibleOk:true});
+        this.setState({
+            formOk: true,
+            visibleOk: true
+        });
 
-  
+
     }
 
     cambiosFecha(e) {
@@ -211,57 +213,59 @@ class NuevoProducto extends Component {
 
     limpiarCampos() {
 
-       let files=[];
-       let campos = this.state.campos;
-       campos["titulo"] = "";
-       campos["descripcion"] = "";
-       campos["categoria"] = "";
-       campos["tipo_producto"] = "";
-       campos["tipo_produccion"] = "";
-       campos["fecha_ven"] = "";
-       campos["stock"] = "";
-       campos["precio"] = "";
-       campos["tiempo_preparacion"] = "";
-       campos["peso"]= "";
-       
+        let files = [];
+        let campos = this.state.campos;
+        campos["titulo"] = "";
+        campos["descripcion"] = "";
+        campos["categoria"] = "";
+        campos["tipo_producto"] = "";
+        campos["tipo_produccion"] = "";
+        campos["fecha_ven"] = "";
+        campos["stock"] = "";
+        campos["precio"] = "";
+        campos["tiempo_preparacion"] = "";
+        campos["peso"] = "";
 
-       this.featurePond.current.getFiles().forEach(file=>{
 
-           this.featurePond.current.removeFile(file);
-    });
+        this.featurePond.current.getFiles().forEach(file => {
 
-        this.setState({campos:campos,
-             files:files, valueCat:[],valueTp:[],valueTprod:[]});
-        
+            this.featurePond.current.removeFile(file);
+        });
+
+        this.setState({
+            campos: campos,
+            files: files, valueCat: [], valueTp: [], valueTprod: []
+        });
+
 
     }
 
 
     cambiosSelect(opt, a, value) {
-       
- 
+
+
         let campos = this.state.campos;
         campos[a.name] = opt.label;
-        this.setState({ campos,valueTprod:value })
+        this.setState({ campos, valueTprod: value })
     }
 
     cambiosSelectTipoProducto(opt, a, value) {
 
-        this.setState({valueTp:value});
+        this.setState({ valueTp: value });
         let campos = this.state.campos;
         campos[a.name] = opt.value;
         this.setState({ campos })
     }
 
     cambiosSelectCategoria(opt, a, value) {
-        
-        this.setState({valueCat:value, valueTp:"",tipos_producto:[],disabled:false});
+
+        this.setState({ valueCat: value, valueTp: "", tipos_producto: [], disabled: false });
         let campos = this.state.campos;
         campos[a.name] = opt.label;
-        
-        if(this.state.campos["categoria"]==="Variado"){
 
-        this.setState({disabled:true})
+        if (this.state.campos["categoria"] === "Variado") {
+
+            this.setState({ disabled: true })
 
         }
 
@@ -273,7 +277,7 @@ class NuevoProducto extends Component {
 
     obtenerTiposProducto(categoria) {
         var _this = this;
-       
+
         const path_principal = "http://localhost:3000/redAgro/obtenerTiposProducto?categoria_producto=";
         const path_final = path_principal + categoria;
 
@@ -297,11 +301,11 @@ class NuevoProducto extends Component {
                     function (response) {
                         _this.setState({ tipos_producto: [] })
 
-                        if(_this.state.campos["categoria"]==="Variado"){
+                        if (_this.state.campos["categoria"] === "Variado") {
 
-                        _this.state.campos["tipo_producto"] = response[0].id
-                    
-                        return;
+                            _this.state.campos["tipo_producto"] = response[0].id
+
+                            return;
 
                         }
 
@@ -334,7 +338,7 @@ class NuevoProducto extends Component {
                                 *Título
 									</Form.Label>
                             <Form.Control
-                            value={this.state.campos["titulo"]}
+                                value={this.state.campos["titulo"]}
                                 type="titulo"
                                 name="titulo"
                                 onChange={(e) => this.detectarCambios(e)}
@@ -348,7 +352,7 @@ class NuevoProducto extends Component {
                                 *Descripción
 									</Form.Label>
                             <Form.Control
-                            value={this.state.campos["descripcion"]}
+                                value={this.state.campos["descripcion"]}
                                 as="textarea"
                                 rows="3"
                                 type="desc"
@@ -388,7 +392,7 @@ class NuevoProducto extends Component {
                                 *Peso (en kg)
                                 </Form.Label>
                             <Form.Control
-                            value={this.state.campos["peso"]}
+                                value={this.state.campos["peso"]}
                                 type="number"
                                 name="peso"
                                 min="1"
@@ -402,7 +406,7 @@ class NuevoProducto extends Component {
                                 *Stock
                                 </Form.Label>
                             <Form.Control
-                            value={this.state.campos["stock"]}
+                                value={this.state.campos["stock"]}
                                 type="number"
                                 name="stock"
                                 min="1"
@@ -416,7 +420,7 @@ class NuevoProducto extends Component {
                                 *Precio
                                 </Form.Label>
                             <Form.Control
-                            value={this.state.campos["precio"]}
+                                value={this.state.campos["precio"]}
                                 type="number"
                                 min="1"
                                 name="precio"
@@ -438,7 +442,7 @@ class NuevoProducto extends Component {
                             />
                         </Form.Group>
                     </div>
-                    
+
                     <div className="fechaVencimiento">
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
@@ -459,6 +463,7 @@ class NuevoProducto extends Component {
                             *Imágenes
 								</div>
                         <FilePond
+                            className="cursorCajaArchivos"
                             ref={this.featurePond}
                             allowMultiple={true} maxFiles={5} imagePreviewHeight={150} acceptedFileTypes="image/jpeg, image/png, image/jpg" labelIdle={"Arrastre o suba sus imágenes aquí"}
                             onupdatefiles={(fileItems) => {
@@ -479,7 +484,7 @@ class NuevoProducto extends Component {
                             <Button variant="success" type="submit">Crear</Button>
                         </div>
                         <div className="botonLimpiar">
-                            <Button variant="success" onClick={()=> this.limpiarCampos()}>Limpiar</Button>
+                            <Button variant="success" onClick={() => this.limpiarCampos()}>Limpiar</Button>
                         </div>
                     </div>
                 </Form>
@@ -506,12 +511,8 @@ class NuevoProducto extends Component {
                         <div>
                             <h1>Producto Guardado</h1>
                             <p>¿Querés seguir cargando productos?</p>
-                             <Button variant="success" onClick={() => this.closeModalSeguirCargando()}>
-                                Si
-                            </Button>
-                            <Button variant="success" onClick={() => this.closeModal()}>
-                                No
-                             </Button>
+                            <Button variant="success" onClick={() => this.closeModalSeguirCargando()}>Si</Button>
+                            <Button variant="success" onClick={() => this.closeModal()}>No</Button>
                         </div>
                     </Modal>
                 </section>
