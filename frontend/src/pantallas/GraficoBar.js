@@ -9,10 +9,10 @@ const GraficoBar = ({ totalesGraficoBar }) => {
             {
                 data,
                 label: 'Productos vendidos',
-                backgroundColor: '#60D97B',
+                backgroundColor: 'rgb(96, 217, 123, 0.3)',
                 borderColor: '#60D97B',
-                borderWidth: 1,
-                hoverBackgroundColor: '#60D97B',
+                borderWidth: 3,
+                hoverBackgroundColor: 'rgb(96, 217, 123, 0.3)',
                 hoverBorderColor: '#60D97B'
             }
         ]
@@ -30,7 +30,10 @@ const GraficoBar = ({ totalesGraficoBar }) => {
                 scales: {
                     xAxes: [
                         {
-                            offset: true
+                            offset: true,
+                            gridLines: {
+                                display: false
+                            }
                         }
                     ],
                     yAxes: [
@@ -38,8 +41,10 @@ const GraficoBar = ({ totalesGraficoBar }) => {
                             offset: true,
                             ticks: {
                                 display: true,
-                                beginAtZero: true
+                                beginAtZero: true,
+                                precision: 0
                             },
+
                         }
                     ]
                 }
