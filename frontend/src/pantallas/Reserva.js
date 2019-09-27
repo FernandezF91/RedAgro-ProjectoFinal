@@ -5,10 +5,6 @@ import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 
 const columnas = [
 	{
-		label: '',
-		field: 'Detalle',
-	},
-	{
 		label: 'Nro. Reserva',
 		field: 'NroReserva',
 	},
@@ -31,6 +27,18 @@ const columnas = [
 	{
 		label: 'Total',
 		field: 'Total',
+	},
+	{
+		label: '',
+		field: 'Detalle',
+	},
+	{
+		label: '',
+		field: 'Ver mensajes',
+	},
+	{
+		label: '',
+		field: 'Editar',
 	}
 ]
 

@@ -21,7 +21,7 @@ const columnas_detalle = [
 const DetalleReserva = ({ item }) => {
 	return (
 		<tr key={"row-expanded-" + item.id}>
-			<td colSpan="7">
+			<td colSpan="9">
 				<Card border="success">
 					<Card.Header>Detalle de la Reserva </Card.Header>
 					<Card.Body>

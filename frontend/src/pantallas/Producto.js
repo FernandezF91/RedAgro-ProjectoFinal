@@ -5,10 +5,6 @@ import { MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
 
 const columnas = [
     {
-		label: '',
-		field: 'Editar',
-	},
-    {
         label: 'Categoría',
         field: 'Categoria'
     },
@@ -47,14 +43,18 @@ const columnas = [
     {
         label: 'Tiempo de preparación (días)',
         field: 'TiempoDePreparacion'
-    }
+    },
+    {
+		label: '',
+		field: 'Editar',
+	}
 ];
 
 const Producto = ({ productos }) => {
-	return (
+	return (       
         <div>
 			{productos.length > 0 ?
-				<MDBTable striped autoWidth responsive hover>
+				<MDBTable striped responsive hover>
 					<MDBTableHead columns={columnas} />
 					<MDBTableBody>{productos}</MDBTableBody>
 				</MDBTable>

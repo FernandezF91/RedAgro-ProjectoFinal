@@ -104,3 +104,16 @@ input[type=text] {
 .iconoBusqueda {
     color: black;
 }
+
+.loader {
+	background-color: white;
+	min-height: calc(100vh - 78px);
+	z-index: 3;
+	padding: 25%;
+	align-content: center;
+}
+
+.iconosTabla {
+    font-size: 18px;
+}
+
