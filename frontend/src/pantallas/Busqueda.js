@@ -46,7 +46,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                                     <i className="fas fa-plus" />
                                                 </button>
                                             </MDBCardFooter>
-                                            <MDBBtn outline color="green" size="sm" onClick={() => agregarAlCarrito(index)}>
+                                            <MDBBtn outline color="green"  onClick={() => agregarAlCarrito(index)}>
                                                 Agregar al carrito
                                             </MDBBtn>
                                         </MDBCardBody>
