@@ -13,7 +13,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                     <MDBContainer >
                         <MDBRow>
                             {listaDeProductos.map((item, index) => (
-                                <MDBCol lg="3" md="6" className="mb-lg-0 mb-4" key={item.id}>
+                                <MDBCol lg="4" md="6" className="mb-lg-0 mb-4" key={item.id}>
                                     <MDBCard narrow ecommerce className="mb-4">
                                         <MDBCardImage
                                             src={culturaVerde}
@@ -55,11 +55,11 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                         </MDBRow>
                     </MDBContainer> :
                     <div className="notFound">
-                        <i className="fas fa-tasks iconoGrande"></i>
+                        <i className="fas fa-tasks iconoGrande" />
                         <br />
                         <br />
                         <h5>Ups! No se encontraron productos para tu busqueda! </h5>
-                        <h6>Probá cambiando la descripción por acá <Link to={'/principalConsumidores'}>acá</Link> </h6>
+                        <h6>Probá cambiando la descripción por acá <Link to={'/principalConsumidores'}>acá</Link></h6>
                     </div>
             }
         </div>
