@@ -82,23 +82,23 @@ class ListadoProductos extends Component {
     }
 
     render() {
-
         const { productos } = this.state;
         let body = [];
         productos.forEach(item => {
             body.push(this.generoItem(item));
         })
 
-        if (this.state.loading) return <Loader
-            type="Grid"
-            color="#28A745"
-            height={150}
-            width={150}
-            className="loader"
-        />;
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
 
         return (
-
             <div>
                 <div className="titulosPrincipales">Productos</div>
                 <Producto productos={body} />

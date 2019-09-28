@@ -1,8 +1,8 @@
 .fondo {
     background-color: whitesmoke;
     height: 100vh;
-	width: 100vw;
-	overflow: auto;
+    width: 100vw;
+    overflow: auto;
 }
 
 .barraBusqueda {
@@ -10,25 +10,25 @@
 }
 
 input[type=text] {
-	width: 500px;
-	margin-left: -0.35%;
-	flex: 1;
-	border: 1.5px solid #ccc;
-	border-radius: 6px;
-	box-sizing: border-box;
-	padding: 0px 10px;
-	font-size: 15px;
-	font-weight: 400;
+    width: 500px;
+    margin-left: -0.35%;
+    flex: 1;
+    border: 1.5px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    padding: 0px 10px;
+    font-size: 15px;
+    font-weight: 400;
 }
 
 @media (max-width: 1000px) {
-	.navbar {
-		overflow: auto !important;
-	}
+    .navbar {
+        overflow: auto !important;
+    }
 }
 
 .sombraBarra {
-	z-index: 1;
+    z-index: 1;
 }
 
 .barraNavegacion {
@@ -36,64 +36,56 @@ input[type=text] {
 }
 
 .botones {
-	font-size: 15px;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .culturaVerde {
-	margin-left: 15.4%;
+    margin-left: 15.4%;
 }
 
 .contenedor {
-	background-color: whitesmoke;
-	flex-direction: column;
-	display: flex;
-	justify-content: center;
-	text-align: center;
+    background-color: whitesmoke;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
 
 .input-group-text {
-	margin-left: -2.02%;
-	margin-top: -0.03%;
-	height: 5.1%;
+    margin-left: -2.02%;
+    margin-top: -0.03%;
+    height: 5.1%;
 }
 
 .error {
-	color: #cc0000;
-	font-size: 13px;
-	position: absolute;
+    color: #cc0000;
+    font-size: 13px;
+    position: absolute;
 }
 
 .titulosPrincipales {
-	padding-top: 20px;
-	padding-bottom: 20px;
-	font-size: 32px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 32px;
 }
 
-.form-control[type="text"],
-.form-control[type="email"],
-.form-control[type="password"],
-.form-control[type="telR"],
-.form-control[type="number"] {
-	width: 40%;
-
+.form-control[type="text"], .form-control[type="email"], .form-control[type="password"], .form-control[type="telR"], .form-control[type="number"] {
+    width: 40%;
 }
 
-.selectTipoProducto,
-.selectTipoUnidad,
-.selectTipoProduccion,
-.selectCategoria {
-	width: 50%;
+.selectTipoProducto, .selectTipoUnidad, .selectTipoProduccion, .selectCategoria {
+    width: 50%;
 }
 
 .iconosBarra {
-	color: darkgreen;
-	font-size: 28px;
-	margin-top: 13px;
-	margin-left: 7px;
-	margin-right: 7px;
+    color: darkgreen;
+    font-size: 28px;
+    margin-top: 13px;
+    margin-left: 7px;
+    margin-right: 7px;
 }
 
 .botonBusqueda {
@@ -106,11 +98,12 @@ input[type=text] {
 }
 
 .loader {
-	background-color: white;
-	min-height: calc(100vh - 78px);
-	z-index: 3;
-	padding: 25%;
-	align-content: center;
+    background-color: white;
+    height: calc(100vh - 78px);
+    position: fixed;
+    top: 50%;
+    left:50%;
+    margin-left: 75px;
 }
 
 .iconosTabla {
@@ -118,7 +111,6 @@ input[type=text] {
 }
 
 .cursorCajaArchivos {
-	cursor:pointer; 
-	cursor: hand;
+    cursor: pointer;
+    cursor: hand;
 }
-

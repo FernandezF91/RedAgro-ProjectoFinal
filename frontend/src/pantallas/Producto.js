@@ -53,18 +53,18 @@ const columnas = [
 const Producto = ({ productos }) => {
 	return (       
         <div>
-			{productos.length > 0 ?
+			{productos.length > 13 ?
 				<MDBTable striped responsive hover>
 					<MDBTableHead columns={columnas} />
 					<MDBTableBody>{productos}</MDBTableBody>
 				</MDBTable>
 				:
 				<div className="sinReservas">
-					<i className="fas fa-tasks iconoGrande"></i>
+					<i className="fas fa-store iconoGrande"></i>
 					<br />
 					<br />
 					<h5>Ups! No tenes productos cargados! </h5>
-					<h6>Cargá tus productos <Link to={''}>acá</Link> </h6>
+					<h6>Cargá tus productos <Link to={'/principalProductores/NuevoProducto'}>acá</Link> </h6>
 				</div>
 			}
 		</div >

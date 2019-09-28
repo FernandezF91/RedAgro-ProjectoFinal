@@ -2,12 +2,13 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 
 const GraficoLine = ({ totalesGraficoLine }) => {
-    //const dataFinalizada = totalesGraficoLine.map(item => item.cantidad);
-    /*const preDataFinalizada = totalesGraficoLine.filter(item => item.estado = 'Finalizado');*/
-    /*const dataFinalizada = preDataFinalizada.map(item => item.cantidad);*/
-    /*const preDataCancelada = totalesGraficoLine.filter(item => item.estado = 'Cancelada');*/
-    /*const dataCancelada = preDataCancelada.map(item => item.cantidad);*/
-    //  const labels = totalesGraficoLine.map(item => item.estado);
+    /*const dataFinalizada = totalesGraficoLine.map(item => item.cantidad);
+    const preDataFinalizada = totalesGraficoLine.filter(item => item.estado = 'Finalizado');
+    const dataFinalizada = preDataFinalizada.map(item => item.cantidad);
+    const preDataCancelada = totalesGraficoLine.filter(item => item.estado = 'Cancelada');
+    const dataCancelada = preDataCancelada.map(item => item.cantidad);
+    const labels = totalesGraficoLine.map(item => item.estado);*/
+    
     const data = totalesGraficoLine.map(item => item.cantidad);
     const labels = totalesGraficoLine.map(item => item.estado);
     const grafico = {
