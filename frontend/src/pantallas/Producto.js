@@ -53,7 +53,7 @@ const columnas = [
 const Producto = ({ productos }) => {
 	return (       
         <div>
-			{productos.length > 13 ?
+			{productos.length > 0 ?
 				<MDBTable striped responsive hover>
 					<MDBTableHead columns={columnas} />
 					<MDBTableBody>{productos}</MDBTableBody>
