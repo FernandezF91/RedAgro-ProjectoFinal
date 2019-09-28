@@ -164,7 +164,8 @@ class PantallaPrincipalconsumidores extends Component {
                             <Route path={'/principalConsumidores/Checkout'} render={(props) =>
                                 <CheckoutRouter
                                     id_consumidor={this.state.id}
-                                    productosSeleccionados={this.state.productosSeleccionados} />} />
+                                    productosSeleccionados={this.state.productosSeleccionados} 
+                                    user={this.state.user}/>} />
                         </Col>
                     </Row>
                 </Container>

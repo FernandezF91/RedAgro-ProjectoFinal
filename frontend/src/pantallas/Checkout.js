@@ -2,59 +2,109 @@ import React, { Component } from 'react';
 import { MDBCard, MDBCardBody, MDBCardFooter, MDBCardTitle, MDBCardText, MDBCardHeader, MDBBtn, MDBContainer, MDBListGroup, MDBListGroupItem, MDBRow, MDBCol } from "mdbreact";
 import { Button } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import StepContent from '@material-ui/core/StepContent';
+import Button2 from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import _ from 'lodash';
+import PasosCheckout from './PasosCheckout';
+import '../diseños/estilosGlobales.css';
+import '../diseños/Checkout.css'
+
+const pasos = ['Confirmá tu datos personales', 'Seleccioná un Punto de Entrega', 'Elegí una fecha de Retiro', 'Resumen de Reserva'];
 
 class Checkout extends Component {
 	constructor(props) {
 		super(props);
-		
+		this.state = {
+			activeStep: 0,
+			setActiveStep: 0,
+			user: {
+				nombre: {
+					value: "Mark",
+					valid: true
+				},
+				apellido: {
+					value: "Otto",
+					valid: true
+				},
+			}
+		}
 	}
 
+	handleNext = () => {
+		this.setState({ activeStep: (this.state.activeStep + 1) });
+	}
+
+	handleBack = () => {
+		this.setState({ activeStep: (this.state.activeStep - 1) });
+	}
+
+	handleReset = () => {
+		this.setState({
+			activeStep: 0,
+			setActiveStep: 0
+		})
+	};
+
+	datosPersonalesHandler = event => {
+		event.preventDefault();
+		event.target.className += " was-validated";
+	};
+
+	changeHandler = event => {
+		this.setState({ [event.target.name]: event.target.value });
+	};
+
 	getTotalReserva(productosSeleccionados) {
-        return _.sumBy(productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
-    }
+		return _.sumBy(productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
+	}
 
 	render() {
+		const activeStep = this.state.activeStep;
 		return (
-			<MDBContainer >
+			<MDBContainer className="containerPrincipal">
 				<div className="titulosPrincipales">Finalizar la Reserva</div>
-				<MDBRow>
-					<MDBCol md="4">
-						<MDBCard style={{ width: "22rem", marginTop: "1rem" }}>
-							<MDBCardHeader><h6>Datos Personales</h6></MDBCardHeader>
-							<MDBCardBody>
+				<Stepper className="pasos" activeStep={activeStep} orientation="vertical">
+					{pasos.map(label => (
+						<Step key={label}>
+							<StepLabel>{label}</StepLabel>
 
-							</MDBCardBody>
-							<Button variant="success" type="submit">Continuar</Button>
-						</MDBCard>
-					</MDBCol>
+							<StepContent>
+								<PasosCheckout indexPasos={activeStep}
+									usuario={this.props.user}
+									datosPersonalesHandler={this.datosPersonalesHandler} />
 
-					<MDBCol md="4">
-						<MDBCard style={{ width: "22rem", marginTop: "1rem" }}>
-							<MDBCardHeader><h6>Puntos de Entrega</h6></MDBCardHeader>
-						</MDBCard>
-					</MDBCol>
+								<div>
+									<div>
+										<Button
+											disabled={activeStep === 0}
+											onClick={this.handleBack}>
+											Atras
+                  						</Button>
+										<Button
+											variant="success"
+											type="submit"
+											onClick={this.handleNext}>
+											{activeStep === pasos.length - 1 ? 'Finalizar' : 'Continuar'}
+										</Button>
+									</div>
+								</div>
+							</StepContent>
 
-					<MDBCol md="4">
-						<MDBCard style={{ width: "22rem", marginTop: "1rem" }}>
-							<MDBCardHeader><h6>Resumen de la Reserva</h6></MDBCardHeader>
-							<MDBCardBody>
-								{this.props.productosSeleccionados.map(item => (
-									<p>
-										{item.titulo} x {item.tipo_unidad}
-										<NumberFormat value={item.precio * item.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
-									</p>
-								))}
-							</MDBCardBody>
-							<MDBCardFooter className="px-2">
-								<h6>
-								<NumberFormat value={this.getTotalReserva(this.props.productosSeleccionado)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix=" $ " decimalScale={2} fixedDecimalScale={true} /> 
-								</h6>
-							</MDBCardFooter>
-							<Button variant="success" type="submit">Reservar</Button>
-						</MDBCard>
-					</MDBCol>
-				</MDBRow>
+						</Step>
+					))}
+				</Stepper>
+
+
+
+
+
+
+
 			</MDBContainer>
 		)
 	}
