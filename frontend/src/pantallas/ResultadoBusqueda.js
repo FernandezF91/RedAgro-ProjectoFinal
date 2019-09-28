@@ -6,28 +6,13 @@ import Busqueda from './Busqueda';
 import Paginacion from './Paginacion';
 
 const tamañosListado = [
-    {
-        label: "12",
-        value: "12"
-    },
-    {
-        label: "20",
-        value: "20"
-    },
-    {
-        label: "40",
-        value: "40"
-    },
-    {
-        label: "Todo",
-        value: "Todo"
-    },
+    { label: "9", value: "9" },
+    { label: "15", value: "15" },
+    { label: "30", value: "30" },
+    { label: "Todo", value: "Todo" },
 ];
 var defaultListado = [
-    {
-        label: "12",
-        value: "12"
-    },
+    { label: "9", value: "9" },
 ];
 
 class ResultadoBusqueda extends Component {
@@ -36,8 +21,9 @@ class ResultadoBusqueda extends Component {
         this.state = {
             id: this.props.id_usuario,
             resultadoBusqueda: [],
-            tamañoListado: 12, //Valor predeterminado
+            tamañoListado: 9, //Valor predeterminado
             paginaActual: 1,
+            imagenes: [],
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
@@ -78,6 +64,8 @@ class ResultadoBusqueda extends Component {
             .then(data => {
                 this.setState({
                     resultadoBusqueda: data.map((item) => {
+                        //var imagen = Blob.Parse(item.imagenes[0].image);
+                        //var objectURL = URL.createObjectURL(imagen);
                         return {
                             id: item.id,
                             categoria: item.producto.categoria,
@@ -91,10 +79,12 @@ class ResultadoBusqueda extends Component {
                             techaDeVencimiento: item.fecha_vencimiento,
                             tiempoDePreparacion: item.tiempo_preparacion,
                             cantidad: 0,
+                            //imagenes: objectURL ,
                         }
                     })
                 })
             })
+            
     }
 
     restarProducto = (position) => {

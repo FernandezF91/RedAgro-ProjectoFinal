@@ -81,17 +81,20 @@ class Estadisticas extends Component {
                 <div className="titulosPrincipales">Estadísticas</div>
                 <div className="graficosPorFila">
                     <div className="graficos1">
-                        <h5>Reservas por estados (en los últimos 90 días)</h5>
+                        <h5>Reservas por estados</h5>
+                        <h6>(en los últimos 90 días)</h6>
                         <GraficoPie totalesGraficoPie={this.state.totalesGraficoPie} />
                     </div>
                     <div className="graficos1">
-                        <h5>Total de reservas concretadas (en los últimos 6 meses)</h5>
+                        <h5>Total de reservas concretadas</h5>
+                        <h6>(en los últimos 6 meses)</h6>
                         <GraficoLine totalesGraficoLine={this.state.totalesGraficoLine} />
                     </div>
                 </div>
                 <div className="graficosPorFila">
                     <div className="graficos2">
-                        <h5>Productos vendidos (en los últimos 90 días)</h5>
+                        <h5>Productos vendidos</h5>
+                        <h6>(en los últimos 90 días)</h6>
                         <GraficoBar totalesGraficoBar={this.state.totalesGraficoBar} />
                     </div>
                 </div>

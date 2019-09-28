@@ -2,6 +2,7 @@ import React from 'react';
 import NumberFormat from 'react-number-format';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarProducto, getTotalCarrito }) => {
 
@@ -74,9 +75,11 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                 <tr>
                     <td colSpan="6" align="right">
                         <h5>Total
-                           <NumberFormat value={getTotalCarrito(listaDeProductos)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix=" $ " decimalScale={2} fixedDecimalScale={true} /> 
+                           <NumberFormat value={getTotalCarrito(listaDeProductos)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix=" $ " decimalScale={2} fixedDecimalScale={true} />
                         </h5>
-                        <Button variant="success" type="submit">Finalizar Reserva</Button>
+                        <Link to={'/principalConsumidores/Checkout'}>
+                            <Button variant="success" type="submit">Finalizar Reserva</Button>
+                        </Link>
                     </td>
                 </tr>
             </MDBTableBody>

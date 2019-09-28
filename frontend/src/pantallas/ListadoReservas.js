@@ -1,10 +1,13 @@
 import '../diseños/Reservas.css';
+import '../diseños/estilosGlobales.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 import Reserva from '../pantallas/Reserva';
 import DetalleReserva from '../pantallas/DetalleReserva';
 import Paginacion from './Paginacion';
+import Loader from 'react-loader-spinner';
 
 class ListadoReservas extends Component {
 
@@ -21,7 +24,8 @@ class ListadoReservas extends Component {
             reservasRealizadas: [],
             currentPage: 1,
             reservasPerPage: 4,
-            expandedRows: []
+            expandedRows: [],
+            loading: true
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
@@ -52,17 +56,28 @@ class ListadoReservas extends Component {
         const clickCallback = () => this.handleRowClick(item.id);
         const itemRows = [
             <tr onClick={clickCallback} key={"row-data-" + item.id}>
-                <td>
-                    <i className="far fa-eye" title="Ver detalle reserva" />
-                </td>
                 <td>{item.id}</td>
                 <td>{item.fecha}</td>
                 <td>{item.estado}</td>
                 <td>Retira <i>{item.persona_retiro}</i> por <i>{item.punto_entrega}</i></td>
-                <td>{item.productor.nombre + " " + item.productor.apellido}<p>Tel: {item.productor.telefono}</p>
-                    <Link to={''} className='text-primary mb-3'>Ver Mensajes</Link>
+                <td>
+                    {item.productor.nombre + " " + item.productor.apellido}<br />Tel: {item.productor.telefono}
                 </td>
-                <td> <NumberFormat value={item.total_reserva} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                <td>
+                    <NumberFormat value={item.total_reserva} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                </td>
+                <td>
+                    <i className="far fa-eye iconosTabla" title="Ver detalle reserva" />
+                </td>
+                <td>
+                    <Link to={''}>
+                        <i className="fas fa-comments iconosTabla" title="Ver mensajes" />
+                    </Link>
+                </td>
+                <td>
+                    <Link to={''}>
+                        <i className="fas fa-ellipsis-v iconosTabla" title="Ver detalle reserva" />
+                    </Link>
                 </td>
             </tr>
         ];
@@ -106,7 +121,8 @@ class ListadoReservas extends Component {
                             estado: item.estado_reserva.nombre,
                             total_reserva: item.total_reserva
                         }
-                    })
+                    }),
+                    loading: false
                 })
             })
     }
@@ -122,6 +138,14 @@ class ListadoReservas extends Component {
         lista.forEach(item => {
             body.push(this.generoItem(item));
         })
+
+        if (this.state.loading) return <Loader
+            type="Grid"
+            color="#28A745"
+            height={150}
+            width={150}
+            className="loader"
+        />;
 
         return (
 

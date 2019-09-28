@@ -6,7 +6,8 @@ const GraficoPie = ({ totalesGraficoPie }) => {
     const labels = totalesGraficoPie.map(item => item.estado);
     const grafico = {
         labels, datasets: [{
-            data, backgroundColor: [
+            data,
+            backgroundColor: [
                 '#FF6384',
                 '#FFCE56',
                 '#D960BD',
@@ -14,11 +15,11 @@ const GraficoPie = ({ totalesGraficoPie }) => {
                 '#60D97B'
             ],
             hoverBackgroundColor: [
-                '#FF6384',
-                '#FFCE56',
-                '#D960BD',
-                '#6081D9',
-                '#60D97B'
+                'rgb(255, 99, 132, 0.8)',
+                'rgb(255, 206, 86, 0.8)',
+                'rgb(217, 96, 189, 0.8)',
+                'rgb(96, 129, 217, 0.8)',
+                'rgb(96, 217, 123, 0.8)'
             ]
         }]
     };
@@ -31,8 +32,6 @@ const GraficoPie = ({ totalesGraficoPie }) => {
                 legend: {
                     display: true,
                     position: 'right',
-                    fullWidth: true,
-                    reverse: false,
                     labels: {
                         fontColor: 'rgb(0, 0, 0)'
                     }

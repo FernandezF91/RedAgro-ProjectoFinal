@@ -2,81 +2,62 @@
 	font-size: 15px;
 	display: flex;
 	flex-direction: row;
-	margin-top:20px;
-	margin-bottom:20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 	justify-content: center;
-
 }
 
-.form-control[type="desc"]{
-
-width:50%;
-height:100px;
-
+.form-control[type="desc"] {
+	width: 50%;
+	height: 100px;
 }
+
 
 .form-control[type="titulo"], .form-control[type="contenido"]{
 
 width:50%;
 
 }
-
-.form-label{
-
-text-align:right;
-
+.form-label {
+	text-align: right;
 }
 
-.botonUpload{
-
-height: 45px;
-margin-left:-300px;
-width: 120px;
-
-
+.botonUpload {
+	height: 45px;
+	margin-left: -300px;
+	width: 120px;
 }
 
 [type="file"] {
-  pointer-events: none;
-  width: 300px;
-  outline: none;
-
-}
-  
-.condicionesInputs{
-
-margin-left:-15%;
-color: #cc0000;
-font-size: 13px;
-margin-bottom: 15px;
-
+	pointer-events: none;
+	width: 300px;
+	outline: none;
 }
 
-.condicionesInputsImg{
-
-color: #cc0000;
-font-size: 13px;
+.condicionesInputs {
+	margin-left: -15%;
+	color: #cc0000;
+	font-size: 13px;
+	margin-bottom: 15px;
 }
 
-.condicionesInputsCO{
-
-margin-left:-18%;
-color: #cc0000;
-font-size: 13px;
+.condicionesInputsImg {
+	color: #cc0000;
+	font-size: 13px;
 }
 
-#number{
+.condicionesInputsCO {
+	margin-left: -18%;
+	color: #cc0000;
+	font-size: 13px;
+}
 
-
+#number {
 	width: 16%;
 }
 
-
-.calen{
-
+.calen {
 	width: 16%;
-
-
 }
 
 .filepond--item {
@@ -84,22 +65,19 @@ font-size: 13px;
 }
 
 .filepond--panel-root {
- 
-    border: 1.5px solid darkgray;
+	border: 1.5px solid darkgray;
 }
 
 /* error state color */
-[data-filepond-item-state*='error'] .filepond--item-panel,
-[data-filepond-item-state*='invalid'] .filepond--item-panel {
-    background-color: red;
+
+[data-filepond-item-state*='error'] .filepond--item-panel, [data-filepond-item-state*='invalid'] .filepond--item-panel {
+	background-color: red;
 }
 
 [data-filepond-item-state='processing-complete'] .filepond--item-panel {
-    background-color: green;
+	background-color: green;
 }
 
-.tituloImagen{
-
-margin-bottom: 12px;
-
+.tituloImagen {
+	margin-bottom: 12px;
 }
