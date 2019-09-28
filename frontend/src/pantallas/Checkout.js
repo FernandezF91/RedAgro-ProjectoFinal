@@ -72,12 +72,11 @@ class Checkout extends Component {
 					{pasos.map(label => (
 						<Step key={label}>
 							<StepLabel>{label}</StepLabel>
-
+							
 							<StepContent>
 								<PasosCheckout indexPasos={activeStep}
 									usuario={this.props.user}
 									datosPersonalesHandler={this.datosPersonalesHandler} />
-
 								<div>
 									<div>
 										<Button
@@ -98,13 +97,6 @@ class Checkout extends Component {
 						</Step>
 					))}
 				</Stepper>
-
-
-
-
-
-
-
 			</MDBContainer>
 		)
 	}
