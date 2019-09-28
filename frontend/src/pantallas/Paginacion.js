@@ -30,7 +30,7 @@ const Paginacion = (props) => {
             }
             {
               pageNumbers.map(number => (
-                <MDBPageItem active={props.currentPage !== number ? false : true}>
+                <MDBPageItem active={props.currentPage !== number ? false : true} key={number}>
                   <MDBPageNav className="page-link" onClick={() => props.nextPage(number)}>
                     {number}
                     {number !== props.currentPage ? '' : <span className="sr-only">(current)</span>}
