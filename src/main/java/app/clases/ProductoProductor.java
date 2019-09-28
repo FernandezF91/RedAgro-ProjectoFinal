@@ -6,7 +6,7 @@ import java.util.List;
 public class ProductoProductor {
 
 	public ProductoProductor(long id, Productor productor, Producto producto, String titulo, String descripcion, List<Imagen> imagenes,
-							 String tipo_produccion, int stock, Date fecha_vencimiento, int peso, int precio, int tiempo_preparacion) {
+							 String tipo_produccion, int stock, Date fecha_vencimiento, String contenido, String unidad_venta, int precio, int tiempo_preparacion) {
 		this.setId(id);
 		this.setProductor(productor);
 		this.setProducto(producto);
@@ -16,9 +16,10 @@ public class ProductoProductor {
 		this.setTipo_produccion(tipo_produccion);
 		this.setStock(stock);
 		this.setFecha_vencimiento(fecha_vencimiento);
-		this.setPeso(peso);
 		this.setPrecio(precio);
 		this.setTiempo_preparacion(tiempo_preparacion);
+		this.setContenido(contenido);
+		this.setUnidad_venta(unidad_venta);
 	}
 
 	private long id;
@@ -30,9 +31,11 @@ public class ProductoProductor {
 	private String tipo_produccion;
 	private int stock;
 	private Date fecha_vencimiento;
-	private int peso;
 	private int precio;
 	private int tiempo_preparacion;
+	private String contenido;
+	private String unidad_venta;
+	
 
 	public long getId() {
 		return id;
@@ -122,12 +125,21 @@ public class ProductoProductor {
 		this.descripcion = descripcion;
 	}
 
-	public int getPeso() {
-		return peso;
+	public String getContenido() {
+		return contenido;
 	}
 
-	public void setPeso(int peso) {
-		this.peso = peso;
+	public void setContenido(String contenido) {
+		this.contenido = contenido;
 	}
+
+	public String getUnidad_venta() {
+		return unidad_venta;
+	}
+
+	public void setUnidad_venta(String unidad_venta) {
+		this.unidad_venta = unidad_venta;
+	}
+
 	
 }

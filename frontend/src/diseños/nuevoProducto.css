@@ -15,7 +15,7 @@ height:100px;
 
 }
 
-.form-control[type="titulo"]{
+.form-control[type="titulo"], .form-control[type="contenido"]{
 
 width:50%;
 

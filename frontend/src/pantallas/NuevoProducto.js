@@ -40,6 +40,15 @@ const tipoProduccion = [
     { label: "Agroecológica", value: 2 },
 ];
 
+const tipoUnidadVenta = [
+    { label: "Kilogramo", value: 1 },
+    { label: "Paquete", value: 2 },
+    { label: "Atado", value: 3 },
+    { label: "Frasco", value: 4 },
+    { label: "Bolsa", value: 5 },
+    { label: "Bolsón", value: 6 }
+];
+
 
 class NuevoProducto extends Component {
     constructor(props) {
@@ -57,7 +66,9 @@ class NuevoProducto extends Component {
             valueCat:[],
             valueTp:[],
             valueTprod:[],
+            valueUnidadVenta:[],
             disabled:false,
+            disabled2:false,
             id: this.props.id_productor
         }
 
@@ -85,8 +96,9 @@ class NuevoProducto extends Component {
 
     validarCampos() {
 
-        if ((!this.state.campos["categoria"])|| (!this.state.campos["tipo_produccion"]) || (!this.state.campos["peso"]) 
-            || (!this.state.campos["stock"]) || (!this.state.campos["precio"])
+        if ((!this.state.campos["categoria"])|| (!this.state.campos["tipo_produccion"]) || (!this.state.campos["unidad_venta"]) 
+            || (!this.state.campos["stock"]) || (!this.state.campos["precio"]) || (!this.state.campos["contenido"]? false : this.state.campos["contenido"].length>20)
+            || (this.state.campos["categoria"]!=="Variado"? (!this.state.campos["tipo_producto"]) : false)
             || (!this.state.campos["tiempo_preparacion"]) || ((!this.state.campos["descripcion"]) || (this.state.campos["descripcion"].length > 255))
             || ((!this.state.campos["titulo"]) || (this.state.campos["titulo"].length > 100)) || (this.state.files.length === 0) ||
             (!this.state.campos["fecha_ven"]? false : this.validarFecha())) {
@@ -103,7 +115,7 @@ class NuevoProducto extends Component {
 
     closeModalSeguirCargando(){
 
-    this.setState({visibleOk:false,formOk:false})
+    this.setState({visibleOk:false,formOk:false,disabled:false,disabled2:false})
 
     this.limpiarCampos();
 
@@ -147,13 +159,15 @@ class NuevoProducto extends Component {
                     "fecha_vencimiento": this.state.campos["fecha_ven"],
                     "precio": this.state.campos["precio"],
                     "stock": this.state.campos["stock"],
-                    "peso": this.state.campos["peso"],
+                    "unidad_venta": this.state.campos["unidad_venta"],
                     "tiempo_preparacion": this.state.campos["tiempo_preparacion"],
-                    "tipo_produccion": this.state.campos["tipo_produccion"]
+                    "tipo_produccion": this.state.campos["tipo_produccion"],
+                    "contenido": this.state.campos["contenido"]
                 }),
             })
                 .then(function (response) {
                     if (response.status !== 200) {
+                        alert("todo mal");
                         _this.setState({
                             visible: true,
                             titulo: "Error",
@@ -222,7 +236,8 @@ class NuevoProducto extends Component {
        campos["stock"] = "";
        campos["precio"] = "";
        campos["tiempo_preparacion"] = "";
-       campos["peso"]= "";
+       campos["unidad_venta"]= "";
+       campos["contenido"]= "";
        
 
        this.featurePond.current.getFiles().forEach(file=>{
@@ -231,18 +246,34 @@ class NuevoProducto extends Component {
     });
 
         this.setState({campos:campos,
-             files:files, valueCat:[],valueTp:[],valueTprod:[]});
+             files:files, valueCat:[],valueTp:[],valueTprod:[],valueUnidadVenta:[]});
         
 
     }
 
 
-    cambiosSelect(opt, a, value) {
+    cambiosSelectTprod(opt, a, value) {
        
- 
         let campos = this.state.campos;
         campos[a.name] = opt.label;
-        this.setState({ campos,valueTprod:value })
+
+         this.setState({ campos, valueTprod:value })
+
+    }
+
+     cambiosSelectUnidadV(opt, a, value) {
+       
+        let campos = this.state.campos;
+        campos[a.name] = opt.label;
+
+        this.setState({ campos, valueUnidadVenta:value, disabled2:false })
+
+        if(this.state.campos["unidad_venta"]==="Kilogramo"){
+
+            this.setState({disabled2:true});
+
+        }
+
     }
 
     cambiosSelectTipoProducto(opt, a, value) {
@@ -379,19 +410,27 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Tipo de Producción
 								</Form.Label>
-                            <Select value={this.state.valueTprod} className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelect(opt, a, value)} />
+                            <Select value={this.state.valueTprod} className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectTprod(opt, a, value)} />
                         </Form.Group>
                     </div>
-                    <div className="peso">
+                    <div className="unidad_venta">
+                       <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                *Unidad de venta
+                                </Form.Label>
+                            <Select value={this.state.valueUnidadVenta} className="selectTipoUnidad" name="unidad_venta" options={tipoUnidadVenta} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectUnidadV(opt, a, value)} />
+                        </Form.Group>
+                    </div>
+                    <div className="contenido">
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
-                                *Peso (en kg)
+                                Contenido
                                 </Form.Label>
                             <Form.Control
-                            value={this.state.campos["peso"]}
-                                type="number"
-                                name="peso"
-                                min="1"
+                            value={this.state.campos["contenido"]}
+                                type="contenido"
+                                name="contenido"
+                                disabled={this.state.disabled2}
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
@@ -399,13 +438,13 @@ class NuevoProducto extends Component {
                     <div className="stock">
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
-                                *Stock
+                                *Cantidad disponible
                                 </Form.Label>
                             <Form.Control
                             value={this.state.campos["stock"]}
                                 type="number"
                                 name="stock"
-                                min="1"
+                                min="0"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
@@ -413,7 +452,7 @@ class NuevoProducto extends Component {
                     <div className="precio">
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
-                                *Precio
+                                *Precio (por unidad)
                                 </Form.Label>
                             <Form.Control
                             value={this.state.campos["precio"]}

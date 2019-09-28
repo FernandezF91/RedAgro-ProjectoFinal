@@ -55,8 +55,11 @@ public class EntidadProductoProductor {
 	@Column(name = "fecha_vencimiento", nullable = true)
 	private Date fecha_vencimiento;
 	
-	@Column(name = "peso", nullable = false)
-	private int peso;
+	@Column(name = "unidad_venta", nullable = false)
+	private String unidad_venta;
+	
+	@Column(name = "contenido", nullable = true)
+	private String contenido;
 
 	@Column(name = "precio", nullable = false)
 	private int precio;
@@ -156,13 +159,20 @@ public class EntidadProductoProductor {
 		this.imagenes = imagenes;
 	}
 
-	public int getPeso() {
-		return peso;
+	public String getUnidad_venta() {
+		return unidad_venta;
 	}
 
-	public void setPeso(int peso) {
-		this.peso = peso;
+	public void setUnidad_venta(String unidad_venta) {
+		this.unidad_venta = unidad_venta;
 	}
-	
+
+	public String getContenido() {
+		return contenido;
+	}
+
+	public void setContenido(String contenido) {
+		this.contenido = contenido;
+	}
 	
 }

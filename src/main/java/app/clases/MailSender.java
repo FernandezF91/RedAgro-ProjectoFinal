@@ -41,6 +41,7 @@ public abstract class MailSender {
 		Transport transport = getMailSession.getTransport("smtp");
  
 		transport.connect("smtp.gmail.com", username, password);
+		
 		transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 		transport.close();
 	}

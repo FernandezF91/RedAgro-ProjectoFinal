@@ -1,40 +1,22 @@
-.botonesnuevopuntoentrega {
+.autoComplete{
+
+	
+}
+
+#autocomplete{
+
+	height: 40px;
+	width: 490px;
+	border: 1.5px solid #ccc;
+	border-radius: 6px;
+	box-sizing: border-box;
+	padding: 0px 10px;
 	font-size: 15px;
-	display: flex;
-	flex-direction: row;
-	margin-top:20px;
-	margin-bottom:20px;
-	justify-content: center;
-
+	font-weight: 400;
 }
 
-.form-control[type="domicilio"]{
+.botones{
 
-width:50%;
+margin-top:20px;
 
-}
-
-.form-control[type="numero"]{
-
-width:16%;
-
-}
-
-.form-control[type="localidad"]{
-
-width:50%;
-
-}
-
-.form-control[type="provincia"]{
-
-width:50%;
-
-}
-
-.condicionesInputsCO{
-
-margin-left:-12%;
-color: #cc0000;
-font-size: 13px;
 }

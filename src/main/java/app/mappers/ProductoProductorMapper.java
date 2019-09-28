@@ -17,7 +17,8 @@ public class ProductoProductorMapper {
 				mapeoProductor.mapFromEntity(entidad.getProductor()),
 				mapeoProducto.mapFromEntity(entidad.getProducto()), entidad.getTitulo(), entidad.getDescripcion(),
 				mapeoImagen.mapFromEntity(entidad.getImagenes()),
-				entidad.getTipo_produccion(), entidad.getStock(), entidad.getFecha_vencimiento(), entidad.getPeso(), entidad.getPrecio(),
+				entidad.getTipo_produccion(), entidad.getStock(), entidad.getFecha_vencimiento(), entidad.getContenido(),
+				entidad.getUnidad_venta(), entidad.getPrecio(),
 				entidad.getTiempo_preparacion());
 		return producto;
 	}
@@ -34,7 +35,8 @@ public class ProductoProductorMapper {
 					mapeoProductor.mapFromEntity(entidad.getProductor()),
 					mapeoProducto.mapFromEntity(entidad.getProducto()), entidad.getTitulo(), entidad.getDescripcion(),
 					mapeoImagen.mapFromEntity(entidad.getImagenes()),
-					entidad.getTipo_produccion(), entidad.getStock(), entidad.getFecha_vencimiento(), entidad.getPeso(),
+					entidad.getTipo_produccion(), entidad.getStock(), entidad.getFecha_vencimiento(), entidad.getContenido(),
+					entidad.getUnidad_venta(),
 					entidad.getPrecio(), entidad.getTiempo_preparacion());
 			listaProdProductor.add(producto);
 		}
@@ -56,7 +58,8 @@ public class ProductoProductorMapper {
 		entidad.setTipo_produccion(modelo.getTipo_produccion());
 		entidad.setStock(modelo.getStock());
 		entidad.setFecha_vencimiento(modelo.getFecha_vencimiento());
-		entidad.setPeso(modelo.getPeso());
+		entidad.setContenido(modelo.getContenido());
+		entidad.setUnidad_venta(modelo.getUnidad_venta());
 		entidad.setPrecio(modelo.getPrecio());
 		entidad.setTiempo_preparacion(modelo.getTiempo_preparacion());
 		return entidad;		
@@ -79,7 +82,8 @@ public class ProductoProductorMapper {
 			entidad.setTipo_produccion(modelo.getTipo_produccion());
 			entidad.setStock(modelo.getStock());
 			entidad.setFecha_vencimiento(modelo.getFecha_vencimiento());
-			entidad.setPeso(modelo.getPeso());
+			entidad.setContenido(modelo.getContenido());
+			entidad.setUnidad_venta(modelo.getUnidad_venta());
 			entidad.setPrecio(modelo.getPrecio());
 			entidad.setTiempo_preparacion(modelo.getTiempo_preparacion());
 			listaEntidad.add(entidad);
