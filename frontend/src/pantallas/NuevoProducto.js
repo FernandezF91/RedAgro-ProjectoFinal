@@ -97,7 +97,8 @@ class NuevoProducto extends Component {
 
     validarCampos() {
         if ((!this.state.campos["categoria"])|| (!this.state.campos["tipo_produccion"]) || (!this.state.campos["unidad_venta"]) 
-            || (!this.state.campos["stock"]) || (!this.state.campos["precio"]) || (!this.state.campos["contenido"]? false : this.state.campos["contenido"].length>20)(!this.state.campos["precio"])
+            || (!this.state.campos["stock"]) || (!this.state.campos["precio"]) || (!this.state.campos["contenido"]? false : this.state.campos["contenido"].length>20)
+            || (this.state.campos["categoria"]!=="Variado"? !this.state.campos["tipo_producto"]: false)
             || (!this.state.campos["tiempo_preparacion"]) || ((!this.state.campos["descripcion"]) || (this.state.campos["descripcion"].length > 255))
             || ((!this.state.campos["titulo"]) || (this.state.campos["titulo"].length > 100)) || (this.state.files.length === 0) ||
             (!this.state.campos["fecha_ven"] ? false : this.validarFecha())) {
