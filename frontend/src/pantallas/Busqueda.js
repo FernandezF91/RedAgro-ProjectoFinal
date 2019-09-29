@@ -46,7 +46,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                                     <i className="fas fa-plus" />
                                                 </button>
                                             </MDBCardFooter>
-                                            <MDBBtn outline color="green"  onClick={() => agregarAlCarrito(index)}>
+                                            <MDBBtn outline color="green" onClick={() => agregarAlCarrito(index)}>
                                                 Agregar al carrito
                                             </MDBBtn>
                                         </MDBCardBody>
@@ -55,10 +55,10 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                         </MDBRow>
                     </MDBContainer> :
                     <div className="notFound">
-                        <i className="fas fa-tasks iconoGrande" />
+                        <i className="fas fa-search iconoGrande" />
                         <br />
                         <br />
-                        <h5>Ups! No se encontraron productos para tu busqueda! </h5>
+                        <h5>Ups! No se encontraron productos para tu búsqueda! </h5>
                         <h6>Probá cambiando la descripción por acá <Link to={'/principalConsumidores'}>acá</Link></h6>
                     </div>
             }
