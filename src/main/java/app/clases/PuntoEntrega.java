@@ -9,7 +9,7 @@ public class PuntoEntrega {
 	public PuntoEntrega( Long id, Productor productor, 
 			  //List<FechaEntrega> fechas_entrega, 
 						String pais, String provincia, 
-						 String localidad, int cod_postal, String direccion, double latitud, double longitud) {
+						 String localidad, String cod_postal, String direccion, double latitud, double longitud) {
 		
 		this.setId(id);
 		this.setProductor(productor);
@@ -35,7 +35,7 @@ public class PuntoEntrega {
 
 	private String localidad;
 
-	private int cod_postal;
+	private String cod_postal;
 
 	private String direccion;
 	
@@ -91,11 +91,11 @@ public class PuntoEntrega {
 		this.localidad = localidad;
 	}
 
-	public int getCod_postal() {
+	public String getCod_postal() {
 		return cod_postal;
 	}
 
-	public void setCod_postal(int cod_postal) {
+	public void setCod_postal(String cod_postal) {
 		this.cod_postal = cod_postal;
 	}
 

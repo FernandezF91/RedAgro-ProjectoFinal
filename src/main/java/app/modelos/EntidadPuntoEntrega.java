@@ -45,7 +45,7 @@ public class EntidadPuntoEntrega {
     private String localidad;
 	
 	@Column(name = "cod_postal", nullable = false)
-    private int cod_postal;
+    private String cod_postal;
 	
 	@Column(name = "direccion", nullable = false)
     private String direccion;
@@ -96,11 +96,11 @@ public class EntidadPuntoEntrega {
 		this.localidad = localidad;
 	}
 
-	public int getCod_postal() {
+	public String getCod_postal() {
 		return cod_postal;
 	}
 
-	public void setCod_postal(int cod_postal) {
+	public void setCod_postal(String cod_postal) {
 		this.cod_postal = cod_postal;
 	}
 
