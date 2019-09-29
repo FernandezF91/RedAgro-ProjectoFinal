@@ -1,8 +1,11 @@
 import '../diseños/estilosGlobales.css';
 import '../diseños/PreferenciasConsumidor.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import React, { Component } from 'react';
 import Select from 'react-select';
 import Button from 'react-bootstrap/Button';
+import Loader from 'react-loader-spinner';
+
 
 //Ejemplo del dropdown
 //https://alligator.io/react/react-select/
@@ -24,7 +27,8 @@ class PreferenciasConsumidor extends Component {
             preferencias: [],
             otros: [],
             verduras: [],
-            frutas: []
+            frutas: [],
+            loading: true
         };
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
@@ -82,6 +86,10 @@ class PreferenciasConsumidor extends Component {
     }
 
     guardarPreferencias() {
+        this.setState({
+            loading: true
+        })
+        var _this = this;
         var preferenciasAGuardar = [];
         preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.verduras, "Verduras");
         preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.frutas, "Frutas");
@@ -95,14 +103,16 @@ class PreferenciasConsumidor extends Component {
             body: JSON.stringify(preferenciasAGuardar)
         })
             .then(function (response) {
-                if (response === 200) {
+                if (response.status === 200) {
                     console.log("Se aplicaron los cambios");
-                    return;
                 }
                 else {
                     console.log("No se aplicaron los cambios");
-                    return;
                 }
+                _this.setState({
+                    loading: false
+                })
+                return;
             })
     }
 
@@ -160,12 +170,23 @@ class PreferenciasConsumidor extends Component {
                             label: item.tipo,
                             value: item.id
                         }
-                    })
+                    }),
+                    loading: false
                 });
             })
     }
 
     render() {
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
+
         return (
             <div className="container">
                 <div className="titulosPrincipales">Preferencias</div>
@@ -204,12 +225,8 @@ class PreferenciasConsumidor extends Component {
                 </div>
                 <br />
                 <div className="botonesPreferencias">
-                    <div className="botonCrear">
-                        <Button variant="success" type="submit" onClick={this.guardarPreferencias}>Guardar</Button>
-                    </div>
-                    <div className="botonAtras">
-                        <Button variant="success" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
-                    </div>
+                    <Button variant="success" className="botonAtras" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                    <Button variant="success" type="submit" className="botonCrear" onClick={this.guardarPreferencias}>Guardar</Button>
                 </div>
             </div>
         )

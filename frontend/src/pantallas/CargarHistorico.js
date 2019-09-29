@@ -29,7 +29,7 @@ class CargarHistorico extends Component {
 				<div clasName="imagenes">
 					<div className="titulosPrincipales">Cargar archivos históricos</div>
 					<FilePond
-						className="cursorCajaArchivos"
+						className="cursorManito"
 						ref="filep"
 						allowMultiple={false} maxFiles={1} labelIdle={"Arrastre o suba sus archivos aquí"}
 						onupdatefiles={(fileItems) => {

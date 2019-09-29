@@ -34,10 +34,12 @@ class BarraNavegacion extends Component {
     }
 
     handleInputChange = e => {
-        this.setState(
-            { busqueda: this.busqueda.value },
-            this.updateParametroBusqueda
-        );
+        if (this.busqueda.value.length > 0) {
+            this.setState(
+                { busqueda: this.busqueda.value },
+                this.updateParametroBusqueda
+            )
+        }
     }
 
     // handleInputChange2 = e => {
@@ -65,10 +67,8 @@ class BarraNavegacion extends Component {
                                     ref={input => (this.busqueda = input)}
                                 />
                                 <InputGroup.Append>
-                                    <InputGroup.Text className="botonBusqueda" onClick={this.handleInputChange}>
-                                        <Link to="/principalConsumidores/ResultadoBusqueda">
-                                            <i className="fa fa-search iconoBusqueda" />
-                                        </Link>
+                                    <InputGroup.Text className="botonBusqueda cursorManito" onClick={this.handleInputChange}>
+                                        <i className="fa fa-search iconoBusqueda" />
                                     </InputGroup.Text>
                                 </InputGroup.Append>
                             </InputGroup>
