@@ -58,6 +58,13 @@ class PantallaPrincipalconsumidores extends Component {
         this.setState({ busqueda },
             () => { console.log("Actualiza campo busqueda con: " + busqueda) } // Lo dejo solo para loggear
         );
+        this.props.history.push({
+            pathname: '/principalConsumidores/ResultadoBusqueda',
+            state: {
+                id: this.state.id,
+                busqueda: busqueda
+            }
+        })
     }
 
     actualizarProductosSeleccionados(productos) {

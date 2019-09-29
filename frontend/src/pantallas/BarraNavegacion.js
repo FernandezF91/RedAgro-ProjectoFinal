@@ -2,7 +2,7 @@ import '../diseños/PrincipalUsuarios.css';
 import '../diseños/estilosGlobales.css';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import React, { Component } from 'react';
-import { Navbar, NavDropdown, Badge, Nav } from 'react-bootstrap';
+import { Navbar, NavDropdown, Badge, Nav, InputGroup, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 class BarraNavegacion extends Component {
@@ -56,20 +56,23 @@ class BarraNavegacion extends Component {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     {rolDeUsuario === "Consumidor" &&
-                        <Nav className="BarraBusqueda">
-                            <input type="text"
-                                placeholder="Buscar productos y productores.. "
-                                name="search"
-                                onKeyPress={this.onKeyPress}
-                                // onChange={this.handleInputChange2}
-                                ref={input => (this.busqueda = input)}
-                            />
-                            <button type="submit" className="botonBusqueda" onClick={this.handleInputChange}>
-                                <Link to="/principalConsumidores/ResultadoBusqueda">
-                                    <i className="fa fa-search iconoBusqueda" />
-                                </Link>
-                            </button>
-                        </Nav>
+                        <div>
+                            <InputGroup className="barraBusquedaNuevo">
+                                <FormControl
+                                    placeholder="Buscar productos y productores.."
+                                    aria-label="Buscar productos y productores.."
+                                    onKeyPress={this.onKeyPress}
+                                    ref={input => (this.busqueda = input)}
+                                />
+                                <InputGroup.Append>
+                                    <InputGroup.Text className="botonBusqueda" onClick={this.handleInputChange}>
+                                        <Link to="/principalConsumidores/ResultadoBusqueda">
+                                            <i className="fa fa-search iconoBusqueda" />
+                                        </Link>
+                                    </InputGroup.Text>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </div>
                     }
 
                     {(rolDeUsuario === "Consumidor") ? (

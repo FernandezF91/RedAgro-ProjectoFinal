@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../diseños/estilosGlobales.css';
 import '../diseños/ResultadoBusqueda.css';
 import Select from 'react-select';
+import Loader from 'react-loader-spinner';
 import Busqueda from './Busqueda';
 import Paginacion from './Paginacion';
 
@@ -24,6 +25,7 @@ class ResultadoBusqueda extends Component {
             tamañoListado: 9, //Valor predeterminado
             paginaActual: 1,
             imagenes: [],
+            loading: true
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
@@ -81,10 +83,10 @@ class ResultadoBusqueda extends Component {
                             cantidad: 0,
                             //imagenes: objectURL ,
                         }
-                    })
+                    }),
+                    loading: false
                 })
-            })
-            
+            })  
     }
 
     restarProducto = (position) => {
@@ -157,6 +159,16 @@ class ResultadoBusqueda extends Component {
         const indexOfLastReserva = paginaActual * tamañoListado;
         const indexOfFirstReserva = indexOfLastReserva - tamañoListado;
         const listadoBusqueda = resultadoBusqueda.slice(indexOfFirstReserva, indexOfLastReserva);
+
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
 
         return (
             <div>
