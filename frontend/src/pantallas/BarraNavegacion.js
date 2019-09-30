@@ -19,7 +19,6 @@ class BarraNavegacion extends Component {
 
     onKeyPress = e => {
         if (e.key === 'Enter') {
-            console.log("Esta funcionando el enter");
             if (this.busqueda.value.length > 0) {
                 this.setState(
                     { busqueda: this.busqueda.value },
@@ -41,11 +40,6 @@ class BarraNavegacion extends Component {
             )
         }
     }
-
-    // handleInputChange2 = e => {
-    //     this.setState({ busqueda: e.target.value},
-    //         this.updateParametroBusqueda );
-    // }
 
     render() {
         const rolDeUsuario = this.state.rolUsuario;
