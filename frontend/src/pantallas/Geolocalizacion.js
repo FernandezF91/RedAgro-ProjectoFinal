@@ -64,7 +64,7 @@ onMarkerClick = (props, marker, e) =>
                     //     titulo: "Error",
                     //     mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
                     // });
-                    alert("todo mal");
+                   
                     return;
                 }
 

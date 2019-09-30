@@ -1,5 +1,6 @@
 package app.modelos;
 
+import java.sql.Date;
 import java.util.Calendar;
 
 import javax.persistence.Column;
@@ -24,10 +25,13 @@ public class EntidadFechaEntrega {
 	private EntidadPuntoEntrega punto_entrega;
 	
 	@Column(name="fecha", nullable=false)
-	private Calendar fecha;
+	private String fecha;
 		
-	@Column(name="horario", nullable=false)
-	private Calendar horario;
+	@Column(name="hora_inicio", nullable=false)
+	private int hora_inicio;
+	
+	@Column(name="hora_fin", nullable=false)
+	private int hora_fin;
 
 	public Long getId() {
 		return id;
@@ -45,19 +49,28 @@ public class EntidadFechaEntrega {
 		this.punto_entrega = punto_entrega;
 	}
 
-	public Calendar getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Calendar fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
-	public Calendar getHorario() {
-		return horario;
+	public int getHora_inicio() {
+		return hora_inicio;
 	}
 
-	public void setHorario(Calendar horario) {
-		this.horario = horario;
+	public void setHora_inicio(int hora_inicio) {
+		this.hora_inicio = hora_inicio;
 	}
+
+	public int getHora_fin() {
+		return hora_fin;
+	}
+
+	public void setHora_fin(int hora_fin) {
+		this.hora_fin = hora_fin;
+	}
+
 }

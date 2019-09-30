@@ -23,7 +23,7 @@ public class EntidadPuntoEntrega {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 	
 	@ManyToOne()
     @JoinColumn(name = "productor_id", nullable = false)
@@ -55,6 +55,9 @@ public class EntidadPuntoEntrega {
 	
 	@Column(name = "longitud", nullable = false)
     private double longitud;
+	
+	@Column(name = "activo", nullable = false)
+    private Boolean activo;
 
 	public Long getId() {
 		return id;
@@ -143,6 +146,15 @@ public class EntidadPuntoEntrega {
 	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+	
 	
 	
 }
