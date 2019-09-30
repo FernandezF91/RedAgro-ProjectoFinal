@@ -54,6 +54,7 @@ INSERT INTO redagro.producto (categoria, tipo) VALUES ("Frutas","Uva red globe")
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Acelga");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Achicoria");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Ají");
+INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Ajo");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Batata");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Berenjena blanca");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Berenjena negra");
@@ -65,6 +66,7 @@ INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Cebolla roja"
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Cebolla superior");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Chaucha");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Chaucha rolliza");
+INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Choclo");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Ciboulette");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Coliflor");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Curcuma");
@@ -91,6 +93,7 @@ INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Radicchio");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Remolacha");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Repollo blanco");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Repollo colorado");
+INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Rúcula");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Tomate redondo");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Tomate racimo");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Verduras","Tomate perita");
@@ -107,7 +110,9 @@ INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Miel");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Pickles");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Aceitunas negras");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Aceitunas verdes");
+
 INSERT INTO redagro.usuario (id,apellido, contraseña, 	fecha_nacimiento, nombre, rol, telefono, usuario) VALUES (10,"bosso", "1", "1982-06-03","ezequiel", "Productor", "23456723456", "e@e.com");
 INSERT INTO redagro.usuario (id,apellido, contraseña, 	fecha_nacimiento, nombre, rol, telefono, usuario) VALUES (11,"papu", "1", "1982-06-03","pepe", "Consumidor", "23456723456", "a@a.com");
+
 INSERT INTO redagro.punto_entrega (id,cod_postal,direccion,latitud,localidad,longitud,pais,provincia,productor_id) VALUES (10,"1686","asamblea 3154", "-54.23456","hurlingham","38.45678", "argentina", "Buenos Aires", "1");
 INSERT INTO redagro.punto_entrega (id,cod_postal,direccion,latitud,localidad,longitud,pais,provincia,productor_id) VALUES (12,"1686","asamblea 3154", "-32.23456","marcos paz","20.45678", "argentina", "Buenos Aires", "1");
