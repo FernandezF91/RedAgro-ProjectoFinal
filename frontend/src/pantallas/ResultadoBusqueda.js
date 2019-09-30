@@ -76,11 +76,12 @@ class ResultadoBusqueda extends Component {
                             titulo: item.titulo,
                             descripcion: item.descripcion,
                             stock: item.stock,
-                            tipoDeUnidad: item.tipo_unidad,
+                            tipoDeUnidad: item.unidad_venta,
                             tipoDeProduccion: item.tipo_produccion,
                             precio: item.precio,
                             techaDeVencimiento: item.fecha_vencimiento,
                             tiempoDePreparacion: item.tiempo_preparacion,
+                            contenido: item.contenido,
                             cantidad: 0,
                             productor: {
                                 id: item.productor.id,
