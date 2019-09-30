@@ -180,7 +180,7 @@ class ListadoReservas extends Component {
             <div>
                 <div className="titulosPrincipales">Reservas</div>
                 {
-                    reservasRealizadas.length > reservasPerPage ?
+                    reservasRealizadas.length > 0 ?
                         <div className="opcionesCantidad">
                             <span className="tituloCantidad">Reservas por página</span>
                             <Select className="cantidadProductos"
