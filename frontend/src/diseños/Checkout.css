@@ -4,90 +4,14 @@
 .MuiStepper-vertical{
     width: auto;
 }
-.MuiStepIcon-root.MuiStepIcon-active {
-    color: #28a745 !important;    
-}
-
-.MuiStepIcon-root.MuiStepIcon-completed {
-    color: #28a745 !important;
-}
-
-.MuiStepIcon-text {
-    fill: #fff;
-    font-size: 0.75rem;
-    font-weight: 400;
-    font-family: "Roboto", sans-serif;
-}
-
-.MuiTypography-body2 {
-    font-size: 18px !important;
-    font-family: "Roboto", sans-serif !important;
-    font-weight: 400 !important;
-    letter-spacing: 0.01071em;
-}
-
-.MuiStepper-root {
-    display: flex;
-    padding: 50px !important;
-}
 
 .datosUsuario {
     align-items: center
 }
 
- .textField{
-    margin-left: 8px;
-    margin-right: 8px;
-    width: 400;
-} 
-
-.MuiFormControl-root {
-    border: 0;
-    margin: 0;
-    display: inline-flex;
-    padding: 0;
-    position: relative;
-    min-width: 0;
-    flex-direction: row;
-    vertical-align: top; 
-}
-
-.MuiInputBase-root.Mui-disabled {
-    font: inherit;
-    color: currentColor;
-    width: auto;
-    border: 0;
-    height: auto;
-    margin: 0;
-    display: block;
-    padding: 6px 6px 6px;
-    min-width: 0;
-    background: none;
-    box-sizing: content-box; 
-}
-
-.MuiInputBase-input.MuiOutlinedInput-input {
-    font: inherit;
-    color: currentColor;
-    width: auto;
-    border: 0;
-    height: auto;
-    margin: 0;
-    display: block;
-    padding:6px 6px 6px;
-    min-width: 0;
-    background: none;
-    box-sizing: content-box;
-}
-
 .containerCheckout{
-    
     flex-wrap: wrap;
 }
-
-/* .MuiFormControl-root.MuiTextField-root.textField.MuiFormControl-marginNormal{
-    flex-direction: column;
-} */
 
 .margenesFormulario{
     margin-left: 10px;
