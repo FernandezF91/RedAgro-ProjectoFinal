@@ -90,7 +90,7 @@ class ResultadoBusqueda extends Component {
                                 apellido: item.productor.usuario.apellido,
                                 telefono: item.productor.usuario.telefono,
                             },
-                            //imagenes: objectURL ,
+                            imagenes: item.imagenes,
                         }
                     }),
                     loading: false

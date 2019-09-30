@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBIcon, MDBTooltip, MDBBadge, MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBBtn } from "mdbreact";
 import NumberFormat from 'react-number-format';
-import { Button } from 'react-bootstrap';
-import culturaVerde from '../imagenes/cultura-verde-2.png';
+import Carousel from 'react-bootstrap/Carousel';
 
 const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCarrito }) => {
     return (
@@ -15,12 +14,23 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                             {listaDeProductos.map((item, index) => (
                                 <MDBCol lg="4" md="6" className="mb-lg-0 mb-4" key={item.id}>
                                     <MDBCard narrow ecommerce className="mb-4">
-                                        <MDBCardImage
-                                            src={culturaVerde}
-                                            top
-                                            alt="sample photo"
-                                            overlay="white-slight"
-                                        />
+                                        <Carousel>
+                                            {
+                                                item.imagenes.map((imagen, index) => (
+                                                    <Carousel.Item key={index}>
+                                                        <MDBCardImage
+                                                            src={"data:" + imagen.tipo_contenido + ";base64," + imagen.image}
+                                                            alt="ImagenBusqueda"
+                                                            overlay="white-slight"
+                                                            mode='fit'
+                                                            height="300x" width="auto"
+                                                            fluid
+                                                        />
+                                                    </Carousel.Item>
+                                                ))
+                                            }
+                                        </Carousel>
+
                                         <MDBCardBody className="text-center">
                                             <a href="#!" className="grey-text">
                                                 <h6>{item.categoria}</h6>
@@ -31,7 +41,6 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                                 </strong>
                                             </MDBCardTitle>
                                             <MDBCardText>
-                                                {/* <p>{item.descripcion}</p> */}
                                                 <strong className="float-center">
                                                     <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                                                     <br /> x {item.tipoDeUnidad}

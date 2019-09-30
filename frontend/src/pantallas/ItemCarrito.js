@@ -3,6 +3,7 @@ import NumberFormat from 'react-number-format';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Image from 'react-bootstrap/Image';
 
 const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarProducto, getTotalCarrito }) => {
 
@@ -41,8 +42,12 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                     listaDeProductos.map((producto, index) =>
                         <tr key={producto.id}>
                             <td>
-                                {/*Puse eso de ejemplo, pero deberia ir la foto que suban del producto*/}
-                                <i className="fas fa-lemon" />
+                                <Image
+                                    roundedCircle
+                                    alt="ImagenCarrito"
+                                    src={"data:" + producto.imagenes[0].tipo_contenido + ";base64," + producto.imagenes[0].image}
+                                    mode='fit'
+                                    height="80px" width="auto" />
                             </td>
                             <td>
                                 <h5>{producto.titulo}</h5>
