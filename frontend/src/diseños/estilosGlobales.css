@@ -123,3 +123,15 @@ input[type=text] {
     cursor: pointer;
     cursor: hand;
 }
+
+.iconoToast {
+    font-size: 20px;
+}
+
+.butter-toast {
+    margin-right: 20px;
+}
+
+.mensajeToast {
+    font-size: 13px;
+}

@@ -89,12 +89,13 @@ class PreferenciasConsumidor extends Component {
         this.setState({
             loading: true
         })
-        var _this = this;
+        
         var preferenciasAGuardar = [];
         preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.verduras, "Verduras");
         preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.frutas, "Frutas");
         preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.otros, "Otros");
 
+        var _this = this;
         //Guardo las nuevas preferencias
         var path = "http://localhost:3000/redAgro/preferencias_consumidor?id=" + this.state.id;
         fetch(path, {

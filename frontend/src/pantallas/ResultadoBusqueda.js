@@ -6,6 +6,7 @@ import Select from 'react-select';
 import Loader from 'react-loader-spinner';
 import Busqueda from './Busqueda';
 import Paginacion from './Paginacion';
+import ButterToast, { Cinnamon, POS_BOTTOM, POS_RIGHT } from 'butter-toast';
 
 const tamañosListado = [
     { label: "9", value: "9" },
@@ -93,7 +94,7 @@ class ResultadoBusqueda extends Component {
                     }),
                     loading: false
                 })
-            })  
+            })
     }
 
     restarProducto = (position) => {
@@ -142,6 +143,13 @@ class ResultadoBusqueda extends Component {
                 productosSeleccionados.push(producto);
             }
             this.setState(this.actualizarPropsSeleccionados(productosSeleccionados));
+            ButterToast.raise({
+                content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_GREEN}
+                    content={() => <div class="mensajeToast">Se agrego un nuevo producto a tu carrito</div>}
+                    title="CulturaVerde"
+                    icon={<i class="fa fa-shopping-cart iconoToast" />}
+                />
+            });
         }
     }
 
@@ -203,6 +211,8 @@ class ResultadoBusqueda extends Component {
                             currentPage={this.state.paginaActual} />
                         : ''
                 }
+                <div  class="toastPosicion">
+                <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_RIGHT }} /></div>
             </div>
         )
     }

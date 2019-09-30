@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "butter-toast": "^3.3.3",
     "cldr-data": "^35.1.0",
     "create-react-class": "^15.6.3",
     "filepond": "^4.6.1",
