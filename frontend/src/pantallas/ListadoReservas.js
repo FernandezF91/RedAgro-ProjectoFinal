@@ -8,6 +8,17 @@ import Reserva from '../pantallas/Reserva';
 import DetalleReserva from '../pantallas/DetalleReserva';
 import Paginacion from './Paginacion';
 import Loader from 'react-loader-spinner';
+import Select from 'react-select';
+
+const tamañosListado = [
+    { label: "5", value: "5" },
+    { label: "15", value: "15" },
+    { label: "30", value: "30" },
+    { label: "Todo", value: "Todo" },
+];
+var defaultListado = [
+    { label: "5", value: "5" },
+];
 
 class ListadoReservas extends Component {
 
@@ -23,7 +34,7 @@ class ListadoReservas extends Component {
             //A partir de aca, datos para el listado de reservas
             reservasRealizadas: [],
             currentPage: 1,
-            reservasPerPage: 4,
+            reservasPerPage: 5,
             expandedRows: [],
             loading: true
         }
@@ -54,15 +65,19 @@ class ListadoReservas extends Component {
 
     generoItem(item) {
         const clickCallback = () => this.handleRowClick(item.id);
+        var tipoUsuario = this.props.rolUsuario;
         const itemRows = [
             <tr onClick={clickCallback} key={"row-data-" + item.id}>
                 <td>{item.id}</td>
                 <td>{item.fecha}</td>
                 <td>{item.estado}</td>
                 <td>Retira <i>{item.persona_retiro}</i> por <i>{item.punto_entrega}</i></td>
-                <td>
-                    {item.productor.nombre + " " + item.productor.apellido}<br />Tel: {item.productor.telefono}
-                </td>
+                {
+                    (tipoUsuario === "Consumidor") ?
+                        <td> {item.productor.nombre + " " + item.productor.apellido}<br />Tel: {item.productor.telefono}</td>
+                        :
+                        <td>{item.consumidor.nombre + " " + item.consumidor.apellido}<br />Tel: {item.consumidor.telefono}</td>
+                }
                 <td>
                     <NumberFormat value={item.total_reserva} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                 </td>
@@ -128,6 +143,17 @@ class ListadoReservas extends Component {
             })
     }
 
+    actualizarTamañoListado = (tamaño) => {
+        let actualizarListado = [];
+        if (tamaño.value === "Todo") {
+            this.setState({ reservasPerPage: this.state.reservasRealizadas.length })
+        } else {
+            this.setState({ reservasPerPage: tamaño.value })
+        }
+        actualizarListado.push(tamaño);
+        defaultListado = actualizarListado;
+    }
+
     render() {
 
         const { reservasRealizadas, currentPage, reservasPerPage } = this.state;
@@ -135,24 +161,37 @@ class ListadoReservas extends Component {
         const indexOfLastReserva = currentPage * reservasPerPage;
         const indexOfFirstReserva = indexOfLastReserva - reservasPerPage;
         const lista = reservasRealizadas.slice(indexOfFirstReserva, indexOfLastReserva);
+        const rolUsuario = this.props.rolUsuario;
         let body = [];
         lista.forEach(item => {
             body.push(this.generoItem(item));
         })
 
-        if (this.state.loading) return <Loader
-            type="Grid"
-            color="#28A745"
-            height={150}
-            width={150}
-            className="loader"
-        />;
+        if (this.state.loading)
+            return <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />;
 
         return (
-
             <div>
                 <div className="titulosPrincipales">Reservas</div>
-                <Reserva lista={body} />
+                {
+                    reservasRealizadas.length > 0 ?
+                        <div className="opcionesCantidad">
+                            <span className="tituloCantidad">Reservas por página</span>
+                            <Select className="cantidadProductos"
+                                value={defaultListado}
+                                options={tamañosListado}
+                                onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />
+                        </div>
+                        : ''
+                }
+                <Reserva lista={body}
+                    rolUsuario={rolUsuario} />
                 {
                     reservasRealizadas.length > reservasPerPage ?
                         <Paginacion
