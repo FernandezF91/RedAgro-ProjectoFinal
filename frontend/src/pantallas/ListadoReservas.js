@@ -112,6 +112,7 @@ class ListadoReservas extends Component {
                                 telefono: item.consumidor.usuario.telefono,
                             },
                             productor: {
+                                id: item.productor.id,
                                 razon_social: item.productor.razon_social,
                                 nombre: item.productor.usuario.nombre,
                                 apellido: item.productor.usuario.apellido,
