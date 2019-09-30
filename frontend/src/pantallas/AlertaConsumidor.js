@@ -50,93 +50,68 @@ class AlertaConsumidor extends Component {
                 <form onSubmit={this.handleFormSubmit}>
 
                     <div className="radioButtons">
-
                         <h5>Notificarme:</h5>
-
-                        <label className="radio1">
-                            <input type="radio"
-                                value="radio1"
-                                checked={this.state.selectedRadioOption === "radio1"}
-                                onChange={this.handleRadioChange}
-                                className="radio-button-input"
-                            /> Nunca
-						</label>
-
-                        <label className="radio2">
-                            <input type="radio"
-                                value="radio2"
-                                checked={this.state.selectedRadioOption === "radio2"}
-                                onChange={this.handleRadioChange}
-                                className="radio-button-input"
-                            /> Diariamente
-						</label>
-
-                        <label className="radio3">
-                            <input type="radio"
-                                value="radio3"
-                                checked={this.state.selectedRadioOption === "radio3"}
-                                onChange={this.handleRadioChange}
-                                className="radio-button-input"
-                            /> Semanalmente
-						</label>
+                        <input type="radio"
+                            value="radio1"
+                            checked={this.state.selectedRadioOption === "radio1"}
+                            onChange={this.handleRadioChange}
+                            className="radio-button-input radioPrimero"
+                        />
+                        <span>Nunca</span>
+                        <input type="radio"
+                            value="radio2"
+                            checked={this.state.selectedRadioOption === "radio2"}
+                            onChange={this.handleRadioChange}
+                            className="radio-button-input radio"
+                        />
+                        <span>Diariamente</span>
+                        <input type="radio"
+                            value="radio3"
+                            checked={this.state.selectedRadioOption === "radio3"}
+                            onChange={this.handleRadioChange}
+                            className="radio-button-input radio"
+                        />
+                        <span>Semanalmente</span>
                     </div>
-
+                    <br />
                     <div className="checkboxes">
-
                         <h5>Alertarme sobre:</h5>
-
-                        <div className="checkbox">
-                            <label>
-                                <input type="checkbox"
-                                    value="check1"
-                                    checked={this.state.selectedCheckOption}
-                                    onChange={this.handleCheckChange}
-                                    className="checkbox-input"
-                                /> Modificaciones en reservas realizadas
-						</label>
-                        </div>
-
-                        <div className="checkbox">
-                            <label>
-                                <input type="checkbox"
-                                    value="check2"
-                                    checked={this.state.selectedCheckOption}
-                                    onChange={this.handleCheckChange}
-                                    className="checkbox-input"
-                                /> Productos de interés
-						</label>
-                        </div>
-
-                        <div className="checkbox">
-                            <label>
-                                <input type="checkbox"
-                                    value="check3"
-                                    checked={this.state.selectedCheckOption}
-                                    onChange={this.handleCheckChange}
-                                    className="checkbox-input"
-                                /> Resumen de reservas vía correo electrónico
-						</label>
-                        </div>
-
-                        <div className="checkbox">
-                            <label>
-                                <input type="checkbox"
-                                    value="check4"
-                                    checked={this.state.selectedCheckOption}
-                                    onChange={this.handleCheckChange}
-                                    className="checkbox-input"
-                                /> Cambio de estado en una reserva vía correo electrónico
-						</label>
-                        </div>
+                        <input type="checkbox"
+                            value="check1"
+                            checked={this.state.selectedCheckOption}
+                            onChange={this.handleCheckChange}
+                            className="checkbox-input checkbox"
+                        />
+                        <span>Modificaciones en reservas realizadas</span>
+                        <br />
+                        <input type="checkbox"
+                            value="check2"
+                            checked={this.state.selectedCheckOption}
+                            onChange={this.handleCheckChange}
+                            className="checkbox-input checkbox"
+                        />
+                        <span>Productos de interés</span>
+                        <br />
+                        <input type="checkbox"
+                            value="check3"
+                            checked={this.state.selectedCheckOption}
+                            onChange={this.handleCheckChange}
+                            className="checkbox-input checkbox"
+                        />
+                        <span>Resumen de reservas vía correo electrónico</span>
+                        <br />
+                        <input type="checkbox"
+                            value="check4"
+                            checked={this.state.selectedCheckOption}
+                            onChange={this.handleCheckChange}
+                            className="checkbox-input checkbox"
+                        />
+                        <span>Cambio de estado en una reserva vía correo electrónico</span>
                     </div>
                 </form>
                 <div className="botones">
-                    <div className="botonCrear">
-                        <Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
-                    </div>
-                    <div className="botonAtras">
-                        <Button variant="success" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
-                    </div>
+                    <Button variant="success" type="submit" className="botonCrear" onClick={this.handleFormSubmit}>Guardar</Button>
+                    <Button variant="success" className="botonAtras" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                 </div>
             </div>
         );
