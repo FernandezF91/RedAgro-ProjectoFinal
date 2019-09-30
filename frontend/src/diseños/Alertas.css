@@ -1,32 +1,32 @@
-.radioButtons{
-	text-align: left;
-	line-height: 40px;
-}
-.radioButtons .radio1{
-	margin-left: 20px
+.radioButtons {
+    text-align: left;
+    line-height: 40px;
 }
 
-.radioButtons .radio2{
-	margin-left: 40px
+.radioButtons .radioPrimero {
+    margin-left: 20px;
+    margin-right: 7px;
+    vertical-align: middle;
 }
 
-.radioButtons .radio3{
-	margin-left: 40px
+.radioButtons .radio {
+    margin-left: 40px;
+    margin-right: 7px;
+    vertical-align: middle;
 }
 
-.checkboxes{
-	text-align: left;
+.checkboxes {
+    text-align: left;
 }
 
-.checkbox{
-	margin-left: 20px;
-	line-height: 40px;
+.checkbox {
+    margin-left: 20px;
+    margin-right: 7px;
+    line-height: 40px;
+    vertical-align: middle;
 }
 
-
-form{
-
-margin-left:20px;
-margin-top:20px;
-
+form {
+    margin-left: 20px;
+    margin-top: 20px;
 }

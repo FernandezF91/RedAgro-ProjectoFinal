@@ -34,7 +34,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                                 {/* <p>{item.descripcion}</p> */}
                                                 <strong className="float-center">
                                                     <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
-                                                    <p>x {item.tipoDeUnidad}</p>
+                                                    <br /> x {item.tipoDeUnidad}
                                                 </strong>
                                             </MDBCardText>
                                             <MDBCardFooter className="px-1">
@@ -46,7 +46,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                                     <i className="fas fa-plus" />
                                                 </button>
                                             </MDBCardFooter>
-                                            <MDBBtn outline color="green"  onClick={() => agregarAlCarrito(index)}>
+                                            <MDBBtn outline color="green" onClick={() => agregarAlCarrito(index)}>
                                                 Agregar al carrito
                                             </MDBBtn>
                                         </MDBCardBody>
@@ -55,11 +55,11 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                         </MDBRow>
                     </MDBContainer> :
                     <div className="notFound">
-                        <i className="fas fa-tasks iconoGrande" />
+                        <i className="fas fa-search iconoGrande" />
                         <br />
                         <br />
-                        <h5>Ups! No se encontraron productos para tu busqueda! </h5>
-                        <h6>Probá cambiando la descripción por acá <Link to={'/principalConsumidores'}>acá</Link></h6>
+                        <h5>Ups! No se encontraron productos para tu búsqueda! </h5>
+                        <h6>Probá cambiando la descripción por <Link to={'/principalConsumidores'}>acá</Link></h6>
                     </div>
             }
         </div>

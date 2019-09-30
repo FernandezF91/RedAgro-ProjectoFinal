@@ -87,7 +87,7 @@ class Carrito extends Component {
                             <br />
                             <br />
                             <h5>Ups! Tu carrito esta vacío!</h5>
-                            <h6>Probá buscando productos por <Link to={''}>acá</Link></h6>
+                            <h6>Probá buscando productos por <Link to={'/principalConsumidores'}>acá</Link></h6>
                         </div>
                     }
                 </ul>

@@ -9,6 +9,15 @@
     margin-left: 100px;
 }
 
+.barraBusquedaNuevo {
+    width: 500px !important;
+    display: flex;
+    flex: 1;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
 input[type=text] {
     width: 500px;
     margin-left: -0.35%;
@@ -89,8 +98,8 @@ input[type=text] {
 }
 
 .botonBusqueda {
-    width: 30px;
-    height: 30px;
+    width: 100%;
+    height: 100%;
 }
 
 .iconoBusqueda {
@@ -102,7 +111,7 @@ input[type=text] {
     height: calc(100vh - 78px);
     position: fixed;
     top: 50%;
-    left:50%;
+    left: 50%;
     margin-left: 75px;
 }
 
@@ -110,7 +119,19 @@ input[type=text] {
     font-size: 18px;
 }
 
-.cursorCajaArchivos {
+.cursorManito {
     cursor: pointer;
     cursor: hand;
+}
+
+.iconoToast {
+    font-size: 20px;
+}
+
+.butter-toast {
+    margin-right: 20px;
+}
+
+.mensajeToast {
+    font-size: 13px;
 }

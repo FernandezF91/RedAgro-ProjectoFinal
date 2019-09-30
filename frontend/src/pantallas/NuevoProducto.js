@@ -150,7 +150,7 @@ class NuevoProducto extends Component {
             })
                 .then(function (response) {
                     if (response.status !== 200) {
-                        alert("todo mal");
+                        
                         _this.setState({
                             visible: true,
                             titulo: "Error",
@@ -455,7 +455,7 @@ class NuevoProducto extends Component {
                     <div className="imagenes">
                         <div className="tituloImagen">*Imágenes</div>
                         <FilePond
-                            className="cursorCajaArchivos"
+                            className="cursorManito"
                             ref={this.featurePond}
                             allowMultiple={true} 
                             maxFiles={5} 

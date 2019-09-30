@@ -1,40 +1,28 @@
-.name{
-
-color:green;
-font-weight: normal;
-
+.name {
+    color: green;
+    font-weight: normal;
 }
 
-.direcc,.localidad,.productos{
-
-text-align: left;
-
+.direcc, .localidad, .productos {
+    text-align: left;
 }
 
-.direcc,.productos{
-
-font-weight: 550;
-
+.direcc, .productos {
+    font-weight: 550;
 }
 
-.localidad,.productos{
-
-margin-top: 3px;
-
+.localidad, .productos {
+    margin-top: 3px;
 }
 
-.descripcionPagina{
-
-margin-bottom: 20px;
-
+.descripcionPagina {
+    margin-bottom: 20px;
 }
 
-.botonVolver{
-
-position:absolute;
-margin-top:37%;
-margin-left:42%;
-display:flex;
-flex-direction:row;
-
+.botonVolver {
+    position: absolute;
+    margin-top: 37%;
+    margin-left: 42%;
+    display: flex;
+    flex-direction: row;
 }

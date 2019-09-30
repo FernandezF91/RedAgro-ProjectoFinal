@@ -1,0 +1,58 @@
+.formularioPuntoEntrega{
+
+	display:flex;
+	flex-direction:column;
+	
+
+}
+
+input{
+
+	border: 1.5px solid #ccc;
+	border-radius: 6px;
+	box-sizing: border-box;
+	padding: 0px 10px;
+	font-size: 15px;
+	font-weight: 400;
+	height:35px;
+
+}
+
+.botones{
+
+margin-top:20px;
+display:flex;
+flex-direction:row;
+
+}
+
+#autocomplete{
+
+width:55%;
+
+}
+
+.fecha_entrega{
+
+width:17%;
+
+}
+
+.hora_inicio,.hora_fin{
+
+width:14%;
+
+}
+
+.hora_inicio{
+
+margin-right:5px;
+
+}
+
+.hora_fin{
+
+margin-left:5px;
+margin-right:5px;
+
+}

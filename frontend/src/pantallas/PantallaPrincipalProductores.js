@@ -37,6 +37,7 @@ class PantallaPrincipalProductores extends Component {
             id: this.props.location.state.id, //paso id de usuario desde el LOGIN
             user: this.props.location.state.user,//paso el usuario desde el LOGIN
             rolUsuario: this.props.location.state.rolUsuario
+
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
@@ -80,7 +81,7 @@ class PantallaPrincipalProductores extends Component {
                             </Row>
                             <Row className="itemsMenu">
                                 <i className="fas fa-map-marker-alt iconosMenuLateral" id="market" />
-                                <NavDropdown title="Puntos de Entrega" id="puntoentrega_drop" className="iconoEntrega">
+                                <NavDropdown title="Puntos de entrega" id="puntoentrega_drop" className="iconoEntrega">
                                     <NavDropdown.Item id="items">
                                         <Link to="/principalProductores/ListadoPuntosEntrega" id="items">Desactivar puntos de entrega</Link>
                                     </NavDropdown.Item>

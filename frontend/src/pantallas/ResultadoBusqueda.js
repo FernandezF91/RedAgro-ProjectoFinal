@@ -1,9 +1,12 @@
-import React, { Component } from 'react';
 import '../diseños/estilosGlobales.css';
 import '../diseños/ResultadoBusqueda.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import React, { Component } from 'react';
 import Select from 'react-select';
+import Loader from 'react-loader-spinner';
 import Busqueda from './Busqueda';
 import Paginacion from './Paginacion';
+import ButterToast, { Cinnamon, POS_BOTTOM, POS_RIGHT } from 'butter-toast';
 
 const tamañosListado = [
     { label: "9", value: "9" },
@@ -24,6 +27,7 @@ class ResultadoBusqueda extends Component {
             tamañoListado: 9, //Valor predeterminado
             paginaActual: 1,
             imagenes: [],
+            loading: true
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
@@ -56,7 +60,6 @@ class ResultadoBusqueda extends Component {
     }
 
     realizarBusqueda(busqueda) {
-        console.log("Estas en el componente de resultado");
         var path = "http://localhost:3000/redAgro/obtenerProductos?titulo=" + busqueda;
         fetch(path)
             .catch(err => console.error(err))
@@ -73,18 +76,26 @@ class ResultadoBusqueda extends Component {
                             titulo: item.titulo,
                             descripcion: item.descripcion,
                             stock: item.stock,
-                            tipoDeUnidad: item.tipo_unidad,
+                            tipoDeUnidad: item.unidad_venta,
                             tipoDeProduccion: item.tipo_produccion,
                             precio: item.precio,
                             techaDeVencimiento: item.fecha_vencimiento,
                             tiempoDePreparacion: item.tiempo_preparacion,
+                            contenido: item.contenido,
                             cantidad: 0,
+                            productor: {
+                                id: item.productor.id,
+                                razon_social: item.productor.razon_social,
+                                nombre: item.productor.usuario.nombre,
+                                apellido: item.productor.usuario.apellido,
+                                telefono: item.productor.usuario.telefono,
+                            },
                             //imagenes: objectURL ,
                         }
-                    })
+                    }),
+                    loading: false
                 })
             })
-            
     }
 
     restarProducto = (position) => {
@@ -133,6 +144,13 @@ class ResultadoBusqueda extends Component {
                 productosSeleccionados.push(producto);
             }
             this.setState(this.actualizarPropsSeleccionados(productosSeleccionados));
+            ButterToast.raise({
+                content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_GREEN}
+                    content={() => <div class="mensajeToast">Se agrego un nuevo producto a tu carrito</div>}
+                    title="CulturaVerde"
+                    icon={<i class="fa fa-shopping-cart iconoToast" />}
+                />
+            });
         }
     }
 
@@ -157,6 +175,16 @@ class ResultadoBusqueda extends Component {
         const indexOfLastReserva = paginaActual * tamañoListado;
         const indexOfFirstReserva = indexOfLastReserva - tamañoListado;
         const listadoBusqueda = resultadoBusqueda.slice(indexOfFirstReserva, indexOfLastReserva);
+
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
 
         return (
             <div>
@@ -184,6 +212,8 @@ class ResultadoBusqueda extends Component {
                             currentPage={this.state.paginaActual} />
                         : ''
                 }
+                <div  class="toastPosicion">
+                <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_RIGHT }} /></div>
             </div>
         )
     }
