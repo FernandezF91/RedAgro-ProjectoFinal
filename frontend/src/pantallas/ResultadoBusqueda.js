@@ -59,7 +59,6 @@ class ResultadoBusqueda extends Component {
     }
 
     realizarBusqueda(busqueda) {
-        console.log("Estas en el componente de resultado");
         var path = "http://localhost:3000/redAgro/obtenerProductos?titulo=" + busqueda;
         fetch(path)
             .catch(err => console.error(err))
@@ -82,6 +81,13 @@ class ResultadoBusqueda extends Component {
                             techaDeVencimiento: item.fecha_vencimiento,
                             tiempoDePreparacion: item.tiempo_preparacion,
                             cantidad: 0,
+                            productor: {
+                                id: item.productor.id,
+                                razon_social: item.productor.razon_social,
+                                nombre: item.productor.usuario.nombre,
+                                apellido: item.productor.usuario.apellido,
+                                telefono: item.productor.usuario.telefono,
+                            },
                             //imagenes: objectURL ,
                         }
                     }),

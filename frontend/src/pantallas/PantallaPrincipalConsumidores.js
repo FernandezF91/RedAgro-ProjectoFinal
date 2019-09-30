@@ -55,9 +55,7 @@ class PantallaPrincipalconsumidores extends Component {
     }
 
     handleNuevaBusqueda(busqueda) {
-        this.setState({ busqueda },
-            () => { console.log("Actualiza campo busqueda con: " + busqueda) } // Lo dejo solo para loggear
-        );
+        this.setState({ busqueda });
         this.props.history.push({
             pathname: '/principalConsumidores/ResultadoBusqueda',
             state: {

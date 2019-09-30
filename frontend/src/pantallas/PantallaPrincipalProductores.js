@@ -37,6 +37,7 @@ class PantallaPrincipalProductores extends Component {
             id: this.props.location.state.id, //paso id de usuario desde el LOGIN
             user: this.props.location.state.user,//paso el usuario desde el LOGIN
             rolUsuario: this.props.location.state.rolUsuario
+
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);

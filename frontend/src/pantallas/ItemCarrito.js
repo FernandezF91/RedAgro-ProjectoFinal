@@ -39,15 +39,17 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
             <MDBTableBody>
                 {
                     listaDeProductos.map((producto, index) =>
-                        <tr>
+                        <tr key={producto.id}>
                             <td>
                                 {/*Puse eso de ejemplo, pero deberia ir la foto que suban del producto*/}
                                 <i className="fas fa-lemon" />
                             </td>
                             <td>
                                 <h5>{producto.titulo}</h5>
-                                <p>{producto.descripcion}</p>
-                                <p>Producido por {producto.productor}</p>
+                                <br />
+                                {producto.descripcion}
+                                <br />
+                                Producido por {producto.productor.razon_social}
                             </td>
                             <td>
                                 <button className="iconosListado" onClick={() => restarProducto(index)}>
