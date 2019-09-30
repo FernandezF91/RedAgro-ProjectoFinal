@@ -1,15 +1,16 @@
 package app.clases;
 
-import app.modelos.EntidadReserva;
 
 public class DetalleReserva {
 
-	public DetalleReserva(long id, long id_producto, int cantidad, int precio_por_unidad, boolean activo) {
+	public DetalleReserva(long id, long id_producto, int cantidad, int precio_por_unidad, boolean activo, ProductoProductor producto) {
 		this.setId_reserva(id);
 		this.setId_producto(id_producto);
 		this.setCantidad(cantidad);
 		this.setPrecio_por_unidad(precio_por_unidad);
 		this.setActivo(activo);
+		this.setProducto(producto);
+		
 	}
 
 	private long id_reserva;
@@ -17,6 +18,7 @@ public class DetalleReserva {
 	private int cantidad;
 	private int precio_por_unidad;
 	private boolean activo;
+	private ProductoProductor producto;
 
 	public long getId_reserva() {
 		return id_reserva;
@@ -56,5 +58,13 @@ public class DetalleReserva {
 
 	public void setPrecio_por_unidad(int precio_por_unidad) {
 		this.precio_por_unidad = precio_por_unidad;
+	}
+	
+	public ProductoProductor getProducto() {
+		return producto;
+	}
+
+	public void setProducto(ProductoProductor producto) {
+		this.producto = producto;
 	}
 }

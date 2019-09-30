@@ -28,3 +28,10 @@
     background-color: #28a745 !important;
     border-color: #28a745 !important;
 }
+.cantidadProductos{
+    width: 150px;
+    margin-left: 10px;
+}
+.tituloCantidad {
+    align-self: center;
+}

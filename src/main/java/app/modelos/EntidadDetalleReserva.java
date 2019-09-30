@@ -27,7 +27,7 @@ public class EntidadDetalleReserva implements Serializable{
 	
 	@ManyToOne
     @JoinColumn(name="id_producto", nullable = false)
-    private EntidadProducto producto;
+    private EntidadProductoProductor producto;
 	
 	@Column(name="cantidad",nullable = false)
 	private int cantidad;
@@ -66,11 +66,11 @@ public class EntidadDetalleReserva implements Serializable{
 		this.id_producto = id_producto;
 	}
 
-	public EntidadProducto getProducto() {
+	public EntidadProductoProductor getProducto() {
 		return producto;
 	}
 
-	public void setProducto(EntidadProducto producto) {
+	public void setProducto(EntidadProductoProductor producto) {
 		this.producto = producto;
 	}
 

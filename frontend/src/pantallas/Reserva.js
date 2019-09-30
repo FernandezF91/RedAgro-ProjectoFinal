@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 
-const columnas = [
+const columnasConsumidor = [
 	{
 		label: 'Nro. Reserva',
 		field: 'NroReserva',
@@ -40,15 +40,58 @@ const columnas = [
 		label: '',
 		field: 'Editar',
 	}
-]
+];
+const columnasProductor = [
+	{
+		label: 'Nro. Reserva',
+		field: 'NroReserva',
+	},
+	{
+		label: 'Fecha',
+		field: 'Fecha',
+	},
+	{
+		label: 'Estado',
+		field: 'Estado',
+	},
+	{
+		label: 'Datos para el Retiro',
+		field: 'Datos Retiro',
+	},
+	{
+		label: 'Consumidor',
+		field: 'Consumidor',
+	},
+	{
+		label: 'Total',
+		field: 'Total',
+	},
+	{
+		label: '',
+		field: 'Detalle',
+	},
+	{
+		label: '',
+		field: 'Ver mensajes',
+	},
+	{
+		label: '',
+		field: 'Editar',
+	}
+];
 
-const Reserva = ({ lista }) => {
+const Reserva = ({ lista, rolUsuario }) => {
 
 	return (
 		<div>
 			{lista.length > 0 ?
 				<MDBTable responsive hover>
-					<MDBTableHead columns={columnas} />
+					{
+						(rolUsuario === "Consumidor") ?
+							<MDBTableHead columns={columnasConsumidor} />
+							:
+							<MDBTableHead columns={columnasProductor} />
+					}
 					<MDBTableBody>{lista}</MDBTableBody>
 				</MDBTable>
 				:
