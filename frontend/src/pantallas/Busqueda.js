@@ -34,7 +34,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                                 {/* <p>{item.descripcion}</p> */}
                                                 <strong className="float-center">
                                                     <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
-                                                    <p>x {item.tipoDeUnidad}</p>
+                                                    <br /> x {item.tipoDeUnidad}
                                                 </strong>
                                             </MDBCardText>
                                             <MDBCardFooter className="px-1">
