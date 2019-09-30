@@ -182,9 +182,10 @@ class LoginForm extends Component {
                                 <Button variant="success">Registrar</Button>
                             </a>
                         </div>
-                        <a href="/recupero_email">
-                            olvidé mi contraseña
-                        </a>
+                        <Link to={'/recupero_email'}>
+                        <a>olvidé mi contraseña</a>
+                        </Link>
+                        
                     </div>
                     <section>
                         <Modal
