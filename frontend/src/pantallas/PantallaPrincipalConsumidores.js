@@ -85,7 +85,7 @@ class PantallaPrincipalconsumidores extends Component {
                                 <h4>Mi cuenta</h4>
                             </Row>
                             <NavDropdown.Divider className="divisor" />
-                            <Row className="itemsMenu itemsSubmenu">
+                            <Row className="itemsSubmenu">
                                 <i className="fas fa-shopping-basket iconosMenuLateral" />
                                 <NavDropdown title="Comprar" id="compra_drop" className="com_drop">
                                     <NavDropdown.Item>
@@ -101,19 +101,19 @@ class PantallaPrincipalconsumidores extends Component {
                                     <p>Reservas</p>
                                 </Link>
                             </Row>
-                            <Row className="itemsMenu">
+                            <Row>
                                 <i className="fas fa-user-edit iconosMenuLateral" />
                                 <Link to={'/principalConsumidores/PreferenciasConsumidor'}>
                                     <p>Preferencias</p>
                                 </Link>
                             </Row>
-                            <Row className="itemsMenu">
+                            <Row>
                                 <i className="fas fa-bell iconosMenuLateral" />
                                 <Link to={'/principalConsumidores/Alertas'}>
                                     <p>Alertas</p>
                                 </Link>
                             </Row>
-                            <Row className="itemsMenu itemsSubmenu">
+                            <Row className="itemsSubmenu">
                                 <i className="fas fa-cogs iconosMenuLateral" />
                                 <div className="conf_drop">
                                     <NavDropdown title="Configuración" id="config_dropConsu">

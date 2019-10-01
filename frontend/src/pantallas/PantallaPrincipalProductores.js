@@ -65,7 +65,7 @@ class PantallaPrincipalProductores extends Component {
                                 <h4>Mi cuenta</h4>
                             </Row>
                             <NavDropdown.Divider className="divisor" />
-                            <Row className="itemsMenu">
+                            <Row>
                                 <i className="fas fa-store iconosMenuLateral" />
                                 <NavDropdown title="Productos" id="producto_drop">
                                     <NavDropdown.Item id="items">
@@ -79,7 +79,7 @@ class PantallaPrincipalProductores extends Component {
                                     <NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
                                 </NavDropdown>
                             </Row>
-                            <Row className="itemsMenu">
+                            <Row>
                                 <i className="fas fa-map-marker-alt iconosMenuLateral" id="market" />
                                 <NavDropdown title="Puntos de entrega" id="puntoentrega_drop" className="iconoEntrega">
                                     <NavDropdown.Item id="items">
@@ -97,29 +97,29 @@ class PantallaPrincipalProductores extends Component {
                                     <p>Reservas</p>
                                 </Link>
                             </Row>
-                            <Row className="itemsMenu">
+                            <Row>
                                 <i className="fas fa-clipboard-list iconosMenuLateral" />
                                 <p>Planificación</p>
                             </Row>
-                            <Row className="itemsMenu">
+                            <Row>
                                 <i className="fas fa-chart-line iconosMenuLateral" />
                                 <Link to={'/principalProductores/Estadisticas'}>
                                     <p>Estadísticas</p>
                                 </Link>
                             </Row>
-                            <Row className="itemsMenu">
+                            <Row>
                                 <i className="fas fa-history iconosMenuLateral" />
                                 <Link to={'/principalProductores/CargarHistorico'}>
                                     <p>Histórico</p>
                                 </Link>
                             </Row>
-                            <Row className="itemsMenu">
+                            <Row>
                                 <i className="fas fa-bell iconosMenuLateral" />
                                 <Link to={'/principalProductores/Alertas'}>
                                     <p>Alertas</p>
                                 </Link>
                             </Row>
-                            <Row className="itemsMenu">
+                            <Row>
                                 <i className="fas fa-cogs iconosMenuLateral" />
                                 <NavDropdown title="Configuración" id="config_drop" className="conf_drop">
                                     <NavDropdown.Item>

@@ -1,158 +1,116 @@
 .filaContenedora {
-    /*78 px es el tamaño que ocupa la nav-bar*/
+	/*78 px es el tamaño que ocupa la nav-bar*/
 	min-height: calc(100vh - 78px);
-
 }
 
 .imagenUsuario {
-
 	margin-left: -2%;
 	margin-top: 5.2%;
 	flex: 1;
-
 }
 
 .imagenUsuarioProd {
-
 	margin-left: -2%;
 	margin-top: 6%;
 	flex: 1;
-
 }
 
 .menuUsuario {
-
 	margin-left: -14px;
 	margin-right: 20px;
-	
 }
 
 .iconos {
-
 	margin-left: 70px;
 	flex-direction: column;
-
 }
 
 .iconosProd {
 	margin-left: 672px;
 	flex-direction: column;
-
 }
 
 #nav-dropdown {
 	color: white !important;
 	flex: 1;
-	margin-left:6.5px;
+	margin-left: 6.5px;
 }
 
 #nav-dropdown.item {
 	color: black !important;
-
 }
 
 .menuConsumidor {
-
 	margin-top: 25px;
 	font-weight: bold;
 	margin-left: 10px;
-
+	min-width: 250px;
 }
 
 .divisor {
-
 	width: 210px;
 	margin-left: -20px;
 }
 
 .subMenu {
-
 	margin-top: 13px;
-
 }
 
-p,
-h4 {
-
+p, h4 {
 	margin-left: 6.4px;
-	margin-top:700px;
-	color:black !important;
-
+	margin-top: 700px;
+	color: black !important;
 }
 
-#compra_drop,
-#producto_drop,
-#puntoentrega_drop {
-
+#compra_drop, #producto_drop, #puntoentrega_drop {
 	color: black !important;
 	font-weight: bold;
 	margin-left: -10px;
-
 }
 
 #config_drop {
-
 	color: black !important;
 	font-weight: bold;
 	margin-left: -9.2px;
 	margin-top: -6.5px;
-
 }
 
 #producto_drop {
-
 	margin-top: -5px;
-
 }
 
 #config_dropConsu {
-
 	margin-top: -7.5px;
 	color: black !important;
 	font-weight: bold;
-    margin-left: -10px;
-    
+	margin-left: -10px;
 }
 
-
 #compra_drop {
-
 	margin-top: -4px;
-
 }
 
 .alerta {
-
 	margin-top: -7px;
-
 }
 
 .configuracion {
-
 	margin-top: -3.8px;
-
 }
 
 .productos {
-
 	margin-top: -3.8px;
-
 }
 
 .reserva {
-
 	margin-top: 7px;
-
 }
 
 .ruteo {
-
 	background-color: white;
-
 }
 
 .imgA {
-
 	margin-top: 3.1px;
 }
 
@@ -165,13 +123,8 @@ h4 {
 	width: 25px;
 }
 
-.itemsMenu {
-	flex-direction: row;
-	display: flex;
-}
-
 .itemsMenuReservas {
-	margin-top:7.5px;
+	margin-top: 7.5px;
 }
 
 .iconoMiCuenta {
@@ -182,28 +135,18 @@ h4 {
 	margin-top: 3px;
 }
 
-#market{
-
-    margin-top:8px;
-
+#market {
+	margin-top: 8px;
 }
 
-#alert{
-
-    margin-left:-16px;
-
+#alert {
+	margin-left: -16px;
 }
 
-#items{
-    
-    color:black !important;
-
+#items {
+	color: black !important;
 }
 
-.items{
-
-    color:black !important;
-
-
+.items {
+	color: black !important;
 }
-
