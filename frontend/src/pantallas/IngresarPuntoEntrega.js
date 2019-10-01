@@ -418,8 +418,8 @@ return;
                         <div>
                             <h1>Punto de entrega guardado</h1>
                             <p>¿Vas a estar en el mismo lugar en otra fecha? agendala!</p>
-                            <Button variant="success" onClick={() => this.closeModalSi()}>Si</Button>
-                            <Button variant="success" onClick={() => this.closeModal()}>No</Button>
+                            <Button variant="success" onClick={() => this.closeModalSi()}>Agendar</Button>
+                            <Button variant="success" onClick={() => this.closeModal()}>Salir</Button>
                         </div>
                     </Modal>
                 </section>

@@ -14,7 +14,7 @@ public MailConfirmacion(String to, Long id) {
 				+"Gracias por registrarte en nuestra sistema."
 				+ "<br>"
 				+ "<br>"
-				+ "Para poder utilizar nuestra p"+"&aacute"+"gina"+","+" confirm"+"&aacute"+" tu cuenta por favor."
+				+ "Para poder utilizar nuestra página, confirmá tu cuenta por favor."
 				+"<br>"
 				+"<br>"
 				+"<a href="+"http://localhost:3000/confirmar_cuenta/"+id+">"+"<button "+"class="+"button "+"style="+

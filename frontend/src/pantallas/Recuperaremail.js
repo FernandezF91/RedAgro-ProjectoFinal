@@ -5,6 +5,7 @@ import { Navbar, Container, Row, Form, Col, Button } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/recuperaremail.css';
 import '../diseños/estilosGlobales.css';
+import Modal from 'react-awesome-modal';
 
 class Recuperaremail extends Component {
 
@@ -12,36 +13,106 @@ class Recuperaremail extends Component {
         super(props)
 
         this.state = {
-            fields: [],
-            errores: []
+            campos: [],
+            titulo:"",
+            mensaje:"",
+            visible:"",
+            formOk:false,
+            error:""
+            
+
         }
         this.validarDatos = this.validarDatos.bind(this);
     }
 
     detectarCambios(e) {
-        let fields = this.state.fields;
-        fields[e.target.name] = e.target.value;
+        let campos = this.state.campos;
+        campos[e.target.name] = e.target.value;
         this.setState({
-            fields
+            campos
         })
     }
 
     validarDatos() {
-        this.setState({
-            errores: []
-        })
+ 
+        if (!this.state.campos["emailuser"]) {
 
-        let errores = {};
+            this.setState({error:"*Campo inválido"});
 
-        if (!this.state.fields["emailuser"]) {
-
-            errores["emailuser"] = "*Campo inválido";
+            return;
         }
 
-        this.setState({
-            errores
-        })
+            const path = "http://localhost:3000/redAgro/recuperar_email?email="
+
+            const final_path = path+this.state.campos["emailuser"];
+            
+            var _this = this;
+
+            fetch(final_path, {
+                method: "GET",
+       
+            })
+                .then(function (response) {
+                    if (response.status !== 200) {
+
+                        // alert("Ocurrió algún problema. Intenta nuevamente")
+
+                        let mensaje = "Ocurrió algún problema, intentá nuevamente"
+                        _this.setState({
+                            visible: true,
+                            mensaje: mensaje,
+                            titulo:"Error",
+                            formOk:false,
+                            error:""
+                        });
+                        return;
+                    }
+
+                    response.text().then(
+                        function (response) {
+                          
+                            if(response==0){
+
+                            let mensaje = "Mail incorrecto o inexistente"
+
+                        _this.setState({
+                            visible: true,
+                            mensaje: mensaje,
+                            titulo:"Error",
+                            formOk:false,
+                            error:""
+                        });
+
+                        return;
+
+                            }
+                            
+                             _this.setState({
+                            visible: true,
+                            mensaje: "Se te envió un email para que puedas recuperar tu contraseña",
+                            titulo:"Recuperar contraseña",
+                            formOk:true,
+                            error:""
+                        });
+
+                        });
+                });
+        
     }
+
+    closeModal() {
+        this.setState({
+            visible: false
+        });
+
+        if(this.state.formOk===true){
+        this.props.history.push({
+                pathname: '/login',
+
+            })
+         }
+    }
+
 
     render() {
 
@@ -65,23 +136,39 @@ class Recuperaremail extends Component {
                                             Correo electronico
                                 		</Form.Label>
                                         <Col>
-                                            <Form.Control type="recuemail" name="emailuser" onChange={(e) => this.detectarCambios(e)} />
-                                            <div className="error">
-                                                {this.state.errores["emailuser"]}
-                                            </div>
+                                            <Form.Control type="email" name="emailuser" onChange={(e) => this.detectarCambios(e)} />
+                                        <div className="error">{this.state.error}</div>
                                         </Col>
                                     </Form.Group>
                                 </div>
                             </Form>
                         </div>
                     </div>
-                    <div className="botones">
+                    <div className="botons">
                         <a href='/login'>
                             <Button variant="success">Cancelar</Button>
                         </a>
                         <Button variant="success" onClick={this.validarDatos}>Confirmar</Button>
                     </div>
+                    <section>
+                        <Modal
+                            visible={this.state.visible}
+                            width="500"
+                            height="130"
+                            effect="fadeInUp"
+                            onClickAway={() => this.closeModal()}
+                        >
+                            <div>
+                                <h1>{this.state.titulo}</h1>
+                                <p>
+                                    {this.state.mensaje}
+                                </p>
+                                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
+                            </div>
+                        </Modal>
+                    </section>
                 </Container>
+            
             </div>
         );
     };

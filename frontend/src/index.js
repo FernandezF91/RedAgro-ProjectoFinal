@@ -13,6 +13,7 @@ import PantallaPrincipalConsumidores from './pantallas/PantallaPrincipalConsumid
 import SeleccionUsuario from './pantallas/SeleccionUsuario';
 import ModificarContraseña from './pantallas/ModificarContraseña';
 import ConfirmacionCuenta from './pantallas/ConfirmacionCuenta';
+import RecuperarContraseña from './pantallas/RecuperarContraseña';
 
 import './diseños/index.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -31,6 +32,7 @@ ReactDOM.render(
             <Route path="/principalConsumidores" component={PantallaPrincipalConsumidores} />
             <Route path="/seleccionUsuario" component={SeleccionUsuario} />
             <Route path="/confirmar_cuenta/:id" component={ConfirmacionCuenta} />
+            <Route path="/recuperar_email/:id" component={RecuperarContraseña} />
             <Route path="*" component={NotFound} />
         </Switch>
     </BrowserRouter>,
