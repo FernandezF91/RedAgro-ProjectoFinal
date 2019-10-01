@@ -102,7 +102,7 @@ const PasosCheckout = (props) => {
                     <ListGroup variant="flush">
                         {
                             props.productosSeleccionados.map(item => (
-                                <ListGroup.Item>
+                                <ListGroup.Item key={item.id}>
                                     {item.titulo}
                                     <br />
                                     {
