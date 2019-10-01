@@ -205,7 +205,7 @@ return;
 
     let fecha_entrega = this.state.campos["fecha_entrega"]
     let dia = fecha_entrega.getDate();
-    let mes =fecha_entrega.getMonth();
+    let mes =fecha_entrega.getMonth()+1;
     let año = fecha_entrega.getFullYear();
     var fecha = dia + '-' + mes + '-' + año;
 
