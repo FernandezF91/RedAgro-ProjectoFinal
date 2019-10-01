@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { MDBContainer } from "mdbreact";
 import { Button } from 'react-bootstrap';
-import NumberFormat from 'react-number-format';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -15,7 +14,7 @@ import '../diseños/Checkout.css'
 const pasos = [
 	'Confirmá tu datos personales',
 	'Elegí una forma de retiro',
-	'Resumen de Reserva'
+	'Resumen de la reserva'
 ];
 
 const theme = createMuiTheme({
@@ -82,7 +81,7 @@ class Checkout extends Component {
 		if (productoresSinRepetidos.length > 0) {
 			var path = "http://localhost:3000/redAgro/ptos_entrega_productores?productores=" + productoresSinRepetidos;
 			fetch(path, {
-				method: "GET",				
+				method: "GET",
 			})
 				.catch(err => console.error(err))
 				.then(response => { return response.json(); })
@@ -119,10 +118,10 @@ class Checkout extends Component {
 	};
 
 	handleRadioRetiroChange = changeEvent => {
-        this.setState({
-            selectedRadioButtonRetiro: changeEvent.target.value
-        });
-    };
+		this.setState({
+			selectedRadioButtonRetiro: changeEvent.target.value
+		});
+	};
 
 	getTotalReserva(productosSeleccionados) {
 		return _.sumBy(productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
@@ -131,43 +130,44 @@ class Checkout extends Component {
 	render() {
 		const activeStep = this.state.activeStep;
 		return (
-			<MDBContainer className="containerPrincipal">
+			<div className="containerPrincipal">
 				<div className="titulosPrincipales">Finalizar la Reserva</div>
 				<MuiThemeProvider theme={theme}>
-					<Stepper activeStep={activeStep} orientation="vertical">
+					<Stepper alternativeLabel nonLinear activeStep={activeStep} >
 						{pasos.map(label => (
 							<Step key={label}>
 								<StepLabel>{label}</StepLabel>
-
-								<StepContent>
-									<PasosCheckout indexPasos={activeStep}
-										usuario={this.props.user}
-										datosPersonalesHandler={this.datosPersonalesHandler} 
-										selectedRadioButtonRetiro={this.state.selectedRadioButtonRetiro}
-										handleRadioRetiroChange = {this.handleRadioRetiroChange}/>
-									<div>
-										<div>
-											<Button 
-												variant="light"
-												disabled={activeStep === 0}
-												onClick={this.handleBack}>
-												Atras
-                  						</Button>
-											<Button
-												variant="success"
-												type="submit"
-												onClick={this.handleNext}>
-												{activeStep === pasos.length - 1 ? 'Finalizar' : 'Continuar'}
-											</Button>
-										</div>
-									</div>
-								</StepContent>
-
 							</Step>
 						))}
 					</Stepper>
+					{
+						activeStep <= pasos.length ?
+							<PasosCheckout indexPasos={activeStep}
+								usuario={this.props.user}
+								datosPersonalesHandler={this.datosPersonalesHandler}
+								selectedRadioButtonRetiro={this.state.selectedRadioButtonRetiro}
+								handleRadioRetiroChange={this.handleRadioRetiroChange}
+								productosSeleccionados={this.props.productosSeleccionados} 
+								getTotalReserva={this.getTotalReserva}/>
+							: ''
+					}
+					<div>
+						<Button
+							variant="light"
+							disabled={activeStep === 0}
+							onClick={this.handleBack}>
+							Atras
+                    </Button>
+
+						<Button
+							variant="success"
+							type="submit"
+							onClick={this.handleNext}>
+							{activeStep === pasos.length - 1 ? 'Finalizar' : 'Continuar'}
+						</Button>
+					</div>
 				</MuiThemeProvider>
-			</MDBContainer>
+			</div>
 		)
 	}
 }

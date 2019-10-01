@@ -29,6 +29,11 @@
 }
 
 .radioButtonsCheckout .radio {
-    margin-right: 7px;
+    margin-right: 10px;
     vertical-align: middle;
+}
+
+.resumenReserva {
+    margin-top: 30px;
+    margin-bottom: 30px;
 }

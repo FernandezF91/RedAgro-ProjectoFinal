@@ -1,9 +1,13 @@
 import React from 'react';
-import { MDBCard, MDBCardBody } from "mdbreact";
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import NumberFormat from 'react-number-format';
 import { Form, Row } from 'react-bootstrap';
 import '../diseños/Checkout.css'
 
 const PasosCheckout = (props) => {
+
+    var productosSeleccionados = props.productosSeleccionados;
 
     switch (props.indexPasos) {
         case 0:
@@ -93,26 +97,46 @@ const PasosCheckout = (props) => {
             );
         case 2:
             return (
-                <MDBCard>
-                    <MDBCardBody>
-
-                    </MDBCardBody>
-
-                </MDBCard>
+                <Card className="resumenReserva" style={{ width: '25rem' }}>
+                    <Card.Header as="h6">Productos seleccionados</Card.Header>
+                    <ListGroup variant="flush">
+                        {
+                            props.productosSeleccionados.map(item => (
+                                <ListGroup.Item>
+                                    {item.titulo}
+                                    <br />
+                                    {
+                                        item.cantidad > 1 ?
+                                            <i className="grey-text">{"x " + item.tipoDeUnidad + "s"}</i>
+                                            :
+                                            <i className="grey-text">{"x " + item.tipoDeUnidad}</i>
+                                    }
+                                    <br />
+                                    {item.cantidad}
+                                </ListGroup.Item>
+                            ))
+                        }
+                    </ListGroup>
+                    <Card.Footer as="h6">
+                        Total
+                        <NumberFormat
+                            value={props.getTotalReserva(props.productosSeleccionados)}
+                            displayType={'text'}
+                            thousandSeparator={"."}
+                            decimalSeparator={","}
+                            prefix=" $ "
+                            decimalScale={2}
+                            fixedDecimalScale={true} />
+                    </Card.Footer>
+                </Card>
             );
         case 3:
             return (
-                <MDBCard>
-                    <MDBCardBody>
-                    </MDBCardBody>
-                </MDBCard>
+                <Card style={{ width: '18rem' }}> </Card>
             );
         case 4:
             return (
-                <MDBCard>
-                    <MDBCardBody>
-                    </MDBCardBody>
-                </MDBCard>
+                <Card style={{ width: '18rem' }}></Card>
             );
     }
 
