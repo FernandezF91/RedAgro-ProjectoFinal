@@ -5,19 +5,42 @@
     margin: 10px;
 }
 
+.grafico {
+    height: 200px;
+}
+
 .graficos1 {
-    width: 400px;
-    height: 280px;
+    min-width: 400px;
+    min-height: 280px;
     margin: 7px;
+    border-color: whitesmoke;
+    border-style: solid;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 1px 1px whitesmoke;
 }
 
 .graficos2 {
-    width: 800px;
-    height: 280px;
+    min-width: 815px;
+    min-height: 280px;
     margin: 5px;
-    margin-top: 60px;
+    border-color: whitesmoke;
+    border-style: solid;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 1px 1px whitesmoke;
 }
 
 .titulo {
     margin-bottom: 15px;
+}
+
+.sinGrafico {
+    margin-top: 15px;
+    height: 200px;
+}
+
+.iconoGrandeGraficos {
+    color: #79CB79;
+    font-size: 140px;
 }

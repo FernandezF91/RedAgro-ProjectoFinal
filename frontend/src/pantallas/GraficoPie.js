@@ -1,6 +1,8 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
 
+import '../diseños/Graficos.css';
+
 const GraficoPie = ({ totalesGraficoPie }) => {
     const data = totalesGraficoPie.map(item => item.cantidad);
     const labels = totalesGraficoPie.map(item => item.estado);
@@ -25,19 +27,31 @@ const GraficoPie = ({ totalesGraficoPie }) => {
     };
 
     return (
-        <Pie
-            data={grafico}
-            options={{
-                maintainAspectRatio: true,
-                legend: {
-                    display: true,
-                    position: 'right',
-                    labels: {
-                        fontColor: 'rgb(0, 0, 0)'
-                    }
-                }
-            }}
-        />
+        <div>
+            {totalesGraficoPie.length > 0 ? (
+                <Pie
+                    className="grafico"
+                    data={grafico}
+                    options={{
+                        maintainAspectRatio: true,
+                        legend: {
+                            display: true,
+                            position: 'right',
+                            labels: {
+                                fontColor: 'rgb(0, 0, 0)'
+                            }
+                        }
+                    }}
+                />
+            ) : (
+                    <div className="sinGrafico">
+                        <i className="fas fa-chart-bar iconoGrandeGraficos" />
+                        <br />
+                        <h6>Ups! No hay datos para mostrar! </h6>
+                    </div>
+                )
+            }
+        </div>
     );
 }
 

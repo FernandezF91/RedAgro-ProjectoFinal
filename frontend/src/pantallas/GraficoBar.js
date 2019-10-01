@@ -1,6 +1,8 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
+import '../diseños/Graficos.css';
+
 const GraficoBar = ({ totalesGraficoBar }) => {
     const data = totalesGraficoBar.map(item => item.cantidad);
     const labels = totalesGraficoBar.map(item => item.estado);
@@ -19,37 +21,48 @@ const GraficoBar = ({ totalesGraficoBar }) => {
     };
 
     return (
+        <div>
+            {totalesGraficoBar.length > 0 ? (
+                <Bar
+                    className="grafico"
+                    data={grafico}
+                    legend={{
+                        display: false
+                    }}
+                    options={{
+                        maintainAspectRatio: false,
+                        scales: {
+                            xAxes: [
+                                {
+                                    offset: true,
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }
+                            ],
+                            yAxes: [
+                                {
+                                    offset: true,
+                                    ticks: {
+                                        display: true,
+                                        beginAtZero: true,
+                                        precision: 0
+                                    },
 
-        <Bar
-            data={grafico}
-            legend={{
-                display: false
-            }}
-            options={{
-                maintainAspectRatio: false,
-                scales: {
-                    xAxes: [
-                        {
-                            offset: true,
-                            gridLines: {
-                                display: false
-                            }
+                                }
+                            ]
                         }
-                    ],
-                    yAxes: [
-                        {
-                            offset: true,
-                            ticks: {
-                                display: true,
-                                beginAtZero: true,
-                                precision: 0
-                            },
-
-                        }
-                    ]
-                }
-            }}
-        />
+                    }}
+                />
+            ) : (
+                    <div className="sinGrafico">
+                        <i className="fas fa-chart-bar iconoGrandeGraficos" />
+                        <br />
+                        <h6>Ups! No hay datos para mostrar! </h6>
+                    </div>
+                )
+            }
+        </div>
     );
 }
 

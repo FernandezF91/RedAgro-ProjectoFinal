@@ -1,14 +1,9 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 
+import '../diseños/Graficos.css';
+
 const GraficoLine = ({ totalesGraficoLine }) => {
-    /*const dataFinalizada = totalesGraficoLine.map(item => item.cantidad);
-    const preDataFinalizada = totalesGraficoLine.filter(item => item.estado = 'Finalizado');
-    const dataFinalizada = preDataFinalizada.map(item => item.cantidad);
-    const preDataCancelada = totalesGraficoLine.filter(item => item.estado = 'Cancelada');
-    const dataCancelada = preDataCancelada.map(item => item.cantidad);
-    const labels = totalesGraficoLine.map(item => item.estado);*/
-    
     const data = totalesGraficoLine.map(item => item.cantidad);
     const labels = totalesGraficoLine.map(item => item.estado);
     const grafico = {
@@ -39,27 +34,39 @@ const GraficoLine = ({ totalesGraficoLine }) => {
     };
 
     return (
-        <Line
-            data={grafico}
-            legend={{
-                display: false
-            }}
-            options={{
-                maintainAspectRatio: false,
-                scales: {
-                    yAxes: [
-                        {
-                            offset: true,
-                            ticks: {
-                                beginAtZero: true,
-                                precision: 0
-                            }
+        <div>
+            {totalesGraficoLine.length > 0 ? (
+                <Line
+                    className="grafico"
+                    data={grafico}
+                    legend={{
+                        display: false
+                    }}
+                    options={{
+                        maintainAspectRatio: false,
+                        scales: {
+                            yAxes: [
+                                {
+                                    offset: true,
+                                    ticks: {
+                                        beginAtZero: true,
+                                        precision: 0
+                                    }
+                                }
+                            ]
                         }
-                    ]
-                }
-            }}
+                    }}
 
-        />
+                />
+            ) : (
+                    <div className="sinGrafico">
+                        <i className="fas fa-chart-bar iconoGrandeGraficos" />
+                        <br />
+                        <h6>Ups! No hay datos para mostrar! </h6>
+                    </div>
+                )
+            }
+        </div>
     );
 }
 
