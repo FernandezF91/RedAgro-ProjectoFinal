@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.clases.MailConfirmacion;
+import app.clases.MailRecuperarContraseña;
 import app.clases.Usuario;
 import app.daos.ConsumidorDao;
 import app.daos.ProductorDao;
@@ -30,6 +31,7 @@ import net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
@@ -180,6 +182,35 @@ public class UsuarioControlador {
 		
 		usuarioDAO.confirmarCuenta(id);
 			
+	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/recuperar_email")
+	
+	public Long confirmarCuenta(@RequestParam String email) {
+		
+		EntidadUsuario eu = new EntidadUsuario();
+		
+		eu = usuarioDAO.validarUsuarioDuplicado(email);
+		
+		if(eu!=null) {
+			
+			MailRecuperarContraseña mrc = new MailRecuperarContraseña(email, eu.getId());
+			
+			try {
+				mrc.enviarMail();
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return eu.getId();
+		}
+		
+		return 0L;
 	}
 	
 

@@ -1,0 +1,21 @@
+#passCN, #passCC{
+
+
+width:30%;
+
+}
+
+.mF{
+
+margin-left:10%;
+
+
+}
+
+.botons{
+
+	justify-content:center;
+display:flex;
+flex-direction:row;
+
+}
