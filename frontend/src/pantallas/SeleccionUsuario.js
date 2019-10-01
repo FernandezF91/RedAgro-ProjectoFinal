@@ -34,6 +34,7 @@ class SeleccionUsuario extends Component {
                             <Button variant="success" href="/registroProductor">Soy productor</Button>
                             <Button variant="success" href="/registroConsumidor">Soy consumidor</Button>
                         </div>
+                        <br />
                         <Button variant="success" href="/login" className="atras">Atras</Button>
                     </div>
                 </Container>

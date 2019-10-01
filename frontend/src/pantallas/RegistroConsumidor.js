@@ -221,7 +221,7 @@ class RegistroConsumidor extends Component {
                             </div>
                             <div className="fechaNacimiento">
                                 <Form.Group as={Row}>
-                                    <Form.Label className="fechaLabel" column sm={3}>
+                                    <Form.Label className="labelLargo" column sm={3}>
                                         Fecha de nacimiento
                                 </Form.Label>
                                     <Col sm={10}>
@@ -239,7 +239,7 @@ class RegistroConsumidor extends Component {
                             </div>
                             <div className="tel">
                                 <Form.Group as={Row} >
-                                    <Form.Label column sm={2}>
+                                    <Form.Label className="labelLargo" column sm={3}>
                                         Teléfono de contacto
                                 </Form.Label>
                                     <Col sm={10}>

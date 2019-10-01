@@ -1,67 +1,49 @@
-.titulos{
-margin-top: 2%;
-justify-content:center;
+.titulos {
+	margin-top: 2%;
+	justify-content: center;
 }
 
-.cuentaUsuario{
-
-	margin-left:15%;
+.cuentaUsuario {
+	margin-left: 15%;
 }
 
-.cuentaCultura{
-font-weight: 500;
-
+.cuentaCultura {
+	font-weight: 500;
 }
 
-.contenidoRegistro{
-margin-left:33%;
+.contenidoRegistro {
+	margin-left: 33%;
 }
 
-
-.tel,.email,.password,.razonSocial,.fechaNacimiento,.apellido{
-
-margin-top:3.5%;
+.tel, .email, .password, .razonSocial, .fechaNacimiento, .apellido {
+	margin-top: 3.5%;
 }
 
-
-
-.errorConsu{
-
-color: #cc0000;
-font-size: 13px;
-position:absolute;
-margin-left:0.5%;
-margin-top:0.5%;
-
+.errorConsu {
+	color: #cc0000;
+	font-size: 13px;
+	position: absolute;
+	margin-left: 0.5%;
+	margin-top: 0.5%;
 }
 
-.errores{
-
-margin-left:-43%;
-position:absolute;
-
+.errores {
+	margin-left: -43%;
+	position: absolute;
 }
 
-
-
-.fechaLabel{
-
-margin-left:-8.4%;
-
+.labelLargo {
+	margin-left: -8.4%;
 }
 
-.calendario{
-
-width:40%;
-
+.calendario {
+	width: 40%;
 }
 
-.botonesUsuarios{
-
-	display:flex;
-	flex-direction:row;
-	justify-content:center;
-	margin-left:-50%;
-	margin-bottom:20px;
-
+.botonesUsuarios {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-left: -50%;
+	margin-bottom: 20px;
 }
