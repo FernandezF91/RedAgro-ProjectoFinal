@@ -3,9 +3,9 @@ import { MDBCard, MDBCardBody } from "mdbreact";
 import { Form, Row } from 'react-bootstrap';
 import '../diseños/Checkout.css'
 
-const PasosCheckout = ({ indexPasos, usuario, datosPersonalesHandler }) => {
+const PasosCheckout = (props) => {
 
-    switch (indexPasos) {
+    switch (props.indexPasos) {
         case 0:
             return (
                 <div className="containerCheckout">
@@ -16,7 +16,7 @@ const PasosCheckout = ({ indexPasos, usuario, datosPersonalesHandler }) => {
                                 required
                                 type="nom"
                                 name="nombre"
-                                defaultValue={usuario.usuario}
+                                defaultValue={props.usuario.usuario}
                                 disabled={true}
                             //       onChange={(e) => datosPersonalesHandler(e)}
                             />
@@ -29,7 +29,7 @@ const PasosCheckout = ({ indexPasos, usuario, datosPersonalesHandler }) => {
                                 required
                                 type="nom"
                                 name="nombre"
-                                defaultValue={usuario.nombre}
+                                defaultValue={props.usuario.nombre}
                                 pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
                             //       onChange={(e) => datosPersonalesHandler(e)}
                             />
@@ -44,7 +44,7 @@ const PasosCheckout = ({ indexPasos, usuario, datosPersonalesHandler }) => {
                                 required
                                 type="ap"
                                 name="apellido"
-                                defaultValue={usuario.apellido}
+                                defaultValue={props.usuario.apellido}
                                 pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
                             //     onChange={(e) => datosPersonalesHandler(e)}
                             />
@@ -60,7 +60,7 @@ const PasosCheckout = ({ indexPasos, usuario, datosPersonalesHandler }) => {
                                 required
                                 type="tel"
                                 name="telefono"
-                                defaultValue={usuario.telefono}
+                                defaultValue={props.usuario.telefono}
                                 pattern="[0-9]{8,14}"
                             //   onChange={(e) => datosPersonalesHandler(e)}
                             />
@@ -70,12 +70,26 @@ const PasosCheckout = ({ indexPasos, usuario, datosPersonalesHandler }) => {
             );
         case 1:
             return (
-                <MDBCard>
-                    <MDBCardBody>
+                <div className="radioButtonsCheckout">
+                    <label>
+                        <input type="radio"
+                            value="radio1"
+                            checked={props.selectedRadioButtonRetiro === "radio1"}
+                            onChange={props.handleRadioRetiroChange}
+                            className="radio-button-input radio" />
+                        Acordar retiro con el Productor
+                    </label>
+                    <br />
+                    <label>
+                        <input type="radio"
+                            value="radio2"
+                            checked={props.selectedRadioButtonRetiro === "radio2"}
+                            onChange={props.handleRadioRetiroChange}
+                            className="radio-button-input radio" />
+                        Seleccionar un punto de entrega
+                    </label>
+                </div>
 
-                    </MDBCardBody>
-
-                </MDBCard>
             );
         case 2:
             return (

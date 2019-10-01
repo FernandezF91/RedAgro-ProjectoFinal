@@ -9,14 +9,12 @@ import StepContent from '@material-ui/core/StepContent';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import PasosCheckout from './PasosCheckout'
 import _ from 'lodash';
-//import '../diseños/estilosGlobales.css';
+import '../diseños/estilosGlobales.css';
 import '../diseños/Checkout.css'
-import { green } from '@material-ui/core/colors';
 
 const pasos = [
 	'Confirmá tu datos personales',
-	'Seleccioná un Punto de Entrega',
-	'Elegí una fecha de Retiro',
+	'Elegí una forma de retiro',
 	'Resumen de Reserva'
 ];
 
@@ -44,9 +42,11 @@ const theme = createMuiTheme({
 			label: {
 				'&$active': {
 					fontWeight: 400,
+					alignContent: "center",
 				},
 				'&$completed': {
 					fontWeight: 400,
+					alignContent: "center",
 				}
 			}
 		},
@@ -65,6 +65,7 @@ class Checkout extends Component {
 			activeStep: 0,
 			setActiveStep: 0,
 			puntosEntrega: [],
+			selectedRadioButtonRetiro: "radio2",
 		}
 	}
 
@@ -81,9 +82,7 @@ class Checkout extends Component {
 		if (productoresSinRepetidos.length > 0) {
 			var path = "http://localhost:3000/redAgro/ptos_entrega_productores?productores=" + productoresSinRepetidos;
 			fetch(path, {
-				method: "GET",
-				// headers: { 'Content-type': 'application/json;' },
-				// body: JSON.stringify(productoresSinRepetidos)
+				method: "GET",				
 			})
 				.catch(err => console.error(err))
 				.then(response => { return response.json(); })
@@ -119,6 +118,12 @@ class Checkout extends Component {
 		this.setState({ [event.target.name]: event.target.value });
 	};
 
+	handleRadioRetiroChange = changeEvent => {
+        this.setState({
+            selectedRadioButtonRetiro: changeEvent.target.value
+        });
+    };
+
 	getTotalReserva(productosSeleccionados) {
 		return _.sumBy(productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
 	}
@@ -137,10 +142,13 @@ class Checkout extends Component {
 								<StepContent>
 									<PasosCheckout indexPasos={activeStep}
 										usuario={this.props.user}
-										datosPersonalesHandler={this.datosPersonalesHandler} />
+										datosPersonalesHandler={this.datosPersonalesHandler} 
+										selectedRadioButtonRetiro={this.state.selectedRadioButtonRetiro}
+										handleRadioRetiroChange = {this.handleRadioRetiroChange}/>
 									<div>
 										<div>
-											<Button
+											<Button 
+												variant="light"
 												disabled={activeStep === 0}
 												onClick={this.handleBack}>
 												Atras
