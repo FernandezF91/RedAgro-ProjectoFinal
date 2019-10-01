@@ -47,46 +47,56 @@ class AlertaProductor extends Component {
                 <form onSubmit={this.handleFormSubmit}>
                     <div className="radioButtons" align="left">
                         <h5>Notificarme:</h5>
-                        <input type="radio"
-                            value="radio1"
-                            checked={this.state.selectedRadioOption === "radio1"}
-                            onChange={this.handleRadioChange}
-                            className="radio-button-input radioPrimero"
-                        />
-                        <span>Nunca</span>
-                        <input type="radio"
-                            value="radio2"
-                            checked={this.state.selectedRadioOption === "radio2"}
-                            onChange={this.handleRadioChange}
-                            className="radio-button-input radio"
-                        />
-                        <span>Diariamente</span>
-                        <input type="radio"
-                            value="radio3"
-                            checked={this.state.selectedRadioOption === "radio3"}
-                            onChange={this.handleRadioChange}
-                            className="radio-button-input radio"
-                        />
-                        <span>Semanalmente</span>
+                        <label class="radio-inline">
+                            <input type="radio"
+                                value="radio1"
+                                checked={this.state.selectedRadioOption === "radio1"}
+                                onChange={this.handleRadioChange}
+                                className="radio-button-input radioPrimero"
+                            />
+                            Nunca
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio"
+                                value="radio2"
+                                checked={this.state.selectedRadioOption === "radio2"}
+                                onChange={this.handleRadioChange}
+                                className="radio-button-input radio"
+                            />
+                            Diariamente
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio"
+                                value="radio3"
+                                checked={this.state.selectedRadioOption === "radio3"}
+                                onChange={this.handleRadioChange}
+                                className="radio-button-input radio"
+                            />
+                            Semanalmente
+                        </label>
                     </div>
                     <br />
                     <div className="checkboxes">
                         <h5>Alertarme sobre:</h5>
-                        <input type="checkbox"
-                            value="check1"
-                            checked={this.state.selectedCheckOption}
-                            onChange={this.handleCheckChange}
-                            className="checkbox-input checkbox"
-                        />
-                        <span>Nuevas reservas</span>
+                        <label class="checkbox-inline">
+                            <input type="checkbox"
+                                value="check1"
+                                checked={this.state.selectedCheckOption}
+                                onChange={this.handleCheckChange}
+                                className="checkbox-input checkbox"
+                            />
+                            Nuevas reservas
+                        </label>
                         <br />
-                        <input type="checkbox"
-                            value="check2"
-                            checked={this.state.selectedCheckOption}
-                            onChange={this.handleCheckChange}
-                            className="checkbox-input checkbox"
-                        />
-                        <span>Actualización de reservas</span>
+                        <label class="checkbox-inline">
+                            <input type="checkbox"
+                                value="check2"
+                                checked={this.state.selectedCheckOption}
+                                onChange={this.handleCheckChange}
+                                className="checkbox-input checkbox"
+                            />
+                            Actualización de reservas
+                        </label>
                     </div>
                 </form >
                 <div className="botones">
