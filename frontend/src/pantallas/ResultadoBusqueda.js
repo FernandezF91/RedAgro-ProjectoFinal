@@ -115,7 +115,6 @@ class ResultadoBusqueda extends Component {
     restarProducto = (position) => {
         //Falta la validación y actualización por stock
         let resultadoBusqueda = this.state.resultadoBusqueda;
-        //  let productosSeleccionados = this.props.productosSeleccionados;
         var productoSeleccionado = resultadoBusqueda[position];
         if ((parseInt(productoSeleccionado.cantidad) - 1) >= 0) {
             let productoActualizado = [
@@ -133,8 +132,6 @@ class ResultadoBusqueda extends Component {
             ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) + 1).toString(),
         ]
         this.setState({ productoSeleccionado: productoActualizado });
-        // console.log(productoSeleccionado);
-        //console.log(this.props.productosSeleccionados)
     }
 
     agregarAlCarrito = (position) => {

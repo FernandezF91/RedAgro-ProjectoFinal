@@ -64,7 +64,7 @@ class Checkout extends Component {
 			activeStep: 0,
 			setActiveStep: 0,
 			puntosEntrega: [],
-			selectedRadioButtonRetiro: "radio2",
+			selectedRadioButtonRetiro: "radio1",
 		}
 	}
 
@@ -72,14 +72,23 @@ class Checkout extends Component {
 		//Busco los puntos de entrega de los productores seleccionados
 		var productores = [];
 		var productoresSinRepetidos = [];
+		var parametro = '';
 		this.props.productosSeleccionados.forEach(item => {
 			productores.push(item.productor.id);
 		});
 		productores.sort();
 		productoresSinRepetidos = [... new Set(productores)];
 
+		productoresSinRepetidos.forEach((item, index) => {
+			if (index === 0) {
+				parametro = parametro + "productores=" + item;
+			} else {
+				parametro = parametro + "&productores=" + item;
+			}
+		});
+
 		if (productoresSinRepetidos.length > 0) {
-			var path = "http://localhost:3000/redAgro/ptos_entrega_productores?productores=" + productoresSinRepetidos;
+			var path = "http://localhost:3000/redAgro/ptos_entrega_productores?" + parametro;
 			fetch(path, {
 				method: "GET",
 			})
@@ -147,8 +156,9 @@ class Checkout extends Component {
 								datosPersonalesHandler={this.datosPersonalesHandler}
 								selectedRadioButtonRetiro={this.state.selectedRadioButtonRetiro}
 								handleRadioRetiroChange={this.handleRadioRetiroChange}
-								productosSeleccionados={this.props.productosSeleccionados} 
-								getTotalReserva={this.getTotalReserva}/>
+								productosSeleccionados={this.props.productosSeleccionados}
+								getTotalReserva={this.getTotalReserva} 
+								puntosEntrega={this.state.puntosEntrega}/>
 							: ''
 					}
 					<div>
