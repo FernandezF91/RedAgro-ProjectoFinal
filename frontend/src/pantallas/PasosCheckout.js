@@ -2,12 +2,10 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import NumberFormat from 'react-number-format';
-import { Form, Row } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 import '../diseños/Checkout.css'
 
 const PasosCheckout = (props) => {
-
-    var productosSeleccionados = props.productosSeleccionados;
 
     switch (props.indexPasos) {
         case 0:
@@ -97,22 +95,33 @@ const PasosCheckout = (props) => {
             );
         case 2:
             return (
-                <Card className="resumenReserva" style={{ width: '25rem' }}>
+                <Card className="resumenReserva" style={{ width: '28rem' }}>
                     <Card.Header as="h6">Productos seleccionados</Card.Header>
-                    <ListGroup variant="flush">
+                    <ListGroup>
                         {
                             props.productosSeleccionados.map(item => (
                                 <ListGroup.Item key={item.id}>
-                                    {item.titulo}
-                                    <br />
-                                    {
-                                        item.cantidad > 1 ?
-                                            <i className="grey-text">{"x " + item.tipoDeUnidad + "s"}</i>
-                                            :
-                                            <i className="grey-text">{"x " + item.tipoDeUnidad}</i>
-                                    }
-                                    <br />
-                                    {item.cantidad}
+                                    <Row>
+                                        <Col>
+                                            {item.titulo}
+                                        </Col>
+                                        {
+                                            item.cantidad > 1 ?
+                                                <Col>
+                                                    {item.cantidad}
+                                                    <span className="unidadMedida">{" " + item.tipoDeUnidad + "s"}</span>
+                                                </Col>
+                                                :
+                                                <Col>
+                                                    {item.cantidad}
+                                                    <span className="unidadMedida">{" " + item.tipoDeUnidad}</span>
+                                                </Col>
+                                        }
+                                        <Col>
+                                            <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                            <span style={{ color: 'gray', fontSize: '12px' }}> por c/u</span>
+                                        </Col>
+                                    </Row>
                                 </ListGroup.Item>
                             ))
                         }
