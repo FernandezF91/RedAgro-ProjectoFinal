@@ -114,29 +114,32 @@ class ResultadoBusqueda extends Component {
 
     restarProducto = (position) => {
         //Falta la validación y actualización por stock
-        let { resultadoBusqueda } = this.state;
+        let resultadoBusqueda = this.state.resultadoBusqueda;
         //  let productosSeleccionados = this.props.productosSeleccionados;
         var productoSeleccionado = resultadoBusqueda[position];
         if ((parseInt(productoSeleccionado.cantidad) - 1) >= 0) {
             let productoActualizado = [
                 ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) - 1).toString(),
             ]
-            this.setState({ productosSeleccionado: productoActualizado });
+            this.setState({ resultadoBusqueda: productoActualizado });
         }
     }
 
     sumarProducto = (position) => {
         //Falta la validación y actualización por stock
-        let { resultadoBusqueda } = this.state;
+        let resultadoBusqueda = this.state.resultadoBusqueda;
         var productoSeleccionado = resultadoBusqueda[position];
         let productoActualizado = [
             ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) + 1).toString(),
+
         ]
-        this.setState({ productosSeleccionado: productoActualizado });
+        this.setState({ productoSeleccionado: productoActualizado });
+        // console.log(productoSeleccionado);
+        //console.log(this.props.productosSeleccionados)
     }
 
     agregarAlCarrito = (position) => {
-        let { resultadoBusqueda } = this.state;
+        let resultadoBusqueda = this.state.resultadoBusqueda;
         let productosSeleccionados = this.props.productosSeleccionados;
         var producto = resultadoBusqueda[position];
         if (parseInt(producto.cantidad) > 0) {
