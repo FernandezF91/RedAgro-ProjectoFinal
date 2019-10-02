@@ -97,7 +97,7 @@ class PreferenciasConsumidor extends Component {
 
         var _this = this;
         //Guardo las nuevas preferencias
-        var path = "http://localhost:3000/redAgro/preferencias_consumidor?id=" + this.state.id;
+        var path = "http://localhost:3000/redAgro/guardarPreferencias?id=" + this.state.id;
         fetch(path, {
             method: "POST",
             headers: { 'Content-type': 'application/json;charset=UTF-8' },
@@ -119,7 +119,7 @@ class PreferenciasConsumidor extends Component {
 
     componentDidMount() {
         //Obtengo las preferencias del Consumidor
-        var path = "http://localhost:3000/redAgro/preferencia_consumidor?id=" + this.state.id;
+        var path = "http://localhost:3000/redAgro/obtenerPreferencias?id=" + this.state.id;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })
