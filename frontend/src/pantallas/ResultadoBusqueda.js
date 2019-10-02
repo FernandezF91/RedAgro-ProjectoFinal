@@ -25,9 +25,9 @@ class ResultadoBusqueda extends Component {
         this.state = {
             id: this.props.id_usuario,
             resultadoBusqueda: [],
+            datosParaReserva:[],
             tamañoListado: 9, //Valor predeterminado
             paginaActual: 1,
-            imagenes: [],
             loading: true
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
@@ -131,7 +131,6 @@ class ResultadoBusqueda extends Component {
         var productoSeleccionado = resultadoBusqueda[position];
         let productoActualizado = [
             ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) + 1).toString(),
-
         ]
         this.setState({ productoSeleccionado: productoActualizado });
         // console.log(productoSeleccionado);
