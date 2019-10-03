@@ -6,7 +6,7 @@ import LoginForm from './pantallas/Login';
 import RegistroConsumidor from './pantallas/RegistroConsumidor';
 import HomePage from './pantallas/Home';
 import NotFound from './pantallas/NotFound';
-import Recuperaremail from './pantallas/Recuperaremail';
+import RecuperarMail from './pantallas/RecuperarMail';
 import RegistroProductor from './pantallas/RegistroProductor';
 import PantallaPrincipalProductores from './pantallas/PantallaPrincipalProductores';
 import PantallaPrincipalConsumidores from './pantallas/PantallaPrincipalConsumidores';
@@ -26,7 +26,7 @@ ReactDOM.render(
             <Route exact path="/" component={HomePage} />
             <Route path="/login" component={LoginForm} />
             <Route path="/registroConsumidor" component={RegistroConsumidor} />
-            <Route path="/recupero_email" component={Recuperaremail} />
+            <Route path="/recupero_email" component={RecuperarMail} />
             <Route path="/registroProductor" component={RegistroProductor} />
             <Route path="/principalProductores" component={PantallaPrincipalProductores} />
             <Route path="/principalConsumidores" component={PantallaPrincipalConsumidores} />

@@ -15,8 +15,8 @@ class ModificarContraseña extends Component {
             usuario: {},
             visible: false,
             mensaje: "",
-            titulo:"",
-            formOk:false,
+            titulo: "",
+            formOk: false,
             user: this.props.usuario //para ir pasando el ID del usuario de pantalla a pantalla
         }
 
@@ -34,72 +34,76 @@ class ModificarContraseña extends Component {
 
     closeModal() {
 
-        if(this.state.formOk===false){
-        
-        this.setState({
-            visible: false
-        });
+        if (this.state.formOk === false) {
 
-        return;
+            this.setState({
+                visible: false
+            });
 
-    }
+            return;
+
+        }
 
         this.setState({
             visible: false
         });
 
         this.mostrarPantallaPrincipal();
-        
+
     }
 
 
-   validarDatos(){
+    validarDatos() {
 
 
-   if((!this.state.fields["contraseñaNueva"] || !this.state.fields["contraseñaActual"] || !this.state.fields["confirmarContraseña"]) ||
-      ((this.state.fields["contraseñaNueva"])!==(this.state.fields["confirmarContraseña"])) ||
-       ((this.state.fields["contraseñaActual"])!==(this.state.user.contraseña))){
+        if ((!this.state.fields["contraseñaNueva"] || !this.state.fields["contraseñaActual"] || !this.state.fields["confirmarContraseña"]) ||
+            ((this.state.fields["contraseñaNueva"]) !== (this.state.fields["confirmarContraseña"])) ||
+            ((this.state.fields["contraseñaActual"]) !== (this.state.user.contraseña))) {
 
-        this.setState({titulo:"Error",
-                       mensaje:"Datos incompletos o incorrectos",
-                       visible:true});
+            this.setState({
+                titulo: "Error",
+                mensaje: "Datos incompletos o incorrectos",
+                visible: true
+            });
 
-                       return false;
+            return false;
 
-       }
+        }
 
-       if(this.state.fields["contraseñaActual"]===this.state.fields["contraseñaNueva"]){
-
-
-      this.setState({titulo:"Error",
-                       mensaje:"No modificaste tu contraseña",
-                       visible:true});
-
-                       return false;
+        if (this.state.fields["contraseñaActual"] === this.state.fields["contraseñaNueva"]) {
 
 
-       }
+            this.setState({
+                titulo: "Error",
+                mensaje: "No modificaste tu contraseña",
+                visible: true
+            });
 
-       return true;
+            return false;
 
-   }
+
+        }
+
+        return true;
+
+    }
 
     modificarContraseña() {
-    
-            const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
 
-            var password = this.state.fields["contraseñaNueva"];
+        const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
 
-            var id = this.state.user.id;
+        var password = this.state.fields["contraseñaNueva"];
 
-            const final_path = path_principal + password + "&id="+id;
+        var id = this.state.user.id;
 
-           console.log(final_path);
+        const final_path = path_principal + password + "&id=" + id;
 
-            var _this = this;
+        console.log(final_path);
+
+        var _this = this;
 
 
-            if(_this.validarDatos()){
+        if (_this.validarDatos()) {
 
             fetch(final_path, {
                 method: "PUT",
@@ -116,10 +120,10 @@ class ModificarContraseña extends Component {
                         // alert("Ocurrió algún problema. Intenta nuevamente")
 
                         let mensajeError = "Ocurrió algun problema, intenta nuevamente"
-                        
+
                         _this.setState({
                             visible: true,
-                            titulo:"Error",
+                            titulo: "Error",
                             mensaje: mensajeError
                         });
 
@@ -131,18 +135,18 @@ class ModificarContraseña extends Component {
 
                         function (response) {
 
-                                _this.setState({
-                                    visible: true,
-                                    titulo:"Modificación exitosa",
-                                    mensaje:"",
-                                    formOk:true
-                                });
-                            
+                            _this.setState({
+                                visible: true,
+                                titulo: "Modificación exitosa",
+                                mensaje: "",
+                                formOk: true
+                            });
+
 
                         });
                 });
-            }
         }
+    }
 
 
     mostrarPantallaPrincipal() {
@@ -205,31 +209,25 @@ class ModificarContraseña extends Component {
                         </Form.Group>
                     </div>
                     <div className="botonesNuevoProducto">
-                        <div className="botonAtras">
-                            <a onClick={this.mostrarPantallaPrincipal}>
-                                <Button variant="success">Cancelar</Button>
-                            </a>
-                        </div>
-                        <div className="botonCrear">
-                            <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
-                        </div>
+                        <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                        <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
                     </div>
                 </div>
                 <section>
-                        <Modal
-                            visible={this.state.visible}
-                            width="460"
-                            height="120"
-                            effect="fadeInUp"
-                            onClickAway={() => this.closeModal()}
-                        >
-                            <div>
-                                <h1>{this.state.titulo}</h1>
-                                <p>{this.state.mensaje}</p>
-                                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
-                            </div>
-                        </Modal>
-                    </section>
+                    <Modal
+                        visible={this.state.visible}
+                        width="460"
+                        height="120"
+                        effect="fadeInUp"
+                        onClickAway={() => this.closeModal()}
+                    >
+                        <div>
+                            <h1>{this.state.titulo}</h1>
+                            <p>{this.state.mensaje}</p>
+                            <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
+                        </div>
+                    </Modal>
+                </section>
             </div>
         );
     };

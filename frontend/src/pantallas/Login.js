@@ -147,45 +147,39 @@ class LoginForm extends Component {
                         <h2>Acceso de usuarios</h2>
                         <div className="encabezadoLogin">
                             <Form>
-                                <div className="usuarioLogin">
-                                    <Form.Group as={Row} controlId="formHorizontalEmail">
-                                        <Form.Label column sm={2}>
-                                            Usuario
+                                <Form.Group as={Row} controlId="formHorizontalEmail" className="usuarioLogin">
+                                    <Form.Label column sm={2}>
+                                        Usuario
                                 </Form.Label>
-                                        <Col sm={10}>
-                                            <Form.Control type="email" name="username" onChange={(e) => this.detectarCambios(e)} />
-                                            <div className="error">
-                                                {this.state.errores["username"]}
-                                            </div>
-                                        </Col>
-
-                                    </Form.Group>
-                                </div>
-                                <div className="passwordLogin">
-                                    <Form.Group as={Row} controlId="formHorizontalPassword" >
-                                        <Form.Label column sm={2}>
-                                            Password
+                                    <Col sm={10}>
+                                        <Form.Control type="email" name="username" onChange={(e) => this.detectarCambios(e)} />
+                                        <div className="error">
+                                            {this.state.errores["username"]}
+                                        </div>
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row} controlId="formHorizontalPassword" className="passwordLogin">
+                                    <Form.Label column sm={2}>
+                                        Password
                                 </Form.Label>
-                                        <Col sm={10}>
-                                            <Form.Control type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
-                                            <div className="error">
-                                                {this.state.errores["password"]}
-                                            </div>
-                                        </Col>
-                                    </Form.Group>
-                                </div>
+                                    <Col sm={10}>
+                                        <Form.Control type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
+                                        <div className="error">
+                                            {this.state.errores["password"]}
+                                        </div>
+                                    </Col>
+                                </Form.Group>
                             </Form>
                         </div>
                         <div className="botonesLogin">
-                            <Button variant="success" onClick={this.validarDatos}>Ingresar</Button>
                             <a href='/seleccionUsuario'>
-                                <Button variant="success">Registrar</Button>
+                                <Button variant="light">Registrar</Button>
                             </a>
+                            <Button variant="success" onClick={this.validarDatos}>Ingresar</Button>
                         </div>
                         <Link to={'/recupero_email'}>
-                        <a>olvidé mi contraseña</a>
+                            <a>olvidé mi contraseña</a>
                         </Link>
-                        
                     </div>
                     <section>
                         <Modal

@@ -17,28 +17,28 @@ class RecuperarContraseña extends Component {
             usuario: {},
             visible: false,
             mensaje: "",
-            titulo:"",
-            formOk:false,
+            titulo: "",
+            formOk: false,
             id: this.props.match.params.id
         }
 
         this.validarDatos = this.validarDatos.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-	}
-	
-	componentDidMount(){
+    }
+
+    componentDidMount() {
 
 
-	if(isNaN(parseInt(this.state.id))){
+        if (isNaN(parseInt(this.state.id))) {
 
-	this.props.history.push({
-            pathname: '/*',
-            
-        })
+            this.props.history.push({
+                pathname: '/*',
+
+            })
 
 
-	}
-}
+        }
+    }
 
     detectarCambios(e) {
         let fields = this.state.fields;
@@ -50,58 +50,60 @@ class RecuperarContraseña extends Component {
 
     closeModal() {
 
-        if(this.state.formOk===false){
-        
-        this.setState({
-            visible: false
-        });
+        if (this.state.formOk === false) {
 
-        return;
+            this.setState({
+                visible: false
+            });
 
-    }
+            return;
+
+        }
 
         this.setState({
             visible: false
         });
 
         this.mostrarPantallaPrincipal();
-        
+
     }
 
 
-   validarDatos(){
+    validarDatos() {
 
 
-   if((!this.state.fields["contraseñaNueva"] || !this.state.fields["confirmarContraseña"]) ||
-      ((this.state.fields["contraseñaNueva"])!==(this.state.fields["confirmarContraseña"]))){
-       
+        if ((!this.state.fields["contraseñaNueva"] || !this.state.fields["confirmarContraseña"]) ||
+            ((this.state.fields["contraseñaNueva"]) !== (this.state.fields["confirmarContraseña"]))) {
 
-        this.setState({titulo:"Error",
-                       mensaje:"Datos incompletos o incorrectos",
-                       visible:true});
 
-                       return false;
+            this.setState({
+                titulo: "Error",
+                mensaje: "Datos incompletos o incorrectos",
+                visible: true
+            });
 
-       }
+            return false;
 
-       return true;
+        }
 
-   }
+        return true;
+
+    }
 
     modificarContraseña() {
-    
-            const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
 
-            var password = this.state.fields["contraseñaNueva"];
+        const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
 
-            var id = this.state.id;
+        var password = this.state.fields["contraseñaNueva"];
 
-            const final_path = path_principal + password + "&id="+id;
+        var id = this.state.id;
 
-            var _this = this;
+        const final_path = path_principal + password + "&id=" + id;
+
+        var _this = this;
 
 
-            if(_this.validarDatos()){
+        if (_this.validarDatos()) {
 
             fetch(final_path, {
                 method: "PUT",
@@ -118,10 +120,10 @@ class RecuperarContraseña extends Component {
                         // alert("Ocurrió algún problema. Intenta nuevamente")
 
                         let mensajeError = "Ocurrió algun problema, intenta nuevamente"
-                        
+
                         _this.setState({
                             visible: true,
-                            titulo:"Error",
+                            titulo: "Error",
                             mensaje: mensajeError
                         });
 
@@ -133,87 +135,81 @@ class RecuperarContraseña extends Component {
 
                         function (response) {
 
-                                _this.setState({
-                                    visible: true,
-                                    titulo:"Modificación exitosa",
-                                    mensaje:"",
-                                    formOk:true
-                                });
-                            
+                            _this.setState({
+                                visible: true,
+                                titulo: "Modificación exitosa",
+                                mensaje: "",
+                                formOk: true
+                            });
+
 
                         });
                 });
-            }
         }
+    }
 
 
     mostrarPantallaPrincipal() {
 
-            this.props.history.push({
-                pathname: '/login',
+        this.props.history.push({
+            pathname: '/login',
 
-            })
-  
+        })
+
     }
 
     render() {
 
         return (
-             <div className="fondo">
+            <div className="fondo">
                 <Navbar className="barraNavegacion">
                     <Link to={'/'} className="culturaVerde">
                         <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
                     </Link>
                 </Navbar>
                 <Container fluid className="contenedor">
-				<br>
-				</br>
-				<br>
-				</br>
-				<br>
-				</br>
-                <div className="titulosPrincipales">Modificar contraseña</div>
-                <div className="mF">
-                    <div className="contraseñaNueva" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Contraseña nueva
+                    <br>
+                    </br>
+                    <br>
+                    </br>
+                    <br>
+                    </br>
+                    <div className="titulosPrincipales">Modificar contraseña</div>
+                    <div className="mF">
+                        <div className="contraseñaNueva" >
+                            <Form.Group as={Row}>
+                                <Form.Label column sm={4}>
+                                    Contraseña nueva
 									</Form.Label>
-                            <Form.Control
-								id="passCN"
-                                required
-                                type="password"
-                                name="contraseñaNueva"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="confirmarContraseña" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Confirmar contraseña
-									</Form.Label>
-                            <Form.Control
-						id="passCC"
-                                required
-                                type="password"
-                                name="confirmarContraseña"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                        </Form.Group>
-                    </div>
-                </div>
-				 <div className="botons">
-                        <div className="botonAtras">
-                            <a onClick={this.mostrarPantallaPrincipal}>
-                                <Button variant="success">Cancelar</Button>
-                            </a>
+                                <Form.Control
+                                    id="passCN"
+                                    required
+                                    type="password"
+                                    name="contraseñaNueva"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                />
+                            </Form.Group>
                         </div>
-                        <div className="botonCrear">
-                            <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
+                        <div className="confirmarContraseña" >
+                            <Form.Group as={Row}>
+                                <Form.Label column sm={4}>
+                                    Confirmar contraseña
+									</Form.Label>
+                                <Form.Control
+                                    id="passCC"
+                                    required
+                                    type="password"
+                                    name="confirmarContraseña"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                />
+                            </Form.Group>
                         </div>
                     </div>
-				<section>
+                    <div className="botons">
+                        <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                        <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
+                    </div>
+                    <section>
                         <Modal
                             visible={this.state.visible}
                             width="460"
@@ -228,8 +224,8 @@ class RecuperarContraseña extends Component {
                             </div>
                         </Modal>
                     </section>
-				</Container>
-            
+                </Container>
+
             </div>
         );
     };

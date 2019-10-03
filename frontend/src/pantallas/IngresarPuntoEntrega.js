@@ -10,16 +10,11 @@ import { isDate } from 'moment';
 
 const minDate = new Date();
 
-
 Geocode.setApiKey('AIzaSyAKxBrG2z8psH-fGJfFDXI-Arn-LkniaqI');
-
 Geocode.setLanguage("es");
-
 Geocode.setRegion("ar");
 
-
 class IngresarPuntoEntrega extends Component {
-
 
     constructor(props) {
         super(props)
@@ -28,21 +23,21 @@ class IngresarPuntoEntrega extends Component {
             campos: [],
             id: this.props.id_productor,
             google: this.props.google,
-            disabled:"true",
-            disabeld2:"",
-            titulo:"",
-            mensaje:"",
-            visible:"",
-            visible2:"",
-            direccion:"",
-            direccOk:"",
-            formOk:"",
-            lat:"",
-            lng:"",
-            id_punto_entrega:""
+            disabled: "true",
+            disabeld2: "",
+            titulo: "",
+            mensaje: "",
+            visible: "",
+            visible2: "",
+            direccion: "",
+            direccOk: "",
+            formOk: "",
+            lat: "",
+            lng: "",
+            id_punto_entrega: ""
 
         }
-        
+
         this.autocompleteInput = React.createRef();
         this.autocomplete = null;
         this.handlePlaceChanged = this.handlePlaceChanged.bind(this);
@@ -72,30 +67,26 @@ class IngresarPuntoEntrega extends Component {
 
     handlePlaceChanged() {
 
-        let campos=this.state.campos;
+        let campos = this.state.campos;
         const place = this.autocomplete.getPlace();
         let address = place.address_components;
         let formatted_address = place.formatted_address;
 
-      try{
+        try {
 
-        campos["direccion"]= place.name;
-        campos["localidad"]=address[2].short_name;
-        campos["provincia"]=address[4].long_name;
-        campos["cod_postal"]=address[6].short_name;
-        campos["pais"]=address[5].long_name;
+            campos["direccion"] = place.name;
+            campos["localidad"] = address[2].short_name;
+            campos["provincia"] = address[4].long_name;
+            campos["cod_postal"] = address[6].short_name;
+            campos["pais"] = address[5].long_name;
 
-        this.setState({campos:campos,direccion:formatted_address,direccOk:true});
+            this.setState({ campos: campos, direccion: formatted_address, direccOk: true });
 
-      } catch{
+        } catch{
 
-        this.setState({direccOk:false});
-
-      }
-        
-
+            this.setState({ direccOk: false });
+        }
     }
-
 
     closeModal() {
         if (this.state.formOk === true) {
@@ -107,19 +98,15 @@ class IngresarPuntoEntrega extends Component {
         });
     }
 
-     closeModalSi() {
-
-        
+    closeModalSi() {
         this.setState({
-            visible2:false,
+            visible2: false,
             formOk: false,
             disabled2: true
         });
-
-
     }
 
-     detectarCambios(e) {
+    detectarCambios(e) {
         let campos = this.state.campos;
         campos[e.target.name] = e.target.value;
         this.setState({
@@ -127,15 +114,15 @@ class IngresarPuntoEntrega extends Component {
         })
     }
 
-    validarFormulario(){
+    validarFormulario() {
 
-   var _this=this
+        var _this = this
 
-    if(this.state.id_punto_entrega!==""){
+        if (this.state.id_punto_entrega !== "") {
 
-    const path = "http://localhost:3000/redAgro/subir_fecha_entrega?id_punto_entrega=";
+            const path = "http://localhost:3000/redAgro/subir_fecha_entrega?id_punto_entrega=";
 
-    const path_final = path + _this.state.id_punto_entrega
+            const path_final = path + _this.state.id_punto_entrega
 
             fetch(path_final, {
                 method: "POST",
@@ -145,13 +132,13 @@ class IngresarPuntoEntrega extends Component {
                 body: JSON.stringify({
 
                     "fecha": this.state.campos["fecha_entrega"],
-                            "hora_fin": this.state.campos["hora_fin"],
-                            "hora_inicio": this.state.campos["hora_inicio"]
+                    "hora_fin": this.state.campos["hora_fin"],
+                    "hora_inicio": this.state.campos["hora_inicio"]
                 }),
             })
                 .then(function (response) {
                     if (response.status !== 200) {
-                    
+
                         _this.setState({
                             visible: true,
                             titulo: "Error",
@@ -162,108 +149,96 @@ class IngresarPuntoEntrega extends Component {
                     response.text().then(
                         function (response) {
 
-                            _this.setState({visible2:true,formOk:true,direccion:"",lat:"",lng:""})
-
+                            _this.setState({ visible2: true, formOk: true, direccion: "", lat: "", lng: "" })
 
                         });
-
                 });
 
+            return;
+
+        }
+
+
+        if (!this.state.campos["provincia"] || !this.state.campos["localidad"] || !this.state.campos["direccion"]
+            || !this.state.campos["cod_postal"] || !isDate(this.state.campos["fecha_entrega"])
+            || !this.state.campos["fecha_entrega"] || !this.state.campos["hora_fin"] || !this.state.campos["hora_inicio"]) {
+
+            this.setState({ visible: true, mensaje: "Campos incompletos o incorrectos", titulo: "Error" })
+
+            return;
+        }
+
+        if (this.state.direccOk === false) {
+            this.setState({ visible: true, mensaje: "Ingresaste una dirección incorrecta", titulo: "Error" });
+
+            return;
+        }
+
+        Geocode.fromAddress(_this.state.direccion).then(
+            response => {
+
+                const { lat, lng } = response.results[0].geometry.location;
+
+                _this.setState({ lat: lat, lng: lng });
+
+                const path = "http://localhost:3000/redAgro/subir_punto_entrega?id_productor=";
+
+                let fecha_entrega = this.state.campos["fecha_entrega"]
+                let dia = fecha_entrega.getDate();
+                let mes = fecha_entrega.getMonth() + 1;
+                let año = fecha_entrega.getFullYear();
+                var fecha = dia + '-' + mes + '-' + año;
+
+                const path_final = path + _this.state.id + "&fecha_entrega=" + fecha
+                    + "&hora_inicio=" + this.state.campos["hora_inicio"] + "&hora_fin=" + this.state.campos["hora_fin"]
+
+                fetch(path_final, {
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'application/json;charset=UTF-8',
+                    },
+                    body: JSON.stringify({
+
+                        "pais": this.state.campos["pais"],
+                        "provincia": this.state.campos["provincia"],
+                        "localidad": this.state.campos["localidad"],
+                        "direccion": this.state.campos["direccion"],
+                        "cod_postal": this.state.campos["cod_postal"],
+                        "latitud": this.state.lat,
+                        "longitud": this.state.lng
+                    }),
+                })
+                    .then(function (response) {
+                        if (response.status !== 200) {
+
+                            _this.setState({
+                                visible: true,
+                                titulo: "Error",
+                                mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                            });
+                            return;
+                        }
+                        response.text().then(
+                            function (response) {
+
+                                _this.setState({ id_punto_entrega: response, visible2: true, formOk: true, direccion: "", lat: "", lng: "" })
+
+                            });
+
+                    });
+
+            },
+            error => {
+
+                _this.setState({
+                    visible: true,
+                    titulo: "Error",
+                    mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                });
                 return;
 
-   }
-
-
-    if(!this.state.campos["provincia"] || !this.state.campos["localidad"] || !this.state.campos["direccion"]
-    || !this.state.campos["cod_postal"] || !isDate(this.state.campos["fecha_entrega"])
-    || !this.state.campos["fecha_entrega"] || !this.state.campos["hora_fin"] || !this.state.campos["hora_inicio"]){
-
-
-        this.setState({visible:true, mensaje:"Campos incompletos o incorrectos",titulo:"Error"})
-
-        return;
-
-    }
-
-
-    if(this.state.direccOk===false){
-
-this.setState({visible:true, mensaje:"Ingresaste una dirección incorrecta",titulo:"Error"});
-
-return;
-
-    }
-
-    Geocode.fromAddress(_this.state.direccion).then(
-  response => {
-
-   const { lat, lng } = response.results[0].geometry.location;
-
-   _this.setState({lat:lat,lng:lng});
-
-    const path = "http://localhost:3000/redAgro/subir_punto_entrega?id_productor=";
-
-    let fecha_entrega = this.state.campos["fecha_entrega"]
-    let dia = fecha_entrega.getDate();
-    let mes =fecha_entrega.getMonth()+1;
-    let año = fecha_entrega.getFullYear();
-    var fecha = dia + '-' + mes + '-' + año;
-
-    const path_final = path + _this.state.id+"&fecha_entrega="+fecha
-    +"&hora_inicio="+this.state.campos["hora_inicio"]+"&hora_fin="+this.state.campos["hora_fin"]
-
-            fetch(path_final, {
-                method: "POST",
-                headers: {
-                    'Content-type': 'application/json;charset=UTF-8',
-                },
-                body: JSON.stringify({
-
-                    "pais": this.state.campos["pais"],
-                            "provincia": this.state.campos["provincia"],
-                            "localidad": this.state.campos["localidad"],
-                            "direccion": this.state.campos["direccion"],
-                            "cod_postal": this.state.campos["cod_postal"],
-                            "latitud": this.state.lat,
-                            "longitud": this.state.lng
-                }),
-            })
-                .then(function (response) {
-                    if (response.status !== 200) {
-                    
-                        _this.setState({
-                            visible: true,
-                            titulo: "Error",
-                            mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
-                        });
-                        return;
-                    }
-                    response.text().then(
-                        function (response) {
-
-                            _this.setState({id_punto_entrega: response, visible2:true,formOk:true,direccion:"",lat:"",lng:""})
-
-
-                        });
-
-                });
-
-
-  },
-  error => {
-
-                        _this.setState({
-                            visible: true,
-                            titulo: "Error",
-                            mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
-                        });
-                        return;
-
-  }
-);
-
-
-
+            }
+        );
     }
 
     render() {
@@ -271,128 +246,126 @@ return;
             <div className="container">
                 <div className="titulosPrincipales">Nuevo punto de entrega</div>
                 <div className="formularioPuntoEntrega">
-                    <div className= "inputs">
-                    <Form.Group as={Row}>
+                    <div className="inputs">
+                        <Form.Group as={Row}>
                             <Form.Label column sm={4}>
-                        Ubicación
-                        </Form.Label>         
-                        <input
-                            ref={this.autocompleteInput}
-                            id="autocomplete"
-                            placeholder="Ingresá la dirección de tu punto de entrega"
-                            name="direccion_entrega"
-                            disabled={this.state.disabled2}
-                        />
-                        </Form.Group>             
-                    </div>
-                    <div className= "inputs">
-                    <Form.Group as={Row}>
-                            <Form.Label column sm={4}>         
-                        País
-                        </Form.Label>     
-                        <input
-                            name="pais"
-                            disabled="true"
-                            value={this.state.campos["pais"]}
-                           
-                        />
-                        </Form.Group>               
-                    </div>
-                    <div className= "inputs">
-                     <Form.Group as={Row}>
-                            <Form.Label column sm={4}> 
-                        Provincia
-                        </Form.Label>       
-                        <input
-                            name="provincia"
-                            value={this.state.campos["provincia"]}
-                            disabled={this.state.disabled}
-                        />
-                        </Form.Group>               
-                    </div>
-                    <div className= "inputs">
-                    <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                        Localidad
-                        </Form.Label>         
-                        <input
-                            name="localidad"
-                            value={this.state.campos["localidad"]}
-                            disabled={this.state.disabled}
-                        />
-                        </Form.Group>               
-                    </div>
-                    <div className= "inputs">
-                    <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                        Dirección
-                        </Form.Label>      
-                        <input
-                            name="direccion"
-                            value={this.state.campos["direccion"]}
-                            disabled={this.state.disabled}
-                        />
-                        </Form.Group>               
-                    </div>
-                    <div className= "inputs">
-                    <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                        Código postal
-                        </Form.Label>      
-                        <input
-                            name="cod_postal"
-                            value={this.state.campos["cod_postal"]}
-                            disabled={this.state.disabled}
-                        />
-                        </Form.Group>               
+                                Ubicación
+                        </Form.Label>
+                            <input
+                                ref={this.autocompleteInput}
+                                id="autocomplete"
+                                placeholder="Ingresá la dirección de tu punto de entrega"
+                                name="direccion_entrega"
+                                disabled={this.state.disabled2}
+                            />
+                        </Form.Group>
                     </div>
                     <div className="inputs">
-                    <Form.Group as={Row}>
-                            <Form.Label column sm={4}> 
-                                        Fecha de entrega
-                                        </Form.Label>                       
-                                        <DatePickerInput
-                                            className="fecha_entrega"
-                                            name="fecha_entrega"
-                                            displayFormat='DD/MM/YYYY'
-                                            minDate={minDate}                                          
-                                            onChange={(e) => this.cambiosFecha(e)}
-                                            value={this.state.campos["fecha_entrega"]}
-                                        />
-                                    </Form.Group>                          
-                    </div>
-                    <div className= "inputs">
-                    <Form.Group as={Row}>
+                        <Form.Group as={Row}>
                             <Form.Label column sm={4}>
-                        Horario de entrega
+                                País
                         </Form.Label>
+                            <input
+                                name="pais"
+                                disabled="true"
+                                value={this.state.campos["pais"]}
+
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="inputs">
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Provincia
+                        </Form.Label>
+                            <input
+                                name="provincia"
+                                value={this.state.campos["provincia"]}
+                                disabled={this.state.disabled}
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="inputs">
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Localidad
+                        </Form.Label>
+                            <input
+                                name="localidad"
+                                value={this.state.campos["localidad"]}
+                                disabled={this.state.disabled}
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="inputs">
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Dirección
+                        </Form.Label>
+                            <input
+                                name="direccion"
+                                value={this.state.campos["direccion"]}
+                                disabled={this.state.disabled}
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="inputs">
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Código postal
+                        </Form.Label>
+                            <input
+                                name="cod_postal"
+                                value={this.state.campos["cod_postal"]}
+                                disabled={this.state.disabled}
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="inputs">
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Fecha de entrega
+                                        </Form.Label>
+                            <DatePickerInput
+                                className="fecha_entrega"
+                                name="fecha_entrega"
+                                displayFormat='DD/MM/YYYY'
+                                minDate={minDate}
+                                onChange={(e) => this.cambiosFecha(e)}
+                                value={this.state.campos["fecha_entrega"]}
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="inputs">
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Horario de entrega
+                        </Form.Label>
+                            <input
+                                className="hora_inicio"
+                                name="hora_inicio"
+                                type="number"
+                                min="6"
+                                max="12"
+                                placeHolder="Horario-inicio"
+                                onChange={(e) => this.detectarCambios(e)}
+                            />
+                            a
                         <input
-                            className="hora_inicio"
-                            name="hora_inicio"
-                            type="number"
-                            min="6"
-                            max="12"
-                            placeHolder="Horario-inicio"
-                            onChange={(e) => this.detectarCambios(e)}
-                        />
-                        a
-                        <input
-                            className="hora_fin"
-                            name="hora_fin"
-                            type="number"
-                            min="12"
-                            max="21"
-                            placeHolder="Horario-fin"
-                            onChange={(e) => this.detectarCambios(e)}
-                        />
-                        hs
+                                className="hora_fin"
+                                name="hora_fin"
+                                type="number"
+                                min="12"
+                                max="21"
+                                placeHolder="Horario-fin"
+                                onChange={(e) => this.detectarCambios(e)}
+                            />
+                            hs
                         </Form.Group>
                     </div>
                     <div className="botones">
-                        <Button variant="success" className="botonGuardar" onClick={() => this.validarFormulario()}>Guardar</Button>
-                        <a onClick={this.mostrarPantallaPrincipal} className="botonCancelar">
-                            <Button variant="success">Cancelar</Button>
-                        </a>
+                        <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                        <Button variant="success" onClick={() => this.validarFormulario()}>Guardar</Button>
                     </div>
                 </div>
                 <section>
@@ -418,8 +391,8 @@ return;
                         <div>
                             <h1>Punto de entrega guardado</h1>
                             <p>¿Vas a estar en el mismo lugar en otra fecha? agendala!</p>
+                            <Button variant="light" onClick={() => this.closeModal()}>Salir</Button>
                             <Button variant="success" onClick={() => this.closeModalSi()}>Agendar</Button>
-                            <Button variant="success" onClick={() => this.closeModal()}>Salir</Button>
                         </div>
                     </Modal>
                 </section>

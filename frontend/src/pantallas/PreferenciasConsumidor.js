@@ -232,8 +232,8 @@ class PreferenciasConsumidor extends Component {
                 </div>
                 <br />
                 <div className="botonesPreferencias">
-                    <Button variant="light" className="botonAtras" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
-                    <Button variant="success" type="submit" className="botonCrear" onClick={this.guardarPreferencias}>Guardar</Button>
+                    <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                    <Button variant="success" type="submit" onClick={this.guardarPreferencias}>Guardar</Button>
                 </div>
                 {(this.state.showModal) &&
                     <MDBModal isOpen={this.state.showModal} centered size="sm">

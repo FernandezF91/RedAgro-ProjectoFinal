@@ -180,11 +180,9 @@ class RegistroConsumidor extends Component {
                     </Navbar>
                 </div>
                 <Container fluid className="contenedor">
-                    <Row className="titulos">
-                        <div className="cuentaCultura">
-                            <p>Creá tu cuenta en culturaVerde</p>
-                        </div>
-                    </Row>
+                    <div className="titulosPrincipales">
+                        Creá tu cuenta en CulturaVerde
+                    </div>
                     <div className="contenidoRegistro">
                         <Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
                             <div className="nombre" >
@@ -278,11 +276,9 @@ class RegistroConsumidor extends Component {
                                 </Form.Group>
                             </div>
                             <div className="botonesUsuarios">
-                                <a href='/seleccionUsuario' className="botonAtras">
-                                    <Button variant="success">Atrás</Button>
-                                </a>
-                                <Button variant="success" type="submit" className="botonCrear">Crear</Button>
-                                <Button variant="success" onClick={this.limpiarCampos} className="botonLimpiar">Limpiar</Button>
+                                <Button variant="light" href='/seleccionUsuario'>Atrás</Button>
+                                <Button variant="light" onClick={this.limpiarCampos}>Limpiar</Button>
+                                <Button variant="success" type="submit">Crear</Button>
                             </div>
                         </Form>
                     </div>
