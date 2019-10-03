@@ -24,9 +24,9 @@ const columnas = [
         field: 'Dirección'
     },
     {
-		label: '',
-		field: 'Dar de baja',
-	}
+        label: '',
+        field: 'Dar de baja',
+    }
 ];
 
 class ListadoPuntosEntrega extends Component {
@@ -37,9 +37,9 @@ class ListadoPuntosEntrega extends Component {
             id: this.props.id_productor,
             puntos_entrega: [],
             loading: true,
-            titulo:"",
-            mensaje:"",
-            visible:""
+            titulo: "",
+            mensaje: "",
+            visible: ""
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
@@ -57,18 +57,13 @@ class ListadoPuntosEntrega extends Component {
         });
     }
 
-    handleRowClick(rowId,activo) {
-        
-            activo===true?
+    handleRowClick(rowId, activo) {
 
-            this.setState({visible:true,titulo:"Baja de punto de entrega",mensaje:"¿Estás seguro que no vas a vender/entregar tus productos en esta ubicación?"})
+        activo === true ?
 
+            this.setState({ visible: true, titulo: "Baja de punto de entrega", mensaje: "¿Estás seguro que no vas a vender/entregar tus productos en esta ubicación?" })
             :
-
- this.setState({visible:true,titulo:"Alta de punto de entrega",mensaje:"¿Estás seguro que vas a vender/entregar tus productos en esta ubicación?"})
-
-
-        
+            this.setState({ visible: true, titulo: "Alta de punto de entrega", mensaje: "¿Estás seguro que vas a vender/entregar tus productos en esta ubicación?" })
     }
 
     generoItem(item) {
@@ -79,13 +74,13 @@ class ListadoPuntosEntrega extends Component {
                 <td>{item.provincia}</td>
                 <td>{item.localidad}</td>
                 <td>{item.direccion}</td>
-                <td>                
-                    {    
-                    item.activo===false?
-                    <i class="fa fa-check-circle verde iconosTabla" onClick={clickCallback} title="Alta"></i>
-                    :
-                    <i class="fa fa-times-circle rojo iconosTabla" onClick={clickCallback} title="Baja"></i>
-                    }                                       
+                <td>
+                    {
+                        item.activo === false ?
+                            <i class="fa fa-check-circle verde iconosTabla" onClick={clickCallback} title="Alta"></i>
+                            :
+                            <i class="fa fa-times-circle rojo iconosTabla" onClick={clickCallback} title="Baja"></i>
+                    }
                 </td>
             </tr>
         ];
@@ -95,9 +90,9 @@ class ListadoPuntosEntrega extends Component {
 
     componentDidMount() {
 
-    var _this=this;
+        var _this = this;
 
-  fetch("http://localhost:3000/redAgro/puntos_productor?id="+this.state.id, {
+        fetch("http://localhost:3000/redAgro/puntos_productor?id=" + this.state.id, {
             method: "GET",
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
@@ -106,29 +101,32 @@ class ListadoPuntosEntrega extends Component {
             .then(function (response) {
                 if (response.status !== 200) {
                     _this.setState({
+                        loading: false,
                         visible: true,
                         titulo: "Error",
                         mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
                     });
-                   
+
                     return;
                 }
 
                 response.json().then(
                     function (response) {
-                    
+
                         response.forEach(element => {
-                            
-                            _this.setState({puntos_entrega:[..._this.state.puntos_entrega,element]});
+
+                            _this.setState({
+                                puntos_entrega: [..._this.state.puntos_entrega, element]
+                            });
 
                         });
 
-                        _this.setState({loading:false});
+                        _this.setState({
+                            loading: false
+                        });
 
                     });
             });
-
-
     }
 
     render() {
@@ -149,44 +147,44 @@ class ListadoPuntosEntrega extends Component {
         )
 
         return (
-			<div>
+            <div>
                 <div className="titulosPrincipales">Puntos de entrega</div>
-				<div className="tabla_puntos">
-				{this.state.puntos_entrega.length>0?
-                <MDBTable striped responsive hover>
-					<MDBTableHead columns={columnas} />
-					<MDBTableBody>{body}</MDBTableBody>
-				</MDBTable>
-				:
-				<div className="sinPuntosDeVenta">
-					<i className="fas fa-store iconoGrande"></i>
-					<br />
-					<br />
-					<h5>Ups! No tenes puntos de venta cargados! </h5>
-                    <h6>Cargá tus puntos de venta <Link to={'/principalProductores/IngresarPuntoEntrega'}>acá</Link> </h6>
-				</div>
-				}
-            </div>
-            <section>
-                        <Modal
-                            visible={this.state.visible}
-                            width="400"
-                            height="230"
-                            effect="fadeInUp"
+                <div className="tabla_puntos">
+                    {this.state.puntos_entrega.length > 0 ?
+                        <MDBTable striped responsive hover>
+                            <MDBTableHead columns={columnas} />
+                            <MDBTableBody>{body}</MDBTableBody>
+                        </MDBTable>
+                        :
+                        <div className="sinPuntosDeVenta">
+                            <i className="fas fa-store iconoGrande"></i>
+                            <br />
+                            <br />
+                            <h5>Ups! No tenes puntos de venta cargados! </h5>
+                            <h6>Cargá tus puntos de venta <Link to={'/principalProductores/IngresarPuntoEntrega'}>acá</Link> </h6>
+                        </div>
+                    }
+                </div>
+                <section>
+                    <Modal
+                        visible={this.state.visible}
+                        width="400"
+                        height="230"
+                        effect="fadeInUp"
 
-                        >
-                            <div>
-                                <h1>{this.state.titulo}</h1>
-                                <p>
-                                    {this.state.mensaje}
-                                </p>
-                                <Button variant="success" onClick={() => this.closeModal()}>Si</Button>
+                    >
+                        <div>
+                            <h1>{this.state.titulo}</h1>
+                            <p>
+                                {this.state.mensaje}
+                            </p>
+                            <Button variant="success" onClick={() => this.closeModal()}>Si</Button>
                             <Button variant="success" onClick={() => this.closeModal()}>No</Button>
-                            </div>
-                        </Modal>
-                    </section>
-			</div>
-			
+                        </div>
+                    </Modal>
+                </section>
+            </div>
+
         );
     };
 }
