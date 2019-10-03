@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.clases.FechaEntrega;
 import app.clases.PuntoEntrega;
 import app.daos.FechaEntregaDao;
 import app.daos.ProductorDao;
 import app.daos.PuntoEntregaDao;
+import app.mappers.FechaEntregaMapper;
 import app.mappers.PuntoEntregaMapper;
 import app.modelos.EntidadFechaEntrega;
 import app.modelos.EntidadPuntoEntrega;
@@ -43,6 +45,25 @@ public class FechaEntregaControlador {
 		ef.setPunto_entrega(puntoEntregaDAO.obtenerPuntoEntrega(id_punto_entrega));
 		
 		fechaEntregaDAO.save(ef);
+	
+	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/fechas_punto_entrega")
+	public List<FechaEntrega> obtenerFechasPuntoDeEntrega(@RequestParam long id_punto_entrega) {
+		
+		List<EntidadFechaEntrega> ef = new ArrayList<EntidadFechaEntrega>();
+		FechaEntregaMapper fem = new FechaEntregaMapper();
+		EntidadPuntoEntrega pe = new EntidadPuntoEntrega();
+		List<FechaEntrega> fe = new ArrayList<FechaEntrega>();
+
+		pe= puntoEntregaDAO.obtenerPuntoEntrega(id_punto_entrega);
+		
+		ef = fechaEntregaDAO.obtenerFechasDePunto(pe);
+		
+		fe = ef.stream().map(entidad -> fem.mapFromEntity(entidad)).collect(Collectors.toList());
+		
+		return fe;
 	
 	}
 

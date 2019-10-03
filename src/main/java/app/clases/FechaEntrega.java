@@ -4,17 +4,19 @@ import java.util.Calendar;
 
 public class FechaEntrega {
 	
-	public FechaEntrega(Long id, PuntoEntrega puntoEntrega, Calendar Fecha, Calendar horario) {
+	public FechaEntrega(Long id, PuntoEntrega puntoEntrega, String Fecha, int hora_inicio, int hora_fin) {
 		this.setId(id);
 		this.setPunto_entrega(puntoEntrega);
 		this.setFecha(Fecha);
-		this.setHorario(horario);		
+		this.setHora_inicio(hora_inicio);
+		this.setHora_fin(hora_fin);
 	}
 	
 	private Long id;
 	private PuntoEntrega punto_entrega;
-	private Calendar fecha;
-	private Calendar horario;
+	private String fecha;
+	private int hora_inicio;
+	private int hora_fin;
 	
 	public Long getId() {
 		return id;
@@ -28,16 +30,24 @@ public class FechaEntrega {
 	public void setPunto_entrega(PuntoEntrega punto_entrega) {
 		this.punto_entrega = punto_entrega;
 	}
-	public Calendar getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
-	public void setFecha(Calendar fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-	public Calendar getHorario() {
-		return horario;
+	public int getHora_inicio() {
+		return hora_inicio;
 	}
-	public void setHorario(Calendar horario) {
-		this.horario = horario;
-	}	
+	public void setHora_inicio(int hora_inicio) {
+		this.hora_inicio = hora_inicio;
+	}
+	public int getHora_fin() {
+		return hora_fin;
+	}
+	public void setHora_fin(int hora_fin) {
+		this.hora_fin = hora_fin;
+	}
+
+	
 }

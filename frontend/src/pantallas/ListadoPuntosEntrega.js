@@ -24,7 +24,11 @@ const columnas = [
         field: 'Dirección'
     },
     {
-		label: '',
+        label: 'Fechas',
+        field: 'Fechas'
+    },
+    {
+		label: 'Baja/Alta',
 		field: 'Dar de baja',
 	}
 ];
@@ -36,6 +40,7 @@ class ListadoPuntosEntrega extends Component {
         this.state = {
             id: this.props.id_productor,
             puntos_entrega: [],
+            fechas_entrega:[],
             loading: true,
             titulo:"",
             mensaje:"",
@@ -57,7 +62,7 @@ class ListadoPuntosEntrega extends Component {
         });
     }
 
-    handleRowClick(rowId,activo) {
+    handleRowAccion(rowId,activo) {
         
             activo===true?
 
@@ -71,23 +76,64 @@ class ListadoPuntosEntrega extends Component {
         
     }
 
+    handleRowFechas(rowId) {
+        
+        
+    var _this=this;
+
+  fetch("http://localhost:3000/redAgro/fechas_punto_entrega?id="+rowId, {
+            method: "GET",
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+            }
+        })
+            .then(function (response) {
+                if (response.status !== 200) {
+                    _this.setState({
+                        visible: true,
+                        titulo: "Error",
+                        mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                    });
+                   
+                    return;
+                }
+
+                response.json().then(
+                    function (response) {
+                    
+                        response.forEach(element => {
+                            
+                            _this.setState({fechas_entrega:[..._this.state.fechas_entrega,element]});
+
+                        });
+
+                    });
+            });  
+      
+    }
+
     generoItem(item) {
-        const clickCallback = () => this.handleRowClick(item.id, item.activo);
+
+        const clickAltaBaja = () => this.handleRowAccion(item.id, item.activo);
+
+        const clickMostrarFechas = () => this.handleRowFechas(item.id);
 
         const itemRows = [
             <tr key={"row-data-" + item.id}>
                 <td>{item.provincia}</td>
                 <td>{item.localidad}</td>
                 <td>{item.direccion}</td>
+                <td><i class="far fa-calendar-alt" title="Fechas" onClick={clickMostrarFechas}></i></td>
                 <td>                
                     {    
                     item.activo===false?
-                    <i class="fa fa-check-circle verde" onClick={clickCallback} title="Alta"></i>
+                    <i class="fa fa-check-circle verde" onClick={clickAltaBaja} title="Alta"></i>
                     :
-                    <i class="fa fa-times-circle rojo" onClick={clickCallback} title="Baja"></i>
+                    <i class="fa fa-times-circle rojo" onClick={clickAltaBaja} title="Baja"></i>
                     }                                       
                 </td>
             </tr>
+
         ];
 
         return itemRows;
