@@ -30,8 +30,7 @@ class PreferenciasConsumidor extends Component {
             frutas: [],
             loading: true,
             showModal: false,
-            resultadoRequest: 0,
-            resultadoMensaje: ""
+            resultadoRequest: 0
         };
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
@@ -233,7 +232,7 @@ class PreferenciasConsumidor extends Component {
                 </div>
                 <br />
                 <div className="botonesPreferencias">
-                    <Button variant="success" className="botonAtras" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                    <Button variant="light" className="botonAtras" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                     <Button variant="success" type="submit" className="botonCrear" onClick={this.guardarPreferencias}>Guardar</Button>
                 </div>
                 {(this.state.showModal) &&
@@ -251,10 +250,11 @@ class PreferenciasConsumidor extends Component {
                                     </div>
                                 ) : (
                                     <div>
-                                        <i className="fas fa-times-circle iconoModalError" />
+                                        <i className="fas fa-exclamation-circle iconoModalError" />
                                         <br />
                                         <br />
-                                        <h5>Ups! Ocurrió un error, por favor intenta nuevamente.</h5>
+                                        <h5>Ups! Ocurrio un error! </h5>
+                                        <h6>Por favor, intenta nuevamente</h6>
                                     </div>
                                 )
                             }
