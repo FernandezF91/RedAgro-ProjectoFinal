@@ -25,13 +25,15 @@ class ResultadoBusqueda extends Component {
         this.state = {
             id: this.props.id_usuario,
             resultadoBusqueda: [],
-            datosParaReserva:[],
+            datosParaReserva: [],
             tamañoListado: 9, //Valor predeterminado
             paginaActual: 1,
-            loading: true
+            loading: true,
+            resultadoRequest: 0
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
     }
 
     mostrarPantallaPrincipal() {
@@ -67,15 +69,24 @@ class ResultadoBusqueda extends Component {
             .then(response => {
                 try {
                     if (response.status === 200) {
+                        this.setState({
+                            resultadoRequest: response.status
+                        });
                         return response.json();
                     }
                     else {
                         console.log(response.status);
-                        this.setState({ loading: false });
+                        this.setState({
+                            loading: false,
+                            resultadoRequest: response.status
+                        });
                     }
                 } catch (error) {
                     console.log(error);
-                    this.setState({ loading: false });
+                    this.setState({
+                        loading: false,
+                        resultadoRequest: response.status
+                    });
                 }
             })
             .then(data => {
@@ -115,7 +126,6 @@ class ResultadoBusqueda extends Component {
     restarProducto = (position) => {
         //Falta la validación y actualización por stock
         let resultadoBusqueda = this.state.resultadoBusqueda;
-        //  let productosSeleccionados = this.props.productosSeleccionados;
         var productoSeleccionado = resultadoBusqueda[position];
         if ((parseInt(productoSeleccionado.cantidad) - 1) >= 0) {
             let productoActualizado = [
@@ -133,8 +143,6 @@ class ResultadoBusqueda extends Component {
             ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) + 1).toString(),
         ]
         this.setState({ productoSeleccionado: productoActualizado });
-        // console.log(productoSeleccionado);
-        //console.log(this.props.productosSeleccionados)
     }
 
     agregarAlCarrito = (position) => {
@@ -185,6 +193,13 @@ class ResultadoBusqueda extends Component {
         this.props.actualizarProductosSeleccionados(productosSeleccionados);
     }
 
+    cerrarModal() {
+        this.setState({
+            showModal: false
+        })
+
+    }
+
     render() {
         const { resultadoBusqueda, paginaActual, tamañoListado } = this.state;
         const numberOfPages = Math.ceil(resultadoBusqueda.length / tamañoListado);
@@ -200,6 +215,16 @@ class ResultadoBusqueda extends Component {
                 width={150}
                 className="loader"
             />
+        )
+
+        if (this.state.resultadoRequest !== 200) return (
+            <div className="notFound">
+                <i className="fas fa-exclamation-circle iconoGrandeError" />
+                <br />
+                <br />
+                <h5>Ups! Ocurrio un error! </h5>
+                <h6>Por favor, intenta nuevamente</h6>
+            </div>
         )
 
         return (

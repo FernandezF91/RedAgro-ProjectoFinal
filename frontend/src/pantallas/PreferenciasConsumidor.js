@@ -3,9 +3,9 @@ import '../diseños/PreferenciasConsumidor.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import React, { Component } from 'react';
 import Select from 'react-select';
-import Button from 'react-bootstrap/Button';
+import { Button } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
-
+import { MDBModal } from 'mdbreact';
 
 //Ejemplo del dropdown
 //https://alligator.io/react/react-select/
@@ -28,11 +28,14 @@ class PreferenciasConsumidor extends Component {
             otros: [],
             verduras: [],
             frutas: [],
-            loading: true
+            loading: true,
+            showModal: false,
+            resultadoRequest: 0
         };
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.guardarPreferencias = this.guardarPreferencias.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
     }
 
     mostrarPantallaPrincipal() {
@@ -89,7 +92,7 @@ class PreferenciasConsumidor extends Component {
         this.setState({
             loading: true
         })
-        
+
         var preferenciasAGuardar = [];
         preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.verduras, "Verduras");
         preferenciasAGuardar = this.generarListadoSeleccionado(preferenciasAGuardar, this.state.seleccionados.frutas, "Frutas");
@@ -104,14 +107,10 @@ class PreferenciasConsumidor extends Component {
             body: JSON.stringify(preferenciasAGuardar)
         })
             .then(function (response) {
-                if (response.status === 200) {
-                    console.log("Se aplicaron los cambios");
-                }
-                else {
-                    console.log("No se aplicaron los cambios");
-                }
                 _this.setState({
-                    loading: false
+                    loading: false,
+                    showModal: true,
+                    resultadoRequest: response.status
                 })
                 return;
             })
@@ -177,6 +176,13 @@ class PreferenciasConsumidor extends Component {
             })
     }
 
+    cerrarModal() {
+        this.setState({
+            showModal: false
+        })
+
+    }
+
     render() {
         if (this.state.loading) return (
             <Loader
@@ -189,7 +195,7 @@ class PreferenciasConsumidor extends Component {
         )
 
         return (
-            <div className="container">
+            <div className="container" >
                 <div className="titulosPrincipales">Preferencias</div>
                 <div className="descripcionPagina">
                     <h5>Seleccione sus productos de interés para recibir novedades sobre los mismos:</h5>
@@ -226,9 +232,35 @@ class PreferenciasConsumidor extends Component {
                 </div>
                 <br />
                 <div className="botonesPreferencias">
-                    <Button variant="success" className="botonAtras" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
-                    <Button variant="success" type="submit" className="botonCrear" onClick={this.guardarPreferencias}>Guardar</Button>
+                    <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                    <Button variant="success" type="submit" onClick={this.guardarPreferencias}>Guardar</Button>
                 </div>
+                {(this.state.showModal) &&
+                    <MDBModal isOpen={this.state.showModal} centered size="sm">
+                        <div className="modalMargenes">
+                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                            <br />
+                            {(this.state.resultadoRequest === 200) ?
+                                (
+                                    <div>
+                                        <i className="fas fa-check-circle iconoModalOk" />
+                                        <br />
+                                        <br />
+                                        <h5>Se aplicaron los cambios!</h5>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <i className="fas fa-exclamation-circle iconoModalError" />
+                                        <br />
+                                        <br />
+                                        <h5>Ups! Ocurrio un error! </h5>
+                                        <h6>Por favor, intenta nuevamente</h6>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </MDBModal>
+                }
             </div>
         )
     };

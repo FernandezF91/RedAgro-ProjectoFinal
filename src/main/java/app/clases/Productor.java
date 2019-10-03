@@ -1,4 +1,5 @@
 package app.clases;
+import java.util.List;
 
 public class Productor {
 
@@ -8,9 +9,17 @@ public class Productor {
 		this.setUsuario(usuario);
 	}
 
+	public Productor(long id, String razon_social, Usuario usuario, List<PuntoEntrega> puntosEntrega) {
+		this.setId(id);
+		this.setRazon_social(razon_social);
+		this.setUsuario(usuario);
+		this.setPuntosEntrega(puntosEntrega);
+	}
+
 	private long id;
 	private String razon_social;
 	private Usuario usuario;
+	private List<PuntoEntrega> puntosEntrega;
 
 	public long getId() {
 		return id;
@@ -35,6 +44,13 @@ public class Productor {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	
+	public List<PuntoEntrega> getPuntosEntrega() {
+		return puntosEntrega;
+	}
 
+	public void setPuntosEntrega(List<PuntoEntrega> puntosEntrega) {
+		this.puntosEntrega = puntosEntrega;
+	}
 	
 }

@@ -1,15 +1,16 @@
 .contenidoSeleccion{
-
 	margin-top:170px;
 }
 
 .botonesRegistro{
-
 	margin-top:20px;
 }
 
 .atras{
-
 	margin-top:20px;
+}
 
+.iconoBotones {
+    margin-right: 10px;
+    font-size: 18px !important;
 }

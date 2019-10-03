@@ -105,11 +105,9 @@ class FormaRetiro extends Component {
                                     </Form.Group>
                                 </div>
                                 <Row className="botonesRegistro">
-                                    <Nav.Link href='/login' className="botonAtras">
-                                        <Button variant="success">Cancelar</Button>
-                                    </Nav.Link>
-                                    <Button variant="success" className="botonCrear">Siguiente</Button>
-                                    <Button variant="success" type="submit" className="botonLimpiar">Limpiar</Button>
+                                    <Button variant="light" href='/login'>Cancelar</Button>
+                                    <Button variant="light" type="submit">Limpiar</Button>
+                                    <Button variant="success">Siguiente</Button>
                                 </Row>
                             </Form>
                         </div>

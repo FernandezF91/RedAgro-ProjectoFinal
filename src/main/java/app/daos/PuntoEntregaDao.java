@@ -9,7 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 import app.modelos.EntidadProductor;
 import app.modelos.EntidadPuntoEntrega;
-import app.modelos.EntidadProductor;
 
 public interface PuntoEntregaDao extends JpaRepository<EntidadPuntoEntrega, Long>{
 

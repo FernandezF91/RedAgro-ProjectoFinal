@@ -135,3 +135,33 @@ input[type=text] {
 .mensajeToast {
     font-size: 13px;
 }
+
+.botonCerrarModal {
+    font-size: 20px;
+    color: grey;
+    float: right;
+}
+
+.iconoModalOk {
+    color: #28a745;
+    font-size: 65px;
+}
+
+.iconoModalError {
+    color: red;
+    font-size: 65px;
+}
+
+.modalMargenes {
+    padding: 15px;
+}
+
+.mensajeModal {
+    font-weight: bold;
+}
+
+.iconoGrandeError {
+    color: red;
+    font-size: 175px;
+    margin-top: 100px;
+}

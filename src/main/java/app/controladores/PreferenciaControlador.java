@@ -1,7 +1,8 @@
 package app.controladores;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,8 @@ public class PreferenciaControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/guardarPreferencias")
-	public boolean guardarPreferencias(@RequestParam long id, @RequestBody ArrayList<Preferencia> Preferencias) {
+	public ResponseEntity<String> guardarPreferencias(@RequestParam long id,
+			@RequestBody ArrayList<Producto> ProductosSeleccionados) {
 
 		ArrayList<Preferencia> preferenciasActuales = this.obtenerPreferencias(id);
 		ArrayList<Preferencia> newPreferencias = new ArrayList<Preferencia>();
@@ -59,18 +61,22 @@ public class PreferenciaControlador {
 			productosActualesId.add(prefe.getProducto().getId());
 		}
 
-		for (Preferencia prefe : Preferencias) {
-			productosNuevosId.add(prefe.getProducto().getId());
-			productosACrearId.add(prefe.getProducto().getId());
+		for (Producto prod : ProductosSeleccionados) {
+			productosNuevosId.add(prod.getId());
+			productosACrearId.add(prod.getId());
 		}
 
 		productosACrearId.removeAll(productosActualesId);
 		productosActualesId.removeAll(productosNuevosId);
 
 		if (productosActualesId.size() > 0) {
-//			Tengo que borrar las prefencias que sacó
+			// Tengo que borrar las prefencias que sacó
 			for (Long productoId : productosActualesId) {
-				preferenciaDAO.borrarPreferenciaConsumidor(id, productoId);
+				try {
+					preferenciaDAO.borrarPreferenciaConsumidor(id, productoId);
+				} catch (Exception e) {
+					return new ResponseEntity<>("Ocurrio un error al borrar las preferencias", HttpStatus.INTERNAL_SERVER_ERROR);
+				}
 			}
 		}
 
@@ -87,12 +93,12 @@ public class PreferenciaControlador {
 
 			try {
 				preferenciaDAO.saveAll(preferenciasAGuardar);
-				return true;
+				return new ResponseEntity<>("Prefencias guardadas", HttpStatus.OK);
 			} catch (Exception e) {
-				return false;
+				return new ResponseEntity<>("Ocurrio un error al guardar las nuevas preferencias", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 
-		return true;
+		return new ResponseEntity<>("No hubo cambios", HttpStatus.OK);
 	}
 }

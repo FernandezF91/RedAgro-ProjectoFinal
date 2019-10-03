@@ -150,7 +150,7 @@ class NuevoProducto extends Component {
             })
                 .then(function (response) {
                     if (response.status !== 200) {
-                        
+
                         _this.setState({
                             visible: true,
                             titulo: "Error",
@@ -318,7 +318,7 @@ class NuevoProducto extends Component {
     render() {
         return (
             <div className="container">
-                <div className="titulosPrincipales">Nuevo Producto</div>
+                <div className="titulosPrincipales">Nuevo producto</div>
                 <div className="condicionesInputsCO">(*) Campos obligatorios</div>
                 <Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
                     <div className="titulo" >
@@ -457,10 +457,10 @@ class NuevoProducto extends Component {
                         <FilePond
                             className="cursorManito"
                             ref={this.featurePond}
-                            allowMultiple={true} 
-                            maxFiles={5} 
-                            imagePreviewHeight={150} 
-                            acceptedFileTypes="image/jpeg, image/png, image/jpg" 
+                            allowMultiple={true}
+                            maxFiles={5}
+                            imagePreviewHeight={150}
+                            acceptedFileTypes="image/jpeg, image/png, image/jpg"
                             labelIdle={"Arrastre o suba sus imágenes aquí"}
                             onupdatefiles={(fileItems) => {
                                 // Set current file objects to this.state
@@ -471,11 +471,9 @@ class NuevoProducto extends Component {
                     </div>
                     <div className="condicionesInputsImg">(*) 5 imágenes como máximo</div>
                     <div className="botonesNuevoProducto">
-                        <a onClick={this.mostrarPantallaPrincipal}>
-                            <Button variant="success" className="botonAtras">Cancelar</Button>
-                        </a>
-                        <Button variant="success" type="submit" className="botonCrear">Crear</Button>
-                        <Button variant="success" onClick={() => this.limpiarCampos()} className="botonLimpiar">Limpiar</Button>
+                        <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                        <Button variant="light" onClick={() => this.limpiarCampos()}>Limpiar</Button>
+                        <Button variant="success" type="submit">Crear</Button>
                     </div>
                 </Form>
                 <section>

@@ -31,11 +31,17 @@ class SeleccionUsuario extends Component {
                             <h3>Selecciona un tipo de usuario</h3>
                         </div>
                         <div className="botonesRegistro">
-                            <Button variant="success" href="/registroProductor">Soy productor</Button>
-                            <Button variant="success" href="/registroConsumidor">Soy consumidor</Button>
+                            <Button variant="success" href="/registroProductor">
+                                <i className="fas fa-tractor iconoBotones" />
+                                Soy productor
+                            </Button>
+                            <Button variant="success" href="/registroConsumidor">
+                                <i className="fas fa-shopping-basket iconoBotones" />
+                                Soy consumidor
+                            </Button>
                         </div>
                         <br />
-                        <Button variant="success" href="/login" className="atras">Atras</Button>
+                        <Button variant="light" href="/login" className="atras">Atras</Button>
                     </div>
                 </Container>
             </div>

@@ -1,4 +1,3 @@
-//este import para cabecera
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { Navbar, Container, Row, Form, Col, Button } from 'react-bootstrap';
@@ -7,21 +6,21 @@ import '../diseños/recuperaremail.css';
 import '../diseños/estilosGlobales.css';
 import Modal from 'react-awesome-modal';
 
-class Recuperaremail extends Component {
+class RecuperarEmail extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
             campos: [],
-            titulo:"",
-            mensaje:"",
-            visible:"",
-            formOk:false,
-            error:""
-            
+            titulo: "",
+            mensaje: "",
+            visible: "",
+            formOk: false,
+            error: ""
 
         }
+
         this.validarDatos = this.validarDatos.bind(this);
     }
 
@@ -34,70 +33,68 @@ class Recuperaremail extends Component {
     }
 
     validarDatos() {
- 
+
         if (!this.state.campos["emailuser"]) {
 
-            this.setState({error:"*Campo inválido"});
-
+            this.setState({ error: "*Campo inválido" });
             return;
         }
 
-            const path = "http://localhost:3000/redAgro/recuperar_email?email="
+        const path = "http://localhost:3000/redAgro/recuperar_email?email="
 
-            const final_path = path+this.state.campos["emailuser"];
-            
-            var _this = this;
+        const final_path = path + this.state.campos["emailuser"];
 
-            fetch(final_path, {
-                method: "GET",
-       
-            })
-                .then(function (response) {
-                    if (response.status !== 200) {
+        var _this = this;
 
-                        // alert("Ocurrió algún problema. Intenta nuevamente")
+        fetch(final_path, {
+            method: "GET",
 
-                        let mensaje = "Ocurrió algún problema, intentá nuevamente"
-                        _this.setState({
-                            visible: true,
-                            mensaje: mensaje,
-                            titulo:"Error",
-                            formOk:false,
-                            error:""
-                        });
-                        return;
-                    }
+        })
+            .then(function (response) {
+                if (response.status !== 200) {
 
-                    response.text().then(
-                        function (response) {
-                          
-                            if(response==0){
+                    // alert("Ocurrió algún problema. Intenta nuevamente")
+
+                    let mensaje = "Ocurrió algún problema, intentá nuevamente"
+                    _this.setState({
+                        visible: true,
+                        mensaje: mensaje,
+                        titulo: "Error",
+                        formOk: false,
+                        error: ""
+                    });
+                    return;
+                }
+
+                response.text().then(
+                    function (response) {
+
+                        if (response === 0) {
 
                             let mensaje = "Mail incorrecto o inexistente"
 
+                            _this.setState({
+                                visible: true,
+                                mensaje: mensaje,
+                                titulo: "Error",
+                                formOk: false,
+                                error: ""
+                            });
+
+                            return;
+
+                        }
+
                         _this.setState({
                             visible: true,
-                            mensaje: mensaje,
-                            titulo:"Error",
-                            formOk:false,
-                            error:""
-                        });
-
-                        return;
-
-                            }
-                            
-                             _this.setState({
-                            visible: true,
                             mensaje: "Se te envió un email para que puedas recuperar tu contraseña",
-                            titulo:"Recuperar contraseña",
-                            formOk:true,
-                            error:""
+                            titulo: "Recuperar contraseña",
+                            formOk: true,
+                            error: ""
                         });
 
-                        });
-                });
-        
+                    });
+            });
     }
 
     closeModal() {
@@ -105,17 +102,15 @@ class Recuperaremail extends Component {
             visible: false
         });
 
-        if(this.state.formOk===true){
-        this.props.history.push({
+        if (this.state.formOk === true) {
+            this.props.history.push({
                 pathname: '/login',
 
             })
-         }
+        }
     }
 
-
     render() {
-
         return (
             <div className="fondo">
                 <div className="barraNavegacion">
@@ -137,17 +132,15 @@ class Recuperaremail extends Component {
                                 		</Form.Label>
                                         <Col>
                                             <Form.Control type="email" name="emailuser" onChange={(e) => this.detectarCambios(e)} />
-                                        <div className="error">{this.state.error}</div>
+                                            <div className="error">{this.state.error}</div>
                                         </Col>
                                     </Form.Group>
                                 </div>
                             </Form>
                         </div>
                     </div>
-                    <div className="botons">
-                        <a href='/login'>
-                            <Button variant="success">Cancelar</Button>
-                        </a>
+                    <div className="botones">
+                        <Button variant="light" href='/login'>Cancelar</Button>
                         <Button variant="success" onClick={this.validarDatos}>Confirmar</Button>
                     </div>
                     <section>
@@ -168,10 +161,10 @@ class Recuperaremail extends Component {
                         </Modal>
                     </section>
                 </Container>
-            
+
             </div>
         );
     };
 }
 
-export default Recuperaremail;
+export default RecuperarEmail;

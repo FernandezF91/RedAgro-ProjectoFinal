@@ -10,9 +10,9 @@ import { isDate } from 'moment';
 const maxDate = new Date();
 
 const regularExp = {
-        onlyLetters : /^[A-Za-z]+$/,
-        onlyNumbers : /^[0-9]+$/
-    }
+    onlyLetters: /^[A-Za-z]+$/,
+    onlyNumbers: /^[0-9]+$/
+}
 
 class DatosDeUsuario extends Component {
 
@@ -26,24 +26,24 @@ class DatosDeUsuario extends Component {
             usuario: this.props.usuario,
             visible: false,
             mensaje: "",
-            titulo:"",
-            formOk:false,
+            titulo: "",
+            formOk: false,
             id: this.props.usuario.id //para ir pasando el ID del usuario de pantalla a pantalla
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
-        let campos={}
+        let campos = {}
 
-    campos["nombre"] = this.state.usuario.nombre;
-    campos["apellido"] = this.state.usuario.apellido;
-    campos["fecha_nac"] = new Date(this.state.usuario.fecha_nacimiento);
-    campos["telefono"] = this.state.usuario.telefono;
+        campos["nombre"] = this.state.usuario.nombre;
+        campos["apellido"] = this.state.usuario.apellido;
+        campos["fecha_nac"] = new Date(this.state.usuario.fecha_nacimiento);
+        campos["telefono"] = this.state.usuario.telefono;
 
-    this.setState({campos:campos});
+        this.setState({ campos: campos });
 
     }
 
@@ -56,7 +56,7 @@ class DatosDeUsuario extends Component {
 
     }
 
-   cambiosFecha(e) {
+    cambiosFecha(e) {
         let campos = this.state.campos;
         campos["fecha_nac"] = e;
         this.setState({ campos })
@@ -65,25 +65,25 @@ class DatosDeUsuario extends Component {
 
     closeModal() {
 
-        if(this.state.formOk===false){
-        
-        this.setState({
-            visible: false
-        });
+        if (this.state.formOk === false) {
 
-        return;
+            this.setState({
+                visible: false
+            });
 
-    }
+            return;
+
+        }
 
         this.setState({
             visible: false
         });
 
         this.mostrarPantallaPrincipal();
-        
+
     }
 
-    
+
 
     mostrarPantallaPrincipal() {
 
@@ -99,48 +99,52 @@ class DatosDeUsuario extends Component {
 
     }
 
-validarCampos() {
-
-    
-   if((!this.state.campos["nombre"]) || (!this.state.campos["apellido"]) || (!this.state.campos["telefono"]) || (!this.state.campos["fecha_nac"]) ||
-      (!regularExp.onlyLetters.test(this.state.campos["nombre"])) || (!regularExp.onlyLetters.test(this.state.campos["apellido"])) || (!isDate(this.state.campos["fecha_nac"])) ||
-       (!regularExp.onlyNumbers.test(this.state.campos["telefono"])) || (this.state.campos["telefono"].length<8) || (this.state.campos["telefono"].length>14)){
+    validarCampos() {
 
 
-        this.setState({titulo:"Error",
-                       mensaje:"Datos incompletos o incorrectos",
-                       visible:true});
-
-                       return false;
-
-       }
-
-        if((this.state.campos["nombre"]=== this.state.usuario.nombre) &&
-       (this.state.campos["apellido"]=== this.state.usuario.apellido) &&
-       (this.state.campos["telefono"]=== this.state.usuario.telefono) &&
-       (this.state.campos["fecha_nac"].getTime() === new Date(this.state.usuario.fecha_nacimiento).getTime())){
-
-       
-          this.setState({titulo:"Error",
-                       mensaje:"No modificaste ningún dato",
-                       visible:true});
-
-                       return false;
+        if ((!this.state.campos["nombre"]) || (!this.state.campos["apellido"]) || (!this.state.campos["telefono"]) || (!this.state.campos["fecha_nac"]) ||
+            (!regularExp.onlyLetters.test(this.state.campos["nombre"])) || (!regularExp.onlyLetters.test(this.state.campos["apellido"])) || (!isDate(this.state.campos["fecha_nac"])) ||
+            (!regularExp.onlyNumbers.test(this.state.campos["telefono"])) || (this.state.campos["telefono"].length < 8) || (this.state.campos["telefono"].length > 14)) {
 
 
-       }
+            this.setState({
+                titulo: "Error",
+                mensaje: "Datos incompletos o incorrectos",
+                visible: true
+            });
+
+            return false;
+
+        }
+
+        if ((this.state.campos["nombre"] === this.state.usuario.nombre) &&
+            (this.state.campos["apellido"] === this.state.usuario.apellido) &&
+            (this.state.campos["telefono"] === this.state.usuario.telefono) &&
+            (this.state.campos["fecha_nac"].getTime() === new Date(this.state.usuario.fecha_nacimiento).getTime())) {
 
 
-       return true;
+            this.setState({
+                titulo: "Error",
+                mensaje: "No modificaste ningún dato",
+                visible: true
+            });
 
-        
+            return false;
+
+
+        }
+
+
+        return true;
+
+
     }
 
     handleSubmit(e) {
         var _this = this;
-   
+
         if (_this.validarCampos()) {
-       
+
             var path_principal = "http://localhost:3000/redAgro/update_usuario?id=";
 
             var path_final = path_principal + _this.state.id;
@@ -170,16 +174,16 @@ validarCampos() {
                     response.text().then(
                         function (response) {
 
-                             _this.setState({
-                            visible: true,
-                            titulo: "Modificación exitosa",
-                            mensaje: "",
-                            formOk:true
-                        });
+                            _this.setState({
+                                visible: true,
+                                titulo: "Modificación exitosa",
+                                mensaje: "",
+                                formOk: true
+                            });
 
                         });
 
-                   
+
                 });
         }
     }
@@ -253,31 +257,25 @@ validarCampos() {
                         </Form.Group>
                     </div>
                     <div className="botones">
-                        <div className="botonAtras">
-                            <a onClick={this.mostrarPantallaPrincipal}>
-                                <Button variant="success">Cancelar</Button>
-                            </a>
-                        </div>
-                        <div className="botonCrear">
-                            <Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Guardar</Button>
-                        </div>
+                        <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                        <Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Guardar</Button>
                     </div>
                 </div>
                 <section>
-                        <Modal
-                            visible={this.state.visible}
-                            width="460"
-                            height="120"
-                            effect="fadeInUp"
-                            onClickAway={() => this.closeModal()}
-                        >
-                            <div>
-                                <h1>{this.state.titulo}</h1>
-                                <p>{this.state.mensaje}</p>
-                                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
-                            </div>
-                        </Modal>
-                    </section>
+                    <Modal
+                        visible={this.state.visible}
+                        width="460"
+                        height="120"
+                        effect="fadeInUp"
+                        onClickAway={() => this.closeModal()}
+                    >
+                        <div>
+                            <h1>{this.state.titulo}</h1>
+                            <p>{this.state.mensaje}</p>
+                            <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
+                        </div>
+                    </Modal>
+                </section>
             </div>
         );
     };

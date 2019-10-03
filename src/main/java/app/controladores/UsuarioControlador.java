@@ -75,31 +75,27 @@ public class UsuarioControlador {
 		entidadConsumidor.setUsuario(userNuevo);
 
 		consumidorDAO.save(entidadConsumidor);
-		
+
 		MailConfirmacion mc = new MailConfirmacion(userNuevo.getUsuario(), userNuevo.getId());
-		
-		
-			try {
-				mc.enviarMail();
-			} catch (MessagingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
+		try {
+			mc.enviarMail();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/usuario_productor")
-	public void agregarUsuarioProductor(@RequestBody EntidadUsuario usuario,
-			@RequestParam String razon_social){
-		
+	public void agregarUsuarioProductor(@RequestBody EntidadUsuario usuario, @RequestParam String razon_social) {
+
 		EntidadUsuario userNuevo = new EntidadUsuario();
 		EntidadProductor entidadProductor = new EntidadProductor();
-		
+
 		usuario.setActivo(false);
-				
+
 		userNuevo = usuarioDAO.save(usuario);
 
 		entidadProductor.setId(userNuevo.getId());
@@ -107,30 +103,25 @@ public class UsuarioControlador {
 		entidadProductor.setRazon_social(razon_social);
 
 		productorDAO.save(entidadProductor);
-		
+
 		MailConfirmacion mc = new MailConfirmacion(userNuevo.getUsuario(), userNuevo.getId());
-		
-	
-			try {
-				mc.enviarMail();
-			} catch (MessagingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-	
 
-
+		try {
+			mc.enviarMail();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping(path = "redAgro/update_usuario")
 	public void updateUsuario(@RequestBody EntidadUsuario usuario, @RequestParam Long id) {
-	
-		 usuarioDAO.actualizaUsuario(usuario.getNombre(),usuario.getApellido(),usuario.getTelefono(),usuario.getFecha_nacimiento(), id);
+
+		usuarioDAO.actualizaUsuario(usuario.getNombre(), usuario.getApellido(), usuario.getTelefono(),
+				usuario.getFecha_nacimiento(), id);
 	}
-	
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/validar_usuario_duplicado")
@@ -144,25 +135,24 @@ public class UsuarioControlador {
 
 		userMapper.mapFromEntity(usuario);
 		String rol = usuario.getRol();
-		
-		
+
 		if (rol.equals("Productor")) {
-			return new ResponseEntity<>("Ya existe un usuario productor registrado con este mail", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Ya existe un usuario productor registrado con este mail",
+					HttpStatus.BAD_REQUEST);
 		} else {
-			return new ResponseEntity<>("Ya existe un usuario consumidor registrado con este mail", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("Ya existe un usuario consumidor registrado con este mail",
+					HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping(path = "redAgro/modificar_contraseña")
 	public void modificacionContraseña(@RequestParam String c, @RequestParam Long id) {
-		
+
 		usuarioDAO.modificarContraseña(c, id);
-		
-		
+
 	}
-	
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/get_tipo_usuario")
 	public String obtenerTipoUsuario(@RequestParam long id) {
@@ -175,28 +165,28 @@ public class UsuarioControlador {
 	public void deleteItem(@PathVariable long id) {
 		usuarioDAO.deleteById(id);
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping(path = "redAgro/confirmar_cuenta")
 	public void confirmarCuenta(@RequestParam Long id) {
-		
+
 		usuarioDAO.confirmarCuenta(id);
-			
+
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/recuperar_email")
-	
+
 	public Long confirmarCuenta(@RequestParam String email) {
-		
+
 		EntidadUsuario eu = new EntidadUsuario();
-		
+
 		eu = usuarioDAO.validarUsuarioDuplicado(email);
-		
-		if(eu!=null) {
-			
+
+		if (eu != null) {
+
 			MailRecuperarContraseña mrc = new MailRecuperarContraseña(email, eu.getId());
-			
+
 			try {
 				mrc.enviarMail();
 			} catch (AddressException e) {
@@ -206,12 +196,11 @@ public class UsuarioControlador {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 			return eu.getId();
 		}
-		
+
 		return 0L;
 	}
-	
 
 }

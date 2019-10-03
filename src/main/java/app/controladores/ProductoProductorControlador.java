@@ -26,24 +26,25 @@ import app.modelos.EntidadProductor;
 
 @RestController
 public class ProductoProductorControlador {
-	
+
 	@Autowired
 	ProductoProductorDao productoProductorDao;
-	
+
 	@Autowired
 	ProductoDao productoDao;
-	
+
 	@Autowired
 	ProductorDao productorDao;
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
-    public Long agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor, @RequestParam long id_producto){   	
-    
+	@PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
+	public Long agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor,
+			@RequestParam long id_producto) {
+
 		EntidadProducto prod = productoDao.obtenerProducto(id_producto);
-		
+
 		EntidadProductor productor = productorDao.obtenerProductor(id_productor);
-				
+
 		EntidadProductoProductor productoNuevo = new EntidadProductoProductor();
 		productoNuevo.setTitulo(producto.getTitulo());
 		productoNuevo.setDescripcion(producto.getDescripcion());
@@ -56,28 +57,41 @@ public class ProductoProductorControlador {
 		productoNuevo.setContenido(producto.getContenido());
 		productoNuevo.setUnidad_venta(producto.getUnidad_venta());
 		productoNuevo.setProducto(prod);
-	    productoNuevo.setProductor(productor);
-	    
-	    return productoProductorDao.save(productoNuevo).getId();	
-    }
-	
+		productoNuevo.setProductor(productor);
+
+		return productoProductorDao.save(productoNuevo).getId();
+	}
+
 	@CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping(path = "redAgro/obtenerProductosProductor")
-    public List<ProductoProductor> obtenerProductosProductor(@RequestParam Long id){   	
-    
+	@GetMapping(path = "redAgro/obtenerProductosProductor")
+	public List<ProductoProductor> obtenerProductosProductor(@RequestParam Long id) {
+
 		List<EntidadProductoProductor> listaProductos = productoProductorDao.obtenerProductosByProductor(id);
 		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
-		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos) ;								
-        return productosMapeados;
-    }
-	
+		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos);
+		return productosMapeados;
+	}
+
 	@CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping(path = "redAgro/obtenerProductos")
-    public List<ProductoProductor> obtenerProductos(@RequestParam String titulo){   	
-    
+	@GetMapping(path = "redAgro/obtenerProductos")
+	public List<ProductoProductor> obtenerProductos(@RequestParam String titulo) {
+
 		List<EntidadProductoProductor> listaProductos = productoProductorDao.obtenerProductos(titulo);
 		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
-		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos) ;								
-        return productosMapeados;
-    }
+		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos);
+		return productosMapeados;
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/validarStock")
+	public boolean validarStock(@RequestParam int id_prod_productor, @RequestParam int cantidad) {
+
+		int stock = productoProductorDao.obtenerStock(id_prod_productor);
+
+		if (cantidad > stock) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

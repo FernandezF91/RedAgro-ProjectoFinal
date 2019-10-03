@@ -100,8 +100,8 @@ class AlertaProductor extends Component {
                     </div>
                 </form >
                 <div className="botones">
-                    <Button variant="success" className="botonAtras" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
-                    <Button variant="success" className="botonCrear" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
+                    <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                    <Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
                 </div>
             </div >
         );

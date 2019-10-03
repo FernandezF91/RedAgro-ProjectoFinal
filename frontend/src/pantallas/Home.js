@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, Row } from 'react-bootstrap';
+import { Navbar, Nav, Row, InputGroup, FormControl } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/Home.css';
 import '../diseños/estilosGlobales.css';
@@ -15,10 +15,24 @@ class HomePage extends Component {
                         </div>
                         <div className="barraBusqueda">
                             <Row>
-                                <input type="text" placeholder="Buscar productos y productores.. " name="search" />
-                                <button type="submit">
-                                    <i className="fa fa-search" />
-                                </button>
+                                <InputGroup className="barraBusquedaNuevo">
+                                    {/*<FormControl
+                                        placeholder="Buscar productos y productores.."
+                                        aria-label="Buscar productos y productores.."
+                                        onKeyPress={this.onKeyPress}
+                                        ref={input => (this.busqueda = input)}
+                                    />*/}
+                                    <FormControl
+                                        placeholder="Buscar productos y productores.."
+                                        aria-label="Buscar productos y productores.."
+                                    />
+                                    <InputGroup.Append>
+                                        {/*<InputGroup.Text className="botonBusqueda cursorManito" onClick={this.handleInputChange}>*/}
+                                        <InputGroup.Text className="botonBusqueda cursorManito">
+                                            <i className="fa fa-search iconoBusqueda" />
+                                        </InputGroup.Text>
+                                    </InputGroup.Append>
+                                </InputGroup>
                             </Row>
                         </div>
                         <div className="textos">
