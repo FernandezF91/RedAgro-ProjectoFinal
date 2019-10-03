@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
@@ -23,7 +26,7 @@ public class EntidadPuntoEntrega {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 	
 	@ManyToOne()
     @JoinColumn(name = "productor_id", nullable = false)
@@ -59,11 +62,11 @@ public class EntidadPuntoEntrega {
 	@Column(name = "activo", nullable = false)
     private Boolean activo;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

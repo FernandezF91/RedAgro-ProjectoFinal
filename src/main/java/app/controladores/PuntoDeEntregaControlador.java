@@ -40,6 +40,27 @@ public class PuntoDeEntregaControlador {
 	FechaEntregaDao fechaEntregaDAO;
 	
 	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/puntos_productor")
+	public List<PuntoEntrega> listadoPuntosDeEntregaProductor(@RequestParam long id) {
+		
+		PuntoEntregaMapper punto_entrega_mapper = new PuntoEntregaMapper();
+		List<EntidadPuntoEntrega> entidad_puntos = new ArrayList<EntidadPuntoEntrega>();
+		List<PuntoEntrega> puntos_entrega = new ArrayList<PuntoEntrega>();
+		EntidadProductor productor = new EntidadProductor();
+		
+		productor = productorDAO.obtenerProductor(id);
+	
+		entidad_puntos = puntoEntregaDAO.obtenerPuntosEntregaProductor(productor);
+		
+        puntos_entrega = entidad_puntos.stream().map(entidad -> 
+     
+        punto_entrega_mapper.mapFromEntity(entidad)).collect(Collectors.toList());
+		
+		return puntos_entrega;		
+	
+	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/puntos_entrega_productor")
 	public List<PuntoEntrega> obtenerPuntosDeEntregaProductores() {
 		
@@ -47,7 +68,7 @@ public class PuntoDeEntregaControlador {
 		List<EntidadPuntoEntrega> entidad_puntos = new ArrayList<EntidadPuntoEntrega>();
 		List<PuntoEntrega> puntos_entrega = new ArrayList<PuntoEntrega>();
 	
-		entidad_puntos = puntoEntregaDAO.findAll();
+		entidad_puntos = puntoEntregaDAO.obtenerTodosLosPuntos();
 		
         puntos_entrega = entidad_puntos.stream().map(entidad -> punto_entrega_mapper.mapFromEntity(entidad)).collect(Collectors.toList());
 		
