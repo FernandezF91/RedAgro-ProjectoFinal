@@ -17,6 +17,7 @@ import ListadoPuntosEntrega from '../pantallas/ListadoPuntosEntrega';
 import ListadoProductos from '../pantallas/ListadoProductos';
 import Estadisticas from '../pantallas/Estadisticas';
 import BarraNavegacion from './BarraNavegacion';
+import Planificación from '../pantallas/Planificacion';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const NuevoProductoRouter = withRouter(NuevoProducto);
@@ -28,6 +29,7 @@ const IngresarPuntoEntregaRouter = withRouter(IngresarPuntoEntrega);
 const ListadoProductosRouter = withRouter(ListadoProductos);
 const EstadisticasRouter = withRouter(Estadisticas);
 const HitoricoRouter = withRouter(CargarHistorico);
+const PlanificacionRouter = withRouter (Planificación);
 
 class PantallaPrincipalProductores extends Component {
     constructor(props) {
@@ -99,8 +101,11 @@ class PantallaPrincipalProductores extends Component {
                             </Row>
                             <Row>
                                 <i className="fas fa-clipboard-list iconosMenuLateral" />
-                                <p>Planificación</p>
+                                <Link to={'/principalProductores/Planificacion'}>
+                                    <p>Planificación</p>
+                                </Link>
                             </Row>
+
                             <Row>
                                 <i className="fas fa-chart-line iconosMenuLateral" />
                                 <Link to={'/principalProductores/Estadisticas'}>
@@ -153,6 +158,8 @@ class PantallaPrincipalProductores extends Component {
                                 render={(props) => <ListadoProductosRouter id_productor={this.state.id} />} />
                             <Route path='/principalProductores/Estadisticas'
                                 render={(props) => <EstadisticasRouter id_productor={this.state.id} />} />
+                            <Route path='/principalProductores/Planificacion'
+                                render={(props) => <PlanificacionRouter id_productor={this.state.id} />} />
                         </Col>
                     </Row>
                 </Container>
