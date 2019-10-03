@@ -82,9 +82,9 @@ class ListadoPuntosEntrega extends Component {
                 <td>                
                     {    
                     item.activo===false?
-                    <i class="fa fa-check-circle verde" onClick={clickCallback} title="Alta"></i>
+                    <i class="fa fa-check-circle verde iconosTabla" onClick={clickCallback} title="Alta"></i>
                     :
-                    <i class="fa fa-times-circle rojo" onClick={clickCallback} title="Baja"></i>
+                    <i class="fa fa-times-circle rojo iconosTabla" onClick={clickCallback} title="Baja"></i>
                     }                                       
                 </td>
             </tr>
