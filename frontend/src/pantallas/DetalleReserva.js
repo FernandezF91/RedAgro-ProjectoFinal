@@ -43,7 +43,15 @@ const DetalleReserva = ({ item }) => {
 											<td>{detalleUnaReserva.producto.producto.categoria}</td>
 											<td>{detalleUnaReserva.producto.producto.tipo}</td>
 											{(detalleUnaReserva.cantidad > 1) ?
-												<td>{detalleUnaReserva.cantidad + " " + detalleUnaReserva.producto.unidad_venta + "s"} </td>
+												(
+													<div className="columnaCentrado">
+														{(detalleUnaReserva.producto.unidad_venta === "Bolsón") ?
+															<td>{detalleUnaReserva.cantidad + " " + "Bolsones"} </td>
+															:
+															<td>{detalleUnaReserva.cantidad + " " + detalleUnaReserva.producto.unidad_venta + "s"} </td>
+														}
+													</div>
+												)
 												:
 												<td>{detalleUnaReserva.cantidad + " " + detalleUnaReserva.producto.unidad_venta} </td>
 											}

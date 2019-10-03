@@ -165,3 +165,7 @@ input[type=text] {
     font-size: 175px;
     margin-top: 100px;
 }
+
+.columnaCentrado {
+    display: inline;
+}
