@@ -18,4 +18,7 @@ public interface ProductoProductorDao extends JpaRepository<EntidadProductoProdu
 			+ " SELECT p.* FROM Producto_Productor p JOIN Productor pr ON P.Productor_id = pr.usuario_id "
 			+ " WHERE pr.razon_social LIKE %:titulo%", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductos(@Param("titulo") String titulo);
+
+	@Query(value = "SELECT p.stock FROM Producto_Productor p where p.id = ?1", nativeQuery = true)
+	int obtenerStock(long id);
 }

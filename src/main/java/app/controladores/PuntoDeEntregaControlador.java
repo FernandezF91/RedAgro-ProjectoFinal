@@ -21,6 +21,7 @@ import app.daos.ProductorDao;
 import app.daos.PuntoEntregaDao;
 import app.mappers.PuntoEntregaMapper;
 import app.mappers.UsuarioMapper;
+import app.mappers.ProductorMapper;
 import app.modelos.EntidadFechaEntrega;
 import app.modelos.EntidadProductor;
 import app.modelos.EntidadPuntoEntrega;
@@ -57,23 +58,21 @@ public class PuntoDeEntregaControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/ptos_entrega_productores")
-	public List<PuntoEntrega> obtenerListadoPuntosEntrega(@RequestParam List<Long> productores) {
-		
-		List<EntidadProductor> entidadProductores = new ArrayList<EntidadProductor>();
+	public List<Productor> getProductoresConPtosEntrega(@RequestParam List<Long> productores) {
+
+		UsuarioMapper user_mapper = new UsuarioMapper();
+		PuntoEntregaMapper entregas = new PuntoEntregaMapper();
+		List<Productor> listaProductores = new ArrayList<Productor>();
+
 		for (Long id : productores) {
-			EntidadProductor productor = productorDAO.obtenerProductor(id);
-			entidadProductores.add(productor);
+			EntidadProductor entidad = productorDAO.obtenerProductor(id);
+			Productor productor = new Productor(entidad.getId(), entidad.getRazon_social(),
+					user_mapper.mapFromEntity(entidad.getUsuario()),
+					entregas.mapFromEntity(entidad.getPuntos_entrega()));
+			listaProductores.add(productor);
 		}
 
-		PuntoEntregaMapper punto_entrega_mapper = new PuntoEntregaMapper();
-		List<EntidadPuntoEntrega> entidad_puntos = new ArrayList<EntidadPuntoEntrega>();
-		List<PuntoEntrega> puntos_entrega = new ArrayList<PuntoEntrega>();
-
-		entidad_puntos = puntoEntregaDAO.obtenerPuntosEntregaProductores(entidadProductores);
-		puntos_entrega = entidad_puntos.stream().map(entidad -> punto_entrega_mapper.mapFromEntity(entidad))
-				.collect(Collectors.toList());
-
-		return puntos_entrega;
+		return listaProductores;
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
