@@ -99,10 +99,17 @@ class IngresarPuntoEntrega extends Component {
     }
 
     closeModalSi() {
+
+        let campos = this.state.campos;
+        campos["fecha_entrega"] = "";
+        campos["hora_inicio"] ="";
+        campos["hora_fin"]="";
+
         this.setState({
             visible2: false,
             formOk: false,
-            disabled2: true
+            disabled2: true,
+            campos:campos
         });
     }
 
@@ -124,6 +131,12 @@ class IngresarPuntoEntrega extends Component {
 
             const path_final = path + _this.state.id_punto_entrega
 
+            let fecha_entrega = this.state.campos["fecha_entrega"]
+                let dia = fecha_entrega.getDate();
+                let mes = fecha_entrega.getMonth() + 1;
+                let año = fecha_entrega.getFullYear();
+                var fecha = dia + '-' + mes + '-' + año;
+
             fetch(path_final, {
                 method: "POST",
                 headers: {
@@ -131,7 +144,7 @@ class IngresarPuntoEntrega extends Component {
                 },
                 body: JSON.stringify({
 
-                    "fecha": this.state.campos["fecha_entrega"],
+                    "fecha": fecha,
                     "hora_fin": this.state.campos["hora_fin"],
                     "hora_inicio": this.state.campos["hora_inicio"]
                 }),
@@ -343,6 +356,7 @@ class IngresarPuntoEntrega extends Component {
                         </Form.Label>
                             <input
                                 className="hora_inicio"
+                                value={this.state.campos["hora_inicio"]}
                                 name="hora_inicio"
                                 type="number"
                                 min="6"
@@ -354,6 +368,7 @@ class IngresarPuntoEntrega extends Component {
                         <input
                                 className="hora_fin"
                                 name="hora_fin"
+                                value={this.state.campos["hora_fin"]}
                                 type="number"
                                 min="12"
                                 max="21"
