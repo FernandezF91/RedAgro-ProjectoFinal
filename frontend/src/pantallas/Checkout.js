@@ -64,42 +64,140 @@ class Checkout extends Component {
             activeStep: 0,
             setActiveStep: 0,
             puntosEntrega: [],
+            selector: {
+                fechasEntrega: [],
+                puntosEntrega: [],
+            },
+            seleccionado: {
+                fechaEntrega: [],
+                puntoEntrega: [],
+            },
             selectedRadioButtonRetiro: "radio1",
+            resultadoRequest: 0,
+            loading: true,
         }
+
+        this.actualizarPuntoEntrega = this.actualizarPuntoEntrega.bind(this);
+        this.actualizarFechaEntrega = this.actualizarFechaEntrega.bind(this);
+        this.obtenerFechasEntrega = this.obtenerFechasEntrega.bind(this);
+        
     }
 
     componentDidMount() {
-        //Busco los puntos de entrega de los productores seleccionados
-        var productores = [];
-        var productoresSinRepetidos = [];
-        var parametro = '';
-        this.props.productosSeleccionados.forEach(item => {
-            productores.push(item.productor.id);
-        });
-        productores.sort();
-        productoresSinRepetidos = [... new Set(productores)];
-
-        productoresSinRepetidos.forEach((item, index) => {
-            if (index === 0) {
-                parametro = parametro + "productores=" + item;
-            } else {
-                parametro = parametro + "&productores=" + item;
-            }
-        });
-
-        if (productoresSinRepetidos.length > 0) {
-            var path = "http://localhost:3000/redAgro/ptos_entrega_productores?" + parametro;
-            fetch(path, {
-                method: "GET",
-            })
-                .catch(err => console.error(err))
-                .then(response => { return response.json(); })
-                .then(data => {
+        var path = "http://localhost:3000/redAgro/puntos_productor_activos?id=1"// + this.props.productosSeleccionados[0].productor.id;
+        fetch(path)
+            .catch(error => console.error(error))
+            .then(response => {
+                try {
+                    if (response.status === 200) {
+                        this.setState({
+                            resultadoRequest: response.status
+                        });
+                        return response.json();
+                    }
+                    else {
+                        console.log(response.status);
+                        this.setState({
+                            loading: false,
+                            resultadoRequest: response.status
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
                     this.setState({
-                        puntosEntrega: data
+                        loading: false,
+                        resultadoRequest: response.status
                     });
-                })
-        }
+                }
+            }).then(data => {
+                if (data !== undefined) {
+                    this.setState({
+                        puntosEntrega: data,
+                        selector: {
+                            puntosEntrega: data.map(item => {
+                                return {
+                                    label: item.direccion + ", " + item.cod_postal + ". " + item.localidad + ", " + item.provincia,
+                                    value: item.id
+                                }
+                            }),
+                        },
+                        loading: false
+                    })
+                }
+            })
+    }
+
+    obtenerFechasEntrega(idPtoEntrega) {
+        var fechaPreparación = this.calculoFechaMinimaEntrega();
+        var path = "http://localhost:3000/redAgro/fechas_punto_entrega?id_punto_entrega=" + idPtoEntrega;
+        fetch(path)
+            .catch(error => console.error(error))
+            .then(response => {
+                try {
+                    if (response.status === 200) {
+                        this.setState({
+                            resultadoRequest: response.status
+                        });
+                        return response.json();
+                    }
+                    else {
+                        console.log(response.status);
+                        this.setState({
+                            loading: false,
+                            resultadoRequest: response.status
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                    this.setState({
+                        loading: false,
+                        resultadoRequest: response.status
+                    });
+                }
+            }).then(data => {
+                if (data !== undefined) {
+                    this.setState({
+                        puntosEntrega: data,
+                        selector: {
+                            fechasEntrega: data.map(item => {
+                                var fecha = new Date(item.fecha);
+                                return {
+                                    label: fecha.getDate().toString() + "/" + (fecha.getMonth() + 1).toString() + "/" + fecha.getFullYear().toString(),
+                                    value: item.id
+                                }
+                                // if (fecha.getTime() >= fechaPreparación.getTime()) {
+                                   
+                                // }
+                            })
+                        },
+                        loading: false
+                    })
+                }
+            })
+    }
+
+    calculoFechaMinimaEntrega() {
+        let fecha = new Date();
+        var tiempoPreparacion = [];
+        this.props.productosSeleccionados.forEach(item => {
+            tiempoPreparacion.push(item.tiempoDePreparacion);
+        });
+        tiempoPreparacion.sort((a, b) => (b - a));
+        fecha.setDate(fecha.getDate() + tiempoPreparacion[0]);
+        return fecha;
+    }
+
+    actualizarPuntoEntrega(newPunto) {
+        var nuevoPuntoEntrega = []
+        nuevoPuntoEntrega.push(newPunto);
+        this.obtenerFechasEntrega(newPunto.value);
+        this.setState({ seleccionado: { puntoEntrega: nuevoPuntoEntrega } });
+    }
+
+    actualizarFechaEntrega(newFecha) {
+        var nuevaFechaEntrega = []
+        nuevaFechaEntrega.push(newFecha);
+        this.setState({ seleccionado: { fechaEntrega: nuevaFechaEntrega } });
     }
 
     handleNext = () => {
@@ -158,15 +256,20 @@ class Checkout extends Component {
                                 handleRadioRetiroChange={this.handleRadioRetiroChange}
                                 productosSeleccionados={this.props.productosSeleccionados}
                                 getTotalReserva={this.getTotalReserva}
-                                puntosEntrega={this.state.puntosEntrega} />
+                                puntosEntrega={this.state.puntosEntrega}
+                                selector={this.state.selector}
+                                seleccionado={this.state.seleccionado}
+                                puntoEntregaSeleccionado={this.state.puntoEntregaSeleccionado}
+                                actualizarPuntoEntrega={this.actualizarPuntoEntrega}
+                                actualizarFechaEntrega={this.actualizarFechaEntrega} />
                             : ''
                     }
                     <div>
                         <Button
                             variant="light"
                             disabled={activeStep === 0}
-                            onClick={this.handleBack}
-                        >Atras
+                            onClick={this.handleBack}>
+                            Atras
                             </Button>
                         <Button
                             variant="success"

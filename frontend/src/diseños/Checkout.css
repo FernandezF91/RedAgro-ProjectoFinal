@@ -42,3 +42,13 @@
     font-size: 14px;
     color:grey;
 }
+
+.dropdownDirecciones{
+    width: 500px;
+}
+
+.opcionesCheckout{
+    display: flex;
+	flex-direction: column;
+	justify-content:center;
+}

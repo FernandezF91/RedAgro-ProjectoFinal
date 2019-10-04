@@ -4,8 +4,16 @@ import CardDeck from 'react-bootstrap/CardDeck';
 import ListGroup from 'react-bootstrap/ListGroup';
 import NumberFormat from 'react-number-format';
 import { Form, Row, Col } from 'react-bootstrap';
-import SeleccionarPtoEntrega from './SeleccionarPtoEntrega';
+import Select from 'react-select';
+import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import '../diseños/Checkout.css'
+
+const columna = [
+    {
+        label: 'Productores seleccionados',
+        field: 'Productores',
+    }
+]
 
 const PasosCheckout = (props) => {
 
@@ -76,7 +84,8 @@ const PasosCheckout = (props) => {
             return (
                 <div className="radioButtonsCheckout">
                     <label>
-                        <input type="radio"
+                        <input
+                            type="radio"
                             value="radio1"
                             checked={props.selectedRadioButtonRetiro === "radio1"}
                             onChange={props.handleRadioRetiroChange}
@@ -85,18 +94,35 @@ const PasosCheckout = (props) => {
                     </label>
                     <br />
                     <label>
-                        <input type="radio"
+                        <input
+                            type="radio"
                             value="radio2"
                             checked={props.selectedRadioButtonRetiro === "radio2"}
                             onChange={props.handleRadioRetiroChange}
                             className="radio-button-input radio" />
                         Seleccionar un punto de entrega
                     </label>
-
                     {
                         props.selectedRadioButtonRetiro === "radio2" ?
-                            <SeleccionarPtoEntrega puntosEntrega = {props.puntosEntrega}/>
-                            : ' '
+                            <div className="opcionesCheckout">
+                                
+                                    <Select className="dropdownDirecciones"
+                                        value={props.seleccionado.puntoEntrega}
+                                        options={props.selector.puntosEntrega}
+                                        placeholder="Seleccione una dirección de retiro..."
+                                        onChange={newPunto => props.actualizarPuntoEntrega(newPunto)} />
+                                
+                                <br />
+                                
+                                    <Select className="dropdownDirecciones"
+                                        value={props.seleccionado.fechaEntrega}
+                                        options={props.selector.fechasEntrega}
+                                        placeholder="Seleccione una fecha de retiro..."
+                                        onChange={newFecha => props.actualizarFechaEntrega(newFecha)} />
+                                
+                            </div>
+
+                            : ''
                     }
                 </div>
 
