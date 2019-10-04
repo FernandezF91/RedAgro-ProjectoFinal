@@ -125,20 +125,20 @@ class ResultadoBusqueda extends Component {
 
     restarProducto = (position) => {
         //Falta la validación y actualización por stock
-        let resultadoBusqueda = this.state.resultadoBusqueda;
-        var productoSeleccionado = resultadoBusqueda[position];
+        let resultadoDeBusqueda = this.state.resultadoBusqueda;
+        var productoSeleccionado = resultadoDeBusqueda[position];
         if ((parseInt(productoSeleccionado.cantidad) - 1) >= 0) {
             let productoActualizado = [
                 ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) - 1).toString(),
             ]
-            this.setState({ resultadoBusqueda: productoActualizado });
+            this.setState({ resultadoDeBusqueda: productoActualizado });
         }
     }
 
     sumarProducto = (position) => {
         //Falta la validación y actualización por stock
-        let resultadoBusqueda = this.state.resultadoBusqueda;
-        var productoSeleccionado = resultadoBusqueda[position];
+        let resultadoDeBusqueda = this.state.resultadoBusqueda;
+        var productoSeleccionado = resultadoDeBusqueda[position];
         let productoActualizado = [
             ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) + 1).toString(),
         ]
@@ -146,35 +146,43 @@ class ResultadoBusqueda extends Component {
     }
 
     agregarAlCarrito = (position) => {
-        let resultadoBusqueda = this.state.resultadoBusqueda;
+        let resultadoDeBusqueda = this.state.resultadoBusqueda;
         let productosSeleccionados = this.props.productosSeleccionados;
-        var producto = resultadoBusqueda[position];
-        if (parseInt(producto.cantidad) > 0) {
+        var producto = resultadoDeBusqueda[position];
 
-            let chequeoProducto = productosSeleccionados.filter(function (item) {
-                return item.id === producto.id;
-            });
+        if (this.validarMismoProductor(producto) === true) {
 
-            if (chequeoProducto.length > 0) {
-                var index = productosSeleccionados.findIndex(item => item.id === chequeoProducto[0].id);
-                let nuevaLista = [
-                    ...productosSeleccionados.slice(0, index),
-                    chequeoProducto[0],
-                    ...productosSeleccionados.slice(index + 1)
-                ];
-                productosSeleccionados = nuevaLista;
+            if (parseInt(producto.cantidad) > 0) {
+
+                let chequeoProducto = productosSeleccionados.filter(function (item) {
+                    return item.id === producto.id;
+                });
+
+                if (chequeoProducto.length > 0) {
+                    var index = productosSeleccionados.findIndex(item => item.id === chequeoProducto[0].id);
+                    let nuevaLista = [
+                        ...productosSeleccionados.slice(0, index),
+                        chequeoProducto[0],
+                        ...productosSeleccionados.slice(index + 1)
+                    ];
+                    productosSeleccionados = nuevaLista;
+                }
+                else {
+                    productosSeleccionados.push(producto);
+                }
+                this.setState(this.actualizarPropsSeleccionados(productosSeleccionados));
+                ButterToast.raise({
+                    content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_GREEN}
+                        content={() => <div class="mensajeToast">Se agrego un nuevo producto a tu carrito</div>}
+                        title="CulturaVerde"
+                        icon={<i class="fa fa-shopping-cart iconoToast" />}
+                    />
+                });
             }
-            else {
-                productosSeleccionados.push(producto);
-            }
-            this.setState(this.actualizarPropsSeleccionados(productosSeleccionados));
-            ButterToast.raise({
-                content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_GREEN}
-                    content={() => <div class="mensajeToast">Se agrego un nuevo producto a tu carrito</div>}
-                    title="CulturaVerde"
-                    icon={<i class="fa fa-shopping-cart iconoToast" />}
-                />
-            });
+
+        } else {
+            this.restarProducto(position);
+            console.log("Cambie el chango");
         }
     }
 
@@ -197,7 +205,36 @@ class ResultadoBusqueda extends Component {
         this.setState({
             showModal: false
         })
+    }
 
+    validarMismoProductor(productoSeleccionado) {
+        var respuesta;
+        this.props.productosSeleccionados.forEach(item => {
+            if (item.productor.id !== productoSeleccionado.productor.id) {
+                respuesta = false;
+            }
+        });
+
+        if (respuesta === undefined) {
+            respuesta = true;
+        }
+        return respuesta;
+    }
+
+    validarStock(producto) {
+        var path = "http://localhost:3000/redAgro/validarStock?id_prod_productor=" + producto.id + "&cantidad=" + (parseInt(producto.cantidad) + 1);
+        fetch(
+            path, {
+            method: "GET",
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+            },
+        })
+            .then(function (response) {
+                if (response.status === 200) {
+                    return response;
+                }
+            })
     }
 
     render() {

@@ -69,7 +69,7 @@ class ListadoProductos extends Component {
                             titulo: item.titulo,
                             descripcion: item.descripcion,
                             stock: item.stock,
-                            tipoDeUnidad: item.tipo_unidad,
+                            tipoDeUnidad: item.unidad_venta,
                             tipoDeProduccion: item.tipo_produccion,
                             precio: item.precio,
                             fechaDeVencimiento: fecha.getDate().toString() + "/" + (fecha.getMonth() + 1).toString() + "/" + fecha.getFullYear().toString(),

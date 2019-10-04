@@ -85,7 +85,7 @@ input[type=text] {
     width: 40%;
 }
 
-.selectTipoProducto, .selectTipoUnidad, .selectTipoProduccion, .selectCategoria {
+.selectTipoProducto, .selectTipoUnidad, .selectTipoProduccion, .selectCategoria ,.selectPeriodo {
     width: 50%;
 }
 
