@@ -103,7 +103,7 @@ class ResultadoBusqueda extends Component {
                                 tipoDeUnidad: item.unidad_venta,
                                 tipoDeProduccion: item.tipo_produccion,
                                 precio: item.precio,
-                                techaDeVencimiento: item.fecha_vencimiento,
+                                fechaDeVencimiento: item.fecha_vencimiento,
                                 tiempoDePreparacion: item.tiempo_preparacion,
                                 contenido: item.contenido,
                                 cantidad: 0,

@@ -5,12 +5,14 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Detalle_reserva")
+@IdClass(EntidadDetalleReserva.class)
 public class EntidadDetalleReserva implements Serializable{
 	
 	@Id
@@ -18,7 +20,7 @@ public class EntidadDetalleReserva implements Serializable{
     private long id_reserva;
 	
 	@ManyToOne()
-    @JoinColumn(name = "id_reserva", nullable = false)
+    @JoinColumn(name = "id_reserva", nullable = false, updatable = false, insertable = false)
     private EntidadReserva reserva;
 	
 	@Id
@@ -26,7 +28,7 @@ public class EntidadDetalleReserva implements Serializable{
     private long id_producto;
 	
 	@ManyToOne
-    @JoinColumn(name="id_producto", nullable = false)
+    @JoinColumn(name="id_producto", nullable = false, updatable = false, insertable = false)
     private EntidadProductoProductor producto;
 	
 	@Column(name="cantidad",nullable = false)

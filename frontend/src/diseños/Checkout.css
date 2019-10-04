@@ -45,10 +45,11 @@
 
 .dropdownDirecciones{
     width: 500px;
+    justify-content:center;
 }
 
 .opcionesCheckout{
     display: flex;
 	flex-direction: column;
-	justify-content:center;
+    align-items: center;
 }

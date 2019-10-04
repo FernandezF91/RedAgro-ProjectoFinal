@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { MDBContainer } from "mdbreact";
 import { Button } from 'react-bootstrap';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MDBModal } from 'mdbreact';
 import PasosCheckout from './PasosCheckout'
 import _ from 'lodash';
 import '../diseños/estilosGlobales.css';
@@ -73,17 +72,35 @@ class Checkout extends Component {
                 fechaEntrega: [],
             },
             selectedRadioButtonRetiro: "radio1",
+            datosReserva: {
+                id: '',
+                consumidor: { id: this.props.id_consumidor },
+                productor: { id: this.props.productosSeleccionados[0].productor.id },
+                punto_entrega: { id: '' },
+                estado_reserva: { id: 1 },
+                total_reserva: this.getTotalReserva(this.props.productosSeleccionados),
+                persona_retiro: this.props.user.nombre + " " + this.props.user.apellido,
+                forma_retiro: "Acuerda con Productor",
+                fecha: '',
+                detallesReserva: [],
+            },
             resultadoRequest: 0,
             loading: true,
+            showModal: false,
         }
-
         this.actualizarPuntoEntrega = this.actualizarPuntoEntrega.bind(this);
         this.actualizarFechaEntrega = this.actualizarFechaEntrega.bind(this);
         this.obtenerFechasEntrega = this.obtenerFechasEntrega.bind(this);
-
+        this.getTotalReserva = this.getTotalReserva.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
+        this.handleNext = this.handleNext.bind(this);
+        this.crearReserva = this.crearReserva.bind(this);
     }
 
     componentDidMount() {
+
+        this.actualizarDetalleReserva();
+
         var path = "http://localhost:3000/redAgro/puntos_productor_activos?id=1"// + this.props.productosSeleccionados[0].productor.id;
         fetch(path)
             .catch(error => console.error(error))
@@ -125,6 +142,24 @@ class Checkout extends Component {
                     })
                 }
             })
+    }
+
+    actualizarDetalleReserva() {
+        var detalleDeReserva = this.props.productosSeleccionados.map(item => {
+            return {
+                id_reserva: '',
+                id_producto: item.id,
+                activo: true,
+                cantidad: item.cantidad,
+                precio_por_unidad: item.precio
+            }
+        })
+        this.setState({
+            datosReserva: {
+                ...this.state.datosReserva,
+                detallesReserva: detalleDeReserva
+            }
+        });
     }
 
     obtenerFechasEntrega(idPtoEntrega) {
@@ -196,6 +231,10 @@ class Checkout extends Component {
             seleccionado: {
                 ...this.state.seleccionado,
                 puntoEntrega: nuevoPuntoEntrega,
+            },
+            datosReserva: {
+                ...this.state.datosReserva,
+                punto_entrega: { id: newPunto.value },
             }
         });
     }
@@ -207,11 +246,18 @@ class Checkout extends Component {
             seleccionado: {
                 ...this.state.seleccionado,
                 fechaEntrega: nuevaFechaEntrega
+            },
+            datosReserva: {
+                ...this.state.datosReserva,
+                fecha: newFecha.label,
             }
         });
     }
 
     handleNext = () => {
+        if (this.state.activeStep === pasos.length - 1) {
+            this.crearReserva(this.state.datosReserva);
+        }
         this.setState({ activeStep: (this.state.activeStep + 1) });
     }
 
@@ -236,13 +282,51 @@ class Checkout extends Component {
     };
 
     handleRadioRetiroChange = changeEvent => {
+        var forma;
+        if (changeEvent.target.value === "radio1") {
+            forma = "Acuerda con Productor";
+        } else {
+            forma = "Por punto de entrega";
+        }
         this.setState({
-            selectedRadioButtonRetiro: changeEvent.target.value
+            selectedRadioButtonRetiro: changeEvent.target.value,
+            datosReserva: {
+                ...this.state.datosReserva,
+                forma_retiro: forma,
+            }
         });
     };
 
     getTotalReserva(productosSeleccionados) {
         return _.sumBy(productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
+    }
+
+    cerrarModal() {
+        this.setState({
+            showModal: false
+        })
+
+        if (this.state.resultadoRequest !== 200) {
+            this.handleReset();
+        }
+    }
+
+    crearReserva(datosReserva) {
+        var path = "http://localhost:3000/redAgro/generarReserva";
+        var _this = this;
+        fetch(path, {
+            method: "POST",
+            headers: { 'Content-type': 'application/json;charset=UTF-8' },
+            body: JSON.stringify(datosReserva)
+        })
+            .then(function (response) {
+                _this.setState({
+                    loading: false,
+                    showModal: true,
+                    resultadoRequest: response.status
+                })
+                return;
+            })
     }
 
     render() {
@@ -259,36 +343,67 @@ class Checkout extends Component {
                         ))}
                     </Stepper>
                     {
-                        activeStep <= pasos.length ?
-                            <PasosCheckout indexPasos={activeStep}
-                                usuario={this.props.user}
-                                datosPersonalesHandler={this.datosPersonalesHandler}
-                                selectedRadioButtonRetiro={this.state.selectedRadioButtonRetiro}
-                                handleRadioRetiroChange={this.handleRadioRetiroChange}
-                                productosSeleccionados={this.props.productosSeleccionados}
-                                getTotalReserva={this.getTotalReserva}
-                                puntosEntrega={this.state.puntosEntrega}
-                                selector={this.state.selector}
-                                seleccionado={this.state.seleccionado}
-                                puntoEntregaSeleccionado={this.state.puntoEntregaSeleccionado}
-                                actualizarPuntoEntrega={this.actualizarPuntoEntrega}
-                                actualizarFechaEntrega={this.actualizarFechaEntrega} />
-                            : ''
+                        activeStep === pasos.length ?
+                            <div>
+                                {(this.state.showModal) &&
+                                    <MDBModal isOpen={this.state.showModal} centered size="sm">
+                                        <div className="modalMargenes">
+                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                            <br />
+                                            {(this.state.resultadoRequest === 200) ?
+                                                (
+                                                    <div>
+                                                        <i className="fas fa-check-circle iconoModalOk" />
+                                                        <br />
+                                                        <br />
+                                                        <h5>Reserva generada!</h5>
+                                                    </div>
+                                                ) : (
+                                                    <div>
+                                                        <i className="fas fa-exclamation-circle iconoModalError" />
+                                                        <br />
+                                                        <br />
+                                                        <h5>Ups! Ocurrio un error! </h5>
+                                                        <h6>Por favor, intenta nuevamente</h6>
+                                                    </div>
+                                                )
+                                            }
+                                        </div>
+                                    </MDBModal>
+                                }
+
+                            </div>
+                            :
+                            <div>
+                                <PasosCheckout
+                                    indexPasos={activeStep}
+                                    usuario={this.props.user}
+                                    selector={this.state.selector}
+                                    seleccionado={this.state.seleccionado}
+                                    puntosEntrega={this.state.puntosEntrega}
+                                    datosReserva={this.state.datosReserva}
+                                    selectedRadioButtonRetiro={this.state.selectedRadioButtonRetiro}
+                                    datosPersonalesHandler={this.datosPersonalesHandler}
+                                    handleRadioRetiroChange={this.handleRadioRetiroChange}
+                                    productosSeleccionados={this.props.productosSeleccionados}
+                                    getTotalReserva={this.getTotalReserva}
+                                    actualizarPuntoEntrega={this.actualizarPuntoEntrega}
+                                    actualizarFechaEntrega={this.actualizarFechaEntrega} />
+
+                                <Button
+                                    variant="light"
+                                    disabled={activeStep === 0}
+                                    onClick={this.handleBack}>
+                                    Atras
+                                    </Button>
+                                <Button
+                                    variant="success"
+                                    type="submit"
+                                    onClick={this.handleNext}>
+                                    {activeStep === pasos.length - 1 ? 'Finalizar' : 'Continuar'}
+                                </Button>
+                            </div>
                     }
-                    <div>
-                        <Button
-                            variant="light"
-                            disabled={activeStep === 0}
-                            onClick={this.handleBack}>
-                            Atras
-                            </Button>
-                        <Button
-                            variant="success"
-                            type="submit"
-                            onClick={this.handleNext}>
-                            {activeStep === pasos.length - 1 ? 'Finalizar' : 'Continuar'}
-                        </Button>
-                    </div>
                 </MuiThemeProvider>
             </div>
         )

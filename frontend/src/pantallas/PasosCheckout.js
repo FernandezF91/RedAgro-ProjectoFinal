@@ -3,9 +3,8 @@ import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import ListGroup from 'react-bootstrap/ListGroup';
 import NumberFormat from 'react-number-format';
-import { Form, Row, Col } from 'react-bootstrap';
+import { Form, Row, Col, CardColumns, CardGroup } from 'react-bootstrap';
 import Select from 'react-select';
-import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import '../diseños/Checkout.css'
 
 const PasosCheckout = (props) => {
@@ -98,37 +97,48 @@ const PasosCheckout = (props) => {
                     {
                         props.selectedRadioButtonRetiro === "radio2" ?
                             <div className="opcionesCheckout">
-                                
-                                    <Select className="dropdownDirecciones"
-                                        value={props.seleccionado.puntoEntrega}
-                                        options={props.selector.puntosEntrega}
-                                        placeholder="Seleccione una dirección de retiro..."
-                                        onChange={newPunto => props.actualizarPuntoEntrega(newPunto)} />
-                                
-                                <br />
-                                
-                                    <Select className="dropdownDirecciones"
-                                        value={props.seleccionado.fechaEntrega}
-                                        options={props.selector.fechasEntrega}
-                                        placeholder="Seleccione una fecha de retiro..."
-                                        onChange={newFecha => props.actualizarFechaEntrega(newFecha)} />
-                                
-                            </div>
 
+                                <Select className="dropdownDirecciones"
+                                    value={props.seleccionado.puntoEntrega}
+                                    options={props.selector.puntosEntrega}
+                                    placeholder="Seleccione una dirección de retiro..."
+                                    onChange={newPunto => props.actualizarPuntoEntrega(newPunto)} />
+                                <br />
+                                <Select className="dropdownDirecciones"
+                                    value={props.seleccionado.fechaEntrega}
+                                    options={props.selector.fechasEntrega}
+                                    placeholder="Seleccione una fecha de retiro..."
+                                    onChange={newFecha => props.actualizarFechaEntrega(newFecha)} />
+                            </div>
                             : ''
                     }
                 </div>
-
             );
         case 2:
             return (
                 <CardDeck className="resumenReserva">
                     <Card>
                         <Card.Header as="h6">Datos para el retiro</Card.Header>
+                        <Card.Body>
+                            Retira {props.datosReserva.persona_retiro}
+                            <br />
+                            {
+                                props.datosReserva.forma_retiro === "Acuerda con Productor" ?
+                                    <p>{props.datosReserva.forma_retiro}</p>
+                                    :
+                                    <p>
+                                        Por el punto de entrega elegido:
+                                    <br />
+                                        {props.seleccionado.puntoEntrega[0].label}
+                                        <br />
+                                        A partir del dia {props.datosReserva.fecha}
+                                    </p>
+                            }
+                        </Card.Body>
                     </Card>
 
-                    <Card style={{ width: '28rem', borderless: true }}>
-                        <Card.Header borderless={true} as="h6">Productos seleccionados</Card.Header>
+                    <Card>
+                        <Card.Header as="h6">Productos seleccionados</Card.Header>
                         <ListGroup>
                             {
                                 props.productosSeleccionados.map(item => (
@@ -158,28 +168,24 @@ const PasosCheckout = (props) => {
                                 ))
                             }
                         </ListGroup>
-                        <Card.Footer as="h6"><strong>Total
-                    <NumberFormat
-                                value={props.getTotalReserva(props.productosSeleccionados)}
-                                displayType={'text'}
-                                thousandSeparator={"."}
-                                decimalSeparator={","}
-                                prefix=" $ "
-                                decimalScale={2}
-                                fixedDecimalScale={true} />
-                        </strong>
+                        <Card.Footer as="h6">
+                            <strong>
+                                Total
+                                <NumberFormat
+                                    value={props.getTotalReserva(props.productosSeleccionados)}
+                                    displayType={'text'}
+                                    thousandSeparator={"."}
+                                    decimalSeparator={","}
+                                    prefix=" $ "
+                                    decimalScale={2}
+                                    fixedDecimalScale={true} />
+                            </strong>
                         </Card.Footer>
                     </Card>
                 </CardDeck>
             );
-        case 3:
-            return (
-                <Card style={{ width: '18rem' }}> </Card>
-            );
-        case 4:
-            return (
-                <Card style={{ width: '18rem' }}></Card>
-            );
+        default:
+            return 'Error';
     }
 
 }
