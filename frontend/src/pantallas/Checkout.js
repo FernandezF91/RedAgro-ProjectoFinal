@@ -69,8 +69,8 @@ class Checkout extends Component {
                 puntosEntrega: [],
             },
             seleccionado: {
-                fechaEntrega: [],
                 puntoEntrega: [],
+                fechaEntrega: [],
             },
             selectedRadioButtonRetiro: "radio1",
             resultadoRequest: 0,
@@ -80,7 +80,7 @@ class Checkout extends Component {
         this.actualizarPuntoEntrega = this.actualizarPuntoEntrega.bind(this);
         this.actualizarFechaEntrega = this.actualizarFechaEntrega.bind(this);
         this.obtenerFechasEntrega = this.obtenerFechasEntrega.bind(this);
-        
+
     }
 
     componentDidMount() {
@@ -159,6 +159,7 @@ class Checkout extends Component {
                     this.setState({
                         puntosEntrega: data,
                         selector: {
+                            ...this.state.selector,
                             fechasEntrega: data.map(item => {
                                 var fecha = new Date(item.fecha);
                                 return {
@@ -166,7 +167,7 @@ class Checkout extends Component {
                                     value: item.id
                                 }
                                 // if (fecha.getTime() >= fechaPreparación.getTime()) {
-                                   
+
                                 // }
                             })
                         },
@@ -191,13 +192,23 @@ class Checkout extends Component {
         var nuevoPuntoEntrega = []
         nuevoPuntoEntrega.push(newPunto);
         this.obtenerFechasEntrega(newPunto.value);
-        this.setState({ seleccionado: { puntoEntrega: nuevoPuntoEntrega } });
+        this.setState({
+            seleccionado: {
+                ...this.state.seleccionado,
+                puntoEntrega: nuevoPuntoEntrega,
+            }
+        });
     }
 
     actualizarFechaEntrega(newFecha) {
         var nuevaFechaEntrega = []
         nuevaFechaEntrega.push(newFecha);
-        this.setState({ seleccionado: { fechaEntrega: nuevaFechaEntrega } });
+        this.setState({
+            seleccionado: {
+                ...this.state.seleccionado,
+                fechaEntrega: nuevaFechaEntrega
+            }
+        });
     }
 
     handleNext = () => {
