@@ -1,9 +1,10 @@
 package app.clases;
 
 import java.util.ArrayList;
-
-import app.modelos.EntidadHistorico;
+import java.util.List;
+import java.util.Arrays;
 import smile.*;
+
 //import smile.Network;
 
 public class Planificador {
@@ -40,19 +41,31 @@ public class Planificador {
 	}
 
 	
-	public void obtenerResultados(){
+	public List<String> obtenerResultados(){
 			
 			Network net = new Network();
-			net.readFile("RedPlanificacion.dsl");
+			net.readFile("C:/Bayes/RedBayesProduccion.xdsl");
 			net.setEvidence("periodo", this.getPeriodo());
 			net.setEvidence("provincia",this.getProvincia());
-			net.setEvidence("ventas", "vent3");
+			net.setEvidence("Ventas", "ventasMayor");
 			net.updateBeliefs();
-			double[] beliefs = net.getNodeValue("alimento");
-			for (int i = 0; i < 5; i ++) {
-			System.out.println(
-			net.getOutcomeId("alimento", i) + " = " + beliefs[i]);
+			double[] lista = net.getNodeValue("Alimento");
+			double[] listaOrdenada = net.getNodeValue("Alimento");
+			Arrays.sort(lista);
+			List<String> alimentos = new ArrayList<String>();
+			int j=0;
+        		   
+			for (int i = lista.length - 1 ; i>=0 ; i--) {
+				listaOrdenada[j] = lista[i];
+				j++;
 			}
+			
+			for (int i = 0; i<5 ; i++) {
+			alimentos.add(net.getOutcomeId("Alimento", i) );
+			}
+			
+			//System.out.println(alimentos);
+			return alimentos;
 	}
 
 
