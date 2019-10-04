@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -78,25 +79,6 @@ public class PuntoDeEntregaControlador {
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
-	@GetMapping(path = "redAgro/ptos_entrega_productores")
-	public List<Productor> getProductoresConPtosEntrega(@RequestParam List<Long> productores) {
-
-		UsuarioMapper user_mapper = new UsuarioMapper();
-		PuntoEntregaMapper entregas = new PuntoEntregaMapper();
-		List<Productor> listaProductores = new ArrayList<Productor>();
-
-		for (Long id : productores) {
-			EntidadProductor entidad = productorDAO.obtenerProductor(id);
-			Productor productor = new Productor(entidad.getId(), entidad.getRazon_social(),
-					user_mapper.mapFromEntity(entidad.getUsuario()),
-					entregas.mapFromEntity(entidad.getPuntos_entrega()));
-			listaProductores.add(productor);
-		}
-
-		return listaProductores;
-	}
-
-	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/puntos_productor_activos")
 	public List<PuntoEntrega> listadoPuntosDeEntregaActivos(@RequestParam long id) {
 
@@ -138,6 +120,25 @@ public class PuntoDeEntregaControlador {
 		fechaEntregaDAO.save(fe);
 
 		return pe.getId();
+		
+		
 
 	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PutMapping(path = "redAgro/modificar_punto")
+	public void modificarEstadoDePunto(@RequestParam long id, @RequestParam String accion) {
+
+		if(accion.equals("Alta")) {
+		
+		puntoEntregaDAO.modificarPunto(id, true);
+		
+		return;
+		
+		}
+			
+		puntoEntregaDAO.modificarPunto(id, false);
+	
+	}
+	
 }
