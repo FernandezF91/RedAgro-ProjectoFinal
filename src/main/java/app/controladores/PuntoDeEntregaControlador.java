@@ -78,25 +78,6 @@ public class PuntoDeEntregaControlador {
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
-	@GetMapping(path = "redAgro/ptos_entrega_productores")
-	public List<Productor> getProductoresConPtosEntrega(@RequestParam List<Long> productores) {
-
-		UsuarioMapper user_mapper = new UsuarioMapper();
-		PuntoEntregaMapper entregas = new PuntoEntregaMapper();
-		List<Productor> listaProductores = new ArrayList<Productor>();
-
-		for (Long id : productores) {
-			EntidadProductor entidad = productorDAO.obtenerProductor(id);
-			Productor productor = new Productor(entidad.getId(), entidad.getRazon_social(),
-					user_mapper.mapFromEntity(entidad.getUsuario()),
-					entregas.mapFromEntity(entidad.getPuntos_entrega()));
-			listaProductores.add(productor);
-		}
-
-		return listaProductores;
-	}
-
-	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/puntos_productor_activos")
 	public List<PuntoEntrega> listadoPuntosDeEntregaActivos(@RequestParam long id) {
 

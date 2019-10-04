@@ -9,13 +9,6 @@ public class Productor {
 		this.setUsuario(usuario);
 	}
 
-	public Productor(long id, String razon_social, Usuario usuario, List<PuntoEntrega> puntosEntrega) {
-		this.setId(id);
-		this.setRazon_social(razon_social);
-		this.setUsuario(usuario);
-		this.setPuntosEntrega(puntosEntrega);
-	}
-
 	private long id;
 	private String razon_social;
 	private Usuario usuario;
