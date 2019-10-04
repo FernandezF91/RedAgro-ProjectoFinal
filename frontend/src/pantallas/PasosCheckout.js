@@ -8,13 +8,6 @@ import Select from 'react-select';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import '../diseños/Checkout.css'
 
-const columna = [
-    {
-        label: 'Productores seleccionados',
-        field: 'Productores',
-    }
-]
-
 const PasosCheckout = (props) => {
 
     switch (props.indexPasos) {
