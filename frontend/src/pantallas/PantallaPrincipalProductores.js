@@ -77,8 +77,6 @@ class PantallaPrincipalProductores extends Component {
                                     <NavDropdown.Item id="items">
                                         <Link to="/principalProductores/NuevoProducto" id="items">Nuevo producto</Link>
                                     </NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action/3.2">Ofertas</NavDropdown.Item>
                                 </NavDropdown>
                             </Row>
                             <Row>

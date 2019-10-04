@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import Producto from './Producto';
 import '../diseños/estilosGlobales.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from 'react-loader-spinner';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
 import '../diseños/ListadoPuntosEntrega.css';
 import Modal from 'react-awesome-modal';
-import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Route, withRouter} from 'react-router-dom';
 
 
 const columnas = [
@@ -48,9 +48,16 @@ class ListadoPuntosEntrega extends Component {
             visible2:"",
             accion:"",
             expandedRows : [],
+            id_punto:""
    
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.handleRowAccion = this.handleRowAccion.bind(this);
+        this.actualizarEstadoPunto = this.actualizarEstadoPunto.bind(this);
+        this.cargarFechas = this.cargarFechas.bind(this);
+        this.cargarFilas = this.cargarFilas.bind(this);
+        this.clickMostrarFechas = this.clickMostrarFechas.bind(this);
+
     }
 
     mostrarPantallaPrincipal() {
@@ -60,28 +67,92 @@ class ListadoPuntosEntrega extends Component {
         })
     }
 
-    closeModal() {
+actualizarEstadoPunto(accion){
 
-        this.state.accion===true?
+        const path_principal = "http://localhost:3000/redAgro/modificar_punto?id="+this.state.id_punto+"&accion="+accion;
+
+        var _this = this;
+
+            fetch(path_principal, {
+                method: "PUT"
+            })
+                .then(function (response) {
+
+                    if (response.status !== 200) {
+
+                        let mensajeError = "Ocurrió algún error inesperado. Intentá nuevamente"
+
+                        _this.setState({
+                            visible2: true,
+                            titulo: "Error",
+                            mensaje: mensajeError
+                        });
+
+                        return;
+
+                    }
+
+                    response.text().then(
+
+                        function (response) {
+
+                            _this.setState({
+                                visible2: true,
+                                titulo: "Actualización exitosa",
+                                mensaje: "",
+                                actualizacion:"Ok"
+                            });
+
+                        });
+                });
         
-        this.setState({
-            visible: false
-        })
 
-        :
+
+
+}
+
+    closeModal() {
+ 
+    
+    if(this.state.accion!==""){
+
+    this.actualizarEstadoPunto(this.state.accion)
+
+    this.setState({
+            visible:false,
+            accion:""})
+    
+    }
+
+    if(this.state.actualizacion==="Ok"){
+
+        this.mostrarPantallaPrincipal();
+
+        return
+
+        }
 
         this.setState({
             visible2: false
         })
+    
+    }
+
+    closeModalNo() {
+ 
+    this.setState({
+            visible:false,
+            accion:""})
+
     }
 
     handleRowAccion(rowId,activo) {
-        
+
             activo===true?
 
-            this.setState({ accion:true,visible: true, titulo: "Baja de punto de entrega", mensaje: "¿Estás seguro que no vas a vender/entregar tus productos en esta ubicación?" })
+            this.setState({id_punto:rowId, accion:"Baja", visible: true, titulo: "Baja de punto de entrega", mensaje: "¿Estás seguro que no vas a vender/entregar tus productos en esta ubicación?" })
             :
-            this.setState({ accion:true,visible: true, titulo: "Alta de punto de entrega", mensaje: "¿Estás seguro que vas a vender/entregar tus productos en esta ubicación?" })
+            this.setState({id_punto:rowId, accion:"Alta", visible: true, titulo: "Alta de punto de entrega", mensaje: "¿Estás seguro que vas a vender/entregar tus productos en esta ubicación?" })
     }
 
     cargarFechas(rowId) {
@@ -100,7 +171,7 @@ class ListadoPuntosEntrega extends Component {
                         visible2: true,
                         accion:false,
                         titulo: "Error",
-                        mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                        mensaje: "Ocurrió algún error inesperado. Intentá nuevamente"
                     });
                    
                     return;
@@ -210,7 +281,7 @@ class ListadoPuntosEntrega extends Component {
                         loading: false,
                         visible2: true,
                         titulo: "Error",
-                        mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                        mensaje: "Ocurrió algún error inesperado. Intentá nuevamente"
                     });
 
                     return;
@@ -277,7 +348,7 @@ class ListadoPuntosEntrega extends Component {
                                 {this.state.mensaje}
                             </p>     
                             <Button variant="success" onClick={() => this.closeModal()}>Si</Button>
-                            <Button variant="success" onClick={() => this.closeModal()}>No</Button>
+                            <Button variant="success" onClick={() => this.closeModalNo()}>No</Button>
                         </div>
                     </Modal>
                     <Modal
@@ -301,4 +372,4 @@ class ListadoPuntosEntrega extends Component {
         );
     };
 }
-export default ListadoPuntosEntrega;
+export default withRouter(ListadoPuntosEntrega);

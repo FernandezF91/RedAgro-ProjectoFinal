@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -138,6 +139,25 @@ public class PuntoDeEntregaControlador {
 		fechaEntregaDAO.save(fe);
 
 		return pe.getId();
+		
+		
 
 	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PutMapping(path = "redAgro/modificar_punto")
+	public void modificarEstadoDePunto(@RequestParam long id, @RequestParam String accion) {
+
+		if(accion.equals("Alta")) {
+		
+		puntoEntregaDAO.modificarPunto(id, true);
+		
+		return;
+		
+		}
+			
+		puntoEntregaDAO.modificarPunto(id, false);
+	
+	}
+	
 }
