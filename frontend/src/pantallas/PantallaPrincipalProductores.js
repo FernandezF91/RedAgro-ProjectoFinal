@@ -29,17 +29,16 @@ const IngresarPuntoEntregaRouter = withRouter(IngresarPuntoEntrega);
 const ListadoProductosRouter = withRouter(ListadoProductos);
 const EstadisticasRouter = withRouter(Estadisticas);
 const HitoricoRouter = withRouter(CargarHistorico);
-const PlanificacionRouter = withRouter (Planificación);
+const PlanificacionRouter = withRouter(Planificación);
 
 class PantallaPrincipalProductores extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            // id: this.props.location.state.id, //paso id de usuario desde el LOGIN
-            // user: this.props.location.state.user,//paso el usuario desde el LOGIN
-            // rolUsuario: this.props.location.state.rolUsuario
-
+            id: this.props.location.state.id, //paso id de usuario desde el LOGIN
+            user: this.props.location.state.user,//paso el usuario desde el LOGIN
+            rolUsuario: this.props.location.state.rolUsuario
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
