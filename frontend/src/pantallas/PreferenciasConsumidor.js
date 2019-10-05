@@ -235,31 +235,34 @@ class PreferenciasConsumidor extends Component {
                     <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                     <Button variant="success" type="submit" onClick={this.guardarPreferencias}>Guardar</Button>
                 </div>
-                {(this.state.showModal) &&
-                    <MDBModal isOpen={this.state.showModal} centered size="sm">
-                        <div className="modalMargenes">
-                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                            <br />
-                            {(this.state.resultadoRequest === 200) ?
-                                (
-                                    <div>
-                                        <i className="fas fa-check-circle iconoModalOk" />
-                                        <br />
-                                        <br />
-                                        <h5>Se aplicaron los cambios!</h5>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <i className="fas fa-exclamation-circle iconoModalError" />
-                                        <br />
-                                        <br />
-                                        <h5>Ups! Ocurrio un error! </h5>
-                                        <h6>Por favor, intenta nuevamente</h6>
-                                    </div>
-                                )
-                            }
-                        </div>
-                    </MDBModal>
+                {
+                    (this.state.showModal) &&
+                    (
+                        <MDBModal isOpen={this.state.showModal} centered size="sm">
+                            <div className="modalMargenes">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <br />
+                                {(this.state.resultadoRequest === 200) ?
+                                    (
+                                        <div>
+                                            <i className="fas fa-check-circle iconoModalOk" />
+                                            <br />
+                                            <br />
+                                            <h5>Se aplicaron los cambios!</h5>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <i className="fas fa-exclamation-circle iconoModalError" />
+                                            <br />
+                                            <br />
+                                            <h5>Ups! Ocurrio un error! </h5>
+                                            <h6>Por favor, intenta nuevamente</h6>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </MDBModal>
+                    )
                 }
             </div>
         )
