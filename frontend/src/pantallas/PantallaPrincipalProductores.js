@@ -36,9 +36,9 @@ class PantallaPrincipalProductores extends Component {
         super(props)
 
         this.state = {
-            id: this.props.location.state.id, //paso id de usuario desde el LOGIN
-            user: this.props.location.state.user,//paso el usuario desde el LOGIN
-            rolUsuario: this.props.location.state.rolUsuario
+            id: localStorage.getItem('myLocalStorageProductor') || this.props.location.state.id, //paso id de usuario desde el LOGIN
+            user: localStorage.getItem('myLocalStorageProductor') || this.props.location.state.user,//paso el usuario desde el LOGIN
+            rolUsuario: localStorage.getItem('myLocalStorageProductor') || this.props.location.state.rolUsuario
 
         }
 
@@ -54,6 +54,14 @@ class PantallaPrincipalProductores extends Component {
             }
         })
     }
+
+componentDidMount(){
+
+localStorage.setItem('myLocalStorageProductor', this.state.id);
+localStorage.setItem('myLocalStorageProductor', this.state.user);
+localStorage.setItem('myLocalStorageProductor', this.state.rolUsuario);
+
+}
 
     render() {
         return (

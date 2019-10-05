@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { NavDropdown, Container, Row, Col } from 'react-bootstrap';
 import { Route, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import DropdownButton from 'react-bootstrap/DropdownButton'
 
 import ListadoReservas from '../pantallas/ListadoReservas';
 import AlertaConsumidor from '../pantallas/AlertaConsumidor';
@@ -33,9 +34,9 @@ class PantallaPrincipalconsumidores extends Component {
         super(props)
 
         this.state = {
-            id: this.props.location.state.id, //paso id de usuario desde el LOGIN
-            user: this.props.location.state.user,
-            rolUsuario: this.props.location.state.rolUsuario,
+            id: localStorage.getItem('myLocalStorageConsumidor') || this.props.location.state.id, //paso id de usuario desde el LOGIN
+            user: localStorage.getItem('myLocalStorageConsumidor') || this.props.location.state.user,
+            rolUsuario: localStorage.getItem('myLocalStorageConsumidor') || this.props.location.state.rolUsuario,
             busqueda: '',
             productosSeleccionados: [],
         }
@@ -43,6 +44,15 @@ class PantallaPrincipalconsumidores extends Component {
         this.handleNuevaBusqueda = this.handleNuevaBusqueda.bind(this);
         this.actualizarProductosSeleccionados = this.actualizarProductosSeleccionados.bind(this);
     }
+
+componentDidMount(){
+
+localStorage.setItem('myLocalStorageConsumidor', this.state.id);
+localStorage.setItem('myLocalStorageConsumidor', this.state.user);
+localStorage.setItem('myLocalStorageConsumidor', this.state.rolUsuario);
+
+}
+
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
@@ -92,7 +102,24 @@ class PantallaPrincipalconsumidores extends Component {
                                         <Link to="/principalConsumidores/Geolocalizacion" id="items">Geolocalización</Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action/3.2" id="items">Categorias</NavDropdown.Item>
+                                    <NavDropdown title="Categoria" id="categoria_drop" drop="right">
+                                    <NavDropdown.Item id="itemArea">
+                                    <Row clasName="titulos">
+                                    <Col id="categorias">Verduras</Col>
+                                    <Col id="categorias">Frutas</Col>
+                                    <Col id="categorias">Otros</Col>
+                                </Row>
+                                <NavDropdown.Divider />
+                                <Row clasName="productos">
+                                    <Col>Lechuga</Col>
+                                    <Col>Tomate</Col>
+                                    <Col>Miel</Col>
+                                </Row>
+
+                                    </NavDropdown.Item>
+                       
+                                    </NavDropdown >
+                              
                                 </NavDropdown>
                             </Row>
                             <Row className="itemsMenuReservas">

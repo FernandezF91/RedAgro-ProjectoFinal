@@ -150,3 +150,25 @@ p, h4 {
 .items {
 	color: black !important;
 }
+
+#categoria_drop{
+
+color: black !important;
+margin-left:5%;
+
+}
+
+#itemArea{
+
+
+width:600px;
+height:300px;
+
+}
+
+#categorias{
+
+	color:green;
+
+
+}
