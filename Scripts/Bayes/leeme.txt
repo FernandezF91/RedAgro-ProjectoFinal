@@ -1,0 +1,1 @@
+Copiar esta carpeta en c: y darle permisos de control total para todos los usuarios.
