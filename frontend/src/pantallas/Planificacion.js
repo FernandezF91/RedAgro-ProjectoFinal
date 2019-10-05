@@ -8,11 +8,11 @@ import Modal from 'react-awesome-modal';
 
 
 
-const periodo = [
-    { label: "Verano", value: "p1" },
-    { label: "Otoño", value: "p2" },
-    { label: "Invierno", value: "p3" },
-    { label: "Primavera", value: "p4" }
+const mostrarPeriodo = [
+    { label: "Verano", value: "Verano" },
+    { label: "Otoño", value: "Otono" },
+    { label: "Invierno", value: "Invierno" },
+    { label: "Primavera", value: "Primavera" }
 ];
 
 
@@ -22,7 +22,11 @@ class Planificacion extends Component{
 		super(props);
 
 		this.state = {
-			campos: {},
+            campos: {},
+            alimentosAProducir: [],
+            formOk: false,
+            visibleOk: false,
+            periodo: String,
 			
 			id: this.props.id_productor
 		}
@@ -32,9 +36,10 @@ class Planificacion extends Component{
 	}
 	
 	cambiosSelectPeriodo(opt, a, value) {
-        let campos = this.state.campos;
-        campos[a.periodo] = opt.value;
-        this.setState({ campos })
+        //let campos = this.state.campos;
+        //campos[a.periodo] = 
+        this.periodo = opt.value;
+        //this.setState({ periodo })
     }
 
 	mostrarPantallaPrincipal() {
@@ -48,31 +53,21 @@ class Planificacion extends Component{
         var _this = this;
         e.preventDefault();
 
-            var path_principal = "http://localhost:3000/redAgro/usuario_productor/nuevo_producto?id_productor=";
-            var id_productor = _this.props.id_productor;
-            var id_producto = _this.state.campos["tipo_producto"];
-            var path_final = path_principal + id_productor + "&id_producto=" + id_producto;
+            var path_principal = "http://localhost:3000/redAgro/obtenerResultados?periodo=";
+            var periodo = this.periodo; 
+            //_this.props.id_productor;
+            var provincia = "CABA";
+            // _this.state.campos["tipo_producto"];
+            var path_final = path_principal + periodo + "&provincia=" + provincia;
 
-            alert(path_final);
+            //alert(path_final);
 
             fetch(path_final, {
-                method: "POST",
+                method: "GET",
                 headers: {
                     'Content-type': 'application/json;charset=UTF-8',
                 },
-                body: JSON.stringify({
-
-                    "titulo": this.state.campos["titulo"],
-                    "descripcion": this.state.campos["descripcion"],
-                    "fecha_vencimiento": this.state.campos["fecha_ven"],
-                    "precio": this.state.campos["precio"],
-                    "stock": this.state.campos["stock"],
-                    "unidad_venta": this.state.campos["unidad_venta"],
-                    "tiempo_preparacion": this.state.campos["tiempo_preparacion"],
-                    "tipo_produccion": this.state.campos["tipo_produccion"],
-                    "contenido": this.state.campos["contenido"]
-                }),
-            })
+                            })
                 .then(function (response) {
                     if (response.status !== 200) {
 
@@ -85,11 +80,19 @@ class Planificacion extends Component{
                     }
                     response.json().then(
                         function (response) {
-                            _this.subirArchivos(response);
+                         response.forEach(element => {
+                            _this.setState({alimentosAProducir:[..._this.state.alimentosAProducir,element]});
+                         });
+                            //_this.mostrarMensajeOk();
                         });
-
-                    _this.mostrarMensajeOk();
                 });
+    }
+  
+    mostrarMensajeOk() {
+        this.setState({
+            formOk: true,
+            visibleOk: true
+        });
     }
 
 
@@ -103,7 +106,7 @@ class Planificacion extends Component{
 							<Form.Label column sm={3}>
 								Periodo
 							</Form.Label>
-							<Select value={this.state.valueCat} className="selectPeriodo" name="periodo" options={periodo} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectPeriodo(opt, a, value)} />
+                            <Select value={this.state.valueCat} className="selectPeriodo" name="periodo" options={mostrarPeriodo} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectPeriodo(opt, a, value)} />
 						</Form.Group>
 					</div>
 					<div className="botonesNuevoProducto">

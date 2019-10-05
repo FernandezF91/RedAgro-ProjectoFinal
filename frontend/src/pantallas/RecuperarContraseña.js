@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react'
-import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
+import { Navbar, Container, Form, Row, Button } from 'react-bootstrap';
 import Modal from 'react-awesome-modal';
 import '../diseños/RecuperarContraseña.css';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
@@ -27,16 +27,10 @@ class RecuperarContraseña extends Component {
     }
 
     componentDidMount() {
-
-
         if (isNaN(parseInt(this.state.id))) {
-
             this.props.history.push({
                 pathname: '/*',
-
             })
-
-
         }
     }
 
@@ -49,15 +43,11 @@ class RecuperarContraseña extends Component {
     }
 
     closeModal() {
-
         if (this.state.formOk === false) {
-
             this.setState({
                 visible: false
             });
-
             return;
-
         }
 
         this.setState({
@@ -65,16 +55,11 @@ class RecuperarContraseña extends Component {
         });
 
         this.mostrarPantallaPrincipal();
-
     }
 
-
     validarDatos() {
-
-
         if ((!this.state.fields["contraseñaNueva"] || !this.state.fields["confirmarContraseña"]) ||
             ((this.state.fields["contraseñaNueva"]) !== (this.state.fields["confirmarContraseña"]))) {
-
 
             this.setState({
                 titulo: "Error",
@@ -83,25 +68,16 @@ class RecuperarContraseña extends Component {
             });
 
             return false;
-
         }
-
         return true;
-
     }
 
     modificarContraseña() {
-
         const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
-
         var password = this.state.fields["contraseñaNueva"];
-
         var id = this.state.id;
-
         const final_path = path_principal + password + "&id=" + id;
-
         var _this = this;
-
 
         if (_this.validarDatos()) {
 
@@ -114,11 +90,8 @@ class RecuperarContraseña extends Component {
                 // },
             })
                 .then(function (response) {
-
                     if (response.status !== 200) {
-
                         // alert("Ocurrió algún problema. Intenta nuevamente")
-
                         let mensajeError = "Ocurrió algun problema, intenta nuevamente"
 
                         _this.setState({
@@ -126,34 +99,25 @@ class RecuperarContraseña extends Component {
                             titulo: "Error",
                             mensaje: mensajeError
                         });
-
                         return;
-
                     }
 
                     response.text().then(
-
                         function (response) {
-
                             _this.setState({
                                 visible: true,
                                 titulo: "Modificación exitosa",
                                 mensaje: "",
                                 formOk: true
                             });
-
-
                         });
                 });
         }
     }
 
-
     mostrarPantallaPrincipal() {
-
         this.props.history.push({
             pathname: '/login',
-
         })
 
     }

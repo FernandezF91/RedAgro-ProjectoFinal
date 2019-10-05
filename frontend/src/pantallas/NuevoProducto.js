@@ -412,7 +412,7 @@ class NuevoProducto extends Component {
                     <div className="precio">
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
-                                *Precio (por unidad)
+                                *Precio (por unidad de venta)
                                 </Form.Label>
                             <Form.Control
                                 value={this.state.campos["precio"]}
