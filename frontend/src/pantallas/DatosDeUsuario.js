@@ -37,7 +37,7 @@ class DatosDeUsuario extends Component {
     componentDidMount() {
 
         let campos = {}
-
+        
         campos["nombre"] = this.state.usuario.nombre;
         campos["apellido"] = this.state.usuario.apellido;
         campos["fecha_nac"] = new Date(this.state.usuario.fecha_nacimiento);

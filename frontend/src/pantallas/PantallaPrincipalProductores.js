@@ -36,9 +36,9 @@ class PantallaPrincipalProductores extends Component {
         super(props)
 
         this.state = {
-            id: localStorage.getItem('myLocalStorageProductor') || this.props.location.state.id, //paso id de usuario desde el LOGIN
-            user: localStorage.getItem('myLocalStorageProductor') || this.props.location.state.user,//paso el usuario desde el LOGIN
-            rolUsuario: localStorage.getItem('myLocalStorageProductor') || this.props.location.state.rolUsuario
+            id: localStorage.getItem('myLocalStorageIdProductor') || this.props.location.state.id, //paso id de usuario desde el LOGIN
+            user: JSON.parse(localStorage.getItem('myLocalStorageUserProductor')) ||this.props.location.state.user,//paso el usuario desde el LOGIN
+            rolUsuario: localStorage.getItem('myLocalStorageRolProductor') || this.props.location.state.rolUsuario
 
         }
 
@@ -57,9 +57,9 @@ class PantallaPrincipalProductores extends Component {
 
 componentDidMount(){
 
-localStorage.setItem('myLocalStorageProductor', this.state.id);
-localStorage.setItem('myLocalStorageProductor', this.state.user);
-localStorage.setItem('myLocalStorageProductor', this.state.rolUsuario);
+localStorage.setItem('myLocalStorageIdProductor', this.state.id);
+localStorage.setItem('myLocalStorageUserProductor', JSON.stringify(this.state.user));
+localStorage.setItem('myLocalStorageRolProductor', this.state.rolUsuario);
 
 }
 
