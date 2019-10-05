@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
-import { BrowserRouter, Router, Route, Switch, Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+import { Button } from 'react-bootstrap';
+import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import CurrentLocation from './Map';
 
 import '../diseños/estilosGlobales.css';
