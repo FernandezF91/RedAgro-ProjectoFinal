@@ -41,6 +41,7 @@ const columnasConsumidor = [
 		field: 'Editar',
 	}
 ];
+
 const columnasProductor = [
 	{
 		label: 'Nro. Reserva',
@@ -96,12 +97,15 @@ const Reserva = ({ lista, rolUsuario }) => {
 				</MDBTable>
 				:
 				<div className="sinReservas">
-					{/* 			Version para consumidores */}
-					<i className="fas fa-tasks iconoGrande"></i>
+					<i className="fas fa-tasks iconoGrande" />
 					<br />
 					<br />
 					<h5>Ups! No tenes reservas! </h5>
-					<h6>Probá buscando productos por <Link to={''}>acá</Link> </h6>
+					{(rolUsuario === "Consumidor") ?
+						<h6>Probá buscando productos por <Link to={'.'}>acá</Link></h6>
+						:
+						<h6>Probá publicando tus productos por <Link to={'./NuevoProducto'}>acá</Link></h6>
+					}
 				</div>
 			}
 		</div >
