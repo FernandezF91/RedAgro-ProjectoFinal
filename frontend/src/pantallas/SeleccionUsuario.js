@@ -41,7 +41,7 @@ class SeleccionUsuario extends Component {
                             </Button>
                         </div>
                         <br />
-                        <Button variant="light" href="/login" className="atras">Atras</Button>
+                        <Button variant="light" href="javascript:history.back()" className="atras">Atras</Button>
                     </div>
                 </Container>
             </div>
