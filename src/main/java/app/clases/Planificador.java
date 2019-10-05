@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Arrays;
-import java.util.HashMap;
-
+import java.util.Collections;
 import smile.*;
-
-//import smile.Network;
 
 public class Planificador {
 	private String periodo;
@@ -47,43 +43,31 @@ public class Planificador {
 	
 	public List<String> obtenerResultados(){
 
-			Map<Long, String> Registros = new TreeMap<Long, String>(); 
+			Map<Integer, String> Registros = new TreeMap<Integer, String>();
+			List<String> alimentos = new ArrayList<String>();
+			List<String> planificados = new ArrayList<String>();
+
+			
 			Network net = new Network();
 			net.readFile("C:/Bayes/RedBayesProduccion.xdsl");
 			net.setEvidence("periodo", this.getPeriodo());
-			System.out.println(this.getPeriodo());
+			//System.out.println(this.getPeriodo());
 			net.setEvidence("provincia",this.getProvincia());
 			net.setEvidence("Ventas", "ventasMayor");
 			net.updateBeliefs();
+			
 			double[] lista = net.getNodeValue("Alimento");
-			List<String> listaNombres= new ArrayList<String>();
-			double[] listaOrdenada = net.getNodeValue("Alimento");
-			List<String> listaNombresOrd= new ArrayList<String>();
-			//Arrays.sort(lista);
-			List<String> alimentos = new ArrayList<String>();
-			int j=0;
+						
 			for (int i = 0 ; i<lista.length ; i++) {
-				listaNombres.add(net.getOutcomeId("Alimento", i));
-				long myBill = (int)(lista[i]*100);
-				Registros.put(myBill, net.getOutcomeId("Alimento", i));
-				//System.out.println(listaNombres.get(i) + " = " + (int)(lista[i]*100));
-				
-			}
-				System.out.println(Registros.values());
-				System.out.println(Registros.keySet());
-			for (int i = lista.length - 1 ; i>=0 ; i--) {
-//				System.out.println(
-//						net.getOutcomeId("Alimento", i) + " = " + lista[i]);
-				listaOrdenada[j] = lista[i];
-				j++;
+				int clave = (int)(lista[i]*100);
+				Registros.put(clave, net.getOutcomeId("Alimento", i));
 			}
 			
-//			for (int i = 0; i<5 ; i++) {
-//			alimentos.add(net.getOutcomeId("Alimento", i) );
-//			}
-//			
-//			System.out.println(alimentos);
-			return alimentos;
+				Registros.forEach((k,v)->alimentos.add(v));
+				Collections.reverse(alimentos);
+				planificados = alimentos.subList(0, 5);
+				
+			return planificados;
 	}
 
 
@@ -105,7 +89,13 @@ public class Planificador {
 	public void setProvincia(String provincia) {
 		this.provincia = provincia;
 	}
-	
-	
+		
 }
 
+
+
+//System.out.println(Registros.values());
+//System.out.println(Registros.keySet());
+//System.out.println(alimentos);
+//System.out.println(alimentos);
+//System.out.println(planificados);
