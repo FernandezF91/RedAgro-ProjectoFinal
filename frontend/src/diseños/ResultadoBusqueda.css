@@ -32,3 +32,10 @@
   .tituloCantidad {
       align-self: center;
   }
+
+  .view .imagenesBusqueda{
+      position: relative;
+      display: initial !important;
+  }
+
+ 

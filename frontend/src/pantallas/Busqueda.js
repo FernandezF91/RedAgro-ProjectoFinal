@@ -1,3 +1,4 @@
+import '../diseños/ResultadoBusqueda.css';
 import React from "react";
 import { Link } from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBIcon, MDBTooltip, MDBBadge, MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBBtn } from "mdbreact";
@@ -19,11 +20,11 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                                 item.imagenes.map((imagen, index) => (
                                                     <Carousel.Item key={index}>
                                                         <MDBCardImage
+                                                            className="imagenesBusqueda"
                                                             src={"data:" + imagen.tipo_contenido + ";base64," + imagen.image}
                                                             alt="ImagenBusqueda"
                                                             overlay="white-slight"
-                                                            mode='fit'
-                                                            height="300x" width="auto"/>
+                                                            height="250x" width="auto" />
                                                     </Carousel.Item>
                                                 ))
                                             }
@@ -38,10 +39,10 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                             </MDBCardTitle>
                                             <MDBCardText>
                                                 <strong className="float-center">
-                                                    <NumberFormat value={item.precio } displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
                                                 </strong>
                                             </MDBCardText>
-                                            <MDBCardFooter className="px-1">
+                                            <MDBCardFooter className="px-1" transparent>
                                                 <button className="iconosListado" onClick={() => restarProducto(index)}>
                                                     <i className="fas fa-minus" />
                                                 </button>
@@ -49,10 +50,11 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                                 <button className="iconosListado" onClick={() => sumarProducto(index)}>
                                                     <i className="fas fa-plus" />
                                                 </button>
+                                                <MDBBtn outline color="green" onClick={() => agregarAlCarrito(index)}>
+                                                    Agregar al carrito
+                                                </MDBBtn>
                                             </MDBCardFooter>
-                                            <MDBBtn outline color="green" onClick={() => agregarAlCarrito(index)}>
-                                                Agregar al carrito
-                                            </MDBBtn>
+
                                         </MDBCardBody>
                                     </MDBCard>
                                 </MDBCol>))}
