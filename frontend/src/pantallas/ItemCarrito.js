@@ -51,7 +51,6 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                             </td>
                             <td>
                                 <h5>{producto.titulo}</h5>
-                                <br />
                                 {producto.descripcion}
                                 <br />
                                 Producido por {producto.productor.razon_social}
