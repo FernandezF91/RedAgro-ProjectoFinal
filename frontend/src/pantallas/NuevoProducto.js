@@ -128,8 +128,6 @@ class NuevoProducto extends Component {
             var id_producto = _this.state.campos["tipo_producto"];
             var path_final = path_principal + id_productor + "&id_producto=" + id_producto;
 
-            alert(path_final);
-
             fetch(path_final, {
                 method: "POST",
                 headers: {

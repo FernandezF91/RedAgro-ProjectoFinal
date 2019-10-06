@@ -23,27 +23,22 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                                             alt="ImagenBusqueda"
                                                             overlay="white-slight"
                                                             mode='fit'
-                                                            height="300x" width="auto"
-                                                            fluid
-                                                        />
+                                                            height="300x" width="auto"/>
                                                     </Carousel.Item>
                                                 ))
                                             }
                                         </Carousel>
 
                                         <MDBCardBody className="text-center">
-                                            <a href="#!" className="grey-text">
-                                                <h6>{item.categoria}</h6>
-                                            </a>
+                                            <h6 className="grey-text">{item.categoria}</h6>
                                             <MDBCardTitle>
                                                 <strong>
-                                                    <a href="#!" className="dark-grey-text">{item.titulo}</a>
+                                                    <Link className="dark-grey-text" to="/">{item.titulo} </Link>
                                                 </strong>
                                             </MDBCardTitle>
                                             <MDBCardText>
                                                 <strong className="float-center">
-                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
-                                                    <br /> x {item.tipoDeUnidad}
+                                                    <NumberFormat value={item.precio } displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
                                                 </strong>
                                             </MDBCardText>
                                             <MDBCardFooter className="px-1">

@@ -8,6 +8,6 @@ import app.modelos.EntidadEstadoReserva;
 
 public interface EstadoReservaDao extends JpaRepository<EntidadEstadoReserva, Long> {
 
-	@Query(value = "SELECT * FROM EstadoReserva", nativeQuery = true)
+	@Query(value = "SELECT * FROM Estado_Reserva", nativeQuery = true)
 	List<EntidadEstadoReserva> obtenerEstadosReserva();
 }
