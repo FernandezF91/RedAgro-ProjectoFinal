@@ -9,6 +9,7 @@ import PasosCheckout from './PasosCheckout'
 import _ from 'lodash';
 import '../diseños/estilosGlobales.css';
 import '../diseños/Checkout.css'
+import moment from 'moment';
 
 const pasos = [
     'Confirmá tu datos personales',
@@ -196,9 +197,8 @@ class Checkout extends Component {
                         selector: {
                             ...this.state.selector,
                             fechasEntrega: data.map(item => {
-                                var fecha = new Date(item.fecha);
                                 return {
-                                    label: fecha.getDate().toString() + "/" + (fecha.getMonth() + 1).toString() + "/" + fecha.getFullYear().toString(),
+                                    label: moment(item.fecha).format('DD/MM/YYYY'),
                                     value: item.id
                                 }
                                 // if (fecha.getTime() >= fechaPreparación.getTime()) {
@@ -213,13 +213,15 @@ class Checkout extends Component {
     }
 
     calculoFechaMinimaEntrega() {
-        let fecha = new Date();
+        //let fecha = new Date();
         var tiempoPreparacion = [];
         this.props.productosSeleccionados.forEach(item => {
             tiempoPreparacion.push(item.tiempoDePreparacion);
         });
         tiempoPreparacion.sort((a, b) => (b - a));
-        fecha.setDate(fecha.getDate() + tiempoPreparacion[0]);
+        var fecha = moment().add(tiempoPreparacion[0], 'days');
+        // fecha.setDate(fecha.getUTCDate() + tiempoPreparacion[0]);
+        console.log(fecha.toString());
         return fecha;
     }
 
