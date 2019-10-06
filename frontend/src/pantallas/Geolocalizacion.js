@@ -2,10 +2,16 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap';
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import CurrentLocation from './Map';
+import { Router, Route, Link,Switch } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import ResultadoBusqueda from './ResultadoBusqueda';
+import { BrowserRouter } from "react-router-dom";
+import PantallaPrincipalConsumidores from "../pantallas/PantallaPrincipalConsumidores"
 
 import '../diseños/estilosGlobales.css';
 import '../diseños/Mapa.css';
 
+const ResultadoBusquedaRouter = withRouter(ResultadoBusqueda);
 
 class Geolocalizacion extends Component {
 
@@ -19,12 +25,31 @@ class Geolocalizacion extends Component {
             activeMarker: {},          //Shows the active marker upon click
             selectedPlace: {},          //Shows the infoWindow to the selected place upon a marker
             google: this.props.google,
-            markers: []
+            markers: [],
+            visible:"",
+            titulo:"",
+            mensaje:"",
+            busqueda:""
 
         }
 
-        this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);;
+        this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.updateParametroBusqueda = this.updateParametroBusqueda.bind(this);
+        
     }
+
+    updateParametroBusqueda(idProductor) {
+        if(idProductor>0) {
+            this.props.handleNuevaBusqueda(idProductor);
+        }
+    }
+
+closeModal() {
+        this.setState({
+            visible: false
+        });
+    }
+
 
     onMarkerClick = (props, marker, e) =>
         this.setState({
@@ -42,6 +67,16 @@ class Geolocalizacion extends Component {
         }
     };
 
+ mostrarPantallaPrincipal() {
+        this.props.history.push({
+            pathname: '/principalConsumidores',
+            state: {
+                id: this.state.id,
+                rolUsuario: this.state.rolUsuario
+            }
+        })
+    }
+
     componentDidMount() {
 
         var _this = this;
@@ -57,7 +92,7 @@ class Geolocalizacion extends Component {
                     // _this.setState({
                     //     visible: true,
                     //     titulo: "Error",
-                    //     mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                    //     mensaje: "Ocurrió algún error inesperado. Intentá nuevamente"
                     // });
                     return;
                 }
@@ -79,23 +114,15 @@ class Geolocalizacion extends Component {
                 id={marker.productor.id}
                 direccion={marker.direccion}
                 localidad={marker.localidad}
-                link={"Mis productos"}
+                link= {"Mis productos"}
                 position={{ lat: marker.latitud, lng: marker.longitud }} />
         });
 
     }
 
-    mostrarPantallaPrincipal() {
-
-        this.props.history.push({
-
-            pathname: '/principalConsumidores',
-            state: { id: this.state.id }
-        })
-
-    }
-
+    
     render() {
+ 
         return (
             <div className="containerGeneral">
                 <div className="titulosPrincipales">
@@ -135,9 +162,9 @@ class Geolocalizacion extends Component {
                             <div className="localidad">
                                 {this.state.selectedPlace.localidad}
                             </div>
-                            <div className="productos">
-                                <a href="/login">{this.state.selectedPlace.link}</a>
-                            </div>
+                            <div className="productos">                           
+                           <a href="#" onClick={this.updateParametroBusqueda(this.state.selectedPlace.id)}>{this.state.selectedPlace.link}</a>
+                            </div>                       
                         </InfoWindow>
                     </CurrentLocation>
                 </div>
@@ -146,6 +173,7 @@ class Geolocalizacion extends Component {
                 </div>
             </div>
         );
+        
     };
 }
 

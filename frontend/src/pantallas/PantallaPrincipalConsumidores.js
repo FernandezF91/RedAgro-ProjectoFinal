@@ -39,10 +39,12 @@ class PantallaPrincipalconsumidores extends Component {
             rolUsuario: localStorage.getItem('myLocalStorageRolConsumidor') || this.props.location.state.rolUsuario,
             busqueda: '',
             productosSeleccionados: [],
+            productos:[]
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.handleNuevaBusqueda = this.handleNuevaBusqueda.bind(this);
         this.actualizarProductosSeleccionados = this.actualizarProductosSeleccionados.bind(this);
+        this.cargarProductos = this.cargarProductos.bind(this);
     }
 
 componentDidMount(){
@@ -51,8 +53,42 @@ localStorage.setItem('myLocalStorageIdConsumidor', this.state.id);
 localStorage.setItem('myLocalStorageUserConsumidor', JSON.stringify(this.state.user));
 localStorage.setItem('myLocalStorageRolConsumidor', this.state.rolUsuario);
 
-}
+var _this=this;
 
+  fetch("http://localhost:3000/redAgro/obtener_productos", {
+            method: "GET",
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+            }
+        })
+            .then(function (response) {
+                if (response.status !== 200) {
+                    _this.setState({
+                        visible: true,
+                        titulo: "Error",
+                        mensaje: "Ocurrió algún error inesperado. Intentá nuevamente"
+                    });
+                   
+                    return;
+                }
+
+                response.json().then(
+                    function (response) {
+                    
+         
+                        response.forEach(element => {
+                            
+                            _this.setState({productos:[..._this.state.productos,element]});
+
+                        });
+
+                        
+
+
+                    });
+            });  
+
+}
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
@@ -79,7 +115,48 @@ localStorage.setItem('myLocalStorageRolConsumidor', this.state.rolUsuario);
         this.setState({ productosSeleccionados: productos })
     }
 
+cargarProductos(){
+
+let verduras = []
+let frutas = []
+let otros = []
+let tipos = []
+
+this.state.productos.forEach(p => p.categoria==="Verduras"? verduras.push(p):null)
+this.state.productos.forEach(p => p.categoria==="Frutas"?frutas.push(p):null)
+this.state.productos.forEach(p => p.categoria==="Otros"?otros.push(p):null)
+
+const item = [
+
+<Row>
+<Col>
+{
+verduras.map(v=>{return <Row id="subTipos"><Link onClick={()=>this.handleNuevaBusqueda(v.tipo)}>{v.tipo}</Link></Row>})
+}
+</Col>
+<Col>
+{
+frutas.map(f=>{return <Row id="subTipos"><Link onClick={()=>this.handleNuevaBusqueda(f.tipo)}>{f.tipo}</Link></Row>})
+}
+</Col>
+<Col>
+{
+otros.map(o=>{return <Row id="subTipos"><Link onClick={()=>this.handleNuevaBusqueda(o.tipo)}>{o.tipo}</Link></Row>})
+}
+</Col>
+</Row>
+
+]
+
+tipos.push(item)
+
+return tipos;
+
+}
+
     render() {
+
+        
         return (
             <div className="fondo">
                 <BarraNavegacion
@@ -102,7 +179,7 @@ localStorage.setItem('myLocalStorageRolConsumidor', this.state.rolUsuario);
                                         <Link to="/principalConsumidores/Geolocalizacion" id="items">Geolocalización</Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown title="Categoria" id="categoria_drop" drop="right">
+                                    <NavDropdown title="Categorias" id="categoria_drop" drop="right">
                                     <NavDropdown.Item id="itemArea">
                                     <Row clasName="titulos">
                                     <Col id="categorias">Verduras</Col>
@@ -110,16 +187,9 @@ localStorage.setItem('myLocalStorageRolConsumidor', this.state.rolUsuario);
                                     <Col id="categorias">Otros</Col>
                                 </Row>
                                 <NavDropdown.Divider />
-                                <Row clasName="productos">
-                                    <Col>Lechuga</Col>
-                                    <Col>Tomate</Col>
-                                    <Col>Miel</Col>
-                                </Row>
-
-                                    </NavDropdown.Item>
-                       
-                                    </NavDropdown >
-                              
+                                {this.cargarProductos()}
+                                    </NavDropdown.Item>                     
+                                    </NavDropdown >                             
                                 </NavDropdown>
                             </Row>
                             <Row className="itemsMenuReservas">
@@ -185,7 +255,8 @@ localStorage.setItem('myLocalStorageRolConsumidor', this.state.rolUsuario);
 
                             <Route path={'/principalConsumidores/Geolocalizacion'} render={(props) =>
                                 <GeolocalizacionRouter
-                                    id_consumidor={this.state.id} />} />
+                                    id_consumidor={this.state.id}
+                                    handleNuevaBusqueda = {this.handleNuevaBusqueda} />} />
 
                             <Route path={'/principalConsumidores/ResultadoBusqueda'} render={(props) =>
                                 <ResultadoBusquedaRouter

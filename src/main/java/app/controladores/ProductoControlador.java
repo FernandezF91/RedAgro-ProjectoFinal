@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.hibernate.transform.ToListResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -67,5 +68,21 @@ public class ProductoControlador {
 		}
 		
 		return productos;
+	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/obtener_productos")
+	public List<Producto> obtenerProductos() {
+
+		List<EntidadProducto> ep = new ArrayList<EntidadProducto>();
+		List<Producto> p = new ArrayList<Producto>();
+		ProductoMapper pm = new ProductoMapper();
+		
+		ep = productoDao.obtenerCategoriasSubtipos();
+		
+		p = ep.stream().map(eprod -> pm.mapFromEntity(eprod)).collect(Collectors.toList());
+		
+		return p;
+		
 	}
 }

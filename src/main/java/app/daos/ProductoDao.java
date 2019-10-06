@@ -25,4 +25,7 @@ public interface ProductoDao extends JpaRepository<EntidadProducto, Long>{
 			nativeQuery = true)
 	ArrayList<EntidadProducto> obtenerTipoProductos(String categoria);
 	
+	@Query("select p from EntidadProducto p")
+	List<EntidadProducto> obtenerCategoriasSubtipos();
+	
 }

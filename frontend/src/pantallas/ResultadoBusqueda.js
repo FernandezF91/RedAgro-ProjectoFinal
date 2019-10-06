@@ -63,7 +63,10 @@ class ResultadoBusqueda extends Component {
     }
 
     realizarBusqueda(busqueda) {
-        var path = "http://localhost:3000/redAgro/obtenerProductos?titulo=" + busqueda;
+
+
+        if(busqueda>0){
+        var path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + busqueda;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -121,6 +124,69 @@ class ResultadoBusqueda extends Component {
                     })
                 }
             })
+
+            return
+        }
+
+        var path = "http://localhost:3000/redAgro/obtenerProductosProductos?id=" + busqueda;
+        fetch(path)
+            .catch(error => console.error(error))
+            .then(response => {
+                try {
+                    if (response.status === 200) {
+                        this.setState({
+                            resultadoRequest: response.status
+                        });
+                        return response.json();
+                    }
+                    else {
+                        console.log(response.status);
+                        this.setState({
+                            loading: false,
+                            resultadoRequest: response.status
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                    this.setState({
+                        loading: false,
+                        resultadoRequest: response.status
+                    });
+                }
+            })
+            .then(data => {
+                if (data !== undefined) {
+                    this.setState({
+                        resultadoBusqueda: data.map((item) => {
+                            return {
+                                id: item.id,
+                                categoria: item.producto.categoria,
+                                tipo: item.producto.tipo,
+                                titulo: item.titulo,
+                                descripcion: item.descripcion,
+                                stock: item.stock,
+                                tipoDeUnidad: item.unidad_venta,
+                                tipoDeProduccion: item.tipo_produccion,
+                                precio: item.precio,
+                                fechaDeVencimiento: item.fecha_vencimiento,
+                                tiempoDePreparacion: item.tiempo_preparacion,
+                                contenido: item.contenido,
+                                cantidad: 0,
+                                productor: {
+                                    id: item.productor.id,
+                                    razon_social: item.productor.razon_social,
+                                    nombre: item.productor.usuario.nombre,
+                                    apellido: item.productor.usuario.apellido,
+                                    telefono: item.productor.usuario.telefono,
+                                },
+                                imagenes: item.imagenes,
+                            }
+                        }),
+                        loading: false
+                    })
+                }
+            })
+
     }
 
     restarProducto = (position) => {

@@ -64,7 +64,7 @@ public class ProductoProductorControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/obtenerProductosProductor")
-	public List<ProductoProductor> obtenerProductosProductor(@RequestParam Long id) {
+	public List<ProductoProductor> obtenerProductosProductor(@RequestParam long id) {
 
 		List<EntidadProductoProductor> listaProductos = productoProductorDao.obtenerProductosByProductor(id);
 		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
@@ -74,10 +74,24 @@ public class ProductoProductorControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/obtenerProductos")
-	public List<ProductoProductor> obtenerProductos(@RequestParam String titulo) {
-
-		List<EntidadProductoProductor> listaProductos = productoProductorDao.obtenerProductos(titulo);
+	public List<ProductoProductor> obtenerProductos(@RequestParam String busqueda) {
+		
+		List<EntidadProducto> p = new ArrayList<EntidadProducto>();
 		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
+		List<EntidadProductoProductor> listaProductos;
+		p=productoDao.obtenerCategoriasSubtipos();
+		
+		if(p.stream().anyMatch(prod ->prod.getTipo().equals(busqueda))) {
+		
+		listaProductos = productoProductorDao.obtenerProductosTipo(busqueda);
+			
+		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos);
+		
+		return productosMapeados;
+			
+		}
+		
+		listaProductos = productoProductorDao.obtenerProductos(busqueda);
 		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos);
 		return productosMapeados;
 	}

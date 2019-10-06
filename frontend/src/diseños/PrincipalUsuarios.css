@@ -162,7 +162,9 @@ margin-left:5%;
 
 
 width:600px;
-height:300px;
+height:400px;
+background-color:white;
+
 
 }
 
@@ -170,5 +172,11 @@ height:300px;
 
 	color:green;
 
+
+}
+
+#subTipos{
+
+margin-left:0px;
 
 }
