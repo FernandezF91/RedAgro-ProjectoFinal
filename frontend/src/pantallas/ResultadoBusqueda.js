@@ -7,7 +7,6 @@ import Loader from 'react-loader-spinner';
 import Busqueda from './Busqueda';
 import Paginacion from './Paginacion';
 import ButterToast, { Cinnamon, POS_BOTTOM, POS_RIGHT } from 'butter-toast';
-import { isUndefined } from 'util';
 
 const tamañosListado = [
     { label: "9", value: "9" },
@@ -64,73 +63,71 @@ class ResultadoBusqueda extends Component {
 
     realizarBusqueda(busqueda) {
 
-
-        if(typeof(busqueda)==="number"){
-        var path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + busqueda;
-        fetch(path)
-            .catch(error => console.error(error))
-            .then(response => {
-                try {
-                    if (response.status === 200) {
-                        this.setState({
-                            resultadoRequest: response.status
-                        });
-                        return response.json();
-                    }
-                    else {
-                        console.log(response.status);
+        if (typeof (busqueda) === "number") {
+            var path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + busqueda;
+            fetch(path)
+                .catch(error => console.error(error))
+                .then(response => {
+                    try {
+                        if (response.status === 200) {
+                            this.setState({
+                                resultadoRequest: response.status
+                            });
+                            return response.json();
+                        }
+                        else {
+                            console.log(response.status);
+                            this.setState({
+                                loading: false,
+                                resultadoRequest: response.status
+                            });
+                        }
+                    } catch (error) {
+                        console.log(error);
                         this.setState({
                             loading: false,
                             resultadoRequest: response.status
                         });
                     }
-                } catch (error) {
-                    console.log(error);
-                    this.setState({
-                        loading: false,
-                        resultadoRequest: response.status
-                    });
-                }
-            })
-            .then(data => {
-                if (data !== undefined) {
-                    this.setState({
-                        resultadoBusqueda: data.map((item) => {
-                            return {
-                                id: item.id,
-                                categoria: item.producto.categoria,
-                                tipo: item.producto.tipo,
-                                titulo: item.titulo,
-                                descripcion: item.descripcion,
-                                stock: item.stock,
-                                tipoDeUnidad: item.unidad_venta,
-                                tipoDeProduccion: item.tipo_produccion,
-                                precio: item.precio,
-                                fechaDeVencimiento: item.fecha_vencimiento,
-                                tiempoDePreparacion: item.tiempo_preparacion,
-                                contenido: item.contenido,
-                                cantidad: 0,
-                                productor: {
-                                    id: item.productor.id,
-                                    razon_social: item.productor.razon_social,
-                                    nombre: item.productor.usuario.nombre,
-                                    apellido: item.productor.usuario.apellido,
-                                    telefono: item.productor.usuario.telefono,
-                                },
-                                imagenes: item.imagenes,
-                            }
-                        }),
-                        loading: false
-                    })
-                }
-            })
+                })
+                .then(data => {
+                    if (data !== undefined) {
+                        this.setState({
+                            resultadoBusqueda: data.map((item) => {
+                                return {
+                                    id: item.id,
+                                    categoria: item.producto.categoria,
+                                    tipo: item.producto.tipo,
+                                    titulo: item.titulo,
+                                    descripcion: item.descripcion,
+                                    stock: item.stock,
+                                    tipoDeUnidad: item.unidad_venta,
+                                    tipoDeProduccion: item.tipo_produccion,
+                                    precio: item.precio,
+                                    fechaDeVencimiento: item.fecha_vencimiento,
+                                    tiempoDePreparacion: item.tiempo_preparacion,
+                                    contenido: item.contenido,
+                                    cantidad: 0,
+                                    productor: {
+                                        id: item.productor.id,
+                                        razon_social: item.productor.razon_social,
+                                        nombre: item.productor.usuario.nombre,
+                                        apellido: item.productor.usuario.apellido,
+                                        telefono: item.productor.usuario.telefono,
+                                    },
+                                    imagenes: item.imagenes,
+                                }
+                            }),
+                            loading: false
+                        })
+                    }
+                })
 
             return
         }
 
-      
-        var path = "http://localhost:3000/redAgro/obtenerProductos?busqueda=" + busqueda;
-        fetch(path)
+        var path2 = "http://localhost:3000/redAgro/obtenerProductos?busqueda=" + busqueda;
+        fetch(path2)
             .catch(error => console.error(error))
             .then(response => {
                 try {
@@ -240,9 +237,9 @@ class ResultadoBusqueda extends Component {
                 this.setState(this.actualizarPropsSeleccionados(productosSeleccionados));
                 ButterToast.raise({
                     content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_GREEN}
-                        content={() => <div class="mensajeToast">Se agrego un nuevo producto a tu carrito</div>}
+                        content={() => <div className="mensajeToast">Se agrego un nuevo producto a tu carrito</div>}
                         title="CulturaVerde"
-                        icon={<i class="fa fa-shopping-cart iconoToast" />}
+                        icon={<i className="fa fa-shopping-cart iconoToast" />}
                     />
                 });
             }
@@ -357,7 +354,7 @@ class ResultadoBusqueda extends Component {
                             currentPage={this.state.paginaActual} />
                         : ''
                 }
-                <div class="toastPosicion">
+                <div className="toastPosicion">
                     <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_RIGHT }} /></div>
             </div>
         )
