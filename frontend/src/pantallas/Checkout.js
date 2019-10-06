@@ -197,13 +197,12 @@ class Checkout extends Component {
                         selector: {
                             ...this.state.selector,
                             fechasEntrega: data.map(item => {
-                                return {
-                                    label: moment(item.fecha).format('DD/MM/YYYY'),
-                                    value: item.id
+                                if (moment(fechaPreparación).isBefore(item.fecha)) {
+                                    return {
+                                        label: moment(item.fecha).format('DD/MM/YYYY'),
+                                        value: item.id
+                                    }
                                 }
-                                // if (fecha.getTime() >= fechaPreparación.getTime()) {
-
-                                // }
                             })
                         },
                         loading: false
@@ -213,15 +212,12 @@ class Checkout extends Component {
     }
 
     calculoFechaMinimaEntrega() {
-        //let fecha = new Date();
         var tiempoPreparacion = [];
         this.props.productosSeleccionados.forEach(item => {
             tiempoPreparacion.push(item.tiempoDePreparacion);
         });
         tiempoPreparacion.sort((a, b) => (b - a));
         var fecha = moment().add(tiempoPreparacion[0], 'days');
-        // fecha.setDate(fecha.getUTCDate() + tiempoPreparacion[0]);
-        console.log(fecha.toString());
         return fecha;
     }
 

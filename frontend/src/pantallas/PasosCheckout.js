@@ -103,8 +103,8 @@ const PasosCheckout = (props) => {
                                     options={props.selector.puntosEntrega}
                                     placeholder="Seleccione una dirección de retiro..."
                                     onChange={newPunto => props.actualizarPuntoEntrega(newPunto)} />
-                                <br />
-                                <Select className="dropdownDirecciones"
+                                    
+                                <Select className="dropdownFechas"
                                     value={props.seleccionado.fechaEntrega}
                                     options={props.selector.fechasEntrega}
                                     placeholder="Seleccione una fecha de retiro..."
