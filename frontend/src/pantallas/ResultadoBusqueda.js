@@ -65,7 +65,7 @@ class ResultadoBusqueda extends Component {
     realizarBusqueda(busqueda) {
 
 
-        if(busqueda>0){
+        if(typeof(busqueda)==="number"){
         var path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + busqueda;
         fetch(path)
             .catch(error => console.error(error))
@@ -128,7 +128,8 @@ class ResultadoBusqueda extends Component {
             return
         }
 
-        var path = "http://localhost:3000/redAgro/obtenerProductosProductos?id=" + busqueda;
+      
+        var path = "http://localhost:3000/redAgro/obtenerProductos?busqueda=" + busqueda;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
