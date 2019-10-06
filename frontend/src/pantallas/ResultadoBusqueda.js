@@ -333,7 +333,7 @@ class ResultadoBusqueda extends Component {
 
         return (
             <div>
-                <div className="titulosPrincipales">Resultado Búsqueda</div>
+                <div className="titulosPrincipales">Resultados</div>
                 {
                     resultadoBusqueda.length > 0 ?
                         <div className="opcionesCantidad">
