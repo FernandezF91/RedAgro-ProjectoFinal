@@ -37,12 +37,12 @@ class PantallaPrincipalProductores extends Component {
 
         this.state = {
             id: localStorage.getItem('myLocalStorageIdProductor') || this.props.location.state.id, //paso id de usuario desde el LOGIN
-            user: JSON.parse(localStorage.getItem('myLocalStorageUserProductor')) ||this.props.location.state.user,//paso el usuario desde el LOGIN
+            user: JSON.parse(localStorage.getItem('myLocalStorageUserProductor')) || this.props.location.state.user,//paso el usuario desde el LOGIN
             rolUsuario: localStorage.getItem('myLocalStorageRolProductor') || this.props.location.state.rolUsuario
-
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.actualizarUsuarioProductor = this.actualizarUsuarioProductor.bind(this);
     }
 
     mostrarPantallaPrincipal() {
@@ -55,13 +55,16 @@ class PantallaPrincipalProductores extends Component {
         })
     }
 
-componentDidMount(){
+    actualizarUsuarioProductor(nuevoUsuario) {
+        this.setState({ user: nuevoUsuario });
+        this.mostrarPantallaPrincipal();
+    }
 
-localStorage.setItem('myLocalStorageIdProductor', this.state.id);
-localStorage.setItem('myLocalStorageUserProductor', JSON.stringify(this.state.user));
-localStorage.setItem('myLocalStorageRolProductor', this.state.rolUsuario);
-
-}
+    componentDidMount() {
+        localStorage.setItem('myLocalStorageIdProductor', this.state.id);
+        localStorage.setItem('myLocalStorageUserProductor', JSON.stringify(this.state.user));
+        localStorage.setItem('myLocalStorageRolProductor', this.state.rolUsuario);
+    }
 
     render() {
         return (
@@ -153,7 +156,9 @@ localStorage.setItem('myLocalStorageRolProductor', this.state.rolUsuario);
                             <Route path='/principalProductores/modificarContraseña'
                                 render={(props) => <ModificarContraseniaRouter usuario={this.state.user} />} />
                             <Route path='/principalProductores/EditarDatos'
-                                render={(props) => <EditarDatosRouter usuario={this.state.user} />} />
+                                render={(props) => <EditarDatosRouter
+                                    usuario={this.state.user}
+                                    actualizarUsuarioProductor={this.actualizarUsuarioProductor} />} />
                             <Route path={'/principalProductores/ListadoReservas'}
                                 render={(props) => <ListadoReservasRouter id_usuario={this.state.id} />} />
                             <Route path={'/principalProductores/IngresarPuntoEntrega'}

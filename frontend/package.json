@@ -16,6 +16,7 @@
     "http-proxy-middleware": "^0.19.1",
     "iana-tz-data": "^2019.1.0",
     "mdbreact": "^4.19.0",
+    "moment": "^2.24.0",
     "rc-datepicker": "^5.0.14",
     "react": "^16.8.6",
     "react-awesome-modal": "^2.0.5",

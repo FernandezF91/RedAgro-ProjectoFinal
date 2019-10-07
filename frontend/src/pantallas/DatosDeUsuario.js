@@ -32,19 +32,18 @@ class DatosDeUsuario extends Component {
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.actualizarStorage = this.actualizarStorage.bind(this);
     }
 
     componentDidMount() {
-
         let campos = {}
-        
+
         campos["nombre"] = this.state.usuario.nombre;
         campos["apellido"] = this.state.usuario.apellido;
         campos["fecha_nac"] = new Date(this.state.usuario.fecha_nacimiento);
         campos["telefono"] = this.state.usuario.telefono;
 
         this.setState({ campos: campos });
-
     }
 
     detectarCambios(e) {
@@ -53,7 +52,6 @@ class DatosDeUsuario extends Component {
         this.setState({
             campos
         })
-
     }
 
     cambiosFecha(e) {
@@ -62,50 +60,71 @@ class DatosDeUsuario extends Component {
         this.setState({ campos })
     }
 
+    actualizarStorage() {
+        if (this.state.usuario.rol === "Consumidor") {
+            this.setState({
+                usuario: JSON.parse(JSON.stringify({
+                    "id": this.state.usuario.id,
+                    "nombre": this.state.campos["nombre"],
+                    "apellido": this.state.campos["apellido"],
+                    "telefono": this.state.campos["telefono"],
+                    "fecha_nacimiento": this.state.campos["fecha_nac"],
+                    "usuario": this.state.usuario.usuario,
+                    "contraseña": this.state.usuario.contraseña,
+                    "rol": this.state.usuario.rol,
+                    "activo": this.state.usuario.activo,
+                    "alertas": []
+                }))
+            })
+            localStorage.removeItem('myLocalStorageUserConsumidor');
+            localStorage.setItem('myLocalStorageUserConsumidor', JSON.stringify(this.state.usuario));
+        } else {
+            this.setState({
+                usuario: JSON.parse(JSON.stringify({
+                    "id": this.state.usuario.id,
+                    "nombre": this.state.campos["nombre"],
+                    "apellido": this.state.campos["apellido"],
+                    "telefono": this.state.campos["telefono"],
+                    "fecha_nacimiento": this.state.campos["fecha_nac"],
+                    "usuario": this.state.usuario.usuario,
+                    "contraseña": this.state.usuario.contraseña,
+                    "rol": this.state.usuario.rol,
+                    "activo": this.state.usuario.activo,
+                    "razon_social": this.state.usuario.razon_social,
+                    "alertas": []
+                }))
+            })
+            localStorage.removeItem('myLocalStorageUserProductor');
+            localStorage.setItem('myLocalStorageUserProductor', JSON.stringify(this.state.usuario));
+        }
+    }
 
     closeModal() {
-
         if (this.state.formOk === false) {
-
             this.setState({
                 visible: false
             });
-
             return;
-
         }
 
         this.setState({
             visible: false
         });
-
         this.mostrarPantallaPrincipal();
-
     }
 
-
-
     mostrarPantallaPrincipal() {
-
-        this.state.usuario.rol === "Productor" ?
-
-            this.props.history.push({
-                pathname: '/principalProductores',
-                state: { id: this.state.usuario.id }
-            })
-            :
-
-            this.props.history.push("/principalConsumidores", { id: this.state.usuario.id });
-
+        if (this.state.usuario.rol === "Productor") {
+            this.props.actualizarUsuarioProductor(this.state.usuario);
+        } else {
+            this.props.actualizarUsuarioConsumidor(this.state.usuario);
+        }
     }
 
     validarCampos() {
-
-
         if ((!this.state.campos["nombre"]) || (!this.state.campos["apellido"]) || (!this.state.campos["telefono"]) || (!this.state.campos["fecha_nac"]) ||
             (!regularExp.onlyLetters.test(this.state.campos["nombre"])) || (!regularExp.onlyLetters.test(this.state.campos["apellido"])) || (!isDate(this.state.campos["fecha_nac"])) ||
             (!regularExp.onlyNumbers.test(this.state.campos["telefono"])) || (this.state.campos["telefono"].length < 8) || (this.state.campos["telefono"].length > 14)) {
-
 
             this.setState({
                 titulo: "Error",
@@ -114,14 +133,12 @@ class DatosDeUsuario extends Component {
             });
 
             return false;
-
         }
 
         if ((this.state.campos["nombre"] === this.state.usuario.nombre) &&
             (this.state.campos["apellido"] === this.state.usuario.apellido) &&
             (this.state.campos["telefono"] === this.state.usuario.telefono) &&
             (this.state.campos["fecha_nac"].getTime() === new Date(this.state.usuario.fecha_nacimiento).getTime())) {
-
 
             this.setState({
                 titulo: "Error",
@@ -130,14 +147,8 @@ class DatosDeUsuario extends Component {
             });
 
             return false;
-
-
         }
-
-
         return true;
-
-
     }
 
     handleSubmit(e) {
@@ -173,7 +184,7 @@ class DatosDeUsuario extends Component {
 
                     response.text().then(
                         function (response) {
-
+                            _this.actualizarStorage();
                             _this.setState({
                                 visible: true,
                                 titulo: "Modificación exitosa",
@@ -182,13 +193,9 @@ class DatosDeUsuario extends Component {
                             });
 
                         });
-
-
                 });
         }
     }
-
-
 
     render() {
         return (
