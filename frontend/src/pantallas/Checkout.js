@@ -33,7 +33,7 @@ const theme = createMuiTheme({
             }
         },
         MuiTypography: {
-            body1: {
+            body2: {
                 fontSize: 18,
             }
         },
@@ -55,6 +55,9 @@ const theme = createMuiTheme({
                 padding: '50'
             }
         }
+    },
+    typography: {
+        useNextVariants: true,
     }
 });
 class Checkout extends Component {
