@@ -119,6 +119,10 @@ input[type=text] {
     font-size: 18px;
 }
 
+.iconosTablaDeshabilitados {
+    opacity: 0.5;
+  }
+
 .cursorManito {
     cursor: pointer;
     cursor: hand;
@@ -168,4 +172,41 @@ input[type=text] {
 
 .columnaCentrado {
     display: inline;
+}
+
+
+.actualizacionEstado {
+    display: flex;
+    flex-direction: row;
+}
+
+.selectEstado {
+    width: 250px;
+    margin-left: 10px;
+}
+
+.tituloActualizacionEstado {
+    align-self: center;
+}
+
+.cantidadProductos {
+    width: 150px;
+    margin-left: 10px;
+}
+
+.margenAutomatico {
+    text-align: center !important;
+    position: relative;
+}
+
+.opcionesCantidad {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 5%;
+    margin-bottom: 20px;
+}
+
+.tituloCantidad {
+    align-self: center;
 }

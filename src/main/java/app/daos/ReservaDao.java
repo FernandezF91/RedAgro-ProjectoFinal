@@ -1,9 +1,12 @@
 package app.daos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import app.modelos.EntidadReserva;
 
@@ -28,11 +31,17 @@ public interface ReservaDao extends JpaRepository<EntidadReserva, Long> {
 			+ " AND ER.nombre = 'Finalizado' AND R.productor_id = ?1 GROUP BY P.tipo ", nativeQuery = true)
 	List<Object[]> obtenerMetricasProductosVendidos(long usuario_id);
 
-	//@Query(value = " SELECT ER.nombre AS estado, Month(R.fecha) AS mes, count(R.id) AS cantidad "
+	// @Query(value = " SELECT ER.nombre AS estado, Month(R.fecha) AS mes,
+	// count(R.id) AS cantidad "
 	@Query(value = " SELECT Month(R.fecha) AS mes, count(R.id) AS cantidad "
 			+ " FROM reserva R JOIN estado_reserva ER ON R.estado_id = ER.id "
 			+ " WHERE R.Fecha BETWEEN DATE_ADD(CURDATE(), INTERVAL -180 DAY) AND CURDATE() "
 			+ " AND ER.nombre = ('Finalizado') AND R.productor_id = ?1 "
 			+ " GROUP BY Month(R.fecha) ORDER BY Month(R.fecha) ", nativeQuery = true)
 	List<Object[]> obtenerMetricasReservasPorMes(long usuario_id);
+
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE Reserva R SET R.estado_id = ?2 WHERE R.id =?1", nativeQuery = true)
+	void actualizarEstadoReserva(long id_reserva, long id_estado);
 }

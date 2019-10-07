@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +29,7 @@ import app.daos.UsuarioDao;
 import app.modelos.EntidadReserva;
 import app.modelos.EntidadDetalleReserva;
 import app.mappers.ReservaMapper;
+
 
 @RestController
 public class ReservaControlador {
@@ -176,7 +178,7 @@ public class ReservaControlador {
 			detalleReservaDao.saveAll(detalles);
 
 			String id_reserva = idReserva.toString();
-			return new ResponseEntity<>("Reserva " + id_reserva + " creada correctamente!", HttpStatus.OK);
+			return new ResponseEntity<>("Reserva #" + id_reserva + " creada correctamente!", HttpStatus.OK);
 
 		} catch (Exception e) {
 			return new ResponseEntity<>("Ocurrio un error crear la reserva. Reintente más tarde",
@@ -184,4 +186,17 @@ public class ReservaControlador {
 		}
 
 	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PutMapping(path = "redAgro/actualizarEstadoReserva")
+	public ResponseEntity<String> actualizarEstadoReserva(@RequestParam long id_reserva, @RequestParam long id_estado) {
+		try {
+			reservaDao.actualizarEstadoReserva(id_reserva, id_estado);
+			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Ocurrio un error crear la reserva. Reintente más tarde",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }

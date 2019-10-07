@@ -9,6 +9,9 @@ import DetalleReserva from '../pantallas/DetalleReserva';
 import Paginacion from './Paginacion';
 import Loader from 'react-loader-spinner';
 import Select from 'react-select';
+import { MDBModal, MDBModalBody, MDBModalHeader } from 'mdbreact';
+import Button from 'react-bootstrap/Button';
+import moment from 'moment';
 
 const tamañosListado = [
     { label: "5", value: "5" },
@@ -16,6 +19,7 @@ const tamañosListado = [
     { label: "30", value: "30" },
     { label: "Todo", value: "Todo" },
 ];
+
 var defaultListado = [
     { label: "5", value: "5" },
 ];
@@ -36,11 +40,23 @@ class ListadoReservas extends Component {
             currentPage: 1,
             reservasPerPage: 5,
             expandedRows: [],
-            loading: true
+            loading: true,
+            showModal: false,
+            listadoEstados: [],
+            listadoFiltradoEstados: [],
+            estadoSeleccionado: "",
+            idReservaActualizar: 0
         }
-        this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-    }
 
+        this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.abrirModal = this.abrirModal.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
+        this.filtrarEstadosAMostrar = this.filtrarEstadosAMostrar.bind(this);
+        this.encontrarEstado = this.encontrarEstado.bind(this);
+        this.cargarListadoDeEstados = this.cargarListadoDeEstados.bind(this);
+        this.actualizarEstadoReserva = this.actualizarEstadoReserva.bind(this);
+    }
+    
     nextPage = (pageNumber) => {
         this.setState({ currentPage: pageNumber });
     }
@@ -65,36 +81,49 @@ class ListadoReservas extends Component {
 
     generoItem(item) {
         const clickCallback = () => this.handleRowClick(item.id);
+        const actualizacionEstado = () => this.abrirModalEstado(item.id, item.fechaDateTime, item.estado);
         var tipoUsuario = this.props.rolUsuario;
         const itemRows = [
-            <tr onClick={clickCallback} key={"row-data-" + item.id}>
+            <tr key={"row-data-" + item.id}>
                 <td>{item.id}</td>
                 <td>{item.fecha}</td>
                 <td>{item.estado}</td>
                 <td>Retira <i>{item.persona_retiro}</i> por <i>{item.punto_entrega}</i></td>
                 {
                     (tipoUsuario === "Consumidor") ?
-                        <td> {item.productor.nombre + " " + item.productor.apellido}<br />Tel: {item.productor.telefono}</td>
+                        <td>
+                            {item.productor.nombre + " " + item.productor.apellido}
+                            <br />
+                            Tel: {item.productor.telefono}
+                        </td>
                         :
-                        <td>{item.consumidor.nombre + " " + item.consumidor.apellido}<br />Tel: {item.consumidor.telefono}</td>
+                        <td>
+                            {item.consumidor.nombre + " " + item.consumidor.apellido}
+                            <br />
+                            Tel: {item.consumidor.telefono}
+                        </td>
                 }
                 <td>
                     <NumberFormat value={item.total_reserva} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                 </td>
                 <td>
-                    <i className="far fa-eye iconosTabla" title="Ver detalle reserva" />
+                    <i className="far fa-eye iconosTabla cursorManito" title="Ver detalle reserva" onClick={clickCallback} key={"row-data-" + item.id} />
+                </td>
+                <td id="estado">
+                    {(item.estado === "Finalizado") || (item.estado === "Cancelado") ?
+                        //TODO: ver como habilitar para el consumidor
+                        //no se puede editar el estado. Se deshabilita
+                        <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas terminadas" />
+                        :
+                        <i className="fas fa-edit iconosTabla cursorManito" title="Actualizar el estado" onClick={actualizacionEstado} key={"row-data-" + item.id} />
+                    }
                 </td>
                 <td>
                     <Link to={''}>
-                        <i className="fas fa-comments iconosTabla" title="Ver mensajes" />
+                        <i className="fas fa-comments iconosTabla cursorManito" title="Ver mensajes" />
                     </Link>
                 </td>
-                <td>
-                    <Link to={''}>
-                        <i className="fas fa-ellipsis-v iconosTabla" title="Ver detalle reserva" />
-                    </Link>
-                </td>
-            </tr>
+            </tr >
         ];
 
         if (this.state.expandedRows.includes(item.id)) {
@@ -105,39 +134,81 @@ class ListadoReservas extends Component {
         return itemRows;
     }
 
+    cargarListadoDeEstados() {
+        var path = "http://localhost:3000/redAgro/obtenerEstadosReserva";
+        fetch(path)
+            .catch(err => console.error(err))
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 504) {
+                    console.log("Timeout");
+                } else {
+                    console.log("Otro error");
+                }
+            })
+            .then(data => {
+                if (data !== void (0)) {
+                    this.setState({
+                        listadoEstados: data.map((item) => {
+                            return {
+                                label: item.nombre,
+                                value: item.id
+                            }
+                        })
+                    })
+                }
+            })
+    }
+
     componentDidMount() {
-        var path_usuario = "http://localhost:3000/redAgro/get_reservas_usuario?id=" + this.state.id;
+        var _this = this;
+        _this.cargarListadoDeEstados();
+
+        var path_usuario = "http://localhost:3000/redAgro/get_reservas_usuario?id=" + _this.state.id;
         fetch(path_usuario)
             .catch(err => console.error(err))
-            .then(response => { return response.json(); })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 504) {
+                    console.log("Timeout");
+                } else {
+                    console.log("Otro error");
+                }
+            })
             .then(data => {
-                this.setState({
-                    reservasRealizadas: data.map((item) => {
-                        var fecha = new Date(item.fecha);
-                        return {
-                            id: item.id,
-                            fecha: fecha.getDate().toString() + "/" + (fecha.getMonth() + 1).toString() + "/" + fecha.getFullYear().toString(),
-                            forma_retiro: item.forma_retiro,
-                            persona_retiro: item.persona_retiro,
-                            punto_entrega: item.punto_entrega.direccion + " " + item.punto_entrega.cod_postal + " " + item.punto_entrega.localidad,
-                            consumidor: {
-                                id: item.consumidor.id,
-                                nombre: item.consumidor.usuario.nombre,
-                                apellido: item.consumidor.usuario.apellido,
-                                telefono: item.consumidor.usuario.telefono,
-                            },
-                            productor: {
-                                id: item.productor.id,
-                                razon_social: item.productor.razon_social,
-                                nombre: item.productor.usuario.nombre,
-                                apellido: item.productor.usuario.apellido,
-                                telefono: item.productor.usuario.telefono,
-                            },
-                            detalleReserva: item.detalleReserva,
-                            estado: item.estado_reserva.nombre,
-                            total_reserva: item.total_reserva
-                        }
-                    }),
+                if (data !== void (0)) {
+                    _this.setState({
+                        reservasRealizadas: data.map((item) => {
+                            return {
+                                id: item.id,
+                                fecha: moment(item.fecha).format('DD/MM/YYYY'),
+                                forma_retiro: item.forma_retiro,
+                                persona_retiro: item.persona_retiro,
+                                punto_entrega: item.punto_entrega.direccion + " " + item.punto_entrega.cod_postal + " " + item.punto_entrega.localidad,
+                                consumidor: {
+                                    id: item.consumidor.id,
+                                    nombre: item.consumidor.usuario.nombre,
+                                    apellido: item.consumidor.usuario.apellido,
+                                    telefono: item.consumidor.usuario.telefono,
+                                },
+                                productor: {
+                                    id: item.productor.id,
+                                    razon_social: item.productor.razon_social,
+                                    nombre: item.productor.usuario.nombre,
+                                    apellido: item.productor.usuario.apellido,
+                                    telefono: item.productor.usuario.telefono,
+                                },
+                                detalleReserva: item.detalleReserva,
+                                estado: item.estado_reserva.nombre,
+                                total_reserva: item.total_reserva,
+                                fechaDateTime: item.fecha
+                            }
+                        })
+                    })
+                }
+                _this.setState({
                     loading: false
                 })
             })
@@ -154,8 +225,84 @@ class ListadoReservas extends Component {
         defaultListado = actualizarListado;
     }
 
-    render() {
+    actualizarEstado = (nuevoEstado) => {
+        this.setState({
+            estadoSeleccionado: nuevoEstado
+        });
+    }
 
+    actualizarEstadoReserva() {
+        var _this = this;
+        _this.setState({
+            loading: true
+        })
+
+        var path = "http://localhost:3000/redAgro/actualizarEstadoReserva?id_reserva=" + _this.state.idReservaActualizar + "&id_estado=" + _this.state.estadoSeleccionado.value;
+        fetch(path, {
+            method: "PUT"
+        })
+            .then(function (response) {
+                _this.setState({
+                    loading: false,
+                    showModal: false,
+                    estadoSeleccionado: ""
+                })
+                _this.forceUpdate();
+                return;
+            })
+    }
+
+    filtrarEstadosAMostrar(fecha, estadoActual) {
+        fecha = moment(fecha).add(2, "days");
+
+        var est = this.encontrarEstado(estadoActual);
+        this.setState({
+            listadoFiltradoEstados: this.state.listadoEstados.filter((estado) => {
+                if (estado.value >= est.value) {
+                    if (this.props.rolUsuario === "Consumidor" && estado.value < 3) {
+                        return;
+                    } else {
+                        return estado;
+                    }
+                    //TODO: Solo permitir cancelar cuando queden 1 y 2 dias dependiendo si es productor o consumidor
+                    /* if (estado.label === "Cancelado" && fecha.diff("2019-10-07", "days") >= 2) {
+                        return estado;
+                    } else {
+                        return estado;
+                    } */
+                }
+            })
+        })
+    }
+
+    encontrarEstado(nombreEstado) {
+        return this.state.listadoEstados.find((item) => {
+            return item.label === nombreEstado;
+        })
+    }
+
+    abrirModalEstado = (idReserva, fecha, estadoActual) => {
+        this.filtrarEstadosAMostrar(fecha, estadoActual);
+        this.setState({
+            estadoSeleccionado: this.encontrarEstado(estadoActual),
+            idReservaActualizar: idReserva
+        })
+        this.abrirModal();
+    }
+
+    abrirModal() {
+        this.setState({
+            showModal: true
+        })
+    }
+
+    cerrarModal() {
+        this.setState({
+            showModal: false
+        })
+    }
+
+    render() {
         const { reservasRealizadas, currentPage, reservasPerPage } = this.state;
         const numberOfPages = Math.ceil(reservasRealizadas.length / reservasPerPage);
         const indexOfLastReserva = currentPage * reservasPerPage;
@@ -199,6 +346,29 @@ class ListadoReservas extends Component {
                             nextPage={this.nextPage}
                             currentPage={this.state.currentPage} />
                         : ''
+                }
+                {
+                    (this.state.showModal) &&
+                    <MDBModal isOpen={this.state.showModal} centered>
+                        <MDBModalHeader>Estado de la reserva</MDBModalHeader>
+                        <MDBModalBody>
+                            <div className="actualizacionEstado">
+                                <span className="tituloActualizacionEstado">Estado</span>
+                                <Select
+                                    className="selectEstado"
+                                    placeholder="Seleccione un estado"
+                                    value={this.state.estadoSeleccionado}
+                                    options={this.state.listadoFiltradoEstados}
+                                    onChange={nuevoEstado => this.actualizarEstado(nuevoEstado)}
+                                />
+                            </div>
+                            <br />
+                            <div className="row justify-content-center">
+                                <Button variant="light" onClick={this.cerrarModal}>Cancelar</Button>
+                                <Button variant="success" type="submit" onClick={this.actualizarEstadoReserva}>Guardar</Button>
+                            </div>
+                        </MDBModalBody>
+                    </MDBModal>
                 }
             </div>
         );
