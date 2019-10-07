@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import CardDeck from 'react-bootstrap/CardDeck';
 import ListGroup from 'react-bootstrap/ListGroup';
 import NumberFormat from 'react-number-format';
-import { Form, Row, Col, CardColumns, CardGroup } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
 import '../diseños/Checkout.css'
 
@@ -13,7 +13,18 @@ const PasosCheckout = (props) => {
         case 0:
             return (
                 <div className="containerCheckout">
-                    <div className="nombreDU" >
+                    <div className="personaRetiro">
+                        <Form.Group as={Row}>
+                            <Form.Check column sm={4}
+                                inline
+                                label="Retira otra persona"
+                                type="checkbox"
+                                id="checkbox"
+                                checked={props.datosPersonaRetiro.checkbox}
+                                onChange={props.handleCheckboxRetiro} />
+                        </Form.Group>
+                    </div>
+                    <div className="usuarioDU" >
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}> Usuario </Form.Label>
                             <Form.Control
@@ -21,9 +32,7 @@ const PasosCheckout = (props) => {
                                 type="nom"
                                 name="nombre"
                                 defaultValue={props.usuario.usuario}
-                                disabled={true}
-                            //       onChange={(e) => datosPersonalesHandler(e)}
-                            />
+                                disabled />
                         </Form.Group>
                     </div>
                     <div className="nombreDU" >
@@ -33,41 +42,39 @@ const PasosCheckout = (props) => {
                                 required
                                 type="nom"
                                 name="nombre"
-                                defaultValue={props.usuario.nombre}
+                                value={(props.datosPersonaRetiro.checkbox===false) ?props.datosPersonaRetiro.nombre : " "}
+                                disabled={props.datosPersonaRetiro.disabled}
                                 pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
-                            //       onChange={(e) => datosPersonalesHandler(e)}
-                            />
+                                onChange={props.handleDatosPersonales}
+                                ref={props.datosPersonaRetiro.refNombre}/>
                         </Form.Group>
                     </div>
                     <div className="apellidoDU" >
                         <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Apellido
-									</Form.Label>
+                            <Form.Label column sm={4}>Apellido</Form.Label>
                             <Form.Control
                                 required
                                 type="ap"
                                 name="apellido"
-                                defaultValue={props.usuario.apellido}
+                                value={(props.datosPersonaRetiro.checkbox===false) ?props.datosPersonaRetiro.apellido : " "}
+                                disabled={props.datosPersonaRetiro.disabled}
                                 pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
-                            //     onChange={(e) => datosPersonalesHandler(e)}
+                                onChange={props.handleDatosPersonales}
+                                ref={props.datosPersonaRetiro.refApellido}
                             />
                         </Form.Group>
                     </div>
 
                     <div className="telefonoDU" >
                         <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Teléfono de contacto
-									</Form.Label>
+                            <Form.Label column sm={4}>Teléfono de contacto</Form.Label>
                             <Form.Control
                                 required
                                 type="tel"
                                 name="telefono"
                                 defaultValue={props.usuario.telefono}
-                                pattern="[0-9]{8,14}"
-                            //   onChange={(e) => datosPersonalesHandler(e)}
-                            />
+                                disabled
+                                pattern="[0-9]{8,14}" />
                         </Form.Group>
                     </div>
                 </div>
@@ -82,7 +89,7 @@ const PasosCheckout = (props) => {
                             checked={props.selectedRadioButtonRetiro === "radio1"}
                             onChange={props.handleRadioRetiroChange}
                             className="radio-button-input radio" />
-                        Acordar retiro con el Productor
+                        Acordá el retiro con tu productor
                     </label>
                     <br />
                     <label>
@@ -92,7 +99,7 @@ const PasosCheckout = (props) => {
                             checked={props.selectedRadioButtonRetiro === "radio2"}
                             onChange={props.handleRadioRetiroChange}
                             className="radio-button-input radio" />
-                        Seleccionar un punto de entrega
+                        Seleccioná un punto de entrega
                     </label>
                     {
                         props.selectedRadioButtonRetiro === "radio2" ?
@@ -103,7 +110,7 @@ const PasosCheckout = (props) => {
                                     options={props.selector.puntosEntrega}
                                     placeholder="Seleccione una dirección de retiro..."
                                     onChange={newPunto => props.actualizarPuntoEntrega(newPunto)} />
-                                    
+
                                 <Select className="dropdownFechas"
                                     value={props.seleccionado.fechaEntrega}
                                     options={props.selector.fechasEntrega}

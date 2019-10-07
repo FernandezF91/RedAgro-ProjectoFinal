@@ -16,7 +16,6 @@ const pasos = [
     'Elegí una forma de retiro',
     'Resumen de la reserva'
 ];
-
 const theme = createMuiTheme({
     overrides: {
         MuiStepIcon: {
@@ -60,6 +59,11 @@ const theme = createMuiTheme({
         useNextVariants: true,
     }
 });
+
+const regularExp = {
+    onlyLetters: /^[A-Za-z]+$/,
+    onlyNumbers: /^[0-9]+$/
+}
 class Checkout extends Component {
     constructor(props) {
         super(props);
@@ -76,6 +80,12 @@ class Checkout extends Component {
                 fechaEntrega: [],
             },
             selectedRadioButtonRetiro: "radio1",
+            datosPersonaRetiro: {
+                checkbox: false,
+                nombre: this.props.user.nombre,
+                apellido: this.props.user.apellido,
+                disabled: true,
+            },
             datosReserva: {
                 id: '',
                 consumidor: { id: this.props.id_consumidor },
@@ -99,6 +109,8 @@ class Checkout extends Component {
         this.cerrarModal = this.cerrarModal.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.crearReserva = this.crearReserva.bind(this);
+        this.handleCheckboxRetiro = this.handleCheckboxRetiro.bind(this);
+        this.handleDatosPersonales = this.handleDatosPersonales.bind(this);
     }
 
     componentDidMount() {
@@ -256,6 +268,21 @@ class Checkout extends Component {
     }
 
     handleNext = () => {
+        switch(this.state.activeStep){
+            case 0: {
+                if((!this.state.datosPersonaRetiro.nombre) || (!this.state.datosPersonaRetiro.apellido) ||
+                (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.nombre)) || (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.apellido))){
+                    this.setState({
+                        titulo: "Error",
+                        mensaje: "Datos incompletos o incorrectos",
+                        showModal: true,
+                    });
+        
+                    return false;
+                }
+            }
+        }
+
         if (this.state.activeStep === pasos.length - 1) {
             this.crearReserva(this.state.datosReserva);
         }
@@ -273,14 +300,48 @@ class Checkout extends Component {
         })
     };
 
-    datosPersonalesHandler = event => {
-        event.preventDefault();
-        event.target.className += " was-validated";
+    handleDatosPersonales = e => {
+        if (e.target.name === "nombre") {
+            this.setState({
+                datosPersonaRetiro: {
+                    ...this.state.datosPersonaRetiro,
+                    nombre: e.target.value,
+                }
+            })
+        }
+        else {
+            if (e.target.name === "apellido") {
+                this.setState({
+                    datosPersonaRetiro: {
+                        ...this.state.datosPersonaRetiro,
+                        apellido: e.target.value,
+                    }
+                })
+            }
+        }
     };
 
-    changeHandler = event => {
-        this.setState({ [event.target.name]: event.target.value });
-    };
+    handleCheckboxRetiro = e => {
+        if (this.state.datosPersonaRetiro.disabled === true) {
+            this.setState({
+                datosPersonaRetiro: {
+                    ...this.state.datosPersonaRetiro,
+                    checkbox: e.target.checked,
+                    disabled: false,
+                }
+            })
+        }
+        else {
+            this.setState({
+                datosPersonaRetiro: {
+                    nombre: this.props.user.nombre,
+                    apellido: this.props.user.apellido,
+                    checkbox: e.target.checked,
+                    disabled: true,
+                }
+            })
+        }
+    }
 
     handleRadioRetiroChange = changeEvent => {
         var forma;
@@ -383,8 +444,10 @@ class Checkout extends Component {
                                     seleccionado={this.state.seleccionado}
                                     puntosEntrega={this.state.puntosEntrega}
                                     datosReserva={this.state.datosReserva}
+                                    datosPersonaRetiro={this.state.datosPersonaRetiro}
                                     selectedRadioButtonRetiro={this.state.selectedRadioButtonRetiro}
-                                    datosPersonalesHandler={this.datosPersonalesHandler}
+                                    handleCheckboxRetiro={this.handleCheckboxRetiro}
+                                    handleDatosPersonales={this.handleDatosPersonales}
                                     handleRadioRetiroChange={this.handleRadioRetiroChange}
                                     productosSeleccionados={this.props.productosSeleccionados}
                                     getTotalReserva={this.getTotalReserva}
