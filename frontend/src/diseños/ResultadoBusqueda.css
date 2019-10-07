@@ -1,41 +1,22 @@
-.agregarcarrito{
-	font-size: 15px;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
+.agregarcarrito {
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.iconosListado{
+.iconosListado {
     padding-left: 10px;
-    padding-right: 10px; 
+    padding-right: 10px;
     height: 20px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     border: 0px;
     background-color: transparent;
-  }
+}
 
-  .cantidadProductos{
-      width: 150px;
-      margin-left: 10px;
-  }
-
-  .opcionesCantidad{
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
-      padding-right: 5%;
-      margin-bottom: 20px;
-  }
-
-  .tituloCantidad {
-      align-self: center;
-  }
-
-  .view .imagenesBusqueda{
-      position: relative;
-      display: initial !important;
-  }
-
- 
+.view .imagenesBusqueda {
+    position: relative;
+    display: initial !important;
+}
