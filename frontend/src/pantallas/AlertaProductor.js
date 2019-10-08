@@ -35,8 +35,10 @@ class AlertaProductor extends Component {
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
-            pathname: '/principalProductores',
-            state: { id: this.state.id }
+            pathname: '/principalProductores/MiCuenta',
+            state: {
+                id: this.state.id
+            }
         })
     }
 

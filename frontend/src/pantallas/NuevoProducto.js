@@ -292,7 +292,7 @@ class NuevoProducto extends Component {
                         _this.setState({ tipos_producto: [] })
 
                         if (_this.state.campos["categoria"] === "Variado") {
-                            _this.state.campos["tipo_producto"] = response[0].id
+                            _this.state.campos["tipo_producto"] = 0
                             return;
                         }
 
@@ -308,7 +308,7 @@ class NuevoProducto extends Component {
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
-            pathname: '/principalProductores',
+            pathname: '/principalProductores/MiCuenta',
             state: { id: this.state.id }
         })
     }

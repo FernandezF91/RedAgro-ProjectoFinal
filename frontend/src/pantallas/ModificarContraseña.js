@@ -35,13 +35,10 @@ class ModificarContraseña extends Component {
     closeModal() {
 
         if (this.state.formOk === false) {
-
             this.setState({
                 visible: false
             });
-
             return;
-
         }
 
         this.setState({
@@ -49,13 +46,9 @@ class ModificarContraseña extends Component {
         });
 
         this.mostrarPantallaPrincipal();
-
     }
 
-
     validarDatos() {
-
-
         if ((!this.state.fields["contraseñaNueva"] || !this.state.fields["contraseñaActual"] || !this.state.fields["confirmarContraseña"]) ||
             ((this.state.fields["contraseñaNueva"]) !== (this.state.fields["confirmarContraseña"])) ||
             ((this.state.fields["contraseñaActual"]) !== (this.state.user.contraseña))) {
@@ -67,12 +60,9 @@ class ModificarContraseña extends Component {
             });
 
             return false;
-
         }
 
         if (this.state.fields["contraseñaActual"] === this.state.fields["contraseñaNueva"]) {
-
-
             this.setState({
                 titulo: "Error",
                 mensaje: "No modificaste tu contraseña",
@@ -80,47 +70,31 @@ class ModificarContraseña extends Component {
             });
 
             return false;
-
-
         }
 
         return true;
-
     }
 
     modificarContraseña() {
 
         const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
-
         var password = this.state.fields["contraseñaNueva"];
-
         var id = this.state.user.id;
-
         const final_path = path_principal + password + "&id=" + id;
 
-        console.log(final_path);
-
         var _this = this;
-
 
         if (_this.validarDatos()) {
 
             fetch(final_path, {
                 method: "PUT",
                 // headers: {
-
                 //     'Content-type': 'application/json;charset=UTF-8',
-
                 // },
             })
                 .then(function (response) {
-
                     if (response.status !== 200) {
-
-                        // alert("Ocurrió algún problema. Intenta nuevamente")
-
                         let mensajeError = "Ocurrió algun problema, intenta nuevamente"
-
                         _this.setState({
                             visible: true,
                             titulo: "Error",
@@ -128,43 +102,32 @@ class ModificarContraseña extends Component {
                         });
 
                         return;
-
                     }
 
                     response.text().then(
-
                         function (response) {
-
                             _this.setState({
                                 visible: true,
                                 titulo: "Modificación exitosa",
                                 mensaje: "",
                                 formOk: true
                             });
-
-
                         });
                 });
         }
     }
 
-
     mostrarPantallaPrincipal() {
-
         this.state.user.rol === "Productor" ?
-
             this.props.history.push({
-                pathname: '/principalProductores',
+                pathname: '/principalProductores/MiCuenta',
                 state: { id: this.state.user.id }
             })
             :
-
-            this.props.history.push("/principalConsumidores", { id: this.state.user.id });
-
+            this.props.history.push("/principalConsumidores/MiCuenta", { id: this.state.user.id });
     }
 
     render() {
-
         return (
             <div>
                 <div className="titulosPrincipales">Modificar contraseña</div>

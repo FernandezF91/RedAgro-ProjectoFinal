@@ -111,7 +111,7 @@ class LoginForm extends Component {
 
     mostrarPantallaProductor() {
         this.props.history.push({
-            pathname: '/principalProductores',
+            pathname: '/principalProductores/MiCuenta',
             state: {
                 id: this.state.usuario.id,
                 user: this.state.usuario,

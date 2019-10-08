@@ -6,6 +6,7 @@ import { NavDropdown, Col, Row, Container } from 'react-bootstrap';
 import { Route, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 
+import MiCuenta from './MiCuentaProductor';
 import AlertaProductor from '../pantallas/AlertaProductor';
 import NuevoProducto from '../pantallas/NuevoProducto';
 import CargarHistorico from '../pantallas/CargarHistorico';
@@ -20,6 +21,7 @@ import BarraNavegacion from './BarraNavegacion';
 import Planificación from '../pantallas/Planificacion';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
+const MiCuentaRouter = withRouter(MiCuenta);
 const NuevoProductoRouter = withRouter(NuevoProducto);
 const AlertaProductorRouter = withRouter(AlertaProductor);
 const ModificarContraseniaRouter = withRouter(ModificarContraseña);
@@ -47,7 +49,7 @@ class PantallaPrincipalProductores extends Component {
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
-            pathname: '/principalProductores',
+            pathname: '/principalProductores/MiCuenta',
             state: {
                 id: this.state.id,
                 rolUsuario: this.state.rolUsuario
@@ -74,8 +76,10 @@ class PantallaPrincipalProductores extends Component {
                     <Row className="filaContenedora">
                         <Col sm={2} className="menuConsumidor">
                             <Row className="cuenta">
-                                <i className="fas fa-bars iconoMiCuenta" />
-                                <h4>Mi cuenta</h4>
+                                <Link to={'/principalProductores/MiCuenta'} className="linkMiCuenta">
+                                    <i className="fas fa-bars iconoMiCuenta" />
+                                    <h4>Mi cuenta</h4>
+                                </Link>
                             </Row>
                             <NavDropdown.Divider className="divisor" />
                             <Row>
@@ -147,30 +151,93 @@ class PantallaPrincipalProductores extends Component {
                             </Row>
                         </Col>
                         <Col className="ruteo">
-                            <Route path='/principalProductores/Alertas'
-                                render={(props) => <AlertaProductorRouter id_productor={this.state.id} />} />
-                            <Route path='/principalProductores/NuevoProducto'
-                                render={(props) => <NuevoProductoRouter id_productor={this.state.id} />} />
-                            <Route path='/principalProductores/CargarHistorico'
-                                render={(props) => <HitoricoRouter id_productor={this.state.id} />} />
-                            <Route path='/principalProductores/modificarContraseña'
-                                render={(props) => <ModificarContraseniaRouter usuario={this.state.user} />} />
-                            <Route path='/principalProductores/EditarDatos'
-                                render={(props) => <EditarDatosRouter
-                                    usuario={this.state.user}
-                                    actualizarUsuarioProductor={this.actualizarUsuarioProductor} />} />
+                            <Route path={'/principalProductores/MiCuenta'}
+                                render={(props) =>
+                                    <MiCuentaRouter
+                                        id_usuario={this.state.id}
+                                        rolUsuario={this.state.rolUsuario}
+                                        usuario={this.state.user}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/Alertas'}
+                                render={(props) =>
+                                    <AlertaProductorRouter
+                                        id_productor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/NuevoProducto'}
+                                render={(props) =>
+                                    <NuevoProductoRouter
+                                        id_productor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/CargarHistorico'}
+                                render={(props) =>
+                                    <HitoricoRouter
+                                        id_productor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/modificarContraseña'}
+                                render={(props) =>
+                                    <ModificarContraseniaRouter
+                                        usuario={this.state.user}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/EditarDatos'}
+                                render={(props) =>
+                                    <EditarDatosRouter
+                                        usuario={this.state.user}
+                                        actualizarUsuarioProductor={this.actualizarUsuarioProductor}
+                                    />
+                                }
+                            />
                             <Route path={'/principalProductores/ListadoReservas'}
-                                render={(props) => <ListadoReservasRouter id_usuario={this.state.id} />} />
+                                render={(props) =>
+                                    <ListadoReservasRouter
+                                        id_usuario={this.state.id}
+                                    />
+                                }
+                            />
                             <Route path={'/principalProductores/IngresarPuntoEntrega'}
-                                render={(props) => <IngresarPuntoEntregaRouter id_productor={this.state.id} />} />
+                                render={(props) =>
+                                    <IngresarPuntoEntregaRouter
+                                        id_productor={this.state.id}
+                                    />
+                                }
+                            />
                             <Route path={'/principalProductores/ListadoPuntosEntrega'}
-                                render={(props) => <ListadoPuntosEntrega id_productor={this.state.id} />} />
-                            <Route path='/principalProductores/ListadoProductos'
-                                render={(props) => <ListadoProductosRouter id_productor={this.state.id} />} />
-                            <Route path='/principalProductores/Estadisticas'
-                                render={(props) => <EstadisticasRouter id_productor={this.state.id} />} />
-                            <Route path='/principalProductores/Planificacion'
-                                render={(props) => <PlanificacionRouter id_productor={this.state.id} />} />
+                                render={(props) =>
+                                    <ListadoPuntosEntrega
+                                        id_productor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/ListadoProductos'}
+                                render={(props) =>
+                                    <ListadoProductosRouter
+                                        id_productor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/Estadisticas'}
+                                render={(props) =>
+                                    <EstadisticasRouter
+                                        id_productor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/Planificacion'}
+                                render={(props) =>
+                                    <PlanificacionRouter
+                                        id_productor={this.state.id}
+                                    />
+                                }
+                            />
                         </Col>
                     </Row>
                 </Container>

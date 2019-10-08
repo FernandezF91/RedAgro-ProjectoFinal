@@ -220,6 +220,8 @@ input[type=text] {
     padding-right: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
     display: flex;
     flex-direction: row;
 }
@@ -233,9 +235,11 @@ input[type=text] {
 
 .textoMiCuenta {
     text-align: left;
-    line-height: 70px;
+    line-height: 40px;
     margin-left: 20px;
     color: darkgreen !important;
+    align-self: center;
+    margin-bottom: 0px !important;
 }
 
 .linkBox {
@@ -248,4 +252,8 @@ input[type=text] {
     margin-left: 0! important;
     margin-right: 0px !important;
     color: darkgreen;
+}
+
+.linkMiCuenta {
+    display: inline-flex;
 }

@@ -160,8 +160,8 @@ class PantallaPrincipalconsumidores extends Component {
                     <Row className="filaContenedora">
                         <Col sm={2} className="menuConsumidor">
                             <Row className="cuenta">
-                                <i className="fas fa-bars iconoMiCuenta" />
-                                <Link to={'/principalConsumidores/MiCuenta'}>
+                                <Link to={'/principalConsumidores/MiCuenta'} className="linkMiCuenta">
+                                    <i className="fas fa-bars iconoMiCuenta" />
                                     <h4>Mi cuenta</h4>
                                 </Link>
                             </Row>
@@ -220,56 +220,88 @@ class PantallaPrincipalconsumidores extends Component {
                             </Row>
                         </Col>
                         <Col className="ruteo">
-                            <Route path={'/principalConsumidores/MiCuenta'} render={(props) =>
-                                <MiCuentaRouter
-                                    id_usuario={this.state.id}
-                                    rolUsuario={this.state.rolUsuario}
-                                    usuario={this.state.user} />} />
-                            <Route path={'/principalConsumidores/ListadoReservas'} render={(props) =>
-                                <ListadoReservasRouter
-                                    id_usuario={this.state.id}
-                                    rolUsuario={this.state.rolUsuario} />} />
-
-                            <Route path={'/principalConsumidores/Alertas'} render={(props) =>
-                                <AlertaConsumidorRouter
-                                    id_consumidor={this.state.id} />} />
-
-                            <Route path={'/principalConsumidores/PreferenciasConsumidor'} render={(props) =>
-                                <PreferenciasConsumidorRouter
-                                    id_consumidor={this.state.id} />} />
-
-                            <Route path={'/principalConsumidores/Carrito'} render={(props) =>
-                                <Carrito
-                                    id_consumidor={this.state.id}
-                                    productosSeleccionados={this.state.productosSeleccionados}
-                                    actualizarProductosSeleccionados={this.actualizarProductosSeleccionados} />} />
-
-                            <Route path={'/principalConsumidores/EditarDatos'} render={(props) =>
-                                <EditarDatosRouter
-                                    usuario={this.state.user}
-                                    actualizarUsuarioConsumidor={this.actualizarUsuarioConsumidor} />} />
-
-                            <Route path={'/principalConsumidores/modificarContraseña'} render={(props) =>
-                                <ModificarContraseniaRouter
-                                    usuario={this.state.user} />} />
-
-                            <Route path={'/principalConsumidores/Geolocalizacion'} render={(props) =>
-                                <GeolocalizacionRouter
-                                    id_consumidor={this.state.id}
-                                    handleNuevaBusqueda={this.handleNuevaBusqueda} />} />
-
-                            <Route path={'/principalConsumidores/ResultadoBusqueda'} render={(props) =>
-                                <ResultadoBusquedaRouter
-                                    id_consumidor={this.state.id}
-                                    productosSeleccionados={this.state.productosSeleccionados}
-                                    busqueda={this.state.busqueda}
-                                    actualizarProductosSeleccionados={this.actualizarProductosSeleccionados} />} />
-
-                            <Route path={'/principalConsumidores/Checkout'} render={(props) =>
-                                <CheckoutRouter
-                                    id_consumidor={this.state.id}
-                                    productosSeleccionados={this.state.productosSeleccionados}
-                                    user={this.state.user} />} />
+                            <Route path={'/principalConsumidores/MiCuenta'}
+                                render={(props) =>
+                                    <MiCuentaRouter
+                                        id_usuario={this.state.id}
+                                        rolUsuario={this.state.rolUsuario}
+                                        usuario={this.state.user}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalConsumidores/ListadoReservas'}
+                                render={(props) =>
+                                    <ListadoReservasRouter
+                                        id_usuario={this.state.id}
+                                        rolUsuario={this.state.rolUsuario}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalConsumidores/Alertas'}
+                                render={(props) =>
+                                    <AlertaConsumidorRouter
+                                        id_consumidor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalConsumidores/PreferenciasConsumidor'}
+                                render={(props) =>
+                                    <PreferenciasConsumidorRouter
+                                        id_consumidor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalConsumidores/Carrito'}
+                                render={(props) =>
+                                    <Carrito
+                                        id_consumidor={this.state.id}
+                                        productosSeleccionados={this.state.productosSeleccionados}
+                                        actualizarProductosSeleccionados={this.actualizarProductosSeleccionados}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalConsumidores/EditarDatos'}
+                                render={(props) =>
+                                    <EditarDatosRouter
+                                        usuario={this.state.user}
+                                        actualizarUsuarioConsumidor={this.actualizarUsuarioConsumidor}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalConsumidores/modificarContraseña'}
+                                render={(props) =>
+                                    <ModificarContraseniaRouter
+                                        usuario={this.state.user}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalConsumidores/Geolocalizacion'}
+                                render={(props) =>
+                                    <GeolocalizacionRouter
+                                        id_consumidor={this.state.id}
+                                        handleNuevaBusqueda={this.handleNuevaBusqueda}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalConsumidores/ResultadoBusqueda'}
+                                render={(props) =>
+                                    <ResultadoBusquedaRouter
+                                        id_consumidor={this.state.id}
+                                        productosSeleccionados={this.state.productosSeleccionados}
+                                        busqueda={this.state.busqueda}
+                                        actualizarProductosSeleccionados={this.actualizarProductosSeleccionados}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalConsumidores/Checkout'}
+                                render={(props) =>
+                                    <CheckoutRouter
+                                        id_consumidor={this.state.id}
+                                        productosSeleccionados={this.state.productosSeleccionados}
+                                        user={this.state.user}
+                                    />
+                                }
+                            />
                         </Col>
                     </Row>
                 </Container>

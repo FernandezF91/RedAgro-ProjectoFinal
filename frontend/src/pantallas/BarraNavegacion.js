@@ -99,7 +99,7 @@ class BarraNavegacion extends Component {
                                     <i className="fas fa-user iconosBarra" />
                                     <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown" className="subMenu">
                                         <NavDropdown.Item>
-                                            <Link to={'/principalProductores'}>Mi cuenta</Link>
+                                            <Link to={'/principalProductores/MiCuenta'}>Mi cuenta</Link>
                                         </NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item href="/">Salir</NavDropdown.Item>

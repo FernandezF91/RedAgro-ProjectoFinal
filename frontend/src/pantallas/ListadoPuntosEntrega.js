@@ -7,8 +7,7 @@ import '../diseños/ListadoPuntosEntrega.css';
 import Modal from 'react-awesome-modal';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Route, withRouter} from 'react-router-dom';
-
+import { withRouter } from 'react-router-dom';
 
 const columnas = [
     {
@@ -28,9 +27,9 @@ const columnas = [
         field: 'Fechas'
     },
     {
-		label: 'Baja/Alta',
-		field: 'Dar de baja',
-	}
+        label: 'Baja/Alta',
+        field: 'Dar de baja',
+    }
 ];
 
 class ListadoPuntosEntrega extends Component {
@@ -40,126 +39,112 @@ class ListadoPuntosEntrega extends Component {
         this.state = {
             id: this.props.id_productor,
             puntos_entrega: [],
-            fechas_entrega:[],
+            fechas_entrega: [],
             loading: true,
             titulo: "",
             mensaje: "",
             visible: "",
-            visible2:"",
-            accion:"",
-            expandedRows : [],
-            id_punto:""
-   
+            visible2: "",
+            accion: "",
+            expandedRows: [],
+            id_punto: ""
         }
+
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.handleRowAccion = this.handleRowAccion.bind(this);
         this.actualizarEstadoPunto = this.actualizarEstadoPunto.bind(this);
         this.cargarFechas = this.cargarFechas.bind(this);
         this.cargarFilas = this.cargarFilas.bind(this);
         this.clickMostrarFechas = this.clickMostrarFechas.bind(this);
-
     }
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
-            pathname: '/principalProductores',
+            pathname: '/principalProductores/MiCuenta',
             state: { id: this.state.id }
         })
     }
 
-actualizarEstadoPunto(accion){
-
-        const path_principal = "http://localhost:3000/redAgro/modificar_punto?id="+this.state.id_punto+"&accion="+accion;
+    actualizarEstadoPunto(accion) {
+        const path_principal = "http://localhost:3000/redAgro/modificar_punto?id=" + this.state.id_punto + "&accion=" + accion;
 
         var _this = this;
 
-            fetch(path_principal, {
-                method: "PUT"
-            })
-                .then(function (response) {
+        fetch(path_principal, {
+            method: "PUT"
+        })
+            .then(function (response) {
+                if (response.status !== 200) {
+                    let mensajeError = "Ocurrió algún error inesperado. Intentá nuevamente"
+                    _this.setState({
+                        visible2: true,
+                        titulo: "Error",
+                        mensaje: mensajeError
+                    });
+                    return;
+                }
 
-                    if (response.status !== 200) {
-
-                        let mensajeError = "Ocurrió algún error inesperado. Intentá nuevamente"
-
+                response.text().then(
+                    function (response) {
                         _this.setState({
                             visible2: true,
-                            titulo: "Error",
-                            mensaje: mensajeError
+                            titulo: "Actualización exitosa",
+                            mensaje: "",
+                            actualizacion: "Ok"
                         });
-
-                        return;
-
-                    }
-
-                    response.text().then(
-
-                        function (response) {
-
-                            _this.setState({
-                                visible2: true,
-                                titulo: "Actualización exitosa",
-                                mensaje: "",
-                                actualizacion:"Ok"
-                            });
-
-                        });
-                });
-        
-
-
-
-}
-
-    closeModal() {
- 
-    
-    if(this.state.accion!==""){
-
-    this.actualizarEstadoPunto(this.state.accion)
-
-    this.setState({
-            visible:false,
-            accion:""})
-    
+                    });
+            });
     }
 
-    if(this.state.actualizacion==="Ok"){
+    closeModal() {
+        if (this.state.accion !== "") {
+            this.actualizarEstadoPunto(this.state.accion)
+            this.setState({
+                visible: false,
+                accion: ""
+            })
+        }
 
-        this.mostrarPantallaPrincipal();
-
-        return
-
+        if (this.state.actualizacion === "Ok") {
+            this.mostrarPantallaPrincipal();
+            return;
         }
 
         this.setState({
             visible2: false
         })
-    
     }
 
     closeModalNo() {
- 
-    this.setState({
-            visible:false,
-            accion:""})
-
+        this.setState({
+            visible: false,
+            accion: ""
+        })
     }
 
-    handleRowAccion(rowId,activo) {
-
-            activo===true?
-
-            this.setState({id_punto:rowId, accion:"Baja", visible: true, titulo: "Baja de punto de entrega", mensaje: "¿Estás seguro que no vas a vender/entregar tus productos en esta ubicación?" })
-            :
-            this.setState({id_punto:rowId, accion:"Alta", visible: true, titulo: "Alta de punto de entrega", mensaje: "¿Estás seguro que vas a vender/entregar tus productos en esta ubicación?" })
+    handleRowAccion(rowId, activo) {
+        if (activo === true) {
+            this.setState({
+                id_punto: rowId,
+                accion: "Baja",
+                visible: true,
+                titulo: "Baja de punto de entrega",
+                mensaje: "¿Estás seguro que no vas a vender/entregar tus productos en esta ubicación?"
+            })
+        } else {
+            this.setState({
+                id_punto: rowId,
+                accion: "Alta",
+                visible: true,
+                titulo: "Alta de punto de entrega",
+                mensaje: "¿Estás seguro que vas a vender/entregar tus productos en esta ubicación?"
+            })
+        }
     }
 
     cargarFechas(rowId) {
-            
-    var _this=this;
-
-  fetch("http://localhost:3000/redAgro/fechas_punto_entrega?id_punto_entrega="+rowId, {
+        var _this = this;
+        fetch("http://localhost:3000/redAgro/fechas_punto_entrega?id_punto_entrega=" + rowId, {
             method: "GET",
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
@@ -169,107 +154,87 @@ actualizarEstadoPunto(accion){
                 if (response.status !== 200) {
                     _this.setState({
                         visible2: true,
-                        accion:false,
+                        accion: false,
                         titulo: "Error",
                         mensaje: "Ocurrió algún error inesperado. Intentá nuevamente"
                     });
-                   
                     return;
                 }
 
                 response.json().then(
                     function (response) {
-                    
                         response.forEach(element => {
-                            
-                            _this.setState({fechas_entrega:[..._this.state.fechas_entrega,element]});
-
+                            _this.setState({ fechas_entrega: [..._this.state.fechas_entrega, element] });
                         });
-
                     });
-            });  
-
+            });
     }
 
-
-    clickMostrarFechas(rowId){
-
-     const currentExpandedRows = this.state.expandedRows;
+    clickMostrarFechas(rowId) {
+        const currentExpandedRows = this.state.expandedRows;
         const isRowCurrentlyExpanded = currentExpandedRows.includes(rowId);
-        
-        const newExpandedRows = isRowCurrentlyExpanded ? 
-			currentExpandedRows.filter(id => id !== rowId) : 
-			currentExpandedRows.concat(rowId);
-        
-        this.setState({expandedRows : newExpandedRows});
 
+        const newExpandedRows = isRowCurrentlyExpanded ?
+            currentExpandedRows.filter(id => id !== rowId) :
+            currentExpandedRows.concat(rowId);
 
+        this.setState({ expandedRows: newExpandedRows });
     }
 
-    cargarFilas(){
+    cargarFilas() {
+        return this.state.puntos_entrega.map(punto => {
+            const clickFechas = () => this.clickMostrarFechas(punto.id);
+            const clickAltaBaja = () => this.handleRowAccion(punto.id, punto.activo);
 
-    return this.state.puntos_entrega.map( punto => {
-
-        const clickFechas = () => this.clickMostrarFechas(punto.id);
-
-        const clickAltaBaja = () => this.handleRowAccion(punto.id,punto.activo);
-
-        var itemRow = [ <tr key={"row-data-" + punto.id} >
-                <td>{punto.provincia}</td>
-                <td>{punto.localidad}</td>
-                <td>{punto.direccion}</td>
-                <td><i class="far fa-calendar-alt" title="Ver fechas" onClick={clickFechas}></i></td>
-                                    
+            var itemRow = [<tr key={"row-data-" + punto.id} >
+                <td>
+                    {punto.provincia}
+                </td>
+                <td>
+                    {punto.localidad}
+                </td>
+                <td>
+                    {punto.direccion}
+                </td>
+                <td>
+                    <i class="far fa-calendar-alt iconosTabla" title="Ver fechas" onClick={clickFechas} />
+                </td>
                 <td>
                     {
                         punto.activo === false ?
-                            <i class="fa fa-check-circle verde iconosTabla" onClick={clickAltaBaja} title="Alta"></i>
+                            <i class="fa fa-check-circle verde iconosTabla" onClick={clickAltaBaja} title="Alta" />
                             :
-                            <i class="fa fa-times-circle rojo iconosTabla" onClick={clickAltaBaja} title="Baja"></i>
+                            <i class="fa fa-times-circle rojo iconosTabla" onClick={clickAltaBaja} title="Baja" />
                     }
                 </td>
-                </tr>
-    
-                ];
+            </tr>
+            ];
 
-                 if(this.state.expandedRows.includes(punto.id)) {
-
-                    const fechas_filtradas = this.state.fechas_entrega.filter(fecha => fecha.punto_entrega.id===punto.id)
-
-                   fechas_filtradas.forEach(fecha => 
-                   
-                    {
-                    
+            if (this.state.expandedRows.includes(punto.id)) {
+                const fechas_filtradas = this.state.fechas_entrega.filter(fecha => fecha.punto_entrega.id === punto.id)
+                fechas_filtradas.forEach(fecha => {
                     itemRow.push(
-
-                 <tr key={"row-expanded-" + punto.id}>
-                 <td></td>
-                 <td></td>
-                 <td></td>
-                 <td>{fecha.fecha}</td>
-                 <td></td>
-                 </tr>
-                 );
-
-                    }
-
-                   )
-              
-                  }
-        
-     return itemRow
-
-    }
-        
-    )
-
+                        <tr key={"row-expanded-" + punto.id}>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                {fecha.fecha}
+                            </td>
+                            <td></td>
+                        </tr>
+                    );
+                }
+                )
+            }
+            return itemRow;
+        })
     }
 
     componentDidMount() {
-
         var _this = this;
 
-        fetch("http://localhost:3000/redAgro/puntos_productor?id="+this.state.id, {
+        fetch("http://localhost:3000/redAgro/puntos_productor?id=" + this.state.id, {
             method: "GET",
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
@@ -283,22 +248,18 @@ actualizarEstadoPunto(accion){
                         titulo: "Error",
                         mensaje: "Ocurrió algún error inesperado. Intentá nuevamente"
                     });
-
                     return;
                 }
 
                 response.json().then(
                     function (response) {
-
-                        _this.setState({loading:false});
-
+                        _this.setState({ loading: false });
                         response.forEach(element => {
-                           
-                          _this.setState({puntos_entrega:[..._this.state.puntos_entrega,element]})
-                          _this.cargarFechas(element.id);
-
+                            _this.setState({
+                                puntos_entrega: [..._this.state.puntos_entrega, element]
+                            })
+                            _this.cargarFechas(element.id);
                         });
-
                     });
             });
     }
@@ -319,10 +280,12 @@ actualizarEstadoPunto(accion){
             <div>
                 <div className="titulosPrincipales">Puntos de entrega</div>
                 <div className="tabla_puntos">
-                    {this.state.puntos_entrega.length > 0?
+                    {this.state.puntos_entrega.length > 0 ?
                         <MDBTable striped responsive hover>
                             <MDBTableHead columns={columnas} />
-                            <MDBTableBody>{this.cargarFilas()}</MDBTableBody>
+                            <MDBTableBody>
+                                {this.cargarFilas()}
+                            </MDBTableBody>
                         </MDBTable>
                         :
                         <div className="sinPuntosDeVenta">
@@ -330,7 +293,7 @@ actualizarEstadoPunto(accion){
                             <br />
                             <br />
                             <h5>Ups! No tenes puntos de venta cargados! </h5>
-                            <h6>Cargá tus puntos de venta <Link to={'/principalProductores/IngresarPuntoEntrega'}>acá</Link> </h6>
+                            <h6>Cargá tus puntos de venta <Link to={'/principalProductores/IngresarPuntoEntrega'}>acá!</Link></h6>
                         </div>
                     }
                 </div>
@@ -340,13 +303,12 @@ actualizarEstadoPunto(accion){
                         width="400"
                         height="230"
                         effect="fadeInUp"
-
                     >
                         <div>
                             <h1>{this.state.titulo}</h1>
                             <p>
                                 {this.state.mensaje}
-                            </p>     
+                            </p>
                             <Button variant="success" onClick={() => this.closeModal()}>Si</Button>
                             <Button variant="success" onClick={() => this.closeModalNo()}>No</Button>
                         </div>
@@ -356,19 +318,17 @@ actualizarEstadoPunto(accion){
                         width="400"
                         height="120"
                         effect="fadeInUp"
-
                     >
                         <div>
                             <h1>{this.state.titulo}</h1>
                             <p>
                                 {this.state.mensaje}
-                            </p>     
+                            </p>
                             <a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
                         </div>
                     </Modal>
                 </section>
             </div>
-
         );
     };
 }

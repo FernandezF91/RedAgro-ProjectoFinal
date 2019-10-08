@@ -39,7 +39,7 @@ class Planificacion extends Component {
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
-            pathname: '/principalProductores',
+            pathname: '/principalProductores/MiCuenta',
             state: { id: this.state.id }
         })
     }
