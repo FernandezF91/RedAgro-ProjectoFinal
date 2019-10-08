@@ -2,8 +2,6 @@ package app.controladores;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.clases.Producto;
 import app.clases.ProductoProductor;
 import app.daos.ProductoDao;
 import app.daos.ProductoProductorDao;

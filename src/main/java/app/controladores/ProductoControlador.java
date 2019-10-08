@@ -2,19 +2,14 @@ package app.controladores;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.hibernate.transform.ToListResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.ArrayList;
 
 import app.clases.Producto;
 import app.daos.ProductoDao;
@@ -22,10 +17,6 @@ import app.daos.ProductoProductorDao;
 import app.daos.ProductorDao;
 import app.mappers.ProductoMapper;
 import app.modelos.EntidadProducto;
-import app.modelos.EntidadProductoProductor;
-import app.modelos.EntidadProductor;
-import app.mappers.ProductoMapper;
-import app.clases.Producto;
 
 @RestController
 public class ProductoControlador {

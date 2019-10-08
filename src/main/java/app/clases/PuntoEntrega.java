@@ -1,7 +1,5 @@
 package app.clases;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PuntoEntrega {
@@ -133,6 +131,5 @@ public class PuntoEntrega {
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
-	
 	
 }

@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import app.modelos.EntidadUsuario;
-import app.clases.Usuario;
 
 public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 
