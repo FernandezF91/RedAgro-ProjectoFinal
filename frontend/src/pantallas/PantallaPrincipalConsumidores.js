@@ -7,6 +7,7 @@ import { Route, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 
+import MiCuenta from './MiCuentaConsumidor';
 import ListadoReservas from '../pantallas/ListadoReservas';
 import AlertaConsumidor from '../pantallas/AlertaConsumidor';
 import Carrito from '../pantallas/Carrito';
@@ -19,6 +20,7 @@ import ResultadoBusqueda from './ResultadoBusqueda';
 import Checkout from './Checkout';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
+const MiCuentaRouter = withRouter(MiCuenta);
 const ListadoReservasRouter = withRouter(ListadoReservas);
 const AlertaConsumidorRouter = withRouter(AlertaConsumidor);
 const PreferenciasConsumidorRouter = withRouter(PreferenciasConsumidor);
@@ -84,7 +86,7 @@ class PantallaPrincipalconsumidores extends Component {
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
-            pathname: '/principalConsumidores',
+            pathname: '/principalConsumidores/MiCuenta',
             state: {
                 id: this.state.id,
                 rolUsuario: this.state.rolUsuario
@@ -160,7 +162,9 @@ class PantallaPrincipalconsumidores extends Component {
                         <Col sm={2} className="menuConsumidor">
                             <Row className="cuenta">
                                 <i className="fas fa-bars iconoMiCuenta" />
-                                <h4>Mi cuenta</h4>
+                                <Link to={'/principalConsumidores/MiCuenta'}>
+                                    <h4>Mi cuenta</h4>
+                                </Link>
                             </Row>
                             <NavDropdown.Divider className="divisor" />
                             <Row className="itemsSubmenu">
@@ -217,6 +221,11 @@ class PantallaPrincipalconsumidores extends Component {
                             </Row>
                         </Col>
                         <Col className="ruteo">
+                            <Route path={'/principalConsumidores/MiCuenta'} render={(props) =>
+                                <MiCuentaRouter
+                                    id_usuario={this.state.id}
+                                    rolUsuario={this.state.rolUsuario}
+                                    usuario={this.state.user} />} />
                             <Route path={'/principalConsumidores/ListadoReservas'} render={(props) =>
                                 <ListadoReservasRouter
                                     id_usuario={this.state.id}

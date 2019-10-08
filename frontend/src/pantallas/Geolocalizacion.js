@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap';
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import CurrentLocation from './Map';
-import { Router, Route, Link,Switch } from 'react-router-dom';
+import { Router, Route, Link, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import ResultadoBusqueda from './ResultadoBusqueda';
 import { BrowserRouter } from "react-router-dom";
@@ -19,32 +19,31 @@ class Geolocalizacion extends Component {
         super(props);
 
         this.state = {
-            campos: [],
             id: this.props.id_consumidor,
             showingInfoWindow: false,  //Hides or the shows the infoWindow
             activeMarker: {},          //Shows the active marker upon click
             selectedPlace: {},          //Shows the infoWindow to the selected place upon a marker
             google: this.props.google,
             markers: [],
-            visible:"",
-            titulo:"",
-            mensaje:"",
-            busqueda:""
+            visible: "",
+            titulo: "",
+            mensaje: "",
+            busqueda: ""
 
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.updateParametroBusqueda = this.updateParametroBusqueda.bind(this);
-        
+
     }
 
     updateParametroBusqueda(idProductor) {
-        if(idProductor>0) {
+        if (idProductor > 0) {
             this.props.handleNuevaBusqueda(idProductor);
         }
     }
 
-closeModal() {
+    closeModal() {
         this.setState({
             visible: false
         });
@@ -67,12 +66,11 @@ closeModal() {
         }
     };
 
- mostrarPantallaPrincipal() {
+    mostrarPantallaPrincipal() {
         this.props.history.push({
-            pathname: '/principalConsumidores',
+            pathname: '/principalConsumidores/MiCuenta',
             state: {
-                id: this.state.id,
-                rolUsuario: this.state.rolUsuario
+                id: this.state.id
             }
         })
     }
@@ -114,15 +112,15 @@ closeModal() {
                 id={marker.productor.id}
                 direccion={marker.direccion}
                 localidad={marker.localidad}
-                link= {"Mis productos"}
+                link={"Mis productos"}
                 position={{ lat: marker.latitud, lng: marker.longitud }} />
         });
 
     }
 
-    
+
     render() {
- 
+
         return (
             <div className="containerGeneral">
                 <div className="titulosPrincipales">
@@ -162,9 +160,9 @@ closeModal() {
                             <div className="localidad">
                                 {this.state.selectedPlace.localidad}
                             </div>
-                            <div className="productos">                           
-                           <a href="#" onClick={this.updateParametroBusqueda(this.state.selectedPlace.id)}>{this.state.selectedPlace.link}</a>
-                            </div>                       
+                            <div className="productos">
+                                <a href="#" onClick={this.updateParametroBusqueda(this.state.selectedPlace.id)}>{this.state.selectedPlace.link}</a>
+                            </div>
                         </InfoWindow>
                     </CurrentLocation>
                 </div>
@@ -173,7 +171,7 @@ closeModal() {
                 </div>
             </div>
         );
-        
+
     };
 }
 

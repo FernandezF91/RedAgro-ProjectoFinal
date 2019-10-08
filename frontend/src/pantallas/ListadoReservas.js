@@ -63,7 +63,7 @@ class ListadoReservas extends Component {
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
-            pathname: '/principalConsumidores',
+            pathname: '/principalConsumidores/MiCuenta',
             state: { id: this.state.id }
         })
     }

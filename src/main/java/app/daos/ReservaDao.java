@@ -44,4 +44,8 @@ public interface ReservaDao extends JpaRepository<EntidadReserva, Long> {
 	@Modifying
 	@Query(value = "UPDATE Reserva R SET R.estado_id = ?2 WHERE R.id =?1", nativeQuery = true)
 	void actualizarEstadoReserva(long id_reserva, long id_estado);
+
+	@Query(value = " SELECT COUNT(1) AS cantidad FROM Reserva R JOIN Estado_Reserva ER ON R.estado_id = ER.id "
+			+ "WHERE R.consumidor_id = ?1 AND ER.Nombre = \"Disponible\" GROUP BY ER.id", nativeQuery = true)
+	Long obtenerCantidadReservasDisponiblesConsumidor(Long id_consumidor);
 }

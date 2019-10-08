@@ -31,7 +31,6 @@ class LoginForm extends Component {
         this.setState({
             fields
         })
-
     }
 
     closeModal() {
@@ -40,9 +39,7 @@ class LoginForm extends Component {
         });
     }
 
-
     validarDatos() {
-
         this.setState({
             errores: []
         })
@@ -77,9 +74,6 @@ class LoginForm extends Component {
             })
                 .then(function (response) {
                     if (response.status !== 200) {
-
-                        // alert("Ocurrió algún problema. Intenta nuevamente")
-
                         let mensajeError = "Ocurrió algun problema, intenta nuevamente"
                         _this.setState({
                             visible: true,
@@ -118,14 +112,17 @@ class LoginForm extends Component {
     mostrarPantallaProductor() {
         this.props.history.push({
             pathname: '/principalProductores',
-            state: { id: this.state.usuario.id, user: this.state.usuario, rolUsuario: this.state.usuario.rol }
+            state: {
+                id: this.state.usuario.id,
+                user: this.state.usuario,
+                rolUsuario: this.state.usuario.rol
+            }
         })
-
     }
 
     mostrarPantallaConsumidor() {
         this.props.history.push({
-            pathname: '/principalConsumidores',
+            pathname: '/principalConsumidores/MiCuenta',
             state: {
                 id: this.state.usuario.id,
                 user: this.state.usuario,

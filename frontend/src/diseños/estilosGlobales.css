@@ -85,7 +85,7 @@ input[type=text] {
     width: 40%;
 }
 
-.selectTipoProducto, .selectTipoUnidad, .selectTipoProduccion, .selectCategoria ,.selectPeriodo {
+.selectTipoProducto, .selectTipoUnidad, .selectTipoProduccion, .selectCategoria, .selectPeriodo {
     width: 50%;
 }
 
@@ -121,7 +121,7 @@ input[type=text] {
 
 .iconosTablaDeshabilitados {
     opacity: 0.5;
-  }
+}
 
 .cursorManito {
     cursor: pointer;
@@ -174,7 +174,6 @@ input[type=text] {
     display: inline;
 }
 
-
 .actualizacionEstado {
     display: flex;
     flex-direction: row;
@@ -209,4 +208,34 @@ input[type=text] {
 
 .tituloCantidad {
     align-self: center;
+}
+
+.boxMiCuenta {
+    border: 2px solid;
+    border-color: #a4dba4;
+    border-radius: 10px;
+    min-height: 70px;
+    background-color: #a4dba4;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tituloMiCuenta {
+    text-align: left !important;
+    font-size: 50px;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.textoMiCuenta {
+    text-align: left;
+    line-height: 70px;
+    margin-left: 20px;
+    color: darkgreen !important;
+}
+
+.linkBox {
+    font-weight: 900;
 }

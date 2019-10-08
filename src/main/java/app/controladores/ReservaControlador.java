@@ -30,7 +30,6 @@ import app.modelos.EntidadReserva;
 import app.modelos.EntidadDetalleReserva;
 import app.mappers.ReservaMapper;
 
-
 @RestController
 public class ReservaControlador {
 
@@ -184,7 +183,6 @@ public class ReservaControlador {
 			return new ResponseEntity<>("Ocurrio un error crear la reserva. Reintente más tarde",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-
 	}
 	
 	@CrossOrigin(origins = "http://localhost:3000")
@@ -195,6 +193,18 @@ public class ReservaControlador {
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Ocurrio un error crear la reserva. Reintente más tarde",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(value = "redAgro/obtenerCantidadReservasDisponiblesConsumidor", method = RequestMethod.GET)
+	public ResponseEntity<String> obtenerCantidadReservasDisponiblesConsumidor(@RequestParam Long id_consumidor) {
+		try {
+			Long cantidad = reservaDao.obtenerCantidadReservasDisponiblesConsumidor(id_consumidor);
+			return new ResponseEntity<>(String.valueOf(cantidad), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Ups!",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
