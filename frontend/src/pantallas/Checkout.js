@@ -124,7 +124,7 @@ class Checkout extends Component {
         this.actualizarDetalleReserva();
         var fechaPreparación = this.calculoFechaMinimaEntrega();
         var path = "http://localhost:3000/redAgro/puntos_productor_activos?id=";
-        path = path + this.props.productosSeleccionados[0].productor.id + "&fecha=" + moment(fechaPreparación).format("YYYYMMDD");
+        path = path + this.props.productosSeleccionados[0].productor.id + "&fecha=" + moment(fechaPreparación).format("YYYY-MM-DD");
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -187,7 +187,7 @@ class Checkout extends Component {
 
     obtenerFechasEntrega(idPtoEntrega) {
         var fechaPreparación = this.calculoFechaMinimaEntrega();
-        var path = "http://localhost:3000/redAgro/fechas_entrega/filtradasPor?id_punto_entrega=" + idPtoEntrega + "&fecha=" + moment(fechaPreparación).format("YYYYMMDD");
+        var path = "http://localhost:3000/redAgro/fechas_entrega/filtradasPor?id_punto_entrega=" + idPtoEntrega + "&fecha=" + moment(fechaPreparación).format("YYYY-MM-DD");
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
