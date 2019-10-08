@@ -137,7 +137,7 @@ const PasosCheckout = (props) => {
                                     <br />
                                         {props.seleccionado.puntoEntrega[0].label}
                                         <br />
-                                        A partir del dia {props.datosReserva.fecha}
+                                        A partir del dia {props.seleccionado.fechaEntrega[0].label}
                                     </p>
                             }
                         </Card.Body>

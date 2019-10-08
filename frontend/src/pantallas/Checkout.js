@@ -117,7 +117,6 @@ class Checkout extends Component {
         this.crearReserva = this.crearReserva.bind(this);
         this.handleCheckboxRetiro = this.handleCheckboxRetiro.bind(this);
         this.handleDatosPersonales = this.handleDatosPersonales.bind(this);
-
     }
 
     componentDidMount() {
@@ -259,6 +258,8 @@ class Checkout extends Component {
 
     actualizarFechaEntrega(newFecha) {
         var nuevaFechaEntrega = []
+        let fechasDeEntrega = this.state.fechasEntrega;
+        var fechaSeleccionada = moment(fechasDeEntrega[newFecha.value - 1].fecha).format("YYYY-MM-DD");;
         nuevaFechaEntrega.push(newFecha);
         this.setState({
             seleccionado: {
@@ -267,7 +268,7 @@ class Checkout extends Component {
             },
             datosReserva: {
                 ...this.state.datosReserva,
-                fecha: newFecha.label,
+                fecha: fechaSeleccionada,
             }
         });
     }
@@ -485,7 +486,7 @@ class Checkout extends Component {
                             </div>
                     }
                 </MuiThemeProvider>
-                
+
             </div>
         )
     }
