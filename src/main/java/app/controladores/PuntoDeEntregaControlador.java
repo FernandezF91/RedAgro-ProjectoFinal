@@ -15,18 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import app.clases.PuntoEntrega;
-import app.clases.Usuario;
 import app.daos.FechaEntregaDao;
-import app.clases.Productor;
 import app.daos.ProductorDao;
 import app.daos.PuntoEntregaDao;
 import app.mappers.PuntoEntregaMapper;
-import app.mappers.UsuarioMapper;
-import app.mappers.ProductorMapper;
 import app.modelos.EntidadFechaEntrega;
 import app.modelos.EntidadProductor;
 import app.modelos.EntidadPuntoEntrega;
-import app.modelos.EntidadUsuario;
 
 @RestController
 public class PuntoDeEntregaControlador {
@@ -58,7 +53,6 @@ public class PuntoDeEntregaControlador {
 		punto_entrega_mapper.mapFromEntity(entidad)).collect(Collectors.toList());
 
 		return puntos_entrega;
-
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
@@ -75,28 +69,23 @@ public class PuntoDeEntregaControlador {
 				.collect(Collectors.toList());
 
 		return puntos_entrega;
-
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/puntos_productor_activos")
-	public List<PuntoEntrega> listadoPuntosDeEntregaActivos(@RequestParam long id) {
+	public List<PuntoEntrega> listadoPuntosDeEntregaActivos(@RequestParam String fecha, @RequestParam long id) {
 
 		PuntoEntregaMapper punto_entrega_mapper = new PuntoEntregaMapper();
 		List<EntidadPuntoEntrega> entidad_puntos = new ArrayList<EntidadPuntoEntrega>();
 		List<PuntoEntrega> puntos_entrega = new ArrayList<PuntoEntrega>();
-		EntidadProductor productor = new EntidadProductor();
 
-		productor = productorDAO.obtenerProductor(id);
-
-		entidad_puntos = puntoEntregaDAO.obtenerPuntosEntregaActivos(productor);
+		entidad_puntos = puntoEntregaDAO.obtenerPuntosEntregaActivos(fecha, id);
 
 		puntos_entrega = entidad_puntos.stream().map(entidad ->
 
 		punto_entrega_mapper.mapFromEntity(entidad)).collect(Collectors.toList());
 
 		return puntos_entrega;
-
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
@@ -120,25 +109,19 @@ public class PuntoDeEntregaControlador {
 		fechaEntregaDAO.save(fe);
 
 		return pe.getId();
-		
-		
-
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping(path = "redAgro/modificar_punto")
 	public void modificarEstadoDePunto(@RequestParam long id, @RequestParam String accion) {
 
-		if(accion.equals("Alta")) {
-		
-		puntoEntregaDAO.modificarPunto(id, true);
-		
-		return;
-		
+		if (accion.equals("Alta")) {
+
+			puntoEntregaDAO.modificarPunto(id, true);
+
+			return;
+
 		}
-			
 		puntoEntregaDAO.modificarPunto(id, false);
-	
 	}
-	
 }
