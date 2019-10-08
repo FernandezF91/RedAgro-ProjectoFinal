@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Row, Button, Col } from 'react-bootstrap';
-import { Autocomplete, GoogleApiWrapper, GoogleMap, ScriptLoaded } from 'google-maps-react';
+import { Form, Row, Button } from 'react-bootstrap';
+import { GoogleApiWrapper } from 'google-maps-react';
 import { DatePickerInput } from 'rc-datepicker';
 import Modal from 'react-awesome-modal';
 import Geocode from "react-geocode";
@@ -35,7 +35,6 @@ class IngresarPuntoEntrega extends Component {
             lat: "",
             lng: "",
             id_punto_entrega: ""
-
         }
 
         this.autocompleteInput = React.createRef();
@@ -102,14 +101,14 @@ class IngresarPuntoEntrega extends Component {
 
         let campos = this.state.campos;
         campos["fecha_entrega"] = "";
-        campos["hora_inicio"] ="";
-        campos["hora_fin"]="";
+        campos["hora_inicio"] = "";
+        campos["hora_fin"] = "";
 
         this.setState({
             visible2: false,
             formOk: false,
             disabled2: true,
-            campos:campos
+            campos: campos
         });
     }
 
@@ -132,10 +131,10 @@ class IngresarPuntoEntrega extends Component {
             const path_final = path + _this.state.id_punto_entrega
 
             let fecha_entrega = this.state.campos["fecha_entrega"]
-                let dia = fecha_entrega.getDate();
-                let mes = fecha_entrega.getMonth() + 1;
-                let año = fecha_entrega.getFullYear();
-                var fecha = dia + '-' + mes + '-' + año;
+            let dia = fecha_entrega.getDate();
+            let mes = fecha_entrega.getMonth() + 1;
+            let año = fecha_entrega.getFullYear();
+            var fecha = dia + '-' + mes + '-' + año;
 
             fetch(path_final, {
                 method: "POST",

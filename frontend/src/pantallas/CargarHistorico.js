@@ -1,14 +1,11 @@
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react';
-import Files from 'react-files';
-import { FilePond, registerPlugin } from 'react-filepond';
+import { FilePond } from 'react-filepond';
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css';
 
 // Import the Image EXIF Orientation and Image Preview plugins
 // Note: These need to be installed separately
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondTypeValidate from "filepond-plugin-file-validate-type";
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 class CargarHistorico extends Component {

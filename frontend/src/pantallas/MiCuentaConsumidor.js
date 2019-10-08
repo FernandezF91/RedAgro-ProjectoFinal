@@ -1,4 +1,3 @@
-import '../diseños/Reservas.css';
 import '../diseños/estilosGlobales.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import React, { Component } from 'react';
@@ -70,7 +69,7 @@ class MiCuenta extends Component {
             })
 
     }
-//TODO: Devolver el mensaje correcto en base a la cantidad de reservas
+    //TODO: Devolver el mensaje correcto en base a la cantidad de reservas
     render() {
         const nombres = this.state.usuario.nombre;
         if (this.state.loading)
@@ -86,9 +85,8 @@ class MiCuenta extends Component {
             <div>
                 <div className="titulosPrincipales tituloMiCuenta">Hola, <strong>{nombres}</strong></div>
                 <div className="boxMiCuenta">
-                    <h4 className="textoMiCuenta">
-                        Tenes {this.state.cantidadReservasDisponibles} reserva disponible para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito">reservas</span>!
-                    </h4>
+                    <i className="fas fa-receipt iconoBox" />
+                    <h4 className="textoMiCuenta">Tenes {this.state.cantidadReservasDisponibles} reserva disponible para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito">reservas</span>!</h4>
                 </div>
             </div>
         );

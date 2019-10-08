@@ -4,9 +4,6 @@ import Select from 'react-select';
 
 import '../diseños/estilosGlobales.css';
 import '../diseños/Planificacion.css';
-import Modal from 'react-awesome-modal';
-
-
 
 const mostrarPeriodo = [
     { label: "Verano", value: "Verano" },
@@ -15,79 +12,77 @@ const mostrarPeriodo = [
     { label: "Primavera", value: "Primavera" }
 ];
 
+class Planificacion extends Component {
+    constructor(props) {
+        super(props);
 
-
-class Planificacion extends Component{
-	constructor(props){
-		super(props);
-
-		this.state = {
+        this.state = {
             campos: {},
             alimentosAProducir: [],
             formOk: false,
             visibleOk: false,
             periodo: String,
-			
-			id: this.props.id_productor
-		}
 
-		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+            id: this.props.id_productor
+        }
 
-	}
-	
-	cambiosSelectPeriodo(opt, a, value) {
+        this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+
+    }
+
+    cambiosSelectPeriodo(opt, a, value) {
         //let campos = this.state.campos;
         //campos[a.periodo] = 
         this.periodo = opt.value;
         //this.setState({ periodo })
     }
 
-	mostrarPantallaPrincipal() {
+    mostrarPantallaPrincipal() {
         this.props.history.push({
             pathname: '/principalProductores',
             state: { id: this.state.id }
         })
     }
 
-	handleSubmit(e) {
+    handleSubmit(e) {
         var _this = this;
         e.preventDefault();
 
-            var path_principal = "http://localhost:3000/redAgro/obtenerResultados?periodo=";
-            var periodo = this.periodo; 
-            //_this.props.id_productor;
-            var provincia = "CABA";
-            // _this.state.campos["tipo_producto"];
-            var path_final = path_principal + periodo + "&provincia=" + provincia;
+        var path_principal = "http://localhost:3000/redAgro/obtenerResultados?periodo=";
+        var periodo = this.periodo;
+        //_this.props.id_productor;
+        var provincia = "CABA";
+        // _this.state.campos["tipo_producto"];
+        var path_final = path_principal + periodo + "&provincia=" + provincia;
 
-            //alert(path_final);
+        //alert(path_final);
 
-            fetch(path_final, {
-                method: "GET",
-                headers: {
-                    'Content-type': 'application/json;charset=UTF-8',
-                },
-                            })
-                .then(function (response) {
-                    if (response.status !== 200) {
+        fetch(path_final, {
+            method: "GET",
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+            },
+        })
+            .then(function (response) {
+                if (response.status !== 200) {
 
-                        _this.setState({
-                            visible: true,
-                            titulo: "Error",
-                            mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                    _this.setState({
+                        visible: true,
+                        titulo: "Error",
+                        mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                    });
+                    return;
+                }
+                response.json().then(
+                    function (response) {
+                        response.forEach(element => {
+                            _this.setState({ alimentosAProducir: [..._this.state.alimentosAProducir, element] });
                         });
-                        return;
-                    }
-                    response.json().then(
-                        function (response) {
-                         response.forEach(element => {
-                            _this.setState({alimentosAProducir:[..._this.state.alimentosAProducir,element]});
-                         });
-                            //_this.mostrarMensajeOk();
-                        });
-                });
+                        //_this.mostrarMensajeOk();
+                    });
+            });
     }
-  
+
     mostrarMensajeOk() {
         this.setState({
             formOk: true,
@@ -96,27 +91,27 @@ class Planificacion extends Component{
     }
 
 
-	render(){
-		return (
-			<div className="container">
-			<div className="titulosPrincipales">Planificar Producción</div>
-				<Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
-					<div className="dropdownPeriodo">
-						<Form.Group as={Row}>
-							<Form.Label column sm={3}>
-								Periodo
+    render() {
+        return (
+            <div className="container">
+                <div className="titulosPrincipales">Planificar Producción</div>
+                <Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+                    <div className="dropdownPeriodo">
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={3}>
+                                Periodo
 							</Form.Label>
                             <Select value={this.state.valueCat} className="selectPeriodo" name="periodo" options={mostrarPeriodo} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectPeriodo(opt, a, value)} />
-						</Form.Group>
-					</div>
-					<div className="botonesNuevoProducto">
+                        </Form.Group>
+                    </div>
+                    <div className="botonesNuevoProducto">
                         <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                         <Button variant="success" type="submit">Planificar</Button>
                     </div>
-				</Form>	
-			</div>
+                </Form>
+            </div>
 
-		);
-	};
+        );
+    };
 }
 export default Planificacion

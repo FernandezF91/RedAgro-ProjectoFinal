@@ -216,10 +216,12 @@ input[type=text] {
     border-radius: 10px;
     min-height: 70px;
     background-color: #a4dba4;
-    margin-left: 30px;
-    margin-right: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
 }
 
 .tituloMiCuenta {
@@ -238,4 +240,12 @@ input[type=text] {
 
 .linkBox {
     font-weight: 900;
+}
+
+.iconoBox {
+    font-size: 40px;
+    margin: auto;
+    margin-left: 0! important;
+    margin-right: 0px !important;
+    color: darkgreen;
 }

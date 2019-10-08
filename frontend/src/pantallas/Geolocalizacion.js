@@ -2,16 +2,9 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap';
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import CurrentLocation from './Map';
-import { Router, Route, Link, Switch } from 'react-router-dom';
-import { withRouter } from 'react-router';
-import ResultadoBusqueda from './ResultadoBusqueda';
-import { BrowserRouter } from "react-router-dom";
-import PantallaPrincipalConsumidores from "../pantallas/PantallaPrincipalConsumidores"
 
 import '../diseños/estilosGlobales.css';
 import '../diseños/Mapa.css';
-
-const ResultadoBusquedaRouter = withRouter(ResultadoBusqueda);
 
 class Geolocalizacion extends Component {
 
@@ -117,7 +110,6 @@ class Geolocalizacion extends Component {
         });
 
     }
-
 
     render() {
 
