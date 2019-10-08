@@ -7,9 +7,10 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { MDBModal } from 'mdbreact';
 import PasosCheckout from './PasosCheckout'
 import _ from 'lodash';
+import moment from 'moment';
 import '../diseños/estilosGlobales.css';
 import '../diseños/Checkout.css'
-import moment from 'moment';
+
 
 const pasos = [
     'Confirmá tu datos personales',
@@ -64,6 +65,7 @@ const regularExp = {
     onlyLetters: /^[A-Za-z]+$/,
     onlyNumbers: /^[0-9]+$/
 }
+
 class Checkout extends Component {
     constructor(props) {
         super(props);
@@ -71,6 +73,7 @@ class Checkout extends Component {
             activeStep: 0,
             setActiveStep: 0,
             puntosEntrega: [],
+            fechasEntrega: [],
             selector: {
                 fechasEntrega: [],
                 puntosEntrega: [],
@@ -100,7 +103,10 @@ class Checkout extends Component {
             },
             resultadoRequest: 0,
             loading: true,
+            titulo: '',
+            mensaje: '',
             showModal: false,
+
         }
         this.actualizarPuntoEntrega = this.actualizarPuntoEntrega.bind(this);
         this.actualizarFechaEntrega = this.actualizarFechaEntrega.bind(this);
@@ -111,20 +117,21 @@ class Checkout extends Component {
         this.crearReserva = this.crearReserva.bind(this);
         this.handleCheckboxRetiro = this.handleCheckboxRetiro.bind(this);
         this.handleDatosPersonales = this.handleDatosPersonales.bind(this);
+
     }
 
     componentDidMount() {
-
         this.actualizarDetalleReserva();
-
-        var path = "http://localhost:3000/redAgro/puntos_productor_activos?id=1"// + this.props.productosSeleccionados[0].productor.id;
+        var fechaPreparación = this.calculoFechaMinimaEntrega();
+        var path = "http://localhost:3000/redAgro/puntos_productor_activos?id=";
+        path = path + this.props.productosSeleccionados[0].productor.id + "&fecha=" + moment(fechaPreparación).format("YYYYMMDD");
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
                 try {
                     if (response.status === 200) {
                         this.setState({
-                            resultadoRequest: response.status
+                            resultadoRequest: response.status,
                         });
                         return response.json();
                     }
@@ -180,7 +187,7 @@ class Checkout extends Component {
 
     obtenerFechasEntrega(idPtoEntrega) {
         var fechaPreparación = this.calculoFechaMinimaEntrega();
-        var path = "http://localhost:3000/redAgro/fechas_punto_entrega?id_punto_entrega=" + idPtoEntrega;
+        var path = "http://localhost:3000/redAgro/fechas_entrega/filtradasPor?id_punto_entrega=" + idPtoEntrega + "&fecha=" + moment(fechaPreparación).format("YYYYMMDD");
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -208,15 +215,13 @@ class Checkout extends Component {
             }).then(data => {
                 if (data !== undefined) {
                     this.setState({
-                        puntosEntrega: data,
+                        fechasEntrega: data,
                         selector: {
                             ...this.state.selector,
                             fechasEntrega: data.map(item => {
-                                if (moment(fechaPreparación).isBefore(item.fecha)) {
-                                    return {
-                                        label: moment(item.fecha).format('DD/MM/YYYY'),
-                                        value: item.id
-                                    }
+                                return {
+                                    label: moment(item.fecha).format('DD/MM/YYYY'),
+                                    value: item.id
                                 }
                             })
                         },
@@ -268,17 +273,28 @@ class Checkout extends Component {
     }
 
     handleNext = () => {
-        switch(this.state.activeStep){
+        switch (this.state.activeStep) {
             case 0: {
-                if((!this.state.datosPersonaRetiro.nombre) || (!this.state.datosPersonaRetiro.apellido) ||
-                (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.nombre)) || (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.apellido))){
+                if ((!this.state.datosPersonaRetiro.nombre) || (!this.state.datosPersonaRetiro.apellido) ||
+                    (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.nombre)) || (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.apellido))) {
                     this.setState({
                         titulo: "Error",
                         mensaje: "Datos incompletos o incorrectos",
                         showModal: true,
                     });
-        
                     return false;
+                }
+            }
+            case 1: {
+                if (this.state.selectedRadioButtonRetiro === "radio2") {
+                    if (this.state.seleccionado.puntoEntrega.length === 0 || this.state.seleccionado.fechaEntrega.length === 0) {
+                        this.setState({
+                            titulo: "Error",
+                            mensaje: "Por favor, complete los datos para la entrega",
+                            showModal: true,
+                        });
+                        return false;
+                    }
                 }
             }
         }
@@ -469,6 +485,7 @@ class Checkout extends Component {
                             </div>
                     }
                 </MuiThemeProvider>
+                
             </div>
         )
     }

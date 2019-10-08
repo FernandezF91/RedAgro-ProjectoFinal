@@ -42,11 +42,10 @@ const PasosCheckout = (props) => {
                                 required
                                 type="nom"
                                 name="nombre"
-                                value={(props.datosPersonaRetiro.checkbox===false) ?props.datosPersonaRetiro.nombre : " "}
+                                value={(props.datosPersonaRetiro.checkbox === false) ? props.datosPersonaRetiro.nombre : " "}
                                 disabled={props.datosPersonaRetiro.disabled}
                                 pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
-                                onChange={props.handleDatosPersonales}
-                                ref={props.datosPersonaRetiro.refNombre}/>
+                                onChange={props.handleDatosPersonales} />
                         </Form.Group>
                     </div>
                     <div className="apellidoDU" >
@@ -56,11 +55,10 @@ const PasosCheckout = (props) => {
                                 required
                                 type="ap"
                                 name="apellido"
-                                value={(props.datosPersonaRetiro.checkbox===false) ?props.datosPersonaRetiro.apellido : " "}
+                                value={(props.datosPersonaRetiro.checkbox === false) ? props.datosPersonaRetiro.apellido : " "}
                                 disabled={props.datosPersonaRetiro.disabled}
                                 pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
                                 onChange={props.handleDatosPersonales}
-                                ref={props.datosPersonaRetiro.refApellido}
                             />
                         </Form.Group>
                     </div>
@@ -109,7 +107,8 @@ const PasosCheckout = (props) => {
                                     value={props.seleccionado.puntoEntrega}
                                     options={props.selector.puntosEntrega}
                                     placeholder="Seleccione una dirección de retiro..."
-                                    onChange={newPunto => props.actualizarPuntoEntrega(newPunto)} />
+                                    onChange={newPunto => props.actualizarPuntoEntrega(newPunto)}
+                                     />
 
                                 <Select className="dropdownFechas"
                                     value={props.seleccionado.fechaEntrega}
