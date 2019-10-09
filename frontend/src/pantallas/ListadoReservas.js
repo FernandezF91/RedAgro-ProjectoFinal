@@ -56,7 +56,7 @@ class ListadoReservas extends Component {
         this.cargarListadoDeEstados = this.cargarListadoDeEstados.bind(this);
         this.actualizarEstadoReserva = this.actualizarEstadoReserva.bind(this);
     }
-    
+
     nextPage = (pageNumber) => {
         this.setState({ currentPage: pageNumber });
     }
@@ -86,9 +86,22 @@ class ListadoReservas extends Component {
         const itemRows = [
             <tr key={"row-data-" + item.id}>
                 <td>{item.id}</td>
-                <td>{item.fecha}</td>
+                <td>{moment(item.fecha_creacion, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
                 <td>{item.estado}</td>
-                <td>Retira <i>{item.persona_retiro}</i> por <i>{item.punto_entrega}</i></td>
+                {
+                    (item.punto_entrega === null) ?
+                        <td>Retira <i>{item.persona_retiro}</i> </td>
+                        :
+                        <td>Retira <i>{item.persona_retiro}</i> por <br />
+                            <i>{item.punto_entrega.direccion + ", " + item.punto_entrega.cod_postal + ". " + item.punto_entrega.localidad}</i>
+                        </td>
+                }
+                {
+                    (item.fecha === null) ?
+                        <td>A coordinar</td>
+                        :
+                        <td>{moment(item.fecha).format('DD/MM/YYYY')}</td>
+                }
                 {
                     (tipoUsuario === "Consumidor") ?
                         <td>
@@ -183,10 +196,11 @@ class ListadoReservas extends Component {
                         reservasRealizadas: data.map((item) => {
                             return {
                                 id: item.id,
-                                fecha: moment(item.fecha).format('DD/MM/YYYY'),
+                                fecha: item.fecha,
+                                fecha_creacion: item.fecha_creacion,
                                 forma_retiro: item.forma_retiro,
                                 persona_retiro: item.persona_retiro,
-                                punto_entrega: item.punto_entrega.direccion + " " + item.punto_entrega.cod_postal + " " + item.punto_entrega.localidad,
+                                punto_entrega: item.punto_entrega,
                                 consumidor: {
                                     id: item.consumidor.id,
                                     nombre: item.consumidor.usuario.nombre,

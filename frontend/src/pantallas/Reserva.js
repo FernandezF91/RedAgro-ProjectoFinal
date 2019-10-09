@@ -5,12 +5,12 @@ import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 
 const columnasConsumidor = [
 	{
-		label: 'Nro. Reserva',
+		label: 'Reserva',
 		field: 'NroReserva',
 	},
 	{
-		label: 'Fecha',
-		field: 'Fecha',
+		label: 'Fecha de Creación',
+		field: 'Fecha_creacion',
 	},
 	{
 		label: 'Estado',
@@ -19,6 +19,10 @@ const columnasConsumidor = [
 	{
 		label: 'Datos para el Retiro',
 		field: 'Datos Retiro',
+	},
+	{
+		label: 'Fecha de Retiro',
+		field: 'Fecha',
 	},
 	{
 		label: 'Productor',
@@ -44,12 +48,12 @@ const columnasConsumidor = [
 
 const columnasProductor = [
 	{
-		label: 'Nro. Reserva',
+		label: 'Reserva',
 		field: 'NroReserva',
 	},
 	{
-		label: 'Fecha',
-		field: 'Fecha',
+		label: 'Fecha de Creación',
+		field: 'Fecha_creacion',
 	},
 	{
 		label: 'Estado',
@@ -58,6 +62,10 @@ const columnasProductor = [
 	{
 		label: 'Datos para el Retiro',
 		field: 'Datos Retiro',
+	},
+	{
+		label: 'Fecha de Retiro',
+		field: 'Fecha',
 	},
 	{
 		label: 'Consumidor',
