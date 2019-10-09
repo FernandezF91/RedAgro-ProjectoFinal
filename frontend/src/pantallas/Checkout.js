@@ -11,7 +11,6 @@ import moment from 'moment';
 import '../diseños/estilosGlobales.css';
 import '../diseños/Checkout.css'
 
-
 const pasos = [
     'Confirmá tu datos personales',
     'Elegí una forma de retiro',
@@ -123,7 +122,7 @@ class Checkout extends Component {
         this.actualizarDetalleReserva();
         var fechaPreparación = this.calculoFechaMinimaEntrega();
         var path = "http://localhost:3000/redAgro/puntos_productor_activos?id=";
-        path = path + this.props.productosSeleccionados[0].productor.id + "&fecha=" + moment(fechaPreparación).format("YYYY-MM-DD");
+        path = path + this.props.productosSeleccionados[0].productor.id + "&fecha=" + moment(fechaPreparación).format("DD-MM-YYYY");
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -186,7 +185,7 @@ class Checkout extends Component {
 
     obtenerFechasEntrega(idPtoEntrega) {
         var fechaPreparación = this.calculoFechaMinimaEntrega();
-        var path = "http://localhost:3000/redAgro/fechas_entrega/filtradasPor?id_punto_entrega=" + idPtoEntrega + "&fecha=" + moment(fechaPreparación).format("YYYY-MM-DD");
+        var path = "http://localhost:3000/redAgro/fechas_entrega/filtradasPor?id_punto_entrega=" + idPtoEntrega + "&fecha=" + moment(fechaPreparación).format("DD-MM-YYYY");
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -219,8 +218,8 @@ class Checkout extends Component {
                             ...this.state.selector,
                             fechasEntrega: data.map(item => {
                                 return {
-                                    label: moment(item.fecha).format('DD/MM/YYYY'),
-                                    value: item.id
+                                    label: moment(item.fecha, 'DD-MM-YYYY').format("DD/MM/YYYY"),
+                                    value: item.id,
                                 }
                             })
                         },
@@ -242,8 +241,8 @@ class Checkout extends Component {
 
     actualizarPuntoEntrega(newPunto) {
         var nuevoPuntoEntrega = []
-        nuevoPuntoEntrega.push(newPunto);
         this.obtenerFechasEntrega(newPunto.value);
+        nuevoPuntoEntrega.push(newPunto);
         this.setState({
             seleccionado: {
                 ...this.state.seleccionado,
@@ -258,8 +257,10 @@ class Checkout extends Component {
 
     actualizarFechaEntrega(newFecha) {
         var nuevaFechaEntrega = []
-        let fechasDeEntrega = this.state.fechasEntrega;
-        var fechaSeleccionada = moment(fechasDeEntrega[newFecha.value - 1].fecha).format("YYYY-MM-DD");;
+        let fechasDeEntrega = this.state.fechasEntrega.filter(function (item) {
+            return item.id === newFecha.value;
+        });
+        var fechaSeleccionada = moment(fechasDeEntrega[0].fecha, 'DD-MM-YYYY').format("YYYY-MM-DD");
         nuevaFechaEntrega.push(newFecha);
         this.setState({
             seleccionado: {
