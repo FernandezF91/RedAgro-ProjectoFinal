@@ -12,14 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "Reserva")
@@ -29,7 +28,7 @@ public class EntidadReserva {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@OneToMany(mappedBy = "reserva", targetEntity=EntidadDetalleReserva.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "reserva", targetEntity = EntidadDetalleReserva.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	private List<EntidadDetalleReserva> detallesReserva = new ArrayList<>();
 
@@ -51,6 +50,10 @@ public class EntidadReserva {
 
 	@Column(name = "fecha", nullable = true)
 	private Date fecha;
+
+	@CreationTimestamp
+	@Column(name = "fecha_creacion", nullable = false)
+	private Date fecha_creacion;
 
 	@Column(name = "total_reserva", nullable = false)
 	private int total_reserva;
@@ -107,6 +110,14 @@ public class EntidadReserva {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public Date getFecha_creacion() {
+		return fecha_creacion;
+	}
+
+	public void setFecha_creacion(Date fecha_creacion) {
+		this.fecha_creacion = fecha_creacion;
 	}
 
 	public int getTotal_reserva() {

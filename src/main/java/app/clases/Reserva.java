@@ -1,12 +1,13 @@
 package app.clases;
+
 import java.sql.Date;
 import java.util.List;
 
 public class Reserva {
 
 	public Reserva(long id, List<DetalleReserva> detalleReserva, Productor productor, Consumidor consumidor,
-			PuntoEntrega punto_entrega, EstadoReserva estado_reserva, Date fecha, int total_reserva,
-			String forma_retiro, String persona_retiro) {
+			PuntoEntrega punto_entrega, EstadoReserva estado_reserva, Date fecha, Date fecha_creacion,
+			int total_reserva, String forma_retiro, String persona_retiro) {
 
 		this.setId(id);
 		this.setDetalleReserva(detalleReserva);
@@ -15,6 +16,7 @@ public class Reserva {
 		this.setPunto_entrega(punto_entrega);
 		this.setEstado_reserva(estado_reserva);
 		this.setFecha(fecha);
+		this.setFecha_creacion(fecha_creacion);
 		this.setTotal_reserva(total_reserva);
 		this.setForma_retiro(forma_retiro);
 		this.setPersona_retiro(persona_retiro);
@@ -33,6 +35,8 @@ public class Reserva {
 	private EstadoReserva estado_reserva;
 
 	private Date fecha;
+
+	private Date fecha_creacion;
 
 	private int total_reserva;
 
@@ -86,6 +90,14 @@ public class Reserva {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public Date getFecha_creacion() {
+		return fecha_creacion;
+	}
+
+	public void setFecha_creacion(Date fecha_creacion) {
+		this.fecha_creacion = fecha_creacion;
 	}
 
 	public int getTotal_reserva() {

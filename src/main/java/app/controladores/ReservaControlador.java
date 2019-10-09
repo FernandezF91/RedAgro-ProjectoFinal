@@ -2,7 +2,6 @@ package app.controladores;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import java.math.BigInteger;
 import java.math.BigDecimal;
 
@@ -161,11 +160,12 @@ public class ReservaControlador {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/generarReserva")
 	public ResponseEntity<String> generarReserva(@RequestBody EntidadReserva reserva) {
-
+		
 		EntidadPuntoEntrega entregas = puntoEntregaDAO.obtenerPuntoEntrega((reserva.getPunto_entrega().getId()));
 		reserva.setPunto_entrega(entregas);
 		List<EntidadDetalleReserva> detalles = reserva.getDetallesReserva();
 		reserva.getEstado_reserva();
+		
 
 		// Validación Stock
 		for (EntidadDetalleReserva unDetalle : detalles) {
