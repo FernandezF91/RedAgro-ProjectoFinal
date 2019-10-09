@@ -1,7 +1,5 @@
 package app.modelos;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,14 +10,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Detalle_reserva")
-@IdClass(EntidadDetalleReserva.class)
-public class EntidadDetalleReserva implements Serializable{
+@IdClass(EntidadDetalleReservaPK.class)
+public class EntidadDetalleReserva{
 	
 	@Id
     @Column(name = "id_reserva")
     private long id_reserva;
 	
-	@ManyToOne()
+	@ManyToOne
     @JoinColumn(name = "id_reserva", nullable = false, updatable = false, insertable = false)
     private EntidadReserva reserva;
 	

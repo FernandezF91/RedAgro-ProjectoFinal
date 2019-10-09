@@ -23,11 +23,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import app.clases.Reserva;
 import app.clases.ResultadosEstadisticas;
 import app.daos.ProductoProductorDao;
+import app.daos.PuntoEntregaDao;
 import app.daos.ReservaDao;
 import app.daos.DetalleReservaDao;
 import app.daos.UsuarioDao;
 import app.modelos.EntidadReserva;
+import app.modelos.EntidadPuntoEntrega;
 import app.modelos.EntidadDetalleReserva;
+import app.modelos.EntidadProductoProductor;
 import app.mappers.ReservaMapper;
 
 @RestController
@@ -35,7 +38,7 @@ public class ReservaControlador {
 
 	@Autowired
 	ReservaDao reservaDao;
-	
+
 	@Autowired
 	DetalleReservaDao detalleReservaDao;
 
@@ -44,6 +47,9 @@ public class ReservaControlador {
 
 	@Autowired
 	ProductoProductorDao productoProductorDao;
+
+	@Autowired
+	PuntoEntregaDao puntoEntregaDAO;
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/get_reservas_usuario")
@@ -156,13 +162,18 @@ public class ReservaControlador {
 	@PostMapping(path = "redAgro/generarReserva")
 	public ResponseEntity<String> generarReserva(@RequestBody EntidadReserva reserva) {
 
+		EntidadPuntoEntrega entregas = puntoEntregaDAO.obtenerPuntoEntrega((reserva.getPunto_entrega().getId()));
+		reserva.setPunto_entrega(entregas);
 		List<EntidadDetalleReserva> detalles = reserva.getDetallesReserva();
+		reserva.getEstado_reserva();
 
-		// Chequeo Stock
+		// Validación Stock
 		for (EntidadDetalleReserva unDetalle : detalles) {
-			int stockProducto = productoProductorDao.obtenerStock(unDetalle.getId_producto());
+			EntidadProductoProductor producto = productoProductorDao.obtenerProductoById(unDetalle.getId_producto());
+			unDetalle.setProducto(producto);
+			int stockProducto = producto.getStock();
 			if (unDetalle.getCantidad() > stockProducto) {
-				return new ResponseEntity<>("En este momento no hay stock del producto seleccionado",
+				return new ResponseEntity<>("En este momento no hay stock del producto "+ producto.getTitulo() +"seleccionado",
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -184,7 +195,7 @@ public class ReservaControlador {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping(path = "redAgro/actualizarEstadoReserva")
 	public ResponseEntity<String> actualizarEstadoReserva(@RequestParam long id_reserva, @RequestParam long id_estado) {
@@ -196,7 +207,7 @@ public class ReservaControlador {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "redAgro/obtenerCantidadReservasDisponiblesConsumidor", method = RequestMethod.GET)
 	public ResponseEntity<String> obtenerCantidadReservasDisponiblesConsumidor(@RequestParam Long id_consumidor) {
@@ -204,11 +215,10 @@ public class ReservaControlador {
 			Long cantidad = reservaDao.obtenerCantidadReservasDisponiblesConsumidor(id_consumidor);
 			return new ResponseEntity<>(String.valueOf(cantidad), HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ups!",
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>("Ups!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "redAgro/obtenerCantidadReservasPendientesProductor", method = RequestMethod.GET)
 	public ResponseEntity<String> obtenerCantidadReservasPendientesProductor(@RequestParam Long id_productor) {
@@ -216,8 +226,7 @@ public class ReservaControlador {
 			Long cantidad = reservaDao.obtenerCantidadReservasPendientesProductor(id_productor);
 			return new ResponseEntity<>(String.valueOf(cantidad), HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ups!",
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>("Ups!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

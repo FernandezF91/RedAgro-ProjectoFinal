@@ -29,27 +29,27 @@ public class EntidadReserva {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "reserva", targetEntity=EntidadDetalleReserva.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
 	private List<EntidadDetalleReserva> detallesReserva = new ArrayList<>();
 
-	@ManyToOne()
+	@OneToOne
 	@JoinColumn(name = "productor_id", nullable = false)
 	private EntidadProductor productor;
 
-	@ManyToOne()
+	@OneToOne
 	@JoinColumn(name = "consumidor_id", nullable = false)
 	private EntidadConsumidor consumidor;
 
-	@ManyToOne()
-	@JoinColumn(name = "punto_entrega_id", nullable = false)
+	@OneToOne
+	@JoinColumn(name = "punto_entrega_id", nullable = true)
 	private EntidadPuntoEntrega punto_entrega;
 
 	@OneToOne
 	@JoinColumn(name = "estado_id", nullable = false)
 	private EntidadEstadoReserva estado_reserva;
 
-	@Column(name = "fecha", nullable = false)
+	@Column(name = "fecha", nullable = true)
 	private Date fecha;
 
 	@Column(name = "total_reserva", nullable = false)
