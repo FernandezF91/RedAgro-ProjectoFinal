@@ -123,19 +123,47 @@ class PantallaPrincipalconsumidores extends Component {
         this.state.productos.forEach(p => p.categoria === "Frutas" ? frutas.push(p) : null)
         this.state.productos.forEach(p => p.categoria === "Otros" ? otros.push(p) : null)
 
+        verduras.sort(function (a, b) {
+            if (a.tipo > b.tipo) {
+              return 1;
+            }
+            if (a.tipo < b.tipo) {
+              return -1;
+            }            
+            return 0;
+          });
+        frutas.sort(function (a, b) {
+            if (a.tipo > b.tipo) {
+              return 1;
+            }
+            if (a.tipo < b.tipo) {
+              return -1;
+            }            
+            return 0;
+          });
+        otros.sort(function (a, b) {
+            if (a.tipo > b.tipo) {
+              return 1;
+            }
+            if (a.tipo < b.tipo) {
+              return -1;
+            }            
+            return 0;
+          });
+
         const item = [
             <Row>
-                <Col>
+                <Col className="scrollMenuCategorias">
                     {
                         verduras.map(v => { return <Row id="subTipos"><Link onClick={() => this.handleNuevaBusqueda(v.tipo)}>{v.tipo}</Link></Row> })
                     }
                 </Col>
-                <Col>
+                <Col className="scrollMenuCategorias">
                     {
                         frutas.map(f => { return <Row id="subTipos"><Link onClick={() => this.handleNuevaBusqueda(f.tipo)}>{f.tipo}</Link></Row> })
                     }
                 </Col>
-                <Col>
+                <Col className="scrollMenuCategorias">
                     {
                         otros.map(o => { return <Row id="subTipos"><Link onClick={() => this.handleNuevaBusqueda(o.tipo)}>{o.tipo}</Link></Row> })
                     }
