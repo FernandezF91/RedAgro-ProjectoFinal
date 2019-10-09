@@ -121,7 +121,7 @@ class PantallaPrincipalconsumidores extends Component {
 
         this.state.productos.forEach(p => p.categoria === "Verduras" ? verduras.push(p) : null)
         this.state.productos.forEach(p => p.categoria === "Frutas" ? frutas.push(p) : null)
-        this.state.productos.forEach(p => p.categoria === "Otros" ? otros.push(p) : null)
+        this.state.productos.forEach(p => p.categoria === "Otros" || p.categoria === "Variado" ? otros.push(p) : null)
 
         verduras.sort(function (a, b) {
             if (a.tipo > b.tipo) {

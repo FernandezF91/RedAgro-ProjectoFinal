@@ -61,7 +61,7 @@ const theme = createMuiTheme({
 });
 
 const regularExp = {
-    onlyLetters: /^[A-Za-z]+$/,
+    onlyLetters: /^[a-zA-Z\s]*$/,
     onlyNumbers: /^[0-9]+$/
 }
 

@@ -195,7 +195,7 @@ class RegistroConsumidor extends Component {
                                             required
                                             type="text"
                                             name="nombre"
-                                            pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+                                            pattern="/^[a-z][a-z\s]*$/"
                                             onChange={(e) => this.detectarCambios(e)}
                                         />
                                         <Form.Control.Feedback className="errores" type="invalid">

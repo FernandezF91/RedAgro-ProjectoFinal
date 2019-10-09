@@ -257,3 +257,8 @@ input[type=text] {
 .linkMiCuenta {
     display: inline-flex;
 }
+
+.columnaPrecio {
+    min-width: 90px !important;
+    max-width: 90px !important;
+}

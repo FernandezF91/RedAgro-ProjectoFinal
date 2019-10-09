@@ -43,7 +43,7 @@ class ListadoProductos extends Component {
                 <td>{item.stock}</td>
                 <td>{item.tipoDeUnidad}</td>
                 <td>{item.tipoDeProduccion}</td>
-                <td>
+                <td className="columnaPrecio">
                     <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                 </td>
                 <td>{item.fechaDeVencimiento}</td>
