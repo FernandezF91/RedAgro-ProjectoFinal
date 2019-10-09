@@ -125,7 +125,11 @@ class NuevoProducto extends Component {
         if (_this.validarCampos()) {
             var path_principal = "http://localhost:3000/redAgro/usuario_productor/nuevo_producto?id_productor=";
             var id_productor = _this.props.id_productor;
-            var id_producto = _this.state.campos["tipo_producto"];
+            if (this.state.campos["categoria"] === "Variado") {
+                var id_producto = 1;
+            } else {
+                var id_producto = _this.state.campos["tipo_producto"];
+            }
             var path_final = path_principal + id_productor + "&id_producto=" + id_producto;
 
             fetch(path_final, {

@@ -3,6 +3,8 @@ import Producto from './Producto';
 import '../diseños/estilosGlobales.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from 'react-loader-spinner';
+import NumberFormat from 'react-number-format';
+import moment from 'moment';
 
 class ListadoProductos extends Component {
     constructor(props) {
@@ -41,11 +43,13 @@ class ListadoProductos extends Component {
                 <td>{item.stock}</td>
                 <td>{item.tipoDeUnidad}</td>
                 <td>{item.tipoDeProduccion}</td>
-                <td>{item.precio}</td>
+                <td>
+                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                </td>
                 <td>{item.fechaDeVencimiento}</td>
                 <td>{item.tiempoDePreparacion}</td>
                 <td>
-                    <i className="fas fa-edit iconosTabla" title="Editar producto" />
+                    <i className="fas fa-edit iconosTabla cursorManito" title="Editar producto" />
                 </td>
             </tr>
         ];
@@ -61,7 +65,11 @@ class ListadoProductos extends Component {
             .then(data => {
                 this.setState({
                     productos: data.map((item) => {
-                        var fecha = new Date(item.fecha_vencimiento);
+                        var fecha = "-";
+                        if (item.fecha_vencimiento !== null) {
+                            fecha = moment(item.fecha_vencimiento).format('DD/MM/YYYY')
+                        }
+
                         return {
                             id: item.id,
                             categoria: item.producto.categoria,
@@ -72,7 +80,7 @@ class ListadoProductos extends Component {
                             tipoDeUnidad: item.unidad_venta,
                             tipoDeProduccion: item.tipo_produccion,
                             precio: item.precio,
-                            fechaDeVencimiento: fecha.getDate().toString() + "/" + (fecha.getMonth() + 1).toString() + "/" + fecha.getFullYear().toString(),
+                            fechaDeVencimiento: fecha,
                             tiempoDePreparacion: item.tiempo_preparacion,
                         }
                     }),
