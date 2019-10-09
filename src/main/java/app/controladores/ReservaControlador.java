@@ -208,5 +208,17 @@ public class ReservaControlador {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(value = "redAgro/obtenerCantidadReservasPendientesProductor", method = RequestMethod.GET)
+	public ResponseEntity<String> obtenerCantidadReservasPendientesProductor(@RequestParam Long id_productor) {
+		try {
+			Long cantidad = reservaDao.obtenerCantidadReservasPendientesProductor(id_productor);
+			return new ResponseEntity<>(String.valueOf(cantidad), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Ups!",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
 }

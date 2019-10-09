@@ -18,6 +18,7 @@ class MiCuenta extends Component {
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.mostrarReservas = this.mostrarReservas.bind(this);
+        this.generarMensajeReservas = this.generarMensajeReservas.bind(this);
     }
 
     mostrarPantallaPrincipal() {
@@ -54,7 +55,7 @@ class MiCuenta extends Component {
                             }
                             else {
                                 _this.setState({
-                                    cantidadReservasDisponibles: response
+                                    cantidadReservasDisponibles: 0
                                 });
                             }
                         });
@@ -69,7 +70,22 @@ class MiCuenta extends Component {
             })
 
     }
-    //TODO: Devolver el mensaje correcto en base a la cantidad de reservas
+
+    generarMensajeReservas() {
+        const mensaje = [
+            (this.state.cantidadReservasDisponibles === 0) ? (
+                < h4 className="textoMiCuenta" > No tenes reservas disponibles para retirar!</h4 >
+            ) : (
+                    (this.state.cantidadReservasDisponibles === "1") ? (
+                        < h4 className="textoMiCuenta" > Tenes {this.state.cantidadReservasDisponibles} reserva disponible para retirar. Para más detalle, consulta tus < span onClick={this.mostrarReservas} className="linkBox cursorManito" > reservas</span >!</h4 >
+                    ) : (
+                            < h4 className="textoMiCuenta" > Tenes {this.state.cantidadReservasDisponibles} reservas disponibles para retirar. Para más detalle, consulta tus < span onClick={this.mostrarReservas} className="linkBox cursorManito" > reservas</span >!</h4 >
+                        )
+                )
+        ]
+        return mensaje;
+    }
+
     render() {
         const nombres = this.state.usuario.nombre;
         if (this.state.loading)
@@ -85,8 +101,8 @@ class MiCuenta extends Component {
             <div>
                 <div className="titulosPrincipales tituloMiCuenta">Hola, <strong>{nombres}</strong></div>
                 <div className="boxMiCuenta">
-                    <i className="fas fa-receipt iconoBox" />
-                    <h4 className="textoMiCuenta">Tenes {this.state.cantidadReservasDisponibles} reserva disponible para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito">reservas</span>!</h4>
+                    <i className="fas fa-shopping-bag iconoBox" />
+                    {this.generarMensajeReservas()}
                 </div>
             </div>
         );

@@ -15,41 +15,39 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "Producto")
 public class EntidadProducto {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-	
-	@Column(name="categoria", nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
+
+	@Column(name = "categoria", nullable = false)
 	private String categoria;
-	
-	@Column(name="tipo", nullable=true)
+
+	@Column(name = "tipo", nullable = true)
 	private String tipo;
-	
+
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<EntidadOferta> ofertas = new ArrayList<>();
-	
+	private List<EntidadOferta> ofertas = new ArrayList<>();
+
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<EntidadHistorico> historicos = new ArrayList<>();
-	
+	private List<EntidadHistorico> historicos = new ArrayList<>();
+
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<EntidadPreferencia> preferencias = new ArrayList<>();
-	
+	private List<EntidadPreferencia> preferencias = new ArrayList<>();
+
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<EntidadProductoProductor> productos_productor = new ArrayList<>();
-	
+	private List<EntidadProductoProductor> productos_productor = new ArrayList<>();
+
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-    private List<EntidadDetalleReserva> detallesReserva = new ArrayList<>();
+	private List<EntidadDetalleReserva> detallesReserva = new ArrayList<>();
 
 	public Long getId() {
 		return id;

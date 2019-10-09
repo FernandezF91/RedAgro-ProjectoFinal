@@ -9,5 +9,5 @@ public interface ProductorDao extends JpaRepository<EntidadProductor, Long> {
 
 	@Query("select p from EntidadProductor p where p.id = ?1")
 	EntidadProductor obtenerProductor(long id);
-
+	
 }
