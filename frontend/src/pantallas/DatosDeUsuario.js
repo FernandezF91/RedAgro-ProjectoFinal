@@ -10,7 +10,7 @@ import { isDate } from 'moment';
 const maxDate = new Date();
 
 const regularExp = {
-    onlyLetters: /^[A-Za-z]+$/,
+    onlyLetters: /^[a-zA-Z ]*$/,
     onlyNumbers: /^[0-9]+$/
 }
 
@@ -212,7 +212,7 @@ class DatosDeUsuario extends Component {
                                 type="nom"
                                 name="nombre"
                                 defaultValue={this.state.usuario.nombre}
-                                pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+                                pattern="^[a-zA-Z ]*$"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
@@ -227,7 +227,7 @@ class DatosDeUsuario extends Component {
                                 type="ap"
                                 name="apellido"
                                 defaultValue={this.state.usuario.apellido}
-                                pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+                                pattern="^[a-zA-Z ]*$"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>

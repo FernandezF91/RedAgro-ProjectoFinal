@@ -44,7 +44,7 @@ const PasosCheckout = (props) => {
                                 name="nombre"
                                 value={(props.datosPersonaRetiro.checkbox === false) ? props.datosPersonaRetiro.nombre : " "}
                                 disabled={props.datosPersonaRetiro.disabled}
-                                pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+                                pattern="^[a-zA-Z ]*$"
                                 onChange={props.handleDatosPersonales} />
                         </Form.Group>
                     </div>
@@ -57,7 +57,7 @@ const PasosCheckout = (props) => {
                                 name="apellido"
                                 value={(props.datosPersonaRetiro.checkbox === false) ? props.datosPersonaRetiro.apellido : " "}
                                 disabled={props.datosPersonaRetiro.disabled}
-                                pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+                                pattern="^[a-zA-Z ]*$"
                                 onChange={props.handleDatosPersonales}
                             />
                         </Form.Group>

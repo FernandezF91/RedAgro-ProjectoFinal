@@ -198,7 +198,7 @@ class RegistroProductor extends Component {
                                             required
                                             type="text"
                                             name="nombre"
-                                            pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*"
+                                            pattern="^[a-zA-Z ]*$"
                                             onChange={(e) => this.detectarCambios(e)}
                                         />
                                         <Form.Control.Feedback className="errores" type="invalid">
@@ -213,7 +213,13 @@ class RegistroProductor extends Component {
                                         Apellido
                                 </Form.Label>
                                     <Col sm={10}>
-                                        <Form.Control required type="text" name="apellido" pattern="[A-Z]*|[a-z]*|[A-Z][a-z]*" onChange={(e) => this.detectarCambios(e)} />
+                                        <Form.Control
+                                            required
+                                            type="text"
+                                            name="apellido"
+                                            pattern="^[a-zA-Z ]*$"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                        />
                                         <Form.Control.Feedback className="errores" type="invalid">
                                             *Campo inválido
 												</Form.Control.Feedback>
@@ -234,7 +240,9 @@ class RegistroProductor extends Component {
                                             onChange={(e) => this.cambiosFecha(e)}
                                             value={this.state.campos["fecha_nac"]}
                                         />
-                                        <div className="errorConsu">{this.state.errores["fecha_nac"]}</div>
+                                        <div className="errorConsu">
+                                            {this.state.errores["fecha_nac"]}
+                                        </div>
                                     </Col>
 
                                 </Form.Group>
@@ -245,7 +253,12 @@ class RegistroProductor extends Component {
                                         Razón social
                                 </Form.Label>
                                     <Col sm={10}>
-                                        <Form.Control required type="text" name="razonSocial" onChange={(e) => this.detectarCambios(e)} />
+                                        <Form.Control
+                                            required
+                                            type="text"
+                                            name="razonSocial"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                        />
                                         <Form.Control.Feedback className="errores" type="invalid">
                                             *Campo inválido
 												</Form.Control.Feedback>
@@ -258,7 +271,13 @@ class RegistroProductor extends Component {
                                         Teléfono de contacto
                                 </Form.Label>
                                     <Col sm={10}>
-                                        <Form.Control required type="telR" name="tel" pattern="[0-9]{8,14}" onChange={(e) => this.detectarCambios(e)} />
+                                        <Form.Control
+                                            required
+                                            type="telR"
+                                            name="tel"
+                                            pattern="[0-9]{8,14}"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                        />
                                         <Form.Control.Feedback className="errores" type="invalid">
                                             *Campo inválido
 												</Form.Control.Feedback>
@@ -271,7 +290,12 @@ class RegistroProductor extends Component {
                                         Email
                                 </Form.Label>
                                     <Col sm={10}>
-                                        <Form.Control required type="email" name="email" onChange={(e) => this.detectarCambios(e)} />
+                                        <Form.Control
+                                            required
+                                            type="email"
+                                            name="email"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                        />
                                         <Form.Control.Feedback className="errores" type="invalid">
                                             *Campo inválido
 												</Form.Control.Feedback>
@@ -284,7 +308,12 @@ class RegistroProductor extends Component {
                                         Password
                                 </Form.Label>
                                     <Col sm={10}>
-                                        <Form.Control required type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
+                                        <Form.Control
+                                            required
+                                            type="password"
+                                            name="password"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                        />
                                         <Form.Control.Feedback className="errores" type="invalid">
                                             *Campo inválido
 												</Form.Control.Feedback>
@@ -306,8 +335,12 @@ class RegistroProductor extends Component {
                             effect="fadeInUp"
                         >
                             <div>
-                                <h1>{this.state.titulo}</h1>
-                                <p>{this.state.mensaje}</p>
+                                <h1>
+                                    {this.state.titulo}
+                                </h1>
+                                <p>
+                                    {this.state.mensaje}
+                                </p>
                                 <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
                             </div>
                         </Modal>
