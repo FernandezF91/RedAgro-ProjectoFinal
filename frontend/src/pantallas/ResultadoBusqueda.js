@@ -50,7 +50,10 @@ class ResultadoBusqueda extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.busqueda !== this.props.busqueda) {
-            this.setState({ resultadoBusqueda: [] });
+            this.setState({
+                resultadoBusqueda: [],
+                loading: true
+            });
             this.realizarBusqueda(this.props.busqueda)
         }
     }
