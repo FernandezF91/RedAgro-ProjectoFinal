@@ -249,7 +249,6 @@ class ResultadoBusqueda extends Component {
 
         } else {
             this.restarProducto(position);
-            console.log("Cambie el chango");
         }
     }
 

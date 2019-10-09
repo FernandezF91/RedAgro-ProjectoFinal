@@ -125,10 +125,9 @@ class NuevoProducto extends Component {
         if (_this.validarCampos()) {
             var path_principal = "http://localhost:3000/redAgro/usuario_productor/nuevo_producto?id_productor=";
             var id_productor = _this.props.id_productor;
-            if (this.state.campos["categoria"] === "Variado") {
-                var id_producto = 1;
-            } else {
-                var id_producto = _this.state.campos["tipo_producto"];
+            var id_producto = 1; //para el caso de variado
+            if (this.state.campos["categoria"] !== "Variado") {
+                id_producto = _this.state.campos["tipo_producto"];
             }
             var path_final = path_principal + id_productor + "&id_producto=" + id_producto;
 
@@ -222,13 +221,16 @@ class NuevoProducto extends Component {
         campos["contenido"] = "";
 
         this.featurePond.current.getFiles().forEach(file => {
-
             this.featurePond.current.removeFile(file);
         });
 
         this.setState({
             campos: campos,
-            files: files, valueCat: [], valueTp: [], valueTprod: [], valueUnidadVenta: []
+            files: files,
+            valueCat: [],
+            valueTp: [],
+            valueTprod: [],
+            valueUnidadVenta: []
         });
     }
 
@@ -259,12 +261,19 @@ class NuevoProducto extends Component {
     }
 
     cambiosSelectCategoria(opt, a, value) {
-        this.setState({ valueCat: value, valueTp: "", tipos_producto: [], disabled: false });
+        this.setState({
+            valueCat: value,
+            valueTp: "",
+            tipos_producto: [],
+            disabled: false
+        });
         let campos = this.state.campos;
         campos[a.name] = opt.label;
 
         if (this.state.campos["categoria"] === "Variado") {
-            this.setState({ disabled: true })
+            this.setState({
+                disabled: true
+            })
         }
         this.obtenerTiposProducto(this.state.campos["categoria"]);
     }
@@ -356,7 +365,14 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Categoria
 								</Form.Label>
-                            <Select value={this.state.valueCat} className="selectCategoria" name="categoria" options={categorias} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectCategoria(opt, a, value)} />
+                            <Select
+                                value={this.state.valueCat}
+                                className="selectCategoria"
+                                name="categoria"
+                                options={categorias}
+                                placeholder="Seleccione un item..."
+                                onChange={(opt, a, value) => this.cambiosSelectCategoria(opt, a, value)}
+                            />
                         </Form.Group>
                     </div>
                     <div className="dropdownTipoProducto">
@@ -364,7 +380,15 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 Tipo de producto
 								</Form.Label>
-                            <Select isDisabled={this.state.disabled} value={this.state.valueTp} className="selectTipoProducto" name="tipo_producto" options={this.state.tipos_producto} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectTipoProducto(opt, a, value)} />
+                            <Select
+                                isDisabled={this.state.disabled}
+                                value={this.state.valueTp}
+                                className="selectTipoProducto"
+                                name="tipo_producto"
+                                options={this.state.tipos_producto}
+                                placeholder="Seleccione un item..."
+                                onChange={(opt, a, value) => this.cambiosSelectTipoProducto(opt, a, value)}
+                            />
                         </Form.Group>
                     </div>
                     <div className="dropdownTipoProduccion">
@@ -372,7 +396,14 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Tipo de Producción
 								</Form.Label>
-                            <Select value={this.state.valueTprod} className="selectTipoProduccion" name="tipo_produccion" options={tipoProduccion} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectTprod(opt, a, value)} />
+                            <Select
+                                value={this.state.valueTprod}
+                                className="selectTipoProduccion"
+                                name="tipo_produccion"
+                                options={tipoProduccion}
+                                placeholder="Seleccione un item..."
+                                onChange={(opt, a, value) => this.cambiosSelectTprod(opt, a, value)}
+                            />
                         </Form.Group>
                     </div>
                     <div className="unidad_venta">
@@ -380,7 +411,14 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Unidad de venta
                                 </Form.Label>
-                            <Select value={this.state.valueUnidadVenta} className="selectTipoUnidad" name="unidad_venta" options={tipoUnidadVenta} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectUnidadV(opt, a, value)} />
+                            <Select
+                                value={this.state.valueUnidadVenta}
+                                className="selectTipoUnidad"
+                                name="unidad_venta"
+                                options={tipoUnidadVenta}
+                                placeholder="Seleccione un item..."
+                                onChange={(opt, a, value) => this.cambiosSelectUnidadV(opt, a, value)}
+                            />
                         </Form.Group>
                     </div>
                     <div className="contenido">
@@ -501,8 +539,8 @@ class NuevoProducto extends Component {
                         <div>
                             <h1>Producto guardado</h1>
                             <p>¿Querés seguir cargando productos?</p>
+                            <Button variant="light" onClick={() => this.closeModal()}>No</Button>
                             <Button variant="success" onClick={() => this.closeModalSeguirCargando()}>Si</Button>
-                            <Button variant="success" onClick={() => this.closeModal()}>No</Button>
                         </div>
                     </Modal>
                 </section>
