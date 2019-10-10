@@ -2,6 +2,7 @@ import '../diseños/estilosGlobales.css';
 import '../diseños/ResultadoBusqueda.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import React, { Component } from 'react';
+import { MDBModal } from 'mdbreact';
 import Select from 'react-select';
 import Loader from 'react-loader-spinner';
 import Busqueda from './Busqueda';
@@ -15,7 +16,6 @@ const tamañosListado = [
     { label: "Todo", value: "Todo" },
 ];
 
-
 class ResultadoBusqueda extends Component {
     constructor(props) {
         super(props)
@@ -27,7 +27,8 @@ class ResultadoBusqueda extends Component {
             paginaActual: 1,
             defaultListado: [{ label: "9", value: "9" }],
             loading: true,
-            resultadoRequest: 0
+            resultadoRequest: 0,
+            showModal: false,
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
@@ -190,7 +191,6 @@ class ResultadoBusqueda extends Component {
     }
 
     restarProducto = (position) => {
-        //Falta la validación y actualización por stock
         let resultadoDeBusqueda = this.state.resultadoBusqueda;
         var productoSeleccionado = resultadoDeBusqueda[position];
         if ((parseInt(productoSeleccionado.cantidad) - 1) >= 0) {
@@ -202,7 +202,6 @@ class ResultadoBusqueda extends Component {
     }
 
     sumarProducto = (position) => {
-        //Falta la validación y actualización por stock
         let resultadoDeBusqueda = this.state.resultadoBusqueda;
         var productoSeleccionado = resultadoDeBusqueda[position];
         let productoActualizado = [
@@ -217,35 +216,46 @@ class ResultadoBusqueda extends Component {
         var producto = resultadoDeBusqueda[position];
 
         if (this.validarMismoProductor(producto) === true) {
-
-            if (parseInt(producto.cantidad) > 0) {
-
-                let chequeoProducto = productosSeleccionados.filter(function (item) {
-                    return item.id === producto.id;
-                });
-
-                if (chequeoProducto.length > 0) {
-                    var index = productosSeleccionados.findIndex(item => item.id === chequeoProducto[0].id);
-                    let nuevaLista = [
-                        ...productosSeleccionados.slice(0, index),
-                        chequeoProducto[0],
-                        ...productosSeleccionados.slice(index + 1)
-                    ];
-                    productosSeleccionados = nuevaLista;
-                }
-                else {
-                    productosSeleccionados.push(producto);
-                }
-                this.setState(this.actualizarPropsSeleccionados(productosSeleccionados));
+            //Chequeo que la cantidad ingresada sea mayor al stock
+            if (parseInt(producto.cantidad) > parseInt(producto.stock)) {
                 ButterToast.raise({
-                    content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_GREEN}
-                        content={() => <div className="mensajeToast">Se agrego un nuevo producto a tu carrito</div>}
+                    content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_RED}
+                        content={() => <div className="mensajeToast">No está disponible el stock seleccionado. Reintentá disminuyendo la cantidad ;)</div>}
                         title="CulturaVerde"
                         icon={<i className="fa fa-shopping-cart iconoToast" />}
                     />
                 });
-            }
+            } else {
 
+                if (parseInt(producto.cantidad) > 0) {
+
+                    let chequeoProducto = productosSeleccionados.filter(function (item) {
+                        return item.id === producto.id;
+                    });
+
+                    if (chequeoProducto.length > 0) {
+                        var index = productosSeleccionados.findIndex(item => item.id === chequeoProducto[0].id);
+                        let nuevaLista = [
+                            ...productosSeleccionados.slice(0, index),
+                            chequeoProducto[0],
+                            ...productosSeleccionados.slice(index + 1)
+                        ];
+                        productosSeleccionados = nuevaLista;
+                    }
+                    else {
+                        productosSeleccionados.push(producto);
+                    }
+                    this.setState(this.actualizarPropsSeleccionados(productosSeleccionados));
+                    ButterToast.raise({
+                        content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_GREEN}
+                            content={() => <div className="mensajeToast">Se agrego un nuevo producto a tu carrito</div>}
+                            title="CulturaVerde"
+                            icon={<i className="fa fa-shopping-cart iconoToast" />}
+                        />
+                    });
+                }
+
+            }
         } else {
             this.restarProducto(position);
         }
@@ -284,22 +294,6 @@ class ResultadoBusqueda extends Component {
             respuesta = true;
         }
         return respuesta;
-    }
-
-    validarStock(producto) {
-        var path = "http://localhost:3000/redAgro/validarStock?id_prod_productor=" + producto.id + "&cantidad=" + (parseInt(producto.cantidad) + 1);
-        fetch(
-            path, {
-            method: "GET",
-            headers: {
-                'Content-type': 'application/json;charset=UTF-8',
-            },
-        })
-            .then(function (response) {
-                if (response.status === 200) {
-                    return response;
-                }
-            })
     }
 
     render() {
@@ -356,7 +350,8 @@ class ResultadoBusqueda extends Component {
                         : ''
                 }
                 <div className="toastPosicion">
-                    <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_RIGHT }} /></div>
+                    <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_RIGHT }} />
+                </div>
             </div>
         )
     }
