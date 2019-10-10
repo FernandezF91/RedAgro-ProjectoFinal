@@ -1,3 +1,4 @@
+INSERT INTO redagro.producto (categoria, tipo) VALUES ("Variado","Variado");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Frutas","Banana");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Frutas","Cereza");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Frutas","Ciruela DAggen");
