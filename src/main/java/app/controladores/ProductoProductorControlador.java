@@ -72,37 +72,40 @@ public class ProductoProductorControlador {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/obtenerProductos")
 	public List<ProductoProductor> obtenerProductos(@RequestParam String busqueda) {
-		
+
 		List<EntidadProducto> p = new ArrayList<EntidadProducto>();
 		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
 		List<EntidadProductoProductor> listaProductos;
-		p=productoDao.obtenerCategoriasSubtipos();
-		
-		if(p.stream().anyMatch(prod ->prod.getTipo().equals(busqueda))) {
-		
-		listaProductos = productoProductorDao.obtenerProductosTipo(busqueda);
-			
-		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos);
-		
-		return productosMapeados;
-			
+		p = productoDao.obtenerCategoriasSubtipos();
+
+		if (p.stream().anyMatch(prod -> prod.getTipo().equals(busqueda))) {
+
+			listaProductos = productoProductorDao.obtenerProductosTipo(busqueda);
+
+			List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos);
+
+			return productosMapeados;
+
 		}
-		
+
 		listaProductos = productoProductorDao.obtenerProductos(busqueda);
 		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos);
 		return productosMapeados;
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
-	@GetMapping(path = "redAgro/validarStock")
-	public boolean validarStock(@RequestParam int id_prod_productor, @RequestParam int cantidad) {
+	@GetMapping(path = "redAgro/obtenerProductosPorLista")
+	public List<ProductoProductor> obtenerProductosPorLista(@RequestParam List<Long> idProducto) {
 
-		int stock = productoProductorDao.obtenerStock(id_prod_productor);
+		List<ProductoProductor> listado = new ArrayList<ProductoProductor>();
+		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
 
-		if (cantidad > stock) {
-			return false;
-		} else {
-			return true;
+		for (Long id : idProducto) {
+			EntidadProductoProductor entidad = productoProductorDao.obtenerProductoById(id);
+			ProductoProductor producto = productoMapper.mapFromEntity(entidad);
+			listado.add(producto);
 		}
+
+		return listado;
 	}
 }
