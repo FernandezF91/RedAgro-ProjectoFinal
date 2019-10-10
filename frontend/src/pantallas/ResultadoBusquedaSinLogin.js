@@ -195,21 +195,21 @@ class ResultadoBusquedaSinLogin extends Component {
                         : ''
                 }
                 {
-                    (this.state.showModal === true) ?
-                        <MDBModal isOpen={this.state.showModal} centered size="sm">
-                            <div className="modalMargenes">
-                                <i className="fas fa-times botonCerrarModal" onClick={this.cerrarModal} />
-                                <div class="modal-body">
-                                    <i className="fas fa-check-circle iconoModalOk" />
-                                    <br />
-                                    <br />
-                                    <h5> Hola!
-                                <br />Para continuar Tenés que iniciar sesión...
+                    <MDBModal isOpen={this.state.showModal} centered size="sm">
+                        <div className="modalMargenes">
+                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                            <br />
+                            <div class="modal-body">
+                                <i className="fas fa-shopping-cart" />
+                                <br />
+                                <br />
+                                <h5> Hola!
+                                <br />Para continuar tenés que iniciar sesión...
                             </h5>
-                                </div>
                             </div>
-                        </MDBModal>
-                        : ''
+                        </div>
+                    </MDBModal>
+
                 }
             </div>
         )
