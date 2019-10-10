@@ -109,6 +109,7 @@ class Checkout extends Component {
 
         this.actualizarPuntoEntrega = this.actualizarPuntoEntrega.bind(this);
         this.actualizarFechaEntrega = this.actualizarFechaEntrega.bind(this);
+        this.actualizarItemsCarrito = this.actualizarItemsCarrito.bind(this);
         this.obtenerFechasEntrega = this.obtenerFechasEntrega.bind(this);
         this.getTotalReserva = this.getTotalReserva.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
@@ -382,13 +383,18 @@ class Checkout extends Component {
     }
 
     cerrarModal() {
-        this.setState({
-            showModal: false
-        })
 
         if (this.state.resultadoRequest !== 200) {
             this.handleReset();
+        } else {
+            if (this.state.resultadoRequest === 200) {
+                this.actualizarItemsCarrito();
+            }
         }
+
+        this.setState({
+            showModal: false
+        })
     }
 
     crearReserva(datosReserva) {
@@ -413,6 +419,11 @@ class Checkout extends Component {
                 )
                 return;
             })
+    }
+
+    actualizarItemsCarrito() {
+        let nuevaLista = [];
+        this.props.actualizarProductosSeleccionados(nuevaLista);
     }
 
     render() {

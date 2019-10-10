@@ -325,8 +325,9 @@ class PantallaPrincipalconsumidores extends Component {
                                 render={(props) =>
                                     <CheckoutRouter
                                         id_consumidor={this.state.id}
-                                        productosSeleccionados={this.state.productosSeleccionados}
                                         user={this.state.user}
+                                        productosSeleccionados={this.state.productosSeleccionados}
+                                        actualizarProductosSeleccionados={this.actualizarProductosSeleccionados}
                                     />
                                 }
                             />
