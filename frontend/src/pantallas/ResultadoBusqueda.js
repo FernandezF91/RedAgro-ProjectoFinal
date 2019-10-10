@@ -109,7 +109,7 @@ class ResultadoBusqueda extends Component {
                                     fechaDeVencimiento: item.fecha_vencimiento,
                                     tiempoDePreparacion: item.tiempo_preparacion,
                                     contenido: item.contenido,
-                                    cantidad: 0,
+                                    cantidad: 1,
                                     productor: {
                                         id: item.productor.id,
                                         razon_social: item.productor.razon_social,
@@ -171,7 +171,7 @@ class ResultadoBusqueda extends Component {
                                 fechaDeVencimiento: item.fecha_vencimiento,
                                 tiempoDePreparacion: item.tiempo_preparacion,
                                 contenido: item.contenido,
-                                cantidad: 0,
+                                cantidad: 1,
                                 productor: {
                                     id: item.productor.id,
                                     razon_social: item.productor.razon_social,
