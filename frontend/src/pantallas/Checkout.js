@@ -400,11 +400,17 @@ class Checkout extends Component {
             body: JSON.stringify(datosReserva)
         })
             .then(function (response) {
-                _this.setState({
-                    loading: false,
-                    showModal: true,
-                    resultadoRequest: response.status
-                })
+                _this.setState({ resultadoRequest: response.status });
+
+                response.text().then(
+                    function (response) {
+                        _this.setState({
+                            loading: false,
+                            showModal: true,
+                            mensaje: response,
+                        })
+                    }
+                )
                 return;
             })
     }
@@ -436,7 +442,7 @@ class Checkout extends Component {
                                                         <i className="fas fa-check-circle iconoModalOk" />
                                                         <br />
                                                         <br />
-                                                        <h5>Reserva generada!</h5>
+                                                        <h5>{this.state.mensaje}</h5>
                                                     </div>
                                                 ) : (
                                                     <div>
