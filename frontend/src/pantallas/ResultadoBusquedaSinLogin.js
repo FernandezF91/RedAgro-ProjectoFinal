@@ -7,6 +7,7 @@ import Loader from 'react-loader-spinner';
 import Busqueda from './Busqueda';
 import Paginacion from './Paginacion';
 import { MDBModal } from 'mdbreact';
+import { Link } from 'react-router-dom';
 
 const tamañosListado = [
     { label: "9", value: "9" },
@@ -202,14 +203,15 @@ class ResultadoBusquedaSinLogin extends Component {
                             <div class="modal-body">
                                 <i className="fas fa-shopping-cart" />
                                 <br />
-                                <br />
                                 <h5> Hola!
                                 <br />Para continuar tenés que iniciar sesión...
-                            </h5>
+                                </h5>
+                                <h6>
+                                    Podes hacerlo por <Link to={'/login'}>acá</Link>
+                                </h6>
                             </div>
                         </div>
                     </MDBModal>
-
                 }
             </div>
         )

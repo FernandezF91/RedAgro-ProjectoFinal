@@ -443,7 +443,7 @@ class Checkout extends Component {
                                                         <i className="fas fa-exclamation-circle iconoModalError" />
                                                         <br />
                                                         <br />
-                                                        <h5>Ups! Ocurrio un error! </h5>
+                                                        <h5>Ups! Ocurrió un error! </h5>
                                                         <h6>Por favor, intenta nuevamente</h6>
                                                     </div>
                                                 )
