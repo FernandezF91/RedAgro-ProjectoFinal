@@ -32,7 +32,7 @@ ReactDOM.render(
             <Route path="/principalConsumidores" component={PantallaPrincipalConsumidores} />
             <Route path="/seleccionUsuario" component={SeleccionUsuario} />
             <Route path="/confirmar_cuenta/:id" component={ConfirmacionCuenta} />
-            <Route path="/recuperar_email/:id" component={RecuperarContraseña} />
+            <Route path="/recuperar_email/:id" component={RecuperarContraseña} />            
             <Route path="*" component={NotFound} />
         </Switch>
     </BrowserRouter>,

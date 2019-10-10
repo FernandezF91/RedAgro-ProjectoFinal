@@ -6,8 +6,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { MDBModal } from 'mdbreact';
 import PasosCheckout from './PasosCheckout'
-import _ from 'lodash';
 import moment from 'moment';
+import _ from 'lodash';
 import '../diseños/estilosGlobales.css';
 import '../diseños/Checkout.css'
 
@@ -105,8 +105,8 @@ class Checkout extends Component {
             titulo: '',
             mensaje: '',
             showModal: false,
-
         }
+
         this.actualizarPuntoEntrega = this.actualizarPuntoEntrega.bind(this);
         this.actualizarFechaEntrega = this.actualizarFechaEntrega.bind(this);
         this.obtenerFechasEntrega = this.obtenerFechasEntrega.bind(this);
