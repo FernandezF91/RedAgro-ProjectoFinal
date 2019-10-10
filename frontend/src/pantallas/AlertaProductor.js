@@ -2,35 +2,78 @@ import '../diseños/estilosGlobales.css';
 import '../diseños/Alertas.css';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
+import Loader from 'react-loader-spinner';
+import { MDBModal } from 'mdbreact';
 
 class AlertaProductor extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            //Acá debería estar trayendo la opción que haya guardado
-            selectedRadioOption: "Nunca",
-            id: this.props.id_productor
+            id: this.props.id_productor,
+            selectedRadioOptionNuevas: "",
+            disabledNuevas: true,
+            selectedRadioOptionActualizacion: "",
+            disabledActualizacion: true,
+            resultadoRequest: 0,
+            showModal: false,
+            loading: true
         };
 
-        this.handleCheckChange = this.handleCheckChange.bind(this);
+        this.handleCheckChangeNuevas = this.handleCheckChangeNuevas.bind(this);
+        this.handleRadioChangeNuevas = this.handleRadioChangeNuevas.bind(this);
+        this.handleCheckChangeActualizacion = this.handleCheckChangeActualizacion.bind(this);
+        this.handleRadioChangeActualizacion = this.handleRadioChangeActualizacion.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
 
-    handleRadioChange = changeEvent => {
+    handleCheckChangeNuevas(e) {
+        if (e.target.checked === true) {
+            this.setState({
+                disabledNuevas: false,
+                selectedRadioOptionNuevas: "En el momento"
+            });
+        } else {
+            this.setState({
+                disabledNuevas: true,
+                selectedRadioOptionNuevas: ""
+            });
+        }
+
+    };
+
+    handleRadioChangeNuevas = changeEvent => {
         this.setState({
-            selectedRadioOption: changeEvent.target.value
+            selectedRadioOptionNuevas: changeEvent.target.value,
         });
     };
 
-    handleCheckChange(e) {
+    handleCheckChangeActualizacion (e) {
+        if (e.target.checked === true) {
+            this.setState({
+                disabledActualizacion: false,
+                selectedRadioOptionActualizacion: "En el momento"
+            });
+        } else {
+            this.setState({
+                disabledActualizacion: true,
+                selectedRadioOptionActualizacion: ""
+            });
+        }
+
+    };
+
+    handleRadioChangeActualizacion  = changeEvent => {
         this.setState({
-            [e.target.name]: e.target.checked
+            selectedRadioOptionActualizacion: changeEvent.target.value,
         });
     };
 
     handleFormSubmit = formSubmitEvent => {
         formSubmitEvent.preventDefault();
-        //  Chequear como lo guardo		
+        console.log(this.state.selectedRadioOption);
+        console.log(this.state.checkNuevas);
+        console.log(this.state.checkActualizacion);
     };
 
     mostrarPantallaPrincipal() {
@@ -43,61 +86,117 @@ class AlertaProductor extends Component {
     }
 
     render() {
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
+
         return (
             <div className="container">
                 <div className="titulosPrincipales">Alertas</div>
                 <form onSubmit={this.handleFormSubmit}>
-                    <div className="radioButtons" align="left">
-                        <h5>Notificarme:</h5>
-                        <label class="radio-inline">
-                            <input type="radio"
-                                value="radio1"
-                                checked={this.state.selectedRadioOption === "radio1"}
-                                onChange={this.handleRadioChange}
-                                className="radio-button-input radioPrimero"
-                            />
-                            Nunca
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio"
-                                value="radio2"
-                                checked={this.state.selectedRadioOption === "radio2"}
-                                onChange={this.handleRadioChange}
+                <div className="radioButtons" align="left">
+                        <h5>
+                            <label className="checkbox-inline">
+                                <input
+                                    type="checkbox"
+                                    value="check2"
+                                    checked={this.state.checkNuevas}
+                                    onChange={this.handleCheckChangeNuevas}
+                                    className="checkbox-input checkbox"
+                                />
+                                Nuevas reservas
+                            </label>
+                        </h5>
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="En el momento"
+                                checked={this.state.selectedRadioOptionNuevas === "En el momento"}
+                                onChange={this.handleRadioChangeNuevas}
                                 className="radio-button-input radio"
+                                disabled={this.state.disabledNuevas}
+                            />
+                            En el momento
+                        </label>
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Diariamente"
+                                checked={this.state.selectedRadioOptionNuevas === "Diariamente"}
+                                onChange={this.handleRadioChangeNuevas}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledNuevas}
                             />
                             Diariamente
                         </label>
-                        <label class="radio-inline">
-                            <input type="radio"
-                                value="radio3"
-                                checked={this.state.selectedRadioOption === "radio3"}
-                                onChange={this.handleRadioChange}
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Semanalmente"
+                                checked={this.state.selectedRadioOptionNuevas === "Semanalmente"}
+                                onChange={this.handleRadioChangeNuevas}
                                 className="radio-button-input radio"
+                                disabled={this.state.disabledNuevas}
                             />
                             Semanalmente
                         </label>
                     </div>
-                    <br />
-                    <div className="checkboxes">
-                        <h5>Alertarme sobre:</h5>
-                        <label class="checkbox-inline">
-                            <input type="checkbox"
-                                value="check1"
-                                checked={this.state.selectedCheckOption}
-                                onChange={this.handleCheckChange}
-                                className="checkbox-input checkbox"
+                    <hr />
+                    <div className="radioButtons" align="left">
+                        <h5>
+                            <label className="checkbox-inline">
+                                <input
+                                    type="checkbox"
+                                    value="check2"
+                                    checked={this.state.checkActualizacion}
+                                    onChange={this.handleCheckChangeActualizacion}
+                                    className="checkbox-input checkbox"
+                                />
+                                Actualización de reservas
+                                </label>
+                        </h5>
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="En el momento"
+                                checked={this.state.selectedRadioOptionActualizacion === "En el momento"}
+                                onChange={this.handleRadioChangeActualizacion}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledActualizacion}
                             />
-                            Nuevas reservas
+                            En el momento
                         </label>
                         <br />
-                        <label class="checkbox-inline">
-                            <input type="checkbox"
-                                value="check2"
-                                checked={this.state.selectedCheckOption}
-                                onChange={this.handleCheckChange}
-                                className="checkbox-input checkbox"
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Diariamente"
+                                checked={this.state.selectedRadioOptionActualizacion === "Diariamente"}
+                                onChange={this.handleRadioChangeActualizacion}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledActualizacion}
                             />
-                            Actualización de reservas
+                            Diariamente
+                        </label>
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Semanalmente"
+                                checked={this.state.selectedRadioOptionActualizacion === "Semanalmente"}
+                                onChange={this.handleRadioChangeActualizacion}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledActualizacion}
+                            />
+                            Semanalmente
                         </label>
                     </div>
                 </form >
@@ -105,6 +204,35 @@ class AlertaProductor extends Component {
                     <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                     <Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
                 </div>
+                {
+                    (this.state.showModal) &&
+                    (
+                        <MDBModal isOpen={this.state.showModal} centered size="sm">
+                            <div className="modalMargenes">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <br />
+                                {(this.state.resultadoRequest === 200) ?
+                                    (
+                                        <div>
+                                            <i className="fas fa-check-circle iconoModalOk" />
+                                            <br />
+                                            <br />
+                                            <h5>Se aplicaron los cambios!</h5>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <i className="fas fa-exclamation-circle iconoModalError" />
+                                            <br />
+                                            <br />
+                                            <h5>Ups! Ocurrio un error! </h5>
+                                            <h6>Por favor, intenta nuevamente</h6>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </MDBModal>
+                    )
+                }
             </div >
         );
     };

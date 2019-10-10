@@ -1,7 +1,8 @@
 package app.modelos;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 public class EntidadAlertaUsuario {
 
 	@Id
-	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
 	@ManyToOne
@@ -25,9 +26,11 @@ public class EntidadAlertaUsuario {
 	@MapsId("id")
 	@JoinColumn(name = "alerta_id")
 	EntidadAlerta alerta;
-
-	@Column(name = "frecuencia")
-	private String frecuencia;
+	
+	@ManyToOne
+	@MapsId("id")
+	@JoinColumn(name = "frecuencia_id")
+	EntidadAlertaFrecuencia alertaFrecuencia;
 
 	public long getId() {
 		return id;
@@ -53,11 +56,11 @@ public class EntidadAlertaUsuario {
 		this.alerta = alerta;
 	}
 
-	public String getFrecuencia() {
-		return frecuencia;
+	public EntidadAlertaFrecuencia getAlertaFrecuencia() {
+		return alertaFrecuencia;
 	}
 
-	public void setFrecuencia(String frecuencia) {
-		this.frecuencia = frecuencia;
+	public void setAlertaFrecuencia(EntidadAlertaFrecuencia alertaFrecuencia) {
+		this.alertaFrecuencia = alertaFrecuencia;
 	}
 }
