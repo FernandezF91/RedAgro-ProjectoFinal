@@ -20,10 +20,6 @@ const tamañosListado = [
     { label: "Todo", value: "Todo" },
 ];
 
-var defaultListado = [
-    { label: "5", value: "5" },
-];
-
 class ListadoReservas extends Component {
 
     constructor(props) {
@@ -39,6 +35,7 @@ class ListadoReservas extends Component {
             reservasRealizadas: [],
             currentPage: 1,
             reservasPerPage: 5,
+            defaultListado: [{ label: "5", value: "5" }],
             expandedRows: [],
             loading: true,
             showModal: false,
@@ -230,13 +227,13 @@ class ListadoReservas extends Component {
 
     actualizarTamañoListado = (tamaño) => {
         let actualizarListado = [];
+        actualizarListado.push(tamaño);
         if (tamaño.value === "Todo") {
             this.setState({ reservasPerPage: this.state.reservasRealizadas.length })
         } else {
             this.setState({ reservasPerPage: tamaño.value })
         }
-        actualizarListado.push(tamaño);
-        defaultListado = actualizarListado;
+        this.setState({ defaultListado: actualizarListado });
     }
 
     actualizarEstado = (nuevoEstado) => {
@@ -317,7 +314,7 @@ class ListadoReservas extends Component {
     }
 
     render() {
-        const { reservasRealizadas, currentPage, reservasPerPage } = this.state;
+        const { reservasRealizadas, currentPage, reservasPerPage, defaultListado } = this.state;
         const numberOfPages = Math.ceil(reservasRealizadas.length / reservasPerPage);
         const indexOfLastReserva = currentPage * reservasPerPage;
         const indexOfFirstReserva = indexOfLastReserva - reservasPerPage;
