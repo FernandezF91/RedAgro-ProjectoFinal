@@ -39,6 +39,12 @@ class LoginForm extends Component {
         });
     }
 
+    onKeyPress = e => {
+        if (e.key === 'Enter') {
+            this.validarDatos();
+        }
+    }
+
     validarDatos() {
         this.setState({
             errores: []
@@ -149,7 +155,12 @@ class LoginForm extends Component {
                                         Usuario
                                 </Form.Label>
                                     <Col sm={10}>
-                                        <Form.Control type="email" name="username" onChange={(e) => this.detectarCambios(e)} />
+                                        <Form.Control
+                                            type="email"
+                                            name="username"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                            onKeyPress={this.onKeyPress}
+                                        />
                                         <div className="error">
                                             {this.state.errores["username"]}
                                         </div>
@@ -160,7 +171,12 @@ class LoginForm extends Component {
                                         Password
                                 </Form.Label>
                                     <Col sm={10}>
-                                        <Form.Control type="password" name="password" onChange={(e) => this.detectarCambios(e)} />
+                                        <Form.Control
+                                            type="password"
+                                            name="password"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                            onKeyPress={this.onKeyPress}
+                                        />
                                         <div className="error">
                                             {this.state.errores["password"]}
                                         </div>
