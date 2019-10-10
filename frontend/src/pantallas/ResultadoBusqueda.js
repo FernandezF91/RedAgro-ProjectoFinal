@@ -192,7 +192,7 @@ class ResultadoBusqueda extends Component {
     restarProducto = (position) => {
         let resultadoDeBusqueda = this.state.resultadoBusqueda;
         var productoSeleccionado = resultadoDeBusqueda[position];
-        if ((parseInt(productoSeleccionado.cantidad) - 1) >= 0) {
+        if ((parseInt(productoSeleccionado.cantidad) - 1) > 0) {
             let productoActualizado = [
                 ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) - 1).toString(),
             ]
