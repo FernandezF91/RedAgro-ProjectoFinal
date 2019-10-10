@@ -2,7 +2,6 @@ import '../diseños/estilosGlobales.css';
 import '../diseños/ResultadoBusqueda.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import React, { Component } from 'react';
-import { MDBModal } from 'mdbreact';
 import Select from 'react-select';
 import Loader from 'react-loader-spinner';
 import Busqueda from './Busqueda';
