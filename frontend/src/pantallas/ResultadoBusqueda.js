@@ -14,9 +14,7 @@ const tamañosListado = [
     { label: "30", value: "30" },
     { label: "Todo", value: "Todo" },
 ];
-var defaultListado = [
-    { label: "9", value: "9" },
-];
+
 
 class ResultadoBusqueda extends Component {
     constructor(props) {
@@ -27,6 +25,7 @@ class ResultadoBusqueda extends Component {
             datosParaReserva: [],
             tamañoListado: 9, //Valor predeterminado
             paginaActual: 1,
+            defaultListado: [{ label: "9", value: "9" }],
             loading: true,
             resultadoRequest: 0
         }
@@ -254,13 +253,13 @@ class ResultadoBusqueda extends Component {
 
     actualizarTamañoListado = (tamaño) => {
         let actualizarListado = [];
+        actualizarListado.push(tamaño);
         if (tamaño.value === "Todo") {
             this.setState({ tamañoListado: this.state.resultadoBusqueda.length })
         } else {
             this.setState({ tamañoListado: tamaño.value })
         }
-        actualizarListado.push(tamaño);
-        defaultListado = actualizarListado;
+        this.setState({ defaultListado: actualizarListado });
     }
 
     actualizarPropsSeleccionados(productosSeleccionados) {
@@ -304,7 +303,7 @@ class ResultadoBusqueda extends Component {
     }
 
     render() {
-        const { resultadoBusqueda, paginaActual, tamañoListado } = this.state;
+        const { resultadoBusqueda, paginaActual, tamañoListado, defaultListado } = this.state;
         const numberOfPages = Math.ceil(resultadoBusqueda.length / tamañoListado);
         const indexOfLastReserva = paginaActual * tamañoListado;
         const indexOfFirstReserva = indexOfLastReserva - tamañoListado;
