@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ItemCarrito from '../pantallas/ItemCarrito';
 import Loader from 'react-loader-spinner';
+import { MDBModal } from 'mdbreact';
 import _ from 'lodash';
 import '../diseños/estilosGlobales.css';
 import '../diseños/Carrito.css';
@@ -14,6 +15,7 @@ class Carrito extends Component {
             id: this.props.id_consumidor,
             stockActualizado: [],
             loading: true,
+            productosSinStock: false,
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
@@ -137,16 +139,22 @@ class Carrito extends Component {
 
     actualizarStock(listaDeProductos) {
         var listaDeProductosActualizado = [];
-        if (listaDeProductos.length > 0) {
-            listaDeProductos.map((item) => {
-                var stockDelProducto = this.state.stockActualizado.filter(function (producto) {
-                    return producto.id === item.id;
-                });
-                item.stock = stockDelProducto[0].stock;
-                listaDeProductosActualizado.push(item);
-            })
-        }
+
+        listaDeProductos.map((item) => {
+            var stockDelProducto = this.state.stockActualizado.filter(function (producto) {
+                return producto.id === item.id;
+            });
+            if (item.stock > stockDelProducto[0].stock) {
+                this.setState({ productosSinStock: true })
+            }
+            item.stock = stockDelProducto[0].stock;
+            listaDeProductosActualizado.push(item);
+        })
         return listaDeProductosActualizado;
+    }
+
+    cerrarModal() {
+        this.setState({ productosSinStock: false })
     }
 
     render() {
@@ -187,6 +195,23 @@ class Carrito extends Component {
                         </div>
                     }
                 </ul>
+                {
+                    <MDBModal isOpen={this.state.productosSinStock} centered size="sm">
+                        <div className="modalMargenes">
+                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                            <br />
+                            <div class="modal-body">
+                                <i className="fas fa-exclamation-circle iconoModalError" />
+                                <br />
+                                <br />
+                                <h5> Whoa!
+                                <br />Hay productos en tu carrito que no tienen stock.</h5>
+                                <br />
+                                <h6> Actualizá las cantidades para continuar.</h6>
+                            </div>
+                        </div>
+                    </MDBModal>
+                }
             </div>
         );
     }
