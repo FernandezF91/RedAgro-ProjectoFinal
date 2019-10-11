@@ -73,9 +73,16 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                                             <i className="fas fa-minus" />
                                         </button>
                                         <span className="item-quantity">{producto.cantidad}</span>
-                                        <button className="iconosListado" onClick={() => sumarProducto(index)}>
-                                            <i className="fas fa-plus" />
-                                        </button>
+                                        {
+                                            (producto.cantidad === producto.stock) ?
+                                                <button className="iconosListado" onClick={() => sumarProducto(index)} disabled>
+                                                    <i className="fas fa-plus" />
+                                                </button>
+                                                :
+                                                <button className="iconosListado" onClick={() => sumarProducto(index)}>
+                                                    <i className="fas fa-plus" />
+                                                </button>
+                                        }
                                     </td>
                             }
                             <td>
