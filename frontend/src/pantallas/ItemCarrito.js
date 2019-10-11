@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import '../diseños/Carrito.css';
 
-const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarProducto, getTotalCarrito }) => {
+const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarProducto, getTotalCarrito, validarItemsCarrito }) => {
 
     const columns = [
         {
@@ -105,7 +105,7 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                            <NumberFormat value={getTotalCarrito(listaDeProductos)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix=" $ " decimalScale={2} fixedDecimalScale={true} />
                         </h5>
                         <Link to={'/principalConsumidores/Checkout'}>
-                            <Button variant="success" type="submit">Finalizar Reserva</Button>
+                            <Button variant="success" type="submit" onClick={() => validarItemsCarrito()}>Finalizar Reserva</Button>
                         </Link>
                     </td>
                 </tr>

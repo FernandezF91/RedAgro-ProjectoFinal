@@ -21,7 +21,6 @@ class Carrito extends Component {
         this.cerrarModal = this.cerrarModal.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
-
     }
 
     mostrarPantallaPrincipal() {
@@ -78,18 +77,48 @@ class Carrito extends Component {
                 })
                 .then(data => {
                     if (data !== undefined) {
-                        this.setState({
-                            stockActualizado: data.map((item) => {
-                                return {
-                                    id: item.id,
-                                    stock: item.stock,
-                                }
-                            }),
-                            loading: false
+                        var validoStock = false;
+                        var actualizoStock = data.map((item) => {
+
+                            var productoElegido = this.props.productosSeleccionados.filter(function (producto) {
+                                return producto.id === item.id;
+                            })[0];
+
+                            if (productoElegido.cantidad > item.stock) {
+                                validoStock = true;
+                            }
+
+                            return {
+                                id: item.id,
+                                categoria: item.producto.categoria,
+                                tipo: item.producto.tipo,
+                                titulo: item.titulo,
+                                descripcion: item.descripcion,
+                                stock: item.stock,
+                                tipoDeUnidad: item.unidad_venta,
+                                tipoDeProduccion: item.tipo_produccion,
+                                precio: item.precio,
+                                fechaDeVencimiento: item.fecha_vencimiento,
+                                tiempoDePreparacion: item.tiempo_preparacion,
+                                contenido: item.contenido,
+                                cantidad: productoElegido.cantidad,
+                                productor: {
+                                    id: item.productor.id,
+                                    razon_social: item.productor.razon_social,
+                                    nombre: item.productor.usuario.nombre,
+                                    apellido: item.productor.usuario.apellido,
+                                    telefono: item.productor.usuario.telefono,
+                                },
+                                imagenes: item.imagenes,
+                            }
                         })
+                        this.setState(this.actualizarPropsSeleccionados(actualizoStock))
+                        this.setState({
+                            loading: false,
+                            productosSinStock: validoStock
+                        });
                     }
                 })
-            return
         }
     }
 
@@ -105,11 +134,8 @@ class Carrito extends Component {
     sumarProducto = (position) => {
         let productosSeleccionados = this.props.productosSeleccionados;
         var productoSeleccionado = productosSeleccionados[position];
-        var stockDelProducto = this.state.stockActualizado.filter(function (producto) {
-            return producto.id === productoSeleccionado.id;
-        })[0];
 
-        if ((parseInt(productoSeleccionado.cantidad) + 1) <= stockDelProducto.stock) {
+        if ((parseInt(productoSeleccionado.cantidad) + 1) <= productoSeleccionado.stock) {
             let productoActualizado = [
                 ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) + 1).toString(),
             ]
@@ -117,7 +143,7 @@ class Carrito extends Component {
         } else {
             ButterToast.raise({
                 content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_RED}
-                    content={() => <div className="mensajeToast">No se encuentra disponible el stock seleccionado.</div>}
+                    content={() => <div className="mensajeToast">No se encuentra disponible el stock solicitado.</div>}
                     title="CulturaVerde"
                     icon={<i className="fa fa-shopping-cart iconoToast" />}
                 />
@@ -152,24 +178,22 @@ class Carrito extends Component {
         return _.sumBy(productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
     }
 
-    actualizarStock(listaDeProductos) {
-        var listaDeProductosActualizado = [];
-
-        listaDeProductos.map((item) => {
-            var stockDelProducto = this.state.stockActualizado.filter(function (producto) {
-                return producto.id === item.id;
-            });
-            if (item.stock > stockDelProducto[0].stock) {
-                this.setState({ productosSinStock: true })
-            }
-            item.stock = stockDelProducto[0].stock;
-            listaDeProductosActualizado.push(item);
-        })
-        return listaDeProductosActualizado;
-    }
-
     cerrarModal() {
         this.setState({ productosSinStock: false })
+    }
+
+    validarItemsCarrito = () => {
+        var chequeoStock = false;
+
+        this.props.productosSeleccionados.map(item => {
+            if (item.cantidad > item.stock) {
+                chequeoStock = true;
+            }
+        })
+
+        if (chequeoStock === true) {
+            this.setState({ productosSinStock: true })
+        }
     }
 
     render() {
@@ -185,53 +209,51 @@ class Carrito extends Component {
         );
 
         if (this.state.loading === false)
-            var productosSeleccionados = [];
-        if (this.props.productosSeleccionados.length > 0) {
-            productosSeleccionados = this.actualizarStock(this.props.productosSeleccionados);
-        }
-        return (
-            <div className="carrito">
-                <div className="titulosPrincipales">Mi carrito</div>
-                <ul className="listado">
-                    {this.props.productosSeleccionados.length >= 1 ?
-                        <ItemCarrito
-                            listaDeProductos={productosSeleccionados}
-                            sumarProducto={this.sumarProducto}
-                            restarProducto={this.restarProducto}
-                            quitarProducto={this.quitarProducto}
-                            getTotalCarrito={this.getTotalCarrito} />
-                        :
-                        <div className="sinProductos">
-                            <i className="fas fa-shopping-cart iconoGrande" />
-                            <br />
-                            <br />
-                            <h5>Ups! Tu carrito esta vacío!</h5>
-                            <h6>Probá buscando productos por <Link to={'/principalConsumidores'}>acá</Link></h6>
-                        </div>
-                    }
-                </ul>
-                {
-                    <MDBModal isOpen={this.state.productosSinStock} centered size="sm">
-                        <div className="modalMargenes">
-                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                            <br />
-                            <div class="modal-body">
-                                <i className="fas fa-exclamation-circle iconoModalError" />
+
+            return (
+                <div className="carrito">
+                    <div className="titulosPrincipales">Mi carrito</div>
+                    <ul className="listado">
+                        {this.props.productosSeleccionados.length >= 1 ?
+                            <ItemCarrito
+                                listaDeProductos={this.props.productosSeleccionados}
+                                sumarProducto={this.sumarProducto}
+                                restarProducto={this.restarProducto}
+                                quitarProducto={this.quitarProducto}
+                                getTotalCarrito={this.getTotalCarrito}
+                                validarItemsCarrito={this.validarItemsCarrito} />
+                            :
+                            <div className="sinProductos">
+                                <i className="fas fa-shopping-cart iconoGrande" />
                                 <br />
                                 <br />
-                                <h5> Whoa!
-                                <br />Hay productos en tu carrito que no tienen stock.</h5>
-                                <br />
-                                <h6> Actualizá las cantidades para continuar.</h6>
+                                <h5>Ups! Tu carrito esta vacío!</h5>
+                                <h6>Probá buscando productos por <Link to={'/principalConsumidores'}>acá</Link></h6>
                             </div>
-                        </div>
-                    </MDBModal>
-                }
-                <div className="toastPosicion">
-                    <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_RIGHT }} />
+                        }
+                    </ul>
+                    {
+                        <MDBModal isOpen={this.state.productosSinStock} centered size="sm">
+                            <div className="modalMargenes">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <br />
+                                <div class="modal-body">
+                                    <i className="fas fa-exclamation-circle iconoModalError" />
+                                    <br />
+                                    <br />
+                                    <h5> Whoa!
+                                    <br />Hay productos en tu carrito que no tienen stock.</h5>
+                                    <br />
+                                    <h6> Actualizá las cantidades para continuar.</h6>
+                                </div>
+                            </div>
+                        </MDBModal>
+                    }
+                    <div className="toastPosicion">
+                        <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_RIGHT }} />
+                    </div>
                 </div>
-            </div>
-        );
+            );
     }
 }
 export default Carrito;
