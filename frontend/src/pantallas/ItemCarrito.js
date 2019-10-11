@@ -4,6 +4,7 @@ import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
+import '../diseños/Carrito.css';
 
 const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarProducto, getTotalCarrito }) => {
 
@@ -55,15 +56,28 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                                 <br />
                                 Producido por {producto.productor.razon_social}
                             </td>
-                            <td>
-                                <button className="iconosListado" onClick={() => restarProducto(index)}>
-                                    <i className="fas fa-minus" />
-                                </button>
-                                <span className="item-quantity">{producto.cantidad}</span>
-                                <button className="iconosListado" onClick={() => sumarProducto(index)}>
-                                    <i className="fas fa-plus" />
-                                </button>
-                            </td>
+                            {
+                                (producto.cantidad > producto.stock) ?
+                                    <td>
+                                        <button className="iconosListado" onClick={() => restarProducto(index)}>
+                                            <i className="fas fa-minus" />
+                                        </button>
+                                        <span className="item-quantity-no-stock" >{producto.cantidad}</span>
+                                        <button className="iconosListado" onClick={() => sumarProducto(index)} disabled>
+                                            <i className="fas fa-plus" />
+                                        </button>
+                                    </td>
+                                    :
+                                    <td>
+                                        <button className="iconosListado" onClick={() => restarProducto(index)}>
+                                            <i className="fas fa-minus" />
+                                        </button>
+                                        <span className="item-quantity">{producto.cantidad}</span>
+                                        <button className="iconosListado" onClick={() => sumarProducto(index)}>
+                                            <i className="fas fa-plus" />
+                                        </button>
+                                    </td>
+                            }
                             <td>
                                 <NumberFormat value={producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                             </td>

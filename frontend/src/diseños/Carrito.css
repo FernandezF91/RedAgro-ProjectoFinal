@@ -119,3 +119,8 @@
     flex-direction: row;
     justify-content: right;
   }  
+
+  .item-quantity-no-stock{
+    color: red !important;
+    font-weight: 600;
+  }
