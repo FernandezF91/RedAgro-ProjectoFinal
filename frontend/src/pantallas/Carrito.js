@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ItemCarrito from '../pantallas/ItemCarrito';
 import Loader from 'react-loader-spinner';
 import { MDBModal } from 'mdbreact';
+import ButterToast, { Cinnamon, POS_BOTTOM, POS_RIGHT } from 'butter-toast';
 import _ from 'lodash';
 import '../diseños/estilosGlobales.css';
 import '../diseños/Carrito.css';
@@ -102,13 +103,26 @@ class Carrito extends Component {
     }
 
     sumarProducto = (position) => {
-        //Falta la validación y actualización por stock
         let productosSeleccionados = this.props.productosSeleccionados;
         var productoSeleccionado = productosSeleccionados[position];
-        let productoActualizado = [
-            ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) + 1).toString(),
-        ]
-        this.setState({ productoSeleccionado: productoActualizado });
+        var stockDelProducto = this.state.stockActualizado.filter(function (producto) {
+            return producto.id === productoSeleccionado.id;
+        })[0];
+
+        if ((parseInt(productoSeleccionado.cantidad) + 1) <= stockDelProducto.stock) {
+            let productoActualizado = [
+                ...productoSeleccionado.cantidad = (parseInt(productoSeleccionado.cantidad) + 1).toString(),
+            ]
+            this.setState({ productoSeleccionado: productoActualizado });
+        } else {
+            ButterToast.raise({
+                content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_RED}
+                    content={() => <div className="mensajeToast">No se encuentra disponible el stock seleccionado.</div>}
+                    title="CulturaVerde"
+                    icon={<i className="fa fa-shopping-cart iconoToast" />}
+                />
+            });
+        }
     }
 
     restarProducto = (position) => {
@@ -213,6 +227,9 @@ class Carrito extends Component {
                         </div>
                     </MDBModal>
                 }
+                <div className="toastPosicion">
+                    <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_RIGHT }} />
+                </div>
             </div>
         );
     }
