@@ -11,6 +11,7 @@ class AlertaProductor extends Component {
 
         this.state = {
             id: this.props.id_productor,
+            alertas: [],
             selectedRadioOptionNuevas: "",
             disabledNuevas: true,
             selectedRadioOptionActualizacion: "",
@@ -27,6 +28,43 @@ class AlertaProductor extends Component {
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
 
+    componentDidMount() {
+        var _this = this;
+        var path = "http://localhost:3000/redAgro/obtenerConfiguracionAlertas?id_usuario=" + _this.state.id;
+        fetch(path)
+            .catch(err => console.error(err))
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                _this.setState({
+                    alertas: data.map((item) => {
+                        return {
+                            id: item.id,
+                            frecuencia: item.frecuencia.frecuencia,
+                            alerta: item.alerta.nombre
+                        }
+                    }),
+                    loading: false
+                })
+
+                const { alertas } = this.state;
+                let body = [];
+                alertas.forEach(item => {
+                    body.push(this.cargoAlerta(item));
+                })
+            })
+    }
+
+    mostrarPantallaPrincipal() {
+        this.props.history.push({
+            pathname: '/principalProductores/MiCuenta',
+            state: {
+                id: this.state.id
+            }
+        })
+    }
+
     handleCheckChangeNuevas(e) {
         if (e.target.checked === true) {
             this.setState({
@@ -39,7 +77,6 @@ class AlertaProductor extends Component {
                 selectedRadioOptionNuevas: ""
             });
         }
-
     };
 
     handleRadioChangeNuevas = changeEvent => {
@@ -48,7 +85,7 @@ class AlertaProductor extends Component {
         });
     };
 
-    handleCheckChangeActualizacion (e) {
+    handleCheckChangeActualizacion(e) {
         if (e.target.checked === true) {
             this.setState({
                 disabledActualizacion: false,
@@ -60,10 +97,9 @@ class AlertaProductor extends Component {
                 selectedRadioOptionActualizacion: ""
             });
         }
-
     };
 
-    handleRadioChangeActualizacion  = changeEvent => {
+    handleRadioChangeActualizacion = changeEvent => {
         this.setState({
             selectedRadioOptionActualizacion: changeEvent.target.value,
         });
@@ -84,6 +120,25 @@ class AlertaProductor extends Component {
             }
         })
     }
+    
+    cargoAlerta(item) {
+        console.log(item.alerta);
+        if (item.alerta === "Nuevas reservas") {
+            this.setState({
+                checkNuevas: true,
+                selectedRadioOptionNuevas: item.frecuencia,
+                disabledNuevas: false
+            });
+        }
+
+        if (item.alerta === "Actualización de reservas") {
+            this.setState({
+                checkActualizacion: true,
+                selectedRadioOptionActualizacion: item.frecuencia,
+                disabledActualizacion: false
+            });
+        }
+    }
 
     render() {
         if (this.state.loading) return (
@@ -100,7 +155,7 @@ class AlertaProductor extends Component {
             <div className="container">
                 <div className="titulosPrincipales">Alertas</div>
                 <form onSubmit={this.handleFormSubmit}>
-                <div className="radioButtons" align="left">
+                    <div className="radioButtons" align="left">
                         <h5>
                             <label className="checkbox-inline">
                                 <input

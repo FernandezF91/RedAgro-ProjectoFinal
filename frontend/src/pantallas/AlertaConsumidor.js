@@ -39,7 +39,9 @@ class AlertaConsumidor extends Component {
         var path = "http://localhost:3000/redAgro/obtenerConfiguracionAlertas?id_usuario=" + this.state.id_consumidor;
         fetch(path)
             .catch(err => console.error(err))
-            .then(response => { return response.json(); })
+            .then(response => { 
+                return response.json();
+             })
             .then(data => {
                 this.setState({
                     seleccionados: {
