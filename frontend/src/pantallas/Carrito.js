@@ -17,6 +17,7 @@ class Carrito extends Component {
             loading: true,
             productosSinStock: false,
         }
+        this.cerrarModal = this.cerrarModal.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
 
