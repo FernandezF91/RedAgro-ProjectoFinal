@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import ReactDOM from "react-dom";
 import { Button } from 'react-bootstrap';
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import CurrentLocation from './Map';
@@ -22,17 +23,14 @@ class Geolocalizacion extends Component {
             titulo: "",
             mensaje: "",
             busqueda: ""
-
         }
-
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.updateParametroBusqueda = this.updateParametroBusqueda.bind(this);
-
     }
 
-    updateParametroBusqueda(idProductor) {
-        if (idProductor > 0) {
-            this.props.handleNuevaBusqueda(idProductor);
+    updateParametroBusqueda() {
+        if (this.state.selectedPlace.id > 0) {
+            this.props.handleNuevaBusqueda(this.state.selectedPlace.id);
         }
     }
 
@@ -41,7 +39,6 @@ class Geolocalizacion extends Component {
             visible: false
         });
     }
-
 
     onMarkerClick = (props, marker, e) =>
         this.setState({
@@ -71,7 +68,6 @@ class Geolocalizacion extends Component {
     componentDidMount() {
 
         var _this = this;
-
         fetch("http://localhost:3000/redAgro/puntos_entrega_productor", {
             method: "GET",
             headers: {
@@ -90,9 +86,7 @@ class Geolocalizacion extends Component {
 
                 response.json().then(
                     function (response) {
-
                         _this.setState({ markers: response });
-
                     });
             });
     }
@@ -100,15 +94,27 @@ class Geolocalizacion extends Component {
     displayMarkers = () => {
 
         return this.state.markers.map(marker => {
-            return <Marker onClick={this.onMarkerClick}
-                name={marker.productor.usuario.nombre + " " + marker.productor.usuario.apellido}
-                id={marker.productor.id}
-                direccion={marker.direccion}
-                localidad={marker.localidad}
-                link={"Mis productos"}
-                position={{ lat: marker.latitud, lng: marker.longitud }} />
+            return (
+                <Marker onClick={this.onMarkerClick}
+                    name={marker.productor.usuario.nombre + " " + marker.productor.usuario.apellido}
+                    id={marker.productor.id}
+                    direccion={marker.direccion}
+                    localidad={marker.localidad}
+                    link={"Mis productos"}
+                    position={{ lat: marker.latitud, lng: marker.longitud }} />)
         });
+    }
 
+    onInfoWindowOpen(props, e) {
+        const button = (
+            <Button variant="success" size="sm" onClick={e => this.updateParametroBusqueda()}>
+                {this.state.selectedPlace.link}
+            </Button>
+        );
+        ReactDOM.render(
+            React.Children.only(button),
+            document.getElementById("geo")
+        );
     }
 
     render() {
@@ -117,30 +123,34 @@ class Geolocalizacion extends Component {
             <div className="containerGeneral">
                 <div className="titulosPrincipales">
                     Búsqueda por geolocalización
-		    </div>
+		        </div>
                 <div className="descripcionPagina">
                     <h5>Seleccione un productor para ver su oferta de productos:</h5>
                 </div>
                 <div className="contenedorMapa">
                     <CurrentLocation
                         centerAroundCurrentLocation
-                        google={this.props.google}
-                    >
-                        <Marker onClick={this.onMarkerClick} name={'Tu ubicación'} icon={{
-                            path: this.state.google.maps.SymbolPath.CIRCLE,
-                            fillColor: 'blue',
-                            fillOpacity: .7,
-                            scale: 10,
-                            strokeColor: 'white',
-                            strokeWeight: .5
-                        }}>
+                        google={this.props.google}>
+
+                        <Marker
+                            onClick={this.onMarkerClick}
+                            name={'Tu ubicación'}
+                            icon={{
+                                path: this.state.google.maps.SymbolPath.CIRCLE,
+                                fillColor: 'blue',
+                                fillOpacity: .7,
+                                scale: 10,
+                                strokeColor: 'white',
+                                strokeWeight: .5
+                            }}>
                         </Marker>
                         {this.displayMarkers()}
+
                         <InfoWindow
                             marker={this.state.activeMarker}
                             visible={this.state.showingInfoWindow}
-                            onClose={this.onClose}
-                        >
+                            onOpen={e => this.onInfoWindowOpen(this.props, e)}
+                            onClose={this.onClose}>
                             <div>
                                 <h5 className="name">
                                     {this.state.selectedPlace.name}
@@ -152,9 +162,7 @@ class Geolocalizacion extends Component {
                             <div className="localidad">
                                 {this.state.selectedPlace.localidad}
                             </div>
-                            <div className="productos">
-                                <a href="#" onClick={this.updateParametroBusqueda(this.state.selectedPlace.id)}>{this.state.selectedPlace.link}</a>
-                            </div>
+                            <div id="geo" />
                         </InfoWindow>
                     </CurrentLocation>
                 </div>
@@ -163,7 +171,6 @@ class Geolocalizacion extends Component {
                 </div>
             </div>
         );
-
     };
 }
 
