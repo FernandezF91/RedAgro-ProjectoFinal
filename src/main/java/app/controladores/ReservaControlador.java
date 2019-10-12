@@ -164,6 +164,7 @@ public class ReservaControlador {
 		EntidadPuntoEntrega entregas = puntoEntregaDAO.obtenerPuntoEntrega((reserva.getPunto_entrega().getId()));
 		reserva.setPunto_entrega(entregas);
 		List<EntidadDetalleReserva> detalles = reserva.getDetallesReserva();
+		List<EntidadProductoProductor> productos = new ArrayList<EntidadProductoProductor>();
 		reserva.getEstado_reserva();
 		
 
@@ -175,6 +176,9 @@ public class ReservaControlador {
 			if (unDetalle.getCantidad() > stockProducto) {
 				return new ResponseEntity<>("En este momento no hay stock del producto "+ producto.getTitulo() +"seleccionado",
 						HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				producto.setStock(stockProducto - unDetalle.getCantidad());
+				productos.add(producto);
 			}
 		}
 
@@ -185,13 +189,15 @@ public class ReservaControlador {
 			for (EntidadDetalleReserva unDetalle : detalles) {
 				unDetalle.setId_reserva(idReserva);
 			}
+			//Guardo el detalle y actualizo stock
 			detalleReservaDao.saveAll(detalles);
+			productoProductorDao.saveAll(productos); 
 
 			String id_reserva = idReserva.toString();
 			return new ResponseEntity<>("Reserva #" + id_reserva + " creada correctamente!", HttpStatus.OK);
 
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrio un error crear la reserva. Reintente más tarde",
+			return new ResponseEntity<>("Ocurrió un error crear la reserva. Reintente más tarde",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -203,7 +209,7 @@ public class ReservaControlador {
 			reservaDao.actualizarEstadoReserva(id_reserva, id_estado);
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrio un error crear la reserva. Reintente más tarde",
+			return new ResponseEntity<>("Ocurrió un error crear la reserva. Reintente más tarde",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
