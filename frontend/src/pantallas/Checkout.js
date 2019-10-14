@@ -99,6 +99,7 @@ class Checkout extends Component {
                 persona_retiro: this.props.user.nombre + " " + this.props.user.apellido,
                 forma_retiro: "Acuerda con Productor",
                 fecha: '',
+                horario: '',
                 detallesReserva: [],
             },
             resultadoRequest: 0,
@@ -263,15 +264,17 @@ class Checkout extends Component {
             return item.id === newFecha.value;
         });
         var fechaSeleccionada = moment(fechasDeEntrega[0].fecha, 'DD-MM-YYYY').format("YYYY-MM-DD");
+        var horarioEntrega = fechasDeEntrega[0].hora_inicio + " hasta las " + fechasDeEntrega[0].hora_fin;
         nuevaFechaEntrega.push(newFecha);
         this.setState({
             seleccionado: {
                 ...this.state.seleccionado,
-                fechaEntrega: nuevaFechaEntrega
+                fechaEntrega: nuevaFechaEntrega                
             },
             datosReserva: {
                 ...this.state.datosReserva,
                 fecha: fechaSeleccionada,
+                horario: horarioEntrega,
             }
         });
     }

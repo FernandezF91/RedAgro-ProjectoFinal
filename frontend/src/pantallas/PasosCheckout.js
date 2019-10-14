@@ -150,7 +150,7 @@ const PasosCheckout = (props) => {
                     <Card>
                         <Card.Header as="h6">Datos para el retiro</Card.Header>
                         <Card.Body>
-                            Retira {props.datosReserva.persona_retiro}
+                            Retira {props.datosReserva.persona_retiro},
                             <br />
                             {
                                 props.datosReserva.forma_retiro === "Acuerda con Productor" ?
@@ -158,10 +158,12 @@ const PasosCheckout = (props) => {
                                     :
                                     <p>
                                         Por el punto de entrega elegido:
-                                    <br />
+                                        <br />
                                         {props.seleccionado.puntoEntrega[0].label}
                                         <br />
-                                        A partir del dia {props.seleccionado.fechaEntrega[0].label}
+                                        A partir del dia {props.seleccionado.fechaEntrega[0].label}.
+                                        <br />
+                                        Horario de Atención: entre las {props.datosReserva.horario} hs.
                                     </p>
                             }
                         </Card.Body>
