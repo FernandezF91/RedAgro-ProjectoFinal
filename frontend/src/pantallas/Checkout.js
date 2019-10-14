@@ -284,22 +284,12 @@ class Checkout extends Component {
             case 0: {
                 if ((!this.state.datosPersonaRetiro.nombre) || (!this.state.datosPersonaRetiro.apellido) ||
                     (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.nombre)) || (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.apellido))) {
-                    this.setState({
-                        titulo: "Error",
-                        mensaje: "Datos incompletos o incorrectos",
-                        showModal: true,
-                    });
                     return false;
                 }
             }
             case 1: {
                 if (this.state.selectedRadioButtonRetiro === "radio2") {
                     if (this.state.seleccionado.puntoEntrega.length === 0 || this.state.seleccionado.fechaEntrega.length === 0) {
-                        this.setState({
-                            titulo: "Error",
-                            mensaje: "Por favor, complete los datos para la entrega",
-                            showModal: true,
-                        });
                         return false;
                     }
                 }
@@ -350,8 +340,8 @@ class Checkout extends Component {
             this.setState({
                 datosPersonaRetiro: {
                     ...this.state.datosPersonaRetiro,
-                    nombre: " ",
-                    apellido: " ",
+                    nombre: "",
+                    apellido: "",
                     checkbox: e.target.checked,
                     disabled: false,
                 }
