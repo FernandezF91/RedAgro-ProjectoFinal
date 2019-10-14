@@ -16,6 +16,7 @@ import ModificarContraseña from '../pantallas/ModificarContraseña';
 import Geolocalizacion from '../pantallas/Geolocalizacion';
 import BarraNavegacion from './BarraNavegacion';
 import ResultadoBusqueda from './ResultadoBusqueda';
+import DetalleProducto from './DetalleProducto';
 import Checkout from './Checkout';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
@@ -28,6 +29,7 @@ const ModificarContraseniaRouter = withRouter(ModificarContraseña);
 const GeolocalizacionRouter = withRouter(Geolocalizacion);
 const ResultadoBusquedaRouter = withRouter(ResultadoBusqueda);
 const CheckoutRouter = withRouter(Checkout);
+const DetalleProductoRouter = withRouter(DetalleProducto);
 
 class PantallaPrincipalconsumidores extends Component {
 
@@ -40,10 +42,12 @@ class PantallaPrincipalconsumidores extends Component {
             rolUsuario: localStorage.getItem('myLocalStorageRolConsumidor') || this.props.location.state.rolUsuario,
             busqueda: '',
             productosSeleccionados: [],
-            productos: []
+            productos: [],
+            detalleProducto: {},
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.handleNuevaBusqueda = this.handleNuevaBusqueda.bind(this);
+        this.handleDetalleProducto = this.handleDetalleProducto.bind(this);
         this.actualizarProductosSeleccionados = this.actualizarProductosSeleccionados.bind(this);
         this.cargarProductos = this.cargarProductos.bind(this);
         this.actualizarUsuarioConsumidor = this.actualizarUsuarioConsumidor.bind(this);
@@ -109,6 +113,16 @@ class PantallaPrincipalconsumidores extends Component {
         })
     }
 
+    handleDetalleProducto(productoSeleccionado) {
+        this.setState({ detalleProducto: productoSeleccionado });
+        this.props.history.push({
+            pathname: '/principalConsumidores/DetalleProducto/',
+            state: {
+                producto: productoSeleccionado,
+            }
+        })
+    }
+
     actualizarProductosSeleccionados(productos) {
         this.setState({ productosSeleccionados: productos })
     }
@@ -125,31 +139,31 @@ class PantallaPrincipalconsumidores extends Component {
 
         verduras.sort(function (a, b) {
             if (a.tipo > b.tipo) {
-              return 1;
+                return 1;
             }
             if (a.tipo < b.tipo) {
-              return -1;
-            }            
+                return -1;
+            }
             return 0;
-          });
+        });
         frutas.sort(function (a, b) {
             if (a.tipo > b.tipo) {
-              return 1;
+                return 1;
             }
             if (a.tipo < b.tipo) {
-              return -1;
-            }            
+                return -1;
+            }
             return 0;
-          });
+        });
         otros.sort(function (a, b) {
             if (a.tipo > b.tipo) {
-              return 1;
+                return 1;
             }
             if (a.tipo < b.tipo) {
-              return -1;
-            }            
+                return -1;
+            }
             return 0;
-          });
+        });
 
         const item = [
             <Row>
@@ -315,8 +329,9 @@ class PantallaPrincipalconsumidores extends Component {
                                 render={(props) =>
                                     <ResultadoBusquedaRouter
                                         id_consumidor={this.state.id}
-                                        productosSeleccionados={this.state.productosSeleccionados}
                                         busqueda={this.state.busqueda}
+                                        productosSeleccionados={this.state.productosSeleccionados}
+                                        handleDetalleProducto={this.handleDetalleProducto}
                                         actualizarProductosSeleccionados={this.actualizarProductosSeleccionados}
                                     />
                                 }
@@ -324,10 +339,17 @@ class PantallaPrincipalconsumidores extends Component {
                             <Route path={'/principalConsumidores/Checkout'}
                                 render={(props) =>
                                     <CheckoutRouter
-                                        id_consumidor={this.state.id}
                                         user={this.state.user}
+                                        id_consumidor={this.state.id}
                                         productosSeleccionados={this.state.productosSeleccionados}
                                         actualizarProductosSeleccionados={this.actualizarProductosSeleccionados}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalConsumidores/DetalleProducto'}
+                                render={(props) =>
+                                    <DetalleProductoRouter
+                                        producto={this.state.detalleProducto}
                                     />
                                 }
                             />

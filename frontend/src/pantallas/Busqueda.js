@@ -5,7 +5,7 @@ import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCa
 import NumberFormat from 'react-number-format';
 import Carousel from 'react-bootstrap/Carousel';
 
-const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCarrito }) => {
+const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCarrito, mostrarDetalleProducto}) => {
     return (
         <div>
             {
@@ -31,10 +31,10 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                         </Carousel>
 
                                         <MDBCardBody className="text-center">
-                                            <h6 className="grey-text">{item.categoria}</h6>
+                                            <h6 className="grey-text">{item.tipo}</h6>
                                             <MDBCardTitle>
                                                 <strong>
-                                                    <Link className="dark-grey-text" to="/">{item.titulo} </Link>
+                                                    <a className="dark-grey-text" onClick={() => mostrarDetalleProducto(item)}>{item.titulo} </a>
                                                 </strong>
                                             </MDBCardTitle>
                                             <MDBCardText>

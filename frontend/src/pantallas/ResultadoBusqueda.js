@@ -30,6 +30,7 @@ class ResultadoBusqueda extends Component {
             showModal: false,
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.mostrarDetalleProducto = this.mostrarDetalleProducto.bind(this);
         this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
     }
@@ -41,6 +42,10 @@ class ResultadoBusqueda extends Component {
                 id: this.state.id,
             }
         })
+    }
+
+    mostrarDetalleProducto = (productoSeleccionado) => {
+        this.props.handleDetalleProducto(productoSeleccionado);
     }
 
     nextPage = (pageNumber) => {
@@ -124,7 +129,6 @@ class ResultadoBusqueda extends Component {
                         })
                     }
                 })
-
             return
         }
 
@@ -186,7 +190,6 @@ class ResultadoBusqueda extends Component {
                     })
                 }
             })
-
     }
 
     restarProducto = (position) => {
@@ -329,17 +332,20 @@ class ResultadoBusqueda extends Component {
                     resultadoBusqueda.length > 0 ?
                         <div className="opcionesCantidad">
                             <span className="tituloCantidad">Resultados por página</span>
-                            <Select className="cantidadProductos"
+                            <Select 
+                                className="cantidadProductos"
                                 value={defaultListado}
                                 options={tamañosListado}
                                 onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />
                         </div>
                         : ''
                 }
-                <Busqueda listaDeProductos={listadoBusqueda}
+                <Busqueda
+                    listaDeProductos={listadoBusqueda}
                     sumarProducto={this.sumarProducto}
                     restarProducto={this.restarProducto}
-                    agregarAlCarrito={this.agregarAlCarrito} />
+                    agregarAlCarrito={this.agregarAlCarrito}
+                    mostrarDetalleProducto={this.mostrarDetalleProducto} />
                 {
                     resultadoBusqueda.length > tamañoListado ?
                         <Paginacion
