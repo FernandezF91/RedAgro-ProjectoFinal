@@ -5,6 +5,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { MDBModal } from 'mdbreact';
+import Loader from 'react-loader-spinner';
 import PasosCheckout from './PasosCheckout'
 import moment from 'moment';
 import _ from 'lodash';
@@ -303,6 +304,7 @@ class Checkout extends Component {
         }
 
         if (this.state.activeStep === pasos.length - 1) {
+            this.setState({ loading: true })
             this.crearReserva(this.state.datosReserva);
         }
         this.setState({ activeStep: (this.state.activeStep + 1) });
@@ -345,6 +347,8 @@ class Checkout extends Component {
             this.setState({
                 datosPersonaRetiro: {
                     ...this.state.datosPersonaRetiro,
+                    nombre: " ",
+                    apellido: " ",
                     checkbox: e.target.checked,
                     disabled: false,
                 }
@@ -406,8 +410,6 @@ class Checkout extends Component {
             body: JSON.stringify(datosReserva)
         })
             .then(function (response) {
-                _this.setState({ resultadoRequest: response.status });
-
                 response.text().then(
                     function (response) {
                         _this.setState({
@@ -417,6 +419,10 @@ class Checkout extends Component {
                         })
                     }
                 )
+                _this.setState({
+                    resultadoRequest: response.status,
+                    loading: false
+                });
                 return;
             })
     }
@@ -428,6 +434,45 @@ class Checkout extends Component {
 
     render() {
         const activeStep = this.state.activeStep;
+
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        );
+
+        if (activeStep === pasos.length && this.state.showModal === true) {
+            return (
+                <MDBModal isOpen={this.state.showModal} centered size="sm">
+                    <div className="modalMargenes">
+                        <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                        <br />
+                        {(this.state.resultadoRequest === 200) ?
+                            (
+                                <div>
+                                    <i className="fas fa-check-circle iconoModalOk" />
+                                    <br />
+                                    <br />
+                                    <h5>{this.state.mensaje}</h5>
+                                </div>
+                            ) : (
+                                <div>
+                                    <i className="fas fa-exclamation-circle iconoModalError" />
+                                    <br />
+                                    <br />
+                                    <h5>{this.state.mensaje} </h5>
+                                </div>
+                            )
+                        }
+                    </div>
+                </MDBModal>
+            );
+        }
+
         return (
             <div className="containerPrincipal">
                 <div className="titulosPrincipales">Finalizar la Reserva</div>
@@ -440,37 +485,8 @@ class Checkout extends Component {
                         ))}
                     </Stepper>
                     {
-                        activeStep === pasos.length ?
-                            <div>
-                                {(this.state.showModal) &&
-                                    <MDBModal isOpen={this.state.showModal} centered size="sm">
-                                        <div className="modalMargenes">
-                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                                            <br />
-                                            {(this.state.resultadoRequest === 200) ?
-                                                (
-                                                    <div>
-                                                        <i className="fas fa-check-circle iconoModalOk" />
-                                                        <br />
-                                                        <br />
-                                                        <h5>{this.state.mensaje}</h5>
-                                                    </div>
-                                                ) : (
-                                                    <div>
-                                                        <i className="fas fa-exclamation-circle iconoModalError" />
-                                                        <br />
-                                                        <br />
-                                                        <h5>Ups! Ocurrió un error! </h5>
-                                                        <h6>Por favor, intenta nuevamente</h6>
-                                                    </div>
-                                                )
-                                            }
-                                        </div>
-                                    </MDBModal>
-                                }
+                        activeStep < pasos.length ?
 
-                            </div>
-                            :
                             <div>
                                 <PasosCheckout
                                     indexPasos={activeStep}
@@ -502,11 +518,11 @@ class Checkout extends Component {
                                     {activeStep === pasos.length - 1 ? 'Finalizar' : 'Continuar'}
                                 </Button>
                             </div>
+                            : ''
                     }
                 </MuiThemeProvider>
-
             </div>
-        )
+        );
     }
 }
 export default Checkout;

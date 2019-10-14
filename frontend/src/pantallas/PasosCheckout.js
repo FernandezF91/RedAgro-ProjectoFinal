@@ -42,7 +42,7 @@ const PasosCheckout = (props) => {
                                 required
                                 type="nom"
                                 name="nombre"
-                                value={(props.datosPersonaRetiro.checkbox === false) ? props.datosPersonaRetiro.nombre : " "}
+                                value={props.datosPersonaRetiro.nombre}
                                 disabled={props.datosPersonaRetiro.disabled}
                                 pattern="^[a-zA-Z ]*$"
                                 onChange={props.handleDatosPersonales} />
@@ -55,7 +55,7 @@ const PasosCheckout = (props) => {
                                 required
                                 type="ap"
                                 name="apellido"
-                                value={(props.datosPersonaRetiro.checkbox === false) ? props.datosPersonaRetiro.apellido : " "}
+                                value={props.datosPersonaRetiro.apellido}
                                 disabled={props.datosPersonaRetiro.disabled}
                                 pattern="^[a-zA-Z ]*$"
                                 onChange={props.handleDatosPersonales}
@@ -108,7 +108,7 @@ const PasosCheckout = (props) => {
                                     options={props.selector.puntosEntrega}
                                     placeholder="Seleccione una dirección de retiro..."
                                     onChange={newPunto => props.actualizarPuntoEntrega(newPunto)}
-                                     />
+                                />
 
                                 <Select className="dropdownFechas"
                                     value={props.seleccionado.fechaEntrega}
