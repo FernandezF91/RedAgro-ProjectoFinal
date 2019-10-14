@@ -10,7 +10,7 @@ public class MailReservas extends MailSender {
 		this.setContenido_email("<div><h2>Felicitaciones " + reserva.getConsumidor().getUsuario().getNombre()
 				+ "! Tu reserva ha sido confirmada</h2>" 
 				+ "</br>"
-				+ "<h5><i>Chequeá el status de tu reserva ingresando en tu cuenta</i></h5>"
+				+ "<h5><i>Chequeá el estado de tu reserva ingresando a tu cuenta</i></h5>"
 				+ "</br>"
 				+ "</br>"
 				+ "<h4> Detalle de la reserva </h4>"

@@ -185,7 +185,7 @@ public class ReservaControlador {
 			int stockProducto = producto.getStock();
 			if (unDetalle.getCantidad() > stockProducto) {
 				return new ResponseEntity<>(
-						"Hey! En este momento no hay stock del producto " + producto.getTitulo() + "seleccionado.",
+						"Hey! En este momento no hay stock del producto: " + producto.getTitulo() + ". Reintentá disminuyendo la cantidad elegida.",
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			} else {
 				producto.setStock(stockProducto - unDetalle.getCantidad());
