@@ -24,7 +24,10 @@ public class ReservaMapper {
 		Consumidor consumidor = mapeoConsumidor.mapFromEntity(entidad.getConsumidor());
 
 		PuntoEntregaMapper mapeoPtoEntrega = new PuntoEntregaMapper();
-		PuntoEntrega ptoEntrega = mapeoPtoEntrega.mapFromEntity(entidad.getPunto_entrega());
+		PuntoEntrega ptoEntrega = null;
+		if(entidad.getPunto_entrega() != null) {
+			ptoEntrega = mapeoPtoEntrega.mapFromEntity(entidad.getPunto_entrega());
+		}
 
 		EstadoReservaMapper mapeoEstado = new EstadoReservaMapper();
 		EstadoReserva estado = mapeoEstado.mapFromEntity(entidad.getEstado_reserva());
