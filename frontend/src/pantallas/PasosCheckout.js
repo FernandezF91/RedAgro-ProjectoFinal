@@ -38,28 +38,52 @@ const PasosCheckout = (props) => {
                     <div className="nombreDU" >
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}> Nombre </Form.Label>
-                            <Form.Control
-                                required
-                                type="nom"
-                                name="nombre"
-                                value={props.datosPersonaRetiro.nombre}
-                                disabled={props.datosPersonaRetiro.disabled}
-                                pattern="^[a-zA-Z ]*$"
-                                onChange={props.handleDatosPersonales} />
+                            {
+                                (props.datosPersonaRetiro.disabled === true) ?
+                                    <Form.Control
+                                        required
+                                        type="nom"
+                                        name="nombre"
+                                        value={props.datosPersonaRetiro.nombre}
+                                        pattern="^[a-zA-Z ]*$"
+                                        onChange={props.handleDatosPersonales}
+                                        disabled />
+                                    :
+                                    <Form.Control
+                                        required
+                                        type="nom"
+                                        name="nombre"
+                                        value={props.datosPersonaRetiro.nombre}
+                                        pattern="^[a-zA-Z ]*$"
+                                        onChange={props.handleDatosPersonales} />
+                            }
                         </Form.Group>
                     </div>
                     <div className="apellidoDU" >
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>Apellido</Form.Label>
-                            <Form.Control
-                                required
-                                type="ap"
-                                name="apellido"
-                                value={props.datosPersonaRetiro.apellido}
-                                disabled={props.datosPersonaRetiro.disabled}
-                                pattern="^[a-zA-Z ]*$"
-                                onChange={props.handleDatosPersonales}
-                            />
+                            {
+                                (props.datosPersonaRetiro.disabled === true) ?
+                                    <Form.Control
+                                        required
+                                        type="ap"
+                                        name="apellido"
+                                        value={props.datosPersonaRetiro.apellido}
+                                        pattern="^[a-zA-Z ]*$"
+                                        onChange={props.handleDatosPersonales}
+                                        disabled
+                                    />
+                                    :
+                                    <Form.Control
+                                        required
+                                        type="ap"
+                                        name="apellido"
+                                        value={props.datosPersonaRetiro.apellido}
+                                        pattern="^[a-zA-Z ]*$"
+                                        onChange={props.handleDatosPersonales}
+                                    />
+                            }
+
                         </Form.Group>
                     </div>
 
