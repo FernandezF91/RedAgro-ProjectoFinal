@@ -2,6 +2,10 @@ package app.controladores;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import java.math.BigInteger;
 import java.math.BigDecimal;
 
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import app.clases.MailReservas;
 import app.clases.Reserva;
 import app.clases.ResultadosEstadisticas;
 import app.daos.ProductoProductorDao;
@@ -30,6 +35,7 @@ import app.modelos.EntidadReserva;
 import app.modelos.EntidadPuntoEntrega;
 import app.modelos.EntidadDetalleReserva;
 import app.modelos.EntidadProductoProductor;
+import app.modelos.EntidadConsumidor;
 import app.mappers.ReservaMapper;
 
 @RestController
@@ -160,13 +166,17 @@ public class ReservaControlador {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/generarReserva")
 	public ResponseEntity<String> generarReserva(@RequestBody EntidadReserva reserva) {
-		
+
 		EntidadPuntoEntrega entregas = puntoEntregaDAO.obtenerPuntoEntrega((reserva.getPunto_entrega().getId()));
-		reserva.setPunto_entrega(entregas);
-		List<EntidadDetalleReserva> detalles = reserva.getDetallesReserva();
+		ReservaMapper mapeo = new ReservaMapper();
 		List<EntidadProductoProductor> productos = new ArrayList<EntidadProductoProductor>();
+		List<EntidadDetalleReserva> detalles = reserva.getDetallesReserva();
+		String usuario;
+
+		reserva.setPunto_entrega(entregas);
+		reserva.setConsumidor(usuarioDAO.obtenerDatosUsuario(reserva.getConsumidor().getId()).getConsumidor());
+		reserva.setProductor(usuarioDAO.obtenerDatosUsuario(reserva.getProductor().getId()).getProductor());
 		reserva.getEstado_reserva();
-		
 
 		// Validación Stock
 		for (EntidadDetalleReserva unDetalle : detalles) {
@@ -174,7 +184,8 @@ public class ReservaControlador {
 			unDetalle.setProducto(producto);
 			int stockProducto = producto.getStock();
 			if (unDetalle.getCantidad() > stockProducto) {
-				return new ResponseEntity<>("En este momento no hay stock del producto "+ producto.getTitulo() +"seleccionado",
+				return new ResponseEntity<>(
+						"Hey! En este momento no hay stock del producto " + producto.getTitulo() + "seleccionado.",
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			} else {
 				producto.setStock(stockProducto - unDetalle.getCantidad());
@@ -189,15 +200,29 @@ public class ReservaControlador {
 			for (EntidadDetalleReserva unDetalle : detalles) {
 				unDetalle.setId_reserva(idReserva);
 			}
-			//Guardo el detalle y actualizo stock
+			// Guardo el detalle y actualizo stock
 			detalleReservaDao.saveAll(detalles);
-			productoProductorDao.saveAll(productos); 
+			productoProductorDao.saveAll(productos);
+
+			try {
+				usuario = mapeo.mapFromEntity(nuevaReserva).getConsumidor().getUsuario().getUsuario();
+				MailReservas mailConsumidor = new MailReservas(usuario, mapeo.mapFromEntity(nuevaReserva));
+
+				mailConsumidor.enviarMail();
+
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			String id_reserva = idReserva.toString();
 			return new ResponseEntity<>("Reserva #" + id_reserva + " creada correctamente!", HttpStatus.OK);
 
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrió un error crear la reserva. Reintente más tarde",
+			return new ResponseEntity<>("Ocurrió un error al crear tu reserva. Reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -209,7 +234,7 @@ public class ReservaControlador {
 			reservaDao.actualizarEstadoReserva(id_reserva, id_estado);
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrió un error crear la reserva. Reintente más tarde",
+			return new ResponseEntity<>("Ocurrió un error al crear tu reserva. Reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

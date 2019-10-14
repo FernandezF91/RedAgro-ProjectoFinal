@@ -1,5 +1,28 @@
 package app.clases;
 
-public class MailReservas extends MailSender{
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
+public class MailReservas extends MailSender {
+
+	public MailReservas(String to, Reserva reserva) {
+		this.setTo(to);
+		this.setContenido_email("<div><h2>Felicitaciones " + reserva.getConsumidor().getUsuario().getNombre()
+				+ "! Tu reserva ha sido confirmada</h2>" 
+				+ "</br>"
+				+ "<h5><i>Chequeá el status de tu reserva ingresando en tu cuenta</i></h5>"
+				+ "</br>"
+				+ "</br>"
+				+ "<h4> Detalle de la reserva </h4>"
+				+ "Saludos," + "<br>"
+				+ "Equipo de culturaVerde");
+
+		this.setAsunto("Tu reserva #" + reserva.getId()+ " fue realizada con éxito!");
+
+	}
+
+	public void enviarMail() throws AddressException, MessagingException {
+		super.enviarMail();
+	}
 
 }
