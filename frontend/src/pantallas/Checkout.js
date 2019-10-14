@@ -5,6 +5,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { MDBModal } from 'mdbreact';
+import { Link } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 import PasosCheckout from './PasosCheckout'
 import moment from 'moment';
@@ -103,6 +104,7 @@ class Checkout extends Component {
                 detallesReserva: [],
             },
             resultadoRequest: 0,
+            reservaOK: false,
             loading: true,
             titulo: '',
             mensaje: '',
@@ -194,9 +196,9 @@ class Checkout extends Component {
             .then(response => {
                 try {
                     if (response.status === 200) {
-                        this.setState({
-                            resultadoRequest: response.status
-                        });
+                        // this.setState({
+                        //     resultadoRequest: response.status
+                        // });
                         return response.json();
                     }
                     else {
@@ -269,7 +271,7 @@ class Checkout extends Component {
         this.setState({
             seleccionado: {
                 ...this.state.seleccionado,
-                fechaEntrega: nuevaFechaEntrega                
+                fechaEntrega: nuevaFechaEntrega
             },
             datosReserva: {
                 ...this.state.datosReserva,
@@ -386,6 +388,7 @@ class Checkout extends Component {
         } else {
             if (this.state.resultadoRequest === 200) {
                 this.actualizarItemsCarrito();
+                this.setState({ reservaOK: true });
             }
         }
 
@@ -437,6 +440,18 @@ class Checkout extends Component {
                 className="loader"
             />
         );
+
+        if (this.state.reservaOK === true) return (
+            <div className="confirmacionReserva">
+                <h2>¡Felicitaciones! </h2>
+                <h3>Tu reserva ha sido confirmada</h3>
+                <br />
+                <i className="fas fa-shopping-basket iconoGrande"/>
+                <br />
+                <br />
+                <h5>Para conocer su estado, hacá click <Link to={'/principalConsumidores/ListadoReservas'}>acá</Link></h5>
+            </div>
+        )
 
         if (activeStep === pasos.length && this.state.showModal === true) {
             return (
