@@ -29,3 +29,8 @@
     font-weight: 500;
     color: #4f4f4f !important;
 }
+
+.view .imagenesBusqueda {
+    position: relative;
+    display: initial !important;
+}
