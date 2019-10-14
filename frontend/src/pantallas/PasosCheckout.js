@@ -114,19 +114,32 @@ const PasosCheckout = (props) => {
                         Acordá el retiro con tu productor
                     </label>
                     <br />
-                    <label>
-                        <input
-                            type="radio"
-                            value="radio2"
-                            checked={props.selectedRadioButtonRetiro === "radio2"}
-                            onChange={props.handleRadioRetiroChange}
-                            className="radio-button-input radio" />
-                        Seleccioná un punto de entrega
-                    </label>
                     {
-                        props.selectedRadioButtonRetiro === "radio2" ?
+                        (props.selectedRadioButtonRetiro === "radio1") ?
                             <div className="opcionesCheckout">
-
+                                <label>
+                                    Comunicate con el productor para coordinar la fecha y punto de entrega que más te convenga.
+                            </label>
+                            </div>
+                            : <br />
+                    }
+                    <br />
+                    {
+                        (props.puntosEntrega.length > 0) ?
+                            <label>
+                                <input
+                                    type="radio"
+                                    value="radio2"
+                                    checked={props.selectedRadioButtonRetiro === "radio2"}
+                                    onChange={props.handleRadioRetiroChange}
+                                    className="radio-button-input radio" />
+                                Seleccioná un punto de entrega
+                            </label>
+                            : ''
+                    }
+                    {
+                        (props.selectedRadioButtonRetiro === "radio2") ?
+                            <div className="opcionesCheckout">
                                 <Select className="dropdownDirecciones"
                                     value={props.seleccionado.puntoEntrega}
                                     options={props.selector.puntosEntrega}
