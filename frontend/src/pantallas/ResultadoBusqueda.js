@@ -45,7 +45,7 @@ class ResultadoBusqueda extends Component {
     }
 
     mostrarDetalleProducto = (productoSeleccionado) => {
-        this.props.handleDetalleProducto(productoSeleccionado);
+        this.props.handleDetalleProducto(productoSeleccionado.id);
     }
 
     nextPage = (pageNumber) => {

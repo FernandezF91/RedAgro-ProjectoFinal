@@ -113,12 +113,12 @@ class PantallaPrincipalconsumidores extends Component {
         })
     }
 
-    handleDetalleProducto(productoSeleccionado) {
-        this.setState({ detalleProducto: productoSeleccionado });
+    handleDetalleProducto(idProductoSeleccionado) {
+        this.setState({ detalleProducto: idProductoSeleccionado });
         this.props.history.push({
-            pathname: '/principalConsumidores/DetalleProducto/',
+            pathname: '/principalConsumidores/DetalleProducto/' + idProductoSeleccionado,
             state: {
-                producto: productoSeleccionado,
+                producto: idProductoSeleccionado,
             }
         })
     }
@@ -346,10 +346,12 @@ class PantallaPrincipalconsumidores extends Component {
                                     />
                                 }
                             />
-                            <Route path={'/principalConsumidores/DetalleProducto'}
+                            <Route path={'/principalConsumidores/DetalleProducto/:id'}
                                 render={(props) =>
                                     <DetalleProductoRouter
                                         producto={this.state.detalleProducto}
+                                        productosSeleccionados={this.state.productosSeleccionados}
+                                        actualizarProductosSeleccionados={this.actualizarProductosSeleccionados}
                                     />
                                 }
                             />
