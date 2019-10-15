@@ -54,7 +54,6 @@ class ResultadoBusquedaSinLogin extends Component {
     }
 
     realizarBusqueda(busqueda) {
-
         var path = "http://localhost:3000/redAgro/obtenerProductos?busqueda=" + busqueda;
         fetch(path)
             .catch(error => console.error(error))
@@ -116,30 +115,42 @@ class ResultadoBusquedaSinLogin extends Component {
     }
 
     restarProducto = (position) => {
-        this.setState({ showModal: true });
+        this.setState({
+            showModal: true
+        });
     }
 
     sumarProducto = (position) => {
-        this.setState({ showModal: true });
+        this.setState({
+            showModal: true
+        });
     }
 
     agregarAlCarrito = (position) => {
-        this.setState({ showModal: true });
+        this.setState({
+            showModal: true
+        });
     }
 
     actualizarTamañoListado = (tamaño) => {
         let actualizarListado = [];
         if (tamaño.value === "Todo") {
-            this.setState({ tamañoListado: this.state.resultadoBusqueda.length })
+            this.setState({
+                tamañoListado: this.state.resultadoBusqueda.length
+            })
         } else {
-            this.setState({ tamañoListado: tamaño.value })
+            this.setState({
+                tamañoListado: tamaño.value
+            })
         }
         actualizarListado.push(tamaño);
         defaultListado = actualizarListado;
     }
 
     cerrarModal() {
-        this.setState({ showModal: false })
+        this.setState({
+            showModal: false
+        })
     }
 
     render() {
@@ -150,13 +161,15 @@ class ResultadoBusquedaSinLogin extends Component {
         const listadoBusqueda = resultadoBusqueda.slice(indexOfFirstReserva, indexOfLastReserva);
 
         if (this.state.loading) return (
-            <Loader
-                type="Grid"
-                color="#28A745"
-                height={150}
-                width={150}
-                className="loader"
-            />
+            <div className="divLoaderWhitesmoke">
+                <Loader
+                    type="Grid"
+                    color="#28A745"
+                    height={150}
+                    width={150}
+                    className="loader loaderWhitesmoke"
+                />
+            </div>
         )
 
         if (this.state.resultadoRequest !== 200) return (

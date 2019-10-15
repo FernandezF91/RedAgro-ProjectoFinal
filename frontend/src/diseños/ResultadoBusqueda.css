@@ -21,7 +21,33 @@
     display: initial !important;
 }
 
-.carousel-control-next,
-.carousel-control-prev {
+.carousel-control-next, .carousel-control-prev {
     filter: invert(100%);
+}
+
+.footerCard {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.botonesCard {
+    max-width: 126px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.btn-primary {
+    background-color: white !important;
+}
+
+.divLoaderWhitesmoke {
+    width: calc(100vw - 78px) !important;
+}
+
+.loaderWhitesmoke {
+    background-color: whitesmoke !important;
+    left: 50%;
+    margin-left: -75px !important;
 }

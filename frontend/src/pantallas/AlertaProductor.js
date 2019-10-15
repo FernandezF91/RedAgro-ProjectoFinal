@@ -34,24 +34,34 @@ class AlertaProductor extends Component {
         fetch(path)
             .catch(err => console.error(err))
             .then(response => {
-                return response.json();
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 504) {
+                    console.log("Timeout");
+                } else {
+                    console.log("Otro error");
+                }
             })
             .then(data => {
+                if (data !== void (0)) {
+                    _this.setState({
+                        alertas: data.map((item) => {
+                            return {
+                                id: item.id,
+                                frecuencia: item.frecuencia.frecuencia,
+                                alerta: item.alerta.nombre
+                            }
+                        }),
+                        loading: false
+                    })
+                    const { alertas } = this.state;
+                    let body = [];
+                    alertas.forEach(item => {
+                        body.push(this.cargoAlerta(item));
+                    })
+                }
                 _this.setState({
-                    alertas: data.map((item) => {
-                        return {
-                            id: item.id,
-                            frecuencia: item.frecuencia.frecuencia,
-                            alerta: item.alerta.nombre
-                        }
-                    }),
                     loading: false
-                })
-
-                const { alertas } = this.state;
-                let body = [];
-                alertas.forEach(item => {
-                    body.push(this.cargoAlerta(item));
                 })
             })
     }
@@ -120,7 +130,7 @@ class AlertaProductor extends Component {
             }
         })
     }
-    
+
     cargoAlerta(item) {
         console.log(item.alerta);
         if (item.alerta === "Nuevas reservas") {

@@ -45,30 +45,30 @@ const columnas = [
         field: 'TiempoDePreparacion'
     },
     {
-		label: '',
-		field: 'Editar',
-	}
+        label: '',
+        field: 'Editar',
+    }
 ];
 
 const Producto = ({ productos }) => {
-	return (       
+    return (
         <div>
-			{productos.length > 0 ?
-				<MDBTable striped responsive hover>
-					<MDBTableHead columns={columnas} />
-					<MDBTableBody>{productos}</MDBTableBody>
-				</MDBTable>
-				:
-				<div className="sinReservas">
-					<i className="fas fa-store iconoGrande"></i>
-					<br />
-					<br />
-					<h5>Ups! No tenes productos cargados! </h5>
-					<h6>Cargá tus productos <Link to={'/principalProductores/NuevoProducto'}>acá</Link> </h6>
-				</div>
-			}
-		</div >
-	);
+            {productos.length > 0 ?
+                <MDBTable striped responsive hover>
+                    <MDBTableHead columns={columnas} />
+                    <MDBTableBody>{productos}</MDBTableBody>
+                </MDBTable>
+                :
+                <div className="sinReservas">
+                    <i className="fas fa-store iconoGrande"></i>
+                    <br />
+                    <br />
+                    <h5>Ups! No tenes productos cargados! </h5>
+                    <h6>Cargá tus productos <Link to={'/principalProductores/NuevoProducto'}>acá</Link> </h6>
+                </div>
+            }
+        </div >
+    );
 }
 
 export default Producto;

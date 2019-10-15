@@ -36,19 +36,40 @@ class AlertaConsumidor extends Component {
     }
 
     componentDidMount() {
+        var _this = this;
         var path = "http://localhost:3000/redAgro/obtenerConfiguracionAlertas?id_usuario=" + this.state.id_consumidor;
         fetch(path)
             .catch(err => console.error(err))
-            .then(response => { 
-                return response.json();
-             })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 504) {
+                    console.log("Timeout");
+                } else {
+                    console.log("Otro error");
+                }
+            })
             .then(data => {
-                this.setState({
-                    seleccionados: {
-                        
-                    },
+                if (data !== void (0)) {
+                    _this.setState({
+                        alertas: data.map((item) => {
+                            return {
+                                id: item.id,
+                                frecuencia: item.frecuencia.frecuencia,
+                                alerta: item.alerta.nombre
+                            }
+                        }),
+                        loading: false
+                    })
+                    const { alertas } = this.state;
+                    let body = [];
+                    alertas.forEach(item => {
+                        body.push(this.cargoAlerta(item));
+                    })
+                }
+                _this.setState({
                     loading: false
-                });
+                })
             })
     }
 
@@ -149,6 +170,40 @@ class AlertaConsumidor extends Component {
         formSubmitEvent.preventDefault();
         //  Chequear como lo guardo
     };
+
+    cargoAlerta(item) {
+        if (item.alerta === "Modificaciones en reservas realizadas") {
+            this.setState({
+                checkModificacion: true,
+                selectedRadioOptionModificacion: item.frecuencia,
+                disabledModificacion: false
+            });
+        }
+
+        if (item.alerta === "Productos de interés") {
+            this.setState({
+                checkProductos: true,
+                selectedRadioOptionProducto: item.frecuencia,
+                disabledProducto: false
+            });
+        }
+
+        if (item.alerta === "Resumen de reservas vía correo electrónico") {
+            this.setState({
+                checkResumen: true,
+                selectedRadioOptionResumen: item.frecuencia,
+                disabledResumen: false
+            });
+        }
+
+        if (item.alerta === "Cambio de estado en una reserva vía correo electrónico") {
+            this.setState({
+                checkCambio: true,
+                selectedRadioOptionCambio: item.frecuencia,
+                disabledCambio: false
+            });
+        }
+    }
 
     render() {
         if (this.state.loading) return (
