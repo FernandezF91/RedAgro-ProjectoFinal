@@ -77,7 +77,7 @@ class PreferenciasConsumidor extends Component {
 
     generarListadoSeleccionado(preferencias, listado, categoria) {
         if (listado.length > 0) {
-            listado.map(item => {
+            listado.forEach(item => {
                 preferencias.push({
                     id: item.value,
                     categoria: categoria,

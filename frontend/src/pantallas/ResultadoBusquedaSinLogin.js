@@ -214,11 +214,14 @@ class ResultadoBusquedaSinLogin extends Component {
                             <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
                             <br />
                             <div class="modal-body">
-                                <i className="fas fa-shopping-cart" />
+                                <i className="fas fa-shopping-cart iconoModal" />
+                                <br />
                                 <br />
                                 <h5> Hola!
-                                <br />Para continuar tenés que iniciar sesión...
+                                <br />
+                                Para continuar tenés que iniciar sesión...
                                 </h5>
+                                <br />
                                 <h6>
                                     Podes hacerlo por <Link to={'/login'}>acá</Link>
                                 </h6>

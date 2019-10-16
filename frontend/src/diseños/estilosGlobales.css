@@ -156,6 +156,11 @@ input[type=text] {
     font-size: 65px;
 }
 
+.iconoModal {
+    font-size: 65px;
+    color: #79CB79;
+}
+
 .modalMargenes {
     padding: 15px;
 }

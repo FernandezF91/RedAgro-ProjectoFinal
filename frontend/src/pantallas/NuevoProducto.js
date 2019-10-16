@@ -89,7 +89,7 @@ class NuevoProducto extends Component {
         if ((!this.state.campos["categoria"]) || (!this.state.campos["tipo_produccion"]) || (!this.state.campos["unidad_venta"])
             || (!this.state.campos["stock"]) || (!this.state.campos["precio"]) || (!this.state.campos["contenido"] ? false : this.state.campos["contenido"].length > 20)
             || (this.state.campos["categoria"] !== "Variado" ? !this.state.campos["tipo_producto"] : false)
-            || (!this.state.campos["tiempo_preparacion"]) || ((!this.state.campos["descripcion"]) || (this.state.campos["descripcion"].length > 255))
+            || ((!this.state.campos["descripcion"]) || (this.state.campos["descripcion"].length > 255))
             || ((!this.state.campos["titulo"]) || (this.state.campos["titulo"].length > 100)) || (this.state.files.length === 0) ||
             (!this.state.campos["fecha_ven"] ? false : this.validarFecha())) {
 
@@ -466,7 +466,7 @@ class NuevoProducto extends Component {
                     <div className="tiempo_preparacion">
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
-                                *Tiempo de preparación (en días)
+                                Tiempo de preparación (en días)
                                 </Form.Label>
                             <Form.Control
                                 value={this.state.campos["tiempo_preparacion"]}

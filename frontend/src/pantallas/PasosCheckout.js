@@ -196,7 +196,12 @@ const PasosCheckout = (props) => {
                                                 item.cantidad > 1 ?
                                                     <Col>
                                                         {item.cantidad}
-                                                        <span className="unidadMedida">{" " + item.tipoDeUnidad + "s"}</span>
+                                                        {
+                                                            item.tipoDeUnidad === "Bolsón" ?
+                                                                <span className="unidadMedida">{" Bolsones"}</span>
+                                                                :
+                                                                <span className="unidadMedida">{" " + item.tipoDeUnidad + "s"}</span>
+                                                        }
                                                     </Col>
                                                     :
                                                     <Col>
@@ -213,7 +218,7 @@ const PasosCheckout = (props) => {
                                 ))
                             }
                         </ListGroup>
-                        <Card.Footer as="h6">
+                        <Card.Footer as="h6" className="footerEstilo">
                             <strong>
                                 Total
                                 <NumberFormat

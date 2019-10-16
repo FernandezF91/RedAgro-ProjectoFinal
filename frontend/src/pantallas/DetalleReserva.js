@@ -46,7 +46,7 @@ const DetalleReserva = ({ item }) => {
 												(
 													<div className="columnaCentrado">
 														{(detalleUnaReserva.producto.unidad_venta === "Bolsón") ?
-															<td>{detalleUnaReserva.cantidad + " " + "Bolsones"} </td>
+															<td>{detalleUnaReserva.cantidad + " Bolsones"} </td>
 															:
 															<td>{detalleUnaReserva.cantidad + " " + detalleUnaReserva.producto.unidad_venta + "s"} </td>
 														}
