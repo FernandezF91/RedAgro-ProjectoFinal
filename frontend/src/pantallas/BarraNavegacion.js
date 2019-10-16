@@ -35,10 +35,17 @@ class BarraNavegacion extends Component {
     handleInputChange = e => {
         if (this.busqueda.value.length > 0) {
             this.setState(
-                { busqueda: this.busqueda.value },
+                {
+                    busqueda: this.busqueda.value
+                },
                 this.updateParametroBusqueda
             )
         }
+    }
+
+    logout() {
+        localStorage.clear();
+        window.location.href = '/';
     }
 
     render() {
@@ -78,7 +85,7 @@ class BarraNavegacion extends Component {
                                         <Link to={'/principalConsumidores/MiCuenta'}>Mi cuenta</Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
-                                    <NavDropdown.Item href="/">Salir</NavDropdown.Item>
+                                    <NavDropdown.Item onClick={this.logout}>Salir</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
 
@@ -105,7 +112,6 @@ class BarraNavegacion extends Component {
                                         <NavDropdown.Item href="/">Salir</NavDropdown.Item>
                                     </NavDropdown>
                                 </Nav>
-
                                 <Nav className="menuUsuario">
                                     <i className="fas fa-bell iconosBarra" />
                                 </Nav>
