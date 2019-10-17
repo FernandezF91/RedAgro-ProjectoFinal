@@ -122,15 +122,6 @@ class AlertaProductor extends Component {
         console.log(this.state.checkActualizacion);
     };
 
-    mostrarPantallaPrincipal() {
-        this.props.history.push({
-            pathname: '/principalProductores/MiCuenta',
-            state: {
-                id: this.state.id
-            }
-        })
-    }
-
     cargoAlerta(item) {
         console.log(item.alerta);
         if (item.alerta === "Nuevas reservas") {
