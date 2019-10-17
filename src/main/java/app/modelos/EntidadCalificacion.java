@@ -9,28 +9,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Entity
 @Table(name = "Calificacion")
 public class EntidadCalificacion {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@ManyToOne()
-    @JoinColumn(name = "consumidor_id", nullable = false)
-    private EntidadConsumidor consumidor;
-	
+	@JoinColumn(name = "consumidor_id", nullable = false)
+	private EntidadConsumidor consumidor;
+
 	@ManyToOne()
-    @JoinColumn(name = "productor_id", nullable = false)
-    private EntidadProductor productor;
-	
-	@Column(name="valor", nullable=false)
+	@JoinColumn(name = "productor_id", nullable = false)
+	private EntidadProductor productor;
+
+	@Column(name = "valor", nullable = false)
 	private int valor;
-	
-	@Column(name="comentario", nullable=false)
+
+	@Column(name = "comentario", nullable = false)
 	private String comentario;
 
 	public Long getId() {

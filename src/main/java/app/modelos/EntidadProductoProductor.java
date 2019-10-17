@@ -18,8 +18,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 @Entity
 @Table(name = "Producto_productor")
 public class EntidadProductoProductor {
@@ -54,10 +52,10 @@ public class EntidadProductoProductor {
 
 	@Column(name = "fecha_vencimiento", nullable = true)
 	private Date fecha_vencimiento;
-	
+
 	@Column(name = "unidad_venta", nullable = false)
 	private String unidad_venta;
-	
+
 	@Column(name = "contenido", nullable = true)
 	private String contenido;
 
@@ -174,5 +172,5 @@ public class EntidadProductoProductor {
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
 	}
-	
+
 }

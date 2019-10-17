@@ -9,24 +9,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "Preferencia")
 public class EntidadPreferencia {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-    private Long id;
-	
+	private Long id;
+
 	@ManyToOne()
-    @JoinColumn(name = "consumidor_id", nullable = false)
-    private EntidadConsumidor consumidor;
-	
+	@JoinColumn(name = "consumidor_id", nullable = false)
+	private EntidadConsumidor consumidor;
+
 	@ManyToOne()
-    @JoinColumn(name = "producto_id", nullable = false)
-    private EntidadProducto producto;
+	@JoinColumn(name = "producto_id", nullable = false)
+	private EntidadProducto producto;
 
 	public Long getId() {
 		return id;

@@ -35,7 +35,6 @@ import app.modelos.EntidadReserva;
 import app.modelos.EntidadPuntoEntrega;
 import app.modelos.EntidadDetalleReserva;
 import app.modelos.EntidadProductoProductor;
-import app.modelos.EntidadConsumidor;
 import app.mappers.ReservaMapper;
 
 @RestController
@@ -184,9 +183,8 @@ public class ReservaControlador {
 			unDetalle.setProducto(producto);
 			int stockProducto = producto.getStock();
 			if (unDetalle.getCantidad() > stockProducto) {
-				return new ResponseEntity<>(
-						"Hey! En este momento no hay stock del producto: " + producto.getTitulo() + ". Reintentá disminuyendo la cantidad elegida.",
-						HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<>("Hey! En este momento no hay stock del producto: " + producto.getTitulo()
+						+ ". Reintentá disminuyendo la cantidad elegida.", HttpStatus.INTERNAL_SERVER_ERROR);
 			} else {
 				producto.setStock(stockProducto - unDetalle.getCantidad());
 				productos.add(producto);
@@ -260,5 +258,4 @@ public class ReservaControlador {
 			return new ResponseEntity<>("Ups!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 }
