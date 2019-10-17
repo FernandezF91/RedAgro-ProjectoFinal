@@ -258,9 +258,9 @@ class ListadoReservas extends Component {
                     showModal: false,
                     estadoSeleccionado: ""
                 })
-                _this.forceUpdate();
-                return;
             })
+        //TODO: cambiarlo para que solo actualice la parte del listado.
+        window.location.reload();
     }
 
     filtrarEstadosAMostrar(fecha, estadoActual) {
