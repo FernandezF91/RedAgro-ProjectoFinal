@@ -7,7 +7,7 @@ public class Reserva {
 
 	public Reserva(long id, List<DetalleReserva> detalleReserva, Productor productor, Consumidor consumidor,
 			PuntoEntrega punto_entrega, EstadoReserva estado_reserva, Date fecha, Date fecha_creacion,
-			int total_reserva, String forma_retiro, String persona_retiro) {
+			float total_reserva, String forma_retiro, String persona_retiro) {
 
 		this.setId(id);
 		this.setDetalleReserva(detalleReserva);
@@ -38,7 +38,7 @@ public class Reserva {
 
 	private Date fecha_creacion;
 
-	private int total_reserva;
+	private float total_reserva;
 
 	private String forma_retiro;
 
@@ -100,11 +100,11 @@ public class Reserva {
 		this.fecha_creacion = fecha_creacion;
 	}
 
-	public int getTotal_reserva() {
+	public float getTotal_reserva() {
 		return total_reserva;
 	}
 
-	public void setTotal_reserva(int total_reserva) {
+	public void setTotal_reserva(float total_reserva) {
 		this.total_reserva = total_reserva;
 	}
 

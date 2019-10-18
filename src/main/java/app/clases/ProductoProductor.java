@@ -6,7 +6,7 @@ import java.util.List;
 public class ProductoProductor {
 
 	public ProductoProductor(long id, Productor productor, Producto producto, String titulo, String descripcion, List<Imagen> imagenes,
-							 String tipo_produccion, int stock, Date fecha_vencimiento, String contenido, String unidad_venta, int precio, int tiempo_preparacion) {
+							 String tipo_produccion, int stock, Date fecha_vencimiento, String contenido, String unidad_venta, float precio, int tiempo_preparacion) {
 		this.setId(id);
 		this.setProductor(productor);
 		this.setProducto(producto);
@@ -31,7 +31,7 @@ public class ProductoProductor {
 	private String tipo_produccion;
 	private int stock;
 	private Date fecha_vencimiento;
-	private int precio;
+	private float precio;
 	private int tiempo_preparacion;
 	private String contenido;
 	private String unidad_venta;
@@ -101,11 +101,11 @@ public class ProductoProductor {
 		this.fecha_vencimiento = fecha_vencimiento;
 	}
 
-	public int getPrecio() {
+	public float getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(int precio) {
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
 

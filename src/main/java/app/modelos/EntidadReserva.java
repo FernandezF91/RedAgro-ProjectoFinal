@@ -56,7 +56,7 @@ public class EntidadReserva {
 	private Date fecha_creacion;
 
 	@Column(name = "total_reserva", nullable = false)
-	private int total_reserva;
+	private float total_reserva;
 
 	@Column(name = "forma_retiro", nullable = false)
 	private String forma_retiro;
@@ -120,11 +120,11 @@ public class EntidadReserva {
 		this.fecha_creacion = fecha_creacion;
 	}
 
-	public int getTotal_reserva() {
+	public float getTotal_reserva() {
 		return total_reserva;
 	}
 
-	public void setTotal_reserva(int total_reserva) {
+	public void setTotal_reserva(float total_reserva) {
 		this.total_reserva = total_reserva;
 	}
 

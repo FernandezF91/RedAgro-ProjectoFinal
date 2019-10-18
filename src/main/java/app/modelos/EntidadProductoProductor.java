@@ -60,7 +60,7 @@ public class EntidadProductoProductor {
 	private String contenido;
 
 	@Column(name = "precio", nullable = false)
-	private int precio;
+	private float precio;
 
 	@Column(name = "tiempo_preparacion", nullable = false)
 	private int tiempo_preparacion;
@@ -121,11 +121,11 @@ public class EntidadProductoProductor {
 		this.fecha_vencimiento = fecha_vencimiento;
 	}
 
-	public int getPrecio() {
+	public float getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(int precio) {
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
 
@@ -172,5 +172,4 @@ public class EntidadProductoProductor {
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
 	}
-
 }

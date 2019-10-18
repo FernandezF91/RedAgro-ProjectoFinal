@@ -36,7 +36,7 @@ public class EntidadDetalleReserva{
 	private Boolean activo;
 	
 	@Column(name = "precio_por_unidad", nullable = false)
-	private int precio_por_unidad;
+	private float precio_por_unidad;
 
 	public long getId_reserva() {
 		return id_reserva;
@@ -58,7 +58,7 @@ public class EntidadDetalleReserva{
 		return id_producto;
 	}
 
-	public int getPrecio_por_unidad() {
+	public float getPrecio_por_unidad() {
 		return precio_por_unidad;
 	}
 	
@@ -90,7 +90,7 @@ public class EntidadDetalleReserva{
 		this.activo = activo;
 	}
 	
-	public void setPrecio_por_unidad(int precio_por_unidad) {
+	public void setPrecio_por_unidad(float precio_por_unidad) {
 		this.precio_por_unidad = precio_por_unidad;
 	}
 }
