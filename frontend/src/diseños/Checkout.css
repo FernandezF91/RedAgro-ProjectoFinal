@@ -25,7 +25,6 @@
     align-content: center;
     margin-top: 30px;
     margin-bottom: 30px;
-    
 }
 
 .radioButtonsCheckout .radio {
@@ -36,8 +35,10 @@
 .resumenReserva {
     margin-top: 30px;
     margin-bottom: 30px;
-    margin-left: 5px !important;
-    margin-right: 5px !important;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    column-count: 2 !important;
+    column-gap: 3.25rem !important;
 }
 
 .unidadMedida{
@@ -71,10 +72,16 @@
     align-content: center;
 }
 
-.footerEstilo {
-    margin-bottom: 0px;
+.cardHeader{
+    font-weight: 500;
 }
 
-.cardHeader{
-    
+.cardFooter{
+    font-weight: 600;
+    font-size: large;
+}
+
+.cardColumns{
+    margin-right: 10px;
+    margin-left: 10px;
 }

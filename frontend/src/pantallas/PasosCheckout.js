@@ -1,8 +1,9 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import CardDeck from 'react-bootstrap/CardDeck';
+import CardColumns from 'react-bootstrap/CardColumns';
 import ListGroup from 'react-bootstrap/ListGroup';
 import NumberFormat from 'react-number-format';
+import Image from 'react-bootstrap/Image';
 import { Form, Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
 import '../diseños/Checkout.css'
@@ -83,7 +84,6 @@ const PasosCheckout = (props) => {
                                         onChange={props.handleDatosPersonales}
                                     />
                             }
-
                         </Form.Group>
                     </div>
 
@@ -118,8 +118,10 @@ const PasosCheckout = (props) => {
                         (props.selectedRadioButtonRetiro === "radio1") ?
                             <div className="opcionesCheckout">
                                 <label>
-                                    Comunicate con el productor para coordinar la fecha y punto de entrega que más te convenga.
-                            </label>
+                                    Comunicate con el productor para coordinar la fecha y
+                                    <br />
+                                    el punto de entrega que más te convenga.
+                                </label>
                             </div>
                             : <br />
                     }
@@ -159,84 +161,92 @@ const PasosCheckout = (props) => {
             );
         case 2:
             return (
-                <CardDeck className="resumenReserva">
-                    <Card>
-                        <Card.Header as="h6">Datos para el retiro</Card.Header>
-                        <Card.Body>
-                            Retira {props.datosReserva.persona_retiro},
+                <div className="cardColumns">
+                    <CardColumns className="resumenReserva">
+                        <Card border="light" className="cardDatosPersonales">
+                            <Card.Header className="cardHeader"><i className="fas fa-store" /> Datos para el retiro</Card.Header>
+                            <Card.Body>
+                                Retira {props.datosReserva.persona_retiro},
                             <br />
-                            {
-                                props.datosReserva.forma_retiro === "Acuerda con Productor" ?
-                                    <p>{props.datosReserva.forma_retiro}</p>
-                                    :
-                                    <p>
-                                        Por el punto de entrega elegido:
+                                {
+                                    props.datosReserva.forma_retiro === "Acuerda con Productor" ?
+                                        <p>Acordás el punto de entrega y la fecha con el productor</p>
+                                        :
+                                        <p>
+                                            Por el punto de entrega elegido:
                                         <br />
-                                        {props.seleccionado.puntoEntrega[0].label}
+                                            {props.seleccionado.puntoEntrega[0].label}
+                                            <br />
+                                            A partir del dia {props.seleccionado.fechaEntrega[0].label}.
                                         <br />
-                                        A partir del dia {props.seleccionado.fechaEntrega[0].label}.
-                                        <br />
-                                        Horario de Atención: entre las {props.datosReserva.horario} hs.
+                                            Horario de Atención: desde las {props.datosReserva.horario} hs.
                                     </p>
-                            }
-                        </Card.Body>
-                    </Card>
+                                }
+                            </Card.Body>
+                        </Card>
 
-                    <Card>
-                        <Card.Header as="h6">Productos seleccionados</Card.Header>
-                        <ListGroup>
-                            {
-                                props.productosSeleccionados.map(item => (
-                                    <ListGroup.Item key={item.id}>
-                                        <Row>
-                                            <Col>
-                                                {item.titulo}
-                                            </Col>
-                                            {
-                                                item.cantidad > 1 ?
-                                                    <Col>
-                                                        {item.cantidad}
-                                                        {
-                                                            item.tipoDeUnidad === "Bolsón" ?
-                                                                <span className="unidadMedida">{" Bolsones"}</span>
-                                                                :
-                                                                <span className="unidadMedida">{" " + item.tipoDeUnidad + "s"}</span>
-                                                        }
-                                                    </Col>
-                                                    :
-                                                    <Col>
-                                                        {item.cantidad}
-                                                        <span className="unidadMedida">{" " + item.tipoDeUnidad}</span>
-                                                    </Col>
-                                            }
-                                            <Col>
-                                                <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
-                                                <span style={{ color: 'gray', fontSize: '12px' }}> por c/u</span>
-                                            </Col>
-                                        </Row>
-                                    </ListGroup.Item>
-                                ))
-                            }
-                        </ListGroup>
-                        <Card.Footer as="h6" className="footerEstilo">
-                            <strong>
-                                Total
-                                <NumberFormat
-                                    value={props.getTotalReserva(props.productosSeleccionados)}
-                                    displayType={'text'}
-                                    thousandSeparator={"."}
-                                    decimalSeparator={","}
-                                    prefix=" $ "
-                                    decimalScale={2}
-                                    fixedDecimalScale={true} />
-                            </strong>
-                        </Card.Footer>
-                    </Card>
-                </CardDeck>
+                        <Card border="light">
+                            <Card.Header className="cardHeader"><i class="fas fa-shopping-basket" /> Productos seleccionados</Card.Header>
+                            <ListGroup>
+                                {
+                                    props.productosSeleccionados.map(item => (
+                                        <ListGroup.Item key={item.id}>
+                                            <Row>
+                                                <Col>
+                                                    <Image
+                                                        roundedCircle
+                                                        alt={item.titulo}
+                                                        src={"data:" + item.imagenes[0].tipo_contenido + ";base64," + item.imagenes[0].image}
+                                                        mode='fit'
+                                                        height="40px" width="auto" />
+                                                </Col>
+                                                <Col>
+                                                    {item.titulo}
+                                                </Col>
+                                                {
+                                                    item.cantidad > 1 ?
+                                                        <Col>
+                                                            {item.cantidad}
+                                                            {
+                                                                item.tipoDeUnidad === "Bolsón" ?
+                                                                    <span className="unidadMedida">{" Bolsones"}</span>
+                                                                    :
+                                                                    <span className="unidadMedida">{" " + item.tipoDeUnidad + "s"}</span>
+                                                            }
+                                                        </Col>
+                                                        :
+                                                        <Col>
+                                                            {item.cantidad}
+                                                            <span className="unidadMedida">{" " + item.tipoDeUnidad}</span>
+                                                        </Col>
+                                                }
+                                                <Col>
+                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                    <span style={{ color: 'gray', fontSize: '12px' }}> por c/u</span>
+                                                </Col>
+                                            </Row>
+                                        </ListGroup.Item>
+                                    ))
+                                }
+                                <ListGroup.Item key="footer" className="cardFooter">
+                                    Total
+                                        <NumberFormat
+                                        value={props.getTotalReserva(props.productosSeleccionados)}
+                                        displayType={'text'}
+                                        thousandSeparator={"."}
+                                        decimalSeparator={","}
+                                        prefix=" $ "
+                                        decimalScale={2}
+                                        fixedDecimalScale={true} />
+                                </ListGroup.Item>
+                            </ListGroup>
+                        </Card>
+                    </CardColumns>
+                </div>
+
             );
         default:
             return 'Error';
     }
-
 }
 export default PasosCheckout
