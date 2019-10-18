@@ -4,6 +4,8 @@ import 'moment/locale/es';
 import { DatePickerInput } from 'rc-datepicker';
 import 'rc-datepicker/lib/style.css';
 import Select from 'react-select';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Loader from 'react-loader-spinner';
 
 import '../diseños/nuevoProducto.css';
 import '../diseños/estilosGlobales.css';
@@ -20,6 +22,11 @@ import FilePondTypeValidate from "filepond-plugin-file-validate-type";
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'; import { isDate } from 'moment';
 
 const minDate = new Date();
+
+const regularExp = {
+    numerosDecimales: /^[0-9]*(\,[0-9]{0,2})?$/
+}
+
 registerPlugin(FilePondPluginImagePreview, FilePondTypeValidate);
 
 const categorias = [
@@ -62,8 +69,9 @@ class NuevoProducto extends Component {
             valueUnidadVenta: [],
             disabled: false,
             disabled2: false,
-
-            id: this.props.id_productor
+            id: this.props.id_productor,
+            loading: false,
+            showModal: false,
         }
 
         this.featurePond = React.createRef();
@@ -71,6 +79,13 @@ class NuevoProducto extends Component {
         this.obtenerTiposProducto = this.obtenerTiposProducto.bind(this);
         this.validarCampos = this.validarCampos.bind(this);
         this.subirArchivos = this.subirArchivos.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
+    }
+
+    cerrarModal() {
+        this.setState({
+            showModal: false
+        })
     }
 
     detectarCambios(e) {
@@ -87,7 +102,9 @@ class NuevoProducto extends Component {
 
     validarCampos() {
         if ((!this.state.campos["categoria"]) || (!this.state.campos["tipo_produccion"]) || (!this.state.campos["unidad_venta"])
-            || (!this.state.campos["stock"]) || (!this.state.campos["precio"]) || (!this.state.campos["contenido"] ? false : this.state.campos["contenido"].length > 20)
+            || (!this.state.campos["stock"]) || (!this.state.campos["precio"]) || (!regularExp.numerosDecimales.test(this.state.campos["precio"]))
+            || (!isNaN((this.state.campos["precio"])) && (!this.state.campos["precio"]) < 1)
+            || (!this.state.campos["contenido"] ? false : this.state.campos["contenido"].length > 20)
             || (this.state.campos["categoria"] !== "Variado" ? !this.state.campos["tipo_producto"] : false)
             || ((!this.state.campos["descripcion"]) || (this.state.campos["descripcion"].length > 255))
             || ((!this.state.campos["titulo"]) || (this.state.campos["titulo"].length > 100)) || (this.state.files.length === 0) ||
@@ -104,7 +121,12 @@ class NuevoProducto extends Component {
     }
 
     closeModalSeguirCargando() {
-        this.setState({ visibleOk: false, formOk: false, disabled: false, disabled2: false })
+        this.setState({
+            visibleOk: false,
+            formOk: false,
+            disabled: false,
+            disabled2: false
+        });
         this.limpiarCampos();
     }
 
@@ -120,6 +142,9 @@ class NuevoProducto extends Component {
 
     handleSubmit(e) {
         var _this = this;
+        _this.setState({
+            loading: true
+        });
         e.preventDefault();
 
         if (_this.validarCampos()) {
@@ -137,11 +162,10 @@ class NuevoProducto extends Component {
                     'Content-type': 'application/json;charset=UTF-8',
                 },
                 body: JSON.stringify({
-
                     "titulo": this.state.campos["titulo"],
                     "descripcion": this.state.campos["descripcion"],
                     "fecha_vencimiento": this.state.campos["fecha_ven"],
-                    "precio": this.state.campos["precio"],
+                    "precio": this.state.campos["precio"].replace(",", "."),
                     "stock": this.state.campos["stock"],
                     "unidad_venta": this.state.campos["unidad_venta"],
                     "tiempo_preparacion": this.state.campos["tiempo_preparacion"],
@@ -155,15 +179,19 @@ class NuevoProducto extends Component {
                         _this.setState({
                             visible: true,
                             titulo: "Error",
-                            mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                            mensaje: "Ocurrió algún error inesperado. Intenta nuevamente",
+                            loading: false
                         });
                         return;
                     }
                     response.json().then(
                         function (response) {
                             _this.subirArchivos(response);
+                            _this.setState({
+                                loading: false
+                            })
                         });
-
+                    
                     _this.mostrarMensajeOk();
                 });
         }
@@ -237,27 +265,40 @@ class NuevoProducto extends Component {
     cambiosSelectTprod(opt, a, value) {
         let campos = this.state.campos;
         campos[a.name] = opt.label;
-        this.setState({ campos, valueTprod: value })
+        this.setState({
+            campos,
+            valueTprod: value
+        })
     }
 
     cambiosSelectUnidadV(opt, a, value) {
         let campos = this.state.campos;
         campos[a.name] = opt.label;
 
-        this.setState({ campos, valueUnidadVenta: value, disabled2: false })
+        this.setState({
+            campos,
+            valueUnidadVenta: value,
+            disabled2: false
+        })
 
         if (this.state.campos["unidad_venta"] === "Kilogramo") {
 
-            this.setState({ disabled2: true });
+            this.setState({
+                disabled2: true
+            });
 
         }
     }
 
     cambiosSelectTipoProducto(opt, a, value) {
-        this.setState({ valueTp: value });
+        this.setState({
+            valueTp: value
+        });
         let campos = this.state.campos;
         campos[a.name] = opt.value;
-        this.setState({ campos })
+        this.setState({
+            campos
+        })
     }
 
     cambiosSelectCategoria(opt, a, value) {
@@ -322,11 +363,23 @@ class NuevoProducto extends Component {
     mostrarPantallaPrincipal() {
         this.props.history.push({
             pathname: '/principalProductores/MiCuenta',
-            state: { id: this.state.id }
+            state: {
+                id: this.state.id
+            }
         })
     }
 
     render() {
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
+
         return (
             <div className="container">
                 <div className="titulosPrincipales">Nuevo producto</div>
@@ -454,13 +507,18 @@ class NuevoProducto extends Component {
                             <Form.Label column sm={4}>
                                 *Precio (por unidad de venta)
                                 </Form.Label>
-                            <Form.Control
-                                value={this.state.campos["precio"]}
-                                type="number"
-                                min="1"
-                                name="precio"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
+                            <InputGroup className="estiloCampoPrecio">
+                                <InputGroup.Prepend>
+                                    <InputGroup.Text className="iconoPrecio sinBorde">$</InputGroup.Text>
+                                </InputGroup.Prepend>
+                                <Form.Control
+                                    value={this.state.campos["precio"]}
+                                    type="text"
+                                    name="precio"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="campoSinBordeNumeros"
+                                />
+                            </InputGroup>
                         </Form.Group>
                     </div>
                     <div className="tiempo_preparacion">
