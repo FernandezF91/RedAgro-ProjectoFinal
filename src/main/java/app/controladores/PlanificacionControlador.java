@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.clases.Planificador;
-//import smile.*;
+import smile.*;
 
 @RestController
 
 public class PlanificacionControlador {
 	
-//	@CrossOrigin(origins = "http://localhost:3000")
-//	@GetMapping(path = "redAgro/obtenerResultados")
-//	public List<String> obtenerPlanificacion(@RequestParam String periodo, @RequestParam String provincia){
-//		
-//		List<String> lista = new ArrayList<String>();
-//		Planificador p = new Planificador(periodo, provincia);
-//		
-//				lista = p.obtenerResultados();
-//		
-//		return lista;
-//	}
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/obtenerResultados")
+	public List<String> obtenerPlanificacion(@RequestParam String periodo, @RequestParam String provincia){
+		
+		List<String> lista = new ArrayList<String>();
+		Planificador p = new Planificador(periodo, provincia);
+		
+				lista = p.obtenerResultados();
+		
+		return lista;
+	}
 }
 
