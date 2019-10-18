@@ -123,14 +123,15 @@ class ListadoReservas extends Component {
                 <td id="estado">
                     {(item.estado === "Finalizado") ?
                         (tipoUsuario === "Consumidor") ?
-                            <i className="far fa-star iconosTabla" title="Calificar reserva" onClick={actualizacionEstado} key={"row-data-" + item.id} />
+                            <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas finalizadas" />
+                            /*    <i className="far fa-star iconosTabla" title="Calificar reserva" onClick={actualizacionEstado} key={"row-data-" + item.id} />
+                               :
+                               <i className="fas fa-star iconosTabla" title="Ver calificación" onClick={actualizacionEstado} key={"row-data-" + item.id} /> */
                             :
-                            <i className="fas fa-star iconosTabla" title="Ver calificación" onClick={actualizacionEstado} key={"row-data-" + item.id} />
-                        :
-                        (item.estado === "Cancelado") ?
-                            <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas canceladas" />
-                            :
-                            <i className="fas fa-edit iconosTabla cursorManito" title="Actualizar el estado" onClick={actualizacionEstado} key={"row-data-" + item.id} />
+                            (item.estado === "Cancelado") ?
+                                <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas canceladas" />
+                                :
+                                <i className="fas fa-edit iconosTabla cursorManito" title="Actualizar el estado" onClick={actualizacionEstado} key={"row-data-" + item.id} />
 
                     }
                 </td>
@@ -277,7 +278,7 @@ class ListadoReservas extends Component {
             listadoFiltradoEstados: this.state.listadoEstados.filter((estado) => {
                 if (estado.value >= est.value) {
                     if (this.props.rolUsuario === "Consumidor" && estado.value <= 3) {
-                            return;
+                        return;
                     } else {
                         if (estado.label === "Cancelado" && ((diff <= 2 && this.props.rolUsuario === "Consumidor") || (diff <= 1 && this.props.rolUsuario === "Productor"))) {
                             return;
