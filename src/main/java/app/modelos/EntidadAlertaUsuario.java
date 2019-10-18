@@ -5,8 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,20 +16,17 @@ public class EntidadAlertaUsuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToOne
-	@MapsId("id")
-	@JoinColumn(name = "usuario_id")
-	EntidadUsuario usuario;
+	@OneToOne
+	@JoinColumn(name = "usuario_id", nullable = false)
+	private EntidadUsuario usuario;
 
-	@ManyToOne
-	@MapsId("id")
-	@JoinColumn(name = "alerta_id")
-	EntidadAlerta alerta;
+	@OneToOne
+	@JoinColumn(name = "alerta_id", nullable = false)
+	private EntidadAlerta alerta;
 	
-	@ManyToOne
-	@MapsId("id")
-	@JoinColumn(name = "frecuencia_id")
-	EntidadAlertaFrecuencia alertaFrecuencia;
+	@OneToOne
+	@JoinColumn(name = "frecuencia_id", nullable = false)
+	private EntidadAlertaFrecuencia alertaFrecuencia;
 
 	public long getId() {
 		return id;

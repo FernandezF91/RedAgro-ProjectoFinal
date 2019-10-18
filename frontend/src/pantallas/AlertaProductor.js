@@ -11,11 +11,13 @@ class AlertaProductor extends Component {
 
         this.state = {
             id: this.props.id_productor,
-            alertas: [],
             selectedRadioOptionNuevas: "",
             disabledNuevas: true,
+            checkNuevas: false,
             selectedRadioOptionActualizacion: "",
             disabledActualizacion: true,
+            checkActualizacion: false,
+            mensaje: "",
             resultadoRequest: 0,
             showModal: false,
             loading: true
@@ -26,6 +28,7 @@ class AlertaProductor extends Component {
         this.handleCheckChangeActualizacion = this.handleCheckChangeActualizacion.bind(this);
         this.handleRadioChangeActualizacion = this.handleRadioChangeActualizacion.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
     }
 
     componentDidMount() {
@@ -75,14 +78,22 @@ class AlertaProductor extends Component {
         })
     }
 
+    cerrarModal() {
+        this.setState({
+            showModal: false
+        })
+    }
+
     handleCheckChangeNuevas(e) {
         if (e.target.checked === true) {
             this.setState({
+                checkNuevas: true,
                 disabledNuevas: false,
                 selectedRadioOptionNuevas: "En el momento"
             });
         } else {
             this.setState({
+                checkNuevas: false,
                 disabledNuevas: true,
                 selectedRadioOptionNuevas: ""
             });
@@ -98,11 +109,13 @@ class AlertaProductor extends Component {
     handleCheckChangeActualizacion(e) {
         if (e.target.checked === true) {
             this.setState({
+                checkActualizacion: true,
                 disabledActualizacion: false,
                 selectedRadioOptionActualizacion: "En el momento"
             });
         } else {
             this.setState({
+                checkActualizacion: false,
                 disabledActualizacion: true,
                 selectedRadioOptionActualizacion: ""
             });
@@ -115,15 +128,68 @@ class AlertaProductor extends Component {
         });
     };
 
+    generarListadoAlertas(configuraciones) {
+        if (this.state.checkNuevas) {
+            configuraciones.push({
+                alertaNombre: "Nuevas reservas",
+                frecuencia: this.state.selectedRadioOptionNuevas
+            });
+        }
+        if (this.state.checkActualizacion) {
+            configuraciones.push({
+                alertaNombre: "Actualización de reservas",
+                frecuencia: this.state.selectedRadioOptionActualizacion
+            });
+        }
+        return configuraciones;
+    }
+
     handleFormSubmit = formSubmitEvent => {
         formSubmitEvent.preventDefault();
-        console.log(this.state.selectedRadioOption);
-        console.log(this.state.checkNuevas);
-        console.log(this.state.checkActualizacion);
+        var _this = this;
+        var configuraciones = [];
+        configuraciones = _this.generarListadoAlertas(configuraciones);
+
+        this.setState({
+            loading: true
+        })
+
+        var path = "http://localhost:3000/redAgro/guardarConfiguracionAlertas?id_usuario=" + this.state.id;
+        fetch(path, {
+            method: "POST",
+            headers: { 'Content-type': 'application/json;charset=UTF-8' },
+            body: JSON.stringify(configuraciones)
+        })
+            .then(function (response) {
+                if (response.status !== 504 ) {
+                    response.text().then(
+                        function (response) {
+                            _this.setState({
+                                loading: false,
+                                showModal: true,
+                                mensaje: response
+                            })
+                        }
+                    )
+                    _this.setState({
+                        resultadoRequest: response.status,
+                        loading: false
+                    });
+                    return;
+                } else {
+                    _this.setState({
+                        mensaje: "Ocurrió un error al guardar las alertas. Por favor, reintentá en unos minutos.",
+                        resultadoRequest: response.status,
+                        showModal: true,
+                        loading: false
+                    });
+                    return;
+                }
+                
+            })
     };
 
     cargoAlerta(item) {
-        console.log(item.alerta);
         if (item.alerta === "Nuevas reservas") {
             this.setState({
                 checkNuevas: true,
@@ -273,15 +339,14 @@ class AlertaProductor extends Component {
                                             <i className="fas fa-check-circle iconoModalOk" />
                                             <br />
                                             <br />
-                                            <h5>Se aplicaron los cambios!</h5>
+                                            <h5>{this.state.mensaje}</h5>
                                         </div>
                                     ) : (
                                         <div>
                                             <i className="fas fa-exclamation-circle iconoModalError" />
                                             <br />
                                             <br />
-                                            <h5>Ups! Ocurrio un error! </h5>
-                                            <h6>Por favor, intenta nuevamente</h6>
+                                            <h5>{this.state.mensaje}</h5>
                                         </div>
                                     )
                                 }

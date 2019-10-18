@@ -13,12 +13,17 @@ class AlertaConsumidor extends Component {
             id: this.props.id_consumidor,
             selectedRadioOptionModificacion: "",
             disabledModificacion: true,
+            checkModificacion: false,
             selectedRadioOptionProducto: "",
             disabledProducto: true,
+            checkProductos: false,
             selectedRadioOptionResumen: "",
             disabledResumen: true,
+            checkResumen: false,
             selectedRadioOptionCambio: "",
             disabledCambio: true,
+            checkCambio: false,
+            mensaje: "",
             resultadoRequest: 0,
             showModal: false,
             loading: true,
@@ -33,11 +38,12 @@ class AlertaConsumidor extends Component {
         this.handleCheckChangeCambio = this.handleCheckChangeCambio.bind(this);
         this.handleRadioChangeCambio = this.handleRadioChangeCambio.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
     }
 
     componentDidMount() {
         var _this = this;
-        var path = "http://localhost:3000/redAgro/obtenerConfiguracionAlertas?id_usuario=" + this.state.id_consumidor;
+        var path = "http://localhost:3000/redAgro/obtenerConfiguracionAlertas?id_usuario=" + this.state.id;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => {
@@ -82,14 +88,22 @@ class AlertaConsumidor extends Component {
         })
     }
 
+    cerrarModal() {
+        this.setState({
+            showModal: false
+        })
+    }
+
     handleCheckChangeModificacion(e) {
         if (e.target.checked === true) {
             this.setState({
+                checkModificacion: true,
                 disabledModificacion: false,
                 selectedRadioOptionModificacion: "En el momento"
             });
         } else {
             this.setState({
+                checkModificacion: false,
                 disabledModificacion: true,
                 selectedRadioOptionModificacion: ""
             });
@@ -106,11 +120,13 @@ class AlertaConsumidor extends Component {
     handleCheckChangeProducto(e) {
         if (e.target.checked === true) {
             this.setState({
+                checkProductos: true,
                 disabledProducto: false,
                 selectedRadioOptionProducto: "En el momento"
             });
         } else {
             this.setState({
+                checkProductos: false,
                 disabledProducto: true,
                 selectedRadioOptionProducto: ""
             });
@@ -127,11 +143,13 @@ class AlertaConsumidor extends Component {
     handleCheckChangeResumen(e) {
         if (e.target.checked === true) {
             this.setState({
+                checkResumen: true,
                 disabledResumen: false,
                 selectedRadioOptionResumen: "En el momento"
             });
         } else {
             this.setState({
+                checkResumen: false,
                 disabledResumen: true,
                 selectedRadioOptionResumen: ""
             });
@@ -148,11 +166,13 @@ class AlertaConsumidor extends Component {
     handleCheckChangeCambio(e) {
         if (e.target.checked === true) {
             this.setState({
+                checkCambio: true,
                 disabledCambio: false,
                 selectedRadioOptionCambio: "En el momento"
             });
         } else {
             this.setState({
+                checkCambio: false,
                 disabledCambio: true,
                 selectedRadioOptionCambio: ""
             });
@@ -166,9 +186,76 @@ class AlertaConsumidor extends Component {
         });
     };
 
+    generarListadoAlertas(configuraciones) {
+        if (this.state.checkModificacion) {
+            configuraciones.push({
+                alertaNombre: "Modificaciones en reservas realizadas",
+                frecuencia: this.state.selectedRadioOptionModificacion
+            });
+        }
+        if (this.state.checkProductos) {
+            configuraciones.push({
+                alertaNombre: "Productos de interés",
+                frecuencia: this.state.selectedRadioOptionProducto
+            });
+        }
+        if (this.state.checkResumen) {
+            configuraciones.push({
+                alertaNombre: "Resumen de reservas vía correo electrónico",
+                frecuencia: this.state.selectedRadioOptionResumen
+            });
+        }
+        if (this.state.checkCambio) {
+            configuraciones.push({
+                alertaNombre: "Cambio de estado en una reserva vía correo electrónico",
+                frecuencia: this.state.selectedRadioOptionCambio
+            });
+        }
+        return configuraciones;
+    }
+
     handleFormSubmit = formSubmitEvent => {
         formSubmitEvent.preventDefault();
-        //  Chequear como lo guardo
+        var _this = this;
+        var configuraciones = [];
+        configuraciones = _this.generarListadoAlertas(configuraciones);
+
+        this.setState({
+            loading: true
+        })
+
+        var path = "http://localhost:3000/redAgro/guardarConfiguracionAlertas?id_usuario=" + this.state.id;
+        fetch(path, {
+            method: "POST",
+            headers: { 'Content-type': 'application/json;charset=UTF-8' },
+            body: JSON.stringify(configuraciones)
+        })
+            .then(function (response) {
+                if (response.status !== 504) {
+                    response.text().then(
+                        function (response) {
+                            _this.setState({
+                                loading: false,
+                                showModal: true,
+                                mensaje: response
+                            })
+                        }
+                    )
+                    _this.setState({
+                        resultadoRequest: response.status,
+                        loading: false
+                    });
+                    return;
+                } else {
+                    _this.setState({
+                        mensaje: "Ocurrió un error al guardar las alertas. Por favor, reintentá en unos minutos.",
+                        resultadoRequest: response.status,
+                        showModal: true,
+                        loading: false
+                    });
+                    return;
+                }
+            })
     };
 
     cargoAlerta(item) {
@@ -437,15 +524,14 @@ class AlertaConsumidor extends Component {
                                             <i className="fas fa-check-circle iconoModalOk" />
                                             <br />
                                             <br />
-                                            <h5>Se aplicaron los cambios!</h5>
+                                            <h5>{this.state.mensaje}</h5>
                                         </div>
                                     ) : (
                                         <div>
                                             <i className="fas fa-exclamation-circle iconoModalError" />
                                             <br />
                                             <br />
-                                            <h5>Ups! Ocurrio un error! </h5>
-                                            <h6>Por favor, intenta nuevamente</h6>
+                                            <h5>{this.state.mensaje}</h5>
                                         </div>
                                     )
                                 }

@@ -1,14 +1,10 @@
 package app.modelos;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -22,23 +18,12 @@ public class EntidadAlerta {
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
 
-	@OneToMany(mappedBy = "alerta")
-	private List<EntidadAlertaUsuario> alertas_usuario = new ArrayList<>();
-
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
-	}
-
-	public List<EntidadAlertaUsuario> getAlertas_usuario() {
-		return alertas_usuario;
-	}
-
-	public void setAlertas_usuario(List<EntidadAlertaUsuario> alertas_usuario) {
-		this.alertas_usuario = alertas_usuario;
 	}
 
 	public String getNombre() {

@@ -103,7 +103,7 @@ class NuevoProducto extends Component {
     validarCampos() {
         if ((!this.state.campos["categoria"]) || (!this.state.campos["tipo_produccion"]) || (!this.state.campos["unidad_venta"])
             || (!this.state.campos["stock"]) || (!this.state.campos["precio"]) || (!regularExp.numerosDecimales.test(this.state.campos["precio"]))
-            || (!isNaN((this.state.campos["precio"])) && (!this.state.campos["precio"]) < 1)
+            || (!isNaN((this.state.campos["precio"])) && (this.state.campos["precio"]) < 1)
             || (!this.state.campos["contenido"] ? false : this.state.campos["contenido"].length > 20)
             || (this.state.campos["categoria"] !== "Variado" ? !this.state.campos["tipo_producto"] : false)
             || ((!this.state.campos["descripcion"]) || (this.state.campos["descripcion"].length > 255))
@@ -113,7 +113,8 @@ class NuevoProducto extends Component {
             this.setState({
                 visible: true,
                 titulo: "Error",
-                mensaje: "Campos incompletos o incorrectos"
+                mensaje: "Campos incompletos o incorrectos",
+                loading: false
             });
             return false;
         }
@@ -191,7 +192,7 @@ class NuevoProducto extends Component {
                                 loading: false
                             })
                         });
-                    
+
                     _this.mostrarMensajeOk();
                 });
         }
@@ -385,7 +386,7 @@ class NuevoProducto extends Component {
                 <div className="titulosPrincipales">Nuevo producto</div>
                 <div className="condicionesInputsCO">(*) Campos obligatorios</div>
                 <Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
-                    <div className="titulo" >
+                    <div className="titulo">
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>*Título</Form.Label>
                             <Form.Control
@@ -393,6 +394,7 @@ class NuevoProducto extends Component {
                                 type="titulo"
                                 name="titulo"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className={this.state.campos["titulo"] !== "prueba" ? "borderRed" : ""}
                             />
                         </Form.Group>
                         <div className="condicionesInputs">(*) 100 caracteres como máximo</div>
