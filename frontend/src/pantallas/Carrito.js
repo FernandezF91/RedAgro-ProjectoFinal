@@ -185,7 +185,7 @@ class Carrito extends Component {
     validarItemsCarrito = () => {
         var chequeoStock = false;
 
-        this.props.productosSeleccionados.map(item => {
+        this.props.productosSeleccionados.forEach(item => {
             if (item.cantidad > item.stock) {
                 chequeoStock = true;
             }
