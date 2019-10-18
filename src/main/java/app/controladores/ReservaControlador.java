@@ -1,6 +1,7 @@
 package app.controladores;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -230,9 +231,22 @@ public class ReservaControlador {
 	public ResponseEntity<String> actualizarEstadoReserva(@RequestParam long id_reserva, @RequestParam long id_estado) {
 		try {
 			reservaDao.actualizarEstadoReserva(id_reserva, id_estado);
+			if (id_estado == 5) {
+				List<EntidadDetalleReserva> detalles = detalleReservaDao.obtenerDetalleReserva(id_reserva);
+
+				Date today = new Date();
+				for (EntidadDetalleReserva item : detalles) {
+					if (item.getProducto().getFecha_vencimiento() == null
+							|| (item.getProducto().getFecha_vencimiento() != null
+									&& today.before(item.getProducto().getFecha_vencimiento()))) {
+						int nuevoStock = item.getCantidad() + item.getProducto().getStock();
+						productoProductorDao.actualizarStockProducto(item.getId_producto(), nuevoStock);
+					}
+				}
+			}
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrió un error al crear tu reserva. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al actualizar tu reserva. Reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

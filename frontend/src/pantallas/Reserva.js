@@ -38,11 +38,11 @@ const columnasConsumidor = [
 	},
 	{
 		label: '',
-		field: 'Ver mensajes',
+		field: 'Editar',
 	},
 	{
 		label: '',
-		field: 'Editar',
+		field: 'Ver mensajes',
 	}
 ];
 
@@ -81,11 +81,11 @@ const columnasProductor = [
 	},
 	{
 		label: '',
-		field: 'Ver mensajes',
+		field: 'Editar',
 	},
 	{
 		label: '',
-		field: 'Editar',
+		field: 'Ver mensajes',
 	}
 ];
 

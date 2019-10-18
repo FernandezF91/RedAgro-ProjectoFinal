@@ -33,7 +33,7 @@ public interface ProductoProductorDao extends JpaRepository<EntidadProductoProdu
 	@Query(value = "SELECT p.* FROM Producto_Productor p JOIN Producto po ON p.producto_id = po.id "
 			+ "WHERE po.tipo=:tipo_categoria", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductosTipo(@Param("tipo_categoria") String busqueda);
-	
+
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE Producto_Productor P SET P.stock = ?2 WHERE P.id =?1", nativeQuery = true)
