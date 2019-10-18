@@ -287,6 +287,14 @@ class Checkout extends Component {
                 if ((!this.state.datosPersonaRetiro.nombre) || (!this.state.datosPersonaRetiro.apellido) ||
                     (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.nombre)) || (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.apellido))) {
                     return false;
+                } else {
+                    //Actualizo los datos de la persona que retira
+                    this.setState({
+                        datosReserva: {
+                            ...this.state.datosReserva,
+                            persona_retiro: this.state.datosPersonaRetiro.nombre + " " + this.state.datosPersonaRetiro.apellido,
+                        }
+                    })
                 }
             }
             case 1: {
@@ -446,7 +454,7 @@ class Checkout extends Component {
                 <h2>¡Felicitaciones! </h2>
                 <h3>Tu reserva ha sido confirmada</h3>
                 <br />
-                <i className="fas fa-shopping-basket iconoGrande"/>
+                <i className="fas fa-shopping-basket iconoGrande" />
                 <br />
                 <br />
                 <h5>Para conocer su estado, hacá click <Link to={'/principalConsumidores/ListadoReservas'}>acá</Link></h5>
