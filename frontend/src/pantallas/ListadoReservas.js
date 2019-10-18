@@ -80,6 +80,7 @@ class ListadoReservas extends Component {
         const clickCallback = () => this.handleRowClick(item.id);
         const actualizacionEstado = () => this.abrirModalEstado(item.id, item.fechaDateTime, item.estado);
         var tipoUsuario = this.props.rolUsuario;
+
         const itemRows = [
             <tr key={"row-data-" + item.id}>
                 <td>{item.id}</td>
@@ -120,12 +121,17 @@ class ListadoReservas extends Component {
                     <i className="far fa-eye iconosTabla cursorManito" title="Ver detalle reserva" onClick={clickCallback} key={"row-data-" + item.id} />
                 </td>
                 <td id="estado">
-                    {(item.estado === "Finalizado") || (item.estado === "Cancelado") ?
-                        //TODO: ver como habilitar para el consumidor
-                        //no se puede editar el estado. Se deshabilita
-                        <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas terminadas" />
+                    {(item.estado === "Finalizado") ?
+                        (tipoUsuario === "Consumidor") ?
+                            <i className="far fa-star iconosTabla" title="Calificar reserva" onClick={actualizacionEstado} key={"row-data-" + item.id} />
+                            :
+                            <i className="fas fa-star iconosTabla" title="Ver calificación" onClick={actualizacionEstado} key={"row-data-" + item.id} />
                         :
-                        <i className="fas fa-edit iconosTabla cursorManito" title="Actualizar el estado" onClick={actualizacionEstado} key={"row-data-" + item.id} />
+                        (item.estado === "Cancelado") ?
+                            <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas canceladas" />
+                            :
+                            <i className="fas fa-edit iconosTabla cursorManito" title="Actualizar el estado" onClick={actualizacionEstado} key={"row-data-" + item.id} />
+
                     }
                 </td>
                 <td>
@@ -254,7 +260,6 @@ class ListadoReservas extends Component {
         })
             .then(function (response) {
                 _this.setState({
-                    loading: false,
                     showModal: false,
                     estadoSeleccionado: ""
                 })
@@ -265,22 +270,21 @@ class ListadoReservas extends Component {
 
     filtrarEstadosAMostrar(fecha, estadoActual) {
         fecha = moment(fecha).add(2, "days");
+        var diff = fecha.diff(moment(), "days");
 
         var est = this.encontrarEstado(estadoActual);
         this.setState({
             listadoFiltradoEstados: this.state.listadoEstados.filter((estado) => {
                 if (estado.value >= est.value) {
-                    if (this.props.rolUsuario === "Consumidor" && estado.value < 3) {
-                        return;
+                    if (this.props.rolUsuario === "Consumidor" && estado.value <= 3) {
+                            return;
                     } else {
-                        return estado;
+                        if (estado.label === "Cancelado" && ((diff <= 2 && this.props.rolUsuario === "Consumidor") || (diff <= 1 && this.props.rolUsuario === "Productor"))) {
+                            return;
+                        } else {
+                            return estado;
+                        }
                     }
-                    //TODO: Solo permitir cancelar cuando queden 1 y 2 dias dependiendo si es productor o consumidor
-                    /* if (estado.label === "Cancelado" && fecha.diff("2019-10-07", "days") >= 2) {
-                        return estado;
-                    } else {
-                        return estado;
-                    } */
                 }
             })
         })
@@ -300,6 +304,34 @@ class ListadoReservas extends Component {
         })
         this.abrirModal();
     }
+
+    /* abrirModalCalificacion = (idReserva) => {
+        var path = "http://localhost:3000/redAgro/obtenerCalificacionDeReserva?id_reserva=" + idReserva;
+        fetch(path)
+            .catch(err => console.error(err))
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 504) {
+                    console.log("Timeout");
+                } else {
+                    console.log("Otro error");
+                }
+            })
+            .then(data => {
+                if (data !== void (0)) {
+                    this.setState({
+                        listadoEstados: data.map((item) => {
+                            return {
+                                label: item.nombre,
+                                value: item.id
+                            }
+                        })
+                    })
+                }
+            })
+        this.abrirModal();
+    } */
 
     abrirModal() {
         this.setState({
