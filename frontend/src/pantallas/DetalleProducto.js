@@ -240,11 +240,11 @@ class DetalleBusqueda extends Component {
                         <h6>{this.state.producto.tipoDeProduccion}</h6>
                         </div>
                         {
-                            this.state.producto.fechaDeVencimiento !== undefined ?
+                            this.state.producto.fechaDeVencimiento !== null ?
                                 <div className="descripcionProducto">
                                     Fecha de vencimiento: <h6>{moment(this.state.producto.fechaDeVencimiento, 'YYYY-MM-DD').format("DD/MM/YYYY")}</h6>
                                 </div>
-                                : ''
+                                : ""
                         }
                         <div className="botonesDetalle">
                             <button className="iconosListado" onClick={restarProducto}
