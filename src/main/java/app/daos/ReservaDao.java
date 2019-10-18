@@ -12,10 +12,10 @@ import app.modelos.EntidadReserva;
 
 public interface ReservaDao extends JpaRepository<EntidadReserva, Long> {
 
-	@Query(value = "SELECT * FROM Reserva WHERE consumidor_id = ?1 ORDER BY fecha_creacion DESC", nativeQuery = true)
+	@Query(value = "SELECT * FROM Reserva WHERE consumidor_id = ?1 ORDER BY fecha_creacion DESC, id DESC", nativeQuery = true)
 	List<EntidadReserva> obtenerReservasByConsumidor(long id);
 
-	@Query(value = "SELECT * FROM Reserva WHERE productor_id = ?1 ORDER BY fecha_creacion DESC", nativeQuery = true)
+	@Query(value = "SELECT * FROM Reserva WHERE productor_id = ?1 ORDER BY fecha_creacion DESC, id DESC", nativeQuery = true)
 	List<EntidadReserva> obtenerReservasByProductor(long id);
 
 	@Query(value = "SELECT ER.nombre, count(r.id) AS contador FROM Reserva R JOIN Estado_Reserva ER "

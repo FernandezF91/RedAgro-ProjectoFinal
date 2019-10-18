@@ -95,7 +95,7 @@ class Checkout extends Component {
                 consumidor: { id: this.props.id_consumidor },
                 productor: { id: this.props.productosSeleccionados[0].productor.id },
                 punto_entrega: { id: '' },
-                estado_reserva: { id: 1 },
+                estado_reserva: { id: 5 },
                 total_reserva: this.getTotalReserva(this.props.productosSeleccionados),
                 persona_retiro: this.props.user.nombre + " " + this.props.user.apellido,
                 forma_retiro: "Acuerda con Productor",
@@ -371,16 +371,22 @@ class Checkout extends Component {
 
     handleRadioRetiroChange = changeEvent => {
         var forma;
+        var estado_reserva;
         if (changeEvent.target.value === "radio1") {
             forma = "Acuerda con Productor";
+            estado_reserva = 5;
         } else {
             forma = "Por punto de entrega";
+            estado_reserva = 1;
         }
         this.setState({
             selectedRadioButtonRetiro: changeEvent.target.value,
             datosReserva: {
                 ...this.state.datosReserva,
                 forma_retiro: forma,
+                estado_reserva: {
+                    id: estado_reserva,
+                }
             }
         });
     };
@@ -457,7 +463,7 @@ class Checkout extends Component {
                 <i className="fas fa-shopping-basket iconoGrande" />
                 <br />
                 <br />
-                <h5>Para conocer su estado, hacá click <Link to={'/principalConsumidores/ListadoReservas'}>acá</Link></h5>
+                <h5>Para conocer su estado, hacé click <Link to={'/principalConsumidores/ListadoReservas'}>acá</Link></h5>
             </div>
         )
 
