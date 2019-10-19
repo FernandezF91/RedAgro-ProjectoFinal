@@ -199,7 +199,7 @@ class PantallaPrincipalProductores extends Component {
                             <Route path={'/principalProductores/ListadoReservas'}
                                 render={(props) =>
                                     <ListadoReservasRouter
-                                        id_usuario={this.state.id}
+                                        usuario={this.state.user}
                                     />
                                 }
                             />
