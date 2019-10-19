@@ -1,12 +1,13 @@
 import '../diseños/Reservas.css';
 import '../diseños/estilosGlobales.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import NumberFormat from 'react-number-format';
 import Reserva from '../pantallas/Reserva';
 import DetalleReserva from '../pantallas/DetalleReserva';
 import Paginacion from './Paginacion';
+import Mensajes from '../mensajeria/Mensajes';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import NumberFormat from 'react-number-format';
 import Loader from 'react-loader-spinner';
 import Select from 'react-select';
 import { MDBModal, MDBModalBody, MDBModalHeader } from 'mdbreact';
@@ -30,7 +31,7 @@ class ListadoReservas extends Component {
             errores: [],
             files: [],
             //Para el ruteo
-            id: this.props.id_usuario,
+            id: this.props.usuario.id,
             //A partir de aca, datos para el listado de reservas
             reservasRealizadas: [],
             currentPage: 1,
@@ -42,9 +43,19 @@ class ListadoReservas extends Component {
             listadoEstados: [],
             listadoFiltradoEstados: [],
             estadoSeleccionado: "",
-            idReservaActualizar: 0
+            idReservaActualizar: 0,
+            datosParaMensajes: {
+                showModal: false,
+                usuarioEmisor: {
+                    id: (this.props.usuario.rol + this.props.usuario.id).toLowerCase(),
+                    nombre: (this.props.usuario.nombre + " " + this.props.usuario.apellido),
+                },
+                usuarioReceptor: {
+                    id: '',
+                    nombre: '',
+                }
+            }
         }
-
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.abrirModal = this.abrirModal.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
@@ -79,7 +90,8 @@ class ListadoReservas extends Component {
     generoItem(item) {
         const clickCallback = () => this.handleRowClick(item.id);
         const actualizacionEstado = () => this.abrirModalEstado(item.id, item.fechaDateTime, item.estado);
-        var tipoUsuario = this.props.rolUsuario;
+        const mostrarMensajes = () => this.mostrarMensajes(item)
+        var tipoUsuario = this.props.usuario.rol;
 
         const itemRows = [
             <tr key={"row-data-" + item.id}>
@@ -127,19 +139,16 @@ class ListadoReservas extends Component {
                             /*    <i className="far fa-star iconosTabla" title="Calificar reserva" onClick={actualizacionEstado} key={"row-data-" + item.id} />*/
                             :
                             <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas finalizadas" />
-                            /* <i className="fas fa-star iconosTabla" title="Ver calificación" onClick={actualizacionEstado} key={"row-data-" + item.id} /> */
+                        /* <i className="fas fa-star iconosTabla" title="Ver calificación" onClick={actualizacionEstado} key={"row-data-" + item.id} /> */
                         :
                         (item.estado === "Cancelado") ?
                             <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas canceladas" />
                             :
                             <i className="fas fa-edit iconosTabla cursorManito" title="Actualizar el estado" onClick={actualizacionEstado} key={"row-data-" + item.id} />
-
                     }
                 </td>
                 <td>
-                    <Link to={''}>
-                        <i className="fas fa-comments iconosTabla cursorManito" title="Ver mensajes" />
-                    </Link>
+                    <i className="fas fa-comments iconosTabla cursorManito" title="Ver mensajes" onClick={mostrarMensajes} />
                 </td>
             </tr >
         ];
@@ -278,10 +287,10 @@ class ListadoReservas extends Component {
         this.setState({
             listadoFiltradoEstados: this.state.listadoEstados.filter((estado) => {
                 if (estado.value >= est.value) {
-                    if (this.props.rolUsuario === "Consumidor" && estado.value <= 3) {
+                    if (this.props.usuario.rol === "Consumidor" && estado.value <= 3) {
                         return;
                     } else {
-                        if (estado.label === "Cancelado" && ((diff <= 2 && this.props.rolUsuario === "Consumidor") || (diff <= 1 && this.props.rolUsuario === "Productor"))) {
+                        if (estado.label === "Cancelado" && ((diff <= 2 && this.props.usuario.rol === "Consumidor") || (diff <= 1 && this.props.usuario.rol === "Productor"))) {
                             return;
                         } else {
                             return estado;
@@ -347,13 +356,48 @@ class ListadoReservas extends Component {
         })
     }
 
+    mostrarMensajes(item) {
+        if (this.props.usuario.rol === "Consumidor") {
+            this.setState({
+                datosParaMensajes: {
+                    ...this.state.datosParaMensajes,
+                    showModal: true,
+                    usuarioReceptor: {
+                        id: "productor" + item.productor.id,
+                        nombre: item.productor.nombre + " " + item.productor.apellido,
+                    }
+                }
+            })
+        } else {
+            this.setState({
+                datosParaMensajes: {
+                    ...this.state.datosParaMensajes,
+                    showModal: true,
+                    usuarioReceptor: {
+                        id: "consumidor" + item.consumidor.id,
+                        nombre: item.consumidor.nombre + " " + item.consumidor.apellido,
+                    }
+                }
+            })
+        }
+    }
+
+    toggle = nr => () => {
+        this.setState({
+            datosParaMensajes: {
+                ...this.state.datosParaMensajes,
+                showModal: !this.state.datosParaMensajes.showModal,
+            }
+        });
+    }
+
     render() {
         const { reservasRealizadas, currentPage, reservasPerPage, defaultListado } = this.state;
         const numberOfPages = Math.ceil(reservasRealizadas.length / reservasPerPage);
         const indexOfLastReserva = currentPage * reservasPerPage;
         const indexOfFirstReserva = indexOfLastReserva - reservasPerPage;
         const lista = reservasRealizadas.slice(indexOfFirstReserva, indexOfLastReserva);
-        const rolUsuario = this.props.rolUsuario;
+        const rolUsuario = this.props.usuario.rol;
         let body = [];
         lista.forEach(item => {
             body.push(this.generoItem(item));
@@ -382,7 +426,8 @@ class ListadoReservas extends Component {
                         </div>
                         : ''
                 }
-                <Reserva lista={body}
+                <Reserva 
+                    lista={body}
                     rolUsuario={rolUsuario} />
                 {
                     reservasRealizadas.length > reservasPerPage ?
@@ -413,6 +458,22 @@ class ListadoReservas extends Component {
                                 <Button variant="success" type="submit" onClick={this.actualizarEstadoReserva}>Guardar</Button>
                             </div>
                         </MDBModalBody>
+                    </MDBModal>
+                }
+                {
+                    (this.state.datosParaMensajes.showModal) &&
+                    <MDBModal
+                        isOpen={this.state.datosParaMensajes.showModal}
+                        toggle={this.toggle()}
+                        fullHeight position="right">
+                        <MDBModalHeader
+                            toggle={this.toggle()}>
+                            Chateá con {this.state.datosParaMensajes.usuarioReceptor.nombre}
+                        </MDBModalHeader>
+                        <Mensajes
+                            usuarioEmisor={this.state.datosParaMensajes.usuarioEmisor}
+                            usuarioReceptor={this.state.datosParaMensajes.usuarioReceptor}
+                        />
                     </MDBModal>
                 }
             </div>

@@ -274,8 +274,7 @@ class PantallaPrincipalconsumidores extends Component {
                             <Route path={'/principalConsumidores/ListadoReservas'}
                                 render={(props) =>
                                     <ListadoReservasRouter
-                                        id_usuario={this.state.id}
-                                        rolUsuario={this.state.rolUsuario}
+                                        usuario={this.state.user}
                                     />
                                 }
                             />

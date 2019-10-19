@@ -110,7 +110,6 @@ class Checkout extends Component {
             mensaje: '',
             showModal: false,
         }
-
         this.actualizarPuntoEntrega = this.actualizarPuntoEntrega.bind(this);
         this.actualizarFechaEntrega = this.actualizarFechaEntrega.bind(this);
         this.actualizarItemsCarrito = this.actualizarItemsCarrito.bind(this);
@@ -215,7 +214,8 @@ class Checkout extends Component {
                         resultadoRequest: response.status
                     });
                 }
-            }).then(data => {
+            })
+            .then(data => {
                 if (data !== undefined) {
                     this.setState({
                         fechasEntrega: data,
