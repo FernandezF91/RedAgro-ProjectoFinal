@@ -3,30 +3,38 @@ import chat from "./Chat";
 import config from "./Config";
 import Loader from 'react-loader-spinner';
 import '../diseños/Mensajes.css'
-
-const header = {
-    'Accept': 'application/json',
-    'Content-type': 'application/json',
-    'appid': '9835b2e58f31f7',
-    'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
-}
+import { thisExpression } from '@babel/types';
 
 class Mensajes extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            receiverID: "",
             mensajesAEnviar: null,
-            groupMessage: [],
-            isAuthenticated: false,
             historialMensajes: [],
-            loading: true,
+            loading: false,
         }
-        this.GUID = config.GUID;
     }
 
     sendMessage = () => {
-
+        chat.sendPrivateMessage(this.props.usuarioEmisor.id, this.state.mensajesAEnviar, this.props.usuarioReceptor.id).then(
+            message => {
+                console.log("Message sent successfully:", message);
+                var agregarMensaje = {
+                    id: this.state.historialMensajes.length,
+                    enviadoPor: this.props.usuarioEmisor.id,
+                    recibidoPor: this.state.mensajesAEnviar,
+                    mensaje: this.state.mensajesAEnviar,
+                }
+                let historialDeMensajes = this.state.historialMensajes
+                historialDeMensajes.push(agregarMensaje);
+                this.setState({
+                    historialMensajes: historialDeMensajes,
+                    mensajesAEnviar: null
+                });
+            },
+            error => {
+                console.log("No se pudo enviar el mensaje" + error);
+            })
     };
 
     scrollToBottom = () => {
@@ -61,11 +69,13 @@ class Mensajes extends React.Component {
     };
 
     messageListener = () => {
+        var detalleHistorial = {};
+        let historial = [];
         chat.addMessageListener((data, error) => {
             if (error) return console.log(`error: ${error}`);
             this.setState(
                 prevState => ({
-                    groupMessage: [...prevState.groupMessage, data]
+                    historialMensajes: [...prevState.historialMensajes, data]
                 }),
                 () => {
                     this.scrollToBottom();
@@ -163,10 +173,13 @@ class Mensajes extends React.Component {
     }
 
     componentDidMount() {
-        var idUsuarioReceptor = "productor1"
         this.chequearUsuarios(this.props.usuarioEmisor.id, this.props.usuarioEmisor.nombre);
         //this.chequearUsuarios(idUsuarioReceptor, nombreUsuarioReceptor);
-        this.cargarHistorialDeMensajes(this.props.usuarioEmisor.id, this.props.usuarioReceptor.id);
+        chat.init();
+        chat.login(this.props.usuarioEmisor.id);
+        this.messageListener();
+        //this.cargarHistorialDeMensajes(this.props.usuarioEmisor.id, this.props.usuarioReceptor.id);
+        this.scrollToBottom();
     }
 
     render() {
@@ -180,41 +193,41 @@ class Mensajes extends React.Component {
             />
         )
 
-        return (               
-                <div className="chatWindow">
-                    <ul className="chat" id="chatList">
-                        {this.state.historialMensajes.map(data => (
-                            <div key={data.id}>
-                                {this.props.usuarioEmisor.id === data.enviadoPor ? (
-                                    <li className="self">
-                                        <div className="mensajeEnviado">
-                                            <p>{this.props.usuarioEmisor.nombre}</p>
-                                            <div className="message"> {data.mensaje}</div>
+        return (
+            <div className="chatWindow">
+                <ul className="chat" id="chatList">
+                    {this.state.historialMensajes.map(data => (
+                        <div key={data.id}>
+                            {this.props.usuarioEmisor.id === data.enviadoPor ? (
+                                <li className="self">
+                                    <div className="mensajeEnviado">
+                                        <p>{this.props.usuarioEmisor.nombre}</p>
+                                        <div className="message"> {data.mensaje}</div>
+                                    </div>
+                                </li>
+                            ) : (
+                                    <li className="other">
+                                        <div className="msg">
+                                            <p>{this.props.usuarioReceptor.nombre}</p>
+                                            <div className="message"> {data.mensaje} </div>
                                         </div>
                                     </li>
-                                ) : (
-                                        <li className="other">
-                                            <div className="msg">
-                                                <p>{this.props.usuarioReceptor.nombre}</p>
-                                                <div className="message"> {data.mensaje} </div>
-                                            </div>
-                                        </li>
-                                    )}
-                            </div>
-                        ))}
-                    </ul>
+                                )}
+                        </div>
+                    ))}
+                </ul>
 
-                    <div className="chatInputWrapper">
-                        <form onSubmit={this.handleSubmit}>
-                            <input
-                                className="textarea input"
-                                type="text"
-                                placeholder="Escribí tu mensaje acá..."
-                                onChange={this.handleChange}
-                            />
-                        </form>
-                    </div>
+                <div className="chatInputWrapper">
+                    <form onSubmit={this.handleSubmit}>
+                        <input
+                            className="textarea input"
+                            type="text"
+                            placeholder="Escribí tu mensaje acá..."
+                            onChange={this.handleChange}
+                        />
+                    </form>
                 </div>
+            </div>
         );
     }
 }
