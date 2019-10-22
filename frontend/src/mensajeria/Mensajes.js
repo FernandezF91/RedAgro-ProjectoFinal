@@ -69,8 +69,6 @@ class Mensajes extends React.Component {
     };
 
     messageListener = () => {
-        var detalleHistorial = {};
-        let historial = [];
         chat.addMessageListener((data, error) => {
             if (error) return console.log(`error: ${error}`);
             this.setState(
@@ -91,8 +89,8 @@ class Mensajes extends React.Component {
             {
                 method: 'GET',
                 headers: {
-                    'appid': '9835b2e58f31f7',
-                    'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
+                    'appid': config.appId,
+                    'apikey': config.apiKey
                 },
             })
             .catch(error => console.error(error))
@@ -104,8 +102,8 @@ class Mensajes extends React.Component {
                             method: 'POST',
                             headers: {
                                 'Content-type': 'application/json',
-                                'appid': '9835b2e58f31f7',
-                                'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
+                                'appid': config.appId,
+                                'apikey': config.apiKey,
                             },
                             body: {
                                 'uid': usuario,
