@@ -191,7 +191,7 @@ class LoginForm extends Component {
                             <Button variant="success" onClick={this.validarDatos}>Ingresar</Button>
                         </div>
                         <Link to={'/recupero_email'}>
-                            <a>olvidé mi contraseña</a>
+                            <a>Olvidé mi contraseña</a>
                         </Link>
                     </div>
                     <section>

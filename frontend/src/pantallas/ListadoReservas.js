@@ -6,7 +6,6 @@ import DetalleReserva from '../pantallas/DetalleReserva';
 import Paginacion from './Paginacion';
 import Mensajes from '../mensajeria/Mensajes';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 import Loader from 'react-loader-spinner';
 import Select from 'react-select';
