@@ -95,7 +95,7 @@ class Checkout extends Component {
                 consumidor: { id: this.props.id_consumidor },
                 productor: { id: this.props.productosSeleccionados[0].productor.id },
                 punto_entrega: { id: '' },
-                estado_reserva: { id: 5 },
+                estado_reserva: { id: 1 },
                 total_reserva: this.getTotalReserva(this.props.productosSeleccionados),
                 persona_retiro: this.props.user.nombre + " " + this.props.user.apellido,
                 forma_retiro: "Acuerda con Productor",
@@ -378,10 +378,10 @@ class Checkout extends Component {
         var estado_reserva;
         if (changeEvent.target.value === "radio1") {
             forma = "Acuerda con Productor";
-            estado_reserva = 5;
+            estado_reserva = 1;
         } else {
             forma = "Por punto de entrega";
-            estado_reserva = 1;
+            estado_reserva = 2;
         }
         this.setState({
             selectedRadioButtonRetiro: changeEvent.target.value,
