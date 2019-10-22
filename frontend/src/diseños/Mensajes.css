@@ -19,6 +19,8 @@
     margin: 0;
     padding: 0 0 50px 0;
     overflow: scroll;
+    max-height: 500px;
+    scroll-behavior: smooth;
   }
 
   .chat li {

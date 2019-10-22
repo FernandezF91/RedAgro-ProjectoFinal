@@ -28,7 +28,7 @@ class Mensajes extends React.Component {
                 let historialDeMensajes = this.state.historialMensajes
                 historialDeMensajes.push(agregarMensaje);
                 this.setState({
-                    historialMensajes: historialDeMensajes,
+                    // historialMensajes: historialDeMensajes,
                     mensajesAEnviar: null
                 });
             },
@@ -71,9 +71,17 @@ class Mensajes extends React.Component {
     messageListener = () => {
         chat.addMessageListener((data, error) => {
             if (error) return console.log(`error: ${error}`);
+
+            var detalleHistorial = {
+                id: data.id,
+                enviadoPor: data.sender.uid,
+                recibidoPor: data.receiver,
+                mensaje: data.text
+            }
+
             this.setState(
                 prevState => ({
-                    historialMensajes: [...prevState.historialMensajes, data]
+                    historialMensajes: [...prevState.historialMensajes, detalleHistorial]
                 }),
                 () => {
                     this.scrollToBottom();
@@ -89,8 +97,8 @@ class Mensajes extends React.Component {
             {
                 method: 'GET',
                 headers: {
-                    'appid': config.appId,
-                    'apikey': config.apiKey
+                    'appid': '9835b2e58f31f7',
+                    'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
                 },
             })
             .catch(error => console.error(error))
@@ -102,8 +110,8 @@ class Mensajes extends React.Component {
                             method: 'POST',
                             headers: {
                                 'Content-type': 'application/json',
-                                'appid': config.appId,
-                                'apikey': config.apiKey,
+                                'appid': '9835b2e58f31f7',
+                                'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
                             },
                             body: {
                                 'uid': usuario,
@@ -175,9 +183,8 @@ class Mensajes extends React.Component {
         //this.chequearUsuarios(idUsuarioReceptor, nombreUsuarioReceptor);
         chat.init();
         chat.login(this.props.usuarioEmisor.id);
+        this.cargarHistorialDeMensajes(this.props.usuarioEmisor.id, this.props.usuarioReceptor.id);
         this.messageListener();
-        //this.cargarHistorialDeMensajes(this.props.usuarioEmisor.id, this.props.usuarioReceptor.id);
-        this.scrollToBottom();
     }
 
     render() {
