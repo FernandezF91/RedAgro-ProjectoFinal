@@ -179,7 +179,7 @@ input[type=text] {
     display: inline;
 }
 
-.actualizacionEstado {
+.modalActualizaciones {
     display: flex;
     flex-direction: row;
 }
@@ -189,7 +189,7 @@ input[type=text] {
     margin-left: 10px;
 }
 
-.tituloActualizacionEstado {
+.tituloCampoModal {
     align-self: center;
 }
 
@@ -266,4 +266,21 @@ input[type=text] {
 .columnaPrecio {
     min-width: 90px !important;
     max-width: 90px !important;
+}
+
+.campoOferta {
+    width: 150px !important;
+    margin-left: 20px !important;
+}
+
+.modal-title {
+    display: contents;
+}
+
+.cruzCerrar {
+    align-self: center;
+}
+
+.alineacionIzquierda {
+    text-align: left;;
 }

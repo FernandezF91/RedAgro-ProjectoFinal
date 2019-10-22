@@ -287,10 +287,10 @@ class ListadoReservas extends Component {
             listadoFiltradoEstados: this.state.listadoEstados.filter((estado) => {
                 if (estado.value >= est.value) {
                     if (this.props.usuario.rol === "Consumidor" && estado.value <= 3) {
-                        return;
+                        return null;
                     } else {
                         if (estado.label === "Cancelado" && ((diff <= 2 && this.props.usuario.rol === "Consumidor") || (diff <= 1 && this.props.usuario.rol === "Productor"))) {
-                            return;
+                            return null;
                         } else {
                             return estado;
                         }
@@ -425,7 +425,7 @@ class ListadoReservas extends Component {
                         </div>
                         : ''
                 }
-                <Reserva 
+                <Reserva
                     lista={body}
                     rolUsuario={rolUsuario} />
                 {
@@ -439,10 +439,15 @@ class ListadoReservas extends Component {
                 {
                     (this.state.showModal) &&
                     <MDBModal isOpen={this.state.showModal} centered>
-                        <MDBModalHeader>Estado de la reserva</MDBModalHeader>
+                        <MDBModalHeader>
+                            Estado de la reserva
+                            <div className="cruzCerrar">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                            </div>
+                        </MDBModalHeader>
                         <MDBModalBody>
-                            <div className="actualizacionEstado">
-                                <span className="tituloActualizacionEstado">Estado</span>
+                            <div className="modalActualizaciones">
+                                <span className="tituloCampoModal">Estado</span>
                                 <Select
                                     className="selectEstado"
                                     placeholder="Seleccione un estado"
@@ -453,7 +458,6 @@ class ListadoReservas extends Component {
                             </div>
                             <br />
                             <div className="row justify-content-center">
-                                <Button variant="light" onClick={this.cerrarModal}>Cancelar</Button>
                                 <Button variant="success" type="submit" onClick={this.actualizarEstadoReserva}>Guardar</Button>
                             </div>
                         </MDBModalBody>
