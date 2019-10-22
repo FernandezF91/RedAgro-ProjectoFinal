@@ -66,7 +66,6 @@ class Geolocalizacion extends Component {
     }
 
     componentDidMount() {
-
         var _this = this;
         fetch("http://localhost:3000/redAgro/puntos_entrega_productor", {
             method: "GET",
@@ -101,7 +100,12 @@ class Geolocalizacion extends Component {
                     direccion={marker.direccion}
                     localidad={marker.localidad}
                     link={"Mis productos"}
-                    position={{ lat: marker.latitud, lng: marker.longitud }} />)
+                    position={{
+                        lat: marker.latitud,
+                        lng: marker.longitud
+                    }}
+                />
+            )
         });
     }
 
@@ -165,9 +169,6 @@ class Geolocalizacion extends Component {
                             <div id="geo" />
                         </InfoWindow>
                     </CurrentLocation>
-                </div>
-                <div className="botonVolver">
-                    <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                 </div>
             </div>
         );
