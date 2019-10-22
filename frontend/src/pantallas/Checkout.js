@@ -306,6 +306,8 @@ class Checkout extends Component {
                 }
                 break;
             }
+            default:
+                console.log("Error en el paso a paso del Checkout");
         }
 
         if (this.state.activeStep === pasos.length - 1) {
