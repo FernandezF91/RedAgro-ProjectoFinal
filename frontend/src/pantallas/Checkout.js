@@ -296,6 +296,7 @@ class Checkout extends Component {
                         }
                     })
                 }
+                break;
             }
             case 1: {
                 if (this.state.selectedRadioButtonRetiro === "radio2") {
@@ -303,6 +304,7 @@ class Checkout extends Component {
                         return false;
                     }
                 }
+                break;
             }
         }
 
