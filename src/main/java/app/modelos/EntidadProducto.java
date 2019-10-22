@@ -31,10 +31,6 @@ public class EntidadProducto {
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-	private List<EntidadOferta> ofertas = new ArrayList<>();
-
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
 	private List<EntidadHistorico> historicos = new ArrayList<>();
 
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -71,14 +67,6 @@ public class EntidadProducto {
 
 	public void setPreferencia(List<EntidadPreferencia> preferencias) {
 		this.preferencias = preferencias;
-	}
-
-	public List<EntidadOferta> getOfertas() {
-		return ofertas;
-	}
-
-	public void setOfertas(List<EntidadOferta> ofertas) {
-		this.ofertas = ofertas;
 	}
 
 	public List<EntidadPreferencia> getPreferencias() {

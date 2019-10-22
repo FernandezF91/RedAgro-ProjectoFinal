@@ -201,13 +201,13 @@ class AlertaConsumidor extends Component {
         }
         if (this.state.checkResumen) {
             configuraciones.push({
-                alertaNombre: "Resumen de reservas vía correo electrónico",
+                alertaNombre: "Resumen de reservas",
                 frecuencia: this.state.selectedRadioOptionResumen
             });
         }
         if (this.state.checkCambio) {
             configuraciones.push({
-                alertaNombre: "Cambio de estado en una reserva vía correo electrónico",
+                alertaNombre: "Cambio de estado en una reserva",
                 frecuencia: this.state.selectedRadioOptionCambio
             });
         }
@@ -275,7 +275,7 @@ class AlertaConsumidor extends Component {
             });
         }
 
-        if (item.alerta === "Resumen de reservas vía correo electrónico") {
+        if (item.alerta === "Resumen de reservas") {
             this.setState({
                 checkResumen: true,
                 selectedRadioOptionResumen: item.frecuencia,
@@ -283,7 +283,7 @@ class AlertaConsumidor extends Component {
             });
         }
 
-        if (item.alerta === "Cambio de estado en una reserva vía correo electrónico") {
+        if (item.alerta === "Cambio de estado en una reserva") {
             this.setState({
                 checkCambio: true,
                 selectedRadioOptionCambio: item.frecuencia,
@@ -420,7 +420,7 @@ class AlertaConsumidor extends Component {
                                     onChange={this.handleCheckChangeResumen}
                                     className="checkbox-input checkbox"
                                 />
-                                Resumen de reservas vía correo electrónico
+                                Resumen de reservas
                                 </label>
                         </h5>
                         <label className="radio-inline">
@@ -470,7 +470,7 @@ class AlertaConsumidor extends Component {
                                     onChange={this.handleCheckChangeCambio}
                                     className="checkbox-input checkbox"
                                 />
-                                Cambio de estado en una reserva vía correo electrónico
+                                Cambio de estado en una reserva
                                 </label>
                         </h5>
                         <label className="radio-inline">

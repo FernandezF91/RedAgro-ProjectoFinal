@@ -56,6 +56,7 @@ public class ProductoProductorControlador {
 		productoNuevo.setUnidad_venta(producto.getUnidad_venta());
 		productoNuevo.setProducto(prod);
 		productoNuevo.setProductor(productor);
+		productoNuevo.setOferta(null);
 
 		return productoProductorDao.save(productoNuevo).getId();
 	}

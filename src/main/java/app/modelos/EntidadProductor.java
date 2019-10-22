@@ -41,10 +41,6 @@ public class EntidadProductor {
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
-	private List<EntidadOferta> ofertas = new ArrayList<>();
-
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
 	private List<EntidadCalificacion> calificaciones = new ArrayList<>();
 
 	@LazyCollection(LazyCollectionOption.FALSE)
@@ -112,14 +108,6 @@ public class EntidadProductor {
 
 	public void setProductos(List<EntidadProductoProductor> productos) {
 		this.productos = productos;
-	}
-
-	public List<EntidadOferta> getOfertas() {
-		return ofertas;
-	}
-
-	public void setOfertas(List<EntidadOferta> ofertas) {
-		this.ofertas = ofertas;
 	}
 
 	public List<EntidadHistorico> getHistoricos() {

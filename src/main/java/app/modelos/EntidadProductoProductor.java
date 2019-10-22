@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.LazyCollection;
@@ -25,6 +26,9 @@ public class EntidadProductoProductor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+
+	@OneToOne(mappedBy = "producto_productor", cascade = CascadeType.ALL)
+	private EntidadOferta oferta = new EntidadOferta();
 
 	@ManyToOne()
 	@JoinColumn(name = "productor_id", nullable = false)
@@ -172,4 +176,13 @@ public class EntidadProductoProductor {
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
 	}
+
+	public EntidadOferta getOferta() {
+		return oferta;
+	}
+
+	public void setOferta(EntidadOferta oferta) {
+		this.oferta = oferta;
+	}
+
 }
