@@ -185,14 +185,10 @@ class LoginForm extends Component {
                             </Form>
                         </div>
                         <div className="botonesLogin">
-                            <a href='/seleccionUsuario'>
-                                <Button variant="light">Registrar</Button>
-                            </a>
+                            <Button variant="light" href="/seleccionUsuario">Registrar</Button>
                             <Button variant="success" onClick={this.validarDatos}>Ingresar</Button>
                         </div>
-                        <Link to={'/recupero_email'}>
-                            <a>Olvidé mi contraseña</a>
-                        </Link>
+                        <a href="/recupero_email">Olvidé mi contraseña</a>
                     </div>
                     <section>
                         <Modal
@@ -200,14 +196,14 @@ class LoginForm extends Component {
                             width="400"
                             height="120"
                             effect="fadeInUp"
-                            onClickAway={() => this.closeModal()}
+                            onClickAway={this.closeModal}
                         >
                             <div>
                                 <h1>Error</h1>
                                 <p>
                                     {this.state.mensajeError}
                                 </p>
-                                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
+                                <a href="javascript:void(0);" onClick={this.closeModal}>Volver</a>
                             </div>
                         </Modal>
                     </section>
