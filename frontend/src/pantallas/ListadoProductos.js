@@ -1,13 +1,22 @@
-import React, { Component } from 'react';
-import Producto from './Producto';
 import '../diseños/estilosGlobales.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import React, { Component } from 'react';
+import Producto from './Producto';
+import Paginacion from './Paginacion';
 import Loader from 'react-loader-spinner';
+import Select from 'react-select';
 import NumberFormat from 'react-number-format';
 import moment from 'moment';
 import { MDBModal, MDBModalBody, MDBModalHeader } from 'mdbreact';
 import Button from 'react-bootstrap/Button';
 import { InputGroup, FormControl } from 'react-bootstrap';
+
+const tamañosListado = [
+    { label: "5", value: "5" },
+    { label: "15", value: "15" },
+    { label: "30", value: "30" },
+    { label: "Todo", value: "Todo" },
+];
 
 class ListadoProductos extends Component {
     constructor(props) {
@@ -24,7 +33,10 @@ class ListadoProductos extends Component {
             idProductoOferta: 0,
             porcentaje: 0,
             idOferta: 0,
-            checkOferta: true
+            checkOferta: true,
+            currentPage: 1,
+            productosPerPage: 5,
+            defaultListado: [{ label: "5", value: "5" }],
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.abrirModal = this.abrirModal.bind(this);
@@ -36,8 +48,8 @@ class ListadoProductos extends Component {
     mostrarPantallaPrincipal() {
         this.props.history.push({
             pathname: '/principalProductores/MiCuenta',
-            state: { 
-                id: this.state.id 
+            state: {
+                id: this.state.id
             }
         })
     }
@@ -178,10 +190,29 @@ class ListadoProductos extends Component {
             })
     }
 
+    actualizarTamañoListado = (tamaño) => {
+        let actualizarListado = [];
+        actualizarListado.push(tamaño);
+        if (tamaño.value === "Todo") {
+            this.setState({ productosPerPage: this.state.productos.length })
+        } else {
+            this.setState({ productosPerPage: tamaño.value })
+        }
+        this.setState({ defaultListado: actualizarListado });
+    }
+
+    nextPage = (pageNumber) => {
+        this.setState({ currentPage: pageNumber });
+    }
+
     render() {
-        const { productos } = this.state;
+        const { productos, productosPerPage, currentPage, defaultListado } = this.state;
+        const numberOfPages = Math.ceil(productos.length / productosPerPage);
+        const indexOfLastReserva = currentPage * productosPerPage;
+        const indexOfFirstReserva = indexOfLastReserva - productosPerPage;
+        const lista = productos.slice(indexOfFirstReserva, indexOfLastReserva);
         let body = [];
-        productos.forEach(item => {
+        lista.forEach(item => {
             body.push(this.generoItem(item));
         })
 
@@ -199,7 +230,26 @@ class ListadoProductos extends Component {
             <div>
                 <div>
                     <div className="titulosPrincipales">Productos</div>
+                    {
+                        productos.length > 0 ?
+                            <div className="opcionesCantidad">
+                                <span className="tituloCantidad">Productos por página</span>
+                                <Select className="cantidadProductos"
+                                    value={defaultListado}
+                                    options={tamañosListado}
+                                    onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />
+                            </div>
+                            : ''
+                    }
                     <Producto productos={body} />
+                    {
+                        productos.length > productosPerPage ?
+                            <Paginacion
+                                pages={numberOfPages}
+                                nextPage={this.nextPage}
+                                currentPage={this.state.currentPage} />
+                            : ''
+                    }
                 </div>
                 {
                     (this.state.showModal) &&
@@ -251,7 +301,7 @@ class ListadoProductos extends Component {
                         </MDBModalBody>
                     </MDBModal>
                 }
-            </div >
+            </div>
         );
     };
 }
