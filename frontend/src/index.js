@@ -11,7 +11,6 @@ import RegistroProductor from './pantallas/RegistroProductor';
 import PantallaPrincipalProductores from './pantallas/PantallaPrincipalProductores';
 import PantallaPrincipalConsumidores from './pantallas/PantallaPrincipalConsumidores';
 import SeleccionUsuario from './pantallas/SeleccionUsuario';
-import ModificarContraseña from './pantallas/ModificarContraseña';
 import ConfirmacionCuenta from './pantallas/ConfirmacionCuenta';
 import RecuperarContraseña from './pantallas/RecuperarContraseña';
 
