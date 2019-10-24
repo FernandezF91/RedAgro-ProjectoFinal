@@ -34,3 +34,7 @@
     position: relative;
     display: initial !important;
 }
+
+.imagenProducto {
+    align-self: center;
+}
