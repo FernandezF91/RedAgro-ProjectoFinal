@@ -27,7 +27,7 @@ public class EntidadProductoProductor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@OneToOne(mappedBy = "producto_productor", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "producto_productor", targetEntity = EntidadOferta.class, cascade = CascadeType.ALL)
 	private EntidadOferta oferta = new EntidadOferta();
 
 	@ManyToOne()

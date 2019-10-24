@@ -1,15 +1,15 @@
 package app.clases;
 
 public class Oferta {
-	public Oferta(long id, ProductoProductor productoProductor, float porcentaje, boolean activo) {
+	public Oferta(long id, long productoProductorId, float porcentaje, boolean activo) {
 		this.setId(id);
-		this.setProductoProductor(productoProductor);
+		this.setProductoProductorId(productoProductorId);
 		this.setPorcentaje(porcentaje);
 		this.setActivo(activo);
 	}
 
 	private long id;
-	private ProductoProductor productoProductor;
+	private long productoProductorId;
 	private float porcentaje;
 	private boolean activo;
 
@@ -21,14 +21,14 @@ public class Oferta {
 		this.id = id;
 	}
 
-	public ProductoProductor getProductoProductor() {
-		return productoProductor;
+	public long getProductoProductorId() {
+		return productoProductorId;
 	}
 	
-	public void setProductoProductor(ProductoProductor productoProductor) {
-		this.productoProductor = productoProductor;
+	public void setProductoProductorId(long productoProductorId) {
+		this.productoProductorId = productoProductorId;
 	}
-	
+
 	public float getPorcentaje() {
 		return porcentaje;
 	}

@@ -15,9 +15,9 @@ public class ProductoProductorMapper {
 		ProductoMapper mapeoProducto = new ProductoMapper();
 		ImagenMapper mapeoImagen = new ImagenMapper();
 		OfertaMapper mapeoOferta = new OfertaMapper();
-		
+
 		Oferta oferta = null;
-		if(entidad.getOferta() != null) {
+		if (entidad.getOferta() != null) {
 			oferta = mapeoOferta.mapFromEntity(entidad.getOferta());
 		}
 
