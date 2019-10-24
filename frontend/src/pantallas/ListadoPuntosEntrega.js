@@ -289,7 +289,7 @@ class ListadoPuntosEntrega extends Component {
                         </MDBTable>
                         :
                         <div className="sinPuntosDeVenta">
-                            <i className="fas fa-store iconoGrande"></i>
+                            <i className="fas fa-map-marker-alt iconoGrande"></i>
                             <br />
                             <br />
                             <h5>Ups! No tenes puntos de venta cargados! </h5>
