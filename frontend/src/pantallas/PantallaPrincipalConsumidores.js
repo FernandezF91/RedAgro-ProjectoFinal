@@ -169,17 +169,29 @@ class PantallaPrincipalconsumidores extends Component {
             <Row>
                 <Col className="scrollMenuCategorias">
                     {
-                        verduras.map(v => { return <Row id="subTipos"><Link onClick={() => this.handleNuevaBusqueda(v.tipo)}>{v.tipo}</Link></Row> })
+                        verduras.map(v => {
+                            return <Row id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(v.tipo)}>
+                                {v.tipo}
+                            </Row>
+                        })
                     }
                 </Col>
                 <Col className="scrollMenuCategorias">
                     {
-                        frutas.map(f => { return <Row id="subTipos"><Link onClick={() => this.handleNuevaBusqueda(f.tipo)}>{f.tipo}</Link></Row> })
+                        frutas.map(f => {
+                            return <Row id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(f.tipo)}>
+                                {f.tipo}
+                            </Row>
+                        })
                     }
                 </Col>
                 <Col className="scrollMenuCategorias">
                     {
-                        otros.map(o => { return <Row id="subTipos"><Link onClick={() => this.handleNuevaBusqueda(o.tipo)}>{o.tipo}</Link></Row> })
+                        otros.map(o => {
+                            return <Row id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(o.tipo)}>
+                                {o.tipo}
+                            </Row>
+                        })
                     }
                 </Col>
             </Row>
@@ -216,8 +228,8 @@ class PantallaPrincipalconsumidores extends Component {
                                     </NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown title="Categorias" id="categoria_drop" drop="right">
-                                        <NavDropdown.Item id="itemArea">
-                                            <Row clasName="titulos">
+                                        <NavDropdown.Item id="itemArea" className="cursor">
+                                            <Row className="titulos">
                                                 <Col id="categorias">Verduras</Col>
                                                 <Col id="categorias">Frutas</Col>
                                                 <Col id="categorias">Otros</Col>

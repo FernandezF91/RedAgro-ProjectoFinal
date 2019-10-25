@@ -300,3 +300,7 @@ input[type=text] {
     margin-left: 5px;
     font-size: 24px;
 }
+
+.cursor {
+    cursor: default !important;
+}
