@@ -293,11 +293,11 @@ class ListadoReservas extends Component {
                     } else {
                         if (estado.label === "Cancelado" && ((diff <= 2 && this.props.usuario.rol === "Consumidor") || (diff <= 1 && this.props.usuario.rol === "Productor"))) {
                             return null;
-                        } else {
-                            return estado;
-                        }
+                        } 
+                        return estado;
                     }
                 }
+                return null;
             })
         })
     }

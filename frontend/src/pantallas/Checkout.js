@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 import PasosCheckout from './PasosCheckout'
 import moment from 'moment';
-import _ from 'lodash';
 import '../diseños/estilosGlobales.css';
 import '../diseños/Checkout.css'
 
