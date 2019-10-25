@@ -39,7 +39,25 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                             </MDBCardTitle>
                                             <MDBCardText>
                                                 <strong className="float-center">
-                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                                    {
+                                                        (item.oferta === null) ?
+                                                            <div>
+                                                                <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                                            </div>
+                                                            :
+                                                            (item.oferta.activo) ?
+                                                                <div>
+                                                                    <strike>
+                                                                        <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                                                    </strike>
+                                                                    <br />
+                                                                    <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                                                </div>
+                                                                :
+                                                                <div>
+                                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                                                </div>
+                                                    }
                                                 </strong>
                                             </MDBCardText>
                                             <MDBCardFooter className="px-1" transparent>

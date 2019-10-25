@@ -106,6 +106,7 @@ class ResultadoBusquedaSinLogin extends Component {
                                     telefono: item.productor.usuario.telefono,
                                 },
                                 imagenes: item.imagenes,
+                                oferta: item.oferta
                             }
                         }),
                         loading: false
@@ -219,7 +220,7 @@ class ResultadoBusquedaSinLogin extends Component {
                                 <br />
                                 <h5> Hola!
                                 <br />
-                                Para continuar tenés que iniciar sesión...
+                                    Para continuar tenés que iniciar sesión...
                                 </h5>
                                 <br />
                                 <h6>

@@ -76,13 +76,14 @@ class ListadoProductos extends Component {
                         (item.oferta === null) ?
                             <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                             :
-                            (item.oferta.activo) ? <div>
-                                <strike>
-                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
-                                </strike>
-                                <br />
-                                <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
-                            </div>
+                            (item.oferta.activo) ?
+                                <div>
+                                    <strike>
+                                        <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                    </strike>
+                                    <br />
+                                    <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                </div>
                                 :
                                 <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                     }
@@ -94,6 +95,9 @@ class ListadoProductos extends Component {
                 </td>
                 <td>
                     <i className="fas fa-percentage iconosTabla cursorManito" onClick={cargarOferta} key={"row-data-" + item.id} title="Cargar una oferta" />
+                </td>
+                <td>
+                    <i className="fas fa-times iconosTabla cursorManito" key={"row-data-" + item.id} title="Eliminar producto" />
                 </td>
             </tr>
         ];

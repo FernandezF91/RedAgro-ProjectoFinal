@@ -26,7 +26,9 @@ class Carrito extends Component {
     mostrarPantallaPrincipal() {
         this.props.history.push({
             pathname: '/principalConsumidores/MiCuenta',
-            state: { id: this.state.id }
+            state: {
+                id: this.state.id
+            }
         })
     }
 
@@ -34,7 +36,9 @@ class Carrito extends Component {
         if (this.props.productosSeleccionados.length > 0) {
             this.obtenerstock();
         } else {
-            this.setState({ loading: false })
+            this.setState({
+                loading: false
+            })
         }
     }
 
@@ -110,6 +114,7 @@ class Carrito extends Component {
                                     telefono: item.productor.usuario.telefono,
                                 },
                                 imagenes: item.imagenes,
+                                oferta: item.oferta
                             }
                         })
                         this.setState(this.actualizarPropsSeleccionados(actualizoStock))
@@ -175,7 +180,19 @@ class Carrito extends Component {
     }
 
     getTotalCarrito(productosSeleccionados) {
-        return _.sumBy(productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
+        var total = 0;
+        productosSeleccionados.forEach((o) => {
+            if (o.oferta !== null) {
+                if (o.oferta.activo) {
+                    total += o.cantidad * (o.precio - (o.precio * o.oferta.porcentaje) / 100);
+                } else {
+                    total += o.cantidad * o.precio;
+                }
+            } else {
+                total += o.cantidad * o.precio;
+            }
+        });;
+        return total;
     }
 
     cerrarModal() {

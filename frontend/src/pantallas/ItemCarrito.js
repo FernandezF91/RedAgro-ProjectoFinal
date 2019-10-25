@@ -86,10 +86,36 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                                     </td>
                             }
                             <td>
-                                <NumberFormat value={producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                {
+                                    (producto.oferta === null) ?
+                                        <NumberFormat value={producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                        :
+                                        (producto.oferta.activo) ?
+                                            <div>
+                                                <strike>
+                                                    <NumberFormat value={producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                </strike>
+                                                <br />
+                                                <NumberFormat value={producto.precio - producto.precio * producto.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                            </div>
+                                            :
+                                            <div>
+                                                <NumberFormat value={producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                            </div>
+                                }
                             </td>
                             <td>
-                                <NumberFormat value={producto.precio * producto.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                {
+                                    (producto.oferta === null) ?
+                                        <NumberFormat value={producto.precio * producto.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                        :
+                                        (producto.oferta.activo) ?
+                                            <NumberFormat value={(producto.precio - producto.precio * producto.oferta.porcentaje / 100) * producto.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                            :
+                                            <div>
+                                                <NumberFormat value={producto.precio * producto.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                            </div>
+                                }
                             </td>
                             <td>
                                 <button className="remove" onClick={() => quitarProducto(index)}>

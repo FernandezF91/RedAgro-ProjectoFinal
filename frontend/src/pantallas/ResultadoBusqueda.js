@@ -184,6 +184,7 @@ class ResultadoBusqueda extends Component {
                                     telefono: item.productor.usuario.telefono,
                                 },
                                 imagenes: item.imagenes,
+                                oferta: item.oferta
                             }
                         }),
                         loading: false

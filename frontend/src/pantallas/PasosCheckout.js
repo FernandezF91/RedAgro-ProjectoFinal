@@ -221,7 +221,17 @@ const PasosCheckout = (props) => {
                                                         </Col>
                                                 }
                                                 <Col>
-                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                    {
+                                                        (item.oferta === null) ?
+                                                            <NumberFormat value={item.precio * item.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                            :
+                                                            (item.oferta.activo) ?
+                                                                <NumberFormat value={(item.precio - item.precio * item.oferta.porcentaje / 100) * item.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                                :
+                                                                <div>
+                                                                    <NumberFormat value={item.precio * item.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                                </div>
+                                                    }
                                                     <span style={{ color: 'gray', fontSize: '12px' }}> por c/u</span>
                                                 </Col>
                                             </Row>

@@ -395,7 +395,19 @@ class Checkout extends Component {
     };
 
     getTotalReserva(productosSeleccionados) {
-        return _.sumBy(productosSeleccionados, function (o) { return o.cantidad * o.precio; });;
+        var total = 0;
+        productosSeleccionados.forEach((o) => {
+            if (o.oferta !== null) {
+                if (o.oferta.activo) {
+                    total += o.cantidad * (o.precio - (o.precio * o.oferta.porcentaje) / 100);
+                } else {
+                    total += o.cantidad * o.precio;
+                }
+            } else {
+                total += o.cantidad * o.precio;
+            }
+        });;
+        return total;
     }
 
     cerrarModal() {
