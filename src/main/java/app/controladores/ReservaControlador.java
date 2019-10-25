@@ -182,6 +182,13 @@ public class ReservaControlador {
 		// Validación Stock
 		for (EntidadDetalleReserva unDetalle : detalles) {
 			EntidadProductoProductor producto = productoProductorDao.obtenerProductoById(unDetalle.getId_producto());
+			if (producto.getOferta() != null) {
+				if (producto.getOferta().getActivo()) {
+					float precioConOferta = producto.getPrecio()
+							- (producto.getPrecio() * producto.getOferta().getPorcentaje() / 100);
+					unDetalle.setPrecio_por_unidad(precioConOferta);
+				}
+			}
 			unDetalle.setProducto(producto);
 			int stockProducto = producto.getStock();
 			if (unDetalle.getCantidad() > stockProducto) {
