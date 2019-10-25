@@ -55,4 +55,9 @@ public interface ReservaDao extends JpaRepository<EntidadReserva, Long> {
 	@Query(value = " SELECT COUNT(1) AS cantidad FROM Reserva R JOIN Estado_Reserva ER ON R.estado_id = ER.id "
 			+ "WHERE R.productor_id = ?1 AND ER.Nombre = \"Pendiente\" GROUP BY ER.id", nativeQuery = true)
 	Long obtenerCantidadReservasPendientesProductor(Long id_Productor);
+	
+	@Transactional
+	@Modifying
+	@Query(value = "UPDATE Reserva R SET R.fecha = CURDATE() WHERE R.id =?1", nativeQuery = true)
+	void actualizarFechaAlFinalizar(long id_reserva);
 }

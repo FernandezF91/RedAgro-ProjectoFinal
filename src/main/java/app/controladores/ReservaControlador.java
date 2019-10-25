@@ -219,6 +219,7 @@ public class ReservaControlador {
 			}
 
 			String id_reserva = idReserva.toString();
+
 			return new ResponseEntity<>("Reserva #" + id_reserva + " creada correctamente!", HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -256,7 +257,7 @@ public class ReservaControlador {
 						reserva.getConsumidor().getUsuario(), reserva);
 				MailActualizacionReserva mensajeProductor = new MailActualizacionReserva(mailProductor,
 						reserva.getProductor().getUsuario(), reserva);
-				
+
 				mensajeConsumidor.enviarMail();
 				mensajeProductor.enviarMail();
 
@@ -266,6 +267,10 @@ public class ReservaControlador {
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+
+			if (id_estado == 4) {
+				reservaDao.actualizarFechaAlFinalizar(id_reserva);
 			}
 
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
