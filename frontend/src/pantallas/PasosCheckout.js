@@ -223,16 +223,28 @@ const PasosCheckout = (props) => {
                                                 <Col>
                                                     {
                                                         (item.oferta === null) ?
-                                                            <NumberFormat value={item.precio * item.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                            <div>
+                                                                <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                                <span style={{ color: 'gray', fontSize: '12px' }}> por c/u</span>
+                                                            </div>
                                                             :
                                                             (item.oferta.activo) ?
-                                                                <NumberFormat value={(item.precio - item.precio * item.oferta.porcentaje / 100) * item.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                                <div title="Producto en oferta!">
+                                                                    <strike>
+                                                                        <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                                        <span style={{ color: 'gray', fontSize: '12px' }}> por c/u</span>
+                                                                    </strike>
+                                                                    <br />
+                                                                    <NumberFormat value={item.precio - (item.precio * item.oferta.porcentaje / 100)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                                    <span style={{ color: 'gray', fontSize: '12px' }}> por c/u</span>
+                                                                </div>
                                                                 :
                                                                 <div>
-                                                                    <NumberFormat value={item.precio * item.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                                                    <span style={{ color: 'gray', fontSize: '12px' }}> por c/u</span>
                                                                 </div>
+
                                                     }
-                                                    <span style={{ color: 'gray', fontSize: '12px' }}> por c/u</span>
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>

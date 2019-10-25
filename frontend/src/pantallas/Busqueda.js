@@ -46,7 +46,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                                             </div>
                                                             :
                                                             (item.oferta.activo) ?
-                                                                <div>
+                                                                <div title="Producto en oferta!">
                                                                     <strike>
                                                                         <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
                                                                     </strike>

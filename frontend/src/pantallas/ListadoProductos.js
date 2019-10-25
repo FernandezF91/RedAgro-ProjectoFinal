@@ -77,7 +77,7 @@ class ListadoProductos extends Component {
                             <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                             :
                             (item.oferta.activo) ?
-                                <div>
+                                <div title="Producto en oferta">
                                     <strike>
                                         <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                                     </strike>
