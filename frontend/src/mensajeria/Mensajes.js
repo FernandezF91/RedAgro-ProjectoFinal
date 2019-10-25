@@ -113,6 +113,12 @@ class Mensajes extends React.Component {
                 try {
                     if (response.status !== 200) { //==> Creo el usuario
                         path = "https://api.cometchat.com/v1.8/users";
+                        var body = {
+                            "uid": usuario,
+                            "name": nombre,
+                            "status": "online",
+                            "createdAt": "1544090097",
+                        }
                         fetch(path, {
                             method: 'POST',
                             headers: {
@@ -120,12 +126,7 @@ class Mensajes extends React.Component {
                                 'appid': '9835b2e58f31f7',
                                 'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
                             },
-                            body: {
-                                'uid': usuario,
-                                'name': nombre,
-                                'status': "offline",
-                                'createdAt': "1544090097",
-                            }
+                            body: JSON.stringify(body)
                         })
                             .catch(error => console.error(error))
                             .then(response2 => {
@@ -187,7 +188,7 @@ class Mensajes extends React.Component {
 
     componentDidMount() {
         this.chequearUsuarios(this.props.usuarioEmisor.id_msj, this.props.usuarioEmisor.nombre);
-        //this.chequearUsuarios(id_msjUsuarioReceptor, nombreUsuarioReceptor);
+        this.chequearUsuarios(this.props.usuarioReceptor.id_msj, this.props.usuarioReceptor.nombre);
         chat.init();
         chat.login(this.props.usuarioEmisor.id_msj);
         this.cargarHistorialDeMensajes(this.props.usuarioEmisor.id_msj, this.props.usuarioReceptor.id_msj);
