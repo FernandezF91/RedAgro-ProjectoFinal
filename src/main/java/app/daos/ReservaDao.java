@@ -30,7 +30,7 @@ public interface ReservaDao extends JpaRepository<EntidadReserva, Long> {
 	@Query(value = "SELECT P.tipo, SUM(DR.cantidad) AS contador FROM producto P JOIN detalle_reserva DR "
 			+ "	ON P.id = DR.id_producto JOIN reserva R ON DR.id_reserva = R.id "
 			+ " JOIN estado_reserva ER ON R.estado_id = ER.id "
-			+ " WHERE R.Fecha BETWEEN DATE_ADD(CURDATE(), INTERVAL -90 DAY) AND CURDATE()  "
+			+ " WHERE R.Fecha > DATE_ADD(CURDATE(), INTERVAL -90 DAY) "
 			+ " AND ER.nombre = 'Finalizado' AND R.productor_id = ?1 GROUP BY P.tipo ", nativeQuery = true)
 	List<Object[]> obtenerMetricasProductosVendidos(long usuario_id);
 
@@ -38,7 +38,7 @@ public interface ReservaDao extends JpaRepository<EntidadReserva, Long> {
 	// count(R.id) AS cantidad "
 	@Query(value = " SELECT Month(R.fecha) AS mes, count(R.id) AS cantidad "
 			+ " FROM reserva R JOIN estado_reserva ER ON R.estado_id = ER.id "
-			+ " WHERE R.Fecha BETWEEN DATE_ADD(CURDATE(), INTERVAL -180 DAY) AND CURDATE() "
+			+ " WHERE R.Fecha > DATE_ADD(CURDATE(), INTERVAL -180 DAY) "
 			+ " AND ER.nombre = ('Finalizado') AND R.productor_id = ?1 "
 			+ " GROUP BY Month(R.fecha) ORDER BY Month(R.fecha) ", nativeQuery = true)
 	List<Object[]> obtenerMetricasReservasPorMes(long usuario_id);
