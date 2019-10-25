@@ -18,7 +18,7 @@ public class MailActualizacionReserva extends MailSender {
 						+ reserva.getEstado_reserva().getNombre()
 						+ "</strong></em>. Acordate que podes contactar a tu consumidor "
 						+ " y seguir el estado de tu reserva ingresando a tu cuenta en Cultura Verde. </p>"
-						+ "</br>Saludos," + "<br>" + "Equipo de culturaVerde");
+						+ "</br>Saludos," + "</br>" + "Equipo de culturaVerde");
 
 				this.setAsunto("Tu reserva #" + reserva.getId() + " fue actualizada!");
 
@@ -73,7 +73,7 @@ public class MailActualizacionReserva extends MailSender {
 					+ "<p> Se ha actualizado el estado de tu reserva #" + reserva.getId() + " a <em><strong>"
 					+ reserva.getEstado_reserva().getNombre() + "</strong></em>. Acordate que podes contactar a tu "
 					+ rol + " y seguir el estado de tu reserva ingresando a tu cuenta en Cultura Verde. </p>"
-					+ "</br>Saludos," + "<br>" + "Equipo de culturaVerde");
+					+ "</br>Saludos," + "</br>" + "Equipo de culturaVerde");
 
 			this.setAsunto("Tu reserva #" + reserva.getId() + " fue actualizada!");
 		}
