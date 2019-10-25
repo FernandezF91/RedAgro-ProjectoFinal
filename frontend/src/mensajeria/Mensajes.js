@@ -9,7 +9,7 @@ class Mensajes extends React.Component {
         this.state = {
             mensajesAEnviar: null,
             historialMensajes: [],
-            loading: false,
+            loading: true,
         }
     }
 
@@ -51,7 +51,7 @@ class Mensajes extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
         this.sendMessage();
-        this.sendNotification();
+        //   this.sendNotification();
         event.target.reset();
     };
 
@@ -177,6 +177,7 @@ class Mensajes extends React.Component {
                                 id_msj: item.id,
                                 enviadoPor: item.sender,
                                 recibidoPor: item.receiver,
+                                borrado: item.deletedAt,
                                 mensaje: item.data.text
                             }
                         }),
@@ -196,6 +197,9 @@ class Mensajes extends React.Component {
     }
 
     render() {
+        let historialMensajes = this.state.historialMensajes.filter(function (msj) {
+            return msj.borrado === undefined;
+        });
         if (this.state.loading) return (
             <Loader
                 type="Grid"
@@ -209,7 +213,7 @@ class Mensajes extends React.Component {
         return (
             <div className="chatWindow">
                 <ul className="chat" id="chatList">
-                    {this.state.historialMensajes.map(data => (
+                    {historialMensajes.map(data => (
                         <div key={data.id_msj}>
                             {this.props.usuarioEmisor.id_msj === data.enviadoPor ? (
                                 <li className="self">
