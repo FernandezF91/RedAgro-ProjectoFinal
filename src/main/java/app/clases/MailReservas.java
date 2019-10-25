@@ -18,7 +18,6 @@ public class MailReservas extends MailSender {
 				+ "Equipo de culturaVerde");
 
 		this.setAsunto("Tu reserva #" + reserva.getId()+ " fue realizada con éxito!");
-
 	}
 
 	public void enviarMail() throws AddressException, MessagingException {
