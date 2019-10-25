@@ -1,9 +1,7 @@
 import React from 'react';
 import chat from "./Chat";
-import config from "./Config";
 import Loader from 'react-loader-spinner';
 import '../diseños/Mensajes.css'
-import { thisExpression } from '@babel/types';
 
 class Mensajes extends React.Component {
     constructor(props) {
@@ -22,7 +20,7 @@ class Mensajes extends React.Component {
                 var agregarMensaje = {
                     id_msj: this.state.historialMensajes.length,
                     enviadoPor: this.props.usuarioEmisor.id_msj,
-                    recibid_msjoPor: this.state.mensajesAEnviar,
+                    recibidoPor: this.state.mensajesAEnviar,
                     mensaje: this.state.mensajesAEnviar,
                 }
                 let historialDeMensajes = this.state.historialMensajes
@@ -83,8 +81,8 @@ class Mensajes extends React.Component {
 
             var detalleHistorial = {
                 id_msj: data.id_msj,
-                enviadoPor: data.sender.uid_msj,
-                recibid_msjoPor: data.receiver,
+                enviadoPor: data.sender.uid,
+                recibidoPor: data.receiver,
                 mensaje: data.text
             }
 
@@ -106,7 +104,7 @@ class Mensajes extends React.Component {
             {
                 method: 'GET',
                 headers: {
-                    'appid_msj': '9835b2e58f31f7',
+                    'appid': '9835b2e58f31f7',
                     'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
                 },
             })
@@ -119,11 +117,11 @@ class Mensajes extends React.Component {
                             method: 'POST',
                             headers: {
                                 'Content-type': 'application/json',
-                                'appid_msj': '9835b2e58f31f7',
+                                'appid': '9835b2e58f31f7',
                                 'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
                             },
                             body: {
-                                'uid_msj': usuario,
+                                'uid': usuario,
                                 'name': nombre,
                                 'status': "offline",
                                 'createdAt': "1544090097",
@@ -158,7 +156,7 @@ class Mensajes extends React.Component {
             {
                 method: 'GET',
                 headers: {
-                    'appid_msj': '9835b2e58f31f7',
+                    'appid': '9835b2e58f31f7',
                     'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
                 },
             })
@@ -175,9 +173,9 @@ class Mensajes extends React.Component {
                     this.setState({
                         historialMensajes: data.data.map(item => {
                             return {
-                                id_msj: item.id_msj,
+                                id_msj: item.id,
                                 enviadoPor: item.sender,
-                                recibid_msjoPor: item.receiver,
+                                recibidoPor: item.receiver,
                                 mensaje: item.data.text
                             }
                         }),
@@ -187,7 +185,7 @@ class Mensajes extends React.Component {
             })
     }
 
-    componentDid_msjMount() {
+    componentDidMount() {
         this.chequearUsuarios(this.props.usuarioEmisor.id_msj, this.props.usuarioEmisor.nombre);
         //this.chequearUsuarios(id_msjUsuarioReceptor, nombreUsuarioReceptor);
         chat.init();
@@ -199,17 +197,17 @@ class Mensajes extends React.Component {
     render() {
         if (this.state.loading) return (
             <Loader
-                type="Grid_msj"
+                type="Grid"
                 color="#28A745"
                 height={150}
-                wid_msjth={150}
+                width={150}
                 className="loader"
             />
         )
 
         return (
             <div className="chatWindow">
-                <ul className="chat" id_msj="chatList">
+                <ul className="chat" id="chatList">
                     {this.state.historialMensajes.map(data => (
                         <div key={data.id_msj}>
                             {this.props.usuarioEmisor.id_msj === data.enviadoPor ? (
