@@ -91,7 +91,7 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                                         <NumberFormat value={producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                                         :
                                         (producto.oferta.activo) ?
-                                            <div>
+                                            <div title="Producto en oferta!">
                                                 <strike>
                                                     <NumberFormat value={producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                                                 </strike>
