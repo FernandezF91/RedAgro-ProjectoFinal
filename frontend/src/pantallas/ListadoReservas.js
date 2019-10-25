@@ -46,11 +46,13 @@ class ListadoReservas extends Component {
             datosParaMensajes: {
                 showModal: false,
                 usuarioEmisor: {
-                    id: (this.props.usuario.rol + this.props.usuario.id).toLowerCase(),
+                    id: this.props.usuario.id,
+                    id_msj: (this.props.usuario.rol + this.props.usuario.id).toLowerCase(),
                     nombre: (this.props.usuario.nombre + " " + this.props.usuario.apellido),
                 },
                 usuarioReceptor: {
                     id: '',
+                    id_msj: '',
                     nombre: '',
                 }
             }
@@ -362,7 +364,8 @@ class ListadoReservas extends Component {
                     ...this.state.datosParaMensajes,
                     showModal: true,
                     usuarioReceptor: {
-                        id: "productor" + item.productor.id,
+                        id: item.productor.id,
+                        id_msj: "productor" + item.productor.id,
                         nombre: item.productor.nombre + " " + item.productor.apellido,
                     }
                 }
@@ -373,7 +376,8 @@ class ListadoReservas extends Component {
                     ...this.state.datosParaMensajes,
                     showModal: true,
                     usuarioReceptor: {
-                        id: "consumidor" + item.consumidor.id,
+                        id: item.consumidor.id,
+                        id_msj: "consumidor" + item.consumidor.id,
                         nombre: item.consumidor.nombre + " " + item.consumidor.apellido,
                     }
                 }

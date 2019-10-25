@@ -24,7 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import app.clases.MailReservas;
+import app.clases.MailNuevaReserva;
+import app.clases.MailActualizacionReserva;
 import app.clases.Reserva;
 import app.clases.ResultadosEstadisticas;
 import app.daos.ProductoProductorDao;
@@ -205,7 +206,7 @@ public class ReservaControlador {
 
 			try {
 				usuario = mapeo.mapFromEntity(nuevaReserva).getConsumidor().getUsuario().getUsuario();
-				MailReservas mailConsumidor = new MailReservas(usuario, mapeo.mapFromEntity(nuevaReserva));
+				MailNuevaReserva mailConsumidor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva));
 
 				mailConsumidor.enviarMail();
 
@@ -229,6 +230,7 @@ public class ReservaControlador {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping(path = "redAgro/actualizarEstadoReserva")
 	public ResponseEntity<String> actualizarEstadoReserva(@RequestParam long id_reserva, @RequestParam long id_estado) {
+		ReservaMapper mapeo = new ReservaMapper();
 		try {
 			reservaDao.actualizarEstadoReserva(id_reserva, id_estado);
 			if (id_estado == 5) {
@@ -244,7 +246,30 @@ public class ReservaControlador {
 					}
 				}
 			}
+			// Genero los mails de alertas
+			Reserva reserva = mapeo.mapFromEntity(reservaDao.obtenerReservaById(id_reserva));
+			String mailConsumidor = reserva.getConsumidor().getUsuario().getUsuario();
+			String mailProductor = reserva.getProductor().getUsuario().getUsuario();
+			try {
+
+				MailActualizacionReserva mensajeConsumidor = new MailActualizacionReserva(mailConsumidor,
+						reserva.getConsumidor().getUsuario(), reserva);
+				MailActualizacionReserva mensajeProductor = new MailActualizacionReserva(mailProductor,
+						reserva.getProductor().getUsuario(), reserva);
+				
+				mensajeConsumidor.enviarMail();
+				mensajeProductor.enviarMail();
+
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>("Ocurrió un error al actualizar tu reserva. Reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);

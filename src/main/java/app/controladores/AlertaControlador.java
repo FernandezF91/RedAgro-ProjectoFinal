@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import app.daos.AlertaDao;
 import app.daos.UsuarioDao;
 import app.modelos.EntidadAlerta;
@@ -27,6 +30,7 @@ import app.clases.AlertaFrecuencia;
 import app.clases.AlertaUsuario;
 import app.clases.AlertaConfiguracion;
 import app.clases.Usuario;
+import app.clases.MailMensajes;
 
 @RestController
 public class AlertaControlador {
@@ -75,7 +79,7 @@ public class AlertaControlador {
 				EntidadAlertaUsuario nueva = mapeoDeAlertaUsuario.mapToEntity(alertaUsuario);
 				nuevasAlertas.add(nueva);
 			}
-			
+
 			alertaDAO.saveAll(nuevasAlertas);
 			return new ResponseEntity<>("Alertas actualizadas correctamente!", HttpStatus.OK);
 		} catch (Exception e) {
@@ -83,5 +87,30 @@ public class AlertaControlador {
 					"Ocurrió un error al guardar las alertas. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PostMapping(path = "redAgro/Alertas/NuevoMensaje")
+	public ResponseEntity<String> notificarNuevoMensaje(@RequestParam long id_Emisor, @RequestParam long id_Receptor) {
+
+		UsuarioMapper userMapper = new UsuarioMapper();
+		Usuario usuarioEmisor = userMapper.mapFromEntity(usuarioDAO.obtenerDatosUsuario(id_Emisor));
+		//ACÁ HABRIA QUE VALIDAR SI EL EMISOR TIENE CONFIGURADO EL ENVIO DE MAILS.
+		Usuario usuarioReceptor = userMapper.mapFromEntity(usuarioDAO.obtenerDatosUsuario(id_Receptor));
+		String mail = usuarioReceptor.getUsuario();
+
+		try {
+			MailMensajes nuevoMensaje = new MailMensajes(mail, usuarioEmisor, usuarioReceptor);
+			nuevoMensaje.enviarMail();
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<>("Ocurrió un error en el envio del mail.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return new ResponseEntity<>("Mail enviado correctamente!", HttpStatus.OK);
 	}
 }

@@ -16,13 +16,13 @@ class Mensajes extends React.Component {
     }
 
     sendMessage = () => {
-        chat.sendPrivateMessage(this.props.usuarioEmisor.id, this.state.mensajesAEnviar, this.props.usuarioReceptor.id).then(
+        chat.sendPrivateMessage(this.props.usuarioEmisor.id_msj, this.state.mensajesAEnviar, this.props.usuarioReceptor.id_msj).then(
             message => {
                 console.log("Message sent successfully:", message);
                 var agregarMensaje = {
-                    id: this.state.historialMensajes.length,
-                    enviadoPor: this.props.usuarioEmisor.id,
-                    recibidoPor: this.state.mensajesAEnviar,
+                    id_msj: this.state.historialMensajes.length,
+                    enviadoPor: this.props.usuarioEmisor.id_msj,
+                    recibid_msjoPor: this.state.mensajesAEnviar,
                     mensaje: this.state.mensajesAEnviar,
                 }
                 let historialDeMensajes = this.state.historialMensajes
@@ -37,6 +37,14 @@ class Mensajes extends React.Component {
             })
     };
 
+    sendNotification = () => {
+        var path = "http://localhost:3000/redAgro/Alertas/NuevoMensaje?id_Emisor=" + this.setState.usuarioEmisor.id + "&id_Receptor=" + this.setState.usuarioReceptor.id;
+        fetch(path, {
+            method: "POST",
+            headers: { 'Content-type': 'application/json;charset=UTF-8' }
+        })
+    }
+
     scrollToBottom = () => {
         const chat = document.getElementById("chatList");
         chat.scrollTop = chat.scrollHeight;
@@ -45,6 +53,7 @@ class Mensajes extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
         this.sendMessage();
+        this.sendNotification();
         event.target.reset();
     };
 
@@ -73,9 +82,9 @@ class Mensajes extends React.Component {
             if (error) return console.log(`error: ${error}`);
 
             var detalleHistorial = {
-                id: data.id,
-                enviadoPor: data.sender.uid,
-                recibidoPor: data.receiver,
+                id_msj: data.id_msj,
+                enviadoPor: data.sender.uid_msj,
+                recibid_msjoPor: data.receiver,
                 mensaje: data.text
             }
 
@@ -97,7 +106,7 @@ class Mensajes extends React.Component {
             {
                 method: 'GET',
                 headers: {
-                    'appid': '9835b2e58f31f7',
+                    'appid_msj': '9835b2e58f31f7',
                     'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
                 },
             })
@@ -110,11 +119,11 @@ class Mensajes extends React.Component {
                             method: 'POST',
                             headers: {
                                 'Content-type': 'application/json',
-                                'appid': '9835b2e58f31f7',
+                                'appid_msj': '9835b2e58f31f7',
                                 'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
                             },
                             body: {
-                                'uid': usuario,
+                                'uid_msj': usuario,
                                 'name': nombre,
                                 'status': "offline",
                                 'createdAt': "1544090097",
@@ -149,7 +158,7 @@ class Mensajes extends React.Component {
             {
                 method: 'GET',
                 headers: {
-                    'appid': '9835b2e58f31f7',
+                    'appid_msj': '9835b2e58f31f7',
                     'apikey': 'd1a0006501d645fd2419b8dbdec84d5ae5d2fe5b'
                 },
             })
@@ -166,9 +175,9 @@ class Mensajes extends React.Component {
                     this.setState({
                         historialMensajes: data.data.map(item => {
                             return {
-                                id: item.id,
+                                id_msj: item.id_msj,
                                 enviadoPor: item.sender,
-                                recibidoPor: item.receiver,
+                                recibid_msjoPor: item.receiver,
                                 mensaje: item.data.text
                             }
                         }),
@@ -178,32 +187,32 @@ class Mensajes extends React.Component {
             })
     }
 
-    componentDidMount() {
-        this.chequearUsuarios(this.props.usuarioEmisor.id, this.props.usuarioEmisor.nombre);
-        //this.chequearUsuarios(idUsuarioReceptor, nombreUsuarioReceptor);
+    componentDid_msjMount() {
+        this.chequearUsuarios(this.props.usuarioEmisor.id_msj, this.props.usuarioEmisor.nombre);
+        //this.chequearUsuarios(id_msjUsuarioReceptor, nombreUsuarioReceptor);
         chat.init();
-        chat.login(this.props.usuarioEmisor.id);
-        this.cargarHistorialDeMensajes(this.props.usuarioEmisor.id, this.props.usuarioReceptor.id);
+        chat.login(this.props.usuarioEmisor.id_msj);
+        this.cargarHistorialDeMensajes(this.props.usuarioEmisor.id_msj, this.props.usuarioReceptor.id_msj);
         this.messageListener();
     }
 
     render() {
         if (this.state.loading) return (
             <Loader
-                type="Grid"
+                type="Grid_msj"
                 color="#28A745"
                 height={150}
-                width={150}
+                wid_msjth={150}
                 className="loader"
             />
         )
 
         return (
             <div className="chatWindow">
-                <ul className="chat" id="chatList">
+                <ul className="chat" id_msj="chatList">
                     {this.state.historialMensajes.map(data => (
-                        <div key={data.id}>
-                            {this.props.usuarioEmisor.id === data.enviadoPor ? (
+                        <div key={data.id_msj}>
+                            {this.props.usuarioEmisor.id_msj === data.enviadoPor ? (
                                 <li className="self">
                                     <div className="mensajeEnviado">
                                         <p>{this.props.usuarioEmisor.nombre}</p>
