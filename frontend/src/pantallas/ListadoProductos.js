@@ -9,7 +9,7 @@ import NumberFormat from 'react-number-format';
 import moment from 'moment';
 import { MDBModal, MDBModalBody, MDBModalHeader } from 'mdbreact';
 import Button from 'react-bootstrap/Button';
-import { InputGroup, FormControl } from 'react-bootstrap';
+import { InputGroup, Form } from 'react-bootstrap';
 
 const tamañosListado = [
     { label: "5", value: "5" },
@@ -32,11 +32,11 @@ class ListadoProductos extends Component {
             showModal: false,
             idProductoOferta: 0,
             porcentaje: 0,
-            idOferta: 0,
-            checkOferta: true,
+            idOferta: null,
+            checkOferta: false,
             currentPage: 1,
             productosPerPage: 5,
-            defaultListado: [{ label: "5", value: "5" }],
+            defaultListado: [{ label: "5", value: "5" }]
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.abrirModal = this.abrirModal.bind(this);
@@ -72,7 +72,20 @@ class ListadoProductos extends Component {
                 <td>{item.tipoDeUnidad}</td>
                 <td>{item.tipoDeProduccion}</td>
                 <td className="columnaPrecio">
-                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                    {
+                        (item.oferta === null) ?
+                            <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                            :
+                            (item.oferta.activo) ? <div>
+                                <strike>
+                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                </strike>
+                                <br />
+                                <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                            </div>
+                                :
+                                <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                    }
                 </td>
                 <td>{item.fechaDeVencimiento}</td>
                 <td>{item.tiempoDePreparacion}</td>
@@ -89,20 +102,30 @@ class ListadoProductos extends Component {
     }
 
     abrirModalOferta = (idProductoProductor, precioActual, oferta) => {
-        var idOferta = 0
-        if (oferta !== undefined) {
-            idOferta = oferta.id
+        if (oferta !== null) {
+            this.setState({
+                idProductoOferta: idProductoProductor,
+                disabledOferta: !oferta.activo,
+                checkOferta: oferta.activo,
+                porcentaje: oferta.porcentaje,
+                idOferta: oferta.id,
+                precioActual: precioActual,
+            })
+
+        } else {
+            this.setState({
+                idProductoOferta: idProductoProductor,
+                disabledOferta: true,
+                checkOferta: false,
+                porcentaje: 0,
+                idOferta: null,
+                precioActual: precioActual,
+            })
         }
-        this.setState({
-            idProductoOferta: idProductoProductor,
-            idOferta: idOferta,
-            precioActual: precioActual
-        })
         this.abrirModal();
     }
 
     abrirModal() {
-        console.log(this.state.idOferta);
         this.setState({
             showModal: true
         })
@@ -120,27 +143,40 @@ class ListadoProductos extends Component {
         })
     }
 
-    guardarOferta() {
-        var _this = this;
-        _this.setState({
-            loading: true
-        })
-
-        var path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta;
-        fetch(path, {
-            method: "PUT"
-        })
-            .then(function (response) {
-                _this.setState({
-                    showModal: false,
-                    estadoSeleccionado: ""
-                })
-            })
-        //TODO: cambiarlo para que solo actualice la parte del listado.
-
-        window.location.reload();
+    validarPorcentaje() {
+        if (this.state.porcentaje > 100 || this.state.porcentaje < 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
+    guardarOferta() {
+        if (this.validarPorcentaje()) {
+            var _this = this;
+            _this.setState({
+                loading: true
+            })
+
+            if (_this.state.idOferta === undefined) {
+                var path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta;
+            } else {
+                var path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta + "&id_oferta=" + _this.state.idOferta;
+            }
+            fetch(path, {
+                method: "PUT"
+            })
+                .then(function (response) {
+                    _this.setState({
+                        showModal: false,
+                        estadoSeleccionado: ""
+                    })
+                })
+            //TODO: cambiarlo para que solo actualice la parte del listado.
+
+            window.location.reload();
+        }
+    }
 
     handleCheckChangeActivo(e) {
         if (e.target.checked === true) {
@@ -260,40 +296,59 @@ class ListadoProductos extends Component {
                                 <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
                             </div>
                         </MDBModalHeader>
-                        <MDBModalBody>
-                            <div className="alineacionIzquierda">
-                                <label className="checkbox-inline">
-                                    <input
-                                        type="checkbox"
-                                        value="checkOferta"
-                                        className="checkbox-input checkbox"
-                                        checked={this.state.checkOferta}
-                                        onChange={this.handleCheckChangeActivo}
-                                    />
-                                    Activar oferta</label>
-                            </div>
+                        <MDBModalBody className="alineacionIzquierda">
+                            <label className="checkbox-inline">
+                                <input
+                                    type="checkbox"
+                                    value="checkbox"
+                                    className="checkbox-input checkbox"
+                                    checked={this.state.checkOferta}
+                                    onChange={this.handleCheckChangeActivo}
+                                />Activar oferta
+                            </label>
                             <br />
-                            <h6>Precio actual: <NumberFormat value={this.state.precioActual} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /></h6>
                             <br />
-                            <div className="modalActualizaciones alineacionIzquierda">
+                            <h6>Precio actual: &nbsp;
+                                <b>
+                                    <NumberFormat value={this.state.precioActual} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                </b>
+                            </h6>
+                            <br />
+                            <div className="modalActualizaciones">
                                 <span className="tituloCampoModal">Porcentaje de descuento</span>
                                 <InputGroup className="campoOferta">
-                                    <FormControl
-                                        value={this.state.campos["porcentaje"]}
-                                        type="integer"
+                                    <Form.Control
+                                        value={this.state.porcentaje}
+                                        type="number"
                                         name="porcentajeCampo"
                                         min="1"
                                         max="100"
                                         onChange={(e) => this.detectarCambios(e)}
                                         disabled={this.state.disabledOferta}
+                                        className="inputDerecha"
                                     />
                                     <InputGroup.Append>
-                                        <InputGroup.Text className="iconoPrecio sinBorde">%</InputGroup.Text>
+                                        <InputGroup.Text className="iconoPrecio sinBorde inputIcono">%</InputGroup.Text>
                                     </InputGroup.Append>
                                 </InputGroup>
+                                {
+                                    (this.state.porcentaje > 100 || this.state.porcentaje < 0) &&
+                                    <div className="mensajeErrorForm">
+                                        <i class="fa fa-exclamation-circle" title="Porcentaje inválido" />
+                                    </div>
+                                }
                             </div>
                             <br />
-                            <h6>Nuevo precio: <NumberFormat value={this.state.precioActual - (this.state.precioActual * this.state.porcentaje) / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> </h6>
+                            <h6>Nuevo precio: &nbsp;
+                                <b>
+                                    {
+                                        (this.state.porcentaje > 100 || this.state.porcentaje < 0) ?
+                                            "-"
+                                            :
+                                            <NumberFormat value={this.state.precioActual - (this.state.precioActual * this.state.porcentaje) / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                    }
+                                </b>
+                            </h6>
                             <br />
                             <div className="row justify-content-center">
                                 <Button variant="success" type="submit" onClick={this.guardarOferta}>Guardar</Button>

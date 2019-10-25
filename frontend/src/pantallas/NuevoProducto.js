@@ -518,7 +518,7 @@ class NuevoProducto extends Component {
                                     type="text"
                                     name="precio"
                                     onChange={(e) => this.detectarCambios(e)}
-                                    className="campoSinBordeNumeros"
+                                    className="campoSinBordeNumeros inputDerecha"
                                 />
                             </InputGroup>
                         </Form.Group>

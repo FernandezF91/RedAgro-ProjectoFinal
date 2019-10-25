@@ -17,21 +17,23 @@ public class OfertaControlador {
 
 	@Autowired
 	OfertaDao ofertaDao;
-	
+
 	@Autowired
 	ProductoProductorDao productoProductorDao;
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping(path = "redAgro/guardarOferta")
-	public ResponseEntity<String> guardarOferta(@RequestParam long id_producto_productor, @RequestParam int porcentaje,
-			@RequestParam boolean activo) {
+	public ResponseEntity<String> guardarOferta(@RequestParam long id_producto_productor,
+			@RequestParam int porcentaje, @RequestParam boolean activo, @RequestParam(required = false) long id_oferta) {
 		try {
+			EntidadOferta oferta = new EntidadOferta();
 
-			EntidadOferta oferta =  new EntidadOferta();
+			if (Long.valueOf(id_oferta) != null) {
+				oferta.setId(id_oferta);
+			}
 			oferta.setproducto_productor_id(id_producto_productor);
 			oferta.setPorcentaje(porcentaje);
 			oferta.setActivo(activo);
-
 			ofertaDao.save(oferta);
 
 			return new ResponseEntity<>("Oferta guardada correctamente!", HttpStatus.OK);

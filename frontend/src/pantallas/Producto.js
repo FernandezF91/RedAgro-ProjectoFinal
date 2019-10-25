@@ -47,6 +47,10 @@ const columnas = [
     {
         label: '',
         field: 'Editar',
+    },
+    {
+        label: '',
+        field: 'Ofertas',
     }
 ];
 

@@ -269,7 +269,7 @@ input[type=text] {
 }
 
 .campoOferta {
-    width: 150px !important;
+    width: 130px !important;
     margin-left: 20px !important;
 }
 
@@ -282,5 +282,21 @@ input[type=text] {
 }
 
 .alineacionIzquierda {
-    text-align: left;;
+    text-align: left;
+}
+
+.inputDerecha {
+    text-align: right;
+}
+
+.inputIcono {
+    border-top-right-radius: .25rem !important;
+    border-bottom-right-radius: .25rem !important;
+}
+
+.mensajeErrorForm {
+    align-self: center;
+    color: #D31212;
+    margin-left: 5px;
+    font-size: 24px;
 }
