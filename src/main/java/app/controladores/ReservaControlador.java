@@ -276,7 +276,7 @@ public class ReservaControlador {
 				e.printStackTrace();
 			}
 
-			if (id_estado == 4) {
+			if (reserva.getFecha() == null && (id_estado == 4 || id_estado == 5)) {
 				reservaDao.actualizarFechaAlFinalizar(id_reserva);
 			}
 
