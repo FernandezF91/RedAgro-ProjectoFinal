@@ -197,14 +197,14 @@ class ListadoPuntosEntrega extends Component {
                     {punto.direccion}
                 </td>
                 <td>
-                    <i class="far fa-calendar-alt iconosTabla" title="Ver fechas" onClick={clickFechas} />
+                    <i className="far fa-calendar-alt iconosTabla" title="Ver fechas" onClick={clickFechas} />
                 </td>
                 <td>
                     {
                         punto.activo === false ?
-                            <i class="fa fa-check-circle verde iconosTabla" onClick={clickAltaBaja} title="Alta" />
+                            <i className="fa fa-check-circle verde iconosTabla" onClick={clickAltaBaja} title="Alta" />
                             :
-                            <i class="fa fa-times-circle rojo iconosTabla" onClick={clickAltaBaja} title="Baja" />
+                            <i className="fa fa-times-circle rojo iconosTabla" onClick={clickAltaBaja} title="Baja" />
                     }
                 </td>
             </tr>

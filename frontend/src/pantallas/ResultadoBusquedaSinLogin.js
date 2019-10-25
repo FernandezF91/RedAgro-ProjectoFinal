@@ -222,7 +222,7 @@ class ResultadoBusquedaSinLogin extends Component {
                         <div className="modalMargenes">
                             <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
                             <br />
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 <i className="fas fa-shopping-cart iconoModal" />
                                 <br />
                                 <br />

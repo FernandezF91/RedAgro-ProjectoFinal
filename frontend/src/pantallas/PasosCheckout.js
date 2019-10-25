@@ -186,7 +186,7 @@ const PasosCheckout = (props) => {
                         </Card>
 
                         <Card border="light">
-                            <Card.Header className="cardHeader"><i class="fas fa-shopping-basket" /> Productos seleccionados</Card.Header>
+                            <Card.Header className="cardHeader"><i className="fas fa-shopping-basket" /> Productos seleccionados</Card.Header>
                             <ListGroup>
                                 {
                                     props.productosSeleccionados.map(item => (
