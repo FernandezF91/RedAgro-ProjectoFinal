@@ -214,7 +214,7 @@ class AlertaConsumidor extends Component {
         return configuraciones;
     }
 
-    handleFormSubmit = formSubmitEvent => {
+    guardarConfiguracionAlertas = formSubmitEvent => {
         formSubmitEvent.preventDefault();
         var _this = this;
         var configuraciones = [];
@@ -309,7 +309,7 @@ class AlertaConsumidor extends Component {
                 <div className="descripcionPagina">
                     <h5>Configura las alertas que recibiras por mail:</h5>
                 </div>
-                <form onSubmit={this.handleFormSubmit}>
+                <form onSubmit={this.guardarConfiguracionAlertas}>
                     <div className="radioButtons" align="left">
                         <h5>
                             <label className="checkbox-inline">
@@ -512,7 +512,7 @@ class AlertaConsumidor extends Component {
                 </form>
                 <div className="botones">
                     <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
-                    <Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
+                    <Button variant="success" type="submit" onClick={this.guardarConfiguracionAlertas}>Guardar</Button>
                 </div>
                 {
                     (this.state.showModal) &&
