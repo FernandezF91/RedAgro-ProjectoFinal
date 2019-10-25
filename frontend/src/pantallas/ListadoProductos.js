@@ -339,7 +339,7 @@ class ListadoProductos extends Component {
                                 {
                                     (this.state.porcentaje > 100 || this.state.porcentaje < 0) &&
                                     <div className="mensajeErrorForm">
-                                        <i class="fa fa-exclamation-circle" title="Porcentaje inválido" />
+                                        <i className="fa fa-exclamation-circle" title="Porcentaje inválido" />
                                     </div>
                                 }
                             </div>
