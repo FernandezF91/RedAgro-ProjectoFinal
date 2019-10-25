@@ -3,9 +3,9 @@ package app.clases;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-public class MailReservas extends MailSender {
+public class MailNuevaReserva extends MailSender {
 
-	public MailReservas(String to, Reserva reserva) {
+	public MailNuevaReserva(String to, Reserva reserva) {
 		this.setTo(to);
 		this.setContenido_email("<div><h2>Felicitaciones " + reserva.getConsumidor().getUsuario().getNombre()
 				+ "! Tu reserva ha sido confirmada</h2>" 

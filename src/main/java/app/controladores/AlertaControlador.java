@@ -28,7 +28,6 @@ import app.mappers.UsuarioMapper;
 import app.clases.Alerta;
 import app.clases.AlertaFrecuencia;
 import app.clases.AlertaUsuario;
-import app.clases.MailReservas;
 import app.clases.AlertaConfiguracion;
 import app.clases.Usuario;
 import app.clases.MailMensajes;

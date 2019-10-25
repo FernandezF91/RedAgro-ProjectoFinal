@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import app.clases.MailReservas;
+import app.clases.MailNuevaReserva;
 import app.clases.Reserva;
 import app.clases.ResultadosEstadisticas;
 import app.daos.ProductoProductorDao;
@@ -205,7 +205,7 @@ public class ReservaControlador {
 
 			try {
 				usuario = mapeo.mapFromEntity(nuevaReserva).getConsumidor().getUsuario().getUsuario();
-				MailReservas mailConsumidor = new MailReservas(usuario, mapeo.mapFromEntity(nuevaReserva));
+				MailNuevaReserva mailConsumidor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva));
 
 				mailConsumidor.enviarMail();
 
