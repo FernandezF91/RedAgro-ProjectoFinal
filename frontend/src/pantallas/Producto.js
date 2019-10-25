@@ -51,6 +51,10 @@ const columnas = [
     {
         label: '',
         field: 'Ofertas',
+    },
+    {
+        label: '',
+        field: 'Eliminar',
     }
 ];
 
