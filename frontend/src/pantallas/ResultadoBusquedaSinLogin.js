@@ -31,6 +31,7 @@ class ResultadoBusquedaSinLogin extends Component {
             showModal: false,
         }
         this.cerrarModal = this.cerrarModal.bind(this);
+        this.mostrarDetalleProducto = this.mostrarDetalleProducto.bind(this);
     }
 
     nextPage = (pageNumber) => {
@@ -113,6 +114,12 @@ class ResultadoBusquedaSinLogin extends Component {
                     })
                 }
             })
+    }
+
+    mostrarDetalleProducto = (productoSeleccionado) => {
+        this.setState({
+            showModal: true
+        });
     }
 
     restarProducto = (position) => {
@@ -200,7 +207,8 @@ class ResultadoBusquedaSinLogin extends Component {
                 <Busqueda listaDeProductos={listadoBusqueda}
                     sumarProducto={this.sumarProducto}
                     restarProducto={this.restarProducto}
-                    agregarAlCarrito={this.agregarAlCarrito} />
+                    agregarAlCarrito={this.agregarAlCarrito}
+                    mostrarDetalleProducto={this.mostrarDetalleProducto} />
                 {
                     resultadoBusqueda.length > tamañoListado ?
                         <Paginacion
