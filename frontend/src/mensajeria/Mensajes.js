@@ -9,7 +9,7 @@ class Mensajes extends React.Component {
         this.state = {
             mensajesAEnviar: null,
             historialMensajes: [],
-            loading: true,
+            //loading: true,
         }
     }
 
@@ -202,7 +202,7 @@ class Mensajes extends React.Component {
         }).filter(function (item) {
             return item.mensaje !== undefined;
         })
-        
+
         if (this.state.loading) return (
             <Loader
                 type="Grid"
