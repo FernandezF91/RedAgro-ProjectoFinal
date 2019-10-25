@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import app.modelos.EntidadReserva;
 
 public interface ReservaDao extends JpaRepository<EntidadReserva, Long> {
+	
+	@Query(value = "SELECT * FROM Reserva WHERE id = ?1", nativeQuery = true)
+	EntidadReserva obtenerReservaById(long id);
 
 	@Query(value = "SELECT * FROM Reserva WHERE consumidor_id = ?1 ORDER BY fecha_creacion DESC, id DESC", nativeQuery = true)
 	List<EntidadReserva> obtenerReservasByConsumidor(long id);
