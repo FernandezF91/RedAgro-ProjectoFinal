@@ -94,7 +94,7 @@ const Reserva = ({ lista, rolUsuario }) => {
 	return (
 		<div>
 			{lista.length > 0 ?
-				<MDBTable responsive hover>
+				<MDBTable striped responsive hover>
 					{
 						(rolUsuario === "Consumidor") ?
 							<MDBTableHead columns={columnasConsumidor} />
