@@ -199,7 +199,10 @@ class Mensajes extends React.Component {
     render() {
         let historialMensajes = this.state.historialMensajes.filter(function (msj) {
             return msj.borrado === undefined;
-        });
+        }).filter(function (item) {
+            return item.mensaje !== undefined;
+        })
+        
         if (this.state.loading) return (
             <Loader
                 type="Grid"
