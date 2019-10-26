@@ -123,6 +123,7 @@ class ResultadoBusqueda extends Component {
                                         telefono: item.productor.usuario.telefono,
                                     },
                                     imagenes: item.imagenes,
+                                    oferta: item.oferta
                                 }
                             }),
                             loading: false
@@ -333,7 +334,7 @@ class ResultadoBusqueda extends Component {
                     resultadoBusqueda.length > 0 ?
                         <div className="opcionesCantidad">
                             <span className="tituloCantidad">Resultados por página</span>
-                            <Select 
+                            <Select
                                 className="cantidadProductos"
                                 value={defaultListado}
                                 options={tamañosListado}

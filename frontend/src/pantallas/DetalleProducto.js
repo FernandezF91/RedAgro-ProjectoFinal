@@ -73,6 +73,7 @@ class DetalleBusqueda extends Component {
                                 telefono: data.productor.usuario.telefono,
                             },
                             imagenes: data.imagenes,
+                            oferta: data.oferta
                         },
                         loading: false
                     })
@@ -223,9 +224,27 @@ class DetalleBusqueda extends Component {
                         <h6 className="grey-text">{this.state.producto.categoria}</h6>
                         <h3 className="tituloProducto">{this.state.producto.titulo}</h3>
                         <h3 className="precioProducto">
-                            <NumberFormat value={this.state.producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /></h3>
-                        x {this.state.producto.tipoDeUnidad}
 
+                            {
+                                (this.state.producto.oferta === null || this.state.producto.oferta === undefined) ?
+                                    <div>
+                                        <NumberFormat value={this.state.producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {this.state.producto.tipoDeUnidad}
+                                    </div>
+                                    :
+                                    (this.state.producto.oferta.activo) ?
+                                        <div title="Producto en oferta!">
+                                            <strike>
+                                                <NumberFormat value={this.state.producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {this.state.producto.tipoDeUnidad}
+                                            </strike>
+                                            <br />
+                                            <NumberFormat value={this.state.producto.precio - this.state.producto.precio * this.state.producto.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {this.state.producto.tipoDeUnidad}
+                                        </div>
+                                        :
+                                        <div>
+                                            <NumberFormat value={this.state.producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {this.state.producto.tipoDeUnidad}
+                                        </div>
+                            }
+                        </h3>
                         <div className="descripcionProducto">
                             Producido por:
                         <h6>{this.state.producto.productor.razon_social}</h6>
