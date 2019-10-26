@@ -4,7 +4,7 @@ import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/Login.css';
 import '../diseños/estilosGlobales.css';
-import Modal from 'react-awesome-modal';
+import { MDBModal } from 'mdbreact';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class LoginForm extends Component {
             fields: [],
             errores: [],
             usuario: {},
-            visible: false,
+            showModal: false,
             mensajeError: "",
             rolUsuario: ""
         }
@@ -23,6 +23,7 @@ class LoginForm extends Component {
         this.validarDatos = this.validarDatos.bind(this);
         this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
         this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
     }
 
     detectarCambios(e) {
@@ -33,10 +34,10 @@ class LoginForm extends Component {
         })
     }
 
-    closeModal() {
+    cerrarModal() {
         this.setState({
-            visible: false
-        });
+            showModal: false
+        })
     }
 
     onKeyPress = e => {
@@ -101,7 +102,7 @@ class LoginForm extends Component {
                             } else {
                                 let mensajeError = "Cuenta inexistente o datos incorrectos";
                                 _this.setState({
-                                    visible: true,
+                                    showModal: true,
                                     mensajeError: mensajeError
                                 });
                             }
@@ -109,7 +110,6 @@ class LoginForm extends Component {
                         });
                 });
         }
-
         this.setState({
             errores
         })
@@ -190,23 +190,24 @@ class LoginForm extends Component {
                         </div>
                         <a href="/recupero_email">Olvidé mi contraseña</a>
                     </div>
-                    <section>
-                        <Modal
-                            visible={this.state.visible}
-                            width="400"
-                            height="120"
-                            effect="fadeInUp"
-                            onClickAway={this.closeModal}
-                        >
-                            <div>
-                                <h1>Error</h1>
-                                <p>
-                                    {this.state.mensajeError}
-                                </p>
-                                <a href="javascript:void(0);" onClick={this.closeModal}>Volver</a>
-                            </div>
-                        </Modal>
-                    </section>
+                    {
+                        (this.state.showModal) &&
+                        (
+                            <MDBModal isOpen={this.state.showModal} centered size="sm">
+                                <div className="modalMargenes">
+                                    <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                    <br />
+                                    <div>
+                                        <i className="fas fa-exclamation-circle iconoModalError" />
+                                        <br />
+                                        <br />
+                                        <h5>{this.state.mensajeError}</h5>
+                                    </div>
+                                </div>
+
+                            </MDBModal>
+                        )
+                    }
                 </Container>
             </div>
         );

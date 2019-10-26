@@ -447,7 +447,7 @@ class AlertaProductor extends Component {
                         </MDBModal>
                     )
                 }
-            </div >
+            </div>
         );
     };
 }
