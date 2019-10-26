@@ -16,9 +16,9 @@ public class EntidadOferta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-    @Column(name = "producto_productor_id")
-    private long producto_productor_id;
+
+	@Column(name = "producto_productor_id")
+	private long producto_productor_id;
 
 	@OneToOne
 	@JoinColumn(name = "producto_productor_id", nullable = false, updatable = false, insertable = false)
@@ -37,11 +37,11 @@ public class EntidadOferta {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public long getProductoProductorId() {
 		return producto_productor_id;
 	}
-	
+
 	public void setProductoProductorId(long producto_productor_id) {
 		this.producto_productor_id = producto_productor_id;
 	}

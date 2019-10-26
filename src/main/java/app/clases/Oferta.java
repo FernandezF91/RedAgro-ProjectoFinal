@@ -24,7 +24,7 @@ public class Oferta {
 	public long getProductoProductorId() {
 		return productoProductorId;
 	}
-	
+
 	public void setProductoProductorId(long productoProductorId) {
 		this.productoProductorId = productoProductorId;
 	}
@@ -40,7 +40,7 @@ public class Oferta {
 	public boolean getActivo() {
 		return activo;
 	}
-	
+
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}

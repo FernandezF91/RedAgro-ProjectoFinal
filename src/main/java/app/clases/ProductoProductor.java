@@ -5,8 +5,9 @@ import java.util.List;
 
 public class ProductoProductor {
 
-	public ProductoProductor(long id, Productor productor, Producto producto, String titulo, String descripcion, List<Imagen> imagenes,
-							 String tipo_produccion, int stock, Date fecha_vencimiento, String contenido, String unidad_venta, float precio, int tiempo_preparacion, Oferta oferta) {
+	public ProductoProductor(long id, Productor productor, Producto producto, String titulo, String descripcion,
+			List<Imagen> imagenes, String tipo_produccion, int stock, Date fecha_vencimiento, String contenido,
+			String unidad_venta, float precio, int tiempo_preparacion, Oferta oferta) {
 		this.setId(id);
 		this.setProductor(productor);
 		this.setProducto(producto);
@@ -37,7 +38,6 @@ public class ProductoProductor {
 	private String contenido;
 	private String unidad_venta;
 	private Oferta oferta;
-	
 
 	public long getId() {
 		return id;
@@ -118,7 +118,7 @@ public class ProductoProductor {
 	public void setTiempo_preparacion(int tiempo_preparacion) {
 		this.tiempo_preparacion = tiempo_preparacion;
 	}
-	
+
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -146,7 +146,7 @@ public class ProductoProductor {
 	public Oferta getOferta() {
 		return oferta;
 	}
-	
+
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
 	}
