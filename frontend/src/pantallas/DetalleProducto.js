@@ -245,6 +245,13 @@ class DetalleBusqueda extends Component {
                                         </div>
                             }
                         </h3>
+                        {
+                            this.state.producto.contenido.length > 0 ?
+                                <div className="contenidoDelProducto">
+                                    <h6 className="grey-text">Cada {this.state.producto.tipoDeUnidad.toLowerCase()} contiene {this.state.producto.contenido}</h6>
+                                </div>
+                                : ''
+                        }
                         <div className="descripcionProducto">
                             Producido por:
                         <h6>{this.state.producto.productor.razon_social}</h6>
@@ -266,18 +273,15 @@ class DetalleBusqueda extends Component {
                                 : ""
                         }
                         <div className="botonesDetalle">
-                            <button className="iconosListado" onClick={restarProducto}
-                            >
+                            <button className="iconosListado" onClick={restarProducto}>
                                 <i className="fas fa-minus" />
                             </button>
                             <span className="float-center">{this.state.producto.cantidad}</span>
-                            <button className="iconosListado" onClick={sumarProducto}
-                            >
+                            <button className="iconosListado" onClick={sumarProducto}>
                                 <i className="fas fa-plus" />
                             </button>
                             <br />
-                            <MDBBtn outline color="green" onClick={agregarAlCarrito}
-                            >
+                            <MDBBtn outline color="green" onClick={agregarAlCarrito}>
                                 Agregar al carrito
                             </MDBBtn>
                         </div>
