@@ -11,32 +11,27 @@ class AlertaConsumidor extends Component {
         super(props);
         this.state = {
             id: this.props.id_consumidor,
-            selectedRadioOptionModificacion: "",
-            disabledModificacion: true,
-            checkModificacion: false,
+            selectedRadioOptionActualizacion: "",
+            disabledActualizacion: true,
+            checkActualizacion: false,
             selectedRadioOptionProducto: "",
             disabledProducto: true,
             checkProductos: false,
-            selectedRadioOptionResumen: "",
-            disabledResumen: true,
-            checkResumen: false,
-            selectedRadioOptionCambio: "",
-            disabledCambio: true,
-            checkCambio: false,
+            selectedRadioOptionMensajes: "",
+            disabledMensajes: true,
+            checkMensajes: false,
             mensaje: "",
             resultadoRequest: 0,
             showModal: false,
             loading: true,
         };
 
-        this.handleCheckChangeModificacion = this.handleCheckChangeModificacion.bind(this);
-        this.handleRadioChangeModificacion = this.handleRadioChangeModificacion.bind(this);
+        this.handleCheckChangeActualizacion = this.handleCheckChangeActualizacion.bind(this);
+        this.handleRadioChangeActualizacion = this.handleRadioChangeActualizacion.bind(this);
         this.handleCheckChangeProducto = this.handleCheckChangeProducto.bind(this);
         this.handleRadioChangeProducto = this.handleRadioChangeProducto.bind(this);
-        this.handleCheckChangeResumen = this.handleCheckChangeResumen.bind(this);
-        this.handleRadioChangeResumen = this.handleRadioChangeResumen.bind(this);
-        this.handleCheckChangeCambio = this.handleCheckChangeCambio.bind(this);
-        this.handleRadioChangeCambio = this.handleRadioChangeCambio.bind(this);
+        this.handleCheckChangeMensajes = this.handleCheckChangeMensajes.bind(this);
+        this.handleRadioChangeMensajes = this.handleRadioChangeMensajes.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
     }
@@ -94,26 +89,25 @@ class AlertaConsumidor extends Component {
         })
     }
 
-    handleCheckChangeModificacion(e) {
+    handleCheckChangeActualizacion(e) {
         if (e.target.checked === true) {
             this.setState({
-                checkModificacion: true,
-                disabledModificacion: false,
-                selectedRadioOptionModificacion: "En el momento"
+                checkActualizacion: true,
+                disabledActualizacion: false,
+                selectedRadioOptionActualizacion: "En el momento"
             });
         } else {
             this.setState({
-                checkModificacion: false,
-                disabledModificacion: true,
-                selectedRadioOptionModificacion: ""
+                checkActualizacion: false,
+                disabledActualizacion: true,
+                selectedRadioOptionActualizacion: ""
             });
         }
-
     };
 
-    handleRadioChangeModificacion = changeEvent => {
+    handleRadioChangeActualizacion = changeEvent => {
         this.setState({
-            selectedRadioOptionModificacion: changeEvent.target.value,
+            selectedRadioOptionActualizacion: changeEvent.target.value,
         });
     };
 
@@ -140,26 +134,25 @@ class AlertaConsumidor extends Component {
         });
     };
 
-    handleCheckChangeResumen(e) {
+    handleCheckChangeMensajes(e) {
         if (e.target.checked === true) {
             this.setState({
-                checkResumen: true,
-                disabledResumen: false,
-                selectedRadioOptionResumen: "En el momento"
+                checkMensajes: true,
+                disabledMensajes: false,
+                selectedRadioOptionMensajes: "En el momento"
             });
         } else {
             this.setState({
-                checkResumen: false,
-                disabledResumen: true,
-                selectedRadioOptionResumen: ""
+                checkMensajes: false,
+                disabledMensajes: true,
+                selectedRadioOptionMensajes: ""
             });
         }
-
     };
 
-    handleRadioChangeResumen = changeEvent => {
+    handleRadioChangeMensajes = changeEvent => {
         this.setState({
-            selectedRadioOptionResumen: changeEvent.target.value,
+            selectedRadioOptionMensajes: changeEvent.target.value,
         });
     };
 
@@ -187,10 +180,10 @@ class AlertaConsumidor extends Component {
     };
 
     generarListadoAlertas(configuraciones) {
-        if (this.state.checkModificacion) {
+        if (this.state.checkActualizacion) {
             configuraciones.push({
-                alertaNombre: "Modificaciones en reservas realizadas",
-                frecuencia: this.state.selectedRadioOptionModificacion
+                alertaNombre: "Actualización de reservas",
+                frecuencia: this.state.selectedRadioOptionActualizacion
             });
         }
         if (this.state.checkProductos) {
@@ -199,16 +192,10 @@ class AlertaConsumidor extends Component {
                 frecuencia: this.state.selectedRadioOptionProducto
             });
         }
-        if (this.state.checkResumen) {
+        if (this.state.checkMensajes) {
             configuraciones.push({
-                alertaNombre: "Resumen de reservas",
-                frecuencia: this.state.selectedRadioOptionResumen
-            });
-        }
-        if (this.state.checkCambio) {
-            configuraciones.push({
-                alertaNombre: "Cambio de estado en una reserva",
-                frecuencia: this.state.selectedRadioOptionCambio
+                alertaNombre: "Nuevos mensajes",
+                frecuencia: this.state.selectedRadioOptionMensajes
             });
         }
         return configuraciones;
@@ -259,11 +246,11 @@ class AlertaConsumidor extends Component {
     };
 
     cargoAlerta(item) {
-        if (item.alerta === "Modificaciones en reservas realizadas") {
+        if (item.alerta === "Actualización de reservas") {
             this.setState({
-                checkModificacion: true,
-                selectedRadioOptionModificacion: item.frecuencia,
-                disabledModificacion: false
+                checkActualizacion: true,
+                selectedRadioOptionActualizacion: item.frecuencia,
+                disabledActualizacion: false
             });
         }
 
@@ -275,19 +262,11 @@ class AlertaConsumidor extends Component {
             });
         }
 
-        if (item.alerta === "Resumen de reservas") {
+        if (item.alerta === "Nuevos mensajes") {
             this.setState({
-                checkResumen: true,
-                selectedRadioOptionResumen: item.frecuencia,
-                disabledResumen: false
-            });
-        }
-
-        if (item.alerta === "Cambio de estado en una reserva") {
-            this.setState({
-                checkCambio: true,
-                selectedRadioOptionCambio: item.frecuencia,
-                disabledCambio: false
+                checkMensajes: true,
+                selectedRadioOptionMensajes: item.frecuencia,
+                disabledMensajes: false
             });
         }
     }
@@ -316,21 +295,21 @@ class AlertaConsumidor extends Component {
                                 <input
                                     type="checkbox"
                                     value="check2"
-                                    checked={this.state.checkModificacion}
-                                    onChange={this.handleCheckChangeModificacion}
+                                    checked={this.state.checkActualizacion}
+                                    onChange={this.handleCheckChangeActualizacion}
                                     className="checkbox-input checkbox"
                                 />
-                                Modificaciones en reservas realizadas
+                                Actualizacion en reservas realizadas
                             </label>
                         </h5>
                         <label className="radio-inline">
                             <input
                                 type="radio"
                                 value="En el momento"
-                                checked={this.state.selectedRadioOptionModificacion === "En el momento"}
-                                onChange={this.handleRadioChangeModificacion}
+                                checked={this.state.selectedRadioOptionActualizacion === "En el momento"}
+                                onChange={this.handleRadioChangeActualizacion}
                                 className="radio-button-input radio"
-                                disabled={this.state.disabledModificacion}
+                                disabled={this.state.disabledActualizacion}
                             />
                             En el momento
                         </label>
@@ -339,10 +318,10 @@ class AlertaConsumidor extends Component {
                             <input
                                 type="radio"
                                 value="Diariamente"
-                                checked={this.state.selectedRadioOptionModificacion === "Diariamente"}
-                                onChange={this.handleRadioChangeModificacion}
+                                checked={this.state.selectedRadioOptionActualizacion === "Diariamente"}
+                                onChange={this.handleRadioChangeActualizacion}
                                 className="radio-button-input radio"
-                                disabled={this.state.disabledModificacion}
+                                disabled={this.state.disabledActualizacion}
                             />
                             Diariamente
                         </label>
@@ -351,15 +330,64 @@ class AlertaConsumidor extends Component {
                             <input
                                 type="radio"
                                 value="Semanalmente"
-                                checked={this.state.selectedRadioOptionModificacion === "Semanalmente"}
-                                onChange={this.handleRadioChangeModificacion}
+                                checked={this.state.selectedRadioOptionActualizacion === "Semanalmente"}
+                                onChange={this.handleRadioChangeActualizacion}
                                 className="radio-button-input radio"
-                                disabled={this.state.disabledModificacion}
+                                disabled={this.state.disabledActualizacion}
                             />
                             Semanalmente
                         </label>
                     </div>
-                    <hr />
+                    <br />
+                    <div className="radioButtons" align="left">
+                        <h5>
+                            <label className="checkbox-inline">
+                                <input
+                                    type="checkbox"
+                                    value="check2"
+                                    checked={this.state.checkMensajes}
+                                    onChange={this.handleCheckChangeMensajes}
+                                    className="checkbox-input checkbox"
+                                />
+                                Nuevos mensajes
+                                </label>
+                        </h5>
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="En el momento"
+                                checked={this.state.selectedRadioOptionMensajes === "En el momento"}
+                                onChange={this.handleRadioChangeMensajes}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledMensajes}
+                            />
+                            En el momento
+                        </label>
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Diariamente"
+                                checked={this.state.selectedRadioOptionMensajes === "Diariamente"}
+                                onChange={this.handleRadioChangeMensajes}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledMensajes}
+                            />
+                            Diariamente
+                        </label>
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Semanalmente"
+                                checked={this.state.selectedRadioOptionMensajes === "Semanalmente"}
+                                onChange={this.handleRadioChangeMensajes}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledMensajes}
+                            />
+                            Semanalmente
+                        </label>
+                    </div>
                     <div className="radioButtons" align="left">
                         <h5>
                             <label className="checkbox-inline">
@@ -405,106 +433,6 @@ class AlertaConsumidor extends Component {
                                 onChange={this.handleRadioChangeProducto}
                                 className="radio-button-input radio"
                                 disabled={this.state.disabledProducto}
-                            />
-                            Semanalmente
-                        </label>
-                    </div>
-                    <hr />
-                    <div className="radioButtons" align="left">
-                        <h5>
-                            <label className="checkbox-inline">
-                                <input
-                                    type="checkbox"
-                                    value="check2"
-                                    checked={this.state.checkResumen}
-                                    onChange={this.handleCheckChangeResumen}
-                                    className="checkbox-input checkbox"
-                                />
-                                Resumen de reservas
-                                </label>
-                        </h5>
-                        <label className="radio-inline">
-                            <input
-                                type="radio"
-                                value="En el momento"
-                                checked={this.state.selectedRadioOptionResumen === "En el momento"}
-                                onChange={this.handleRadioChangeResumen}
-                                className="radio-button-input radio"
-                                disabled={this.state.disabledResumen}
-                            />
-                            En el momento
-                        </label>
-                        <br />
-                        <label className="radio-inline">
-                            <input
-                                type="radio"
-                                value="Diariamente"
-                                checked={this.state.selectedRadioOptionResumen === "Diariamente"}
-                                onChange={this.handleRadioChangeResumen}
-                                className="radio-button-input radio"
-                                disabled={this.state.disabledResumen}
-                            />
-                            Diariamente
-                        </label>
-                        <br />
-                        <label className="radio-inline">
-                            <input
-                                type="radio"
-                                value="Semanalmente"
-                                checked={this.state.selectedRadioOptionResumen === "Semanalmente"}
-                                onChange={this.handleRadioChangeResumen}
-                                className="radio-button-input radio"
-                                disabled={this.state.disabledResumen}
-                            />
-                            Semanalmente
-                        </label>
-                    </div>
-                    <hr />
-                    <div className="radioButtons" align="left">
-                        <h5>
-                            <label className="checkbox-inline">
-                                <input
-                                    type="checkbox"
-                                    value="check2"
-                                    checked={this.state.checkCambio}
-                                    onChange={this.handleCheckChangeCambio}
-                                    className="checkbox-input checkbox"
-                                />
-                                Cambio de estado en una reserva
-                                </label>
-                        </h5>
-                        <label className="radio-inline">
-                            <input
-                                type="radio"
-                                value="En el momento"
-                                checked={this.state.selectedRadioOptionCambio === "En el momento"}
-                                onChange={this.handleRadioChangeCambio}
-                                className="radio-button-input radio"
-                                disabled={this.state.disabledCambio}
-                            />
-                            En el momento
-                        </label>
-                        <br />
-                        <label className="radio-inline">
-                            <input
-                                type="radio"
-                                value="Diariamente"
-                                checked={this.state.selectedRadioOptionCambio === "Diariamente"}
-                                onChange={this.handleRadioChangeCambio}
-                                className="radio-button-input radio"
-                                disabled={this.state.disabledCambio}
-                            />
-                            Diariamente
-                        </label>
-                        <br />
-                        <label className="radio-inline">
-                            <input
-                                type="radio"
-                                value="Semanalmente"
-                                checked={this.state.selectedRadioOptionCambio === "Semanalmente"}
-                                onChange={this.handleRadioChangeCambio}
-                                className="radio-button-input radio"
-                                disabled={this.state.disabledCambio}
                             />
                             Semanalmente
                         </label>

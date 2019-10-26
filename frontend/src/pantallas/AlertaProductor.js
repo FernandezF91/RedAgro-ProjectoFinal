@@ -17,6 +17,9 @@ class AlertaProductor extends Component {
             selectedRadioOptionActualizacion: "",
             disabledActualizacion: true,
             checkActualizacion: false,
+            selectedRadioOptionMensajes: "",
+            disabledMensajes: true,
+            checkMensajes: false,
             mensaje: "",
             resultadoRequest: 0,
             showModal: false,
@@ -27,6 +30,8 @@ class AlertaProductor extends Component {
         this.handleRadioChangeNuevas = this.handleRadioChangeNuevas.bind(this);
         this.handleCheckChangeActualizacion = this.handleCheckChangeActualizacion.bind(this);
         this.handleRadioChangeActualizacion = this.handleRadioChangeActualizacion.bind(this);
+        this.handleCheckChangeMensajes = this.handleCheckChangeMensajes.bind(this);
+        this.handleRadioChangeMensajes = this.handleRadioChangeMensajes.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
     }
@@ -106,6 +111,28 @@ class AlertaProductor extends Component {
         });
     };
 
+    handleCheckChangeMensajes(e) {
+        if (e.target.checked === true) {
+            this.setState({
+                checkMensajes: true,
+                disabledMensajes: false,
+                selectedRadioOptionMensajes: "En el momento"
+            });
+        } else {
+            this.setState({
+                checkMensajes: false,
+                disabledMensajes: true,
+                selectedRadioOptionMensajes: ""
+            });
+        }
+    };
+
+    handleRadioChangeMensajes = changeEvent => {
+        this.setState({
+            selectedRadioOptionMensajes: changeEvent.target.value,
+        });
+    };
+
     handleCheckChangeActualizacion(e) {
         if (e.target.checked === true) {
             this.setState({
@@ -131,7 +158,7 @@ class AlertaProductor extends Component {
     generarListadoAlertas(configuraciones) {
         if (this.state.checkNuevas) {
             configuraciones.push({
-                alertaNombre: "Nuevas reservas",
+                alertaNombre: "Nuevas calificaciones",
                 frecuencia: this.state.selectedRadioOptionNuevas
             });
         }
@@ -139,6 +166,12 @@ class AlertaProductor extends Component {
             configuraciones.push({
                 alertaNombre: "Actualización de reservas",
                 frecuencia: this.state.selectedRadioOptionActualizacion
+            });
+        }
+        if (this.state.checkMensajes) {
+            configuraciones.push({
+                alertaNombre: "Nuevos mensajes",
+                frecuencia: this.state.selectedRadioOptionMensajes
             });
         }
         return configuraciones;
@@ -190,7 +223,7 @@ class AlertaProductor extends Component {
     };
 
     cargoAlerta(item) {
-        if (item.alerta === "Nuevas reservas") {
+        if (item.alerta === "Nuevas calificaciones") {
             this.setState({
                 checkNuevas: true,
                 selectedRadioOptionNuevas: item.frecuencia,
@@ -203,6 +236,14 @@ class AlertaProductor extends Component {
                 checkActualizacion: true,
                 selectedRadioOptionActualizacion: item.frecuencia,
                 disabledActualizacion: false
+            });
+        }
+
+        if (item.alerta === "Nuevos mensajes") {
+            this.setState({
+                checkMensajes: true,
+                selectedRadioOptionMensajes: item.frecuencia,
+                disabledMensajes: false
             });
         }
     }
@@ -226,56 +267,6 @@ class AlertaProductor extends Component {
                     <h5>Configura las alertas que recibiras por mail:</h5>
                 </div>
                 <form onSubmit={this.handleFormSubmit}>
-                    <div className="radioButtons" align="left">
-                        <h5>
-                            <label className="checkbox-inline">
-                                <input
-                                    type="checkbox"
-                                    value="check2"
-                                    checked={this.state.checkNuevas}
-                                    onChange={this.handleCheckChangeNuevas}
-                                    className="checkbox-input checkbox"
-                                />
-                                Nuevas reservas
-                            </label>
-                        </h5>
-                        <label className="radio-inline">
-                            <input
-                                type="radio"
-                                value="En el momento"
-                                checked={this.state.selectedRadioOptionNuevas === "En el momento"}
-                                onChange={this.handleRadioChangeNuevas}
-                                className="radio-button-input radio"
-                                disabled={this.state.disabledNuevas}
-                            />
-                            En el momento
-                        </label>
-                        <br />
-                        <label className="radio-inline">
-                            <input
-                                type="radio"
-                                value="Diariamente"
-                                checked={this.state.selectedRadioOptionNuevas === "Diariamente"}
-                                onChange={this.handleRadioChangeNuevas}
-                                className="radio-button-input radio"
-                                disabled={this.state.disabledNuevas}
-                            />
-                            Diariamente
-                        </label>
-                        <br />
-                        <label className="radio-inline">
-                            <input
-                                type="radio"
-                                value="Semanalmente"
-                                checked={this.state.selectedRadioOptionNuevas === "Semanalmente"}
-                                onChange={this.handleRadioChangeNuevas}
-                                className="radio-button-input radio"
-                                disabled={this.state.disabledNuevas}
-                            />
-                            Semanalmente
-                        </label>
-                    </div>
-                    <hr />
                     <div className="radioButtons" align="left">
                         <h5>
                             <label className="checkbox-inline">
@@ -321,6 +312,104 @@ class AlertaProductor extends Component {
                                 onChange={this.handleRadioChangeActualizacion}
                                 className="radio-button-input radio"
                                 disabled={this.state.disabledActualizacion}
+                            />
+                            Semanalmente
+                        </label>
+                    </div>
+                    <div className="radioButtons" align="left">
+                        <h5>
+                            <label className="checkbox-inline">
+                                <input
+                                    type="checkbox"
+                                    value="check2"
+                                    checked={this.state.checkMensajes}
+                                    onChange={this.handleCheckChangeMensajes}
+                                    className="checkbox-input checkbox"
+                                />
+                                Nuevos mensajes
+                                </label>
+                        </h5>
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="En el momento"
+                                checked={this.state.selectedRadioOptionMensajes === "En el momento"}
+                                onChange={this.handleRadioChangeMensajes}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledMensajes}
+                            />
+                            En el momento
+                        </label>
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Diariamente"
+                                checked={this.state.selectedRadioOptionMensajes === "Diariamente"}
+                                onChange={this.handleRadioChangeMensajes}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledMensajes}
+                            />
+                            Diariamente
+                        </label>
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Semanalmente"
+                                checked={this.state.selectedRadioOptionMensajes === "Semanalmente"}
+                                onChange={this.handleRadioChangeMensajes}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledMensajes}
+                            />
+                            Semanalmente
+                        </label>
+                    </div>
+                    <div className="radioButtons" align="left">
+                        <h5>
+                            <label className="checkbox-inline">
+                                <input
+                                    type="checkbox"
+                                    value="check2"
+                                    checked={this.state.checkNuevas}
+                                    onChange={this.handleCheckChangeNuevas}
+                                    className="checkbox-input checkbox"
+                                />
+                                Nuevas calificaciones
+                            </label>
+                        </h5>
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="En el momento"
+                                checked={this.state.selectedRadioOptionNuevas === "En el momento"}
+                                onChange={this.handleRadioChangeNuevas}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledNuevas}
+                            />
+                            En el momento
+                        </label>
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Diariamente"
+                                checked={this.state.selectedRadioOptionNuevas === "Diariamente"}
+                                onChange={this.handleRadioChangeNuevas}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledNuevas}
+                            />
+                            Diariamente
+                        </label>
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Semanalmente"
+                                checked={this.state.selectedRadioOptionNuevas === "Semanalmente"}
+                                onChange={this.handleRadioChangeNuevas}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledNuevas}
                             />
                             Semanalmente
                         </label>
