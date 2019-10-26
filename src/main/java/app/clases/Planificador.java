@@ -15,7 +15,7 @@ public class Planificador {
 
 		// License issued by BayesFusion Licensing Server
 		// This code must be executed before any other jSMILE object is created
-		new smile.License(
+		/*new smile.License(
 				"SMILE LICENSE bbf3ed59 e15480dc 0cb1f7b5 THIS IS AN ACADEMIC LICENSE AND CAN BE USED "
 						+ "SOLELY FOR ACADEMIC RESEARCH AND TEACHING, AS DEFINED IN THE BAYESFUSION ACADEMIC "
 						+ "SOFTWARE LICENSING AGREEMENT. Serial #: b1909hjel3g27sswusbdnsib8 "
@@ -25,7 +25,7 @@ public class Planificador {
 						-94, 90, -59, 53, -24, -2, 126, 125, -28, -33, 59, -110, 69, 27, 84, 108, -89, -113, -61, -126,
 						82, -25, 109, -89, 39, 4, 4, 111, -10, -62, 23, -81, -128, 118, 86, 32, 124, -46, -116, 103, 48,
 						-16, 60, 109 });
-
+*/
 		this.setPeriodo(periodo);
 		this.setProvincia(provincia);
 	}
@@ -54,7 +54,7 @@ public class Planificador {
 		Registros.forEach((k, v) -> alimentos.add(v));
 		Collections.reverse(alimentos);
 		planificados = alimentos.subList(0, 5);
-
+		System.out.println(planificados);
 		return planificados;
 	}
 
@@ -80,4 +80,4 @@ public class Planificador {
 //System.out.println(Registros.keySet());
 //System.out.println(alimentos);
 //System.out.println(alimentos);
-//System.out.println(planificados);
+//
