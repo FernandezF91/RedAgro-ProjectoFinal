@@ -24,11 +24,11 @@ public class OfertaControlador {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping(path = "redAgro/guardarOferta")
 	public ResponseEntity<String> guardarOferta(@RequestParam long id_producto_productor,
-			@RequestParam int porcentaje, @RequestParam boolean activo, @RequestParam(required = false) long id_oferta) {
+			@RequestParam int porcentaje, @RequestParam boolean activo, @RequestParam long id_oferta) {
 		try {
 			EntidadOferta oferta = new EntidadOferta();
 
-			if (Long.valueOf(id_oferta) != null) {
+			if (id_oferta != 0) {
 				oferta.setId(id_oferta);
 			}
 			oferta.setproducto_productor_id(id_producto_productor);

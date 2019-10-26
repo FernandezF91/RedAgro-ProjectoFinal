@@ -96,9 +96,9 @@ class ListadoProductos extends Component {
                 <td>
                     <i className="fas fa-percentage iconosTabla cursorManito" onClick={cargarOferta} key={"row-data-" + item.id} title="Cargar una oferta" />
                 </td>
-                <td>
+                {/* <td>
                     <i className="fas fa-times iconosTabla cursorManito" key={"row-data-" + item.id} title="Eliminar producto" />
-                </td>
+                </td> */}
             </tr>
         ];
 
@@ -163,8 +163,8 @@ class ListadoProductos extends Component {
             })
 
             var path = "";
-            if (_this.state.idOferta === undefined) {
-                path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta;
+            if (_this.state.idOferta === null) {
+                path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta + "&id_oferta=0";
             } else {
                 path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta + "&id_oferta=" + _this.state.idOferta;
             }
