@@ -139,7 +139,7 @@ class ListadoReservas extends Component {
                 </td>
                 <td id="estado">
                     {(item.calificacion != null || item.calificacion != undefined) ?
-                        <i className="fas fa-star iconosTabla cursorManito" title="Ver calificación" onClick={actualizacionEstado} key={"row-data-" + item.id} />
+                        <i className="fas fa-star iconosTabla cursorManito" title="Ver calificación" onClick={calificarReserva} key={"row-data-" + item.id} />
                         :
                         (item.estado === "Finalizado" || item.estado === "Cancelado") ?
                             (tipoUsuario === "Consumidor") ?
@@ -395,7 +395,10 @@ class ListadoReservas extends Component {
 
     cerrarModalCalificacion() {
         this.setState({
-            showModalCalificacion: false
+            showModalCalificacion: false,
+            textCalificacion: "",
+            cantidadEstrellas: 0,
+            verCalificacion: false
         })
     }
 
