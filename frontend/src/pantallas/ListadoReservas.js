@@ -10,8 +10,9 @@ import NumberFormat from 'react-number-format';
 import Loader from 'react-loader-spinner';
 import Select from 'react-select';
 import { MDBModal, MDBModalBody, MDBModalHeader } from 'mdbreact';
-import Button from 'react-bootstrap/Button';
+import { Form, Button } from 'react-bootstrap';
 import moment from 'moment';
+import BeautyStars from 'beauty-stars';
 
 const tamañosListado = [
     { label: "5", value: "5" },
@@ -26,9 +27,6 @@ class ListadoReservas extends Component {
         super(props);
 
         this.state = {
-            campos: [],
-            errores: [],
-            files: [],
             //Para el ruteo
             id: this.props.usuario.id,
             //A partir de aca, datos para el listado de reservas
@@ -38,11 +36,14 @@ class ListadoReservas extends Component {
             defaultListado: [{ label: "5", value: "5" }],
             expandedRows: [],
             loading: true,
-            showModal: false,
+            showModalEstado: false,
             listadoEstados: [],
             listadoFiltradoEstados: [],
             estadoSeleccionado: "",
             idReservaActualizar: 0,
+            showModalCalificacion: false,
+            cantidadEstrellas: 0,
+            textCalificacion: "",
             datosParaMensajes: {
                 showModal: false,
                 usuarioEmisor: {
@@ -59,11 +60,13 @@ class ListadoReservas extends Component {
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.abrirModal = this.abrirModal.bind(this);
-        this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarModalEstado = this.cerrarModalEstado.bind(this);
         this.filtrarEstadosAMostrar = this.filtrarEstadosAMostrar.bind(this);
         this.encontrarEstado = this.encontrarEstado.bind(this);
         this.cargarListadoDeEstados = this.cargarListadoDeEstados.bind(this);
         this.actualizarEstadoReserva = this.actualizarEstadoReserva.bind(this);
+        this.cerrarModalCalificacion = this.cerrarModalCalificacion.bind(this);
+        this.guardarCalificacion = this.guardarCalificacion.bind(this);
     }
 
     nextPage = (pageNumber) => {
@@ -91,6 +94,7 @@ class ListadoReservas extends Component {
     generoItem(item) {
         const clickCallback = () => this.handleRowClick(item.id);
         const actualizacionEstado = () => this.abrirModalEstado(item.id, item.fechaDateTime, item.estado);
+        const calificarReserva = () => this.abrirModalCalificacion(item.id, item.calificacion);
         const mostrarMensajes = () => this.mostrarMensajes(item)
         var tipoUsuario = this.props.usuario.rol;
 
@@ -134,19 +138,18 @@ class ListadoReservas extends Component {
                     <i className="far fa-eye iconosTabla cursorManito" title="Ver detalle reserva" onClick={clickCallback} key={"row-data-" + item.id} />
                 </td>
                 <td id="estado">
-                    {(item.estado === "Finalizado") ?
-                        (tipoUsuario === "Consumidor") ?
-                            <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas finalizadas" />
-                            /*    <i className="far fa-star iconosTabla" title="Calificar reserva" onClick={actualizacionEstado} key={"row-data-" + item.id} />*/
-                            :
-                            <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas finalizadas" />
-                        /* <i className="fas fa-star iconosTabla" title="Ver calificación" onClick={actualizacionEstado} key={"row-data-" + item.id} /> */
+                    {(item.calificacion != null || item.calificacion != undefined) ?
+                        <i className="fas fa-star iconosTabla cursorManito" title="Ver calificación" onClick={actualizacionEstado} key={"row-data-" + item.id} />
                         :
-                        (item.estado === "Cancelado") ?
-                            <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas canceladas" />
+                        (item.estado === "Finalizado" || item.estado === "Cancelado") ?
+                            (tipoUsuario === "Consumidor") ?
+                                <i className="far fa-star iconosTabla cursorManito" title="Calificar reserva" onClick={calificarReserva} key={"row-data-" + item.id} />
+                                :
+                                <i className="fas fa-edit iconosTabla iconosTablaDeshabilitados" title="No se pueden actualizar reservas finalizadas" />
                             :
                             <i className="fas fa-edit iconosTabla cursorManito" title="Actualizar el estado" onClick={actualizacionEstado} key={"row-data-" + item.id} />
                     }
+
                 </td>
                 <td>
                     <i className="fas fa-comments iconosTabla cursorManito" title="Ver mensajes" onClick={mostrarMensajes} />
@@ -232,7 +235,8 @@ class ListadoReservas extends Component {
                                 detalleReserva: item.detalleReserva,
                                 estado: item.estado_reserva.nombre,
                                 total_reserva: item.total_reserva,
-                                fechaDateTime: item.fecha
+                                fechaDateTime: item.fecha,
+                                calificacion: item.calificacion
                             }
                         })
                     })
@@ -272,7 +276,7 @@ class ListadoReservas extends Component {
         })
             .then(function (response) {
                 _this.setState({
-                    showModal: false,
+                    showModalEstado: false,
                     estadoSeleccionado: ""
                 })
             })
@@ -293,7 +297,7 @@ class ListadoReservas extends Component {
                     } else {
                         if (estado.label === "Cancelado" && ((diff <= 2 && this.props.usuario.rol === "Consumidor") || (diff <= 1 && this.props.usuario.rol === "Productor"))) {
                             return null;
-                        } 
+                        }
                         return estado;
                     }
                 }
@@ -314,46 +318,84 @@ class ListadoReservas extends Component {
             estadoSeleccionado: this.encontrarEstado(estadoActual),
             idReservaActualizar: idReserva
         })
-        this.abrirModal();
+        this.abrirModal("Estado");
     }
 
-    /* abrirModalCalificacion = (idReserva) => {
-        var path = "http://localhost:3000/redAgro/obtenerCalificacionDeReserva?id_reserva=" + idReserva;
-        fetch(path)
-            .catch(err => console.error(err))
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json();
-                } else if (response.status === 504) {
-                    console.log("Timeout");
-                } else {
-                    console.log("Otro error");
-                }
-            })
-            .then(data => {
-                if (data !== void (0)) {
-                    this.setState({
-                        listadoEstados: data.map((item) => {
-                            return {
-                                label: item.nombre,
-                                value: item.id
-                            }
-                        })
-                    })
-                }
-            })
-        this.abrirModal();
-    } */
-
-    abrirModal() {
+    detectarCambiosComentario(e) {
+        let textCalificacion = this.state.textCalificacion;
+        textCalificacion = e.target.value;
         this.setState({
-            showModal: true
+            textCalificacion
         })
     }
 
-    cerrarModal() {
+    guardarCalificacion() {
+        var _this = this;
+        _this.setState({
+            loading: true
+        })
+
+        var path = "http://localhost:3000/redAgro/guardarCalificacion?reserva_id=" + _this.state.idReservaActualizar;
+        fetch(path, {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8'
+            },
+            body: JSON.stringify({
+                "valor": _this.state.cantidadEstrellas,
+                "comentario": _this.state.textCalificacion
+            })
+        })
+            .then(function (response) {
+                _this.setState({
+                    showModalEstado: false,
+                    cantidadEstrellas: 0,
+                    idReservaActualizar: 0,
+                    textCalificacion: ""
+                })
+            })
+        //TODO: cambiarlo para que solo actualice la parte del listado.
+        window.location.reload();
+    }
+
+    abrirModalCalificacion = (idReserva, calificacion) => {
+        if (calificacion != null || calificacion != undefined) {
+            this.setState({
+                textCalificacion: calificacion.comentario,
+                cantidadEstrellas: calificacion.valor,
+                verCalificacion: true
+            })
+        } else {
+            this.setState({
+                verCalificacion: false,
+                idReservaActualizar: idReserva
+            })
+        }
+        this.abrirModal("Calificacion");
+    }
+
+    abrirModal(modal) {
+        if (modal === "Estado") {
+            this.setState({
+                showModalEstado: true
+            })
+        }
+        if (modal === "Calificacion") {
+            this.setState({
+                showModalCalificacion: true
+            })
+        }
+    }
+
+    cerrarModalEstado() {
         this.setState({
-            showModal: false
+            showModalEstado: false
+        })
+    }
+
+    cerrarModalCalificacion() {
+        this.setState({
+            showModalCalificacion: false
         })
     }
 
@@ -441,12 +483,15 @@ class ListadoReservas extends Component {
                         : ''
                 }
                 {
-                    (this.state.showModal) &&
-                    <MDBModal isOpen={this.state.showModal} centered>
+                    (this.state.showModalEstado) &&
+                    <MDBModal
+                        isOpen={this.state.showModalEstado}
+                        centered
+                    >
                         <MDBModalHeader>
                             Estado de la reserva
                             <div className="cruzCerrar">
-                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalEstado} />
                             </div>
                         </MDBModalHeader>
                         <MDBModalBody>
@@ -464,6 +509,58 @@ class ListadoReservas extends Component {
                             <div className="row justify-content-center">
                                 <Button variant="success" type="submit" onClick={this.actualizarEstadoReserva}>Guardar</Button>
                             </div>
+                        </MDBModalBody>
+                    </MDBModal>
+                }
+                {
+                    (this.state.showModalCalificacion) &&
+                    <MDBModal
+                        isOpen={this.state.showModalCalificacion}
+                        centered
+                    >
+                        <MDBModalHeader>
+                            Calificá al productor
+                            <div className="cruzCerrar">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalCalificacion} />
+                            </div>
+                        </MDBModalHeader>
+                        <MDBModalBody>
+                            <div className="divEstrellas">
+                                {(this.state.verCalificacion) ?
+                                    <BeautyStars
+                                        value={this.state.cantidadEstrellas}
+                                        activeColor="#28a745"
+                                    />
+                                    :
+                                    <BeautyStars
+                                        value={this.state.cantidadEstrellas}
+                                        activeColor="#28a745"
+                                        onChange={cantidadEstrellas => this.setState({ cantidadEstrellas })}
+                                    />
+                                }
+                            </div>
+                            <br />
+                            <br />
+                            <span className="spanModalLeft">¿Querés contarnos algo más?</span>
+                            <Form.Control
+                                value={this.state.textCalificacion}
+                                as="textarea"
+                                rows="3"
+                                type="calificacion"
+                                name="textCalificacion"
+                                onChange={(e) => this.detectarCambiosComentario(e)}
+                                className="textCalificacion"
+                                disabled={this.state.verCalificacion}
+                            />
+                            {
+                                (!this.state.verCalificacion) &&
+                                <div>
+                                    <br />
+                                    <div className="row justify-content-center">
+                                        <Button variant="success" type="submit" onClick={this.guardarCalificacion}>Guardar</Button>
+                                    </div>
+                                </div>
+                            }
                         </MDBModalBody>
                     </MDBModal>
                 }

@@ -41,15 +41,8 @@ public class EntidadProductor {
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
-	private List<EntidadCalificacion> calificaciones = new ArrayList<>();
-
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
 	private List<EntidadProductoProductor> productos = new ArrayList<>();
 
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
-	private List<EntidadZona> zonas = new ArrayList<>();
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
@@ -78,28 +71,12 @@ public class EntidadProductor {
 		this.usuario = usuario;
 	}
 
-	public List<EntidadZona> getZonas() {
-		return zonas;
-	}
-
-	public void setZonas(List<EntidadZona> zonas) {
-		this.zonas = zonas;
-	}
-
 	public List<EntidadPuntoEntrega> getPuntos_entrega() {
 		return puntos_entrega;
 	}
 
 	public void setPuntos_entrega(List<EntidadPuntoEntrega> puntos_entrega) {
 		this.puntos_entrega = puntos_entrega;
-	}
-
-	public List<EntidadCalificacion> getCalificaciones() {
-		return calificaciones;
-	}
-
-	public void setCalificaciones(List<EntidadCalificacion> calificaciones) {
-		this.calificaciones = calificaciones;
 	}
 
 	public List<EntidadProductoProductor> getProductos() {

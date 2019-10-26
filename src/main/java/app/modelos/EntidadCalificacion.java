@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,14 +16,13 @@ public class EntidadCalificacion {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+    @Column(name = "reserva_id")
+    private long reserva_id;
 
-	@ManyToOne()
-	@JoinColumn(name = "consumidor_id", nullable = false)
-	private EntidadConsumidor consumidor;
-
-	@ManyToOne()
-	@JoinColumn(name = "productor_id", nullable = false)
-	private EntidadProductor productor;
+	@OneToOne()
+	@JoinColumn(name = "reserva_id", nullable = false, updatable = false, insertable = false)
+	private EntidadReserva reserva;
 
 	@Column(name = "valor", nullable = false)
 	private int valor;
@@ -38,15 +37,15 @@ public class EntidadCalificacion {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public EntidadConsumidor getConsumidor() {
-		return consumidor;
+	
+	public long getReservaId() {
+		return reserva_id;
 	}
-
-	public void setConsumidor(EntidadConsumidor consumidor) {
-		this.consumidor = consumidor;
+	
+	public void setReservaId(long reserva_id) {
+		this.reserva_id = reserva_id;
 	}
-
+	
 	public int getValor() {
 		return valor;
 	}
@@ -61,13 +60,5 @@ public class EntidadCalificacion {
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
-	}
-
-	public EntidadProductor getProductor() {
-		return productor;
-	}
-
-	public void setProductor(EntidadProductor productor) {
-		this.productor = productor;
 	}
 }

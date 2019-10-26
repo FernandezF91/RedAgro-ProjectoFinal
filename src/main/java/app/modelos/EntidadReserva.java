@@ -47,6 +47,9 @@ public class EntidadReserva {
 	@OneToOne
 	@JoinColumn(name = "estado_id", nullable = false)
 	private EntidadEstadoReserva estado_reserva;
+	
+	@OneToOne(mappedBy = "reserva", targetEntity = EntidadCalificacion.class, cascade = CascadeType.ALL)
+	private EntidadCalificacion calificacion = new EntidadCalificacion();
 
 	@Column(name = "fecha", nullable = true)
 	private Date fecha;
@@ -150,5 +153,13 @@ public class EntidadReserva {
 
 	public void setDetallesReserva(List<EntidadDetalleReserva> detallesReserva) {
 		this.detallesReserva = detallesReserva;
+	}
+	
+	public EntidadCalificacion getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(EntidadCalificacion calificacion) {
+		this.calificacion = calificacion;
 	}
 }

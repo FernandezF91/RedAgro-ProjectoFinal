@@ -46,3 +46,16 @@
     display: flex;
     flex-direction: row;
 }
+
+.textCalificacion {
+    width: 97%;
+    margin: auto;
+}
+
+.divEstrellas {
+    display: inline-flex;
+}
+
+.spanModalLeft {
+    float: left;
+}

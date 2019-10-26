@@ -199,6 +199,8 @@ public class ReservaControlador {
 				productos.add(producto);
 			}
 		}
+		
+		reserva.setCalificacion(null);
 
 		try {
 			EntidadReserva nuevaReserva = reservaDao.save(reserva);

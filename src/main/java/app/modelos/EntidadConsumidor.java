@@ -39,10 +39,6 @@ public class EntidadConsumidor {
 	@OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL)
 	private List<EntidadReserva> reservas = new ArrayList<>();
 
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "consumidor", cascade = CascadeType.ALL)
-	private List<EntidadCalificacion> calificaciones = new ArrayList<>();
-
 	public EntidadUsuario getUsuario() {
 		return usuario;
 	}
@@ -57,14 +53,6 @@ public class EntidadConsumidor {
 
 	public void setPreferencia(List<EntidadPreferencia> preferencia) {
 		this.preferencia = preferencia;
-	}
-
-	public List<EntidadCalificacion> getCalificaciones() {
-		return calificaciones;
-	}
-
-	public void setCalificaciones(List<EntidadCalificacion> calificaciones) {
-		this.calificaciones = calificaciones;
 	}
 
 	public List<EntidadReserva> getReservas() {

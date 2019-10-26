@@ -4,6 +4,7 @@ import app.clases.Reserva;
 import app.clases.EstadoReserva;
 import app.clases.DetalleReserva;
 import app.clases.Productor;
+import app.clases.Calificacion;
 import app.clases.Consumidor;
 import app.clases.PuntoEntrega;
 import app.modelos.EntidadReserva;
@@ -13,7 +14,6 @@ import java.util.ArrayList;
 public class ReservaMapper {
 
 	public Reserva mapFromEntity(EntidadReserva entidad) {
-
 		DetalleReservaMapper mapeoDetalle = new DetalleReservaMapper();
 		List<DetalleReserva> listaDetalle = mapeoDetalle.mapFromEntity(entidad.getDetallesReserva());
 
@@ -25,61 +25,44 @@ public class ReservaMapper {
 
 		PuntoEntregaMapper mapeoPtoEntrega = new PuntoEntregaMapper();
 		PuntoEntrega ptoEntrega = null;
-		if(entidad.getPunto_entrega() != null) {
+		if (entidad.getPunto_entrega() != null) {
 			ptoEntrega = mapeoPtoEntrega.mapFromEntity(entidad.getPunto_entrega());
 		}
 
 		EstadoReservaMapper mapeoEstado = new EstadoReservaMapper();
 		EstadoReserva estado = mapeoEstado.mapFromEntity(entidad.getEstado_reserva());
 
+		CalificacionMapper mapeoCalificacion = new CalificacionMapper();
+		Calificacion calificacion = null;
+		if (entidad.getCalificacion() != null) {
+			calificacion = mapeoCalificacion.mapFromEntity(entidad.getCalificacion());
+		}
+
 		Reserva reserva = new Reserva(entidad.getId(), listaDetalle, productor, consumidor, ptoEntrega, estado,
 				entidad.getFecha(), entidad.getFecha_creacion(), entidad.getTotal_reserva(), entidad.getForma_retiro(),
-				entidad.getPersona_retiro());
+				entidad.getPersona_retiro(), calificacion);
 		return reserva;
 	}
 
 	public List<Reserva> mapFromEntity(List<EntidadReserva> listaEntidadReserva) {
-
 		List<Reserva> listaReservas = new ArrayList<>();
-		DetalleReservaMapper mapeoDetalle = new DetalleReservaMapper();
-		ProductorMapper mapeoProductor = new ProductorMapper();
-		ConsumidorMapper mapeoConsumidor = new ConsumidorMapper();
-		PuntoEntregaMapper mapeoPtoEntrega = new PuntoEntregaMapper();
-		EstadoReservaMapper mapeoEstado = new EstadoReservaMapper();
 
 		for (EntidadReserva entidad : listaEntidadReserva) {
-			if (entidad.getPunto_entrega() == null) {
-				Reserva reserva = new Reserva(entidad.getId(), mapeoDetalle.mapFromEntity(entidad.getDetallesReserva()),
-						mapeoProductor.mapFromEntity(entidad.getProductor()),
-						mapeoConsumidor.mapFromEntity(entidad.getConsumidor()), null,
-						mapeoEstado.mapFromEntity(entidad.getEstado_reserva()), entidad.getFecha(),
-						entidad.getFecha_creacion(), entidad.getTotal_reserva(), entidad.getForma_retiro(),
-						entidad.getPersona_retiro());
-				listaReservas.add(reserva);
-
-			} else {
-				Reserva reserva = new Reserva(entidad.getId(), mapeoDetalle.mapFromEntity(entidad.getDetallesReserva()),
-						mapeoProductor.mapFromEntity(entidad.getProductor()),
-						mapeoConsumidor.mapFromEntity(entidad.getConsumidor()),
-						mapeoPtoEntrega.mapFromEntity(entidad.getPunto_entrega()),
-						mapeoEstado.mapFromEntity(entidad.getEstado_reserva()), entidad.getFecha(),
-						entidad.getFecha_creacion(), entidad.getTotal_reserva(), entidad.getForma_retiro(),
-						entidad.getPersona_retiro());
-				listaReservas.add(reserva);
-			}
-
+			Reserva reserva = mapFromEntity(entidad);
+			listaReservas.add(reserva);
 		}
+		
 		return listaReservas;
 	}
 
 	public EntidadReserva mapToEntity(Reserva modelo) {
-
 		EntidadReserva entidad = new EntidadReserva();
 		DetalleReservaMapper mapeoDetalle = new DetalleReservaMapper();
 		ProductorMapper mapeoProductor = new ProductorMapper();
 		ConsumidorMapper mapeoConsumidor = new ConsumidorMapper();
 		PuntoEntregaMapper mapeoPtoEntrega = new PuntoEntregaMapper();
 		EstadoReservaMapper mapeoEstado = new EstadoReservaMapper();
+		CalificacionMapper mapeoCalificacion = new CalificacionMapper();
 
 		entidad.setId(modelo.getId());
 		entidad.setDetallesReserva(mapeoDetalle.mapToEntity(modelo.getDetalleReserva()));
@@ -92,32 +75,16 @@ public class ReservaMapper {
 		entidad.setTotal_reserva(modelo.getTotal_reserva());
 		entidad.setForma_retiro(modelo.getForma_retiro());
 		entidad.setPersona_retiro(modelo.getForma_retiro());
+		entidad.setCalificacion(mapeoCalificacion.mapToEntity(modelo.getCalificacion()));
 
 		return entidad;
 	}
 
 	public List<EntidadReserva> mapToEntity(List<Reserva> listaReservas) {
-
 		List<EntidadReserva> listaEntidadReserva = new ArrayList<>();
-		DetalleReservaMapper mapeoDetalle = new DetalleReservaMapper();
-		ProductorMapper mapeoProductor = new ProductorMapper();
-		ConsumidorMapper mapeoConsumidor = new ConsumidorMapper();
-		PuntoEntregaMapper mapeoPtoEntrega = new PuntoEntregaMapper();
-		EstadoReservaMapper mapeoEstado = new EstadoReservaMapper();
 
 		for (Reserva modelo : listaReservas) {
-			EntidadReserva entidad = new EntidadReserva();
-			entidad.setId(modelo.getId());
-			entidad.setDetallesReserva(mapeoDetalle.mapToEntity(modelo.getDetalleReserva()));
-			entidad.setProductor(mapeoProductor.mapToEntity(modelo.getProductor()));
-			entidad.setConsumidor(mapeoConsumidor.mapToEntity(modelo.getConsumidor()));
-			entidad.setPunto_entrega(mapeoPtoEntrega.mapToEntity(modelo.getPunto_entrega()));
-			entidad.setEstado_reserva(mapeoEstado.mapToEntity(modelo.getEstado_reserva()));
-			entidad.setFecha(modelo.getFecha());
-			entidad.setFecha_creacion(modelo.getFecha_creacion());
-			entidad.setTotal_reserva(modelo.getTotal_reserva());
-			entidad.setForma_retiro(modelo.getForma_retiro());
-			entidad.setPersona_retiro(modelo.getForma_retiro());
+			EntidadReserva entidad = mapToEntity(modelo);
 			listaEntidadReserva.add(entidad);
 		}
 		return listaEntidadReserva;

@@ -7,7 +7,7 @@ public class Reserva {
 
 	public Reserva(long id, List<DetalleReserva> detalleReserva, Productor productor, Consumidor consumidor,
 			PuntoEntrega punto_entrega, EstadoReserva estado_reserva, Date fecha, Date fecha_creacion,
-			float total_reserva, String forma_retiro, String persona_retiro) {
+			float total_reserva, String forma_retiro, String persona_retiro, Calificacion calificacion) {
 
 		this.setId(id);
 		this.setDetalleReserva(detalleReserva);
@@ -20,29 +20,21 @@ public class Reserva {
 		this.setTotal_reserva(total_reserva);
 		this.setForma_retiro(forma_retiro);
 		this.setPersona_retiro(persona_retiro);
+		this.setCalificacion(calificacion);
 	}
 
 	private long id;
-
 	private List<DetalleReserva> detalleReserva;
-
 	private Productor productor;
-
 	private Consumidor consumidor;
-
 	private PuntoEntrega punto_entrega;
-
 	private EstadoReserva estado_reserva;
-
 	private Date fecha;
-
 	private Date fecha_creacion;
-
 	private float total_reserva;
-
 	private String forma_retiro;
-
 	private String persona_retiro;
+	private Calificacion calificacion;
 
 	public Long getId() {
 		return id;
@@ -130,5 +122,13 @@ public class Reserva {
 
 	public void setDetalleReserva(List<DetalleReserva> detalleReserva) {
 		this.detalleReserva = detalleReserva;
+	}
+	
+	public Calificacion getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(Calificacion calificacion) {
+		this.calificacion = calificacion;
 	}
 }
