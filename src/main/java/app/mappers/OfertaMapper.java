@@ -7,7 +7,7 @@ public class OfertaMapper {
 
 	public Oferta mapFromEntity(EntidadOferta entidad) {
 
-		Oferta mapeoOferta = new Oferta(entidad.getId(), entidad.getproducto_productor_id(), entidad.getPorcentaje(),
+		Oferta mapeoOferta = new Oferta(entidad.getId(), entidad.getProductoProductorId(), entidad.getPorcentaje(),
 				entidad.getActivo());
 		return mapeoOferta;
 	}
@@ -15,7 +15,7 @@ public class OfertaMapper {
 	public EntidadOferta mapToEntity(Oferta oferta) {
 		EntidadOferta mapeoOferta = new EntidadOferta();
 		mapeoOferta.setId(oferta.getId());
-		mapeoOferta.setproducto_productor_id(oferta.getProductoProductorId());
+		mapeoOferta.setProductoProductorId(oferta.getProductoProductorId());
 		mapeoOferta.setPorcentaje(oferta.getPorcentaje());
 		mapeoOferta.setActivo(oferta.getActivo());
 

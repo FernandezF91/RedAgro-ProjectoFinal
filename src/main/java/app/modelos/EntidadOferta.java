@@ -38,11 +38,11 @@ public class EntidadOferta {
 		this.id = id;
 	}
 	
-	public long getproducto_productor_id() {
+	public long getProductoProductorId() {
 		return producto_productor_id;
 	}
 	
-	public void setproducto_productor_id(long producto_productor_id) {
+	public void setProductoProductorId(long producto_productor_id) {
 		this.producto_productor_id = producto_productor_id;
 	}
 

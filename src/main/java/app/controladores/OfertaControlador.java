@@ -31,7 +31,7 @@ public class OfertaControlador {
 			if (id_oferta != 0) {
 				oferta.setId(id_oferta);
 			}
-			oferta.setproducto_productor_id(id_producto_productor);
+			oferta.setProductoProductorId(id_producto_productor);
 			oferta.setPorcentaje(porcentaje);
 			oferta.setActivo(activo);
 			ofertaDao.save(oferta);
