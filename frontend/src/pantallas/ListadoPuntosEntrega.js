@@ -8,6 +8,7 @@ import Modal from 'react-awesome-modal';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import moment from 'moment';
 
 const columnas = [
     {
@@ -215,13 +216,13 @@ class ListadoPuntosEntrega extends Component {
                 fechas_filtradas.forEach(fecha => {
                     itemRow.push(
                         <tr key={"row-expanded-" + punto.id}>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td />
+                            <td />
+                            <td />
                             <td>
-                                {fecha.fecha}
+                                {moment(fecha.fecha, 'DD-MM-YYYY').format('DD/MM/YYYY')}
                             </td>
-                            <td></td>
+                            <td />
                         </tr>
                     );
                 }
