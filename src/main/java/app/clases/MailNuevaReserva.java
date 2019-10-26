@@ -15,7 +15,7 @@ public class MailNuevaReserva extends MailSender {
 				+ "</br>"
 				+ "<h4> Detalle de la reserva </h4>"
 				+ "Saludos," + "<br>"
-				+ "Equipo de culturaVerde");
+				+ "Equipo de CulturaVerde");
 
 		this.setAsunto("Tu reserva #" + reserva.getId()+ " fue realizada con éxito!");
 	}

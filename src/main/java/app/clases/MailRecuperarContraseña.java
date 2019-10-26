@@ -22,7 +22,7 @@ public class MailRecuperarContraseña extends MailSender{
 				+"<br>"
 				+"Saludos,"
 				+"<br>"
-				+"Equipo de culturaVerde"
+				+"Equipo de CulturaVerde"
 				);
 		this.setAsunto("Restablecer la contraseña");
 	}

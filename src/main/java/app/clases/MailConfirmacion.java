@@ -14,7 +14,7 @@ public class MailConfirmacion extends MailSender {
 				+ "http://localhost:3000/confirmar_cuenta/" + id + ">" + "<button " + "class=" + "button " + "style="
 				+ "background-color:#4CAF50; border:none; color:white; padding: 15px 32px; text-align: center; text-decoration: none>"
 				+ "Confirmar" + "</button>" + "</a><div>" + "<br>" + "<br>" + "Saludos," + "<br>"
-				+ "Equipo de culturaVerde"
+				+ "Equipo de CulturaVerde"
 
 		);
 		this.setAsunto("Confirmación de cuenta");
