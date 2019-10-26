@@ -79,7 +79,7 @@ class MiCuenta extends Component {
                     (this.state.cantidadReservasDisponibles === "1") ? (
                         <h4 className="textoMiCuenta"> Tenes {this.state.cantidadReservasDisponibles} reserva pendiente. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
                     ) : (
-                            <h4 className="textoMiCuenta"> Tenes {this.state.cantidadReservasDisponibles} reservas pendeientes. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito">reservas</span>!</h4>
+                            <h4 className="textoMiCuenta"> Tenes {this.state.cantidadReservasDisponibles} reservas pendientes. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito">reservas</span>!</h4>
                         )
                 )
         ]
