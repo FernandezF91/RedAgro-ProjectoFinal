@@ -73,7 +73,7 @@ class ListadoProductos extends Component {
                 <td>{item.tipoDeProduccion}</td>
                 <td className="columnaPrecio">
                     {
-                        (item.oferta === null) ?
+                        (item.oferta === null || item.oferta === undefined) ?
                             <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                             :
                             (item.oferta.activo) ?
@@ -162,11 +162,11 @@ class ListadoProductos extends Component {
                 loading: true
             })
 
-            var path = "";
-            if (_this.state.idOferta === null) {
-                path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta + "&id_oferta=0";
+            var path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta + "&id_oferta=";
+            if (_this.state.idOferta === null || _this.state.idOferta === undefined) {
+                path =+ "0";
             } else {
-                path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta + "&id_oferta=" + _this.state.idOferta;
+                path =+ _this.state.idOferta;
             }
             fetch(path, {
                 method: "PUT"

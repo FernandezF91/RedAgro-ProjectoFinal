@@ -222,7 +222,7 @@ const PasosCheckout = (props) => {
                                                 }
                                                 <Col>
                                                     {
-                                                        (item.oferta === null) ?
+                                                        (item.oferta === null || item.ofera === undefined) ?
                                                             <div>
                                                                 <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                                                                 <span style={{ color: 'gray', fontSize: '12px' }}> por c/u</span>

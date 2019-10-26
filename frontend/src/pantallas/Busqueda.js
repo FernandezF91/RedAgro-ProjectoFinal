@@ -40,7 +40,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                             <MDBCardText>
                                                 <strong className="float-center">
                                                     {
-                                                        (item.oferta === null) ?
+                                                        (item.oferta === null || item.oferta === undefined) ?
                                                             <div>
                                                                 <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
                                                             </div>

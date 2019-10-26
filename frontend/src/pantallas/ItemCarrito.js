@@ -87,7 +87,7 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                             }
                             <td>
                                 {
-                                    (producto.oferta === null) ?
+                                    (producto.oferta === null || producto.oferta === undefined) ?
                                         <NumberFormat value={producto.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                                         :
                                         (producto.oferta.activo) ?
@@ -106,7 +106,7 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                             </td>
                             <td>
                                 {
-                                    (producto.oferta === null) ?
+                                    (producto.oferta === null || producto.oferta === undefined) ?
                                         <NumberFormat value={producto.precio * producto.cantidad} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
                                         :
                                         (producto.oferta.activo) ?
