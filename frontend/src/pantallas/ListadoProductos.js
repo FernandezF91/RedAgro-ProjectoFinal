@@ -23,9 +23,6 @@ class ListadoProductos extends Component {
         super(props);
 
         this.state = {
-            campos: [],
-            errores: [],
-            files: [],
             id: this.props.id_productor,
             productos: [],
             loading: true,
