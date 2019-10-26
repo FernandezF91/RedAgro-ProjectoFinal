@@ -161,9 +161,9 @@ class ListadoProductos extends Component {
 
             var path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta + "&id_oferta=";
             if (_this.state.idOferta === null || _this.state.idOferta === undefined) {
-                path =+ "0";
+                path += "0";
             } else {
-                path =+ _this.state.idOferta;
+                path += _this.state.idOferta;
             }
             fetch(path, {
                 method: "PUT"
@@ -175,7 +175,6 @@ class ListadoProductos extends Component {
                     })
                 })
             //TODO: cambiarlo para que solo actualice la parte del listado.
-
             window.location.reload();
         }
     }
@@ -192,7 +191,6 @@ class ListadoProductos extends Component {
                 disabledOferta: true
             });
         }
-
     };
 
     componentDidMount() {
