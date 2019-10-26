@@ -18,8 +18,6 @@ import javax.mail.internet.AddressException;
 
 import app.daos.AlertaDao;
 import app.daos.UsuarioDao;
-import app.modelos.EntidadAlerta;
-import app.modelos.EntidadAlertaFrecuencia;
 import app.modelos.EntidadAlertaUsuario;
 import app.mappers.AlertaFrecuenciaMapper;
 import app.mappers.AlertaMapper;
@@ -95,7 +93,7 @@ public class AlertaControlador {
 
 		UsuarioMapper userMapper = new UsuarioMapper();
 		Usuario usuarioEmisor = userMapper.mapFromEntity(usuarioDAO.obtenerDatosUsuario(id_Emisor));
-		//ACÁ HABRIA QUE VALIDAR SI EL EMISOR TIENE CONFIGURADO EL ENVIO DE MAILS.
+		// ACÁ HABRIA QUE VALIDAR SI EL EMISOR TIENE CONFIGURADO EL ENVIO DE MAILS.
 		Usuario usuarioReceptor = userMapper.mapFromEntity(usuarioDAO.obtenerDatosUsuario(id_Receptor));
 		String mail = usuarioReceptor.getUsuario();
 
