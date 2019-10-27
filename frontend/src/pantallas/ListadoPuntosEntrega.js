@@ -282,7 +282,7 @@ class ListadoPuntosEntrega extends Component {
                 <div className="titulosPrincipales">Puntos de entrega</div>
                 <div className="tabla_puntos">
                     {this.state.puntos_entrega.length > 0 ?
-                        <MDBTable striped responsive hover>
+                        <MDBTable striped hover>
                             <MDBTableHead columns={columnas} />
                             <MDBTableBody>
                                 {this.cargarFilas()}

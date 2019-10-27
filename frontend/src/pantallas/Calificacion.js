@@ -34,7 +34,7 @@ const calificacion = ({ lista }) => {
     return (
         <div>
             {lista.length > 0 ?
-                <MDBTable striped responsive hover>
+                <MDBTable striped hover>
                     <MDBTableHead columns={columnasCalificaciones} />
                     <MDBTableBody>{lista}</MDBTableBody>
                 </MDBTable>

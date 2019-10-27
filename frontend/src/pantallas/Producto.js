@@ -62,7 +62,7 @@ const Producto = ({ productos }) => {
     return (
         <div>
             {productos.length > 0 ?
-                <MDBTable striped responsive hover>
+                <MDBTable striped hover>
                     <MDBTableHead columns={columnas} />
                     <MDBTableBody>{productos}</MDBTableBody>
                 </MDBTable>

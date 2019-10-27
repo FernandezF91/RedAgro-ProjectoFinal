@@ -108,6 +108,7 @@ p, h4 {
 
 .ruteo {
 	background-color: white;
+	overflow-y: auto;
 }
 
 .imgA {

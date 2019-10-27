@@ -109,7 +109,7 @@ class BarraNavegacion extends Component {
                                             <Link to={'/principalProductores/MiCuenta'}>Mi cuenta</Link>
                                         </NavDropdown.Item>
                                         <NavDropdown.Divider />
-                                        <NavDropdown.Item href="/">Salir</NavDropdown.Item>
+                                        <NavDropdown.Item onClick={this.logout}>Salir</NavDropdown.Item>
                                     </NavDropdown>
                                 </Nav>
                                 <Nav className="menuUsuario">

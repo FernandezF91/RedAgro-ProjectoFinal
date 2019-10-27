@@ -43,7 +43,7 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                 <MDBTableBody>
                     {
                         listaDeProductos.map((producto, index) =>
-                            <tr key={producto.id}>
+                            <tr key={producto.id} class="border-bottom">
                                 <td>
                                     <Image
                                         roundedCircle
