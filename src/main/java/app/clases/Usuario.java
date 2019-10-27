@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario {
-	
-	public Usuario (long ID, List<Alerta> a, String u, String c, String n, String ap, Date fn, String r, String t, Boolean ac) {
-		
+
+	public Usuario(long ID, List<Alerta> a, String u, String c, String n, String ap, Date fn, String r, String t,
+			Date fc, Boolean ac) {
+
 		this.setId(ID);
-		this.alertas= alertas != null ? alertas: new ArrayList<Alerta>();
+		this.alertas = alertas != null ? alertas : new ArrayList<Alerta>();
 		this.setUsuario(u);
 		this.setContraseña(c);
 		this.setNombre(n);
@@ -17,111 +18,118 @@ public class Usuario {
 		this.setFecha_nacimiento(fn);
 		this.setRol(r);
 		this.setTelefono(t);
-		this.setActivo(ac);		
-		
+		this.setFecha_creacion(fc);
+		this.setActivo(ac);
 	}
 
-	    private Long id;
-	    
-	    private List<Alerta> alertas;
-	    
-	    private String usuario;
-	    
-	    private String contraseña;
+	private Long id;
 
-	    private String nombre;
-	    
-	    private String apellido;
+	private List<Alerta> alertas;
 
-	    private Date fecha_nacimiento;
+	private String usuario;
 
-	    private String rol;
+	private String contraseña;
 
-	    private String telefono;
+	private String nombre;
 
-	    private Boolean activo;
+	private String apellido;
 
-		public Long getId() {
-			return id;
-		}
+	private Date fecha_nacimiento;
 
-		public void setId(Long id) {
-			this.id = id;
-		}
+	private String rol;
 
-		
-		public List<Alerta> getAlertas() {
-			return alertas;
-		}
+	private String telefono;
 
-		public void setAlertas(List<Alerta> alertas) {
-			this.alertas = alertas;
-		}
+	private Date fecha_creacion;
 
-		public String getUsuario() {
-			return usuario;
-		}
+	private Boolean activo;
 
-		public void setUsuario(String usuario) {
-			this.usuario = usuario;
-		}
+	public Long getId() {
+		return id;
+	}
 
-		public String getContraseña() {
-			return contraseña;
-		}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-		public void setContraseña(String contraseña) {
-			this.contraseña = contraseña;
-		}
+	public List<Alerta> getAlertas() {
+		return alertas;
+	}
 
-		public String getNombre() {
-			return nombre;
-		}
+	public void setAlertas(List<Alerta> alertas) {
+		this.alertas = alertas;
+	}
 
-		public void setNombre(String nombre) {
-			this.nombre = nombre;
-		}
+	public String getUsuario() {
+		return usuario;
+	}
 
-		public String getApellido() {
-			return apellido;
-		}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 
-		public void setApellido(String apellido) {
-			this.apellido = apellido;
-		}
+	public String getContraseña() {
+		return contraseña;
+	}
 
-		public Date getFecha_nacimiento() {
-			return fecha_nacimiento;
-		}
+	public void setContraseña(String contraseña) {
+		this.contraseña = contraseña;
+	}
 
-		public void setFecha_nacimiento(Date fecha_nacimiento) {
-			this.fecha_nacimiento = fecha_nacimiento;
-		}
+	public String getNombre() {
+		return nombre;
+	}
 
-		public String getRol() {
-			return rol;
-		}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-		public void setRol(String rol) {
-			this.rol = rol;
-		}
+	public String getApellido() {
+		return apellido;
+	}
 
-		public String getTelefono() {
-			return telefono;
-		}
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
 
-		public void setTelefono(String telefono) {
-			this.telefono = telefono;
-		}
+	public Date getFecha_nacimiento() {
+		return fecha_nacimiento;
+	}
 
-		public Boolean getActivo() {
-			return activo;
-		}
+	public void setFecha_nacimiento(Date fecha_nacimiento) {
+		this.fecha_nacimiento = fecha_nacimiento;
+	}
 
-		public void setActivo(Boolean activo) {
-			this.activo = activo;
-		}
-	    
-	    
+	public String getRol() {
+		return rol;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+
+	public Date getFecha_creacion() {
+		return fecha_creacion;
+	}
+
+	public void setFecha_creacion(Date fecha_creacion) {
+		this.fecha_creacion = fecha_creacion;
+	}
 
 }
