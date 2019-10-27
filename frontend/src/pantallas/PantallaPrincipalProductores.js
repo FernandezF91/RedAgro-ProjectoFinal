@@ -19,6 +19,7 @@ import ListadoProductos from '../pantallas/ListadoProductos';
 import Estadisticas from '../pantallas/Estadisticas';
 import BarraNavegacion from './BarraNavegacion';
 import Planificación from '../pantallas/Planificacion';
+import Calificaciones from '../pantallas/Calificaciones';
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const MiCuentaRouter = withRouter(MiCuenta);
@@ -32,6 +33,7 @@ const ListadoProductosRouter = withRouter(ListadoProductos);
 const EstadisticasRouter = withRouter(Estadisticas);
 const HitoricoRouter = withRouter(CargarHistorico);
 const PlanificacionRouter = withRouter(Planificación);
+const CalificacionesRouter = withRouter(Calificaciones);
 
 class PantallaPrincipalProductores extends Component {
     constructor(props) {
@@ -110,6 +112,12 @@ class PantallaPrincipalProductores extends Component {
                                 <i className="fas fa-tasks iconosMenuLateral" />
                                 <Link to={'/principalProductores/ListadoReservas'}>
                                     <p>Reservas</p>
+                                </Link>
+                            </Row>
+                            <Row>
+                                <i className="fas fa-star iconosMenuLateral" />
+                                <Link to={'/principalProductores/Calificaciones'}>
+                                    <p>Calificaciones</p>
                                 </Link>
                             </Row>
                             <Row>
@@ -234,6 +242,13 @@ class PantallaPrincipalProductores extends Component {
                             <Route path={'/principalProductores/Planificacion'}
                                 render={(props) =>
                                     <PlanificacionRouter
+                                        id_productor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/Calificaciones'}
+                                render={(props) =>
+                                    <CalificacionesRouter
                                         id_productor={this.state.id}
                                     />
                                 }

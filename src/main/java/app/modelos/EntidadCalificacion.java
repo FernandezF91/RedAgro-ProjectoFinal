@@ -9,6 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Date;
+
 @Entity
 @Table(name = "Calificacion")
 public class EntidadCalificacion {
@@ -27,8 +31,12 @@ public class EntidadCalificacion {
 	@Column(name = "valor", nullable = false)
 	private int valor;
 
-	@Column(name = "comentario", nullable = false)
+	@Column(name = "comentario", nullable = true)
 	private String comentario;
+	
+	@CreationTimestamp
+	@Column(name = "fecha_calificacion", nullable = false)
+	private Date fecha_calificacion;
 
 	public Long getId() {
 		return id;
@@ -60,5 +68,13 @@ public class EntidadCalificacion {
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+	
+	public Date getFechaCalificacion() {
+		return fecha_calificacion;
+	}
+
+	public void setFechaCalificacion(Date fecha_calificacion) {
+		this.fecha_calificacion = fecha_calificacion;
 	}
 }

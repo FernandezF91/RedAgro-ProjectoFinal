@@ -304,3 +304,7 @@ input[type=text] {
 .cursor {
     cursor: default !important;
 }
+
+.columnaTablaCentrada {
+    display: inline-block;
+}

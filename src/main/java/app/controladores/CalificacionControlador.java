@@ -1,14 +1,21 @@
 package app.controladores;
 
+import java.math.BigInteger;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.clases.ListadoCalificaciones;
 import app.daos.CalificacionDao;
 import app.modelos.EntidadCalificacion;
 
@@ -20,11 +27,9 @@ public class CalificacionControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/guardarCalificacion")
-	public ResponseEntity<String> guardarOferta(@RequestParam long reserva_id, @RequestBody EntidadCalificacion calificacionAGuardar) {
+	public ResponseEntity<String> guardarOferta(@RequestParam long reserva_id,
+			@RequestBody EntidadCalificacion calificacionAGuardar) {
 		try {
-			
-//			CalificacionMapper mapeoCalificacion = new CalificacionMapper();
-//			EntidadCalificacion calificacion = mapeoCalificacion.mapToEntity(calificacionAGuardar);
 			EntidadCalificacion calificacion = new EntidadCalificacion();
 			calificacion.setReservaId(reserva_id);
 			calificacion.setValor(calificacionAGuardar.getValor());
@@ -38,4 +43,20 @@ public class CalificacionControlador {
 		}
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/obtenerCalificaciones")
+	public List<ListadoCalificaciones> obtenerCalificaciones(@RequestParam long id_productor) {
+
+		List<Object[]> resultados = calificacionDao.obtenerCalificaciones(id_productor);
+		List<ListadoCalificaciones> listaCalificaciones = new ArrayList<>();
+
+		if (resultados != null && !resultados.isEmpty()) {
+			for (Object[] object : resultados) {
+				listaCalificaciones.add(new ListadoCalificaciones((BigInteger) object[0], (Date) object[1],
+						(BigInteger) object[2], (String) object[3], (int) object[4], (String) object[5],
+						(String) object[6], (String) object[7]));
+			}
+		}
+		return listaCalificaciones;
+	}
 }

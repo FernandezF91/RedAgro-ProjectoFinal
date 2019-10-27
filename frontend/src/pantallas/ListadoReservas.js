@@ -532,12 +532,14 @@ class ListadoReservas extends Component {
                                 {(this.state.verCalificacion) ?
                                     <BeautyStars
                                         value={this.state.cantidadEstrellas}
-                                        activeColor="#28a745"
+                                        activeColor="#28A745"
+                                        inactiveColor="#757877"
                                     />
                                     :
                                     <BeautyStars
                                         value={this.state.cantidadEstrellas}
-                                        activeColor="#28a745"
+                                        activeColor="#28A745"
+                                        inactiveColor="#757877"
                                         onChange={cantidadEstrellas => this.setState({ cantidadEstrellas })}
                                     />
                                 }

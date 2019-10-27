@@ -7,7 +7,7 @@ public class CalificacionMapper {
 	public Calificacion mapFromEntity(EntidadCalificacion entidad) {
 
 		Calificacion mapeoCalificacion = new Calificacion(entidad.getId(), entidad.getReservaId(), entidad.getValor(),
-				entidad.getComentario());
+				entidad.getComentario(), entidad.getFechaCalificacion());
 		return mapeoCalificacion;
 	}
 
@@ -17,8 +17,8 @@ public class CalificacionMapper {
 		mapeoCalificacion.setReservaId(calificacion.getReservaId());
 		mapeoCalificacion.setValor(calificacion.getValor());
 		mapeoCalificacion.setComentario(calificacion.getComentario());
+		mapeoCalificacion.setFechaCalificacion(calificacion.getFechaCalificacion());
 
 		return mapeoCalificacion;
 	}
-
 }

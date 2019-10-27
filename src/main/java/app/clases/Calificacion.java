@@ -1,17 +1,21 @@
 package app.clases;
 
+import java.sql.Date;
+
 public class Calificacion {
-	public Calificacion(long id, long reservaId, int valor, String comentario) {
+	public Calificacion(long id, long reserva_id, int valor, String comentario, Date fecha_calificacion) {
 		this.setId(id);
-		this.setReservaId(reservaId);
+		this.setReservaId(reserva_id);
 		this.setValor(valor);
 		this.setComentario(comentario);
+		this.setFechaCalificacion(fecha_calificacion);
 	}
 	
 	private long id;
-	private long reservaId;
+	private long reserva_id;
 	private int valor;
 	private String comentario;
+	private Date fecha_calificacion;
 	
 	public long getId() {
 		return id;
@@ -22,11 +26,11 @@ public class Calificacion {
 	}
 
 	public long getReservaId() {
-		return reservaId;
+		return reserva_id;
 	}
 	
-	public void setReservaId(long reservaId) {
-		this.reservaId = reservaId;
+	public void setReservaId(long reserva_id) {
+		this.reserva_id = reserva_id;
 	}
 
 	public int getValor() {
@@ -43,5 +47,13 @@ public class Calificacion {
 	
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+	
+	public Date getFechaCalificacion() {
+		return fecha_calificacion;
+	}
+	
+	public void setFechaCalificacion(Date fecha_calificacion) {
+		this.fecha_calificacion = fecha_calificacion;
 	}
 }
