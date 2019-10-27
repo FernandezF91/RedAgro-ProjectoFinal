@@ -46,9 +46,8 @@ public class PuntoDeEntregaControlador {
 
 		entidad_puntos = puntoEntregaDAO.obtenerPuntosEntregaProductor(productor);
 
-		puntos_entrega = entidad_puntos.stream().map(entidad ->
-
-		punto_entrega_mapper.mapFromEntity(entidad)).collect(Collectors.toList());
+		puntos_entrega = entidad_puntos.stream().map(entidad -> punto_entrega_mapper.mapFromEntity(entidad))
+				.collect(Collectors.toList());
 
 		return puntos_entrega;
 	}

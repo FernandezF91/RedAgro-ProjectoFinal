@@ -12,10 +12,11 @@ public class PuntoEntregaMapper {
 	public PuntoEntrega mapFromEntity(EntidadPuntoEntrega entidad) {
 
 		ProductorMapper mapeoProductor = new ProductorMapper();
-		Productor productor = mapeoProductor.mapFromEntity(entidad.getProductor());
-		
-		PuntoEntrega entrega = new PuntoEntrega(entidad.getId(), productor,  entidad.getPais(), entidad.getProvincia(), 
-												entidad.getLocalidad(), entidad.getCod_postal(), entidad.getDireccion(), entidad.getLatitud(), entidad.getLongitud(), entidad.getActivo());
+		Productor productor = mapeoProductor.mapFromEntityWithoutPtoEntrega(entidad.getProductor());
+
+		PuntoEntrega entrega = new PuntoEntrega(entidad.getId(), productor, entidad.getPais(), entidad.getProvincia(),
+				entidad.getLocalidad(), entidad.getCod_postal(), entidad.getDireccion(), entidad.getLatitud(),
+				entidad.getLongitud(), entidad.getActivo());
 
 		return entrega;
 	}
@@ -27,10 +28,10 @@ public class PuntoEntregaMapper {
 
 		for (EntidadPuntoEntrega entidad : listaEntidad) {
 
-			Productor productor = mapeoProductor.mapFromEntity(entidad.getProductor());
+			Productor productor = mapeoProductor.mapFromEntityWithoutPtoEntrega(entidad.getProductor());
 			PuntoEntrega entrega = new PuntoEntrega(entidad.getId(), productor, entidad.getPais(),
 					entidad.getProvincia(), entidad.getLocalidad(), entidad.getCod_postal(), entidad.getDireccion(),
-					entidad.getLatitud(), entidad.getLongitud(),entidad.getActivo());
+					entidad.getLatitud(), entidad.getLongitud(), entidad.getActivo());
 			entregas.add(entrega);
 		}
 
@@ -40,7 +41,7 @@ public class PuntoEntregaMapper {
 	public EntidadPuntoEntrega mapToEntity(PuntoEntrega modelo) {
 
 		ProductorMapper mapeoProductor = new ProductorMapper();
-		EntidadProductor entidadProductor = mapeoProductor.mapToEntity(modelo.getProductor());
+		EntidadProductor entidadProductor = mapeoProductor.mapToEntityWithoutPtoEntrega(modelo.getProductor());
 
 		EntidadPuntoEntrega entidad = new EntidadPuntoEntrega();
 
@@ -64,7 +65,7 @@ public class PuntoEntregaMapper {
 		List<EntidadPuntoEntrega> listaEntidad = new ArrayList<EntidadPuntoEntrega>();
 
 		for (PuntoEntrega modelo : listaModelo) {
-			EntidadProductor entidadProductor = mapeoProductor.mapToEntity(modelo.getProductor());
+			EntidadProductor entidadProductor = mapeoProductor.mapToEntityWithoutPtoEntrega(modelo.getProductor());
 			EntidadPuntoEntrega entidad = new EntidadPuntoEntrega();
 			entidad.setId(modelo.getId());
 			entidad.setProductor(entidadProductor);

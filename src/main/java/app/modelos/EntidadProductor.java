@@ -43,7 +43,6 @@ public class EntidadProductor {
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
 	private List<EntidadProductoProductor> productos = new ArrayList<>();
 
-
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "productor", cascade = CascadeType.ALL)
 	private List<EntidadPuntoEntrega> puntos_entrega = new ArrayList<>();
