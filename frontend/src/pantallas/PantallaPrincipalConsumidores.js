@@ -18,6 +18,7 @@ import BarraNavegacion from './BarraNavegacion';
 import ResultadoBusqueda from './ResultadoBusqueda';
 import DetalleProducto from './DetalleProducto';
 import Checkout from './Checkout';
+import PerfilProductor from './PerfilProductor'
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const MiCuentaRouter = withRouter(MiCuenta);
@@ -30,6 +31,7 @@ const GeolocalizacionRouter = withRouter(Geolocalizacion);
 const ResultadoBusquedaRouter = withRouter(ResultadoBusqueda);
 const CheckoutRouter = withRouter(Checkout);
 const DetalleProductoRouter = withRouter(DetalleProducto);
+const PerfilProductorRouter = withRouter(PerfilProductor);
 
 class PantallaPrincipalconsumidores extends Component {
 
@@ -44,10 +46,12 @@ class PantallaPrincipalconsumidores extends Component {
             productosSeleccionados: [],
             productos: [],
             detalleProducto: {},
+            nombrePerfilProductor: {},
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.handleNuevaBusqueda = this.handleNuevaBusqueda.bind(this);
         this.handleDetalleProducto = this.handleDetalleProducto.bind(this);
+        this.handlePerfilProductor = this.handlePerfilProductor.bind(this);
         this.actualizarProductosSeleccionados = this.actualizarProductosSeleccionados.bind(this);
         this.cargarProductos = this.cargarProductos.bind(this);
         this.actualizarUsuarioConsumidor = this.actualizarUsuarioConsumidor.bind(this);
@@ -119,6 +123,16 @@ class PantallaPrincipalconsumidores extends Component {
             pathname: '/principalConsumidores/DetalleProducto/' + idProductoSeleccionado,
             state: {
                 producto: idProductoSeleccionado,
+            }
+        })
+    }
+
+    handlePerfilProductor(nombrePerfil) {
+        this.setState({ nombrePerfilProductor: nombrePerfil });
+        this.props.history.push({
+            pathname: '/principalConsumidores/PerfilProductor/' + nombrePerfil,
+            state: {
+                nombrePerfil: nombrePerfil,
             }
         })
     }
@@ -361,9 +375,16 @@ class PantallaPrincipalconsumidores extends Component {
                                 render={(props) =>
                                     <DetalleProductoRouter
                                         producto={this.state.detalleProducto}
+                                        handlePerfilProductor={this.handlePerfilProductor}
                                         productosSeleccionados={this.state.productosSeleccionados}
                                         actualizarProductosSeleccionados={this.actualizarProductosSeleccionados}
                                     />
+                                }
+                            />
+
+                            <Route path={'/principalConsumidores/PerfilProductor/:nombrePerfil'}
+                                render={(props) =>
+                                    <PerfilProductorRouter />
                                 }
                             />
                         </Col>

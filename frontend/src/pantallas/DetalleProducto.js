@@ -19,6 +19,7 @@ class DetalleBusqueda extends Component {
             resultadoRequest: 0,
         }
         this.actualizarPropsSeleccionados = this.actualizarPropsSeleccionados.bind(this);
+        this.mostrarPerfilProductor = this.mostrarPerfilProductor.bind(this);
     }
 
     componentDidMount() {
@@ -71,6 +72,7 @@ class DetalleBusqueda extends Component {
                                 nombre: data.productor.usuario.nombre,
                                 apellido: data.productor.usuario.apellido,
                                 telefono: data.productor.usuario.telefono,
+                                usuario: data.productor.usuario.usuario,
                             },
                             imagenes: data.imagenes,
                             oferta: data.oferta
@@ -184,6 +186,10 @@ class DetalleBusqueda extends Component {
         }
     }
 
+    mostrarPerfilProductor = (usuario) =>{
+        this.props.handlePerfilProductor(usuario.split("@")[0]);
+    }
+
     render() {
         const sumarProducto = () => this.sumarProducto();
         const restarProducto = () => this.restarProducto();
@@ -246,15 +252,15 @@ class DetalleBusqueda extends Component {
                             }
                         </h3>
                         {
-                            this.state.producto.contenido.length > 0 ?
+                            this.state.producto.contenido !== null ? //|| this.state.producto.contenido.length > 0
                                 <div className="contenidoDelProducto">
                                     <h6 className="grey-text">Cada {this.state.producto.tipoDeUnidad.toLowerCase()} contiene {this.state.producto.contenido}</h6>
                                 </div>
                                 : ''
                         }
-                        <div className="descripcionProducto">
+                        <div className="descripcionProductor">
                             Producido por:
-                        <h6>{this.state.producto.productor.razon_social}</h6>
+                        <h6><a onClick={() =>this.mostrarPerfilProductor(this.state.producto.productor.usuario)}>{this.state.producto.productor.razon_social}</a></h6>
                         </div>
 
                         <div className="descripcionProducto">
