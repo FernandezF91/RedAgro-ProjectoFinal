@@ -42,15 +42,21 @@ class Calificaciones extends Component {
                 <td>{item.estado}</td>
                 <td>
                     <div className="columnaTablaCentrada">
-                    <BeautyStars
-                        value={item.valor}
-                        activeColor="#28A745"
-                        inactiveColor="#757877"
-                        size="16px"
-                    />
+                        <BeautyStars
+                            value={item.valor}
+                            activeColor="#28A745"
+                            inactiveColor="#757877"
+                            size="16px"
+                        />
                     </div>
                 </td>
-                <td>{item.comentario}</td>
+                <td>
+                    {(item.comentario.length > 0) ?
+                        item.comentario
+                        :
+                        "-"
+                    }
+                </td>
                 <td>{item.nombre_consumidor} {item.apellido_consumidor}</td>
             </tr >
         ];
