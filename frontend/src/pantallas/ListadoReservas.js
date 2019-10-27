@@ -138,7 +138,7 @@ class ListadoReservas extends Component {
                     <i className="far fa-eye iconosTabla cursorManito" title="Ver detalle reserva" onClick={clickCallback} key={"row-data-" + item.id} />
                 </td>
                 <td id="estado">
-                    {(item.calificacion !== null || item.calificacion !== undefined) ?
+                    {(item.calificacion !== null) ?
                         <i className="fas fa-star iconosTabla cursorManito" title="Ver calificación" onClick={calificarReserva} key={"row-data-" + item.id} />
                         :
                         (item.estado === "Finalizado" || item.estado === "Cancelado") ?
