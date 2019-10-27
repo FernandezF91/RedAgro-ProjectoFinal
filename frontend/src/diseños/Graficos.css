@@ -1,35 +1,3 @@
-.graficosPorFila {
-    flex-direction: row;
-    display: flex;
-    justify-content: center;
-    margin: 10px;
-}
-
-.grafico {
-    height: 200px;
-}
-
-.graficos1 {
-    min-width: 400px;
-    min-height: 280px;
-    margin: 7px;
-    border-color: whitesmoke;
-    border-style: solid;
-    border-radius: 6px;
-    padding: 15px;
-    box-shadow: 1px 1px whitesmoke;
-}
-
-.graficos2 {
-    min-width: 815px;
-    min-height: 280px;
-    margin: 5px;
-    border-color: whitesmoke;
-    border-style: solid;
-    border-radius: 6px;
-    padding: 15px;
-    box-shadow: 1px 1px whitesmoke;
-}
 
 .titulo {
     margin-bottom: 15px;
@@ -42,5 +10,5 @@
 
 .iconoGrandeGraficos {
     color: #79CB79;
-    font-size: 140px;
+    font-size: 160px;
 }

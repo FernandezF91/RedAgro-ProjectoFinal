@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import GraficoPie from './GraficoPie';
 import GraficoLine from './GraficoLine';
 import GraficoBar from './GraficoBar';
-
+import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
 import '../diseños/Graficos.css';
 
 class Estadisticas extends Component {
@@ -78,29 +78,53 @@ class Estadisticas extends Component {
     render() {
         return (
             <div>
-                <div className="titulosPrincipales">Estadísticas</div>
-                <div className="graficosPorFila">
-                    <div className="graficos1">
-                        <h5>Reservas por estados</h5>
-                        <h6 className="titulo">(en los últimos 90 días)</h6>
-                        <br />
-                        <GraficoPie totalesGraficoPie={this.state.totalesGraficoPie} />
-                    </div>
-                    <div className="graficos1">
-                        <h5>Total de reservas concretadas</h5>
-                        <h6 className="titulo">(en los últimos 6 meses)</h6>
-                        <br />
-                        <GraficoLine totalesGraficoLine={this.state.totalesGraficoLine} />
-                    </div>
-                </div>
-                <div className="graficosPorFila">
-                    <div className="graficos2">
-                        <h5>Productos vendidos</h5>
-                        <h6 className="titulo">(en los últimos 90 días)</h6>
-                        <br />
-                        <GraficoBar totalesGraficoBar={this.state.totalesGraficoBar} />
-                    </div>
-                </div>
+                <br />
+                <MDBRow className="graficosCentrados">
+                    <MDBCol className="col-6">
+                        <MDBCard className="mb-4">
+                            <MDBCardBody className="text-center">
+                                <MDBCardTitle>
+                                    <h3>Reservas por estados</h3>
+                                    <h4 className="titulo grey-text">(en los últimos 90 días)</h4>
+                                </MDBCardTitle>
+                                <br />
+                                <MDBCardText>
+                                    <GraficoPie totalesGraficoPie={this.state.totalesGraficoPie} />
+                                </MDBCardText>
+                            </MDBCardBody>
+                        </MDBCard>
+                    </MDBCol>
+                    <MDBCol className="col-6">
+                        <MDBCard className="mb-4">
+                            <MDBCardBody className="text-center">
+                                <MDBCardTitle>
+                                    <h3>Total de reservas concretadas</h3>
+                                    <h4 className="titulo grey-text">(en los últimos 6 meses)</h4>
+                                </MDBCardTitle>
+                                <br />
+                                <MDBCardText>
+                                    <GraficoLine totalesGraficoLine={this.state.totalesGraficoLine} />
+                                </MDBCardText>
+                            </MDBCardBody>
+                        </MDBCard>
+                    </MDBCol>
+                </MDBRow>
+                <MDBRow className="graficosCentrados">
+                    <MDBCol>
+                        <MDBCard className="mb-4">
+                            <MDBCardBody className="text-center">
+                                <MDBCardTitle>
+                                    <h3>Productos vendidos</h3>
+                                    <h4 className="titulo grey-text">(en los últimos 90 días)</h4>
+                                </MDBCardTitle>
+                                <br />
+                                <MDBCardText>
+                                    <GraficoBar totalesGraficoBar={this.state.totalesGraficoBar} />
+                                </MDBCardText>
+                            </MDBCardBody>
+                        </MDBCard>
+                    </MDBCol>
+                </MDBRow>
             </div >
         );
     };

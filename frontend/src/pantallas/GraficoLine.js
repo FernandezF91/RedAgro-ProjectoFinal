@@ -21,13 +21,13 @@ const GraficoLine = ({ totalesGraficoLine }) => {
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
                 pointBorderColor: '#60D97B',
-                pointBackgroundColor: '#fff',
+                pointBackgroundColor: '#60D97B',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
                 pointHoverBackgroundColor: '#60D97B',
                 pointHoverBorderColor: '#60D97B',
                 pointHoverBorderWidth: 2,
-                pointRadius: 1,
+                pointRadius: 3,
                 pointHitRadius: 10,
             }
         ]
@@ -37,13 +37,13 @@ const GraficoLine = ({ totalesGraficoLine }) => {
         <div>
             {totalesGraficoLine.length > 0 ? (
                 <Line
-                    className="grafico"
                     data={grafico}
+                    height={150}
                     legend={{
                         display: false
                     }}
                     options={{
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
                         scales: {
                             yAxes: [
                                 {
@@ -62,7 +62,7 @@ const GraficoLine = ({ totalesGraficoLine }) => {
                     <div className="sinGrafico">
                         <i className="fas fa-chart-bar iconoGrandeGraficos" />
                         <br />
-                        <h6>Ups! No hay datos para mostrar! </h6>
+                        <h5>Ups! No hay datos para mostrar!</h5>
                     </div>
                 )
             }

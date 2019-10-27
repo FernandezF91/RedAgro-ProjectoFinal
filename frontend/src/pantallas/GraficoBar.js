@@ -24,13 +24,13 @@ const GraficoBar = ({ totalesGraficoBar }) => {
         <div>
             {totalesGraficoBar.length > 0 ? (
                 <Bar
-                    className="grafico"
                     data={grafico}
+                    height={70}
                     legend={{
                         display: false
                     }}
                     options={{
-                        maintainAspectRatio: false,
+                        maintainAspectRatio: true,
                         scales: {
                             xAxes: [
                                 {
@@ -58,7 +58,7 @@ const GraficoBar = ({ totalesGraficoBar }) => {
                     <div className="sinGrafico">
                         <i className="fas fa-chart-bar iconoGrandeGraficos" />
                         <br />
-                        <h6>Ups! No hay datos para mostrar! </h6>
+                        <h5>Ups! No hay datos para mostrar!</h5>
                     </div>
                 )
             }
