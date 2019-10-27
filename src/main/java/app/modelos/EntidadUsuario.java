@@ -16,6 +16,8 @@ import javax.persistence.OneToOne;
 //import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -59,6 +61,10 @@ public class EntidadUsuario {
 	@Column(name = "telefono", nullable = false)
 	private String telefono;
 
+	@CreationTimestamp
+	@Column(name = "fecha_creacion", nullable = false)
+	private Date fecha_creacion;
+	
 	@Column(name = "activo")
 	private Boolean activo;
 
