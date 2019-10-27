@@ -5,8 +5,10 @@ import java.sql.Date;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import app.modelos.EntidadProductor;
 import app.modelos.EntidadUsuario;
 
 public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
@@ -37,6 +39,9 @@ public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 	
 	@Query(value="SELECT * FROM Usuario  WHERE id = ?1", nativeQuery = true)
 	EntidadUsuario obtenerDatosUsuario(long id);
+	
+	@Query(value="SELECT * FROM Usuario WHERE rol='Productor' AND usuario LIKE :nombreUsuario ESCAPE '#'", nativeQuery = true)
+	EntidadUsuario obtenerProductorByUsuario(@Param("nombreUsuario") String usuario);
 	
 
 }
