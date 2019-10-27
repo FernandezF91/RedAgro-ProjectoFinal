@@ -85,3 +85,17 @@
     margin-right: 10px;
     margin-left: 10px;
 }
+
+.botonIzquierda {
+    float: left;
+}
+
+.botonDerecha {
+    float: right;
+}
+
+.precioCheckout {
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 0px !important;
+}
