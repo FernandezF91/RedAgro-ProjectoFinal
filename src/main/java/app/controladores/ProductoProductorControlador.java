@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,7 +71,7 @@ public class ProductoProductorControlador {
 		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos);
 		return productosMapeados;
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/obtenerProductosProductorBusqueda")
 	public List<ProductoProductor> obtenerProductosProductorBusqueda(@RequestParam long id) {
@@ -129,5 +130,21 @@ public class ProductoProductorControlador {
 		EntidadProductoProductor entidad = productoProductorDao.obtenerProductoById(id);
 		ProductoProductor producto = productoMapper.mapFromEntity(entidad);
 		return producto;
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/obtenerProductosARevisar")
+	public ResponseEntity<Object> obtenerProductosARevisar(@RequestParam long id_productor) {
+		try {
+			List<EntidadProductoProductor> resultados = productoProductorDao.obtenerProductosARevisar(id_productor);
+			ProductoProductorMapper productoMapper = new ProductoProductorMapper();
+			List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(resultados);
+			
+			return new ResponseEntity<>(productosMapeados, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					"Ocurrió un error al buscar los productos.",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

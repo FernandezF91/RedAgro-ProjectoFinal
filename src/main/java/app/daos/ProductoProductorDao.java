@@ -14,7 +14,7 @@ public interface ProductoProductorDao extends JpaRepository<EntidadProductoProdu
 
 	@Query(value = "SELECT * FROM Producto_Productor p where p.productor_id = ?1 ", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductosByProductor(long id);
-	
+
 	@Query(value = "SELECT * FROM Producto_Productor p where p.productor_id = ?1 AND p.stock > 0 "
 			+ " AND (p.fecha_vencimiento >= CURDATE() OR p.fecha_vencimiento IS NULL) ", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductosProductorBusqueda(long id);
@@ -42,4 +42,8 @@ public interface ProductoProductorDao extends JpaRepository<EntidadProductoProdu
 	@Modifying
 	@Query(value = "UPDATE Producto_Productor P SET P.stock = ?2 WHERE P.id =?1", nativeQuery = true)
 	void actualizarStockProducto(long id_producto, int stock);
+
+	@Query(value = "SELECT * FROM Producto_productor p WHERE (stock = 0 OR fecha_vencimiento <= CURDATE()) "
+			+ " AND productor_id = ?1 ORDER BY p.id DESC LIMIT 0, 10", nativeQuery = true)
+	List<EntidadProductoProductor> obtenerProductosARevisar(long id_productor);
 }
