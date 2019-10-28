@@ -54,7 +54,7 @@ class MiCuenta extends Component {
                     resultadoRequestReservas: response.status
                 })
                 if (response.status === 200) {
-                    return response.json();
+                    return JSON.stringify(response);
                 } else if (response.status === 504) {
                     console.log("Timeout");
                 } else {
