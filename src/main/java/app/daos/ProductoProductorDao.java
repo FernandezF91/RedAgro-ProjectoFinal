@@ -12,8 +12,12 @@ import app.modelos.EntidadProductoProductor;
 
 public interface ProductoProductorDao extends JpaRepository<EntidadProductoProductor, Long> {
 
-	@Query(value = "SELECT * FROM Producto_Productor p where p.productor_id = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM Producto_Productor p where p.productor_id = ?1 ", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductosByProductor(long id);
+	
+	@Query(value = "SELECT * FROM Producto_Productor p where p.productor_id = ?1 AND p.stock > 0 "
+			+ " AND (p.fecha_vencimiento >= CURDATE() OR p.fecha_vencimiento IS NULL) ", nativeQuery = true)
+	List<EntidadProductoProductor> obtenerProductosProductorBusqueda(long id);
 
 	@Query(value = "SELECT DISTINCT p.* FROM Producto_Productor p JOIN Producto po ON p.producto_id = po.id "
 			+ " WHERE (p.titulo LIKE %:titulo% OR po.tipo LIKE %:titulo%) "

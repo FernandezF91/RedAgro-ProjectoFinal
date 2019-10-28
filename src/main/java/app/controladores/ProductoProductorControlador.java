@@ -70,6 +70,16 @@ public class ProductoProductorControlador {
 		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos);
 		return productosMapeados;
 	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/obtenerProductosProductorBusqueda")
+	public List<ProductoProductor> obtenerProductosProductorBusqueda(@RequestParam long id) {
+
+		List<EntidadProductoProductor> listaProductos = productoProductorDao.obtenerProductosProductorBusqueda(id);
+		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
+		List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(listaProductos);
+		return productosMapeados;
+	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/obtenerProductos")
