@@ -17,5 +17,8 @@ public interface PreferenciaDao extends JpaRepository<EntidadPreferencia, Long> 
 	@Modifying
 	@Query(value = "DELETE FROM Preferencia p where p.consumidor_id = ?1 and producto_id = ?2", nativeQuery = true)
 	void borrarPreferenciaConsumidor(long id, long id_Producto);
+	
+	@Query(value = "SELECT * From Preferencia p WHERE  p.producto_id = ?1", nativeQuery = true)
+	ArrayList<EntidadPreferencia> obtenerPreferenciasPorProducto(long id_producto);
 
 }

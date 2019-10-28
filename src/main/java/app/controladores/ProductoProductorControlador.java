@@ -3,6 +3,9 @@ package app.controladores;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.clases.MailProductoInteres;
 import app.clases.ProductoProductor;
+import app.daos.PreferenciaDao;
 import app.daos.ProductoDao;
 import app.daos.ProductoProductorDao;
 import app.daos.ProductorDao;
+import app.daos.UsuarioDao;
 import app.mappers.ProductoProductorMapper;
+import app.modelos.EntidadPreferencia;
 import app.modelos.EntidadProducto;
 import app.modelos.EntidadProductoProductor;
 import app.modelos.EntidadProductor;
@@ -35,6 +42,12 @@ public class ProductoProductorControlador {
 	@Autowired
 	ProductorDao productorDao;
 
+	@Autowired
+	PreferenciaDao preferenciaDAO;
+
+	@Autowired
+	UsuarioDao usuarioDAO;
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
 	public Long agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor,
@@ -43,6 +56,8 @@ public class ProductoProductorControlador {
 		EntidadProducto prod = productoDao.obtenerProducto(id_producto);
 
 		EntidadProductor productor = productorDao.obtenerProductor(id_productor);
+
+		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
 
 		EntidadProductoProductor productoNuevo = new EntidadProductoProductor();
 		productoNuevo.setTitulo(producto.getTitulo());
@@ -59,7 +74,28 @@ public class ProductoProductorControlador {
 		productoNuevo.setProductor(productor);
 		productoNuevo.setOferta(null);
 
-		return productoProductorDao.save(productoNuevo).getId();
+		Long id = productoProductorDao.save(productoNuevo).getId();
+		ProductoProductor prodProductor = productoMapper.mapFromEntity(productoProductorDao.obtenerProductoById(id));
+
+		// Chequeo las preferencias de los usuarios
+		ArrayList<EntidadPreferencia> preferencias = preferenciaDAO.obtenerPreferenciasPorProducto(id_producto);
+		for (EntidadPreferencia p : preferencias) {
+			String mailUsuario = p.getConsumidor().getUsuario().getUsuario();
+			String nombre = p.getConsumidor().getUsuario().getNombre();
+
+			try {
+				MailProductoInteres mail = new MailProductoInteres(mailUsuario, nombre, prodProductor);
+				mail.enviarMail();
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return id;
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
@@ -139,12 +175,10 @@ public class ProductoProductorControlador {
 			List<EntidadProductoProductor> resultados = productoProductorDao.obtenerProductosARevisar(id_productor);
 			ProductoProductorMapper productoMapper = new ProductoProductorMapper();
 			List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(resultados);
-			
+
 			return new ResponseEntity<>(productosMapeados, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(
-					"Ocurrió un error al buscar los productos.",
-					HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>("Ocurrió un error al buscar los productos.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
