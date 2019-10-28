@@ -5,6 +5,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.clases.ListadoCalificaciones;
+import app.clases.MailNuevaCalificacion;
+import app.clases.Reserva;
 import app.daos.CalificacionDao;
+import app.daos.ReservaDao;
+import app.mappers.ReservaMapper;
 import app.modelos.EntidadCalificacion;
 
 @RestController
@@ -25,16 +32,36 @@ public class CalificacionControlador {
 	@Autowired
 	CalificacionDao calificacionDao;
 
+	@Autowired
+	ReservaDao reservaDao;
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/guardarCalificacion")
-	public ResponseEntity<String> guardarOferta(@RequestParam long reserva_id,
+	public ResponseEntity<String> guardarCalificacion(@RequestParam long reserva_id,
 			@RequestBody EntidadCalificacion calificacionAGuardar) {
+
 		try {
 			EntidadCalificacion calificacion = new EntidadCalificacion();
 			calificacion.setReservaId(reserva_id);
 			calificacion.setValor(calificacionAGuardar.getValor());
 			calificacion.setComentario(calificacionAGuardar.getComentario());
 			calificacionDao.save(calificacion);
+
+			try {
+				ReservaMapper mapeoReservas = new ReservaMapper();
+				Reserva reserva = mapeoReservas.mapFromEntity(reservaDao.obtenerReservaById(reserva_id));
+				MailNuevaCalificacion mailConsumidor = new MailNuevaCalificacion(
+						reserva.getProductor().getUsuario().getUsuario(), reserva);
+
+				mailConsumidor.enviarMail();
+
+			} catch (AddressException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			return new ResponseEntity<>("Calificación guardada correctamente!", HttpStatus.OK);
 		} catch (Exception e) {

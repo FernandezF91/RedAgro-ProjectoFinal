@@ -39,7 +39,7 @@ public class MailActualizacionReserva extends MailSender {
 							+ "No te olvides de chequear el horario de atención y de llevar los datos de tu reserva para que no haya inconvenientes al momento del retiro. </p>"
 							+ "</br>" + "Saludos," + "</br>" + "Equipo de CulturaVerde");
 				}
-				this.setAsunto("Tu reserva #" + reserva.getId() + " ya esta disponible para retirar!");
+				this.setAsunto("Tu reserva #" + reserva.getId() + " ya está disponible para retirar!");
 			}
 			
 			break;
@@ -47,7 +47,7 @@ public class MailActualizacionReserva extends MailSender {
 
 		case "Finalizado": {
 			this.setContenido_email("<div>Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Tu reserva #"
-					+ reserva.getId() + " esta finalizada! Muchas gracias por ser parte de Cultura verde :) </p>"
+					+ reserva.getId() + " se encuentra finalizada! Muchas gracias por ser parte de Cultura verde :) </p>"
 					+ "</br>Saludos," + "</br>" + "Equipo de CulturaVerde");
 			this.setAsunto("Tu reserva #" + reserva.getId() + " fue actualizada!");
 			break;
