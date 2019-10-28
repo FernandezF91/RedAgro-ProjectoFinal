@@ -286,7 +286,7 @@ class AlertaConsumidor extends Component {
             <div className="container">
                 <div className="titulosPrincipales">Alertas</div>
                 <div className="descripcionPagina">
-                    <h5>Configura las alertas que recibiras por mail:</h5>
+                    <h5>Configurá las alertas que recibiras por mail:</h5>
                 </div>
                 <form onSubmit={this.guardarConfiguracionAlertas}>
                     <div className="radioButtons" align="left">
