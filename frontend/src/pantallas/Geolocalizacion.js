@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Button } from 'react-bootstrap';
 import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import CurrentLocation from './Map';
+import Loader from 'react-loader-spinner';
 
 import '../diseños/estilosGlobales.css';
 import '../diseños/Mapa.css';
@@ -22,7 +23,8 @@ class Geolocalizacion extends Component {
             visible: "",
             titulo: "",
             mensaje: "",
-            busqueda: ""
+            busqueda: "",
+            loading: true
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.updateParametroBusqueda = this.updateParametroBusqueda.bind(this);
@@ -85,7 +87,10 @@ class Geolocalizacion extends Component {
 
                 response.json().then(
                     function (response) {
-                        _this.setState({ markers: response });
+                        _this.setState({
+                            markers: response,
+                            loading: false
+                        });
                     });
             });
     }
@@ -122,6 +127,15 @@ class Geolocalizacion extends Component {
     }
 
     render() {
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
 
         return (
             <div className="containerGeneral">
