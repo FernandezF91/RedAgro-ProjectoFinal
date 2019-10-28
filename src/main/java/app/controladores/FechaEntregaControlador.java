@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.clases.FechaEntrega;
+import app.clases.ProximasFechasEntrega;
 import app.daos.FechaEntregaDao;
 import app.daos.PuntoEntregaDao;
 import app.mappers.FechaEntregaMapper;
@@ -75,5 +78,26 @@ public class FechaEntregaControlador {
 
 		return fe;
 	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/obtenerEntregasProximoMes")
+	public ResponseEntity<Object> obtenerEntregasProximoMes(@RequestParam long id_productor) {
+		try {
+			List<Object[]> resultados = fechaEntregaDAO.obtenerEntregasProximoMes(id_productor);
+			List<ProximasFechasEntrega> listaProximasFechasEntrega = new ArrayList<>();
 
+			if (resultados != null && !resultados.isEmpty()) {
+				for (Object[] object : resultados) {
+					listaProximasFechasEntrega.add(new ProximasFechasEntrega((String) object[0], (String) object[1],
+							(String) object[2]));
+				}
+			}
+			
+			return new ResponseEntity<>(listaProximasFechasEntrega, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					"Ocurrió un error al buscar las fechas de entrega.",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

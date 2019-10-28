@@ -59,4 +59,34 @@ public class CalificacionControlador {
 		}
 		return listaCalificaciones;
 	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/obtenerPromedioCalificaciones")
+	public ResponseEntity<Object> obtenerPromedioCalificaciones(@RequestParam long id_productor) {
+		try {
+			String resultado = calificacionDao.obtenerPromedioCalificaciones(id_productor);
+			if (resultado != null) {
+				return new ResponseEntity<>(resultado, HttpStatus.OK);
+			}
+			return new ResponseEntity<>("Aún no hay calificaciones", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					"Ocurrió un error al calcular el promedio de las calificaciones. Reintentá en unos minutos.",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/obtenerUltimasCalificacionesPorProductor")
+	public ResponseEntity<Object> obtenerUltimasCalificacionesPorProductor(@RequestParam long id_productor) {
+		try {
+			List<EntidadCalificacion> listadoCalificacione = calificacionDao
+					.obtenerUltimasCalificacionesPorProductor(id_productor);
+			return new ResponseEntity<>(listadoCalificacione, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					"Ocurrió un error al buscar las últimas calificaciones. Reintentá en unos minutos.",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 }

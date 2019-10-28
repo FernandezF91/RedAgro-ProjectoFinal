@@ -155,10 +155,6 @@ public class ReservaControlador {
 					break;
 				}
 				estadisticas.add(new ResultadosEstadisticas(mes, (BigInteger) object[1]));
-				/*
-				 * estadisticas.add( new ResultadosEstadisticas((String) object[0], (int)
-				 * object[1], (BigInteger) object[2]));
-				 */
 			}
 		}
 		return estadisticas;
@@ -199,7 +195,7 @@ public class ReservaControlador {
 				productos.add(producto);
 			}
 		}
-		
+
 		reserva.setCalificacion(null);
 
 		try {
@@ -291,24 +287,28 @@ public class ReservaControlador {
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
-	@RequestMapping(value = "redAgro/obtenerCantidadReservasDisponiblesConsumidor", method = RequestMethod.GET)
-	public ResponseEntity<String> obtenerCantidadReservasDisponiblesConsumidor(@RequestParam Long id_consumidor) {
+	@GetMapping(value = "redAgro/obtenerCantidadReservasDisponiblesConsumidor")
+	public ResponseEntity<Object> obtenerCantidadReservasDisponiblesConsumidor(@RequestParam Long id_consumidor) {
 		try {
 			Long cantidad = reservaDao.obtenerCantidadReservasDisponiblesConsumidor(id_consumidor);
-			return new ResponseEntity<>(String.valueOf(cantidad), HttpStatus.OK);
+			return new ResponseEntity<>(cantidad, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ups!", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(
+					"Ocurrió un error al buscar las reservas pendientes. Reintentá en unos minutos.",
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
-	@RequestMapping(value = "redAgro/obtenerCantidadReservasPendientesProductor", method = RequestMethod.GET)
-	public ResponseEntity<String> obtenerCantidadReservasPendientesProductor(@RequestParam Long id_productor) {
+	@GetMapping(value = "redAgro/obtenerCantidadReservasPendientesProductor")
+	public ResponseEntity<Object> obtenerCantidadReservasPendientesProductor(@RequestParam Long id_productor) {
 		try {
 			Long cantidad = reservaDao.obtenerCantidadReservasPendientesProductor(id_productor);
-			return new ResponseEntity<>(String.valueOf(cantidad), HttpStatus.OK);
+			return new ResponseEntity<>(cantidad, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ups!", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(
+					"Ocurrió un error al buscar las reservas.",
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
