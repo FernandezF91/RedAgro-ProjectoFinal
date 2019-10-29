@@ -69,6 +69,9 @@ public class EntidadProductoProductor {
 	@Column(name = "tiempo_preparacion", nullable = false)
 	private int tiempo_preparacion;
 
+	@Column(name = "activo", nullable = false)
+	private boolean activo;
+	
 	public Long getId() {
 		return id;
 	}
@@ -184,5 +187,12 @@ public class EntidadProductoProductor {
 	public void setOferta(EntidadOferta oferta) {
 		this.oferta = oferta;
 	}
+	
+	public boolean getActivo() {
+		return activo;
+	}
 
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
 }

@@ -26,7 +26,7 @@ public class ProductoProductorMapper {
 				mapeoProducto.mapFromEntity(entidad.getProducto()), entidad.getTitulo(), entidad.getDescripcion(),
 				mapeoImagen.mapFromEntity(entidad.getImagenes()), entidad.getTipo_produccion(), entidad.getStock(),
 				entidad.getFecha_vencimiento(), entidad.getContenido(), entidad.getUnidad_venta(), entidad.getPrecio(),
-				entidad.getTiempo_preparacion(), oferta);
+				entidad.getTiempo_preparacion(), oferta, entidad.getActivo());
 		return producto;
 	}
 
@@ -61,6 +61,7 @@ public class ProductoProductorMapper {
 		entidad.setPrecio(modelo.getPrecio());
 		entidad.setTiempo_preparacion(modelo.getTiempo_preparacion());
 		entidad.setOferta(mapeoOferta.mapToEntity(modelo.getOferta()));
+		entidad.setActivo(modelo.getActivo());
 		return entidad;
 	}
 

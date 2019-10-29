@@ -73,6 +73,7 @@ public class ProductoProductorControlador {
 		productoNuevo.setProducto(prod);
 		productoNuevo.setProductor(productor);
 		productoNuevo.setOferta(null);
+		productoNuevo.setActivo(true);
 
 		Long id = productoProductorDao.save(productoNuevo).getId();
 		ProductoProductor prodProductor = productoMapper.mapFromEntity(productoProductorDao.obtenerProductoById(id));

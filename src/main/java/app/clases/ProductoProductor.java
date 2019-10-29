@@ -7,7 +7,7 @@ public class ProductoProductor {
 
 	public ProductoProductor(long id, Productor productor, Producto producto, String titulo, String descripcion,
 			List<Imagen> imagenes, String tipo_produccion, int stock, Date fecha_vencimiento, String contenido,
-			String unidad_venta, float precio, int tiempo_preparacion, Oferta oferta) {
+			String unidad_venta, float precio, int tiempo_preparacion, Oferta oferta, boolean activo) {
 		this.setId(id);
 		this.setProductor(productor);
 		this.setProducto(producto);
@@ -22,6 +22,7 @@ public class ProductoProductor {
 		this.setContenido(contenido);
 		this.setUnidad_venta(unidad_venta);
 		this.setOferta(oferta);
+		this.setActivo(activo);
 	}
 
 	private long id;
@@ -38,6 +39,7 @@ public class ProductoProductor {
 	private String contenido;
 	private String unidad_venta;
 	private Oferta oferta;
+	private boolean activo;
 
 	public long getId() {
 		return id;
@@ -149,5 +151,13 @@ public class ProductoProductor {
 
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
+	}
+	
+	public boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(boolean activo) {
+		this.activo = activo;
 	}
 }
