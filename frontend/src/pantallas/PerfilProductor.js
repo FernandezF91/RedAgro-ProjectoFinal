@@ -5,8 +5,9 @@ import Loader from 'react-loader-spinner';
 import Avatar from '@material-ui/core/Avatar';
 import { Row, Col, Container } from 'react-bootstrap';
 import { MDBCard, MDBCardTitle, MDBCardBody, MDBCardImage, MDBCardText, MDBCol, MDBRow, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBContainer } from "mdbreact";
-import Carousel from 'react-bootstrap/Carousel';
-import Paginacion from './Paginacion';
+import BeautyStars from 'beauty-stars';
+import ResumenCalificaciones from "./principales/ResumenCalificaciones";
+import ResumenFechasEntrega from "./principales/ResumenFechasEntrega";
 import NumberFormat from 'react-number-format';
 import moment from 'moment';
 
@@ -24,8 +25,9 @@ class PerfilProductor extends Component {
                 telefono: '',
                 productos: {},
                 puntosEntrega: {},
-                fechasEntrega: {},
+                calificacion: '',
             },
+            listaFechasEntrega: [],
             loading: true,
             paginaActual: 1,
             productosPerPage: 3,
@@ -81,7 +83,9 @@ class PerfilProductor extends Component {
                         },
                     })
 
-                    path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + data.id;
+                    var id_productor = data.id;
+
+                    path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + id_productor;
                     fetch(path)
                         .catch(error => console.error(error))
                         .then(response => {
@@ -137,12 +141,55 @@ class PerfilProductor extends Component {
                                 this.setState({ loading: false });
                             }
                         })
+
+                    path = "http://localhost:3000/redAgro/obtenerPromedioCalificaciones?id_productor=" + id_productor;
+                    fetch(path)
+                        .catch(error => console.error(error))
+                        .then(response => {
+                            try {
+                                if (response.status === 200) {
+                                    this.setState({
+                                        resultadoRequest: response.status
+                                    });
+                                    return response.json();
+                                }
+                                else {
+                                    console.log(response.status);
+                                    this.setState({
+                                        loading: false,
+                                        resultadoRequest: response.status
+                                    });
+                                }
+                            } catch (error) {
+                                console.log(error);
+                                this.setState({
+                                    loading: false,
+                                    resultadoRequest: response.status
+                                });
+                            }
+                        })
+                        .then(data => {
+                            if (data !== undefined) {
+                                this.setState({
+                                    datosProductor: {
+                                        ...this.state.datosProductor,
+                                        calificacion: data,
+                                    },
+                                })
+                            } else {
+                                this.setState({ loading: false });
+                            }
+                        })
+                    
+                    this.obtenerListadoFechasEntrega(id_productor);
+
                     return
                 } else {
                     console.log("No hay datos");
                     this.setState({ loading: false });
                 }
             })
+
     }
 
     nextPage = (pageNumber) => {
@@ -206,6 +253,45 @@ class PerfilProductor extends Component {
         return nuevaLista;
     }
 
+    obtenerListadoFechasEntrega(id_productor) {
+        var _this = this;
+        _this.setState({
+            loading: true
+        });
+        var path = "http://localhost:3000/redAgro/obtenerEntregasProximoMes?id_productor=" + id_productor;
+
+        fetch(path)
+            .catch(err => console.error(err))
+            .then(response => {
+                _this.setState({
+                    resultadoRequestFechasEntrega: response.status
+                })
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 504) {
+                    console.log("Timeout");
+                } else {
+                    console.log("Otro error");
+                }
+            })
+            .then(data => {
+                if (data !== void (0)) {
+                    _this.setState({
+                        listaFechasEntrega: data.map((item) => {
+                            return {
+                                fecha: moment(item.fechaEntrega, 'DD-MM-YYYY').format('DD/MM/YYYY'),
+                                localidad: item.localidad,
+                                direccion: item.direccion
+                            }
+                        })
+                    })
+                }
+                _this.setState({
+                    loading: false
+                })
+            })
+    }
+
     render() {
 
         if (this.state.loading)
@@ -219,9 +305,13 @@ class PerfilProductor extends Component {
         var fecha = moment(this.state.datosProductor.fecha_creacion, "YYYY-MM-DD").fromNow().toString();
         fecha = fecha.charAt(0).toUpperCase() + fecha.slice(1);
         const productos = this.state.datosProductor.productos;
-        const { productosPerPage } = this.state;
+        const { productosPerPage, listaFechasEntrega } = this.state;
         const numberOfPages = Math.ceil(productos.length / productosPerPage);
         let lista = this.crearListaDeProductos(numberOfPages, productosPerPage, productos);
+        let bodyFechas = [];
+        listaFechasEntrega.forEach(item => {
+            bodyFechas.push(this.generoItemFechas(item));
+        })
 
         return (
             <div className="perfilProductor">
@@ -231,30 +321,72 @@ class PerfilProductor extends Component {
                         <h6 className="grey-text">{fecha} que forma parte de Cultura Verde</h6>
                     </div>
                 </Row>
-
-                <MDBContainer>
-                <div className="listadoDeProductos">Mis productos</div>
-                    <MDBCarousel activeItem={1} length={lista.length} slide={true} showControls={true} showIndicators={true} multiItem>
-                        <MDBCarouselInner>
-                            {
-                                lista.map((itemLista, index) => (
-                                    <MDBCarouselItem itemId={index + 1}>
-                                        <MDBRow>
+                <Row>
+                    <Col xs={6} md={4}>
+                        <Row>
+                            <MDBCard className="mb-4">
+                                <MDBCardBody className="text-center">
+                                    <MDBCardTitle> <i className="fas fa-star" /> Mis calificaciones</MDBCardTitle>
+                                    {
+                                        this.state.datosProductor.calificacion === "Aún no hay calificaciones" || this.state.datosProductor.calificacion === undefined ?
+                                            'Aún no hay calificaciones' :
+                                            <div>
+                                                <h6 className="grey-text">Promedio realizado en base a 1 reservas calificadas.</h6>
+                                                <BeautyStars
+                                                    value={this.state.datosProductor.calificacion}
+                                                    activeColor="#28A745"
+                                                    inactiveColor="#757877"
+                                                    size="24px" />
+                                            </div>
+                                    }
+                                </MDBCardBody>
+                            </MDBCard>
+                        </Row>
+                        <Row>
+                            <MDBCard className="mb-4">
+                                <MDBCardBody className="text-center">
+                                    <MDBCardTitle>
+                                        <h4><i className="fas fa-map-marker-alt" /> Próximas fechas de entrega</h4>
+                                    </MDBCardTitle>
+                                    <MDBCardText>
+                                        <ResumenFechasEntrega
+                                            listadoPuntosEntrega={bodyFechas}
+                                            resultadoRequest={this.state.resultadoRequestFechasEntrega}
+                                        />
+                                    </MDBCardText>
+                                </MDBCardBody>
+                            </MDBCard>
+                        </Row>
+                    </Col>
+                    <Col xs={12} md={8}>
+                        <MDBCard>
+                            <MDBCardBody>
+                                <MDBCardTitle><h4> <i className="fas fa-store" /> Mis productos </h4>
+                                </MDBCardTitle>
+                                <MDBContainer className="listadoDeProductos">
+                                    <MDBCarousel activeItem={1} length={lista.length} slide={true} showControls={true} showIndicators={true} multiItem>
+                                        <MDBCarouselInner>
                                             {
-                                                itemLista.map((item) => (
-                                                    this.generarProductosAMostrar(item)
+                                                lista.map((itemLista, index) => (
+                                                    <MDBCarouselItem itemId={index + 1}>
+                                                        <MDBRow>
+                                                            {
+                                                                itemLista.map((item) => (
+                                                                    this.generarProductosAMostrar(item)
+                                                                ))
+                                                            }
+                                                        </MDBRow>
+                                                    </MDBCarouselItem>
                                                 ))
                                             }
-                                        </MDBRow>
-                                    </MDBCarouselItem>
-                                ))
-                            }
-                        </MDBCarouselInner>
-                    </MDBCarousel>
-                </MDBContainer>
-
+                                        </MDBCarouselInner>
+                                    </MDBCarousel>
+                                </MDBContainer>
+                            </MDBCardBody>
+                        </MDBCard>
+                    </Col>
+                </Row>
             </div>
-
         );
     }
 }
