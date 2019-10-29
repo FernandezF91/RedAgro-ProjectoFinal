@@ -2,11 +2,9 @@ import '../diseños/PerfilProductor.css'
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import Avatar from '@material-ui/core/Avatar';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { MDBCard, MDBCardTitle, MDBCardBody, MDBCardImage, MDBCardText, MDBCol, MDBRow, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBContainer } from "mdbreact";
 import BeautyStars from 'beauty-stars';
-import ResumenCalificaciones from "./principales/ResumenCalificaciones";
 import ResumenFechasEntrega from "./principales/ResumenFechasEntrega";
 import NumberFormat from 'react-number-format';
 import moment from 'moment';
