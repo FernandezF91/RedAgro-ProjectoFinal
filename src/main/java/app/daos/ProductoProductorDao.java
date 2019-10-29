@@ -16,26 +16,28 @@ public interface ProductoProductorDao extends JpaRepository<EntidadProductoProdu
 	List<EntidadProductoProductor> obtenerProductosByProductor(long id);
 
 	@Query(value = "SELECT * FROM Producto_Productor p where p.productor_id = ?1 AND p.stock > 0 "
-			+ " AND (p.fecha_vencimiento >= CURDATE() OR p.fecha_vencimiento IS NULL) ", nativeQuery = true)
+			+ " AND (p.fecha_vencimiento >= CURDATE() OR p.fecha_vencimiento IS NULL) "
+			+ " AND p.activo = true", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductosProductorBusqueda(long id);
 
 	@Query(value = "SELECT DISTINCT p.* FROM Producto_Productor p JOIN Producto po ON p.producto_id = po.id "
-			+ " WHERE (p.titulo LIKE %:titulo% OR po.tipo LIKE %:titulo%) "
-			+ " AND p.stock > 0 AND (p.fecha_vencimiento >= CURDATE() OR p.fecha_vencimiento IS NULL) "
+			+ " WHERE (p.titulo LIKE %:titulo% OR po.tipo LIKE %:titulo%) AND p.stock > 0 AND p.activo = true "
+			+ " AND (p.fecha_vencimiento >= CURDATE() OR p.fecha_vencimiento IS NULL) "
 			+ " UNION DISTINCT SELECT DISTINCT p.* FROM Producto_Productor p "
 			+ " JOIN Productor pr ON P.Productor_id = pr.usuario_id "
 			+ " WHERE pr.razon_social LIKE %:titulo% AND p.stock > 0 "
-			+ " AND (p.fecha_vencimiento >= CURDATE() OR p.fecha_vencimiento IS NULL) ", nativeQuery = true)
+			+ " AND (p.fecha_vencimiento >= CURDATE() OR p.fecha_vencimiento IS NULL) "
+			+ " AND p.activo = true ", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductos(@Param("titulo") String titulo);
 
-	@Query(value = "SELECT p.stock FROM Producto_Productor p where p.id = ?1", nativeQuery = true)
+	@Query(value = "SELECT p.stock FROM Producto_Productor p where p.id = ?1 AND p.activo = true", nativeQuery = true)
 	int obtenerStock(long id);
 
-	@Query(value = "SELECT * FROM Producto_Productor p where p.id = ?1", nativeQuery = true)
+	@Query(value = "SELECT * FROM Producto_Productor p where p.id = ?1 AND p.activo = true", nativeQuery = true)
 	EntidadProductoProductor obtenerProductoById(long id);
 
 	@Query(value = "SELECT p.* FROM Producto_Productor p JOIN Producto po ON p.producto_id = po.id "
-			+ "WHERE po.tipo=:tipo_categoria", nativeQuery = true)
+			+ "WHERE po.tipo=:tipo_categoria AND p.activo = true", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductosTipo(@Param("tipo_categoria") String busqueda);
 
 	@Transactional
@@ -44,6 +46,6 @@ public interface ProductoProductorDao extends JpaRepository<EntidadProductoProdu
 	void actualizarStockProducto(long id_producto, int stock);
 
 	@Query(value = "SELECT * FROM Producto_productor p WHERE (stock = 0 OR fecha_vencimiento <= CURDATE()) "
-			+ " AND productor_id = ?1 ORDER BY p.id DESC LIMIT 0, 10", nativeQuery = true)
+			+ " AND productor_id = ?1 AND p.activo = true ORDER BY p.id DESC LIMIT 0, 10", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductosARevisar(long id_productor);
 }
