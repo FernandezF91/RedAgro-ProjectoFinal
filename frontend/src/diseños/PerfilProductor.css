@@ -1,7 +1,30 @@
+.perfilProductor{
+    margin-top: 30px;
+    margin-left: 30px;
+}
 .nombreDelPerfil{
     font-weight: 500;
-    font-size: x-large;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    font-size: xx-large;
     text-align-last: start; 
+    margin-bottom: 10px;
 }
+
+.perfilDatosProducto{
+    font-weight: 400;
+    align-content: center;
+    margin-bottom: 10px;
+}
+
+.listadoDeProductos{
+    font-weight: 500;
+    font-size: x-large;  
+}
+
+.carousel-indicators{
+    position: inherit !important;
+}
+
+.carousel-indicators .li {
+    background-color: #44bb4b !important;
+}
+
