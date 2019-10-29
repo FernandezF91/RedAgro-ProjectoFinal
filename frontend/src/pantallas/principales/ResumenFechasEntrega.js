@@ -18,7 +18,7 @@ const columnas = [
     }
 ];
 
-const ResumenPuntosEntrega = ({ listadoPuntosEntrega, resultadoRequest }) => {
+const ResumenPuntosEntrega = ({ listadoPuntosEntrega, resultadoRequest, vistaProductor }) => {
     return (
         <div>
             {
@@ -29,7 +29,12 @@ const ResumenPuntosEntrega = ({ listadoPuntosEntrega, resultadoRequest }) => {
                                 <MDBTableHead columns={columnas} />
                                 <MDBTableBody>{listadoPuntosEntrega}</MDBTableBody>
                             </MDBTable>
-                            <h6 className="grey-text">Para más detalle, revisa el listado de puntos de entrega por <Link to={'./ListadoPuntosEntrega'}>acá</Link></h6>
+                            {
+                                vistaProductor === true ?
+                                    <h6 className="grey-text">Para más detalle, revisa el listado de puntos de entrega por <Link to={'./ListadoPuntosEntrega'}>acá</Link></h6>
+                                    : ''
+                            }
+
                         </div>
                     ) : (
                             <div>
@@ -37,8 +42,12 @@ const ResumenPuntosEntrega = ({ listadoPuntosEntrega, resultadoRequest }) => {
                                 <i className="fas fa-map-marker-alt iconoGrande" />
                                 <br />
                                 <br />
-                                <h6>Ups! No tenes fechas de entrega en los próximos 30 días!</h6>
-                                <h6 className="grey-text">Cargá tus puntos de venta por <Link to={'./ListadoPuntosEntrega'}>acá</Link></h6>
+                                <h6>Ups! No hay fechas de entrega para los próximos 30 días!</h6>
+                                {
+                                    vistaProductor === true ?
+                                        <h6 className="grey-text">Cargá tus puntos de venta por <Link to={'./ListadoPuntosEntrega'}>acá</Link></h6>
+                                        : ''
+                                }
                             </div>
                         )
                 ) : (

@@ -383,6 +383,7 @@ class MiCuenta extends Component {
                                     <ResumenFechasEntrega
                                         listadoPuntosEntrega={bodyFechas}
                                         resultadoRequest={this.state.resultadoRequestFechasEntrega}
+                                        vistaProductor={true}
                                     />
                                 </MDBCardText>
                             </MDBCardBody>

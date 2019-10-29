@@ -350,6 +350,7 @@ class PerfilProductor extends Component {
                                         <ResumenFechasEntrega
                                             listadoPuntosEntrega={bodyFechas}
                                             resultadoRequest={this.state.resultadoRequestFechasEntrega}
+                                            vistaProductor={false}
                                         />
                                     </MDBCardText>
                                 </MDBCardBody>
