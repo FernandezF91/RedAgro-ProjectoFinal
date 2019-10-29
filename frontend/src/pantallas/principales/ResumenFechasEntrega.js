@@ -34,17 +34,17 @@ const ResumenPuntosEntrega = ({ listadoPuntosEntrega, resultadoRequest }) => {
                     ) : (
                             <div>
                                 <br />
-                                <i className="fas fa-map-marker-alt iconoGrande" />
+                                <i className="fas fa-map-marker-alt iconoGrandePrincipales" />
                                 <br />
                                 <br />
-                                <h6>Ups! No tenes fechas de entrega en los próximos 30 días!</h6>
+                                <h6>No tenes fechas de entrega en los próximos 30 días!</h6>
                                 <h6 className="grey-text">Cargá tus puntos de venta por <Link to={'./ListadoPuntosEntrega'}>acá</Link></h6>
                             </div>
                         )
                 ) : (
                         <div>
                             <br />
-                            <i className="fas fa-map-marker-alt iconoGrande" />
+                            <i className="fas fa-map-marker-alt iconoGrandePrincipales" />
                             <br />
                             <br />
                             <h6 className="grey-text">Ups! Ocurrió un error al obtener las fechas de entrega. Reintentá en unos minutos!</h6>
