@@ -110,7 +110,6 @@ class NuevoProducto extends Component {
         if ((!this.state.campos["categoria"]) || (!this.state.campos["tipo_produccion"]) || (!this.state.campos["unidad_venta"])
             || (!this.state.campos["stock"]) || (!this.state.campos["precio"]) || (!regularExp.numerosDecimales.test(this.state.campos["precio"]))
             || (!isNaN((this.state.campos["precio"])) && (this.state.campos["precio"]) < 1)
-            || (!this.state.campos["contenido"] ? false : this.state.campos["contenido"].length > 20)
             || (this.state.campos["categoria"] !== "Variado" ? !this.state.campos["tipo_producto"] : false)
             || (!this.state.campos["descripcion"]) || (!this.state.campos["titulo"]) || (this.state.files.length === 0) ||
             (!this.state.campos["fecha_ven"] ? false : this.validarFecha())) {
@@ -513,6 +512,7 @@ class NuevoProducto extends Component {
                                 type="contenido"
                                 name="contenido"
                                 disabled={this.state.disabled2}
+                                maxLength="50"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>

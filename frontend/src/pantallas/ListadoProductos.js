@@ -8,8 +8,7 @@ import Select from 'react-select';
 import NumberFormat from 'react-number-format';
 import moment from 'moment';
 import { MDBModal, MDBModalBody, MDBModalHeader } from 'mdbreact';
-import Button from 'react-bootstrap/Button';
-import { InputGroup, Form } from 'react-bootstrap';
+import { InputGroup, Form, Button } from 'react-bootstrap';
 
 const tamañosListado = [
     { label: "5", value: "5" },
@@ -62,7 +61,7 @@ class ListadoProductos extends Component {
     generoItemActivo(item) {
         const clickCallback = () => this.handleRowClick(item.id);
         const cargarOferta = () => this.abrirModalOferta(item.id, item.precio, item.oferta);
-        //const editarProducto = () => this.editarProducto(item);
+        const editarProducto = () => this.editarProducto(item);
         const abrirModalEstadoProducto = () => this.abrirModalEstadoProducto(item.id, item.activo);
 
         const itemRows = [
@@ -94,8 +93,7 @@ class ListadoProductos extends Component {
                 <td>{item.fechaDeVencimiento}</td>
                 <td>{item.tiempoDePreparacion}</td>
                 <td>
-                    {/*<i className="fas fa-edit iconosTabla cursorManito" onClick={editarProducto} title="Editar producto" />*/}
-                    <i className="fas fa-edit iconosTabla cursorManito" title="Editar producto" />
+                    <i className="fas fa-edit iconosTabla cursorManito" onClick={editarProducto} title="Editar producto" />
                 </td>
                 <td>
                     <i className="fas fa-percentage iconosTabla cursorManito" onClick={cargarOferta} key={"row-data-" + item.id} title="Cargar una oferta" />
@@ -303,7 +301,6 @@ class ListadoProductos extends Component {
                         if (item.fecha_vencimiento !== null) {
                             fecha = moment(item.fecha_vencimiento).format('DD/MM/YYYY')
                         }
-                        console.log(item);
                         return {
                             id: item.id,
                             categoria: item.producto.categoria,
