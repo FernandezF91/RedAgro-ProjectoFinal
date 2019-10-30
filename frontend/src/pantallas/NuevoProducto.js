@@ -67,11 +67,11 @@ class NuevoProducto extends Component {
             valueTp: [],
             valueTprod: [],
             valueUnidadVenta: [],
-            disabled: false,
+            disabled: true,
             disabled2: false,
             id: this.props.id_productor,
-            loading: false,
-            showModal: false,
+            loading: true,
+            showModal: false
         }
 
         this.featurePond = React.createRef();
@@ -80,6 +80,12 @@ class NuevoProducto extends Component {
         this.validarCampos = this.validarCampos.bind(this);
         this.subirArchivos = this.subirArchivos.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({
+            loading: false
+        });
     }
 
     cerrarModal() {
@@ -106,8 +112,7 @@ class NuevoProducto extends Component {
             || (!isNaN((this.state.campos["precio"])) && (this.state.campos["precio"]) < 1)
             || (!this.state.campos["contenido"] ? false : this.state.campos["contenido"].length > 20)
             || (this.state.campos["categoria"] !== "Variado" ? !this.state.campos["tipo_producto"] : false)
-            || ((!this.state.campos["descripcion"]) || (this.state.campos["descripcion"].length > 255))
-            || ((!this.state.campos["titulo"]) || (this.state.campos["titulo"].length > 100)) || (this.state.files.length === 0) ||
+            || (!this.state.campos["descripcion"]) || (!this.state.campos["titulo"]) || (this.state.files.length === 0) ||
             (!this.state.campos["fecha_ven"] ? false : this.validarFecha())) {
 
             this.setState({
@@ -307,14 +312,15 @@ class NuevoProducto extends Component {
             valueCat: value,
             valueTp: "",
             tipos_producto: [],
-            disabled: false
+            loadingTipo: true
         });
         let campos = this.state.campos;
         campos[a.name] = opt.label;
 
         if (this.state.campos["categoria"] === "Variado") {
             this.setState({
-                disabled: true
+                disabled: true,
+                loadingTipo: false
             })
         }
         this.obtenerTiposProducto(this.state.campos["categoria"]);
@@ -357,6 +363,10 @@ class NuevoProducto extends Component {
                                 value: producto.id
                             }]
                         }));
+                        _this.setState({
+                            disabled: false,
+                            loadingTipo: false
+                        })
                     });
             });
     }
@@ -393,8 +403,8 @@ class NuevoProducto extends Component {
                                 value={this.state.campos["titulo"]}
                                 type="titulo"
                                 name="titulo"
+                                maxLength="100"
                                 onChange={(e) => this.detectarCambios(e)}
-                                className={this.state.campos["titulo"] !== "prueba" ? "borderRed" : ""}
                             />
                         </Form.Group>
                         <div className="condicionesInputs">(*) 100 caracteres como máximo</div>
@@ -410,6 +420,7 @@ class NuevoProducto extends Component {
                                 rows="3"
                                 type="desc"
                                 name="descripcion"
+                                maxLength="255"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>
@@ -436,6 +447,7 @@ class NuevoProducto extends Component {
                                 Tipo de producto
 								</Form.Label>
                             <Select
+                                isLoading={this.state.loadingTipo}
                                 isDisabled={this.state.disabled}
                                 value={this.state.valueTp}
                                 className="selectTipoProducto"

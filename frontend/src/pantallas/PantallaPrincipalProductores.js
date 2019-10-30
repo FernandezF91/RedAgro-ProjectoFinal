@@ -20,6 +20,7 @@ import Estadisticas from '../pantallas/Estadisticas';
 import BarraNavegacion from './BarraNavegacion';
 import Planificación from '../pantallas/Planificacion';
 import Calificaciones from '../pantallas/Calificaciones';
+import EditarProducto from "../pantallas/EditarProducto";
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const MiCuentaRouter = withRouter(MiCuenta);
@@ -34,6 +35,7 @@ const EstadisticasRouter = withRouter(Estadisticas);
 const HitoricoRouter = withRouter(CargarHistorico);
 const PlanificacionRouter = withRouter(Planificación);
 const CalificacionesRouter = withRouter(Calificaciones);
+const EditarProductoRouter = withRouter(EditarProducto);
 
 class PantallaPrincipalProductores extends Component {
     constructor(props) {
@@ -42,11 +44,23 @@ class PantallaPrincipalProductores extends Component {
         this.state = {
             id: localStorage.getItem('myLocalStorageIdProductor') || this.props.location.state.id, //paso id de usuario desde el LOGIN
             user: JSON.parse(localStorage.getItem('myLocalStorageUserProductor')) || this.props.location.state.user,//paso el usuario desde el LOGIN
-            rolUsuario: localStorage.getItem('myLocalStorageRolProductor') || this.props.location.state.rolUsuario
+            rolUsuario: localStorage.getItem('myLocalStorageRolProductor') || this.props.location.state.rolUsuario,
+            productoAEditar: []
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.actualizarUsuarioProductor = this.actualizarUsuarioProductor.bind(this);
+        this.editarProductoProductor = this.editarProductoProductor.bind(this);
+    }
+
+    editarProductoProductor(productoAEditar) {
+        this.setState({ productoAEditar });
+        this.props.history.push({
+            pathname: '/principalProductores/EditarProducto',
+            state: {
+                productoAEditar: this.state.productoAEditar
+            }
+        })
     }
 
     mostrarPantallaPrincipal() {
@@ -229,6 +243,7 @@ class PantallaPrincipalProductores extends Component {
                                 render={(props) =>
                                     <ListadoProductosRouter
                                         id_productor={this.state.id}
+                                        editarProductoProductor={this.editarProductoProductor}
                                     />
                                 }
                             />
@@ -250,6 +265,14 @@ class PantallaPrincipalProductores extends Component {
                                 render={(props) =>
                                     <CalificacionesRouter
                                         id_productor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/EditarProducto'}
+                                render={(props) =>
+                                    <EditarProductoRouter
+                                        id_productor={this.state.id}
+                                        productoAEditar={this.state.productoAEditar}
                                     />
                                 }
                             />

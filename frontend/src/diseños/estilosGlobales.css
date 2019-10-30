@@ -156,6 +156,11 @@ input[type=text] {
     font-size: 65px;
 }
 
+.iconoModalWarning {
+    color: #FFBF00;
+    font-size: 65px;
+}
+
 .iconoModal {
     font-size: 65px;
     color: #79CB79;
@@ -314,4 +319,8 @@ input[type=text] {
 .iconoGrandePrincipales {
     color: #79CB79;
     font-size: 130px;
+}
+
+.productoInactivo {
+    opacity: 0.5;
 }

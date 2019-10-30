@@ -26,20 +26,24 @@ class ListadoProductos extends Component {
             id: this.props.id_productor,
             productos: [],
             loading: true,
-            showModal: false,
+            showModalOferta: false,
             idProductoOferta: 0,
             porcentaje: 0,
             idOferta: null,
             checkOferta: false,
             currentPage: 1,
             productosPerPage: 5,
-            defaultListado: [{ label: "5", value: "5" }]
+            defaultListado: [{ label: "5", value: "5" }],
+            showModalEstado: false,
+            activo: true
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
-        this.abrirModal = this.abrirModal.bind(this);
-        this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarModalOferta = this.cerrarModalOferta.bind(this);
+        this.cerrarModalEstado = this.cerrarModalEstado.bind(this);
         this.guardarOferta = this.guardarOferta.bind(this);
-        this.handleCheckChangeActivo = this.handleCheckChangeActivo.bind(this);
+        this.guardarEstadoProducto = this.guardarEstadoProducto.bind(this);
+        this.handleCheckChangeActivoOferta = this.handleCheckChangeActivoOferta.bind(this);
+        this.redireccionarProductoAEditar = this.redireccionarProductoAEditar.bind(this);
     }
 
     mostrarPantallaPrincipal() {
@@ -55,9 +59,11 @@ class ListadoProductos extends Component {
         //TODO
     }
 
-    generoItem(item) {
+    generoItemActivo(item) {
         const clickCallback = () => this.handleRowClick(item.id);
         const cargarOferta = () => this.abrirModalOferta(item.id, item.precio, item.oferta);
+        //const editarProducto = () => this.editarProducto(item);
+        const abrirModalEstadoProducto = () => this.abrirModalEstadoProducto(item.id, item.activo);
 
         const itemRows = [
             <tr onClick={clickCallback} key={"row-data-" + item.id}>
@@ -88,18 +94,74 @@ class ListadoProductos extends Component {
                 <td>{item.fechaDeVencimiento}</td>
                 <td>{item.tiempoDePreparacion}</td>
                 <td>
+                    {/*<i className="fas fa-edit iconosTabla cursorManito" onClick={editarProducto} title="Editar producto" />*/}
                     <i className="fas fa-edit iconosTabla cursorManito" title="Editar producto" />
                 </td>
                 <td>
                     <i className="fas fa-percentage iconosTabla cursorManito" onClick={cargarOferta} key={"row-data-" + item.id} title="Cargar una oferta" />
                 </td>
-                {/* <td>
-                    <i className="fas fa-times iconosTabla cursorManito" key={"row-data-" + item.id} title="Eliminar producto" />
-                </td> */}
+                <td>
+                    <i className="fas fa-toggle-on iconosTabla cursorManito" onClick={abrirModalEstadoProducto} key={"row-data-" + item.id} title="Desactivar producto" />
+                </td>
             </tr>
         ];
-
         return itemRows;
+    }
+
+    generoItemInactivo(item) {
+        const abrirModalEstadoProducto = () => this.abrirModalEstadoProducto(item.id, item.activo);
+
+        const itemRows = [
+            <tr key={"row-data-" + item.id} title="Producto inactivo">
+                <td className="productoInactivo">{item.categoria}</td>
+                <td className="productoInactivo">{item.tipo}</td>
+                <td className="productoInactivo">{item.titulo}</td>
+                <td className="productoInactivo">{item.descripcion}</td>
+                <td className="productoInactivo">{item.stock}</td>
+                <td className="productoInactivo">{item.tipoDeUnidad}</td>
+                <td className="productoInactivo">{item.tipoDeProduccion}</td>
+                <td className="productoInactivo" className="columnaPrecio">
+                    {
+                        (item.oferta === null || item.oferta === undefined) ?
+                            <NumberFormat className="productoInactivo" value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                            :
+                            (item.oferta.activo) ?
+                                <div className="productoInactivo">
+                                    <strike>
+                                        <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                    </strike>
+                                    <br />
+                                    <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                                </div>
+                                :
+                                <NumberFormat className="productoInactivo" value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />
+                    }
+                </td>
+                <td className="productoInactivo">{item.fechaDeVencimiento}</td>
+                <td className="productoInactivo">{item.tiempoDePreparacion}</td>
+                <td className="productoInactivo">
+                    <i className="fas fa-edit iconosTabla" />
+                </td>
+                <td className="productoInactivo">
+                    <i className="fas fa-percentage iconosTabla" key={"row-data-" + item.id} />
+                </td>
+                <td>
+                    <i className="fas fa-toggle-off iconosTabla cursorManito" onClick={abrirModalEstadoProducto} key={"row-data-" + item.id} title="Activar producto" />
+                </td>
+            </tr>
+        ];
+        return itemRows;
+    }
+
+    editarProducto = (productoAEditar) => {
+        this.setState(
+            { productoAEditar: productoAEditar },
+            this.redireccionarProductoAEditar
+        );
+    }
+
+    redireccionarProductoAEditar() {
+        this.props.editarProductoProductor(this.state.productoAEditar);
     }
 
     abrirModalOferta = (idProductoProductor, precioActual, oferta) => {
@@ -123,18 +185,15 @@ class ListadoProductos extends Component {
                 precioActual: precioActual,
             })
         }
-        this.abrirModal();
-    }
 
-    abrirModal() {
         this.setState({
-            showModal: true
+            showModalOferta: true
         })
     }
 
-    cerrarModal() {
+    cerrarModalOferta() {
         this.setState({
-            showModal: false
+            showModalOferta: false
         })
     }
 
@@ -170,7 +229,7 @@ class ListadoProductos extends Component {
             })
                 .then(function (response) {
                     _this.setState({
-                        showModal: false,
+                        showModalOferta: false,
                         estadoSeleccionado: ""
                     })
                 })
@@ -179,7 +238,7 @@ class ListadoProductos extends Component {
         }
     }
 
-    handleCheckChangeActivo(e) {
+    handleCheckChangeActivoOferta(e) {
         if (e.target.checked === true) {
             this.setState({
                 checkOferta: true,
@@ -193,6 +252,45 @@ class ListadoProductos extends Component {
         }
     };
 
+    abrirModalEstadoProducto = (idProductoProductor, activo) => {
+        this.setState({
+            showModalEstado: true,
+            idProductoProductor: idProductoProductor,
+            activo: activo
+        });
+    }
+
+    guardarEstadoProducto() {
+        var nuevoEstado = true;
+        if (this.state.activo) {
+            nuevoEstado = false;
+        }
+        const path = "http://localhost:3000/redAgro/actualizarEstadoProducto?id_producto_productor=" + this.state.idProductoProductor + "&activo=" + nuevoEstado;
+        fetch(path,
+            {
+                method: "PUT"
+            }
+        )
+            .catch(err => console.error(err))
+            .then(response => {
+                if (response.status === 200) {
+                    response.text().then(
+
+                        this.setState({
+                            showModalEstado: false
+                        })
+                    )
+                }
+                window.location.reload();
+            })
+    }
+
+    cerrarModalEstado() {
+        this.setState({
+            showModalEstado: false
+        })
+    }
+
     componentDidMount() {
         var path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + this.state.id;
         fetch(path)
@@ -205,7 +303,7 @@ class ListadoProductos extends Component {
                         if (item.fecha_vencimiento !== null) {
                             fecha = moment(item.fecha_vencimiento).format('DD/MM/YYYY')
                         }
-
+                        console.log(item);
                         return {
                             id: item.id,
                             categoria: item.producto.categoria,
@@ -218,7 +316,10 @@ class ListadoProductos extends Component {
                             precio: item.precio,
                             fechaDeVencimiento: fecha,
                             tiempoDePreparacion: item.tiempo_preparacion,
-                            oferta: item.oferta
+                            oferta: item.oferta,
+                            contenido: item.contenido,
+                            imagenes: item.imagenes,
+                            activo: item.activo
                         }
                     }),
                     loading: false
@@ -249,7 +350,12 @@ class ListadoProductos extends Component {
         const lista = productos.slice(indexOfFirstReserva, indexOfLastReserva);
         let body = [];
         lista.forEach(item => {
-            body.push(this.generoItem(item));
+            if (item.activo) {
+                body.push(this.generoItemActivo(item));
+            }
+            else {
+                body.push(this.generoItemInactivo(item));
+            }
         })
 
         if (this.state.loading) return (
@@ -288,12 +394,12 @@ class ListadoProductos extends Component {
                     }
                 </div>
                 {
-                    (this.state.showModal) &&
-                    <MDBModal isOpen={this.state.showModal} centered>
+                    (this.state.showModalOferta) &&
+                    <MDBModal isOpen={this.state.showModalOferta} centered>
                         <MDBModalHeader>
                             Oferta
                             <div className="cruzCerrar">
-                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalOferta} />
                             </div>
                         </MDBModalHeader>
                         <MDBModalBody className="alineacionIzquierda">
@@ -303,7 +409,7 @@ class ListadoProductos extends Component {
                                     value="checkbox"
                                     className="checkbox-input checkbox"
                                     checked={this.state.checkOferta}
-                                    onChange={this.handleCheckChangeActivo}
+                                    onChange={this.handleCheckChangeActivoOferta}
                                 />Activar oferta
                             </label>
                             <br />
@@ -354,6 +460,32 @@ class ListadoProductos extends Component {
                                 <Button variant="success" type="submit" onClick={this.guardarOferta}>Guardar</Button>
                             </div>
                         </MDBModalBody>
+                    </MDBModal>
+                }
+                {
+                    (this.state.showModalEstado) &&
+                    <MDBModal isOpen={this.state.showModalEstado} centered>
+                        <div className="modalMargenes">
+                            <br />
+                            <div>
+                                <i className="fas fa-exclamation-triangle iconoModalWarning" />
+                                <br />
+                                <br />
+                                {
+                                    (this.state.activo) ?
+                                        <div>
+                                            <h5>¿Estás seguro de que querés desactivar el producto?</h5>
+                                            <h6 className="grey-text">Los productos desactivados no estarán disponibles para la búsqueda y generación de nuevas reservas.</h6>
+                                        </div>
+                                        :
+                                        <h5>¿Estás seguro de que querés activar el producto?</h5>
+                                }
+                            </div>
+                            <div className="botones">
+                                <Button variant="light" type="submit" onClick={this.cerrarModalEstado}>No</Button>
+                                <Button variant="success" type="submit" onClick={this.guardarEstadoProducto}>Si</Button>
+                            </div>
+                        </div>
                     </MDBModal>
                 }
             </div>
