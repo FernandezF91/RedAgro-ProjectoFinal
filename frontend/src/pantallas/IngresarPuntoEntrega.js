@@ -124,8 +124,9 @@ class IngresarPuntoEntrega extends Component {
 
         var _this = this
 
-
-        if (parseInt(this.state.campos["hora_inicio"]) >= parseInt(this.state.campos["hora_fin"])) {
+        if (parseInt(this.state.campos["hora_inicio"]) >= parseInt(this.state.campos["hora_fin"]) ||
+            this.state.campos["hora_inicio"].length > 2 ||
+            this.state.campos["hora_fin"].length > 2) {
             this.setState({
                 visible: true,
                 titulo: "Error",
@@ -179,7 +180,6 @@ class IngresarPuntoEntrega extends Component {
             return;
 
         }
-
 
         if (!this.state.campos["provincia"] || !this.state.campos["localidad"] || !this.state.campos["direccion"]
             || !this.state.campos["cod_postal"] || !isDate(this.state.campos["fecha_entrega"])
