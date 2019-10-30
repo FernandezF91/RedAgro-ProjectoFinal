@@ -124,6 +124,16 @@ class IngresarPuntoEntrega extends Component {
 
         var _this = this
 
+
+        if (parseInt(this.state.campos["hora_inicio"]) >= parseInt(this.state.campos["hora_fin"])) {
+            this.setState({
+                visible: true,
+                titulo: "Error",
+                mensaje: "El horario ingresado es incorrecto. Intentá nuevamente"
+            });
+            return
+        }
+
         if (this.state.id_punto_entrega !== "") {
 
             const path = "http://localhost:3000/redAgro/subir_fecha_entrega?id_punto_entrega=";
