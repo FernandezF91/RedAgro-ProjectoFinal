@@ -255,6 +255,7 @@ class RegistroConsumidor extends Component {
                                             name="tel"
                                             pattern="[0-9]{8,14}"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            maxLength="14"
                                         />
                                         <Form.Control.Feedback className="errores" type="invalid">
                                             *Campo inválido

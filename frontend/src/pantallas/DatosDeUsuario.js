@@ -259,6 +259,7 @@ class DatosDeUsuario extends Component {
                                 name="telefono"
                                 defaultValue={this.state.usuario.telefono}
                                 pattern="[0-9]{8,14}"
+                                maxLength="14"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
                         </Form.Group>

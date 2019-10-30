@@ -276,6 +276,7 @@ class RegistroProductor extends Component {
                                             type="telR"
                                             name="tel"
                                             pattern="[0-9]{8,14}"
+                                            maxLength="14"
                                             onChange={(e) => this.detectarCambios(e)}
                                         />
                                         <Form.Control.Feedback className="errores" type="invalid">
