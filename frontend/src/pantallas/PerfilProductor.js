@@ -20,16 +20,16 @@ class PerfilProductor extends Component {
                 id: '',
                 razon_social: '',
                 nombre: '',
-                telefono: '',
                 productos: {},
                 puntosEntrega: {},
-                calificacion: '',
             },
+            calificacion: {},
             listaFechasEntrega: [],
             loading: true,
             paginaActual: 1,
             productosPerPage: 3,
             tamañoListado: 3,
+            resultadoRequest: '',
         }
     }
 
@@ -78,116 +78,19 @@ class PerfilProductor extends Component {
                                     direccion: item.direccion,
                                 }
                             })
-                        },
+                        }
                     })
 
                     var id_productor = data.id;
+                    this.obtenerProductos(id_productor);
+                    this.obtenerCalificaciones(id_productor);
+                    //this.obtenerListadoFechasEntrega(id_productor);
 
-                    path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + id_productor;
-                    fetch(path)
-                        .catch(error => console.error(error))
-                        .then(response => {
-                            try {
-                                if (response.status === 200) {
-                                    this.setState({
-                                        resultadoRequest: response.status
-                                    });
-                                    return response.json();
-                                }
-                                else {
-                                    console.log(response.status);
-                                    this.setState({
-                                        loading: false,
-                                        resultadoRequest: response.status
-                                    });
-                                }
-                            } catch (error) {
-                                console.log(error);
-                                this.setState({
-                                    loading: false,
-                                    resultadoRequest: response.status
-                                });
-                            }
-                        })
-                        .then(data => {
-                            if (data !== undefined) {
-                                this.setState({
-                                    datosProductor: {
-                                        ...this.state.datosProductor,
-                                        productos: data.map((item) => {
-                                            return {
-                                                id: item.id,
-                                                categoria: item.producto.categoria,
-                                                tipo: item.producto.tipo,
-                                                titulo: item.titulo,
-                                                descripcion: item.descripcion,
-                                                stock: item.stock,
-                                                tipoDeUnidad: item.unidad_venta,
-                                                tipoDeProduccion: item.tipo_produccion,
-                                                precio: item.precio,
-                                                fechaDeVencimiento: item.fecha_vencimiento,
-                                                tiempoDePreparacion: item.tiempo_preparacion,
-                                                contenido: item.contenido,
-                                                imagenes: item.imagenes,
-                                                oferta: item.oferta
-                                            }
-                                        })
-                                    },
-                                    loading: false
-                                })
-                            } else {
-                                this.setState({ loading: false });
-                            }
-                        })
-
-                    path = "http://localhost:3000/redAgro/obtenerPromedioCalificaciones?id_productor=" + id_productor;
-                    fetch(path)
-                        .catch(error => console.error(error))
-                        .then(response => {
-                            try {
-                                if (response.status === 200) {
-                                    this.setState({
-                                        resultadoRequest: response.status
-                                    });
-                                    return response.json();
-                                }
-                                else {
-                                    console.log(response.status);
-                                    this.setState({
-                                        loading: false,
-                                        resultadoRequest: response.status
-                                    });
-                                }
-                            } catch (error) {
-                                console.log(error);
-                                this.setState({
-                                    loading: false,
-                                    resultadoRequest: response.status
-                                });
-                            }
-                        })
-                        .then(data => {
-                            if (data !== undefined) {
-                                this.setState({
-                                    datosProductor: {
-                                        ...this.state.datosProductor,
-                                        calificacion: data,
-                                    },
-                                })
-                            } else {
-                                this.setState({ loading: false });
-                            }
-                        })
-                    
-                    this.obtenerListadoFechasEntrega(id_productor);
-
-                    return
                 } else {
                     console.log("No hay datos");
                     this.setState({ loading: false });
                 }
             })
-
     }
 
     nextPage = (pageNumber) => {
@@ -249,6 +152,103 @@ class PerfilProductor extends Component {
             nuevaLista.push(lista);
         }
         return nuevaLista;
+    }
+
+    obtenerProductos(id_productor) {
+        var path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + id_productor;
+        fetch(path)
+            .catch(error => console.error(error))
+            .then(response => {
+                try {
+                    if (response.status === 200) {
+                        this.setState({
+                            resultadoRequest: response.status
+                        });
+                        return response.json();
+                    }
+                    else {
+                        console.log(response.status);
+                        this.setState({
+                            loading: false,
+                            resultadoRequest: response.status
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                    this.setState({
+                        loading: false,
+                        resultadoRequest: response.status
+                    });
+                }
+            })
+            .then(data => {
+                if (data !== undefined) {
+                    this.setState({
+                        datosProductor: {
+                            ...this.state.datosProductor,
+                            productos: data.map((item) => {
+                                return {
+                                    id: item.id,
+                                    categoria: item.producto.categoria,
+                                    tipo: item.producto.tipo,
+                                    titulo: item.titulo,
+                                    descripcion: item.descripcion,
+                                    stock: item.stock,
+                                    tipoDeUnidad: item.unidad_venta,
+                                    tipoDeProduccion: item.tipo_produccion,
+                                    precio: item.precio,
+                                    fechaDeVencimiento: item.fecha_vencimiento,
+                                    tiempoDePreparacion: item.tiempo_preparacion,
+                                    contenido: item.contenido,
+                                    imagenes: item.imagenes,
+                                    oferta: item.oferta
+                                }
+                            })
+                        },
+                        loading: false,
+                    })
+                } else {
+                    this.setState({ loading: false });
+                }
+            })
+    }
+
+    obtenerCalificaciones(id_productor) {
+        var path = "http://localhost:3000/redAgro/obtenerPromedioCalificaciones?id_productor=" + id_productor;
+        fetch(path)
+            .catch(error => console.error(error))
+            .then(response => {
+                try {
+                    if (response.status === 200) {
+                        this.setState({
+                            resultadoRequest: response.status
+                        });
+                        return response.json();
+                    }
+                    else {
+                        console.log(response.status);
+                        this.setState({
+                            loading: false,
+                            resultadoRequest: response.status
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                    this.setState({
+                        loading: false,
+                        resultadoRequest: response.status
+                    });
+                }
+            })
+            .then(data => {
+                if (data !== undefined) {
+                    this.setState({
+                        calificacion: data,
+                    })
+                } else {
+                    this.setState({ loading: false });
+                }
+            })
     }
 
     obtenerListadoFechasEntrega(id_productor) {
