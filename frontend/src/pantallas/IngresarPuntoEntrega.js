@@ -133,7 +133,7 @@ class IngresarPuntoEntrega extends Component {
 
         var _this = this;
 
-        if (this.state.campos["hora_inicio"] === undefined || this.state.campos["hora_fin"].length === undefined) {
+        if (this.state.campos["hora_inicio"] === undefined || this.state.campos["hora_fin"] === undefined) {
             this.setState({
                 visible: true,
                 titulo: "Error",
