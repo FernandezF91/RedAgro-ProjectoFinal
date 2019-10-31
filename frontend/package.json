@@ -41,6 +41,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.0.1",
     "react-select": "^2.4.4",
+    "react-simple-timefield": "^3.0.0",
     "react-widgets": "^4.4.11",
     "react-widgets-globalize": "^5.0.20",
     "yup": "^0.27.0"

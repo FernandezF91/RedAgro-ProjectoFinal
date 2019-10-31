@@ -1,8 +1,10 @@
 package app.clases;
 
+import java.sql.Time;
+
 public class FechaEntrega {
 	
-	public FechaEntrega(Long id, PuntoEntrega puntoEntrega, String Fecha, int hora_inicio, int hora_fin) {
+	public FechaEntrega(Long id, PuntoEntrega puntoEntrega, String Fecha, String hora_inicio, String hora_fin) {
 		this.setId(id);
 		this.setPunto_entrega(puntoEntrega);
 		this.setFecha(Fecha);
@@ -13,8 +15,8 @@ public class FechaEntrega {
 	private Long id;
 	private PuntoEntrega punto_entrega;
 	private String fecha;
-	private int hora_inicio;
-	private int hora_fin;
+	private String hora_inicio;
+	private String hora_fin;
 	
 	public Long getId() {
 		return id;
@@ -34,18 +36,17 @@ public class FechaEntrega {
 	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
-	public int getHora_inicio() {
+	public String getHora_inicio() {
 		return hora_inicio;
 	}
-	public void setHora_inicio(int hora_inicio) {
+	public void setHora_inicio(String hora_inicio) {
 		this.hora_inicio = hora_inicio;
 	}
-	public int getHora_fin() {
+	public String getHora_fin() {
 		return hora_fin;
 	}
-	public void setHora_fin(int hora_fin) {
+	public void setHora_fin(String hora_fin) {
 		this.hora_fin = hora_fin;
 	}
 
-	
 }

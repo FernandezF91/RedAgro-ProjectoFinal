@@ -25,10 +25,10 @@ public class EntidadFechaEntrega {
 	private String fecha;
 		
 	@Column(name="hora_inicio", nullable=false)
-	private int hora_inicio;
+	private String hora_inicio;
 	
 	@Column(name="hora_fin", nullable=false)
-	private int hora_fin;
+	private String hora_fin;
 
 	public Long getId() {
 		return id;
@@ -54,19 +54,19 @@ public class EntidadFechaEntrega {
 		this.fecha = fecha;
 	}
 
-	public int getHora_inicio() {
+	public String getHora_inicio() {
 		return hora_inicio;
 	}
 
-	public void setHora_inicio(int hora_inicio) {
+	public void setHora_inicio(String hora_inicio) {
 		this.hora_inicio = hora_inicio;
 	}
 
-	public int getHora_fin() {
+	public String getHora_fin() {
 		return hora_fin;
 	}
 
-	public void setHora_fin(int hora_fin) {
+	public void setHora_fin(String hora_fin) {
 		this.hora_fin = hora_fin;
 	}
 
