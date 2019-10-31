@@ -12,6 +12,10 @@ import moment from 'moment';
 
 const columnas = [
     {
+        label: 'Descripción',
+        field: 'Descripción'
+    },
+    {
         label: 'Provincia',
         field: 'Provincia'
     },
@@ -28,7 +32,7 @@ const columnas = [
         field: 'Fechas'
     },
     {
-        label: 'Baja/Alta',
+        label: 'Habilitado',
         field: 'Dar de baja',
     }
 ];
@@ -189,6 +193,9 @@ class ListadoPuntosEntrega extends Component {
 
             var itemRow = [<tr key={"row-data-" + punto.id} >
                 <td>
+                    {punto.descripcion}
+                </td>
+                <td>
                     {punto.provincia}
                 </td>
                 <td>
@@ -203,9 +210,9 @@ class ListadoPuntosEntrega extends Component {
                 <td>
                     {
                         punto.activo === false ?
-                            <i className="fa fa-check-circle verde iconosTabla" onClick={clickAltaBaja} title="Alta" />
-                            :
                             <i className="fa fa-times-circle rojo iconosTabla" onClick={clickAltaBaja} title="Baja" />
+                            :
+                            <i className="fa fa-check-circle verde iconosTabla" onClick={clickAltaBaja} title="Alta" />
                     }
                 </td>
             </tr>
@@ -217,11 +224,9 @@ class ListadoPuntosEntrega extends Component {
                     itemRow.push(
                         <tr key={"row-expanded-" + punto.id}>
                             <td />
-                            <td />
-                            <td />
-                            <td>
-                                {moment(fecha.fecha, 'DD-MM-YYYY').format('DD/MM/YYYY')}
-                            </td>
+                            <td> {moment(fecha.fecha, 'DD-MM-YYYY').format('DD/MM/YYYY')} </td>
+                            <td> {fecha.hora_inicio} </td>
+                            <td> {fecha.hora_fin} </td>
                             <td />
                         </tr>
                     );
