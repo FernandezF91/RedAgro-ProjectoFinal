@@ -197,4 +197,32 @@ public class ProductoProductorControlador {
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@PostMapping(path = "redAgro/actualizarProductoProductor")
+	public ResponseEntity<String> actualizarProductoProductor(@RequestBody EntidadProductoProductor producto,
+			@RequestParam long id_producto_productor) {
+		try {
+			EntidadProductoProductor productoAActualizar = productoProductorDao
+					.obtenerProductoById(id_producto_productor);
+
+			productoAActualizar.setTitulo(producto.getTitulo());
+			productoAActualizar.setDescripcion(producto.getDescripcion());
+			productoAActualizar.setFecha_vencimiento(producto.getFecha_vencimiento());
+			productoAActualizar.setPrecio(producto.getPrecio());
+			productoAActualizar.setStock(producto.getStock());
+			productoAActualizar.setTiempo_preparacion(producto.getTiempo_preparacion());
+			productoAActualizar.setContenido(producto.getContenido());
+			//productoAActualizar.setImagenes(null);
+
+			productoProductorDao.save(productoAActualizar).getId();
+
+			return new ResponseEntity<>("Producto actualizado correctamente!", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					"Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 }
