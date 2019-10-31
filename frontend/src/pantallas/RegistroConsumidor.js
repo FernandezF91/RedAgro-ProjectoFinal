@@ -141,7 +141,7 @@ class RegistroConsumidor extends Component {
                             if (response.status !== 200) {
                                 _this.setState({
                                     visible: true,
-                                    mensaje: "Ocurrió algun problema, intenta nuevamente"
+                                    mensaje: "Ups, hubo un error al generar tu cuenta. Intentá nuevamente"
                                 });
                                 return;
                             }
@@ -150,7 +150,7 @@ class RegistroConsumidor extends Component {
                                     _this.setState({
                                         validated: true,
                                         visible: true,
-                                        mensaje: "Se te envió un mail para que puedas confirmar tu cuenta",
+                                        mensaje: "Bienvenido/a! Para finalizar con el registro, te enviamos un mail para confirmar tu cuenta ;)",
                                         titulo: "Registro exitoso!"
                                     });
                                     _this.mostrarLogin();
@@ -159,7 +159,7 @@ class RegistroConsumidor extends Component {
                 } else {
                     _this.setState({
                         visible: true,
-                        mensaje: "Ocurrió algun problema, intenta nuevamente"
+                        mensaje: "Ups, hubo un error al generar tu cuenta. Intentá nuevamente"
                     })
                     return;
                 }
