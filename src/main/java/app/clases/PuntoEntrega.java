@@ -4,14 +4,15 @@ import java.util.List;
 
 public class PuntoEntrega {
 
-	public PuntoEntrega( Long id, Productor productor, 
-			  //List<FechaEntrega> fechas_entrega, 
-						String pais, String provincia, 
-						 String localidad, String cod_postal, String direccion, double latitud, double longitud, boolean activo) {
-		
+	public PuntoEntrega(Long id, Productor productor,
+			// List<FechaEntrega> fechas_entrega,
+			String descripcion, String pais, String provincia, String localidad, String cod_postal, String direccion,
+			double latitud, double longitud, boolean activo) {
+
 		this.setId(id);
 		this.setProductor(productor);
-		//this.setFechas_entrega(fechas_entrega); Lo comento momentaneamente
+		// this.setFechas_entrega(fechas_entrega); Lo comento momentaneamente
+		this.setDescripcion(descripcion);
 		this.setPais(pais);
 		this.setProvincia(provincia);
 		this.setLocalidad(localidad);
@@ -25,8 +26,10 @@ public class PuntoEntrega {
 	private Long id;
 
 	private Productor productor;
-	
+
 	private List<FechaEntrega> fechas_entrega;
+
+	private String descripcion;
 
 	private String pais;
 
@@ -37,11 +40,11 @@ public class PuntoEntrega {
 	private String cod_postal;
 
 	private String direccion;
-	
+
 	private double latitud;
 
 	private double longitud;
-	
+
 	private boolean activo;
 
 	public long getId() {
@@ -59,7 +62,7 @@ public class PuntoEntrega {
 	public void setProductor(Productor productor) {
 		this.productor = productor;
 	}
-	
+
 	public List<FechaEntrega> getFechas_entrega() {
 		return fechas_entrega;
 	}
@@ -131,5 +134,12 @@ public class PuntoEntrega {
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
-	
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 }

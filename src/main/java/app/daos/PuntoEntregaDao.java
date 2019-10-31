@@ -23,7 +23,7 @@ public interface PuntoEntregaDao extends JpaRepository<EntidadPuntoEntrega, Long
 	List<EntidadPuntoEntrega> obtenerPuntosEntregaProductor(EntidadProductor productor);
 
 	@Query(value = "SELECT DISTINCT p.* FROM Punto_entrega AS p JOIN Fecha_entrega as F ON p.id = F.punto_entrega_id "
-			+ "WHERE F.fecha >= :fecha AND p.productor_id =:id_productor AND p.activo = true ", nativeQuery = true)
+			+ "WHERE F.fecha >= (:fecha) AND p.productor_id =:id_productor AND p.activo = true ", nativeQuery = true)
 	List<EntidadPuntoEntrega> obtenerPuntosEntregaActivos(@Param("fecha") String fecha,
 			@Param("id_productor") long id_productor);
 
@@ -34,5 +34,9 @@ public interface PuntoEntregaDao extends JpaRepository<EntidadPuntoEntrega, Long
 	@Modifying
 	@Query("UPDATE EntidadPuntoEntrega pe SET pe.activo =?2 WHERE pe.id =?1")
 	void modificarPunto(long id, boolean accion);
+
+	@Query(value = "SELECT * FROM Punto_entrega WHERE latitud= (:latitud) AND longitud= (:longitud) ", nativeQuery = true)
+	EntidadPuntoEntrega obtenerPuntosEntregaPorLatitud(@Param("latitud") double latitud,
+			@Param("longitud") double longitud);
 
 }

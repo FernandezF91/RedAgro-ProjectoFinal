@@ -14,9 +14,9 @@ public class PuntoEntregaMapper {
 		ProductorMapper mapeoProductor = new ProductorMapper();
 		Productor productor = mapeoProductor.mapFromEntityWithoutPtoEntrega(entidad.getProductor());
 
-		PuntoEntrega entrega = new PuntoEntrega(entidad.getId(), productor, entidad.getPais(), entidad.getProvincia(),
-				entidad.getLocalidad(), entidad.getCod_postal(), entidad.getDireccion(), entidad.getLatitud(),
-				entidad.getLongitud(), entidad.getActivo());
+		PuntoEntrega entrega = new PuntoEntrega(entidad.getId(), productor, entidad.getDescripcion(), entidad.getPais(),
+				entidad.getProvincia(), entidad.getLocalidad(), entidad.getCod_postal(), entidad.getDireccion(),
+				entidad.getLatitud(), entidad.getLongitud(), entidad.getActivo());
 
 		return entrega;
 	}
@@ -29,9 +29,9 @@ public class PuntoEntregaMapper {
 		for (EntidadPuntoEntrega entidad : listaEntidad) {
 
 			Productor productor = mapeoProductor.mapFromEntityWithoutPtoEntrega(entidad.getProductor());
-			PuntoEntrega entrega = new PuntoEntrega(entidad.getId(), productor, entidad.getPais(),
-					entidad.getProvincia(), entidad.getLocalidad(), entidad.getCod_postal(), entidad.getDireccion(),
-					entidad.getLatitud(), entidad.getLongitud(), entidad.getActivo());
+			PuntoEntrega entrega = new PuntoEntrega(entidad.getId(), productor, entidad.getDescripcion(),
+					entidad.getPais(), entidad.getProvincia(), entidad.getLocalidad(), entidad.getCod_postal(),
+					entidad.getDireccion(), entidad.getLatitud(), entidad.getLongitud(), entidad.getActivo());
 			entregas.add(entrega);
 		}
 

@@ -3,8 +3,11 @@ package app.controladores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.sql.Time;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -87,25 +90,49 @@ public class PuntoDeEntregaControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/subir_punto_entrega")
-	public long subirPuntoDeEntrega(@RequestBody EntidadPuntoEntrega punto_entrega, @RequestParam long id_productor,
-			@RequestParam String fecha_entrega, @RequestParam int hora_inicio, @RequestParam int hora_fin) {
+	public ResponseEntity<Object> subirPuntoDeEntrega(@RequestBody EntidadPuntoEntrega punto_entrega,
+			@RequestParam long id_productor, @RequestParam String descripcion, @RequestParam String fecha_entrega,
+			@RequestParam String hora_inicio, @RequestParam String hora_fin) {
 
 		EntidadProductor p = new EntidadProductor();
 		EntidadFechaEntrega fe = new EntidadFechaEntrega();
 		EntidadPuntoEntrega pe = new EntidadPuntoEntrega();
+		List<EntidadFechaEntrega> fechas = new ArrayList<EntidadFechaEntrega>();
 
+		pe = puntoEntregaDAO.obtenerPuntosEntregaPorLatitud(punto_entrega.getLatitud(), punto_entrega.getLongitud());
 		p = productorDAO.obtenerProductor(id_productor);
 
-		punto_entrega.setActivo(true);
-		punto_entrega.setProductor(p);
-		pe = puntoEntregaDAO.save(punto_entrega);
+		if (pe == null) {
+			punto_entrega.setActivo(true);
+			punto_entrega.setProductor(p);
+			punto_entrega.setDescripcion(descripcion);
+			pe = puntoEntregaDAO.save(punto_entrega);
+		} else {
+			fechas = fechaEntregaDAO.obtenerHorariosDeUnaFecha(pe.getId(), fecha_entrega);
+		}
+
+		for (EntidadFechaEntrega f : fechas) {
+
+			int horaInicio = Integer.parseInt((hora_inicio.replaceAll(":", "")));
+			int horaFinGuardada = Integer.parseInt((f.getHora_fin().replaceAll(":", "")));
+			if (horaFinGuardada >= horaInicio) {
+				return new ResponseEntity<>(
+						"Hey! Existe una fecha de entrega con un horario similar al que ingresaste: inicia a las "
+								+ f.getHora_inicio() + " y termina a las " + f.getHora_fin()
+								+ ". Reintentá con otro horario ;)",
+						HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+
 		fe.setPunto_entrega(pe);
 		fe.setFecha(fecha_entrega);
 		fe.setHora_inicio(hora_inicio);
 		fe.setHora_fin(hora_fin);
 		fechaEntregaDAO.save(fe);
+		long id = pe.getId();
 
-		return pe.getId();
+		return new ResponseEntity<>(id,HttpStatus.OK);
+
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")

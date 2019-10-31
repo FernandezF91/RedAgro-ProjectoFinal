@@ -18,44 +18,47 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Punto_entrega")
 public class EntidadPuntoEntrega {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@ManyToOne()
-    @JoinColumn(name = "productor_id", nullable = false)
-    private EntidadProductor productor;
-	
+	@JoinColumn(name = "productor_id", nullable = false)
+	private EntidadProductor productor;
+
 	@OneToMany(mappedBy = "punto_entrega", cascade = CascadeType.ALL)
-    private List<EntidadFechaEntrega> fechas_entrega = new ArrayList<>();
-	
+	private List<EntidadFechaEntrega> fechas_entrega = new ArrayList<>();
+
 	@OneToMany(mappedBy = "punto_entrega", cascade = CascadeType.ALL)
-    private List<EntidadReserva> reservas = new ArrayList<>();
-	
+	private List<EntidadReserva> reservas = new ArrayList<>();
+
+	@Column(name = "descripcion", nullable = false)
+	private String descripcion;
+
 	@Column(name = "pais", nullable = false)
-    private String pais;
+	private String pais;
 
 	@Column(name = "provincia", nullable = false)
-    private String provincia;
-	
+	private String provincia;
+
 	@Column(name = "localidad", nullable = false)
-    private String localidad;
-	
+	private String localidad;
+
 	@Column(name = "cod_postal", nullable = false)
-    private String cod_postal;
-	
+	private String cod_postal;
+
 	@Column(name = "direccion", nullable = false)
-    private String direccion;
-	
+	private String direccion;
+
 	@Column(name = "latitud", nullable = false)
-    private double latitud;
-	
+	private double latitud;
+
 	@Column(name = "longitud", nullable = false)
-    private double longitud;
-	
+	private double longitud;
+
 	@Column(name = "activo", nullable = false)
-    private Boolean activo;
+	private Boolean activo;
 
 	public long getId() {
 		return id;
@@ -152,7 +155,12 @@ public class EntidadPuntoEntrega {
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
 	}
-	
-	
-	
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
 }
