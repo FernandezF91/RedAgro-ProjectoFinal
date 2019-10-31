@@ -72,7 +72,7 @@ const Producto = ({ productos }) => {
                     <br />
                     <br />
                     <h5>Ups! No tenes productos cargados! </h5>
-                    <h6>Cargá tus productos <Link to={'/principalProductores/NuevoProducto'}>acá</Link> </h6>
+                    <h6 className="grey-text">Cargá tus productos <Link to={'/principalProductores/NuevoProducto'}>acá</Link> </h6>
                 </div>
             }
         </div >
