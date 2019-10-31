@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Row, Button } from 'react-bootstrap';
 import { GoogleApiWrapper } from 'google-maps-react';
 import { DatePickerInput } from 'rc-datepicker';
+import TimeField from 'react-simple-timefield';
 import Modal from 'react-awesome-modal';
 import Geocode from "react-geocode";
 
@@ -48,7 +49,6 @@ class IngresarPuntoEntrega extends Component {
         campos["fecha_entrega"] = e;
         this.setState({ campos })
     }
-
 
     mostrarPantallaPrincipal() {
         this.props.history.push({
@@ -103,6 +103,7 @@ class IngresarPuntoEntrega extends Component {
         campos["fecha_entrega"] = "";
         campos["hora_inicio"] = "";
         campos["hora_fin"] = "";
+        campos["descripcion"] = "";
 
         this.setState({
             visible2: false,
@@ -112,9 +113,17 @@ class IngresarPuntoEntrega extends Component {
         });
     }
 
-    detectarCambios(e) {
+    detectarCambiosDescripcion(e) {
         let campos = this.state.campos;
-        campos[e.target.name] = e.target.value;
+        campos["descripcion"] = e.target.value;
+        this.setState({
+            campos
+        })
+    }
+
+    cambiosHora(valor, hora) {
+        let campos = this.state.campos;
+        campos[hora] = valor;
         this.setState({
             campos
         })
@@ -122,17 +131,28 @@ class IngresarPuntoEntrega extends Component {
 
     validarFormulario() {
 
-        var _this = this
+        var _this = this;
 
-        if (parseInt(this.state.campos["hora_inicio"]) >= parseInt(this.state.campos["hora_fin"]) ||
-            this.state.campos["hora_inicio"].length > 2 ||
-            this.state.campos["hora_fin"].length > 2) {
+        if (this.state.campos["hora_inicio"] === undefined || this.state.campos["hora_fin"].length === undefined) {
             this.setState({
                 visible: true,
                 titulo: "Error",
                 mensaje: "El horario ingresado es incorrecto. Intentá nuevamente"
             });
             return
+        } else {
+
+            var hora_inicio = this.state.campos["hora_inicio"].replace(/:/g, '');
+            var hora_fin = this.state.campos["hora_fin"].replace(/:/g, '');
+
+            if (parseInt(hora_inicio) >= parseInt(hora_fin)) {
+                this.setState({
+                    visible: true,
+                    titulo: "Error",
+                    mensaje: "El horario ingresado es incorrecto. Intentá nuevamente"
+                });
+                return
+            }
         }
 
         if (this.state.id_punto_entrega !== "") {
@@ -161,19 +181,19 @@ class IngresarPuntoEntrega extends Component {
             })
                 .then(function (response) {
                     if (response.status !== 200) {
-
-                        _this.setState({
-                            visible: true,
-                            titulo: "Error",
-                            mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
-                        });
+                        response.text().then(
+                            function (response) {
+                                _this.setState({
+                                    visible: true,
+                                    titulo: "Error",
+                                    mensaje: response,
+                                });
+                            })
                         return;
                     }
                     response.text().then(
                         function (response) {
-
                             _this.setState({ visible2: true, formOk: true, direccion: "", lat: "", lng: "" })
-
                         });
                 });
 
@@ -181,7 +201,7 @@ class IngresarPuntoEntrega extends Component {
 
         }
 
-        if (!this.state.campos["provincia"] || !this.state.campos["localidad"] || !this.state.campos["direccion"]
+        if (!this.state.campos["descripcion"] || !this.state.campos["provincia"] || !this.state.campos["localidad"] || !this.state.campos["direccion"]
             || !this.state.campos["cod_postal"] || !isDate(this.state.campos["fecha_entrega"])
             || !this.state.campos["fecha_entrega"] || !this.state.campos["hora_fin"] || !this.state.campos["hora_inicio"]) {
 
@@ -211,7 +231,7 @@ class IngresarPuntoEntrega extends Component {
                 let año = fecha_entrega.getFullYear();
                 var fecha = dia + '-' + mes + '-' + año;
 
-                const path_final = path + _this.state.id + "&fecha_entrega=" + fecha
+                const path_final = path + _this.state.id + "&descripcion=" + this.state.campos["descripcion"] + "&fecha_entrega=" + fecha
                     + "&hora_inicio=" + this.state.campos["hora_inicio"] + "&hora_fin=" + this.state.campos["hora_fin"]
 
                 fetch(path_final, {
@@ -232,12 +252,14 @@ class IngresarPuntoEntrega extends Component {
                 })
                     .then(function (response) {
                         if (response.status !== 200) {
-
-                            _this.setState({
-                                visible: true,
-                                titulo: "Error",
-                                mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
-                            });
+                            response.text().then(
+                                function (response) {
+                                    _this.setState({
+                                        visible: true,
+                                        titulo: "Error",
+                                        mensaje: response,
+                                    });
+                                })
                             return;
                         }
                         response.text().then(
@@ -246,9 +268,7 @@ class IngresarPuntoEntrega extends Component {
                                 _this.setState({ id_punto_entrega: response, visible2: true, formOk: true, direccion: "", lat: "", lng: "" })
 
                             });
-
                     });
-
             },
             error => {
 
@@ -258,7 +278,6 @@ class IngresarPuntoEntrega extends Component {
                     mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
                 });
                 return;
-
             }
         );
     }
@@ -268,6 +287,20 @@ class IngresarPuntoEntrega extends Component {
             <div className="container">
                 <div className="titulosPrincipales">Nuevo punto de entrega</div>
                 <div className="formularioPuntoEntrega">
+                    <div className="inputs">
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={4}>
+                                Nombre
+                            </Form.Label>
+
+                            <input
+                                id="descripcion"
+                                placeholder="Ingresá el nombre con el que vas a identificar a este punto de entrega"
+                                value={this.state.campos["descripcion"]}
+                                onChange={(e) => this.detectarCambiosDescripcion(e)}
+                            />
+                        </Form.Group>
+                    </div>
                     <div className="inputs">
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
@@ -291,7 +324,6 @@ class IngresarPuntoEntrega extends Component {
                                 name="pais"
                                 disabled="true"
                                 value={this.state.campos["pais"]}
-
                             />
                         </Form.Group>
                     </div>
@@ -323,7 +355,7 @@ class IngresarPuntoEntrega extends Component {
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
                                 Dirección
-                        </Form.Label>
+                            </Form.Label>
                             <input
                                 name="direccion"
                                 value={this.state.campos["direccion"]}
@@ -335,7 +367,7 @@ class IngresarPuntoEntrega extends Component {
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
                                 Código postal
-                        </Form.Label>
+                            </Form.Label>
                             <input
                                 name="cod_postal"
                                 value={this.state.campos["cod_postal"]}
@@ -347,7 +379,7 @@ class IngresarPuntoEntrega extends Component {
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
                                 Fecha de entrega
-                                        </Form.Label>
+                            </Form.Label>
                             <DatePickerInput
                                 className="fecha_entrega"
                                 name="fecha_entrega"
@@ -362,29 +394,26 @@ class IngresarPuntoEntrega extends Component {
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>
                                 Horario de entrega
-                        </Form.Label>
-                            <input
-                                className="hora_inicio"
-                                value={this.state.campos["hora_inicio"]}
-                                name="hora_inicio"
-                                type="number"
-                                min="6"
-                                max="12"
-                                placeHolder="Horario-inicio"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                            a
-                        <input
-                                className="hora_fin"
-                                name="hora_fin"
-                                value={this.state.campos["hora_fin"]}
-                                type="number"
-                                min="12"
-                                max="21"
-                                placeHolder="Horario-fin"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                            hs
+                            </Form.Label>
+                            <div>
+                                <TimeField
+                                    className="hora_inicio"
+                                    name="hora_inicio"
+                                    value={this.state.campos["hora_inicio"]}
+                                    onChange={(event, valor) => this.cambiosHora(valor, "hora_inicio")}
+                                    style={{ width: 100 }}
+                                />
+                                a
+                                <TimeField
+                                    className="hora_fin"
+                                    name="hora_fin"
+                                    value={this.state.campos["hora_fin"]}
+                                    onChange={(event, valor) => this.cambiosHora(valor, "hora_fin")}
+                                    style={{ width: 100 }}
+                                />
+                                hs
+
+                            </div>
                         </Form.Group>
                     </div>
                     <div className="botones">
