@@ -108,6 +108,9 @@ class Checkout extends Component {
             titulo: '',
             mensaje: '',
             showModal: false,
+            selectorFecha: {
+                selectorFechaDisabled: true
+            }
         }
         this.actualizarPuntoEntrega = this.actualizarPuntoEntrega.bind(this);
         this.actualizarFechaEntrega = this.actualizarFechaEntrega.bind(this);
@@ -255,6 +258,10 @@ class Checkout extends Component {
             datosReserva: {
                 ...this.state.datosReserva,
                 punto_entrega: { id: newPunto.value },
+            },
+            selectorFecha: {
+                ...this.state.selectorFecha,
+                selectorFechaDisabled: false
             }
         });
     }
@@ -539,8 +546,9 @@ class Checkout extends Component {
                                     productosSeleccionados={this.props.productosSeleccionados}
                                     getTotalReserva={this.getTotalReserva}
                                     actualizarPuntoEntrega={this.actualizarPuntoEntrega}
-                                    actualizarFechaEntrega={this.actualizarFechaEntrega} />
-
+                                    actualizarFechaEntrega={this.actualizarFechaEntrega}
+                                    selectorFecha={this.state.selectorFecha}
+                                />
                                 <Button
                                     variant="light"
                                     disabled={activeStep === 0}

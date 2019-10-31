@@ -150,6 +150,7 @@ const PasosCheckout = (props) => {
                                 />
 
                                 <Select className="dropdownFechas"
+                                    isDisabled={props.selectorFecha.selectorFechaDisabled}
                                     value={props.seleccionado.fechaEntrega}
                                     options={props.selector.fechasEntrega}
                                     placeholder="Seleccione una fecha de retiro..."
