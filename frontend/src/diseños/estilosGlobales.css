@@ -316,6 +316,15 @@ input[type=text] {
     white-space: nowrap;
 }
 
+.overflowDescripcion {
+    max-width: 100px;
+    overflow: hidden;
+    display: inline-block;
+    border: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .iconoGrandePrincipales {
     color: #79CB79;
     font-size: 130px;
@@ -323,4 +332,9 @@ input[type=text] {
 
 .productoInactivo {
     opacity: 0.5;
+}
+
+.resumenCentrado {
+    margin: auto !important;
+    align-self: center !important;
 }

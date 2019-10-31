@@ -186,10 +186,11 @@ class MiCuenta extends Component {
                 if (data !== void (0)) {
                     _this.setState({
                         listaFechasEntrega: data.map((item) => {
+                            var direccion = item.direccion + " (" + item.localidad + ")";
                             return {
                                 fecha: moment(item.fechaEntrega, 'DD-MM-YYYY').format('DD/MM/YYYY'),
-                                localidad: item.localidad,
-                                direccion: item.direccion
+                                descripcion: item.descripcion,
+                                direccion: direccion
                             }
                         })
                     })
@@ -298,8 +299,16 @@ class MiCuenta extends Component {
         const itemRows = [
             <tr key={"row-data-" + item.fecha}>
                 <td>{item.fecha}</td>
-                <td>{item.localidad}</td>
-                <td>{item.direccion}</td>
+                <td>
+                    <div className="overflowDescripcion" title={item.descripcion}>
+                        {item.descripcion}
+                    </div>
+                </td>
+                <td>
+                    <div className="overflowDescripcion" title={item.direccion}>
+                        {item.direccion}
+                    </div>
+                </td>
             </tr>
         ];
         return itemRows;
@@ -358,13 +367,13 @@ class MiCuenta extends Component {
                     </MDBCol>
                 </MDBRow>
                 <MDBRow>
-                    <MDBCol className="col-4">
+                    <MDBCol md="4">
                         <MDBCard className="mb-4">
                             <MDBCardBody className="text-center">
                                 <MDBCardTitle>
                                     <h4><i className="fas fa-store" /> Productos a revisar</h4>
                                 </MDBCardTitle>
-                                <MDBCardText>
+                                <MDBCardText className="resumenCentrado">
                                     <ResumenProductosProductor
                                         listadoProductosProductor={bodyProductos}
                                         resultadoRequest={this.state.resultadoRequestCalificaciones}
@@ -373,13 +382,13 @@ class MiCuenta extends Component {
                             </MDBCardBody>
                         </MDBCard>
                     </MDBCol>
-                    <MDBCol className="col-4">
+                    <MDBCol md="4">
                         <MDBCard className="mb-4">
                             <MDBCardBody className="text-center">
                                 <MDBCardTitle>
                                     <h4><i className="fas fa-map-marker-alt" /> Próximas fechas de entrega</h4>
                                 </MDBCardTitle>
-                                <MDBCardText>
+                                <MDBCardText className="resumenCentrado">
                                     <ResumenFechasEntrega
                                         listadoPuntosEntrega={bodyFechas}
                                         resultadoRequest={this.state.resultadoRequestFechasEntrega}
@@ -389,13 +398,13 @@ class MiCuenta extends Component {
                             </MDBCardBody>
                         </MDBCard>
                     </MDBCol>
-                    <MDBCol className="col-4">
+                    <MDBCol md="4">
                         <MDBCard className="mb-4">
                             <MDBCardBody className="text-center">
                                 <MDBCardTitle>
                                     <h4><i className="fas fa-star" /> Calificaciones</h4>
                                 </MDBCardTitle>
-                                <MDBCardText>
+                                <MDBCardText className="resumenCentrado">
                                     <ResumenCalificaciones
                                         cantidadEstrellas={this.state.cantidadEstrellas}
                                         listadoCalificaciones={bodyCalificaciones}

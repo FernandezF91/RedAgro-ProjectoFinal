@@ -2,9 +2,18 @@ package app.clases;
 
 public class ProximasFechasEntrega {
 	private String fechaEntrega;
+	private String descripcion;
 	private String localidad;
 	private String direccion;
 
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
 	public String getLocalidad() {
 		return localidad;
 	}
@@ -29,9 +38,10 @@ public class ProximasFechasEntrega {
 		this.fechaEntrega = fechaEntrega;
 	}
 
-	public ProximasFechasEntrega(String fechaEntrega, String localidad, String direccion) {
+	public ProximasFechasEntrega(String fechaEntrega, String descripcion, String localidad, String direccion) {
 		super();
 		this.fechaEntrega = fechaEntrega;
+		this.descripcion = descripcion;
 		this.localidad = localidad;
 		this.direccion = direccion;
 	}

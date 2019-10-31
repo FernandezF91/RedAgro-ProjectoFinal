@@ -63,10 +63,11 @@ public class FechaEntregaControlador {
 
 		return fe;
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/fechas_entrega/filtradasPor")
-	public List<FechaEntrega> obtenerFechasFiltradasPtoEntrega(@RequestParam long id_punto_entrega, @RequestParam String fecha) {
+	public List<FechaEntrega> obtenerFechasFiltradasPtoEntrega(@RequestParam long id_punto_entrega,
+			@RequestParam String fecha) {
 
 		List<EntidadFechaEntrega> ef = new ArrayList<EntidadFechaEntrega>();
 		FechaEntregaMapper fem = new FechaEntregaMapper();
@@ -78,7 +79,7 @@ public class FechaEntregaControlador {
 
 		return fe;
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/obtenerEntregasProximoMes")
 	public ResponseEntity<Object> obtenerEntregasProximoMes(@RequestParam long id_productor) {
@@ -89,14 +90,13 @@ public class FechaEntregaControlador {
 			if (resultados != null && !resultados.isEmpty()) {
 				for (Object[] object : resultados) {
 					listaProximasFechasEntrega.add(new ProximasFechasEntrega((String) object[0], (String) object[1],
-							(String) object[2]));
+							(String) object[2], (String) object[3]));
 				}
 			}
-			
+
 			return new ResponseEntity<>(listaProximasFechasEntrega, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(
-					"Ocurrió un error al buscar las fechas de entrega.",
+			return new ResponseEntity<>("Ocurrió un error al buscar las fechas de entrega.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

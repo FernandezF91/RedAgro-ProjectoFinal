@@ -9,8 +9,8 @@ const columnas = [
         field: 'fecha'
     },
     {
-        label: 'Localidad',
-        field: 'localidad'
+        label: 'Descripcion',
+        field: 'descripcion'
     },
     {
         label: 'Direccion',

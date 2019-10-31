@@ -2,8 +2,7 @@ import '../diseños/PerfilProductor.css'
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import { Row, Col } from 'react-bootstrap';
-import { MDBCard, MDBCardTitle, MDBCardBody, MDBCardImage, MDBCardText, MDBCol, MDBRow, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBContainer } from "mdbreact";
+import { MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBCardBody, MDBCardImage, MDBCardText, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBContainer } from "mdbreact";
 import BeautyStars from 'beauty-stars';
 import ResumenFechasEntrega from "./principales/ResumenFechasEntrega";
 import NumberFormat from 'react-number-format';
@@ -24,6 +23,7 @@ class PerfilProductor extends Component {
                 puntosEntrega: {},
             },
             calificacion: {},
+            productos: [],
             listaFechasEntrega: [],
             loading: true,
             paginaActual: 1,
@@ -84,7 +84,7 @@ class PerfilProductor extends Component {
                     var id_productor = data.id;
                     this.obtenerProductos(id_productor);
                     this.obtenerCalificaciones(id_productor);
-                    //this.obtenerListadoFechasEntrega(id_productor);
+                    this.obtenerListadoFechasEntrega(id_productor);
 
                 } else {
                     console.log("No hay datos");
@@ -184,27 +184,24 @@ class PerfilProductor extends Component {
             .then(data => {
                 if (data !== undefined) {
                     this.setState({
-                        datosProductor: {
-                            ...this.state.datosProductor,
-                            productos: data.map((item) => {
-                                return {
-                                    id: item.id,
-                                    categoria: item.producto.categoria,
-                                    tipo: item.producto.tipo,
-                                    titulo: item.titulo,
-                                    descripcion: item.descripcion,
-                                    stock: item.stock,
-                                    tipoDeUnidad: item.unidad_venta,
-                                    tipoDeProduccion: item.tipo_produccion,
-                                    precio: item.precio,
-                                    fechaDeVencimiento: item.fecha_vencimiento,
-                                    tiempoDePreparacion: item.tiempo_preparacion,
-                                    contenido: item.contenido,
-                                    imagenes: item.imagenes,
-                                    oferta: item.oferta
-                                }
-                            })
-                        },
+                        productos: data.map((item) => {
+                            return {
+                                id: item.id,
+                                categoria: item.producto.categoria,
+                                tipo: item.producto.tipo,
+                                titulo: item.titulo,
+                                descripcion: item.descripcion,
+                                stock: item.stock,
+                                tipoDeUnidad: item.unidad_venta,
+                                tipoDeProduccion: item.tipo_produccion,
+                                precio: item.precio,
+                                fechaDeVencimiento: item.fecha_vencimiento,
+                                tiempoDePreparacion: item.tiempo_preparacion,
+                                contenido: item.contenido,
+                                imagenes: item.imagenes,
+                                oferta: item.oferta
+                            }
+                        }),
                         loading: false,
                     })
                 } else {
@@ -276,10 +273,11 @@ class PerfilProductor extends Component {
                 if (data !== void (0)) {
                     _this.setState({
                         listaFechasEntrega: data.map((item) => {
+                            var direccion = item.direccion + " (" + item.localidad + ")";
                             return {
                                 fecha: moment(item.fechaEntrega, 'DD-MM-YYYY').format('DD/MM/YYYY'),
-                                localidad: item.localidad,
-                                direccion: item.direccion
+                                descripcion: item.descripcion,
+                                direccion: direccion
                             }
                         })
                     })
@@ -288,6 +286,25 @@ class PerfilProductor extends Component {
                     loading: false
                 })
             })
+    }
+
+    generoItemFechas(item) {
+        const itemMDBRows = [
+            <tr key={"MDBRow-data-" + item.fecha}>
+                <td>{item.fecha}</td>
+                <td>
+                    <div className="overflowDescripcion" title={item.descripcion}>
+                        {item.descripcion}
+                    </div>
+                </td>
+                <td>
+                    <div className="overflowDescripcion" title={item.direccion}>
+                        {item.direccion}
+                    </div>
+                </td>
+            </tr>
+        ];
+        return itemMDBRows;
     }
 
     render() {
@@ -302,8 +319,7 @@ class PerfilProductor extends Component {
 
         var fecha = moment(this.state.datosProductor.fecha_creacion, "YYYY-MM-DD").fromNow().toString();
         fecha = fecha.charAt(0).toUpperCase() + fecha.slice(1);
-        const productos = this.state.datosProductor.productos;
-        const { productosPerPage, listaFechasEntrega } = this.state;
+        const { productos, productosPerPage, listaFechasEntrega } = this.state;
         const numberOfPages = Math.ceil(productos.length / productosPerPage);
         let lista = this.crearListaDeProductos(numberOfPages, productosPerPage, productos);
         let bodyFechas = [];
@@ -312,55 +328,62 @@ class PerfilProductor extends Component {
         })
 
         return (
-            <div className="perfilProductor">
-                <Row>
-                    <div className="nombreDelPerfil">
+            <div>
+                <MDBRow>
+                    <div className="nombreDelPerfil titulosPrincipales tituloMiCuenta">
                         {this.state.datosProductor.nombre}
                         <h6 className="grey-text">{fecha} que forma parte de Cultura Verde</h6>
                     </div>
-                </Row>
-                <Row>
-                    <Col xs={6} md={4}>
-                        <Row>
-                            <MDBCard className="mb-4">
-                                <MDBCardBody className="text-center">
-                                    <MDBCardTitle> <i className="fas fa-star" /> Mis calificaciones</MDBCardTitle>
-                                    {
-                                        this.state.datosProductor.calificacion === "Aún no hay calificaciones" || this.state.datosProductor.calificacion === undefined ?
-                                            'Aún no hay calificaciones' :
-                                            <div>
-                                                <h6 className="grey-text">Promedio realizado en base a 1 reservas calificadas.</h6>
-                                                <BeautyStars
-                                                    value={this.state.datosProductor.calificacion}
-                                                    activeColor="#28A745"
-                                                    inactiveColor="#757877"
-                                                    size="24px" />
-                                            </div>
-                                    }
-                                </MDBCardBody>
-                            </MDBCard>
-                        </Row>
-                        <Row>
-                            <MDBCard className="mb-4">
-                                <MDBCardBody className="text-center">
-                                    <MDBCardTitle>
-                                        <h4><i className="fas fa-map-marker-alt" /> Próximas fechas de entrega</h4>
-                                    </MDBCardTitle>
-                                    <MDBCardText>
-                                        <ResumenFechasEntrega
-                                            listadoPuntosEntrega={bodyFechas}
-                                            resultadoRequest={this.state.resultadoRequestFechasEntrega}
-                                            vistaProductor={false}
-                                        />
-                                    </MDBCardText>
-                                </MDBCardBody>
-                            </MDBCard>
-                        </Row>
-                    </Col>
-                    <Col xs={12} md={8}>
+                </MDBRow>
+                <MDBRow>
+                    <MDBCol md="4">
+                        <MDBRow>
+                            <MDBCol>
+                                <MDBCard className="mb-4">
+                                    <MDBCardBody className="text-center">
+                                        <MDBCardTitle> <i className="fas fa-star" /> Mis calificaciones</MDBCardTitle>
+                                        {
+                                            this.state.datosProductor.calificacion === "Aún no hay calificaciones" || this.state.datosProductor.calificacion === undefined ?
+                                                'Aún no hay calificaciones' :
+                                                <div>
+                                                    <h6 className="grey-text">Promedio realizado en base a 1 reservas calificadas.</h6>
+                                                    <BeautyStars
+                                                        value={this.state.datosProductor.calificacion}
+                                                        activeColor="#28A745"
+                                                        inactiveColor="#757877"
+                                                        size="24px" />
+                                                </div>
+                                        }
+                                    </MDBCardBody>
+                                </MDBCard>
+                            </MDBCol>
+                        </MDBRow>
+                        <MDBRow>
+                            <MDBCol>
+                                <MDBCard>
+                                    <MDBCardBody className="text-center">
+                                        <MDBCardTitle>
+                                            <i className="fas fa-map-marker-alt" /> Próximas fechas de entrega
+                                        </MDBCardTitle>
+                                        <MDBCardText className="resumenCentrado">
+                                            <ResumenFechasEntrega
+                                                listadoPuntosEntrega={bodyFechas}
+                                                resultadoRequest={this.state.resultadoRequestFechasEntrega}
+                                                vistaProductor={false}
+                                            />
+                                        </MDBCardText>
+                                    </MDBCardBody>
+                                </MDBCard>
+                            </MDBCol>
+                        </MDBRow>
+                    </MDBCol>
+                    <MDBCol md="8">
                         <MDBCard>
                             <MDBCardBody>
-                                <MDBCardTitle><h4> <i className="fas fa-store" /> Mis productos </h4>
+                                <MDBCardTitle>
+                                    <h4>
+                                        <i className="fas fa-store" /> Mis productos
+                                    </h4>
                                 </MDBCardTitle>
                                 <MDBContainer className="listadoDeProductos">
                                     <MDBCarousel activeItem={1} length={lista.length} slide={true} showControls={true} showIndicators={true} multiItem>
@@ -383,8 +406,8 @@ class PerfilProductor extends Component {
                                 </MDBContainer>
                             </MDBCardBody>
                         </MDBCard>
-                    </Col>
-                </Row>
+                    </MDBCol>
+                </MDBRow>
             </div>
         );
     }

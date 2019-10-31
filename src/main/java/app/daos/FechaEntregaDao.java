@@ -22,11 +22,11 @@ public interface FechaEntregaDao extends JpaRepository<EntidadFechaEntrega, Long
 	List<EntidadFechaEntrega> obtenerHorariosDeUnaFecha(@Param("id_pto_entrega") long id_pto_entrega,
 			@Param("fecha") String fecha);
 
-	@Query(value = "SELECT f.fecha, p.localidad, p.direccion FROM fecha_entrega f JOIN punto_entrega p "
+	@Query(value = "SELECT f.fecha, p.descripcion, p.localidad, p.direccion FROM fecha_entrega f JOIN punto_entrega p "
 			+ " ON f.punto_entrega_id = p.id "
 			+ " WHERE STR_TO_DATE(fecha,'%d-%m-%Y') < DATE_ADD(CURDATE(), INTERVAL 30 DAY) "
 			+ " AND STR_TO_DATE(fecha,'%d-%m-%y') >= CURDATE() AND p.productor_id = ?1 "
-			+ " GROUP BY f.fecha, p.localidad, p.direccion "
-			+ " ORDER BY f.fecha, p.localidad, p.direccion ASC LIMIT 0, 10", nativeQuery = true)
+			+ " GROUP BY f.fecha, p.descripcion, p.localidad, p.direccion "
+			+ " ORDER BY f.fecha, p.descripcion, p.localidad, p.direccion ASC LIMIT 0, 10", nativeQuery = true)
 	List<Object[]> obtenerEntregasProximoMes(long productor_id);
 }
