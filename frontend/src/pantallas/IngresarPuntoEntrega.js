@@ -155,6 +155,15 @@ class IngresarPuntoEntrega extends Component {
             }
         }
 
+        if( this.state.campos["fecha_entrega"] === undefined){
+            this.setState({
+                visible: true,
+                titulo: "Error",
+                mensaje: "Te olvidaste de seleccionar una fecha de entrega. Por favor, intentá nuevamente"
+            });
+            return
+        }
+
         if (this.state.id_punto_entrega !== "") {
 
             const path = "http://localhost:3000/redAgro/subir_fecha_entrega?id_punto_entrega=";
