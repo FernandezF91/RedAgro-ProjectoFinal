@@ -20,8 +20,8 @@ public class EntidadPerfil {
 	@MapsId
 	private EntidadProductor productor;
 
-	@Column(name = "ruta", nullable = false)
-	private String ruta;
+	@Column(name = "url", nullable = false)
+	private String url;
 
 	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
@@ -35,11 +35,11 @@ public class EntidadPerfil {
 	}
 
 	public String getRuta() {
-		return ruta;
+		return url;
 	}
 
-	public void setRuta(String ruta) {
-		this.ruta = ruta;
+	public void setRuta(String url) {
+		this.url = url;
 	}
 
 	public String getDescripcion() {
