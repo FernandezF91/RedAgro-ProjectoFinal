@@ -114,13 +114,24 @@ public class PuntoDeEntregaControlador {
 		for (EntidadFechaEntrega f : fechas) {
 
 			int horaInicio = Integer.parseInt((hora_inicio.replaceAll(":", "")));
+			int horaFin = Integer.parseInt((hora_fin.replaceAll(":", "")));
+			int horaInicioGuardada = Integer.parseInt((f.getHora_inicio().replaceAll(":", "")));
 			int horaFinGuardada = Integer.parseInt((f.getHora_fin().replaceAll(":", "")));
 			if (horaFinGuardada >= horaInicio) {
 				return new ResponseEntity<>(
-						"Hey! Existe una fecha de entrega con un horario similar al que ingresaste: inicia a las "
+						"Hey! Para la fecha de entrega elegida, ya existe un horario de entrega que inicia a las "
 								+ f.getHora_inicio() + " y termina a las " + f.getHora_fin()
 								+ ". Reintentá con otro horario ;)",
 						HttpStatus.INTERNAL_SERVER_ERROR);
+			} else {
+				
+				if (horaFin >= horaInicioGuardada) {
+					return new ResponseEntity<>(
+							"Hey!  Para la fecha de entrega elegida, ya existe un horario de entrega que inicia a las "
+									+ f.getHora_inicio() + " y termina a las " + f.getHora_fin()
+									+ ". Reintentá con otro horario ;)",
+							HttpStatus.INTERNAL_SERVER_ERROR);
+				}
 			}
 		}
 
