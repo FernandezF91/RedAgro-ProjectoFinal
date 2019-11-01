@@ -53,41 +53,24 @@ class RecuperarEmail extends Component {
             .then(function (response) {
                 if (response.status !== 200) {
 
-                    // alert("Ocurrió algún problema. Intenta nuevamente")
-
-                    let mensaje = "Ocurrió algún problema, intentá nuevamente"
-                    _this.setState({
-                        visible: true,
-                        mensaje: mensaje,
-                        titulo: "Error",
-                        formOk: false,
-                        error: ""
-                    });
+                    response.text().then(
+                        function (response) {
+                            _this.setState({
+                                visible: true,
+                                mensaje: response,
+                                titulo: "Error",
+                                formOk: false,
+                                error: ""
+                            });
+                        })
                     return;
                 }
 
                 response.text().then(
                     function (response) {
-
-                        if (response === 0) {
-
-                            let mensaje = "Mail incorrecto o inexistente"
-
-                            _this.setState({
-                                visible: true,
-                                mensaje: mensaje,
-                                titulo: "Error",
-                                formOk: false,
-                                error: ""
-                            });
-
-                            return;
-
-                        }
-
                         _this.setState({
                             visible: true,
-                            mensaje: "Se te envió un email para que puedas recuperar tu contraseña",
+                            mensaje: "No te preocupes! Te enviamos un email para que puedas reestablecer tu contraseña",
                             titulo: "Recuperar contraseña",
                             formOk: true,
                             error: ""
