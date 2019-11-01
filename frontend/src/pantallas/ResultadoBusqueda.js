@@ -323,7 +323,7 @@ class ResultadoBusqueda extends Component {
                 <br />
                 <br />
                 <h5>Ups! Ocurrio un error! </h5>
-                <h6>Por favor, intenta nuevamente</h6>
+                <h6 className="grey-text">Por favor, intenta nuevamente</h6>
             </div>
         )
 
@@ -335,7 +335,7 @@ class ResultadoBusqueda extends Component {
                         <div className="opcionesCantidad">
                             <span className="tituloCantidad">Resultados por página</span>
                             <Select
-                                className="cantidadProductos"
+                                className="cantidadItemsListado"
                                 value={defaultListado}
                                 options={tamañosListado}
                                 onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />

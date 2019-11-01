@@ -186,7 +186,7 @@ class ResultadoBusquedaSinLogin extends Component {
                 <br />
                 <br />
                 <h5>Ups! Ocurrio un error! </h5>
-                <h6>Por favor, intenta nuevamente</h6>
+                <h6 className="grey-text">Por favor, intenta nuevamente</h6>
             </div>
         )
 
@@ -197,7 +197,7 @@ class ResultadoBusquedaSinLogin extends Component {
                     resultadoBusqueda.length > 0 ?
                         <div className="opcionesCantidad">
                             <span className="tituloCantidad">Resultados por página</span>
-                            <Select className="cantidadProductos"
+                            <Select className="cantidadItemsListado"
                                 value={defaultListado}
                                 options={tamañosListado}
                                 onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />
@@ -231,7 +231,7 @@ class ResultadoBusquedaSinLogin extends Component {
                                     Para continuar tenés que iniciar sesión...
                                 </h5>
                                 <br />
-                                <h6>
+                                <h6 className="grey-text">
                                     Podes hacerlo por <Link to={'/login'}>acá</Link>
                                 </h6>
                             </div>

@@ -1,4 +1,5 @@
 import '../diseños/Reservas.css';
+import '../diseños/estilosGlobales.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
@@ -67,7 +68,7 @@ const Producto = ({ productos }) => {
                     <MDBTableBody>{productos}</MDBTableBody>
                 </MDBTable>
                 :
-                <div className="sinReservas">
+                <div className="listadosSinItems">
                     <i className="fas fa-store iconoGrande"></i>
                     <br />
                     <br />

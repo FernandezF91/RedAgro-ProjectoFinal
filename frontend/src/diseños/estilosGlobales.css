@@ -198,7 +198,7 @@ input[type=text] {
     align-self: center;
 }
 
-.cantidadProductos {
+.cantidadItemsListado {
     width: 150px;
     margin-left: 10px;
 }
@@ -337,4 +337,8 @@ input[type=text] {
 .resumenCentrado {
     margin: auto !important;
     align-self: center !important;
+}
+
+.listadosSinItems {
+    margin-top: 15px;
 }

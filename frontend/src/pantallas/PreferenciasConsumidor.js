@@ -256,7 +256,7 @@ class PreferenciasConsumidor extends Component {
                                             <br />
                                             <br />
                                             <h5>Ups! Ocurrio un error! </h5>
-                                            <h6>Por favor, intenta nuevamente</h6>
+                                            <h6 className="grey-text">Por favor, intenta nuevamente</h6>
                                         </div>
                                     )
                                 }

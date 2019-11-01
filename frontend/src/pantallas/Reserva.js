@@ -1,3 +1,4 @@
+import '../diseños/estilosGlobales.css';
 import '../diseños/Reservas.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -104,15 +105,15 @@ const Reserva = ({ lista, rolUsuario }) => {
 					<MDBTableBody>{lista}</MDBTableBody>
 				</MDBTable>
 				:
-				<div className="sinReservas">
+				<div className="listadoSinItems">
 					<i className="fas fa-tasks iconoGrande" />
 					<br />
 					<br />
 					<h5>Ups! No tenes reservas! </h5>
 					{(rolUsuario === "Consumidor") ?
-						<h6>Probá buscando productos por <Link to={'.'}>acá</Link></h6>
+						<h6 className="grey-text">Probá buscando productos por <Link to={'.'}>acá</Link></h6>
 						:
-						<h6>Probá publicando tus productos por <Link to={'./NuevoProducto'}>acá</Link></h6>
+						<h6 className="grey-text">Probá publicando tus productos por <Link to={'./NuevoProducto'}>acá</Link></h6>
 					}
 				</div>
 			}

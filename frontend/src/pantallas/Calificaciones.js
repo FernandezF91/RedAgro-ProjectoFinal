@@ -130,7 +130,7 @@ class Calificaciones extends Component {
                     calificacionesRecibidas.length > 0 ?
                         <div className="opcionesCantidad">
                             <span className="tituloCantidad">Calificaciones por página</span>
-                            <Select className="cantidadProductos"
+                            <Select className="cantidadItemsListado"
                                 value={defaultListado}
                                 options={tamañosListado}
                                 onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />

@@ -1,63 +1,54 @@
-import React, { Component } from 'react'
-import { Navbar, Container } from 'react-bootstrap';
-import culturaVerde from '../imagenes/cultura-verde-2.png';
-import '../diseños/PuntoDeEntrega.css';
-import '../diseños/estilosGlobales.css';
+import '../diseños/Reservas.css';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
 
-class FormaRetiro extends Component {
-    constructor() {
-        super()
-
-        this.state = {
-            campos: [],
-            validated: false
-        }
-
+const columnas = [
+    {
+        label: 'Descripción',
+        field: 'Descripción'
+    },
+    {
+        label: 'Provincia',
+        field: 'Provincia'
+    },
+    {
+        label: 'Localidad',
+        field: 'Localidad'
+    },
+    {
+        label: 'Dirección',
+        field: 'Dirección'
+    },
+    {
+        label: 'Fecha',
+        field: 'Fechas'
+    },
+    {
+        label: 'Habilitado',
+        field: 'Dar de baja',
     }
+];
 
-    handleSubmit(e) {
-
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        this.setState({ validated: true });
-
-    };
-
-    detectarCambios(e) {
-
-        let campos = this.state.campos;
-        campos[e.target.name] = e.target.value;
-        this.setState({
-            campos
-        })
-    }
-
-    limpiarCampos(e) {
-        var form = e.target;
-        e.preventDefault();
-
-        form.reset();
-
-    }
-
-    render() {
-        return (
-            <div className="fondo">
-                <Navbar className="barraNavegacion">
-                    <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                </Navbar>
-                <Container fluid className="contenedor">
-                    <div className="puntoDeEntrega">
-                        <h2>Seleccione punto de entrega</h2>
-                    </div>
-                </Container>
-            </div>
-        );
-    };
+const PuntoDeEntrega = ({ puntosDeEntrega }) => {
+    return (
+        <div>
+            {puntosDeEntrega.length > 0 ?
+                <MDBTable striped hover>
+                    <MDBTableHead columns={columnas} />
+                    <MDBTableBody>{puntosDeEntrega}</MDBTableBody>
+                </MDBTable>
+                :
+                <div className="listadoSinItems">
+                    <i className="fas fa-map-marker-alt iconoGrande" />
+                    <br />
+                    <br />
+                    <h5>Ups! No tenes puntos de venta cargados! </h5>
+                    <h6 className="grey-text">Cargá tus puntos de venta <Link to={'/principalProductores/IngresarPuntoEntrega'}>acá!</Link></h6>
+                </div>
+            }
+        </div >
+    );
 }
 
-export default FormaRetiro;
+export default PuntoDeEntrega;

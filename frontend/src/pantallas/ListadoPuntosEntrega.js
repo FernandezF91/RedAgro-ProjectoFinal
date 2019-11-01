@@ -1,40 +1,21 @@
-import React, { Component } from 'react';
 import '../diseños/estilosGlobales.css';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import Loader from 'react-loader-spinner';
-import { MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
 import '../diseños/ListadoPuntosEntrega.css';
-import Modal from 'react-awesome-modal';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import React, { Component } from 'react';
+import PuntoDeEntrega from './PuntoDeEntrega';
+import Paginacion from './Paginacion';
 import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
+import Select from 'react-select';
+import Loader from 'react-loader-spinner';
+import Modal from 'react-awesome-modal';
 import moment from 'moment';
 
-const columnas = [
-    {
-        label: 'Descripción',
-        field: 'Descripción'
-    },
-    {
-        label: 'Provincia',
-        field: 'Provincia'
-    },
-    {
-        label: 'Localidad',
-        field: 'Localidad'
-    },
-    {
-        label: 'Dirección',
-        field: 'Dirección'
-    },
-    {
-        label: 'Fecha',
-        field: 'Fechas'
-    },
-    {
-        label: 'Habilitado',
-        field: 'Dar de baja',
-    }
+const tamañosListado = [
+    { label: "5", value: "5" },
+    { label: "15", value: "15" },
+    { label: "30", value: "30" },
+    { label: "Todo", value: "Todo" },
 ];
 
 class ListadoPuntosEntrega extends Component {
@@ -52,7 +33,10 @@ class ListadoPuntosEntrega extends Component {
             visible2: "",
             accion: "",
             expandedRows: [],
-            id_punto: ""
+            id_punto: "",
+            currentPage: 1,
+            puntosPerPage: 5,
+            defaultListado: [{ label: "5", value: "5" }]
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
@@ -186,55 +170,54 @@ class ListadoPuntosEntrega extends Component {
         this.setState({ expandedRows: newExpandedRows });
     }
 
-    cargarFilas() {
-        return this.state.puntos_entrega.map(punto => {
-            const clickFechas = () => this.clickMostrarFechas(punto.id);
-            const clickAltaBaja = () => this.handleRowAccion(punto.id, punto.activo);
+    cargarFilas(item) {
+        const clickFechas = () => this.clickMostrarFechas(item.id);
+        const clickAltaBaja = () => this.handleRowAccion(item.id, item.activo);
 
-            var itemRow = [<tr key={"row-data-" + punto.id} >
+        const itemRow = [
+            <tr key={"row-data-" + item.id}>
                 <td>
-                    {punto.descripcion}
+                    {item.descripcion}
                 </td>
                 <td>
-                    {punto.provincia}
+                    {item.provincia}
                 </td>
                 <td>
-                    {punto.localidad}
+                    {item.localidad}
                 </td>
                 <td>
-                    {punto.direccion}
+                    {item.direccion}
                 </td>
                 <td>
                     <i className="far fa-calendar-alt iconosTabla" title="Ver fechas" onClick={clickFechas} />
                 </td>
                 <td>
                     {
-                        punto.activo === false ?
+                        item.activo === false ?
                             <i className="fa fa-times-circle rojo iconosTabla" onClick={clickAltaBaja} title="Baja" />
                             :
                             <i className="fa fa-check-circle verde iconosTabla" onClick={clickAltaBaja} title="Alta" />
                     }
                 </td>
             </tr>
-            ];
+        ];
 
-            if (this.state.expandedRows.includes(punto.id)) {
-                const fechas_filtradas = this.state.fechas_entrega.filter(fecha => fecha.punto_entrega.id === punto.id)
-                fechas_filtradas.forEach(fecha => {
-                    itemRow.push(
-                        <tr key={"row-expanded-" + punto.id}>
-                            <td />
-                            <td> {moment(fecha.fecha, 'DD-MM-YYYY').format('DD/MM/YYYY')} </td>
-                            <td> {fecha.hora_inicio} </td>
-                            <td> {fecha.hora_fin} </td>
-                            <td />
-                        </tr>
-                    );
-                }
-                )
+        if (this.state.expandedRows.includes(item.id)) {
+            const fechas_filtradas = this.state.fechas_entrega.filter(fecha => fecha.punto_entrega.id === item.id)
+            fechas_filtradas.forEach(fecha => {
+                itemRow.push(
+                    <tr key={"row-expanded-" + item.id}>
+                        <td />
+                        <td> {moment(fecha.fecha, 'DD-MM-YYYY').format('DD/MM/YYYY')} </td>
+                        <td> {fecha.hora_inicio} </td>
+                        <td> {fecha.hora_fin} </td>
+                        <td />
+                    </tr>
+                );
             }
-            return itemRow;
-        })
+            )
+        }
+        return itemRow;
     }
 
     componentDidMount() {
@@ -246,31 +229,73 @@ class ListadoPuntosEntrega extends Component {
                 'Content-type': 'application/json;charset=UTF-8',
             }
         })
-            .then(function (response) {
-                if (response.status !== 200) {
-                    _this.setState({
-                        loading: false,
-                        visible2: true,
-                        titulo: "Error",
-                        mensaje: "Ocurrió algún error inesperado. Intentá nuevamente"
-                    });
-                    return;
+            .catch(err => console.error(err))
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else if (response.status === 504) {
+                    console.log("Timeout");
+                } else {
+                    console.log("Otro error");
                 }
+            })
+            .then(data => {
+                if (data !== void (0)) {
+                    _this.setState({
+                        puntos_entrega: data.map((item) => {
+                            return {
+                                id: item.id,
+                                productor: item.productor,
+                                fechas_entrega: item.fechas_entrega,
+                                descripcion: item.descripcion,
+                                pais: item.pais,
+                                provincia: item.provincia,
+                                localidad: item.localidad,
+                                codigoPostal: item.cod_postal,
+                                direccion: item.direccion,
+                                latitud: item.latitud,
+                                longitud: item.longitud,
+                                activo: item.activo
+                            }
+                        })
+                    })
+                }
+                _this.setState({
+                    loading: false
+                })
+            })
+    }
 
-                response.json().then(
-                    function (response) {
-                        _this.setState({ loading: false });
-                        response.forEach(element => {
-                            _this.setState({
-                                puntos_entrega: [..._this.state.puntos_entrega, element]
-                            })
-                            _this.cargarFechas(element.id);
-                        });
-                    });
-            });
+    nextPage = (pageNumber) => {
+        this.setState({ currentPage: pageNumber });
+    }
+
+    actualizarTamañoListado = (tamaño) => {
+        let actualizarListado = [];
+        actualizarListado.push(tamaño);
+        if (tamaño.value === "Todo") {
+            this.setState({ puntosPerPage: this.state.puntos_entrega.length })
+        } else {
+            this.setState({ puntosPerPage: tamaño.value })
+        }
+        this.setState({ defaultListado: actualizarListado });
     }
 
     render() {
+        const { puntos_entrega, puntosPerPage, currentPage, defaultListado } = this.state;
+        const numberOfPages = Math.ceil(puntos_entrega.length / puntosPerPage);
+        const indexOfLastPunto = currentPage * puntosPerPage;
+        const indexOfFirstPunto = indexOfLastPunto - puntosPerPage;
+        const lista = puntos_entrega.slice(indexOfFirstPunto, indexOfLastPunto);
+        let body = [];
+        lista.forEach(item => {
+            if (item.activo) {
+                body.push(this.cargarFilas(item));
+            }
+            else {
+                body.push(this.generoItemInactivo(item));
+            }
+        })
 
         if (this.state.loading) return (
             <Loader
@@ -285,24 +310,26 @@ class ListadoPuntosEntrega extends Component {
         return (
             <div>
                 <div className="titulosPrincipales">Puntos de entrega</div>
-                <div className="tabla_puntos">
-                    {this.state.puntos_entrega.length > 0 ?
-                        <MDBTable striped hover>
-                            <MDBTableHead columns={columnas} />
-                            <MDBTableBody>
-                                {this.cargarFilas()}
-                            </MDBTableBody>
-                        </MDBTable>
-                        :
-                        <div className="sinPuntosDeVenta">
-                            <i className="fas fa-map-marker-alt iconoGrande"></i>
-                            <br />
-                            <br />
-                            <h5>Ups! No tenes puntos de venta cargados! </h5>
-                            <h6>Cargá tus puntos de venta <Link to={'/principalProductores/IngresarPuntoEntrega'}>acá!</Link></h6>
+                {
+                    puntos_entrega.length > 0 ?
+                        <div className="opcionesCantidad">
+                            <span className="tituloCantidad">Puntos de entrega por página</span>
+                            <Select className="cantidadItemsListado"
+                                value={defaultListado}
+                                options={tamañosListado}
+                                onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />
                         </div>
-                    }
-                </div>
+                        : ''
+                }
+                <PuntoDeEntrega puntosDeEntrega={body} />
+                {
+                    puntos_entrega.length > puntosPerPage ?
+                        <Paginacion
+                            pages={numberOfPages}
+                            nextPage={this.nextPage}
+                            currentPage={this.state.currentPage} />
+                        : ''
+                }
                 <section>
                     <Modal
                         visible={this.state.visible}

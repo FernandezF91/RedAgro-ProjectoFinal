@@ -359,7 +359,7 @@ class ListadoReservas extends Component {
     }
 
     abrirModalCalificacion = (idReserva, calificacion) => {
-        if (calificacion != null || calificacion != undefined) {
+        if (calificacion !== null) {
             this.setState({
                 textCalificacion: calificacion.comentario,
                 cantidadEstrellas: calificacion.valor,
@@ -467,7 +467,7 @@ class ListadoReservas extends Component {
                     reservasRealizadas.length > 0 ?
                         <div className="opcionesCantidad">
                             <span className="tituloCantidad">Reservas por página</span>
-                            <Select className="cantidadProductos"
+                            <Select className="cantidadItemsListado"
                                 value={defaultListado}
                                 options={tamañosListado}
                                 onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />

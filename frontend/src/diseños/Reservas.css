@@ -20,16 +20,12 @@
     font-size: 175px;
 }
 
-.sinReservas {
-    margin-top: 15px;
-}
-
 .pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
     background-color: #28a745 !important;
     border-color: #28a745 !important;
 }
 
-.cantidadProductos {
+.cantidadItemsListado {
     width: 150px;
     margin-left: 10px;
 }
