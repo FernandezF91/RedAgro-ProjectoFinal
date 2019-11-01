@@ -2,7 +2,8 @@ import '../diseños/estilosGlobales.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
+import NumberFormat from 'react-number-format';
+import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBCardImage, MDBContainer } from "mdbreact";
 
 class MiCuenta extends Component {
 
@@ -15,12 +16,18 @@ class MiCuenta extends Component {
             usuario: this.props.usuario,
             loading: true,
             cantidadReservasDisponibles: 0,
-            resultadoRequestReservas: 0
+            resultadoRequestReservas: 0,
+            resultadoRequestProductos: 0,
+            productosDePreferencia: [],
+            paginaActual: 1,
+            productosPerPage: 3,
+            tamañoListado: 3,
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.mostrarReservas = this.mostrarReservas.bind(this);
         this.generarMensajeReservas = this.generarMensajeReservas.bind(this);
+        this.generarProductosDePreferencia = this.generarProductosDePreferencia.bind(this);
     }
 
     mostrarPantallaPrincipal() {
@@ -84,11 +91,73 @@ class MiCuenta extends Component {
             loading: true
         });
 
+        _this.obtenerProductosDePreferencia();
         _this.obtenerMensajeReservasPendiente();
 
         _this.setState({
             loading: false
         });
+    }
+
+    obtenerProductosDePreferencia() {
+        var _this = this;
+        _this.setState({
+            loading: true
+        });
+
+        var path = "http://localhost:3000/redAgro/preferencias/obtenerProductos?id=" + _this.state.id_usuario;
+        fetch(path)
+            .catch(error => console.error(error))
+            .then(response => {
+                try {
+                    if (response.status === 200) {
+                        _this.setState({
+                            resultadoRequestProductos: response.status
+                        });
+                        return response.json();
+                    }
+                    else {
+                        console.log(response.status);
+                        _this.setState({
+                            loading: false,
+                            resultadoRequestProductos: response.status
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                    _this.setState({
+                        loading: false,
+                        resultadoRequestProductos: response.status
+                    });
+                }
+            })
+            .then(data => {
+                if (data !== undefined) {
+                    _this.setState({
+                        productosDePreferencia: data.map((item) => {
+                            return {
+                                id: item.id,
+                                categoria: item.producto.categoria,
+                                tipo: item.producto.tipo,
+                                titulo: item.titulo,
+                                descripcion: item.descripcion,
+                                stock: item.stock,
+                                tipoDeUnidad: item.unidad_venta,
+                                tipoDeProduccion: item.tipo_produccion,
+                                precio: item.precio,
+                                fechaDeVencimiento: item.fecha_vencimiento,
+                                tiempoDePreparacion: item.tiempo_preparacion,
+                                contenido: item.contenido,
+                                imagenes: item.imagenes,
+                                oferta: item.oferta
+                            }
+                        }),
+                        loading: false,
+                    })
+                } else {
+                    _this.setState({ loading: false });
+                }
+            })
     }
 
     generarMensajeReservas() {
@@ -110,8 +179,100 @@ class MiCuenta extends Component {
         return mensaje;
     }
 
+    generarProductosAMostrar = (item) => {
+        return (
+            <MDBCol md="4" key={item.id}>
+                <MDBCard className="mb-2">
+                    <MDBCardImage
+                        className="imagenesBusqueda"
+                        src={"data:" + item.imagenes[0].tipo_contenido + ";base64," + item.imagenes[0].image}
+                        alt="ImagenBusqueda"
+                        overlay="white-slight"
+                        height="150x" width="auto" />
+
+                    <MDBCardBody className="text-center">
+                        <h6 className="grey-text">{item.tipo}</h6>
+                        <MDBCardTitle>
+                            <strong className="dark-grey-text">{item.titulo}</strong>
+                        </MDBCardTitle>
+                        <MDBCardText>
+                            <strong className="float-center">
+                                {
+                                    (item.oferta === null || item.oferta === undefined) ?
+                                        <div>
+                                            <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                        </div>
+                                        :
+                                        (item.oferta.activo) ?
+                                            <div title="Producto en oferta!">
+                                                <strike>
+                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                                </strike>
+                                                <br />
+                                                <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                            </div>
+                                            :
+                                            <div>
+                                                <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                            </div>
+                                }
+                            </strong>
+                        </MDBCardText>
+                    </MDBCardBody>
+                </MDBCard>
+            </MDBCol>
+        )
+    }
+
+    generarProductosDePreferencia(listadoProductos) {
+        if (listadoProductos.length > 0) {
+            return (
+
+                listadoProductos.length > 0 ?
+                    <MDBContainer>
+                        <MDBCarousel activeItem={1} length={listadoProductos.length} slide={true} showControls={true} showIndicators={true} multiItem>
+                            <MDBCarouselInner>
+                                {
+                                    listadoProductos.map((itemLista, index) => (
+                                        <MDBCarouselItem itemId={index + 1}>
+                                            <MDBRow>
+                                                {
+                                                    itemLista.map((item) => (
+                                                        this.generarProductosAMostrar(item)
+                                                    ))
+                                                }
+                                            </MDBRow>
+                                        </MDBCarouselItem>
+                                    ))
+                                }
+                            </MDBCarouselInner>
+                        </MDBCarousel>
+
+                    </MDBContainer>
+                    : ''
+
+            )
+        }
+    }
+
+    crearListaDeProductos(numberOfPages, productosPerPage, productos) {
+        let nuevaLista = [];
+        var indexOfLastProducto, indexOfFirstProducto;
+        for (let i = 1; i <= numberOfPages; i++) {
+            indexOfLastProducto = i * productosPerPage;
+            indexOfFirstProducto = indexOfLastProducto - productosPerPage;
+            let lista = productos.slice(indexOfFirstProducto, indexOfLastProducto)
+            nuevaLista.push(lista);
+        }
+        return nuevaLista;
+    }
+
     render() {
         const nombres = this.state.usuario.nombre;
+        const { productosPerPage, productosDePreferencia } = this.state;
+        const numberOfPages = Math.ceil(productosDePreferencia.length / productosPerPage);
+        let lista = this.crearListaDeProductos(numberOfPages, productosPerPage, productosDePreferencia);
+
         if (this.state.loading)
             return <Loader
                 type="Grid"
@@ -132,6 +293,7 @@ class MiCuenta extends Component {
                         </MDBCard>
                     </MDBCol>
                 </MDBRow>
+                {this.generarProductosDePreferencia(lista)}
             </div>
         );
     };
