@@ -1,3 +1,4 @@
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import React, { Component } from 'react';
 import { Form, Row, Button } from 'react-bootstrap';
 import { GoogleApiWrapper } from 'google-maps-react';
@@ -5,6 +6,7 @@ import { DatePickerInput } from 'rc-datepicker';
 import TimeField from 'react-simple-timefield';
 import Modal from 'react-awesome-modal';
 import Geocode from "react-geocode";
+import Loader from 'react-loader-spinner';
 
 import '../diseños/NuevoPuntoEntrega.css';
 import { isDate } from 'moment';
@@ -155,7 +157,7 @@ class IngresarPuntoEntrega extends Component {
             }
         }
 
-        if( this.state.campos["fecha_entrega"] === undefined){
+        if (this.state.campos["fecha_entrega"] === undefined) {
             this.setState({
                 visible: true,
                 titulo: "Error",
@@ -165,7 +167,9 @@ class IngresarPuntoEntrega extends Component {
         }
 
         if (this.state.id_punto_entrega !== "") {
-
+            this.setState({
+                loading: true
+            });
             const path = "http://localhost:3000/redAgro/subir_fecha_entrega?id_punto_entrega=";
 
             const path_final = path + _this.state.id_punto_entrega
@@ -202,7 +206,14 @@ class IngresarPuntoEntrega extends Component {
                     }
                     response.text().then(
                         function (response) {
-                            _this.setState({ visible2: true, formOk: true, direccion: "", lat: "", lng: "" })
+                            _this.setState({
+                                loading: false,
+                                visible2: true,
+                                formOk: true,
+                                direccion: "",
+                                lat: "",
+                                lng: ""
+                            })
                         });
                 });
 
@@ -292,6 +303,16 @@ class IngresarPuntoEntrega extends Component {
     }
 
     render() {
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
+
         return (
             <div className="container">
                 <div className="titulosPrincipales">Nuevo punto de entrega</div>
@@ -301,9 +322,9 @@ class IngresarPuntoEntrega extends Component {
                             <Form.Label column sm={4}>
                                 Nombre
                             </Form.Label>
-
-                            <input
+                            <Form.Control
                                 id="descripcion"
+                                type="titulo"
                                 placeholder="Ingresá el nombre con el que vas a identificar a este punto de entrega"
                                 value={this.state.campos["descripcion"]}
                                 onChange={(e) => this.detectarCambiosDescripcion(e)}
@@ -321,6 +342,7 @@ class IngresarPuntoEntrega extends Component {
                                 placeholder="Ingresá la dirección de tu punto de entrega"
                                 name="direccion_entrega"
                                 disabled={this.state.disabled2}
+                                className="inputAutocomplete"
                             />
                         </Form.Group>
                     </div>
@@ -333,6 +355,7 @@ class IngresarPuntoEntrega extends Component {
                                 name="pais"
                                 disabled="true"
                                 value={this.state.campos["pais"]}
+                                className="inputAutocomplete"
                             />
                         </Form.Group>
                     </div>
@@ -345,6 +368,7 @@ class IngresarPuntoEntrega extends Component {
                                 name="provincia"
                                 value={this.state.campos["provincia"]}
                                 disabled={this.state.disabled}
+                                className="inputAutocomplete"
                             />
                         </Form.Group>
                     </div>
@@ -357,6 +381,7 @@ class IngresarPuntoEntrega extends Component {
                                 name="localidad"
                                 value={this.state.campos["localidad"]}
                                 disabled={this.state.disabled}
+                                className="inputAutocomplete"
                             />
                         </Form.Group>
                     </div>
@@ -369,6 +394,7 @@ class IngresarPuntoEntrega extends Component {
                                 name="direccion"
                                 value={this.state.campos["direccion"]}
                                 disabled={this.state.disabled}
+                                className="inputAutocomplete"
                             />
                         </Form.Group>
                     </div>
@@ -381,6 +407,7 @@ class IngresarPuntoEntrega extends Component {
                                 name="cod_postal"
                                 value={this.state.campos["cod_postal"]}
                                 disabled={this.state.disabled}
+                                className="inputAutocomplete"
                             />
                         </Form.Group>
                     </div>
@@ -421,7 +448,6 @@ class IngresarPuntoEntrega extends Component {
                                     style={{ width: 100 }}
                                 />
                                 hs
-
                             </div>
                         </Form.Group>
                     </div>

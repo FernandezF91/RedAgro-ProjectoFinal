@@ -1,47 +1,52 @@
-.formularioPuntoEntrega{
-	display:flex;
-	flex-direction:column;
+.formularioPuntoEntrega {
+	display: flex;
+	flex-direction: column;
 }
 
-input{
-	border: 1.5px solid #ccc;
-	border-radius: 6px;
+.inputAutocomplete {
+	border: 1px solid #ced4da !important;
+	border-radius: .25rem !important;
 	box-sizing: border-box;
 	padding: 0px 10px;
 	font-size: 15px;
 	font-weight: 400;
-	height:35px;
+	height: 35px;
+	height: 38px !important;
 }
 
-.botones{
-
-margin-top:10px;
-display:flex;
-flex-direction:row;
-
+.botones {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: row;
 }
 
-#autocomplete{
-	width:55%;
+#autocomplete {
+	width: 55%;
 }
 
 #descripcion {
-	width:55% !important;
+	width: 55% !important;
 }
 
-.fecha_entrega{
-	width:17%;
+.fecha_entrega {
+	width: 17%;
 }
 
-.hora_inicio,.hora_fin{
-	width:14%;
+.hora_inicio {
+	margin-right: 10px;
+	width: 14%;
+	border: 1px solid #ced4da !important;
+	border-radius: .25rem !important;
+	height: 38px !important;
+	text-align: center;
 }
 
-.hora_inicio{
-	margin-right:5px;
-}
-
-.hora_fin{
+.hora_fin {
+	width: 14%;
 	margin-left: 10px !important;
-	margin-right:5px;
+	margin-right: 5px;
+	border: 1px solid #ced4da !important;
+	border-radius: .25rem !important;
+	height: 38px !important;
+	text-align: center;
 }
