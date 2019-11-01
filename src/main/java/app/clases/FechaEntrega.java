@@ -1,7 +1,5 @@
 package app.clases;
 
-import java.sql.Time;
-
 public class FechaEntrega {
 	
 	public FechaEntrega(Long id, PuntoEntrega puntoEntrega, String Fecha, String hora_inicio, String hora_fin) {
