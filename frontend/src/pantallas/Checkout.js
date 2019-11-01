@@ -338,7 +338,7 @@ class Checkout extends Component {
                     this.setState({
                         resultadoRequest: 401,
                         showModal: true,
-                        mensaje: 'Hey! Para continuar, necesitas completar los datos de la persona que va a retirar la reserva'
+                        mensaje: 'Hey! Para continuar, necesitas completar con los datos de la persona que va a retirar la reserva'
                     })
                     return false;
                 }
@@ -360,7 +360,7 @@ class Checkout extends Component {
                         this.setState({
                             resultadoRequest: 401,
                             showModal: true,
-                            mensaje: 'Hey! Para continuar, necesitas completar la forma de retiro'
+                            mensaje: 'Hey! Para continuar, necesitas seleccionar un punto de entrega, con su fecha y horario de retiro.'
                         })
                         return false;
                     }
@@ -634,14 +634,10 @@ class Checkout extends Component {
                             <div className="modalMargenes">
                                 <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalErrores} />
                                 <br />
-                                {
-                                    <div>
-                                        <i className="fas fa-exclamation-circle iconoModalError" />
-                                        <br />
-                                        <br />
-                                        <h5>{this.state.mensaje} </h5>
-                                    </div>
-                                }
+                                <i className="fas fa-exclamation-circle iconoModalError" />
+                                <br />
+                                <br />
+                                <h5>{this.state.mensaje} </h5>
                             </div>
                         </MDBModal>
                         : ''
