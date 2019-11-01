@@ -166,7 +166,7 @@ public class UsuarioControlador {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/recuperar_email")
 
-	public Long confirmarCuenta(@RequestParam String email) {
+	public ResponseEntity<Object> confirmarCuenta(@RequestParam String email) {
 
 		EntidadUsuario eu = new EntidadUsuario();
 
@@ -184,12 +184,18 @@ public class UsuarioControlador {
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return new ResponseEntity<>(
+						"Ocurrió un error al recuperar tu mail. Reintentá en unos minutos. ",							
+						HttpStatus.INTERNAL_SERVER_ERROR);
 			}
+			
+			long id = eu.getId();		
+			return new ResponseEntity<>(id,HttpStatus.OK);
 
-			return eu.getId();
-		}
-
-		return 0L;
+		} else {
+			return new ResponseEntity<>(
+					"Hey! El mail ingresado no existe en nuestro sistema. Comprobá si esta bien escrito y reintentá :) ",							
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}	
 	}
-
 }
