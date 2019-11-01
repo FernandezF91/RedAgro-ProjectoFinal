@@ -69,7 +69,14 @@ public class ProductoProductorControlador {
 		productoNuevo.setImagenes(null);
 		productoNuevo.setTiempo_preparacion(producto.getTiempo_preparacion());
 		productoNuevo.setTipo_produccion(producto.getTipo_produccion());
-		productoNuevo.setContenido(producto.getContenido());
+		
+		String contenido = producto.getContenido();
+		if (contenido == "") {
+			productoNuevo.setContenido(null);
+		} else {
+			productoNuevo.setContenido(contenido);
+		}
+		
 		productoNuevo.setUnidad_venta(producto.getUnidad_venta());
 		productoNuevo.setProducto(prod);
 		productoNuevo.setProductor(productor);
