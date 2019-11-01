@@ -155,6 +155,13 @@ const PasosCheckout = (props) => {
                                     options={props.selector.fechasEntrega}
                                     placeholder="Seleccione una fecha de retiro..."
                                     onChange={newFecha => props.actualizarFechaEntrega(newFecha)} />
+                                
+                                <Select className="dropdownHorarios"
+                                    isDisabled={props.selectorHorarios.selectorHorariosDisabled}
+                                    value={props.seleccionado.horarioEntrega}
+                                    options={props.selector.horarioEntrega}
+                                    placeholder="Seleccione un horario de retiro..."
+                                    onChange={newHorario => props.actualizarHorarioEntrega(newHorario)} />
                             </div>
                             : ''
                     }

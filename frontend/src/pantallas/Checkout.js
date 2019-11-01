@@ -77,10 +77,12 @@ class Checkout extends Component {
             selector: {
                 fechasEntrega: [],
                 puntosEntrega: [],
+                horarioEntrega: [],
             },
             seleccionado: {
                 puntoEntrega: [],
                 fechaEntrega: [],
+                horarioEntrega: [],
             },
             selectedRadioButtonRetiro: "radio1",
             datosPersonaRetiro: {
@@ -110,10 +112,14 @@ class Checkout extends Component {
             showModal: false,
             selectorFecha: {
                 selectorFechaDisabled: true
+            },
+            selectorHorarios: {
+                selectorHorariosDisabled: true
             }
         }
         this.actualizarPuntoEntrega = this.actualizarPuntoEntrega.bind(this);
         this.actualizarFechaEntrega = this.actualizarFechaEntrega.bind(this);
+        this.actualizarHorarioEntrega = this.actualizarHorarioEntrega.bind(this);
         this.actualizarItemsCarrito = this.actualizarItemsCarrito.bind(this);
         this.obtenerFechasEntrega = this.obtenerFechasEntrega.bind(this);
         this.getTotalReserva = this.getTotalReserva.bind(this);
@@ -197,9 +203,6 @@ class Checkout extends Component {
             .then(response => {
                 try {
                     if (response.status === 200) {
-                        // this.setState({
-                        //     resultadoRequest: response.status
-                        // });
                         return response.json();
                     }
                     else {
@@ -219,16 +222,22 @@ class Checkout extends Component {
             })
             .then(data => {
                 if (data !== undefined) {
+                    let fechasEntrega = data.map(item => {
+                        return {
+                            label: moment(item.fecha, 'DD-MM-YYYY').format("DD/MM/YYYY"),
+                            value: item.id,
+                        }
+                    })
+
+                    let fechasSinRepetidos = fechasEntrega.filter((valorActual, indiceActual, arreglo) => {
+                        return arreglo.findIndex(valorDelArreglo => JSON.stringify(valorDelArreglo.label) === JSON.stringify(valorActual.label)) === indiceActual
+                    });
+
                     this.setState({
                         fechasEntrega: data,
                         selector: {
                             ...this.state.selector,
-                            fechasEntrega: data.map(item => {
-                                return {
-                                    label: moment(item.fecha, 'DD-MM-YYYY').format("DD/MM/YYYY"),
-                                    value: item.id,
-                                }
-                            })
+                            fechasEntrega: fechasSinRepetidos
                         },
                         loading: false
                     })
@@ -260,7 +269,6 @@ class Checkout extends Component {
                 punto_entrega: { id: newPunto.value },
             },
             selectorFecha: {
-                ...this.state.selectorFecha,
                 selectorFechaDisabled: false
             }
         });
@@ -269,10 +277,10 @@ class Checkout extends Component {
     actualizarFechaEntrega(newFecha) {
         var nuevaFechaEntrega = []
         let fechasDeEntrega = this.state.fechasEntrega.filter(function (item) {
-            return item.id === newFecha.value;
+            return item.fecha === moment(newFecha.label, 'DD/MM/YYYY').format("DD-MM-YYYY");
         });
         var fechaSeleccionada = moment(fechasDeEntrega[0].fecha, 'DD-MM-YYYY').format("YYYY-MM-DD");
-        var horarioEntrega = fechasDeEntrega[0].hora_inicio + " hasta las " + fechasDeEntrega[0].hora_fin;
+        this.cargarHorariosEntrega(fechasDeEntrega);
         nuevaFechaEntrega.push(newFecha);
         this.setState({
             seleccionado: {
@@ -282,9 +290,42 @@ class Checkout extends Component {
             datosReserva: {
                 ...this.state.datosReserva,
                 fecha: fechaSeleccionada,
-                horario: horarioEntrega,
+            },
+            selectorHorarios: {
+                selectorHorariosDisabled: false
             }
         });
+    }
+
+    cargarHorariosEntrega(fechas) {
+        let horarioEntrega = fechas.map(item => {
+            return {
+                label: item.hora_inicio + " hasta las " + item.hora_fin,
+                value: item.id,
+            }
+        });
+        this.setState({
+            selector: {
+                ...this.state.selector,
+                horarioEntrega: horarioEntrega,
+            }
+        })
+    }
+
+    actualizarHorarioEntrega(newHorario) {
+        var nuevaHorarioEntrega = []
+        var horarioEntrega = newHorario.label;
+        nuevaHorarioEntrega.push(newHorario);
+        this.setState({
+            seleccionado: {
+                ...this.state.seleccionado,
+                horarioEntrega: nuevaHorarioEntrega
+            },
+            datosReserva: {
+                ...this.state.datosReserva,
+                horario: horarioEntrega,
+            }
+        })
     }
 
     handleNext = () => {
@@ -547,7 +588,9 @@ class Checkout extends Component {
                                     getTotalReserva={this.getTotalReserva}
                                     actualizarPuntoEntrega={this.actualizarPuntoEntrega}
                                     actualizarFechaEntrega={this.actualizarFechaEntrega}
+                                    actualizarHorarioEntrega={this.actualizarHorarioEntrega}
                                     selectorFecha={this.state.selectorFecha}
+                                    selectorHorarios={this.state.selectorHorarios}
                                 />
                                 <Button
                                     variant="light"

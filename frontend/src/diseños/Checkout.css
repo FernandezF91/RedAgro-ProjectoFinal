@@ -51,11 +51,19 @@
     justify-content:center;
     margin-top: 10px;
 }
+
 .dropdownFechas{
     width: 500px;
     justify-content:center;
     margin-top: 25px;
 }
+
+.dropdownHorarios{
+    width: 500px;
+    justify-content:center;
+    margin-top: 25px;
+}
+
 .opcionesCheckout{
     display: flex;
 	flex-direction: column;
