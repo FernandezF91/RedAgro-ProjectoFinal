@@ -12,17 +12,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import app.daos.PreferenciaDao;
 import app.daos.ProductoDao;
+import app.daos.ProductoProductorDao;
 import app.daos.UsuarioDao;
 import app.modelos.EntidadPreferencia;
 import app.modelos.EntidadProducto;
+import app.modelos.EntidadProductoProductor;
 import app.mappers.PreferenciaMapper;
+import app.mappers.ProductoProductorMapper;
 import app.mappers.UsuarioMapper;
 import app.clases.Consumidor;
 import app.clases.Preferencia;
 import app.clases.Producto;
+import app.clases.ProductoProductor;
 
 @RestController
 public class PreferenciaControlador {
@@ -33,6 +39,9 @@ public class PreferenciaControlador {
 	ProductoDao productoDAO;
 	@Autowired
 	UsuarioDao usuarioDAO;
+
+	@Autowired
+	ProductoProductorDao productoProductorDao;
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/obtenerPreferencias")
@@ -75,7 +84,8 @@ public class PreferenciaControlador {
 				try {
 					preferenciaDAO.borrarPreferenciaConsumidor(id, productoId);
 				} catch (Exception e) {
-					return new ResponseEntity<>("Ocurrio un error al borrar las preferencias", HttpStatus.INTERNAL_SERVER_ERROR);
+					return new ResponseEntity<>("Ocurrio un error al borrar las preferencias",
+							HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 			}
 		}
@@ -95,10 +105,28 @@ public class PreferenciaControlador {
 				preferenciaDAO.saveAll(preferenciasAGuardar);
 				return new ResponseEntity<>("Prefencias guardadas", HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<>("Ocurrio un error al guardar las nuevas preferencias", HttpStatus.INTERNAL_SERVER_ERROR);
+				return new ResponseEntity<>("Ocurrio un error al guardar las nuevas preferencias",
+						HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
 
 		return new ResponseEntity<>("No hubo cambios", HttpStatus.OK);
 	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/preferencias/obtenerProductos")
+	public List<ProductoProductor> obtenerProductosDePreferencias(@RequestParam Long id) {
+		ArrayList<Preferencia> preferencias = this.obtenerPreferencias(id);
+		List<ProductoProductor> productos = new ArrayList<ProductoProductor>();
+		List<EntidadProductoProductor> entidadProductos = new ArrayList<EntidadProductoProductor>();
+		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
+
+		for (Preferencia p : preferencias) {
+			entidadProductos.addAll(productoProductorDao.obtenerProductosByProductoId(p.getProducto().getId()));
+		}
+		productos = entidadProductos.stream().map(entidad -> productoMapper.mapFromEntity(entidad))
+				.collect(Collectors.toList());
+		return productos;
+	}
+
 }

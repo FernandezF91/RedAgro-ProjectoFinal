@@ -53,4 +53,7 @@ public interface ProductoProductorDao extends JpaRepository<EntidadProductoProdu
 	@Modifying
 	@Query(value = "UPDATE Producto_productor p SET p.activo = ?2 WHERE p.id =?1", nativeQuery = true)
 	void actualizarEstadoProducto(long id_producto, boolean activo);
+	
+	@Query(value = "SELECT * FROM Producto_Productor p where p.producto_id = ?1 ", nativeQuery = true)
+	List<EntidadProductoProductor> obtenerProductosByProductoId(long id);
 }
