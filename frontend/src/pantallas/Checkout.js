@@ -124,6 +124,7 @@ class Checkout extends Component {
         this.obtenerFechasEntrega = this.obtenerFechasEntrega.bind(this);
         this.getTotalReserva = this.getTotalReserva.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarModalErrores = this.cerrarModalErrores.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.crearReserva = this.crearReserva.bind(this);
         this.handleCheckboxRetiro = this.handleCheckboxRetiro.bind(this);
@@ -333,8 +334,15 @@ class Checkout extends Component {
             case 0: {
                 if ((!this.state.datosPersonaRetiro.nombre) || (!this.state.datosPersonaRetiro.apellido) ||
                     (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.nombre)) || (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.apellido))) {
+
+                    this.setState({
+                        resultadoRequest: 401,
+                        showModal: true,
+                        mensaje: 'Hey! Para continuar, necesitas completar los datos de la persona que va a retirar la reserva'
+                    })
                     return false;
-                } else {
+                }
+                else {
                     //Actualizo los datos de la persona que retira
                     this.setState({
                         datosReserva: {
@@ -348,6 +356,12 @@ class Checkout extends Component {
             case 1: {
                 if (this.state.selectedRadioButtonRetiro === "radio2") {
                     if (this.state.seleccionado.puntoEntrega.length === 0 || this.state.seleccionado.fechaEntrega.length === 0) {
+
+                        this.setState({
+                            resultadoRequest: 401,
+                            showModal: true,
+                            mensaje: 'Hey! Para continuar, necesitas completar la forma de retiro'
+                        })
                         return false;
                     }
                 }
@@ -468,6 +482,12 @@ class Checkout extends Component {
             }
         }
 
+        this.setState({
+            showModal: false
+        })
+    }
+
+    cerrarModalErrores() {
         this.setState({
             showModal: false
         })
@@ -608,6 +628,24 @@ class Checkout extends Component {
                             : ''
                     }
                 </MuiThemeProvider>
+                {
+                    (this.state.showModal === true && this.state.resultadoRequest !== 200) ?
+                        <MDBModal isOpen={this.state.showModal} centered size="sm">
+                            <div className="modalMargenes">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalErrores} />
+                                <br />
+                                {
+                                    <div>
+                                        <i className="fas fa-exclamation-circle iconoModalError" />
+                                        <br />
+                                        <br />
+                                        <h5>{this.state.mensaje} </h5>
+                                    </div>
+                                }
+                            </div>
+                        </MDBModal>
+                        : ''
+                }
             </div>
         );
     }
