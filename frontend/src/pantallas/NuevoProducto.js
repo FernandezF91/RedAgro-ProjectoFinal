@@ -161,30 +161,17 @@ class NuevoProducto extends Component {
             }
             var path_final = path_principal + id_productor + "&id_producto=" + id_producto;
 
-            if (this.state.campos["contenido"] === undefined || (this.state.campos["contenido"] !== undefined && this.state.campos["contenido"].length > 0)) {
-                var body = JSON.stringify({
-                    "titulo": this.state.campos["titulo"],
-                    "descripcion": this.state.campos["descripcion"],
-                    "fecha_vencimiento": this.state.campos["fecha_ven"],
-                    "precio": this.state.campos["precio"].replace(",", "."),
-                    "stock": this.state.campos["stock"],
-                    "unidad_venta": this.state.campos["unidad_venta"],
-                    "tiempo_preparacion": this.state.campos["tiempo_preparacion"],
-                    "tipo_produccion": this.state.campos["tipo_produccion"]
-                })
-            } else {
-                var body = JSON.stringify({
-                    "titulo": this.state.campos["titulo"],
-                    "descripcion": this.state.campos["descripcion"],
-                    "fecha_vencimiento": this.state.campos["fecha_ven"],
-                    "precio": this.state.campos["precio"].replace(",", "."),
-                    "stock": this.state.campos["stock"],
-                    "unidad_venta": this.state.campos["unidad_venta"],
-                    "tiempo_preparacion": this.state.campos["tiempo_preparacion"],
-                    "tipo_produccion": this.state.campos["tipo_produccion"],
-                    "contenido": this.state.campos["contenido"]
-                })
-            }
+            var body = JSON.stringify({
+                "titulo": this.state.campos["titulo"],
+                "descripcion": this.state.campos["descripcion"],
+                "fecha_vencimiento": this.state.campos["fecha_ven"],
+                "precio": this.state.campos["precio"].replace(",", "."),
+                "stock": this.state.campos["stock"],
+                "unidad_venta": this.state.campos["unidad_venta"],
+                "tiempo_preparacion": this.state.campos["tiempo_preparacion"],
+                "tipo_produccion": this.state.campos["tipo_produccion"],
+                "contenido": this.state.campos["contenido"]
+            })
 
             fetch(path_final, {
                 method: "POST",
