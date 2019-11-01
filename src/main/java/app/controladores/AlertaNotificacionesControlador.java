@@ -19,7 +19,7 @@ public class AlertaNotificacionesControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/AlertaNotificaciones/obtenerAlertasByUsuario")
-	public ArrayList<EntidadAlertasNotificaciones> obtenerConfiguracionAlertas(@RequestParam long id_usuario) {
+	public ArrayList<EntidadAlertasNotificaciones> obtenerAlertasByUsuario(@RequestParam long id_usuario) {
 		ArrayList<EntidadAlertasNotificaciones> alertas = alertaDAO.obtenerNotificacionesByUsuario(id_usuario);
 		return alertas;
 	}
