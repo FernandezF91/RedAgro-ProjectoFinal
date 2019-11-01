@@ -220,12 +220,13 @@ class NuevoProducto extends Component {
 
     handleSubmit(e) {
         var _this = this;
+        
+        _this.setState({
+            loading: true
+        });
         e.preventDefault();
 
         if (_this.validarCampos()) {
-            _this.setState({
-                loading: true
-            });
             var path = "http://localhost:3000/redAgro/actualizarProductoProductor?id_producto_productor=" + _this.props.productoAEditar.id;
 
             fetch(path, {
