@@ -13,7 +13,7 @@ import '../diseños/estilosGlobales.css';
 import '../diseños/Checkout.css'
 
 const pasos = [
-    'Confirmá tu datos personales',
+    'Confirmá tus datos personales',
     'Elegí una forma de retiro',
     'Resumen de la reserva'
 ];
