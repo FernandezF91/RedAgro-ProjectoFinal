@@ -289,12 +289,7 @@ class ListadoPuntosEntrega extends Component {
         const lista = puntos_entrega.slice(indexOfFirstPunto, indexOfLastPunto);
         let body = [];
         lista.forEach(item => {
-            if (item.activo) {
-                body.push(this.cargarFilas(item));
-            }
-            else {
-                body.push(this.generoItemInactivo(item));
-            }
+            body.push(this.cargarFilas(item));
         })
 
         if (this.state.loading) return (
