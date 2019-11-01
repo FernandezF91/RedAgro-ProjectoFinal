@@ -14,7 +14,7 @@ public class MailNuevaCalificacion extends MailSender {
 				+ "</br>"
 				+ "</br>"
 				+ "Saludos," + "<br>"
-				+ "Equipo de CulturaVerde");
+				+ "Equipo de Cultura Verde");
 
 		this.setAsunto("Te calificaron por la reserva  #" + reserva.getId()+ "!");
 	}

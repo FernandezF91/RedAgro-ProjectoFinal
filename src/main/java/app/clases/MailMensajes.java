@@ -12,7 +12,7 @@ public class MailMensajes extends MailSender {
 				+ usuarioEmisor.getRol().toLowerCase() + " <em>" + usuarioEmisor.getNombre() + " "
 				+ usuarioEmisor.getApellido() + "</em> te ha enviado un nuevo mensaje. "
 				+ "Ingresá a Cultura Verde para responder.</p>" + "</br>" + "Saludos," + "<br>"
-				+ "Equipo de CulturaVerde");
+				+ "Equipo de Cultura Verde");
 
 		this.setAsunto("Tenes un nuevo mensaje en Cultura Verde");
 	}
