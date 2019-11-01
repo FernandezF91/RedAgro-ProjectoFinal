@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
-import { Form, Row, Button } from 'react-bootstrap';
+import { Form, Row, Button, InputGroup } from 'react-bootstrap';
 import 'moment/locale/es';
 import { DatePickerInput } from 'rc-datepicker';
 import 'rc-datepicker/lib/style.css';
 import Select from 'react-select';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Loader from 'react-loader-spinner';
 import moment from 'moment';
+import { MDBModal } from 'mdbreact';
 
 import '../diseños/nuevoProducto.css';
 import '../diseños/estilosGlobales.css';
-import Modal from 'react-awesome-modal';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import { FilePond, registerPlugin } from 'react-filepond';
 // Import FilePond styles
@@ -20,6 +20,7 @@ import 'filepond/dist/filepond.min.css';
 // Note: These need to be installed separately
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondTypeValidate from "filepond-plugin-file-validate-type";
+//import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'; import { isDate } from 'moment';
 
 const minDate = new Date();
@@ -28,6 +29,7 @@ const regularExp = {
     numerosDecimales: /^[0-9]*(\,[0-9]{0,2})?$/
 }
 
+//registerPlugin(FilePondPluginImagePreview, FilePondTypeValidate, FilePondPluginImageExifOrientation);
 registerPlugin(FilePondPluginImagePreview, FilePondTypeValidate);
 
 class NuevoProducto extends Component {
@@ -35,7 +37,7 @@ class NuevoProducto extends Component {
         super(props);
 
         this.state = {
-            campos: {},
+            campos: [],
             files: "",
             titulo: "",
             visible: false,
@@ -47,20 +49,23 @@ class NuevoProducto extends Component {
             tipoProducto: [],
             tipoProduccion: [],
             valueUnidadVenta: [],
-            disabled: false,
-            disabled2: false,
             id: this.props.id_productor,
             loading: true,
             showModal: false,
             productoAEditar: [],
-            edicion: true
+            validaciones: [],
+            resultadoRequest: 0,
+            showError: false,
+            showErrorMensaje: "",
+            contenidoDeshabilitado: false
         }
 
         this.featurePond = React.createRef();
-        this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.mostrarListadoDeProductos = this.mostrarListadoDeProductos.bind(this);
         this.validarCampos = this.validarCampos.bind(this);
         this.subirArchivos = this.subirArchivos.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarModalError = this.cerrarModalError.bind(this);
     }
 
     componentDidMount() {
@@ -69,15 +74,25 @@ class NuevoProducto extends Component {
         })
 
         if (this.state.productoAEditar !== undefined) {
-            this.state.campos["titulo"] = this.props.productoAEditar.titulo;
-            this.state.campos["descripcion"] = this.props.productoAEditar.descripcion;
-            this.state.campos["fecha_ven"] = moment(this.props.productoAEditar.fechaDeVencimiento, 'DD/MM/YYYY').format('YYYY-MM-DD');
-            this.state.campos["precio"] = this.props.productoAEditar.precio;
-            this.state.campos["stock"] = this.props.productoAEditar.stock;
-            this.state.campos["contenido"] = this.props.productoAEditar.contenido;
-            this.state.campos["tiempo_preparacion"] = this.props.productoAEditar.tiempoDePreparacion;
+            if (this.props.productoAEditar.tipoDeUnidad === "Kilogramo") {
+                this.setState({
+                    contenidoDeshabilitado: true
+                });
+            }
+            let campos = [];
+            campos["titulo"] = this.props.productoAEditar.titulo;
+            campos["descripcion"] = this.props.productoAEditar.descripcion;
+            if (this.props.productoAEditar.fechaDeVencimiento !== "-") {
+                campos["fecha_vencimiento"] = moment(this.props.productoAEditar.fechaDeVencimiento, 'DD/MM/YYYY').format('YYYY-MM-DD');
+            }
+            campos["precio"] = this.props.productoAEditar.precio;
+            campos["stock"] = this.props.productoAEditar.stock;
+            campos["contenido"] = this.props.productoAEditar.contenido;
+            campos["tiempo_preparacion"] = this.props.productoAEditar.tiempoDePreparacion;
 
+            //var imagen = this.props.productoAEditar.imagenes[0].tipo_contenido + ";base64," + this.props.productoAEditar.imagenes[0].image
             this.setState({
+                campos: campos,
                 categoria: [{
                     label: this.props.productoAEditar.categoria,
                     value: 1
@@ -94,32 +109,13 @@ class NuevoProducto extends Component {
                     label: this.props.productoAEditar.tipoDeProduccion,
                     value: 1
                 }],
-                files: [{
-                    file: this.props.productoAEditar.imagenes.image,
-                    name: this.props.productoAEditar.imagenes.name
-                }]
+                // files: [{
+                //     source: imagen,
+                //     options: {
+                //         type: 'local'
+                //     }
+                // }]
             })
-
-
-            const pond = FilePond.create({
-                files: [
-                    {
-                        // the server file reference
-                        source: this.props.productoAEditar.imagenes.image,
-
-                        // set type to local to indicate an already uploaded file
-                        options: {
-                            type: 'local',
-
-                            // mock file information
-                            file: {
-                                name: this.props.productoAEditar.imagenes.name,
-                                type: this.props.productoAEditar.imagenes.tipo_contenido
-                            }
-                        }
-                    }
-                ]
-            });
         }
         this.setState({
             loading: false
@@ -132,6 +128,12 @@ class NuevoProducto extends Component {
         })
     }
 
+    cerrarModalError() {
+        this.setState({
+            showError: false
+        })
+    }
+
     detectarCambios(e) {
         let campos = this.state.campos;
         campos[e.target.name] = e.target.value;
@@ -140,42 +142,75 @@ class NuevoProducto extends Component {
         })
     }
 
-    validarFecha() {
-        return !isDate(this.state.campos["fecha_ven"]);
-    }
-
     validarCampos() {
-        if ((!this.state.campos["categoria"]) || (!this.state.campos["tipo_produccion"]) || (!this.state.campos["unidad_venta"])
-            || (!this.state.campos["stock"]) || (!this.state.campos["precio"]) || (!regularExp.numerosDecimales.test(this.state.campos["precio"]))
-            || (!isNaN((this.state.campos["precio"])) && (this.state.campos["precio"]) < 1)
-            || (this.state.campos["categoria"] !== "Variado" ? !this.state.campos["tipo_producto"] : false)
-            || (!this.state.campos["descripcion"]) || (!this.state.campos["titulo"]) || (this.state.files.length === 0) ||
-            (!this.state.campos["fecha_ven"] ? false : this.validarFecha())) {
+        var showError = false;
+        this.setState({
+            validaciones: []
+        });
+        let validaciones = [];
+        if (!this.state.campos["stock"]) {
+            validaciones["stock"] = "Campo requerido";
+            showError = true;
+        }
 
+        if (!this.state.campos["precio"]) {
+            validaciones["precio"] = "Campo requerido";
+            showError = true;
+        } else if (!regularExp.numerosDecimales.test(this.state.campos["precio"])) {
+            validaciones["precio"] = "Formato invalido reg";
+            showError = true;
+        } else if (isNaN(this.state.campos["precio"])) {
+            validaciones["precio"] = "Formato invalido nan";
+            showError = true;
+        }
+
+        if (!this.state.campos["descripcion"]) {
+            validaciones["descripcion"] = "Campo requerido";
+            showError = true;
+        }
+
+        if (!this.state.campos["titulo"]) {
+            validaciones["titulo"] = "Campo requerido";
+            showError = true;
+        }
+
+        // if (!this.state.campos["files"]) {
+        //     validaciones["files"] = "Campo requerido";
+        //     showError = true;
+        // }
+
+        if (!this.state.campos["fecha_vencimiento"]) {
+            validaciones["fecha_vencimiento"] = "Campo requerido";
+            showError = true;
+        } else if (moment(this.state.campos["fecha_vencimiento"], 'DD/MM/YYYY').format('YYYY-MM-DD') === "Invalid date") {
+            validaciones["fecha_vencimiento"] = "Formato incorrecto";
+            showError = true;
+        }
+
+        if (showError) {
             this.setState({
-                visible: true,
-                titulo: "Error",
-                mensaje: "Campos incompletos o incorrectos",
+                validaciones: validaciones,
+                showError: showError,
+                showErrorMensaje: "Ups! Campos incompletos o incorrectos",
                 loading: false
             });
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
     closeModalSeguirCargando() {
         this.setState({
             visibleOk: false,
-            formOk: false,
-            disabled: false,
-            disabled2: false
+            formOk: false
         });
         this.limpiarCampos();
     }
 
     closeModal() {
         if (this.state.formOk === true) {
-            this.mostrarPantallaPrincipal();
+            this.mostrarListadoDeProductos();
         }
 
         this.setState({
@@ -185,21 +220,15 @@ class NuevoProducto extends Component {
 
     handleSubmit(e) {
         var _this = this;
-        _this.setState({
-            loading: true
-        });
         e.preventDefault();
 
         if (_this.validarCampos()) {
-            var path_principal = "http://localhost:3000/redAgro/usuario_productor/nuevo_producto?id_productor=";
-            var id_productor = _this.props.id_productor;
-            var id_producto = 1; //para el caso de variado
-            if (this.state.campos["categoria"] !== "Variado") {
-                id_producto = _this.state.campos["tipo_producto"];
-            }
-            var path_final = path_principal + id_productor + "&id_producto=" + id_producto;
+            _this.setState({
+                loading: true
+            });
+            var path = "http://localhost:3000/redAgro/actualizarProductoProductor?id_producto_productor=" + _this.props.productoAEditar.id;
 
-            fetch(path_final, {
+            fetch(path, {
                 method: "POST",
                 headers: {
                     'Content-type': 'application/json;charset=UTF-8',
@@ -207,37 +236,41 @@ class NuevoProducto extends Component {
                 body: JSON.stringify({
                     "titulo": this.state.campos["titulo"],
                     "descripcion": this.state.campos["descripcion"],
-                    "fecha_vencimiento": this.state.campos["fecha_ven"],
-                    "precio": this.state.campos["precio"].replace(",", "."),
+                    "fecha_vencimiento": this.state.campos["fecha_vencimiento"],
+                    //"precio": this.state.campos["precio"].replace(",", "."),
+                    "precio": this.state.campos["precio"],
                     "stock": this.state.campos["stock"],
-                    "unidad_venta": this.state.campos["unidad_venta"],
                     "tiempo_preparacion": this.state.campos["tiempo_preparacion"],
-                    "tipo_produccion": this.state.campos["tipo_produccion"],
                     "contenido": this.state.campos["contenido"]
                 }),
             })
-                .then(function (response) {
-                    if (response.status !== 200) {
-
-                        _this.setState({
-                            visible: true,
-                            titulo: "Error",
-                            mensaje: "Ocurrió algún error inesperado. Intenta nuevamente",
-                            loading: false
-                        });
-                        return;
+                .catch(err => console.error(err))
+                .then(response => {
+                    _this.setState({
+                        resultadoRequest: response.status
+                    })
+                    if (response.status === 200) {
+                        return response.json();
+                    } else if (response.status === 504) {
+                        console.log("Timeout");
+                    } else {
+                        console.log("Otro error");
                     }
-                    response.json().then(
-                        function (response) {
-                            _this.subirArchivos(response);
-                            _this.setState({
-                                loading: false
-                            })
-                        });
-
-                    _this.mostrarMensajeOk();
-                });
+                    _this.setState({
+                        mensaje: "Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
+                    })
+                })
+                .then(data => {
+                    _this.setState({
+                        mensaje: data,
+                        showModal: true
+                    });
+                    //_this.subirArchivos(response);
+                })
         }
+        _this.setState({
+            loading: false
+        });
     }
 
     subirArchivos(producto_productor) {
@@ -272,7 +305,7 @@ class NuevoProducto extends Component {
 
     cambiosFecha(e) {
         let campos = this.state.campos;
-        campos["fecha_ven"] = e;
+        campos["fecha_vencimiento"] = e;
         this.setState({ campos })
     }
 
@@ -284,7 +317,7 @@ class NuevoProducto extends Component {
         campos["categoria"] = "";
         campos["tipo_producto"] = "";
         campos["tipo_produccion"] = "";
-        campos["fecha_ven"] = "";
+        campos["fecha_vencimiento"] = "";
         campos["stock"] = "";
         campos["precio"] = "";
         campos["tiempo_preparacion"] = "";
@@ -305,9 +338,9 @@ class NuevoProducto extends Component {
         });
     }
 
-    mostrarPantallaPrincipal() {
+    mostrarListadoDeProductos() {
         this.props.history.push({
-            pathname: '/principalProductores/MiCuenta',
+            pathname: '/principalProductores/ListadoProductos',
             state: {
                 id: this.state.id
             }
@@ -340,8 +373,11 @@ class NuevoProducto extends Component {
                                 onChange={(e) => this.detectarCambios(e)}
                                 maxLength="100"
                             />
+                            {
+                                (this.state.validaciones["titulo"]) &&
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["titulo"]} />
+                            }
                         </Form.Group>
-
                         <div className="condicionesInputs">(*) 100 caracteres como máximo</div>
                     </div>
                     <div className="descripcion" >
@@ -358,6 +394,10 @@ class NuevoProducto extends Component {
                                 maxLength="255"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
+                            {
+                                (this.state.validaciones["descripcion"]) &&
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["descripcion"]} />
+                            }
                         </Form.Group>
                         <div className="condicionesInputs">(*) 255 caracteres como máximo</div>
                     </div>
@@ -422,10 +462,14 @@ class NuevoProducto extends Component {
                                 value={this.state.campos["contenido"]}
                                 type="contenido"
                                 name="contenido"
-                                disabled={this.state.disabled2}
                                 maxLength="50"
                                 onChange={(e) => this.detectarCambios(e)}
+                                disabled={this.state.contenidoDeshabilitado}
                             />
+                            {
+                                (this.state.validaciones["contenido"]) &&
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["contenido"]} />
+                            }
                         </Form.Group>
                     </div>
                     <div className="stock">
@@ -440,6 +484,10 @@ class NuevoProducto extends Component {
                                 min="0"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
+                            {
+                                (this.state.validaciones["stock"]) &&
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["stock"]} />
+                            }
                         </Form.Group>
                     </div>
                     <div className="precio">
@@ -459,7 +507,16 @@ class NuevoProducto extends Component {
                                     className="campoSinBordeNumeros inputDerecha"
                                 />
                             </InputGroup>
+                            {
+                                (this.state.campos["precio"] <= 0) &&
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" title="El precio debe ser mayor a 0" />
+                            }
+                            {
+                                (this.state.validaciones["precio"]) &&
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["precio"]} />
+                            }
                         </Form.Group>
+
                     </div>
                     <div className="tiempo_preparacion">
                         <Form.Group as={Row}>
@@ -469,10 +526,13 @@ class NuevoProducto extends Component {
                             <Form.Control
                                 value={this.state.campos["tiempo_preparacion"]}
                                 type="number"
-                                min="1"
                                 name="tiempo_preparacion"
                                 onChange={(e) => this.detectarCambios(e)}
                             />
+                            {
+                                (this.state.validaciones["tiempo_preparacion"] && this.state.campos["tiempo_preparacion"] <= 0) &&
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" title="El tiempo de preparación no puede ser menor a 0" />
+                            }
                         </Form.Group>
                     </div>
                     <div className="fechaVencimiento">
@@ -481,13 +541,17 @@ class NuevoProducto extends Component {
                                 Fecha de vencimiento
                                 </Form.Label>
                             <DatePickerInput
-                                name="fecha_ven"
+                                name="fecha_vencimiento"
                                 displayFormat='DD/MM/YYYY'
                                 minDate={minDate}
                                 className="calen"
-                                value={this.state.campos["fecha_ven"]}
+                                value={this.state.campos["fecha_vencimiento"]}
                                 onChange={(e) => this.cambiosFecha(e)}
                             />
+                            {
+                                (this.state.validaciones["fecha_vencimiento"]) &&
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["fecha_vencimiento"]} />
+                            }
                         </Form.Group>
                     </div>
                     <div className="imagenes">
@@ -510,39 +574,54 @@ class NuevoProducto extends Component {
                     </div>
                     <div className="condicionesInputsImg">(*) 5 imágenes como máximo</div>
                     <div className="botonesNuevoProducto">
-                        <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                        <Button variant="light" onClick={this.mostrarListadoDeProductos}>Cancelar</Button>
                         <Button variant="light" onClick={() => this.limpiarCampos()}>Limpiar</Button>
-                        <Button variant="success" type="submit">Crear</Button>
+                        <Button variant="success" type="submit">Guardar</Button>
                     </div>
                 </Form>
-                <section>
-                    <Modal
-                        visible={this.state.visible}
-                        width="400"
-                        height="120"
-                        effect="fadeInUp"
-                        onClickAway={() => this.closeModal()}
-                    >
-                        <div>
-                            <h1>{this.state.titulo}</h1>
-                            <p>{this.state.mensaje}</p>
-                            <a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
-                        </div>
-                    </Modal>
-                    <Modal
-                        visible={this.state.visibleOk}
-                        width="400"
-                        height="160"
-                        effect="fadeInUp"
-                    >
-                        <div>
-                            <h1>Producto guardado</h1>
-                            <p>¿Querés seguir cargando productos?</p>
-                            <Button variant="light" onClick={() => this.closeModal()}>No</Button>
-                            <Button variant="success" onClick={() => this.closeModalSeguirCargando()}>Si</Button>
-                        </div>
-                    </Modal>
-                </section>
+                {
+                    (this.state.showModal) &&
+                    (
+                        <MDBModal isOpen={this.state.showModal} centered size="sm">
+                            <div className="modalMargenes">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <br />
+                                {(this.state.resultadoRequest === 200) ?
+                                    (
+                                        <div>
+                                            <i className="fas fa-check-circle iconoModalOk" />
+                                            <br />
+                                            <br />
+                                            <h5>{this.state.mensaje}</h5>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <i className="fas fa-exclamation-circle iconoModalError" />
+                                            <br />
+                                            <br />
+                                            <h5>{this.state.mensaje}</h5>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </MDBModal>
+                    )
+                }
+                {
+                    (this.state.showError) &&
+                    (
+                        <MDBModal isOpen={this.state.showError} centered size="sm">
+                            <div className="modalMargenes">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                                <br />
+                                <i className="fas fa-exclamation-circle iconoModalError" />
+                                <br />
+                                <br />
+                                <h5>{this.state.showErrorMensaje}</h5>
+                            </div>
+                        </MDBModal>
+                    )
+                }
             </div>
         );
     };
