@@ -14,7 +14,7 @@ import CargarHistorico from '../pantallas/CargarHistorico';
 import ModificarContraseña from '../pantallas/ModificarContraseña';
 import DatosDeUsuario from '../pantallas/DatosDeUsuario';
 import ListadoReservas from '../pantallas/ListadoReservas';
-import IngresarPuntoEntrega from '../pantallas/IngresarPuntoEntrega';
+import NuevoPuntoEntrega from '../pantallas/NuevoPuntoEntrega';
 import ListadoPuntosEntrega from '../pantallas/ListadoPuntosEntrega';
 import ListadoProductos from '../pantallas/ListadoProductos';
 import Estadisticas from '../pantallas/Estadisticas';
@@ -30,7 +30,7 @@ const AlertaProductorRouter = withRouter(AlertaProductor);
 const ModificarContraseniaRouter = withRouter(ModificarContraseña);
 const EditarDatosRouter = withRouter(DatosDeUsuario);
 const ListadoReservasRouter = withRouter(ListadoReservas);
-const IngresarPuntoEntregaRouter = withRouter(IngresarPuntoEntrega);
+const NuevoPuntoEntregaRouter = withRouter(NuevoPuntoEntrega);
 const ListadoProductosRouter = withRouter(ListadoProductos);
 const EstadisticasRouter = withRouter(Estadisticas);
 const HitoricoRouter = withRouter(CargarHistorico);
@@ -120,7 +120,7 @@ class PantallaPrincipalProductores extends Component {
                                         </NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item id="items">
-                                            <Link to="/principalProductores/IngresarPuntoEntrega" id="items">Nuevo punto de entrega</Link>
+                                            <Link to="/principalProductores/NuevoPuntoEntrega" id="items">Nuevo punto de entrega</Link>
                                         </NavDropdown.Item>
                                     </NavDropdown>
                                 </MDBRow>
@@ -228,9 +228,9 @@ class PantallaPrincipalProductores extends Component {
                                     />
                                 }
                             />
-                            <Route path={'/principalProductores/IngresarPuntoEntrega'}
+                            <Route path={'/principalProductores/NuevoPuntoEntrega'}
                                 render={(props) =>
-                                    <IngresarPuntoEntregaRouter
+                                    <NuevoPuntoEntregaRouter
                                         id_productor={this.state.id}
                                     />
                                 }
