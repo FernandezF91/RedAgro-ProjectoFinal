@@ -393,3 +393,8 @@ input[type=text] {
     background: #CCC;
     border-radius: 10px;
 }
+
+.tablaDetalleFechasEntrega {
+    max-width: 600px;
+    margin: auto;
+}
