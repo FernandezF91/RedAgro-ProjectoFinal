@@ -46,7 +46,7 @@ class PantallaPrincipalProductores extends Component {
             id: localStorage.getItem('myLocalStorageIdProductor') || this.props.location.state.id, //paso id de usuario desde el LOGIN
             user: JSON.parse(localStorage.getItem('myLocalStorageUserProductor')) || this.props.location.state.user,//paso el usuario desde el LOGIN
             rolUsuario: localStorage.getItem('myLocalStorageRolProductor') || this.props.location.state.rolUsuario,
-            productoAEditar: []
+            productoAEditar: {},
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
@@ -57,7 +57,7 @@ class PantallaPrincipalProductores extends Component {
     editarProductoProductor(productoAEditar) {
         this.setState({ productoAEditar });
         this.props.history.push({
-            pathname: '/principalProductores/EditarProducto',
+            pathname: '/principalProductores/EditarProducto/' + productoAEditar.id,
             state: {
                 productoAEditar: this.state.productoAEditar
             }
@@ -271,11 +271,10 @@ class PantallaPrincipalProductores extends Component {
                                     />
                                 }
                             />
-                            <Route path={'/principalProductores/EditarProducto'}
+                            <Route path={'/principalProductores/EditarProducto/:idProducto'}
                                 render={(props) =>
                                     <EditarProductoRouter
                                         id_productor={this.state.id}
-                                        productoAEditar={this.state.productoAEditar}
                                     />
                                 }
                             />

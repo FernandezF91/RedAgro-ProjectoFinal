@@ -32,7 +32,7 @@ const regularExp = {
 //registerPlugin(FilePondPluginImagePreview, FilePondTypeValidate, FilePondPluginImageExifOrientation);
 registerPlugin(FilePondPluginImagePreview, FilePondTypeValidate);
 
-class NuevoProducto extends Component {
+class EditarProducto extends Component {
     constructor(props) {
         super(props);
 
@@ -52,7 +52,7 @@ class NuevoProducto extends Component {
             id: this.props.id_productor,
             loading: true,
             showModal: false,
-            productoAEditar: [],
+            productoAEditar: {},
             validaciones: [],
             resultadoRequest: 0,
             showError: false,
@@ -69,57 +69,94 @@ class NuevoProducto extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            productoAEditar: this.props.productoAEditar
-        })
-
-        if (this.state.productoAEditar !== undefined) {
-            if (this.props.productoAEditar.tipoDeUnidad === "Kilogramo") {
-                this.setState({
-                    contenidoDeshabilitado: true
-                });
-            }
-            let campos = [];
-            campos["titulo"] = this.props.productoAEditar.titulo;
-            campos["descripcion"] = this.props.productoAEditar.descripcion;
-            if (this.props.productoAEditar.fechaDeVencimiento !== "-") {
-                campos["fecha_vencimiento"] = moment(this.props.productoAEditar.fechaDeVencimiento, 'DD/MM/YYYY').format('YYYY-MM-DD');
-            }
-            campos["precio"] = this.props.productoAEditar.precio;
-            campos["stock"] = this.props.productoAEditar.stock;
-            campos["contenido"] = this.props.productoAEditar.contenido;
-            campos["tiempo_preparacion"] = this.props.productoAEditar.tiempoDePreparacion;
-
-            //var imagen = this.props.productoAEditar.imagenes[0].tipo_contenido + ";base64," + this.props.productoAEditar.imagenes[0].image
-            this.setState({
-                campos: campos,
-                categoria: [{
-                    label: this.props.productoAEditar.categoria,
-                    value: 1
-                }],
-                tipoProducto: [{
-                    label: this.props.productoAEditar.tipo,
-                    value: 1
-                }],
-                valueUnidadVenta: [{
-                    label: this.props.productoAEditar.tipoDeUnidad,
-                    value: 1
-                }],
-                tipoProduccion: [{
-                    label: this.props.productoAEditar.tipoDeProduccion,
-                    value: 1
-                }],
-                // files: [{
-                //     source: imagen,
-                //     options: {
-                //         type: 'local'
-                //     }
-                // }]
+        const path = "http://localhost:3000/redAgro/obtenerProducto/" + this.props.match.params.idProducto;
+        fetch(path)
+            .catch(error => console.error(error))
+            .then(response => {
+                try {
+                    if (response.status === 200) {
+                        this.setState({
+                            resultadoRequest: response.status
+                        });
+                        return response.json();
+                    }
+                    else {
+                        console.log(response.status);
+                        this.setState({
+                            loading: false,
+                            resultadoRequest: response.status
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                    this.setState({
+                        loading: false,
+                        resultadoRequest: response.status
+                    });
+                }
             })
-        }
-        this.setState({
-            loading: false
-        });
+            .then(data => {
+                if (data !== undefined) {
+                    var producto = {
+                        id: data.id,
+                        categoria: data.producto.categoria,
+                        tipo: data.producto.tipo,
+                        titulo: data.titulo,
+                        descripcion: data.descripcion,
+                        stock: data.stock,
+                        tipoDeUnidad: data.unidad_venta,
+                        tipoDeProduccion: data.tipo_produccion,
+                        precio: data.precio,
+                        fechaDeVencimiento: data.fecha_vencimiento,
+                        tiempoDePreparacion: data.tiempo_preparacion,
+                        contenido: data.contenido,
+                        imagenes: data.imagenes,
+                        oferta: data.oferta                        
+                    }
+                    
+                    let campos = [];
+                    if (producto !== undefined) {
+                        if (producto.tipoDeUnidad === "Kilogramo") {
+                            this.setState({
+                                contenidoDeshabilitado: true
+                            });
+                        }
+                        
+                        campos["titulo"] = producto.titulo;
+                        campos["descripcion"] = producto.descripcion;
+                        if (producto.fechaDeVencimiento !== "-") {
+                            campos["fecha_vencimiento"] = producto.fechaDeVencimiento;
+                        }
+                        campos["precio"] = producto.precio;
+                        campos["stock"] = producto.stock;
+                        campos["contenido"] = producto.contenido;
+                        campos["tiempo_preparacion"] = producto.tiempoDePreparacion;
+                       
+                    }
+
+                    this.setState({
+                        productoAEditar: producto,
+                        campos: campos,
+                        categoria: [{
+                            label: producto.categoria,  
+                            value: 1
+                        }],
+                        tipoProducto: [{
+                            label: producto.tipo,
+                            value: 1
+                        }],
+                        valueUnidadVenta: [{
+                            label: producto.tipoDeUnidad,
+                            value: 1
+                        }],
+                        tipoProduccion: [{
+                            label: producto.tipoDeProduccion,
+                            value: 1
+                        }],
+                        loading: false
+                    })
+                }
+            })
     }
 
     cerrarModal() {
@@ -220,7 +257,7 @@ class NuevoProducto extends Component {
 
     handleSubmit(e) {
         var _this = this;
-        
+
         _this.setState({
             loading: true
         });
@@ -628,4 +665,4 @@ class NuevoProducto extends Component {
     };
 }
 
-export default NuevoProducto;
+export default EditarProducto;
