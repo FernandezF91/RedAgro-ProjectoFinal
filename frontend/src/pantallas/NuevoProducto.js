@@ -161,8 +161,9 @@ class NuevoProducto extends Component {
             }
             var path_final = path_principal + id_productor + "&id_producto=" + id_producto;
 
+            var titulo = this.state.campos["titulo"].charAt(0).toUpperCase() + this.state.campos["titulo"].slice(1);
             var body = JSON.stringify({
-                "titulo": this.state.campos["titulo"],
+                "titulo": titulo,
                 "descripcion": this.state.campos["descripcion"],
                 "fecha_vencimiento": this.state.campos["fecha_ven"],
                 "precio": this.state.campos["precio"].replace(",", "."),

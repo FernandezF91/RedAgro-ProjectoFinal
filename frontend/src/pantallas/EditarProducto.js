@@ -266,13 +266,14 @@ class EditarProducto extends Component {
         if (_this.validarCampos()) {
             var path = "http://localhost:3000/redAgro/actualizarProductoProductor?id_producto_productor=" + _this.props.productoAEditar.id;
 
+            var titulo = this.state.campos["titulo"].charAt(0).toUpperCase() + this.state.campos["titulo"].slice(1);
             fetch(path, {
                 method: "POST",
                 headers: {
                     'Content-type': 'application/json;charset=UTF-8',
                 },
                 body: JSON.stringify({
-                    "titulo": this.state.campos["titulo"],
+                    "titulo": titulo,
                     "descripcion": this.state.campos["descripcion"],
                     "fecha_vencimiento": this.state.campos["fecha_vencimiento"],
                     //"precio": this.state.campos["precio"].replace(",", "."),
