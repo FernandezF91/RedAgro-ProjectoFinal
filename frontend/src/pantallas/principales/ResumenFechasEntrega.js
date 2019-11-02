@@ -2,6 +2,7 @@ import '../../diseños/estilosGlobales.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
+import { NavDropdown } from 'react-bootstrap';
 
 const columnas = [
     {
@@ -9,11 +10,11 @@ const columnas = [
         field: 'fecha'
     },
     {
-        label: 'Descripcion',
+        label: 'Descripción',
         field: 'descripcion'
     },
     {
-        label: 'Direccion',
+        label: 'Dirección',
         field: 'direccion'
     }
 ];
@@ -25,16 +26,20 @@ const ResumenPuntosEntrega = ({ listadoPuntosEntrega, resultadoRequest, vistaPro
                 resultadoRequest === 200 ? (
                     listadoPuntosEntrega.length > 0 ? (
                         <div>
-                            <MDBTable striped>
-                                <MDBTableHead columns={columnas} />
-                                <MDBTableBody>{listadoPuntosEntrega}</MDBTableBody>
-                            </MDBTable>
+                            <div className="tablaResumen">
+                                <MDBTable striped small scrollY responsive>
+                                    <MDBTableHead columns={columnas} />
+                                    <MDBTableBody>{listadoPuntosEntrega}</MDBTableBody>
+                                </MDBTable>
+                            </div>
                             {
                                 vistaProductor === true ?
-                                    <h6 className="grey-text">Para más detalle, revisa el listado de puntos de entrega por <Link to={'./ListadoPuntosEntrega'}>acá</Link></h6>
+                                    <div>
+                                        <NavDropdown.Divider />
+                                        <h6 className="grey-text">Para más detalle, revisá el listado de puntos de entrega por <Link to={'./ListadoPuntosEntrega'}>acá</Link></h6>
+                                    </div>
                                     : ''
                             }
-
                         </div>
                     ) : (
                             <div>

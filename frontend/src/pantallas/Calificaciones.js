@@ -45,7 +45,7 @@ class Calificaciones extends Component {
                         <BeautyStars
                             value={item.valor}
                             activeColor="#28A745"
-                            inactiveColor="#757877"
+                            inactiveColor="#CCC"
                             size="16px"
                         />
                     </div>

@@ -308,7 +308,6 @@ input[type=text] {
 }
 
 .overflowTexto {
-    max-width: 160px;
     overflow: hidden;
     display: inline-block;
     border: none;
@@ -316,13 +315,16 @@ input[type=text] {
     white-space: nowrap;
 }
 
-.overflowDescripcion {
-    max-width: 100px;
-    overflow: hidden;
-    display: inline-block;
-    border: none;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.primeraColumna {
+    padding-left: 6px !important;
+}
+
+.ultimaColumna {
+    padding-right: 6px !important;
+}
+
+.alineacionResumenJustificado {
+    text-align: justify !important;
 }
 
 .iconoGrandePrincipales {
@@ -341,4 +343,53 @@ input[type=text] {
 
 .listadosSinItems {
     margin-top: 15px;
+}
+
+.tablasResumenes {
+    max-height: 500px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.margenTitulosResumen {
+    margin-left: 0px;
+    margin-bottom: 8px;
+    font-size: 22px;
+}
+
+.iconoTituloResumen {
+    font-size: 22px;
+    margin-right: 5px;
+    color: #555;
+}
+
+.alturaTarjetasResumen {
+    height: 400px !important;
+}
+
+.tablaResumen {
+    min-height: 270px !important;
+    max-height: 270px !important;
+}
+
+.table-wrapper-scroll-y {
+    max-height: 270px !important;
+}
+
+.alturaTablaCalificaciones {
+    max-height: 240px !important;
+}
+
+.table-wrapper-scroll-y::-webkit-scrollbar {
+    width: 10px;
+}
+
+.table-wrapper-scroll-y::-webkit-scrollbar-track {
+    background: #DDD;
+    border-radius: 10px;
+}
+
+.table-wrapper-scroll-y::-webkit-scrollbar-thumb {
+    background: #CCC;
+    border-radius: 10px;
 }

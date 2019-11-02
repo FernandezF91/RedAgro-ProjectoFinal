@@ -43,8 +43,8 @@
 .menuConsumidor {
 	margin-top: 25px;
 	font-weight: bold;
-	margin-left: 10px;
-	min-width: 250px;
+	min-width: 230px !important;
+	max-width: 230px !important;
 }
 
 .divisor {
@@ -175,4 +175,8 @@ p, h4 {
     overflow-y: auto;
 	height: 340px;
 	margin-right: 10px;
+}
+
+.margenMenuLateral {
+	margin-left: 15px !important;
 }

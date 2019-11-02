@@ -2,6 +2,7 @@ import '../../diseños/estilosGlobales.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
+import { NavDropdown } from 'react-bootstrap';
 
 const columnas = [
     {
@@ -25,11 +26,14 @@ const ResumenProductosProductor = ({ listadoProductosProductor, resultadoRequest
                 resultadoRequest === 200 ? (
                     listadoProductosProductor.length > 0 ? (
                         <div>
-                            <MDBTable striped>
-                                <MDBTableHead columns={columnas} />
-                                <MDBTableBody>{listadoProductosProductor}</MDBTableBody>
-                            </MDBTable>
-                            <h6 className="grey-text">Para más detalle, revisa el listado de productos por <Link to={'./ListadoProductos'}>acá</Link></h6>
+                            <div className="tablaResumen">
+                                <MDBTable striped small scrollY responsive thin>
+                                    <MDBTableHead columns={columnas} />
+                                    <MDBTableBody>{listadoProductosProductor}</MDBTableBody>
+                                </MDBTable>
+                            </div>
+                            <NavDropdown.Divider />
+                            <h6 className="grey-text">Para más detalle, revisá el listado de productos por <Link to={'./ListadoProductos'}>acá</Link></h6>
                         </div>
                     ) : (
                             <div>
@@ -38,7 +42,7 @@ const ResumenProductosProductor = ({ listadoProductosProductor, resultadoRequest
                                 <br />
                                 <br />
                                 <h6>No tenes productos fuera de stock o vencidos!</h6>
-                                <h6 className="grey-text">Revisa tus productos por <Link to={'./ListadoProductos'}>acá</Link></h6>
+                                <h6 className="grey-text">Revisá tus productos por <Link to={'./ListadoProductos'}>acá</Link></h6>
                             </div>
                         )
                 ) : (

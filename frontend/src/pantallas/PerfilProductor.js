@@ -291,14 +291,16 @@ class PerfilProductor extends Component {
     generoItemFechas(item) {
         const itemMDBRows = [
             <tr key={"MDBRow-data-" + item.fecha}>
-                <td>{item.fecha}</td>
                 <td>
-                    <div className="overflowDescripcion" title={item.descripcion}>
-                        {item.descripcion}
+                    <div className="primeraColumna">
+                        {item.fecha}
                     </div>
                 </td>
                 <td>
-                    <div className="overflowDescripcion" title={item.direccion}>
+                    {item.descripcion}
+                </td>
+                <td>
+                    <div className="ultimaColumna" title={item.direccion}>
                         {item.direccion}
                     </div>
                 </td>
@@ -350,7 +352,7 @@ class PerfilProductor extends Component {
                                                     <BeautyStars
                                                         value={this.state.datosProductor.calificacion}
                                                         activeColor="#28A745"
-                                                        inactiveColor="#757877"
+                                                        inactiveColor="#CCC"
                                                         size="24px" />
                                                 </div>
                                         }
