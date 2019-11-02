@@ -3,7 +3,6 @@ package app.controladores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.sql.Time;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -81,9 +80,8 @@ public class PuntoDeEntregaControlador {
 
 		entidad_puntos = puntoEntregaDAO.obtenerPuntosEntregaActivos(fecha, id);
 
-		puntos_entrega = entidad_puntos.stream().map(entidad ->
-
-		punto_entrega_mapper.mapFromEntity(entidad)).collect(Collectors.toList());
+		puntos_entrega = entidad_puntos.stream().map(entidad -> punto_entrega_mapper.mapFromEntity(entidad))
+				.collect(Collectors.toList());
 
 		return puntos_entrega;
 	}
@@ -124,7 +122,7 @@ public class PuntoDeEntregaControlador {
 								+ ". Reintentá con otro horario ;)",
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			} else {
-				
+
 				if (horaFin >= horaInicioGuardada) {
 					return new ResponseEntity<>(
 							"Hey!  Para la fecha de entrega elegida, ya existe un horario de entrega que inicia a las "
@@ -142,7 +140,7 @@ public class PuntoDeEntregaControlador {
 		fechaEntregaDAO.save(fe);
 		long id = pe.getId();
 
-		return new ResponseEntity<>(id,HttpStatus.OK);
+		return new ResponseEntity<>(id, HttpStatus.OK);
 
 	}
 
@@ -158,5 +156,24 @@ public class PuntoDeEntregaControlador {
 
 		}
 		puntoEntregaDAO.modificarPunto(id, false);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/listadoPuntosEntregaProductor")
+	public List<PuntoEntrega> listadoPuntosEntregaProductor(@RequestParam long productor_id) {
+
+		PuntoEntregaMapper punto_entrega_mapper = new PuntoEntregaMapper();
+		List<EntidadPuntoEntrega> entidad_puntos = new ArrayList<EntidadPuntoEntrega>();
+		List<PuntoEntrega> puntos_entrega = new ArrayList<PuntoEntrega>();
+		EntidadProductor productor = new EntidadProductor();
+
+		productor = productorDAO.obtenerProductor(productor_id);
+
+		entidad_puntos = puntoEntregaDAO.obtenerPuntosEntregaProductor(productor);
+
+		puntos_entrega = entidad_puntos.stream().map(entidad -> punto_entrega_mapper.mapFromEntityWithFechas(entidad))
+				.collect(Collectors.toList());
+
+		return puntos_entrega;
 	}
 }

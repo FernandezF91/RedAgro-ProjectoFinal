@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name = "Punto_entrega")
 public class EntidadPuntoEntrega {
@@ -27,6 +30,7 @@ public class EntidadPuntoEntrega {
 	@JoinColumn(name = "productor_id", nullable = false)
 	private EntidadProductor productor;
 
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "punto_entrega", cascade = CascadeType.ALL)
 	private List<EntidadFechaEntrega> fechas_entrega = new ArrayList<>();
 
