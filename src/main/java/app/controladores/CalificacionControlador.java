@@ -126,7 +126,7 @@ public class CalificacionControlador {
 	public ResponseEntity<Object> obtenerCantidadDeReservasCalificadas(@RequestParam long id_productor) {
 		try {
 			String resultado = calificacionDao.obtenerCantidadDeReservasCalificadas(id_productor);
-			if (resultado != null || Integer.valueOf(resultado) != 0) {
+			if (resultado != null && Integer.valueOf(resultado) > 0) {
 				String respuesta = "Promedio realizado en base a ";
 				if (Integer.valueOf(resultado) == 1) {
 					respuesta = respuesta + "1 reserva calificada"; 

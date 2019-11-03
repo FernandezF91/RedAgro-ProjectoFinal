@@ -233,7 +233,7 @@ class PerfilProductor extends Component {
             .then(data => {
                 console.log(data);
                 if (data !== undefined) {
-                    
+
                     this.setState({
                         cantidadDeReservasCalificadas: data,
                     })
@@ -342,23 +342,18 @@ class PerfilProductor extends Component {
                                 <MDBCard className="mb-4">
                                     <MDBCardBody>
                                         <MDBCardTitle> <i className="fas fa-star" /> Mis calificaciones</MDBCardTitle>
-                                        {
-                                            this.state.calificacion === "Aún no hay calificaciones" ?
-                                                <h6 className="grey-text">Aún no hay calificaciones</h6>
-                                                :
-                                                <div>
-                                                    <div className="columnaTablaCentrada">
-                                                        <BeautyStars
-                                                            value={this.state.calificacion}
-                                                            activeColor="#28A745"
-                                                            inactiveColor="#CCC"
-                                                            size="24px"
-                                                        />
-                                                    </div>
-                                                    <br />
-                                                    <h6 className="grey-text leyendaCajaCalificaciones">{this.state.cantidadDeReservasCalificadas}</h6>
-                                                </div>
-                                        }
+                                        <div className="columnaTablaCentrada">
+                                            <BeautyStars
+                                                value={this.state.calificacion}
+                                                activeColor="#28A745"
+                                                inactiveColor="#CCC"
+                                                size="24px"
+                                            />
+                                        </div>
+                                        <br />
+                                        <h6 className="grey-text leyendaCajaCalificaciones">
+                                            {this.state.cantidadDeReservasCalificadas}
+                                        </h6>
                                     </MDBCardBody>
                                 </MDBCard>
                             </MDBCol>

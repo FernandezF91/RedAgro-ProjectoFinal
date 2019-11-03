@@ -556,6 +556,7 @@ class ListadoReservas extends Component {
                                 onChange={(e) => this.detectarCambiosComentario(e)}
                                 className="textCalificacion"
                                 disabled={this.state.verCalificacion}
+                                maxLength="100"
                             />
                             {
                                 (!this.state.verCalificacion) &&
