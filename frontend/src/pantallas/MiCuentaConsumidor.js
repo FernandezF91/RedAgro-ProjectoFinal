@@ -27,6 +27,7 @@ class MiCuenta extends Component {
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.mostrarReservas = this.mostrarReservas.bind(this);
         this.generarMensajeReservas = this.generarMensajeReservas.bind(this);
+        this.mostrarDetalleProducto = this.mostrarDetalleProducto.bind(this);
     }
 
     mostrarPantallaPrincipal() {
@@ -34,6 +35,10 @@ class MiCuenta extends Component {
             pathname: '/principalConsumidores/MiCuenta',
             state: { id: this.state.id_usuario }
         })
+    }
+
+    mostrarDetalleProducto = (productoSeleccionado) => {
+        this.props.handleDetalleProducto(productoSeleccionado.id);
     }
 
     mostrarReservas() {
@@ -217,7 +222,8 @@ class MiCuenta extends Component {
                     </MDBCol>
                 </MDBRow>
                 <CarouselProductos
-                    listadoProductos={lista} />
+                    listadoProductos={lista}
+                    mostrarDetalleProducto={this.mostrarDetalleProducto} />
             </div>
         );
     };

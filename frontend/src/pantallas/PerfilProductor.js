@@ -32,6 +32,11 @@ class PerfilProductor extends Component {
             tamañoListado: 3,
             resultadoRequest: '',
         }
+        this.mostrarDetalleProducto = this.mostrarDetalleProducto.bind(this);
+    }
+
+    mostrarDetalleProducto = (productoSeleccionado) => {
+        this.props.handleDetalleProducto(productoSeleccionado.id);
     }
 
     componentDidMount() {
@@ -345,7 +350,8 @@ class PerfilProductor extends Component {
                                 </MDBCardTitle>
                                 <MDBContainer className="listadoDeProductos">
                                     <CarouselProductos
-                                        listadoProductos={lista} />
+                                        listadoProductos={lista}
+                                        mostrarDetalleProducto={this.mostrarDetalleProducto} />
                                 </MDBContainer>
                             </MDBCardBody>
                         </MDBCard>

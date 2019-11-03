@@ -296,6 +296,7 @@ class PantallaPrincipalconsumidores extends Component {
                                         id_usuario={this.state.id}
                                         rolUsuario={this.state.rolUsuario}
                                         usuario={this.state.user}
+                                        handleDetalleProducto={this.handleDetalleProducto}
                                     />
                                 }
                             />
@@ -386,7 +387,9 @@ class PantallaPrincipalconsumidores extends Component {
 
                             <Route path={'/principalConsumidores/PerfilProductor/:nombrePerfil'}
                                 render={(props) =>
-                                    <PerfilProductorRouter />
+                                    <PerfilProductorRouter
+                                        handleDetalleProducto={this.handleDetalleProducto}
+                                    />
                                 }
                             />
                         </MDBCol>

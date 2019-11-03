@@ -1,6 +1,8 @@
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/Home.css';
 import '../diseños/estilosGlobales.css';
+import { MDBModal } from 'mdbreact';
+import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
 import CarouselProductos from './CarouselProductos'
@@ -18,7 +20,22 @@ class HomePage extends Component {
             paginaActual: 1,
             productosPerPage: 3,
             tamañoListado: 3,
+            showModal: false,
         }
+        this.cerrarModal = this.cerrarModal.bind(this);
+        this.mostrarDetalleProducto = this.mostrarDetalleProducto.bind(this);
+    }
+
+    mostrarDetalleProducto = (productoSeleccionado) => {
+        this.setState({
+            showModal: true
+        });
+    }
+
+    cerrarModal() {
+        this.setState({
+            showModal: false
+        })
     }
 
     componentDidMount() {
@@ -106,6 +123,18 @@ class HomePage extends Component {
         const numberOfPages = Math.ceil(productos.length / productos);
         let lista = this.crearListaDeProductos(numberOfPages, productosPerPage, productos);
 
+        if (this.state.loading) return (
+            <div className="divLoaderWhitesmoke">
+                <Loader
+                    type="Grid"
+                    color="#28A745"
+                    height={150}
+                    width={150}
+                    className="loader loaderWhitesmoke"
+                />
+            </div>
+        )
+
         return (
             <div className="fondo">
                 <div className="barraNavegacion">
@@ -144,14 +173,35 @@ class HomePage extends Component {
                         this.state.busqueda !== '' ?
                             <ResultadoBusquedaSinLogin
                                 busqueda={this.state.busqueda} />
-                            : ''       
+                            :
+                            <CarouselProductos
+                                listadoProductos={lista}
+                                mostrarDetalleProducto={this.mostrarDetalleProducto} />
                     }
-                    <CarouselProductos
-                                listadoProductos={lista} />
+                    {
+                        <MDBModal isOpen={this.state.showModal} centered size="sm">
+                            <div className="modalMargenes">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <br />
+                                <div className="modal-body">
+                                    <i className="fas fa-shopping-cart iconoModal" />
+                                    <br />
+                                    <br />
+                                    <h5> Hola!
+                                        <br />
+                                        Para continuar tenés que iniciar sesión...
+                                        </h5>
+                                    <br />
+                                    <h6 className="grey-text">
+                                        Podes hacerlo por <Link to={'/login'}>acá</Link>
+                                    </h6>
+                                </div>
+                            </div>
+                        </MDBModal>
+                    }
                 </Container>
             </div>
         );
     }
 }
-
 export default HomePage;

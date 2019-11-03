@@ -27,7 +27,9 @@ const CarouselProductos = (props) => {
                                                         <MDBCardBody className="text-center">
                                                             <h6 className="grey-text">{item.tipo}</h6>
                                                             <MDBCardTitle>
-                                                                <strong className="dark-grey-text">{item.titulo}</strong>
+                                                                <strong>
+                                                                    <a className="dark-grey-text" onClick={() => props.mostrarDetalleProducto(item)} title="Clickeá para ver el detalle del producto">{item.titulo}</a>
+                                                                </strong>
                                                             </MDBCardTitle>
                                                             <MDBCardText>
                                                                 <strong className="float-center">
