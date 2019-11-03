@@ -88,7 +88,6 @@ class BarraNavegacion extends Component {
                                     <NavDropdown.Item onClick={this.logout}>Salir</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
-
                             <Nav className="menuUsuario">
                                 <i className="fas fa-bell iconosBarra" />
                             </Nav>
@@ -98,6 +97,10 @@ class BarraNavegacion extends Component {
                                     <i className="fas fa-shopping-cart iconosBarra" />
                                     <Badge>{this.props.productosSeleccionados.length}</Badge>
                                 </Link>
+                            </Nav.Item>
+                            <div className="verticalDivider" role="separator" />
+                            <Nav.Item className="menuUsuario">
+                                <i className="fas fa-info-circle iconosBarra" />
                             </Nav.Item>
                         </Nav>
                     ) : (
@@ -115,6 +118,10 @@ class BarraNavegacion extends Component {
                                 <Nav className="menuUsuario">
                                     <i className="fas fa-bell iconosBarra" />
                                 </Nav>
+                                <div className="verticalDivider" role="separator" />
+                                <Nav.Item className="menuUsuario">
+                                    <i className="fas fa-info-circle iconosBarra" />
+                                </Nav.Item>
                             </Nav>
                         )}
                 </Navbar.Collapse>

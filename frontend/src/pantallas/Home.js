@@ -124,14 +124,16 @@ class HomePage extends Component {
         let lista = this.crearListaDeProductos(numberOfPages, productosPerPage, productos);
 
         if (this.state.loading) return (
-            <div className="divLoaderWhitesmoke">
-                <Loader
-                    type="Grid"
-                    color="#28A745"
-                    height={150}
-                    width={150}
-                    className="loader loaderWhitesmoke"
-                />
+            <div className="fondo">
+                <div className="divLoaderWhitesmoke">
+                    <Loader
+                        type="Grid"
+                        color="#28A745"
+                        height={150}
+                        width={150}
+                        className="loader loaderWhitesmoke"
+                    />
+                </div>
             </div>
         )
 
@@ -166,6 +168,10 @@ class HomePage extends Component {
                                 <Nav.Link href='/seleccionUsuario'>Creá tu cuenta</Nav.Link>
                             </Nav>
                         </div>
+                        <div className="verticalDivider" role="separator" />
+                        <Nav.Item className="menuUsuario">
+                            <i className="fas fa-info-circle iconosBarra" />
+                        </Nav.Item>
                     </Navbar>
                 </div>
                 <Container fluid className="contenedor">

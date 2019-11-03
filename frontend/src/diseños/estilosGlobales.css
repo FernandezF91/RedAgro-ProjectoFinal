@@ -403,3 +403,11 @@ input[type=text] {
 .leyendaCajaCalificaciones {
     margin-top: 10px;
 }
+
+.verticalDivider {
+    width: 0;
+    overflow: hidden;
+    border-right: 1px solid #006400;
+    margin-right: 20px;
+    opacity: 0.2;
+}
