@@ -5,6 +5,7 @@ import Loader from 'react-loader-spinner';
 import { MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBCardBody, MDBCardImage, MDBCardText, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBContainer } from "mdbreact";
 import BeautyStars from 'beauty-stars';
 import ResumenFechasEntrega from "./principales/ResumenFechasEntrega";
+import CarouselProductos from './CarouselProductos'
 import NumberFormat from 'react-number-format';
 import moment from 'moment';
 
@@ -95,51 +96,6 @@ class PerfilProductor extends Component {
 
     nextPage = (pageNumber) => {
         this.setState({ paginaActual: pageNumber });
-    }
-
-    generarProductosAMostrar = (item) => {
-        return (
-            <MDBCol md="4" key={item.id}>
-                <MDBCard className="mb-2">
-                    <MDBCardImage
-                        className="imagenesBusqueda"
-                        src={"data:" + item.imagenes[0].tipo_contenido + ";base64," + item.imagenes[0].image}
-                        alt="ImagenBusqueda"
-                        overlay="white-slight"
-                        height="150x" width="auto" />
-
-                    <MDBCardBody className="text-center">
-                        <h6 className="grey-text">{item.tipo}</h6>
-                        <MDBCardTitle>
-                            <strong className="dark-grey-text">{item.titulo}</strong>
-                        </MDBCardTitle>
-                        <MDBCardText>
-                            <strong className="float-center">
-                                {
-                                    (item.oferta === null || item.oferta === undefined) ?
-                                        <div>
-                                            <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                        </div>
-                                        :
-                                        (item.oferta.activo) ?
-                                            <div title="Producto en oferta!">
-                                                <strike>
-                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                                </strike>
-                                                <br />
-                                                <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                            </div>
-                                            :
-                                            <div>
-                                                <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                            </div>
-                                }
-                            </strong>
-                        </MDBCardText>
-                    </MDBCardBody>
-                </MDBCard>
-            </MDBCol>
-        )
     }
 
     crearListaDeProductos(numberOfPages, productosPerPage, productos) {
@@ -388,23 +344,8 @@ class PerfilProductor extends Component {
                                     </h4>
                                 </MDBCardTitle>
                                 <MDBContainer className="listadoDeProductos">
-                                    <MDBCarousel activeItem={1} length={lista.length} slide={true} showControls={true} showIndicators={true} multiItem>
-                                        <MDBCarouselInner>
-                                            {
-                                                lista.map((itemLista, index) => (
-                                                    <MDBCarouselItem itemId={index + 1}>
-                                                        <MDBRow>
-                                                            {
-                                                                itemLista.map((item) => (
-                                                                    this.generarProductosAMostrar(item)
-                                                                ))
-                                                            }
-                                                        </MDBRow>
-                                                    </MDBCarouselItem>
-                                                ))
-                                            }
-                                        </MDBCarouselInner>
-                                    </MDBCarousel>
+                                    <CarouselProductos
+                                        listadoProductos={lista} />
                                 </MDBContainer>
                             </MDBCardBody>
                         </MDBCard>

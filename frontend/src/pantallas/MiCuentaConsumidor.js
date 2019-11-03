@@ -1,9 +1,9 @@
 import '../diseños/estilosGlobales.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import CarouselProductos from './CarouselProductos'
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import NumberFormat from 'react-number-format';
-import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBCardImage, MDBContainer } from "mdbreact";
+import { MDBRow, MDBCol, MDBCard } from "mdbreact";
 
 class MiCuenta extends Component {
 
@@ -27,7 +27,6 @@ class MiCuenta extends Component {
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.mostrarReservas = this.mostrarReservas.bind(this);
         this.generarMensajeReservas = this.generarMensajeReservas.bind(this);
-        this.generarProductosDePreferencia = this.generarProductosDePreferencia.bind(this);
     }
 
     mostrarPantallaPrincipal() {
@@ -179,82 +178,6 @@ class MiCuenta extends Component {
         return mensaje;
     }
 
-    generarProductosAMostrar = (item) => {
-        return (
-            <MDBCol md="4" key={item.id}>
-                <MDBCard className="mb-2">
-                    <MDBCardImage
-                        className="imagenesBusqueda"
-                        src={"data:" + item.imagenes[0].tipo_contenido + ";base64," + item.imagenes[0].image}
-                        alt="ImagenBusqueda"
-                        overlay="white-slight"
-                        height="150x" width="auto" />
-
-                    <MDBCardBody className="text-center">
-                        <h6 className="grey-text">{item.tipo}</h6>
-                        <MDBCardTitle>
-                            <strong className="dark-grey-text">{item.titulo}</strong>
-                        </MDBCardTitle>
-                        <MDBCardText>
-                            <strong className="float-center">
-                                {
-                                    (item.oferta === null || item.oferta === undefined) ?
-                                        <div>
-                                            <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                        </div>
-                                        :
-                                        (item.oferta.activo) ?
-                                            <div title="Producto en oferta!">
-                                                <strike>
-                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                                </strike>
-                                                <br />
-                                                <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                            </div>
-                                            :
-                                            <div>
-                                                <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                            </div>
-                                }
-                            </strong>
-                        </MDBCardText>
-                    </MDBCardBody>
-                </MDBCard>
-            </MDBCol>
-        )
-    }
-
-    generarProductosDePreferencia(listadoProductos) {
-        if (listadoProductos.length > 0) {
-            return (
-
-                listadoProductos.length > 0 ?
-                    <MDBContainer>
-                        <MDBCarousel activeItem={1} length={listadoProductos.length} slide={true} showControls={true} showIndicators={true} multiItem>
-                            <MDBCarouselInner>
-                                {
-                                    listadoProductos.map((itemLista, index) => (
-                                        <MDBCarouselItem itemId={index + 1}>
-                                            <MDBRow>
-                                                {
-                                                    itemLista.map((item) => (
-                                                        this.generarProductosAMostrar(item)
-                                                    ))
-                                                }
-                                            </MDBRow>
-                                        </MDBCarouselItem>
-                                    ))
-                                }
-                            </MDBCarouselInner>
-                        </MDBCarousel>
-
-                    </MDBContainer>
-                    : ''
-
-            )
-        }
-    }
-
     crearListaDeProductos(numberOfPages, productosPerPage, productos) {
         let nuevaLista = [];
         var indexOfLastProducto, indexOfFirstProducto;
@@ -293,7 +216,8 @@ class MiCuenta extends Component {
                         </MDBCard>
                     </MDBCol>
                 </MDBRow>
-                {this.generarProductosDePreferencia(lista)}
+                <CarouselProductos
+                    listadoProductos={lista} />
             </div>
         );
     };
