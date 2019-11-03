@@ -9,7 +9,7 @@ class BarraNavegacion extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            rolUsuario: this.props.rolUsuario,
+            usuario: this.props.usuario,
             busqueda: '',
         }
         this.onKeyPress = this.onKeyPress.bind(this);
@@ -49,7 +49,7 @@ class BarraNavegacion extends Component {
     }
 
     render() {
-        const rolDeUsuario = this.state.rolUsuario;
+        const rolDeUsuario = this.state.usuario.rolUsuario;
         return (
             <Navbar collapseOnSelect expand="lg" className="barraNavegacion sombraBarra" >
                 <Navbar.Brand className="culturaVerde" href="/">
@@ -80,7 +80,7 @@ class BarraNavegacion extends Component {
                         <Nav className="iconos">
                             <Nav className="menuUsuario">
                                 <i className="fas fa-user iconosBarra" />
-                                <NavDropdown title="Usuario" id="nav-dropdown" className="subMenu">
+                                <NavDropdown title={this.state.usuario.nombre} id="nav-dropdown" className="subMenu">
                                     <NavDropdown.Item>
                                         <Link to={'/principalConsumidores/MiCuenta'}>Mi cuenta</Link>
                                     </NavDropdown.Item>
@@ -107,7 +107,7 @@ class BarraNavegacion extends Component {
                             <Nav className="iconosProd">
                                 <Nav className="menuUsuario">
                                     <i className="fas fa-user iconosBarra" />
-                                    <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown" className="subMenu">
+                                    <NavDropdown onSelect={this.mostrarPantallaPrincipal} title={this.state.usuario.nombre} id="nav-dropdown" className="subMenu">
                                         <NavDropdown.Item>
                                             <Link to={'/principalProductores/MiCuenta'}>Mi cuenta</Link>
                                         </NavDropdown.Item>

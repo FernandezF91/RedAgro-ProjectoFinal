@@ -221,7 +221,7 @@ class PantallaPrincipalconsumidores extends Component {
             <div className="fondo">
                 <BarraNavegacion
                     productosSeleccionados={this.state.productosSeleccionados}
-                    rolUsuario={this.state.rolUsuario}
+                    usuario={this.state.user}
                     handleNuevaBusqueda={this.handleNuevaBusqueda}
                 />
                 <MDBContainer fluid className="contenedor">

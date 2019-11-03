@@ -88,7 +88,9 @@ class PantallaPrincipalProductores extends Component {
     render() {
         return (
             <div className="fondo">
-                <BarraNavegacion rolUsuario={this.state.rolUsuario} />
+                <BarraNavegacion
+                    usuario={this.state.user}
+                />
                 <MDBContainer fluid className="contenedor">
                     <MDBRow className="filaContenedora">
                         <MDBCol md="2" className="menuConsumidor">
