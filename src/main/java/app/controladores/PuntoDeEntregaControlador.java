@@ -92,21 +92,24 @@ public class PuntoDeEntregaControlador {
 			@RequestParam long id_productor, @RequestParam String descripcion, @RequestParam String fecha_entrega,
 			@RequestParam String hora_inicio, @RequestParam String hora_fin) {
 
-		EntidadProductor p = new EntidadProductor();
-		EntidadFechaEntrega fe = new EntidadFechaEntrega();
-		EntidadPuntoEntrega pe = new EntidadPuntoEntrega();
+		EntidadProductor productor = new EntidadProductor();
+		EntidadFechaEntrega fechaEntrega = new EntidadFechaEntrega();
+		EntidadPuntoEntrega puntoEntrega = new EntidadPuntoEntrega();
 		List<EntidadFechaEntrega> fechas = new ArrayList<EntidadFechaEntrega>();
 
-		pe = puntoEntregaDAO.obtenerPuntosEntregaPorLatitud(punto_entrega.getLatitud(), punto_entrega.getLongitud());
-		p = productorDAO.obtenerProductor(id_productor);
+		puntoEntrega = puntoEntregaDAO.obtenerPuntosEntregaPorLatitud(punto_entrega.getLatitud(),
+				punto_entrega.getLongitud());
+		productor = productorDAO.obtenerProductor(id_productor);
 
-		if (pe == null) {
+		if (puntoEntrega == null) {
+			String descripcionCap = descripcion.substring(0, 1).toUpperCase() + descripcion.substring(1);
+
 			punto_entrega.setActivo(true);
-			punto_entrega.setProductor(p);
-			punto_entrega.setDescripcion(descripcion);
-			pe = puntoEntregaDAO.save(punto_entrega);
+			punto_entrega.setProductor(productor);
+			punto_entrega.setDescripcion(descripcionCap);
+			puntoEntrega = puntoEntregaDAO.save(punto_entrega);
 		} else {
-			fechas = fechaEntregaDAO.obtenerHorariosDeUnaFecha(pe.getId(), fecha_entrega);
+			fechas = fechaEntregaDAO.obtenerHorariosDeUnaFecha(puntoEntrega.getId(), fecha_entrega);
 		}
 
 		for (EntidadFechaEntrega f : fechas) {
@@ -133,12 +136,12 @@ public class PuntoDeEntregaControlador {
 			}
 		}
 
-		fe.setPunto_entrega(pe);
-		fe.setFecha(fecha_entrega);
-		fe.setHora_inicio(hora_inicio);
-		fe.setHora_fin(hora_fin);
-		fechaEntregaDAO.save(fe);
-		long id = pe.getId();
+		fechaEntrega.setPunto_entrega(puntoEntrega);
+		fechaEntrega.setFecha(fecha_entrega);
+		fechaEntrega.setHora_inicio(hora_inicio);
+		fechaEntrega.setHora_fin(hora_fin);
+		fechaEntregaDAO.save(fechaEntrega);
+		long id = puntoEntrega.getId();
 
 		return new ResponseEntity<>(id, HttpStatus.OK);
 
@@ -157,7 +160,7 @@ public class PuntoDeEntregaControlador {
 		}
 		puntoEntregaDAO.modificarPunto(id, false);
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/listadoPuntosEntregaProductor")
 	public List<PuntoEntrega> listadoPuntosEntregaProductor(@RequestParam long productor_id) {

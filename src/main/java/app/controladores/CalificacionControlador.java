@@ -42,9 +42,12 @@ public class CalificacionControlador {
 
 		try {
 			EntidadCalificacion calificacion = new EntidadCalificacion();
+			
+			String comentario = calificacionAGuardar.getComentario().substring(0, 1).toUpperCase() + calificacionAGuardar.getComentario().substring(1);
+			
 			calificacion.setReservaId(reserva_id);
 			calificacion.setValor(calificacionAGuardar.getValor());
-			calificacion.setComentario(calificacionAGuardar.getComentario());
+			calificacion.setComentario(comentario);
 			calificacionDao.save(calificacion);
 
 			try {

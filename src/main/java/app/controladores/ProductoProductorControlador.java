@@ -55,28 +55,30 @@ public class ProductoProductorControlador {
 			@RequestParam long id_producto) {
 
 		EntidadProducto prod = productoDao.obtenerProducto(id_producto);
-
 		EntidadProductor productor = productorDao.obtenerProductor(id_productor);
 
 		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
-
 		EntidadProductoProductor productoNuevo = new EntidadProductoProductor();
-		productoNuevo.setTitulo(producto.getTitulo());
-		productoNuevo.setDescripcion(producto.getDescripcion());
+
+		String titulo = producto.getTitulo().substring(0, 1).toUpperCase() + producto.getTitulo().substring(1);
+		String descripcion = producto.getDescripcion().substring(0, 1).toUpperCase() + producto.getDescripcion().substring(1);
+
+		productoNuevo.setTitulo(titulo);
+		productoNuevo.setDescripcion(descripcion);
 		productoNuevo.setFecha_vencimiento(producto.getFecha_vencimiento());
 		productoNuevo.setPrecio(producto.getPrecio());
 		productoNuevo.setStock(producto.getStock());
 		productoNuevo.setImagenes(null);
 		productoNuevo.setTiempo_preparacion(producto.getTiempo_preparacion());
 		productoNuevo.setTipo_produccion(producto.getTipo_produccion());
-		
+
 		String contenido = producto.getContenido();
 		if (contenido == "") {
 			productoNuevo.setContenido(null);
 		} else {
 			productoNuevo.setContenido(contenido);
 		}
-		
+
 		productoNuevo.setUnidad_venta(producto.getUnidad_venta());
 		productoNuevo.setProducto(prod);
 		productoNuevo.setProductor(productor);
@@ -213,21 +215,23 @@ public class ProductoProductorControlador {
 			EntidadProductoProductor productoAActualizar = productoProductorDao
 					.obtenerProductoById(id_producto_productor);
 
-			productoAActualizar.setTitulo(producto.getTitulo());
-			productoAActualizar.setDescripcion(producto.getDescripcion());
+			String titulo = producto.getTitulo().substring(0, 1).toUpperCase() + producto.getTitulo().substring(1);
+			String descripcion = producto.getDescripcion().substring(0, 1).toUpperCase() + producto.getDescripcion().substring(1);
+			
+			productoAActualizar.setTitulo(titulo);
+			productoAActualizar.setDescripcion(descripcion);
 			productoAActualizar.setFecha_vencimiento(producto.getFecha_vencimiento());
 			productoAActualizar.setPrecio(producto.getPrecio());
 			productoAActualizar.setStock(producto.getStock());
 			productoAActualizar.setTiempo_preparacion(producto.getTiempo_preparacion());
 			productoAActualizar.setContenido(producto.getContenido());
-			//productoAActualizar.setImagenes(null);
+			// productoAActualizar.setImagenes(null);
 
 			productoProductorDao.save(productoAActualizar).getId();
 
 			return new ResponseEntity<>("Producto actualizado correctamente!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(
-					"Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
