@@ -144,8 +144,7 @@ class HomePage extends Component {
                         this.state.busqueda !== '' ?
                             <ResultadoBusquedaSinLogin
                                 busqueda={this.state.busqueda} />
-                            : ''
-                            
+                            : ''       
                     }
                     <CarouselProductos
                                 listadoProductos={lista} />
