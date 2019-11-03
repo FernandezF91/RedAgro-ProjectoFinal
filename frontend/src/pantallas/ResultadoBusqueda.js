@@ -7,6 +7,7 @@ import Loader from 'react-loader-spinner';
 import Busqueda from './Busqueda';
 import Paginacion from './Paginacion';
 import ButterToast, { Cinnamon, POS_BOTTOM, POS_RIGHT } from 'butter-toast';
+import { MDBRow, MDBCol } from 'mdbreact';
 
 const tamañosListado = [
     { label: "9", value: "9" },
@@ -330,19 +331,28 @@ class ResultadoBusqueda extends Component {
         return (
             <div>
                 <div className="titulosPrincipales">Resultados</div>
-                <span className="cantidadDeBusqueda">{resultadoBusqueda.length} resultados</span>
                 {
-                    resultadoBusqueda.length > 0 ?
-                        <div className="opcionesCantidad">
-                            
-                            <span className="tituloCantidad">Resultados por página</span>
-                            <Select
-                                className="cantidadItemsListado"
-                                value={defaultListado}
-                                options={tamañosListado}
-                                onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />
-                        </div>
-                        : ''
+                    resultadoBusqueda.length > 0 &&
+                    <MDBRow>
+                        <MDBCol md="2" className="align-center cantidadDeBusquedaDiv">
+                            {
+                                (resultadoBusqueda.length === 1) ?
+                                    <span className="cantidadDeBusqueda">{resultadoBusqueda.length} resultado</span>
+                                    :
+                                    <span className="cantidadDeBusqueda">{resultadoBusqueda.length} resultados</span>
+                            }
+                        </MDBCol>
+                        <MDBCol className="align-center">
+                            <div className="opcionesCantidadBusqueda">
+                                <span>Resultados por página</span>
+                                <Select
+                                    className="cantidadItemsListado"
+                                    value={defaultListado}
+                                    options={tamañosListado}
+                                    onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />
+                            </div>
+                        </MDBCol>
+                    </MDBRow>
                 }
                 <Busqueda
                     listaDeProductos={listadoBusqueda}

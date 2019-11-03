@@ -140,7 +140,7 @@ class LoginForm extends Component {
     render() {
         return (
             <div className="fondo">
-                <Navbar className="barraNavegacion">
+                <Navbar className="barraNavegacion alturaBarra">
                     <Link to={'/'} className="culturaVerde">
                         <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
                     </Link>

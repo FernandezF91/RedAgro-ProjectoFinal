@@ -129,7 +129,7 @@ class ListadoCalificaciones extends Component {
                 {
                     calificacionesRecibidas.length > 0 ?
                         <div className="opcionesCantidad">
-                            <span className="tituloCantidad">Calificaciones por página</span>
+                            <span className="align-center">Calificaciones por página</span>
                             <Select className="cantidadItemsListado"
                                 value={defaultListado}
                                 options={tamañosListado}

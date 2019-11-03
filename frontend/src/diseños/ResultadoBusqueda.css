@@ -52,6 +52,11 @@
     margin-left: -75px !important;
 }
 
-.cantidadDeBusqueda{
-    margin-left: 10px;
+.cantidadDeBusqueda {
+    padding-left: 5%;
+    align-items: center;
+}
+
+.cantidadDeBusquedaDiv {
+    height: 38px;
 }

@@ -275,7 +275,7 @@ class ListadoPuntosEntrega extends Component {
                 {
                     puntos_entrega.length > 0 ?
                         <div className="opcionesCantidad">
-                            <span className="tituloCantidad">Puntos de entrega por página</span>
+                            <span className="align-center">Puntos de entrega por página</span>
                             <Select className="cantidadItemsListado"
                                 value={defaultListado}
                                 options={tamañosListado}

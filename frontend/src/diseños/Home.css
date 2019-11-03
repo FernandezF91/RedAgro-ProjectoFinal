@@ -1,8 +1,12 @@
 .textos {
-    margin-left: 4%;
+    margin-left: 15px;
 }
 
 .nav-link {
     font-weight: 400;
     color: white !important
+}
+
+.alturaBarra {
+    height: 75px;
 }

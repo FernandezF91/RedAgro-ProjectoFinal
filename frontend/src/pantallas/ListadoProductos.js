@@ -372,7 +372,7 @@ class ListadoProductos extends Component {
                     {
                         productos.length > 0 ?
                             <div className="opcionesCantidad">
-                                <span className="tituloCantidad">Productos por página</span>
+                                <span className="align-center">Productos por página</span>
                                 <Select className="cantidadItemsListado"
                                     value={defaultListado}
                                     options={tamañosListado}

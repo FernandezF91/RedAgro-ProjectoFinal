@@ -211,13 +211,22 @@ input[type=text] {
 
 .opcionesCantidad {
     display: flex;
-    flex-direction: row;
+    flex-direction: row; 
     justify-content: flex-end;
     padding-right: 5%;
     margin-bottom: 20px;
+    float: right;
 }
 
-.tituloCantidad {
+.opcionesCantidadBusqueda {
+    display: flex;
+    margin-bottom: 20px;
+    float: right;
+    padding-right: 5%;
+    align-items: center;
+}
+
+.align-center {
     align-self: center;
 }
 

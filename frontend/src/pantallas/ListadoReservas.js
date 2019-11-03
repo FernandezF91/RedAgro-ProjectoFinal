@@ -466,7 +466,7 @@ class ListadoReservas extends Component {
                 {
                     reservasRealizadas.length > 0 ?
                         <div className="opcionesCantidad">
-                            <span className="tituloCantidad">Reservas por página</span>
+                            <span className="align-center">Reservas por página</span>
                             <Select className="cantidadItemsListado"
                                 value={defaultListado}
                                 options={tamañosListado}

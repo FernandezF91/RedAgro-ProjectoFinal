@@ -21,7 +21,7 @@
 }
 
 .iconos {
-	margin-left: 70px;
+	margin-left: 40px;
 	flex-direction: column;
 }
 
@@ -172,7 +172,7 @@ p, h4 {
 }
 
 .scrollMenuCategorias {
-    overflow-y: auto;
+	overflow-y: auto;
 	height: 340px;
 	margin-right: 10px;
 }

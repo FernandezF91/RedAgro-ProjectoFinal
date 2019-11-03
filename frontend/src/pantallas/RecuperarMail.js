@@ -97,7 +97,7 @@ class RecuperarEmail extends Component {
         return (
             <div className="fondo">
                 <div className="barraNavegacion">
-                    <Navbar>
+                    <Navbar className="alturaBarra">
                         <Link to={'/'} className="culturaVerde">
                             <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
                         </Link>
@@ -105,7 +105,7 @@ class RecuperarEmail extends Component {
                 </div>
                 <Container fluid className="contenedor">
                     <div className="formularioRecuContra">
-                        <h2>Recuperar Contraseña</h2>
+                        <h2>Recuperar contraseña</h2>
                         <div className="encabezadoRecucontra">
                             <Form>
                                 <div className="Correoelectronico">

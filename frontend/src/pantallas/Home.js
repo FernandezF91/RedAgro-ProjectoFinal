@@ -140,7 +140,7 @@ class HomePage extends Component {
         return (
             <div className="fondo">
                 <div className="barraNavegacion">
-                    <Navbar>
+                    <Navbar className="alturaBarra">
                         <div className="culturaVerde">
                             <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
                         </div>

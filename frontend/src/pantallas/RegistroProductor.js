@@ -176,7 +176,7 @@ class RegistroProductor extends Component {
         return (
             <div className="fondo">
                 <div className="barraNavegacion">
-                    <Navbar>
+                    <Navbar className="alturaBarra">
                         <Link to={'/'} className="culturaVerde">
                             <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
                         </Link>

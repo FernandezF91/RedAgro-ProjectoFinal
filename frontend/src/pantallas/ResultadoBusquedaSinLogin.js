@@ -6,7 +6,7 @@ import Select from 'react-select';
 import Loader from 'react-loader-spinner';
 import Busqueda from './Busqueda';
 import Paginacion from './Paginacion';
-import { MDBModal } from 'mdbreact';
+import { MDBModal, MDBRow, MDBCol } from 'mdbreact';
 import { Link } from 'react-router-dom';
 
 const tamañosListado = [
@@ -194,15 +194,27 @@ class ResultadoBusquedaSinLogin extends Component {
             <div>
                 <div className="titulosPrincipales">Novedades</div>
                 {
-                    resultadoBusqueda.length > 0 ?
-                        <div className="opcionesCantidad">
-                            <span className="tituloCantidad">Resultados por página</span>
-                            <Select className="cantidadItemsListado"
-                                value={defaultListado}
-                                options={tamañosListado}
-                                onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />
-                        </div>
-                        : ''
+                    resultadoBusqueda.length > 0 &&
+                    <MDBRow>
+                        <MDBCol md="2" className="align-center cantidadDeBusquedaDiv">
+                            {
+                                (resultadoBusqueda.length === 1) ?
+                                    <span className="cantidadDeBusqueda">{resultadoBusqueda.length} resultado</span>
+                                    :
+                                    <span className="cantidadDeBusqueda">{resultadoBusqueda.length} resultados</span>
+                            }
+                        </MDBCol>
+                        <MDBCol className="align-center">
+                            <div className="opcionesCantidadBusqueda">
+                                <span>Resultados por página</span>
+                                <Select
+                                    className="cantidadItemsListado"
+                                    value={defaultListado}
+                                    options={tamañosListado}
+                                    onChange={nuevoTamaño => this.actualizarTamañoListado(nuevoTamaño)} />
+                            </div>
+                        </MDBCol>
+                    </MDBRow>
                 }
                 <Busqueda listaDeProductos={listadoBusqueda}
                     sumarProducto={this.sumarProducto}
