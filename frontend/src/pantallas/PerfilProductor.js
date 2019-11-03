@@ -294,7 +294,7 @@ class PerfilProductor extends Component {
             <div>
                 <MDBRow>
                     <div className="nombreDelPerfil titulosPrincipales tituloMiCuenta">
-                        {this.state.datosProductor.nombre}
+                        {this.state.datosProductor.razon_social}
                         <h6 className="grey-text">{fecha} que forma parte de Cultura Verde</h6>
                     </div>
                 </MDBRow>

@@ -120,7 +120,7 @@ class ListadoReservas extends Component {
                 {
                     (tipoUsuario === "Consumidor") ?
                         <td>
-                            {item.productor.nombre + " " + item.productor.apellido}
+                            {item.productor.razon_social}
                             <br />
                             Tel: {item.productor.telefono}
                         </td>
