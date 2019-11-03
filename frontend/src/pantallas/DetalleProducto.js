@@ -173,7 +173,7 @@ class DetalleBusqueda extends Component {
                     this.setState(this.actualizarPropsSeleccionados(productosSeleccionados));
                     ButterToast.raise({
                         content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_GREEN}
-                            content={() => <div className="mensajeToast">Se agrego un nuevo producto a tu carrito</div>}
+                            content={() => <div className="mensajeToast">Se agregó un nuevo producto a tu carrito</div>}
                             title="CulturaVerde"
                             icon={<i className="fa fa-shopping-cart iconoToast" />}
                         />

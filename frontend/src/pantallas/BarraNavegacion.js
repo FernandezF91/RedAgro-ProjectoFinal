@@ -49,7 +49,7 @@ class BarraNavegacion extends Component {
     }
 
     render() {
-        const rolDeUsuario = this.state.usuario.rolUsuario;
+        const rolDeUsuario = this.state.usuario.rol;
         return (
             <Navbar collapseOnSelect expand="lg" className="barraNavegacion sombraBarra" >
                 <Navbar.Brand className="culturaVerde" href="/">

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.daos.AlertaNotificacionesDao;
-import app.modelos.EntidadAlertasNotificaciones;
+import app.modelos.EntidadAlertaNotificaciones;
 
 @RestController
 public class AlertaNotificacionesControlador {
@@ -19,8 +19,8 @@ public class AlertaNotificacionesControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/AlertaNotificaciones/obtenerAlertasByUsuario")
-	public ArrayList<EntidadAlertasNotificaciones> obtenerAlertasByUsuario(@RequestParam long id_usuario) {
-		ArrayList<EntidadAlertasNotificaciones> alertas = alertaDAO.obtenerNotificacionesByUsuario(id_usuario);
+	public ArrayList<EntidadAlertaNotificaciones> obtenerAlertasByUsuario(@RequestParam long id_usuario) {
+		ArrayList<EntidadAlertaNotificaciones> alertas = alertaDAO.obtenerNotificacionesByUsuario(id_usuario);
 		return alertas;
 	}
 }

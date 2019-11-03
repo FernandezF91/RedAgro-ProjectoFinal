@@ -1,8 +1,8 @@
 package app.clases;
 
-public class AlertasNotificaciones {
+public class AlertaNotificaciones {
 	
-	public AlertasNotificaciones(long id, Alerta alerta,  Usuario usuario, String tipo, String titulo, String descripcion) { 
+	public AlertaNotificaciones(long id, Alerta alerta,  Usuario usuario, String tipo, String titulo, String descripcion) { 
 		this.setId(id);
 		this.setAlerta(alerta);
 		this.setUsuario(usuario);
