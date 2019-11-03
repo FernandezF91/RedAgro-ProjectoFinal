@@ -12,12 +12,13 @@ import '../diseños/NuevoPuntoEntrega.css';
 import { isDate } from 'moment';
 
 const minDate = new Date();
+minDate.setDate(minDate.getDate() + 1);
 
 Geocode.setApiKey('AIzaSyAKxBrG2z8psH-fGJfFDXI-Arn-LkniaqI');
 Geocode.setLanguage("es");
 Geocode.setRegion("ar");
 
-class IngresarPuntoEntrega extends Component {
+class NuevoPuntoEntrega extends Component {
 
     constructor(props) {
         super(props)
@@ -491,4 +492,4 @@ class IngresarPuntoEntrega extends Component {
 
 export default GoogleApiWrapper({
     apiKey: 'AIzaSyAKxBrG2z8psH-fGJfFDXI-Arn-LkniaqI'
-})(IngresarPuntoEntrega);
+})(NuevoPuntoEntrega);
