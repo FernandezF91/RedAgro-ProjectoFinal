@@ -64,7 +64,7 @@ class LoginForm extends Component {
             errores["password"] = "*Campo inválido";
 
         } else {
-            const path_principal = "http://localhost:3000/redAgro/login?u=";
+            const path_principal = "http://localhost:3000/redAgro/login/usuario?u=";
 
             var username = this.state.fields["username"];
             var password = this.state.fields["password"];
@@ -80,34 +80,26 @@ class LoginForm extends Component {
                 },
             })
                 .then(function (response) {
-                    if (response.status !== 200) {
-                        let mensajeError = "Ocurrió algun problema, intenta nuevamente"
-                        _this.setState({
-                            visible: true,
-                            mensajeError: mensajeError
-                        });
-                        return;
-                    }
-
+                    var status = response.status;
                     response.text().then(
                         function (response) {
-                            if (response !== "") {
+                            if (status !== 200) {
+                                let mensajeError = response;
+                                _this.setState({
+                                    showModal: true,
+                                    mensajeError: mensajeError
+                                });
+                            }
+                            else {
                                 _this.setState({ usuario: JSON.parse(response) });
                                 if (_this.state.usuario.rol === "Productor") {
                                     _this.mostrarPantallaProductor();
                                 } else {
                                     _this.mostrarPantallaConsumidor();
                                 }
-
-                            } else {
-                                let mensajeError = "Cuenta inexistente o datos incorrectos";
-                                _this.setState({
-                                    showModal: true,
-                                    mensajeError: mensajeError
-                                });
                             }
-
-                        });
+                        }
+                    )
                 });
         }
         this.setState({
