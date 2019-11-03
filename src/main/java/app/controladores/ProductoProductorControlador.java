@@ -69,14 +69,14 @@ public class ProductoProductorControlador {
 		productoNuevo.setImagenes(null);
 		productoNuevo.setTiempo_preparacion(producto.getTiempo_preparacion());
 		productoNuevo.setTipo_produccion(producto.getTipo_produccion());
-		
+
 		String contenido = producto.getContenido();
 		if (contenido == "") {
 			productoNuevo.setContenido(null);
 		} else {
 			productoNuevo.setContenido(contenido);
 		}
-		
+
 		productoNuevo.setUnidad_venta(producto.getUnidad_venta());
 		productoNuevo.setProducto(prod);
 		productoNuevo.setProductor(productor);
@@ -192,6 +192,20 @@ public class ProductoProductorControlador {
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/ProductosProductor/obtenerProductosPantallaInicial")
+	public ResponseEntity<Object> obtenerProductosPantallaInicial() {
+		try {
+			List<EntidadProductoProductor> resultados = productoProductorDao.obtenerProductosPantallaSinLogin();
+			ProductoProductorMapper productoMapper = new ProductoProductorMapper();
+			List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(resultados);
+
+			return new ResponseEntity<>(productosMapeados, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Ocurrió un error al buscar los productos.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
 	@PutMapping(path = "redAgro/actualizarEstadoProducto")
 	public ResponseEntity<String> actualizarEstadoProducto(@RequestParam long id_producto_productor,
 			@RequestParam boolean activo) {
@@ -220,16 +234,14 @@ public class ProductoProductorControlador {
 			productoAActualizar.setStock(producto.getStock());
 			productoAActualizar.setTiempo_preparacion(producto.getTiempo_preparacion());
 			productoAActualizar.setContenido(producto.getContenido());
-			//productoAActualizar.setImagenes(null);
+			// productoAActualizar.setImagenes(null);
 
 			productoProductorDao.save(productoAActualizar).getId();
 
 			return new ResponseEntity<>("Producto actualizado correctamente!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(
-					"Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 }
