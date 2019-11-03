@@ -7,10 +7,6 @@ import { Button } from 'react-bootstrap';
 import Loader from 'react-loader-spinner';
 import { MDBModal } from 'mdbreact';
 
-//Ejemplo del dropdown
-//https://alligator.io/react/react-select/
-//Por si les hace falta: npm install react-select@next
-
 class PreferenciasConsumidor extends Component {
 
     constructor(props) {
@@ -47,13 +43,19 @@ class PreferenciasConsumidor extends Component {
 
     agregarNuevaPreferencia(categoria, newPreferencia) {
         if (categoria === "verduras") {
-            this.setState({ seleccionados: { ...this.state.seleccionados, verduras: newPreferencia } });
+            this.setState({
+                seleccionados: { ...this.state.seleccionados, verduras: newPreferencia }
+            });
         }
         if (categoria === "frutas") {
-            this.setState({ seleccionados: { ...this.state.seleccionados, frutas: newPreferencia } });
+            this.setState({
+                seleccionados: { ...this.state.seleccionados, frutas: newPreferencia }
+            });
         }
         if (categoria === "otros") {
-            this.setState({ seleccionados: { ...this.state.seleccionados, otros: newPreferencia } });
+            this.setState({
+                seleccionados: { ...this.state.seleccionados, otros: newPreferencia }
+            });
         }
     }
 
@@ -231,7 +233,7 @@ class PreferenciasConsumidor extends Component {
                         onChange={newOtros => this.agregarNuevaPreferencia("otros", newOtros)} />
                 </div>
                 <br />
-                <div className="botonesPreferencias">
+                <div className="botones">
                     <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                     <Button variant="success" type="submit" onClick={this.guardarPreferencias}>Guardar</Button>
                 </div>
