@@ -1,7 +1,8 @@
-.containerPrincipal{
+.containerPrincipal {
     align-content: center;
 }
-.MuiStepper-vertical{
+
+.MuiStepper-vertical {
     width: auto;
 }
 
@@ -9,19 +10,19 @@
     align-items: center
 }
 
-.containerCheckout{
+.containerCheckout {
     flex-wrap: wrap;
     align-content: center;
     margin-top: 30px;
     margin-bottom: 30px;
 }
 
-.margenesFormulario{
+.margenesFormulario {
     margin-left: 10px;
     margin-right: 10px;
 }
 
-.radioButtonsCheckout{
+.radioButtonsCheckout {
     align-content: center;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -41,55 +42,55 @@
     column-gap: 3.25rem !important;
 }
 
-.unidadMedida{
+.unidadMedida {
     font-size: 14px;
-    color:grey;
+    color: grey;
 }
 
-.dropdownDirecciones{
+.dropdownDirecciones {
     width: 500px;
-    justify-content:center;
+    justify-content: center;
     margin-top: 10px;
 }
 
-.dropdownFechas{
+.dropdownFechas {
     width: 500px;
-    justify-content:center;
+    justify-content: center;
     margin-top: 25px;
 }
 
-.dropdownHorarios{
+.dropdownHorarios {
     width: 500px;
-    justify-content:center;
+    justify-content: center;
     margin-top: 25px;
 }
 
-.opcionesCheckout{
+.opcionesCheckout {
     display: flex;
-	flex-direction: column;
+    flex-direction: column;
     align-items: center;
 }
 
-.personaRetiro{
+.personaRetiro {
     margin-left: 33%;
     padding-left: 14px;
 }
 
-.confirmacionReserva{
+.confirmacionReserva {
     margin-top: 95px;
     align-content: center;
 }
 
-.cardHeader{
+.cardHeader {
     font-weight: 500;
 }
 
-.cardFooter{
+.cardFooter {
     font-weight: 600;
     font-size: large;
 }
 
-.cardColumns{
+.cardColumns {
     margin-right: 10px;
     margin-left: 10px;
 }
@@ -106,4 +107,14 @@
     float: right;
     margin-right: 10px;
     margin-bottom: 0px !important;
+}
+
+.sinBordesCajaCheckout {
+    border: none !important;
+}
+
+.bordesPrecioCheckout {
+    border-top-width: 1px !important;
+    border-top-style: solid !important;
+    border-top-color: rgba(0, 0, 0, 0.125) !important;
 }
