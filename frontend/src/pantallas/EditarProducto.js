@@ -264,7 +264,7 @@ class EditarProducto extends Component {
         e.preventDefault();
 
         if (_this.validarCampos()) {
-            var path = "http://localhost:3000/redAgro/actualizarProductoProductor?id_producto_productor=" + _this.props.productoAEditar.id;
+            var path = "http://localhost:3000/redAgro/actualizarProductoProductor?id_producto_productor=" + _this.state.productoAEditar.id;
 
             fetch(path, {
                 method: "POST",

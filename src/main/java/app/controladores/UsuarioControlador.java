@@ -55,7 +55,13 @@ public class UsuarioControlador {
 	@PostMapping(path = "redAgro/usuario_consumidor")
 	public void agregarUsuarioConsumidor(@RequestBody EntidadUsuario usuario) {
 
+		String nombre = usuario.getNombre().substring(0, 1).toUpperCase() + usuario.getNombre().substring(1);
+		String apellido = usuario.getApellido().substring(0, 1).toUpperCase() + usuario.getApellido().substring(1);
+		
+		usuario.setNombre(nombre);
+		usuario.setApellido(apellido);
 		usuario.setActivo(false);
+		
 		EntidadUsuario userNuevo = usuarioDAO.save(usuario);
 
 		EntidadConsumidor entidadConsumidor = new EntidadConsumidor();
@@ -83,13 +89,20 @@ public class UsuarioControlador {
 		EntidadUsuario userNuevo = new EntidadUsuario();
 		EntidadProductor entidadProductor = new EntidadProductor();
 
+		String nombre = usuario.getNombre().substring(0, 1).toUpperCase() + usuario.getNombre().substring(1);
+		String apellido = usuario.getApellido().substring(0, 1).toUpperCase() + usuario.getApellido().substring(1);
+		
+		usuario.setNombre(nombre);
+		usuario.setApellido(apellido);
 		usuario.setActivo(false);
 
 		userNuevo = usuarioDAO.save(usuario);
 
 		entidadProductor.setId(userNuevo.getId());
 		entidadProductor.setUsuario(userNuevo);
-		entidadProductor.setRazon_social(razon_social);
+		
+		String razonSocialCap = razon_social.substring(0, 1).toUpperCase() + razon_social.substring(1);
+		entidadProductor.setRazon_social(razonSocialCap);
 
 		productorDAO.save(entidadProductor);
 

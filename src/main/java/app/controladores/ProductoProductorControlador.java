@@ -55,14 +55,16 @@ public class ProductoProductorControlador {
 			@RequestParam long id_producto) {
 
 		EntidadProducto prod = productoDao.obtenerProducto(id_producto);
-
 		EntidadProductor productor = productorDao.obtenerProductor(id_productor);
 
 		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
-
 		EntidadProductoProductor productoNuevo = new EntidadProductoProductor();
-		productoNuevo.setTitulo(producto.getTitulo());
-		productoNuevo.setDescripcion(producto.getDescripcion());
+
+		String titulo = producto.getTitulo().substring(0, 1).toUpperCase() + producto.getTitulo().substring(1);
+		String descripcion = producto.getDescripcion().substring(0, 1).toUpperCase() + producto.getDescripcion().substring(1);
+
+		productoNuevo.setTitulo(titulo);
+		productoNuevo.setDescripcion(descripcion);
 		productoNuevo.setFecha_vencimiento(producto.getFecha_vencimiento());
 		productoNuevo.setPrecio(producto.getPrecio());
 		productoNuevo.setStock(producto.getStock());
@@ -227,8 +229,11 @@ public class ProductoProductorControlador {
 			EntidadProductoProductor productoAActualizar = productoProductorDao
 					.obtenerProductoById(id_producto_productor);
 
-			productoAActualizar.setTitulo(producto.getTitulo());
-			productoAActualizar.setDescripcion(producto.getDescripcion());
+			String titulo = producto.getTitulo().substring(0, 1).toUpperCase() + producto.getTitulo().substring(1);
+			String descripcion = producto.getDescripcion().substring(0, 1).toUpperCase() + producto.getDescripcion().substring(1);
+			
+			productoAActualizar.setTitulo(titulo);
+			productoAActualizar.setDescripcion(descripcion);
 			productoAActualizar.setFecha_vencimiento(producto.getFecha_vencimiento());
 			productoAActualizar.setPrecio(producto.getPrecio());
 			productoAActualizar.setStock(producto.getStock());
