@@ -15,7 +15,7 @@ const tamañosListado = [
     { label: "Todo", value: "Todo" },
 ];
 
-class Calificaciones extends Component {
+class ListadoCalificaciones extends Component {
 
     constructor(props) {
         super(props);
@@ -152,4 +152,4 @@ class Calificaciones extends Component {
         );
     };
 }
-export default Calificaciones;
+export default ListadoCalificaciones;

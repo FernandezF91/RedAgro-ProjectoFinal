@@ -20,7 +20,7 @@ import ListadoProductos from '../pantallas/ListadoProductos';
 import Estadisticas from '../pantallas/Estadisticas';
 import BarraNavegacion from './BarraNavegacion';
 import Planificación from '../pantallas/Planificacion';
-import Calificaciones from '../pantallas/Calificaciones';
+import ListadoCalificaciones from '../pantallas/ListadoCalificaciones';
 import EditarProducto from "../pantallas/EditarProducto";
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
@@ -35,7 +35,7 @@ const ListadoProductosRouter = withRouter(ListadoProductos);
 const EstadisticasRouter = withRouter(Estadisticas);
 const HitoricoRouter = withRouter(CargarHistorico);
 const PlanificacionRouter = withRouter(Planificación);
-const CalificacionesRouter = withRouter(Calificaciones);
+const ListadoCalificacionesRouter = withRouter(ListadoCalificaciones);
 const EditarProductoRouter = withRouter(EditarProducto);
 
 class PantallaPrincipalProductores extends Component {
@@ -132,7 +132,7 @@ class PantallaPrincipalProductores extends Component {
                                 </MDBRow>
                                 <MDBRow>
                                     <i className="fas fa-star iconosMenuLateral" />
-                                    <Link to={'/principalProductores/Calificaciones'}>
+                                    <Link to={'/principalProductores/ListadoCalificaciones'}>
                                         <p>Calificaciones</p>
                                     </Link>
                                 </MDBRow>
@@ -264,9 +264,9 @@ class PantallaPrincipalProductores extends Component {
                                     />
                                 }
                             />
-                            <Route path={'/principalProductores/Calificaciones'}
+                            <Route path={'/principalProductores/ListadoCalificaciones'}
                                 render={(props) =>
-                                    <CalificacionesRouter
+                                    <ListadoCalificacionesRouter
                                         id_productor={this.state.id}
                                     />
                                 }
