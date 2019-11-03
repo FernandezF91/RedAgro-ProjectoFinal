@@ -178,7 +178,6 @@ public class UsuarioControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/recuperar_email")
-
 	public ResponseEntity<Object> confirmarCuenta(@RequestParam String email) {
 
 		EntidadUsuario eu = new EntidadUsuario();
