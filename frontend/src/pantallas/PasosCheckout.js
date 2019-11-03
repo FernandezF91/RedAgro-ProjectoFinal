@@ -155,7 +155,7 @@ const PasosCheckout = (props) => {
                                     options={props.selector.fechasEntrega}
                                     placeholder="Seleccione una fecha de retiro..."
                                     onChange={newFecha => props.actualizarFechaEntrega(newFecha)} />
-                                
+
                                 <Select className="dropdownHorarios"
                                     isDisabled={props.selectorHorarios.selectorHorariosDisabled}
                                     value={props.seleccionado.horarioEntrega}
@@ -198,7 +198,7 @@ const PasosCheckout = (props) => {
                             <ListGroup>
                                 {
                                     props.productosSeleccionados.map(item => (
-                                        <ListGroup.Item key={item.id}>
+                                        <ListGroup.Item key={item.id} className="sinBordesCajaCheckout">
                                             <Row>
                                                 <Col>
                                                     <Image
@@ -258,7 +258,7 @@ const PasosCheckout = (props) => {
                                         </ListGroup.Item>
                                     ))
                                 }
-                                <ListGroup.Item key="footer" className="cardFooter">
+                                <ListGroup.Item key="footer" className="cardFooter sinBordesCajaCheckout bordesPrecioCheckout">
                                     Total
                                         <NumberFormat
                                         value={props.getTotalReserva(props.productosSeleccionados)}
