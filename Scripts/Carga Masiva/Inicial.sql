@@ -1,3 +1,19 @@
+INSERT INTO redagro.alerta (id, nombre) VALUES (1, 'Actualización de reservas');
+INSERT INTO redagro.alerta (id, nombre) VALUES (2, 'Productos de interés');
+INSERT INTO redagro.alerta (id, nombre) VALUES (3, 'Nuevos mensajes');
+INSERT INTO redagro.alerta (id, nombre) VALUES (4, 'Nuevas calificaciones');
+INSERT INTO redagro.alerta (id, nombre) VALUES (5, 'Nuevas reservas');
+
+INSERT INTO redagro.alerta_frecuencia (id, frecuencia) VALUES (1, 'En el momento');
+INSERT INTO redagro.alerta_frecuencia (id, frecuencia) VALUES (2, 'Diariamente');
+INSERT INTO redagro.alerta_frecuencia (id, frecuencia) VALUES (3, 'Semanalmente');
+
+INSERT INTO redagro.estado_reserva (id, nombre) VALUES (1, 'Pendiente');
+INSERT INTO redagro.estado_reserva (id, nombre) VALUES (2, 'En proceso');
+INSERT INTO redagro.estado_reserva (id, nombre) VALUES (3, 'Disponible');
+INSERT INTO redagro.estado_reserva (id, nombre) VALUES (4, 'Finalizado');
+INSERT INTO redagro.estado_reserva (id, nombre) VALUES (5, 'Cancelado');
+
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Variado","Variado");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Frutas","Banana");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Frutas","Cereza");
@@ -111,9 +127,3 @@ INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Miel");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Pickles");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Aceitunas negras");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Aceitunas verdes");
-
-INSERT INTO redagro.usuario (id,apellido, contraseña, 	fecha_nacimiento, nombre, rol, telefono, usuario) VALUES (10,"bosso", "1", "1982-06-03","ezequiel", "Productor", "23456723456", "e@e.com");
-INSERT INTO redagro.usuario (id,apellido, contraseña, 	fecha_nacimiento, nombre, rol, telefono, usuario) VALUES (11,"papu", "1", "1982-06-03","pepe", "Consumidor", "23456723456", "a@a.com");
-
-INSERT INTO redagro.punto_entrega (id,cod_postal,direccion,latitud,localidad,longitud,pais,provincia,productor_id) VALUES (10,"1686","asamblea 3154", "-54.23456","hurlingham","38.45678", "argentina", "Buenos Aires", "1");
-INSERT INTO redagro.punto_entrega (id,cod_postal,direccion,latitud,localidad,longitud,pais,provincia,productor_id) VALUES (12,"1686","asamblea 3154", "-32.23456","marcos paz","20.45678", "argentina", "Buenos Aires", "1");

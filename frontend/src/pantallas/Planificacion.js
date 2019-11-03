@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Form, Row, Button } from 'react-bootstrap';
 import Select from 'react-select';
-
-import '../diseños/estilosGlobales.css';
+import { MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
+import { Link } from 'react-router-dom';
+    import '../diseños/estilosGlobales.css';
 import '../diseños/Planificacion.css';
 
 const mostrarPeriodo = [
@@ -11,6 +12,12 @@ const mostrarPeriodo = [
     { label: "Invierno", value: "Invierno" },
     { label: "Primavera", value: "Primavera" }
 ];
+
+const columnas = [
+    {
+        label: 'Ranking de productos con más probabilidad de venderse en el período solicitado',
+        field: 'productos'
+    }]
 
 class Planificacion extends Component {
     constructor(props) {
@@ -48,6 +55,8 @@ class Planificacion extends Component {
         var _this = this;
         e.preventDefault();
 
+        _this.setState({alimentosAProducir:[]})
+
         var path_principal = "http://localhost:3000/redAgro/obtenerResultados?periodo=";
         var periodo = this.periodo;
         //_this.props.id_productor;
@@ -78,9 +87,35 @@ class Planificacion extends Component {
                         response.forEach(element => {
                             _this.setState({ alimentosAProducir: [..._this.state.alimentosAProducir, element] });
                         });
-                        //_this.mostrarMensajeOk();
+        
+                     //   mostrarProduccion(_this.state.alimentosAProducir)
                     });
             });
+    }
+
+    retornaLista(){
+                var i = 1
+        return this.state.alimentosAProducir.map(producto => {
+             var itemRow = []
+             //[<tr key={"row-data-"} >
+            //     <td>
+            //         {"producto"}
+            //     </td>
+            // </tr>
+
+          //  ];
+
+            itemRow.push(
+                        <tr>
+         
+                            <td> {i + " " + producto} </td>
+                        </tr>
+                    );
+                     i++
+            return itemRow;
+        
+        })
+       
     }
 
     mostrarMensajeOk() {
@@ -108,6 +143,26 @@ class Planificacion extends Component {
                         <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                         <Button variant="success" type="submit">Planificar</Button>
                     </div>
+
+                    <div className="titulosPrincipales">Productos a producir</div>
+                    <div className="tabla_puntos">
+                    {this.state.alimentosAProducir.length>0?
+                     <MDBTable striped hover>
+                            <MDBTableHead columns={columnas} />
+                            <MDBTableBody>    
+                            {this.retornaLista()}              
+                            </MDBTableBody>
+                        </MDBTable>
+                        :
+                        <div className="sinPuntosDeVenta">
+                            <i className="fas fa-chart-bar iconoGrande"></i>
+                            <br />
+                            <h5>No has solicitado aún la planificación </h5>
+                        </div>
+                
+                    }
+                </div> 
+
                 </Form>
             </div>
 
