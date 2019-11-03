@@ -42,9 +42,10 @@ public class CalificacionControlador {
 
 		try {
 			EntidadCalificacion calificacion = new EntidadCalificacion();
-			
-			String comentario = calificacionAGuardar.getComentario().substring(0, 1).toUpperCase() + calificacionAGuardar.getComentario().substring(1);
-			
+
+			String comentario = calificacionAGuardar.getComentario().substring(0, 1).toUpperCase()
+					+ calificacionAGuardar.getComentario().substring(1);
+
 			calificacion.setReservaId(reserva_id);
 			calificacion.setValor(calificacionAGuardar.getValor());
 			calificacion.setComentario(comentario);
@@ -116,6 +117,29 @@ public class CalificacionControlador {
 		} catch (Exception e) {
 			return new ResponseEntity<>(
 					"Ocurrió un error al buscar las últimas calificaciones. Reintentá en unos minutos.",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@GetMapping(path = "redAgro/obtenerCantidadDeReservasCalificadas")
+	public ResponseEntity<Object> obtenerCantidadDeReservasCalificadas(@RequestParam long id_productor) {
+		try {
+			String resultado = calificacionDao.obtenerCantidadDeReservasCalificadas(id_productor);
+			if (resultado != null || Integer.valueOf(resultado) != 0) {
+				String respuesta = "Promedio realizado en base a ";
+				if (Integer.valueOf(resultado) == 1) {
+					respuesta = respuesta + "1 reserva calificada"; 
+					return new ResponseEntity<>("Promedio realizado en base a 1 reserva calificada", HttpStatus.OK);
+				} else {
+					respuesta = respuesta + resultado + " reservas calificadas"; 
+				}
+				return new ResponseEntity<>(respuesta, HttpStatus.OK);	
+			}
+			return new ResponseEntity<>("Aún no hay calificaciones", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					"Ocurrió un error al calcular el promedio de las calificaciones. Reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

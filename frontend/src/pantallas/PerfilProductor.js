@@ -24,6 +24,7 @@ class PerfilProductor extends Component {
                 puntosEntrega: {},
             },
             calificacion: {},
+            cantidadDeReservasCalificadas: "",
             productos: [],
             listaFechasEntrega: [],
             loading: true,
@@ -90,6 +91,7 @@ class PerfilProductor extends Component {
                     var id_productor = data.id;
                     this.obtenerProductos(id_productor);
                     this.obtenerCalificaciones(id_productor);
+                    this.obtenerCantidadDeReservasCalificadas(id_productor);
                     this.obtenerListadoFechasEntrega(id_productor);
 
                 } else {
@@ -178,23 +180,18 @@ class PerfilProductor extends Component {
             .then(response => {
                 try {
                     if (response.status === 200) {
-                        this.setState({
-                            resultadoRequest: response.status
-                        });
                         return response.json();
                     }
                     else {
                         console.log(response.status);
                         this.setState({
                             loading: false,
-                            resultadoRequest: response.status
                         });
                     }
                 } catch (error) {
                     console.log(error);
                     this.setState({
-                        loading: false,
-                        resultadoRequest: response.status
+                        loading: false
                     });
                 }
             })
@@ -204,7 +201,47 @@ class PerfilProductor extends Component {
                         calificacion: data,
                     })
                 } else {
-                    this.setState({ loading: false });
+                    this.setState({
+                        loading: false
+                    });
+                }
+            })
+    }
+
+    obtenerCantidadDeReservasCalificadas(id_productor) {
+        var path = "http://localhost:3000/redAgro/obtenerCantidadDeReservasCalificadas?id_productor=" + id_productor;
+        fetch(path)
+            .catch(error => console.error(error))
+            .then(response => {
+                try {
+                    if (response.status === 200) {
+                        return response.text();
+                    }
+                    else {
+                        console.log(response.status);
+                        this.setState({
+                            loading: false
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                    this.setState({
+                        loading: false
+                    });
+                }
+            })
+            .then(data => {
+                console.log(data);
+                if (data !== undefined) {
+                    
+                    this.setState({
+                        cantidadDeReservasCalificadas: data,
+                    })
+                    console.log(this.state.cantidadDeReservasCalificadas);
+                } else {
+                    this.setState({
+                        loading: false
+                    });
                 }
             })
     }
@@ -303,18 +340,23 @@ class PerfilProductor extends Component {
                         <MDBRow>
                             <MDBCol>
                                 <MDBCard className="mb-4">
-                                    <MDBCardBody className="text-center">
+                                    <MDBCardBody>
                                         <MDBCardTitle> <i className="fas fa-star" /> Mis calificaciones</MDBCardTitle>
                                         {
-                                            this.state.datosProductor.calificacion === "Aún no hay calificaciones" || this.state.datosProductor.calificacion === undefined ?
-                                                'Aún no hay calificaciones' :
+                                            this.state.calificacion === "Aún no hay calificaciones" ?
+                                                <h6 className="grey-text">Aún no hay calificaciones</h6>
+                                                :
                                                 <div>
-                                                    <h6 className="grey-text">Promedio realizado en base a 1 reservas calificadas.</h6>
-                                                    <BeautyStars
-                                                        value={this.state.datosProductor.calificacion}
-                                                        activeColor="#28A745"
-                                                        inactiveColor="#CCC"
-                                                        size="24px" />
+                                                    <div className="columnaTablaCentrada">
+                                                        <BeautyStars
+                                                            value={this.state.calificacion}
+                                                            activeColor="#28A745"
+                                                            inactiveColor="#CCC"
+                                                            size="24px"
+                                                        />
+                                                    </div>
+                                                    <br />
+                                                    <h6 className="grey-text leyendaCajaCalificaciones">{this.state.cantidadDeReservasCalificadas}</h6>
                                                 </div>
                                         }
                                     </MDBCardBody>

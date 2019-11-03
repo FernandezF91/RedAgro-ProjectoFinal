@@ -399,3 +399,7 @@ input[type=text] {
     max-width: 600px;
     margin: auto;
 }
+
+.leyendaCajaCalificaciones {
+    margin-top: 10px;
+}
