@@ -111,9 +111,9 @@ class EditarProducto extends Component {
                         tiempoDePreparacion: data.tiempo_preparacion,
                         contenido: data.contenido,
                         imagenes: data.imagenes,
-                        oferta: data.oferta                        
+                        oferta: data.oferta
                     }
-                    
+
                     let campos = [];
                     if (producto !== undefined) {
                         if (producto.tipoDeUnidad === "Kilogramo") {
@@ -121,7 +121,7 @@ class EditarProducto extends Component {
                                 contenidoDeshabilitado: true
                             });
                         }
-                        
+
                         campos["titulo"] = producto.titulo;
                         campos["descripcion"] = producto.descripcion;
                         if (producto.fechaDeVencimiento !== "-") {
@@ -131,14 +131,14 @@ class EditarProducto extends Component {
                         campos["stock"] = producto.stock;
                         campos["contenido"] = producto.contenido;
                         campos["tiempo_preparacion"] = producto.tiempoDePreparacion;
-                       
+
                     }
 
                     this.setState({
                         productoAEditar: producto,
                         campos: campos,
                         categoria: [{
-                            label: producto.categoria,  
+                            label: producto.categoria,
                             value: 1
                         }],
                         tipoProducto: [{
@@ -219,9 +219,11 @@ class EditarProducto extends Component {
         if (!this.state.campos["fecha_vencimiento"]) {
             validaciones["fecha_vencimiento"] = "Campo requerido";
             showError = true;
-        } else if (moment(this.state.campos["fecha_vencimiento"], 'DD/MM/YYYY').format('YYYY-MM-DD') === "Invalid date") {
-            validaciones["fecha_vencimiento"] = "Formato incorrecto";
-            showError = true;
+        } else if (this.state.campos["fecha_vencimiento"] !== this.state.productoAEditar.fechaDeVencimiento) {
+            if (moment(this.state.campos["fecha_vencimiento"], 'DD/MM/YYYY').format('YYYY-MM-DD') === "Invalid date") {
+                validaciones["fecha_vencimiento"] = "Formato incorrecto";
+                showError = true;
+            }
         }
 
         if (showError) {
