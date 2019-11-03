@@ -176,7 +176,12 @@ class NuevoPuntoEntrega extends Component {
             const path_final = path + _this.state.id_punto_entrega
 
             let fecha_entrega = this.state.campos["fecha_entrega"]
-            let dia = fecha_entrega.getDate();
+            let dia;
+            if (fecha_entrega.getDate() < 10) {
+                dia = "0" + fecha_entrega.getDate().toString();
+            } else {
+                dia = fecha_entrega.getDate().toString();
+            }
             let mes = fecha_entrega.getMonth() + 1;
             let año = fecha_entrega.getFullYear();
             var fecha = dia + '-' + mes + '-' + año;
@@ -247,7 +252,12 @@ class NuevoPuntoEntrega extends Component {
                 const path = "http://localhost:3000/redAgro/subir_punto_entrega?id_productor=";
 
                 let fecha_entrega = this.state.campos["fecha_entrega"]
-                let dia = fecha_entrega.getDate();
+                let dia;
+                if (fecha_entrega.getDate() < 10) {
+                    dia = "0" + fecha_entrega.getDate().toString();
+                } else {
+                    dia = fecha_entrega.getDate().toString();
+                }
                 let mes = fecha_entrega.getMonth() + 1;
                 let año = fecha_entrega.getFullYear();
                 var fecha = dia + '-' + mes + '-' + año;
