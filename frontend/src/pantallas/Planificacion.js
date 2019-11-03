@@ -6,6 +6,14 @@ import { Link } from 'react-router-dom';
     import '../diseños/estilosGlobales.css';
 import '../diseños/Planificacion.css';
 
+const mostrarZonas = [
+    { label: "CABA y Gran Buenos Aires", value: "CABA" },
+    { label: "Buenos Aires", value: "BUENOSAIRES" },
+    { label: "Neuquén", value: "NEUQUEN" },
+    { label: "Tucumán", value: "TUCUMAN"}
+];
+
+
 const mostrarPeriodo = [
     { label: "Verano", value: "Verano" },
     { label: "Otoño", value: "Otono" },
@@ -29,12 +37,19 @@ class Planificacion extends Component {
             formOk: false,
             visibleOk: false,
             periodo: String,
-
+            zona: String,
             id: this.props.id_productor
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 
+    }
+
+    cambiosSelectZona(opt, a, value) {
+        //let campos = this.state.campos;
+        //campos[a.periodo] = 
+        this.zona = opt.value;
+        //this.setState({ periodo })
     }
 
     cambiosSelectPeriodo(opt, a, value) {
@@ -60,7 +75,7 @@ class Planificacion extends Component {
         var path_principal = "http://localhost:3000/redAgro/obtenerResultados?periodo=";
         var periodo = this.periodo;
         //_this.props.id_productor;
-        var provincia = "CABA";
+        var provincia = this.zona;
         // _this.state.campos["tipo_producto"];
         var path_final = path_principal + periodo + "&provincia=" + provincia;
 
@@ -137,6 +152,14 @@ class Planificacion extends Component {
                                 Periodo
 							</Form.Label>
                             <Select value={this.state.valueCat} className="selectPeriodo" name="periodo" options={mostrarPeriodo} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectPeriodo(opt, a, value)} />
+                        </Form.Group>
+                    </div>
+                     <div className="dropdownPeriodo">
+                        <Form.Group as={Row}>
+                            <Form.Label column sm={3}>
+                                Periodo
+							</Form.Label>
+                            <Select value={this.state.valueCat} className="selectPeriodo" name="zonas" options={mostrarZonas} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectZona(opt, a, value)} />
                         </Form.Group>
                     </div>
                     <div className="botonesNuevoProducto">
