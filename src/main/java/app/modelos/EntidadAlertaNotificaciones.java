@@ -10,9 +10,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Alertas_Notificaciones")
+@Table(name = "Alerta_Notificaciones")
 
-public class EntidadAlertasNotificaciones {
+public class EntidadAlertaNotificaciones {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
