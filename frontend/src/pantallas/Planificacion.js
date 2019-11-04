@@ -9,8 +9,28 @@ import '../diseños/Planificacion.css';
 const mostrarZonas = [
     { label: "CABA y Gran Buenos Aires", value: "CABA" },
     { label: "Buenos Aires", value: "BUENOSAIRES" },
+    { label: "Catamarca", value: "CATAMARCA" },
+	{ label: "Chaco", value: "CHACO"},
+	{ label: "Chubut", value: "CHUBUT" },
+    { label: "Córdoba", value: "CORDOBA" },
+    { label: "Corrientes", value: "CORRIENTES" },
+	{ label: "Entre Ríos", value: "ENTRERIOS"},
+	{ label: "Formosa", value: "FORMOSA" },
+    { label: "Jujuy", value: "JUJUY" },
+    { label: "La Pampa", value: "LAPAMPA" },
+	{ label: "La Rioja", value: "LARIOJA"},
+	{ label: "Mendoza", value: "MENDOZA" },
+    { label: "Misiones", value: "MISIONES" },
     { label: "Neuquén", value: "NEUQUEN" },
-    { label: "Tucumán", value: "TUCUMAN"}
+	{ label: "Rio Negro", value: "RIO NEGRO"},
+	{ label: "Salta", value: "SALTA" },
+    { label: "San Juan", value: "SANJUAN" },
+    { label: "San Luis", value: "SANLUIS" },
+	{ label: "Santa Cruz", value: "SANTACRUZ"},
+	{ label: "Santa Fe", value: "SANTAFE" },
+    { label: "Santiago del Estero", value: "SANTIAGO" },
+    { label: "Tierra del Fuego", value: "TIERRA" },
+	{ label: "Tucumán", value: "TUCUMAN"}
 ];
 
 
@@ -149,7 +169,7 @@ class Planificacion extends Component {
                     <div className="dropdownPeriodo">
                         <Form.Group as={Row}>
                             <Form.Label column sm={3}>
-                                Periodo
+                                Período
 							</Form.Label>
                             <Select value={this.state.valueCat} className="selectPeriodo" name="periodo" options={mostrarPeriodo} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectPeriodo(opt, a, value)} />
                         </Form.Group>
@@ -157,7 +177,7 @@ class Planificacion extends Component {
                      <div className="dropdownPeriodo">
                         <Form.Group as={Row}>
                             <Form.Label column sm={3}>
-                                Periodo
+                                Zona de venta
 							</Form.Label>
                             <Select value={this.state.valueCat} className="selectPeriodo" name="zonas" options={mostrarZonas} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectZona(opt, a, value)} />
                         </Form.Group>

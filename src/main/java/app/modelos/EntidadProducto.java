@@ -29,9 +29,9 @@ public class EntidadProducto {
 	@Column(name = "tipo", nullable = true)
 	private String tipo;
 
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
-	private List<EntidadHistorico> historicos = new ArrayList<>();
+//	@LazyCollection(LazyCollectionOption.FALSE)
+//	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+//	private List<EntidadHistorico> historicos = new ArrayList<>();
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
@@ -85,13 +85,13 @@ public class EntidadProducto {
 		this.productos_productor = productos_productor;
 	}
 
-	public List<EntidadHistorico> getHistoricos() {
-		return historicos;
-	}
-
-	public void setHistoricos(List<EntidadHistorico> historicos) {
-		this.historicos = historicos;
-	}
+//	public List<EntidadHistorico> getHistoricos() {
+//		return historicos;
+//	}
+//
+//	public void setHistoricos(List<EntidadHistorico> historicos) {
+//		this.historicos = historicos;
+//	}
 
 	public List<EntidadDetalleReserva> getDetallesReserva() {
 		return detallesReserva;
