@@ -30,7 +30,7 @@ class SeleccionUsuario extends Component {
                         <div className="tituloSeleccion">
                             <h3>Selecciona un tipo de usuario</h3>
                         </div>
-                        <div className="botonesRegistro">
+                        <div className="botones">
                             <Button variant="success" href="/registroProductor">
                                 <i className="fas fa-tractor iconoBotones" />
                                 Soy productor
@@ -40,7 +40,6 @@ class SeleccionUsuario extends Component {
                                 Soy consumidor
                             </Button>
                         </div>
-                        <br />
                         <Button variant="light" href="javascript:history.back()" className="atras">Atras</Button>
                     </div>
                 </Container>

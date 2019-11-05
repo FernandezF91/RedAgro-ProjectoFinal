@@ -580,7 +580,7 @@ class EditarProducto extends Component {
                             }} />
                     </div>
                     <div className="condicionesInputsImg">(*) 5 imágenes como máximo</div>
-                    <div className="botonesNuevoProducto">
+                    <div className="botones">
                         <Button variant="light" onClick={this.mostrarListadoDeProductos}>Cancelar</Button>
                         <Button variant="light" onClick={() => this.limpiarCampos()}>Limpiar</Button>
                         <Button variant="success" type="submit">Guardar</Button>
