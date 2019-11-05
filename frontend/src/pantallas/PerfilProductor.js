@@ -341,8 +341,10 @@ class PerfilProductor extends Component {
                             <MDBCol>
                                 <MDBCard className="mb-4">
                                     <MDBCardBody>
-                                        <MDBCardTitle> <i className="fas fa-star" /> Mis calificaciones</MDBCardTitle>
-                                        <div className="columnaTablaCentrada">
+                                        <MDBCardTitle className="margenTitulosResumen">
+                                            <i className="fas fa-star iconoTituloResumen" /> Mis calificaciones
+                                        </MDBCardTitle>
+                                        <div className="resumenCentrado columnaTablaCentrada">
                                             <BeautyStars
                                                 value={this.state.calificacion}
                                                 activeColor="#28A745"

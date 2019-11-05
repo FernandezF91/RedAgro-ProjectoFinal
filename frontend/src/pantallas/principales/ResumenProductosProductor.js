@@ -38,7 +38,11 @@ const ResumenProductosProductor = ({ listadoProductosProductor, resultadoRequest
                     ) : (
                             <div>
                                 <br />
+                                <br />
+                                <br />
                                 <i className="fas fa-store iconoGrandePrincipales" />
+                                <br />
+                                <br />
                                 <br />
                                 <br />
                                 <h6>No tenes productos fuera de stock o vencidos!</h6>
@@ -48,7 +52,12 @@ const ResumenProductosProductor = ({ listadoProductosProductor, resultadoRequest
                 ) : (
                         <div>
                             <br />
+                            <br />
+                            <br />
                             <i className="fas fa-store iconoGrandePrincipales" />
+                            <br />
+                            <br />
+                            <br />
                             <br />
                             <br />
                             <h6 className="grey-text">Ups! Ocurrió un error al obtener el listado de productos. Reintentá en unos minutos!</h6>

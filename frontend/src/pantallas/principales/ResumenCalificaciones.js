@@ -47,7 +47,11 @@ const ResumenCalificaciones = ({ cantidadEstrellas, listadoCalificaciones, resul
                     ) : (
                             <div>
                                 <br />
+                                <br />
+                                <br />
                                 <i className="fas fa-star iconoGrandePrincipales" />
+                                <br />
+                                <br />
                                 <br />
                                 <br />
                                 <h6>No tenes calificaciones!</h6>
@@ -57,7 +61,12 @@ const ResumenCalificaciones = ({ cantidadEstrellas, listadoCalificaciones, resul
                 ) : (
                         <div>
                             <br />
+                            <br />
+                            <br />
                             <i className="fas fa-star iconoGrandePrincipales" />
+                            <br />
+                            <br />
+                            <br />
                             <br />
                             <br />
                             <h6 className="grey-text">Ups! Ocurrió un error al calcular el promedio de las calificaciones. Reintentá en unos minutos!</h6>

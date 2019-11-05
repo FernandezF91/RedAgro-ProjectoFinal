@@ -355,12 +355,6 @@ input[type=text] {
     margin-top: 15px;
 }
 
-.tablasResumenes {
-    max-height: 500px !important;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
 .margenTitulosResumen {
     margin-left: 0px;
     margin-bottom: 8px;
@@ -384,6 +378,8 @@ input[type=text] {
 
 .table-wrapper-scroll-y {
     max-height: 270px !important;
+    overflow-y: auto;
+    overflow-x: hidden !important;
 }
 
 .alturaTablaCalificaciones {

@@ -388,7 +388,7 @@ class MiCuenta extends Component {
                                 <MDBCardText className="resumenCentrado">
                                     <ResumenProductosProductor
                                         listadoProductosProductor={bodyProductos}
-                                        resultadoRequest={this.state.resultadoRequestCalificaciones}
+                                        resultadoRequest={this.state.resultadoRequestProductosProductor}
                                     />
                                 </MDBCardText>
                             </MDBCardBody>
@@ -420,7 +420,7 @@ class MiCuenta extends Component {
                                     <ResumenCalificaciones
                                         cantidadEstrellas={this.state.cantidadEstrellas}
                                         listadoCalificaciones={bodyCalificaciones}
-                                        resultadoRequest={this.state.resultadoRequestProductosProductor}
+                                        resultadoRequest={this.state.resultadoRequestCalificaciones}
                                     />
                                 </MDBCardText>
                             </MDBCardBody>

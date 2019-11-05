@@ -10,7 +10,6 @@ import { MDBModal } from 'mdbreact';
 
 import '../diseños/nuevoProducto.css';
 import '../diseños/estilosGlobales.css';
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import { FilePond, registerPlugin } from 'react-filepond';
 // Import FilePond styles
@@ -39,12 +38,7 @@ class EditarProducto extends Component {
         this.state = {
             campos: [],
             files: "",
-            titulo: "",
-            visible: false,
             mensaje: "",
-            tipos_producto: [],
-            formOk: false,
-            visibleOk: false,
             categoria: [],
             tipoProducto: [],
             tipoProduccion: [],
@@ -55,8 +49,6 @@ class EditarProducto extends Component {
             productoAEditar: {},
             validaciones: [],
             resultadoRequest: 0,
-            showError: false,
-            showErrorMensaje: "",
             contenidoDeshabilitado: false
         }
 
@@ -161,13 +153,14 @@ class EditarProducto extends Component {
 
     cerrarModal() {
         this.setState({
-            showModal: false
+            showModal: false,
         })
+        this.mostrarListadoDeProductos();
     }
 
     cerrarModalError() {
         this.setState({
-            showError: false
+            showModal: false
         })
     }
 
@@ -180,81 +173,64 @@ class EditarProducto extends Component {
     }
 
     validarCampos() {
-        var showError = false;
+        var showModal = false;
         this.setState({
             validaciones: []
         });
         let validaciones = [];
         if (!this.state.campos["stock"]) {
             validaciones["stock"] = "Campo requerido";
-            showError = true;
+            showModal = true;
         }
 
         if (!this.state.campos["precio"]) {
             validaciones["precio"] = "Campo requerido";
-            showError = true;
+            showModal = true;
         } else if (!regularExp.numerosDecimales.test(this.state.campos["precio"])) {
             validaciones["precio"] = "Formato invalido reg";
-            showError = true;
+            showModal = true;
         } else if (isNaN(this.state.campos["precio"])) {
             validaciones["precio"] = "Formato invalido nan";
-            showError = true;
+            showModal = true;
         }
 
         if (!this.state.campos["descripcion"]) {
             validaciones["descripcion"] = "Campo requerido";
-            showError = true;
+            showModal = true;
         }
 
         if (!this.state.campos["titulo"]) {
             validaciones["titulo"] = "Campo requerido";
-            showError = true;
+            showModal = true;
         }
 
         // if (!this.state.campos["files"]) {
         //     validaciones["files"] = "Campo requerido";
-        //     showError = true;
+        //     showModal = true;
         // }
 
         if (!this.state.campos["fecha_vencimiento"]) {
             validaciones["fecha_vencimiento"] = "Campo requerido";
-            showError = true;
+            showModal = true;
         } else if (this.state.campos["fecha_vencimiento"] !== this.state.productoAEditar.fechaDeVencimiento) {
             if (moment(this.state.campos["fecha_vencimiento"], 'DD/MM/YYYY').format('YYYY-MM-DD') === "Invalid date") {
                 validaciones["fecha_vencimiento"] = "Formato incorrecto";
-                showError = true;
+                showModal = true;
             }
         }
 
-        if (showError) {
+        if (showModal) {
             this.setState({
                 validaciones: validaciones,
-                showError: showError,
-                showErrorMensaje: "Ups! Campos incompletos o incorrectos",
-                loading: false
+                showModal: showModal,
+                mensaje: "Ups! Campos incompletos o incorrectos",
+                loading: false,
+                resultadoRequest: 0
             });
             return false;
         } else {
             return true;
         }
-    }
-
-    closeModalSeguirCargando() {
-        this.setState({
-            visibleOk: false,
-            formOk: false
-        });
-        this.limpiarCampos();
-    }
-
-    closeModal() {
-        if (this.state.formOk === true) {
-            this.mostrarListadoDeProductos();
-        }
-
-        this.setState({
-            visible: false
-        });
     }
 
     handleSubmit(e) {
@@ -290,7 +266,7 @@ class EditarProducto extends Component {
                         resultadoRequest: response.status
                     })
                     if (response.status === 200) {
-                        return response.json();
+                        return response.text();
                     } else if (response.status === 504) {
                         console.log("Timeout");
                     } else {
@@ -298,19 +274,22 @@ class EditarProducto extends Component {
                     }
                     _this.setState({
                         mensaje: "Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
+                        showModal: true,
+                        loading: false
                     })
                 })
                 .then(data => {
-                    _this.setState({
-                        mensaje: data,
-                        showModal: true
-                    });
-                    //_this.subirArchivos(response);
+                    if (data !== undefined) {
+                        _this.setState({
+                            mensaje: data,
+                            showModal: true,
+                            loading: false
+                        });
+                        //_this.subirArchivos(response);
+                    }
                 })
+
         }
-        _this.setState({
-            loading: false
-        });
     }
 
     subirArchivos(producto_productor) {
@@ -336,17 +315,12 @@ class EditarProducto extends Component {
         })
     }
 
-    mostrarMensajeOk() {
-        this.setState({
-            formOk: true,
-            visibleOk: true
-        });
-    }
-
     cambiosFecha(e) {
         let campos = this.state.campos;
         campos["fecha_vencimiento"] = e;
-        this.setState({ campos })
+        this.setState({
+            campos
+        });
     }
 
     limpiarCampos() {
@@ -354,9 +328,6 @@ class EditarProducto extends Component {
         let campos = this.state.campos;
         campos["titulo"] = "";
         campos["descripcion"] = "";
-        campos["categoria"] = "";
-        campos["tipo_producto"] = "";
-        campos["tipo_produccion"] = "";
         campos["fecha_vencimiento"] = "";
         campos["stock"] = "";
         campos["precio"] = "";
@@ -370,11 +341,7 @@ class EditarProducto extends Component {
 
         this.setState({
             campos: campos,
-            files: files,
-            categoria: [],
-            tipo: [],
-            tipoProduccion: [],
-            valueUnidadVenta: []
+            files: files
         });
     }
 
@@ -624,11 +591,11 @@ class EditarProducto extends Component {
                     (
                         <MDBModal isOpen={this.state.showModal} centered size="sm">
                             <div className="modalMargenes">
-                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                                <br />
                                 {(this.state.resultadoRequest === 200) ?
                                     (
                                         <div>
+                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                            <br />
                                             <i className="fas fa-check-circle iconoModalOk" />
                                             <br />
                                             <br />
@@ -636,6 +603,8 @@ class EditarProducto extends Component {
                                         </div>
                                     ) : (
                                         <div>
+                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                                            <br />
                                             <i className="fas fa-exclamation-circle iconoModalError" />
                                             <br />
                                             <br />
@@ -643,21 +612,6 @@ class EditarProducto extends Component {
                                         </div>
                                     )
                                 }
-                            </div>
-                        </MDBModal>
-                    )
-                }
-                {
-                    (this.state.showError) &&
-                    (
-                        <MDBModal isOpen={this.state.showError} centered size="sm">
-                            <div className="modalMargenes">
-                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
-                                <br />
-                                <i className="fas fa-exclamation-circle iconoModalError" />
-                                <br />
-                                <br />
-                                <h5>{this.state.showErrorMensaje}</h5>
                             </div>
                         </MDBModal>
                     )
