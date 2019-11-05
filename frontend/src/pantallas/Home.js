@@ -120,7 +120,7 @@ class HomePage extends Component {
 
     render() {
         const { productosPerPage, productos } = this.state;
-        const numberOfPages = Math.ceil(productos.length / productos);
+        const numberOfPages = Math.ceil(productos.length / productosPerPage);
         let lista = this.crearListaDeProductos(numberOfPages, productosPerPage, productos);
 
         if (this.state.loading) return (
@@ -176,7 +176,7 @@ class HomePage extends Component {
                 </div>
                 <Container fluid className="contenedor">
                     {
-                        this.state.busqueda !== '' ?
+                        this.state.busqueda !== "" ?
                             <ResultadoBusquedaSinLogin
                                 busqueda={this.state.busqueda} />
                             :
