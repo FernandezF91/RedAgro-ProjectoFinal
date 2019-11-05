@@ -288,7 +288,7 @@ class PerfilProductor extends Component {
 
     generoItemFechas(item) {
         const itemMDBRows = [
-            <tr key={"MDBRow-data-" + item.fecha}>
+            <tr key={"MDBRow-data-" + item.fecha} className="border-bottom">
                 <td>
                     <div className="primeraColumna">
                         {item.fecha}
@@ -361,9 +361,9 @@ class PerfilProductor extends Component {
                         <MDBRow>
                             <MDBCol>
                                 <MDBCard>
-                                    <MDBCardBody className="text-center">
-                                        <MDBCardTitle>
-                                            <i className="fas fa-map-marker-alt" /> Próximas fechas de entrega
+                                    <MDBCardBody className="text-center margenTitulosResumen">
+                                        <MDBCardTitle className="margenTitulosResumen">
+                                            <i className="fas fa-map-marker-alt iconoTituloResumen" /> Próximas fechas de entrega
                                         </MDBCardTitle>
                                         <MDBCardText className="resumenCentrado">
                                             <ResumenFechasEntrega

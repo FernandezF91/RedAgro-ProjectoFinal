@@ -34,7 +34,8 @@ class ListadoProductos extends Component {
             productosPerPage: 5,
             defaultListado: [{ label: "5", value: "5" }],
             showModalEstado: false,
-            activo: true
+            activo: true,
+            mensajeErrorOferta: ""
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.cerrarModalOferta = this.cerrarModalOferta.bind(this);
@@ -197,24 +198,44 @@ class ListadoProductos extends Component {
 
     detectarCambios(e) {
         this.setState({
-            porcentaje: e.target.value
+            porcentaje: e.target.value,
+            mensajeErrorOferta: ""
         })
     }
 
     validarPorcentaje() {
-        if (this.state.porcentaje > 100 || this.state.porcentaje < 0) {
-            return false;
-        } else {
+        if (!this.state.checkOferta) {
             return true;
         }
+
+        if (this.state.checkOferta && this.state.porcentaje === null) {
+            this.setState({
+                mensajeErrorOferta: "Campo requerido"
+            })
+            return false;
+        }
+
+        if (this.state.checkOferta && this.state.porcentaje === "") {
+            this.setState({
+                mensajeErrorOferta: "Campo requerido"
+            })
+            return false;
+        }
+
+        if (this.state.checkOferta && (this.state.porcentaje > 100 || this.state.porcentaje <= 0)) {
+            this.setState({
+                mensajeErrorOferta: "Porcentaje inválido"
+            })
+            return false;
+        }
+
+        return true;
+
     }
 
     guardarOferta() {
         if (this.validarPorcentaje()) {
             var _this = this;
-            _this.setState({
-                loading: true
-            })
 
             var path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta + "&id_oferta=";
             if (_this.state.idOferta === null || _this.state.idOferta === undefined) {
@@ -228,7 +249,7 @@ class ListadoProductos extends Component {
                 .then(function (response) {
                     _this.setState({
                         showModalOferta: false,
-                        estadoSeleccionado: ""
+                        mensajeErrorOferta: ""
                     })
                 })
             //TODO: cambiarlo para que solo actualice la parte del listado.
@@ -245,7 +266,8 @@ class ListadoProductos extends Component {
         } else {
             this.setState({
                 checkOferta: false,
-                disabledOferta: true
+                disabledOferta: true,
+                porcentaje: 0
             });
         }
     };
@@ -435,9 +457,9 @@ class ListadoProductos extends Component {
                                     </InputGroup.Append>
                                 </InputGroup>
                                 {
-                                    (this.state.porcentaje > 100 || this.state.porcentaje < 0) &&
+                                    (this.state.mensajeErrorOferta !== "") &&
                                     <div className="mensajeErrorForm">
-                                        <i className="fa fa-exclamation-circle" title="Porcentaje inválido" />
+                                        <i className="fa fa-exclamation-circle" title={this.state.mensajeErrorOferta} />
                                     </div>
                                 }
                             </div>
