@@ -2,11 +2,10 @@ import '../diseños/PerfilProductor.css'
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import { MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBCardBody, MDBCardImage, MDBCardText, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBContainer } from "mdbreact";
+import { MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBCardBody, MDBCardText, MDBContainer } from "mdbreact";
 import BeautyStars from 'beauty-stars';
 import ResumenFechasEntrega from "./principales/ResumenFechasEntrega";
 import CarouselProductos from './CarouselProductos'
-import NumberFormat from 'react-number-format';
 import moment from 'moment';
 
 moment.locale('es');
