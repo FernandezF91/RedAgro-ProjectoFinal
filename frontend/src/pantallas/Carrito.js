@@ -148,7 +148,7 @@ class Carrito extends Component {
             ButterToast.raise({
                 content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_RED}
                     content={() => <div className="mensajeToast">No se encuentra disponible el stock solicitado.</div>}
-                    title="CulturaVerde"
+                    title="Cultura Verde"
                     icon={<i className="fa fa-shopping-cart iconoToast" />}
                 />
             });
