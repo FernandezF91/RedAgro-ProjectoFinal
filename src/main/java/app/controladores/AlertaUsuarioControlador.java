@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-import app.daos.AlertaDao;
+import app.daos.AlertaUsuarioDao;
 import app.daos.UsuarioDao;
 import app.modelos.EntidadAlertaUsuario;
 import app.mappers.AlertaFrecuenciaMapper;
@@ -31,10 +31,10 @@ import app.clases.Usuario;
 import app.clases.MailMensajes;
 
 @RestController
-public class AlertaControlador {
+public class AlertaUsuarioControlador {
 
 	@Autowired
-	AlertaDao alertaDAO;
+	AlertaUsuarioDao alertaUsuarioDAO;
 
 	@Autowired
 	UsuarioDao usuarioDAO;
@@ -43,7 +43,7 @@ public class AlertaControlador {
 	@GetMapping(path = "redAgro/obtenerConfiguracionAlertas")
 	@ResponseBody
 	public ArrayList<AlertaUsuario> obtenerConfiguracionAlertas(@RequestParam long id_usuario) {
-		ArrayList<EntidadAlertaUsuario> resultados = alertaDAO.obtenerConfiguracionAlertas(id_usuario);
+		ArrayList<EntidadAlertaUsuario> resultados = alertaUsuarioDAO.obtenerConfiguracionAlertas(id_usuario);
 		AlertaUsuarioMapper mapeoDeAlertaUsuario = new AlertaUsuarioMapper();
 		ArrayList<AlertaUsuario> alertas = mapeoDeAlertaUsuario.mapFromEntity(resultados);
 		return alertas;
@@ -58,7 +58,7 @@ public class AlertaControlador {
 			ArrayList<EntidadAlertaUsuario> nuevasAlertas = new ArrayList<EntidadAlertaUsuario>();
 			ArrayList<AlertaUsuario> alertasActuales = this.obtenerConfiguracionAlertas(id_usuario);
 			if (alertasActuales.size() > 0) {
-				alertaDAO.borrarAlertaPorUsuario(id_usuario);
+				alertaUsuarioDAO.borrarAlertaPorUsuario(id_usuario);
 			}
 
 			AlertaMapper mapeoDeAlerta = new AlertaMapper();
@@ -68,9 +68,9 @@ public class AlertaControlador {
 
 			for (AlertaConfiguracion alertaConf : alertasAGuardar) {
 
-				Alerta alerta = mapeoDeAlerta.mapFromEntity(alertaDAO.obtenerAlertaTipo(alertaConf.getAlertaNombre()));
+				Alerta alerta = mapeoDeAlerta.mapFromEntity(alertaUsuarioDAO.obtenerAlertaTipo(alertaConf.getAlertaNombre()));
 				AlertaFrecuencia frecuencia = mapeoDeFrecuencia
-						.mapFromEntity(alertaDAO.obtenerFrecuencia(alertaConf.getFrecuencia()));
+						.mapFromEntity(alertaUsuarioDAO.obtenerFrecuencia(alertaConf.getFrecuencia()));
 				Usuario usuario = mapeoDeUsuario.mapFromEntity(usuarioDAO.obtenerDatosUsuario(id_usuario));
 				AlertaUsuario alertaUsuario = new AlertaUsuario(0, alerta, frecuencia, usuario);
 
@@ -78,7 +78,7 @@ public class AlertaControlador {
 				nuevasAlertas.add(nueva);
 			}
 
-			alertaDAO.saveAll(nuevasAlertas);
+			alertaUsuarioDAO.saveAll(nuevasAlertas);
 			return new ResponseEntity<>("Alertas actualizadas correctamente!", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(

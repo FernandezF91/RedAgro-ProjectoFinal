@@ -13,7 +13,7 @@ public class EntidadAlerta {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 
 	@Column(name = "nombre", nullable = false)
 	private String nombre;
