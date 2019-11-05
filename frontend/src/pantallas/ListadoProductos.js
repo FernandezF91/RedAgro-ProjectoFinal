@@ -118,7 +118,7 @@ class ListadoProductos extends Component {
                 <td className="productoInactivo">{item.stock}</td>
                 <td className="productoInactivo">{item.tipoDeUnidad}</td>
                 <td className="productoInactivo">{item.tipoDeProduccion}</td>
-                <td className="productoInactivo" className="columnaPrecio">
+                <td className="productoInactivo columnaPrecio">
                     {
                         (item.oferta === null || item.oferta === undefined) ?
                             <NumberFormat className="productoInactivo" value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} />

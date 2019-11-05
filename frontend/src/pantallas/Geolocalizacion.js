@@ -143,7 +143,7 @@ class Geolocalizacion extends Component {
                     Búsqueda por geolocalización
 		        </div>
                 <div className="descripcionPagina">
-                    <h5>Seleccione un productor para ver su oferta de productos:</h5>
+                    <h5>Seleccione un productor para ver su catálogo de productos:</h5>
                 </div>
                 <div className="contenedorMapa">
                     <CurrentLocation
