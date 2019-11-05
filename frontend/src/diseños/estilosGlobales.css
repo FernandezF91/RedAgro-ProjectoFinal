@@ -82,10 +82,6 @@ input[type=text] {
     font-size: 32px;
 }
 
-.form-control[type="text"], .form-control[type="email"], .form-control[type="password"], .form-control[type="telR"], .form-control[type="number"] {
-    width: 40%;
-}
-
 .selectTipoProducto, .selectTipoUnidad, .selectTipoProduccion, .selectCategoria, .selectPeriodo {
     width: 50%;
 }

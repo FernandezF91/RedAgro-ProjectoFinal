@@ -1,14 +1,17 @@
+import '../diseños/Registro.css';
+import '../diseños/estilosGlobales.css';
+import 'rc-datepicker/lib/style.css';
+
 import React, { Component } from 'react'
 import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import culturaVerde from '../imagenes/cultura-verde-2.png';
-import '../diseños/Registro.css';
-import '../diseños/estilosGlobales.css';
-import 'moment/locale/es';
 import { DatePickerInput } from 'rc-datepicker';
-import 'rc-datepicker/lib/style.css';
 import { isDate } from 'moment';
 import Modal from 'react-awesome-modal';
+
+import culturaVerde from '../imagenes/cultura-verde-2.png';
+
+import 'moment/locale/es';
 
 const maxDate = new Date();
 
@@ -48,17 +51,20 @@ class RegistroProductor extends Component {
         if ((form.checkValidity() === false) && ((!this.state.campos["fecha_nac"]) || (!isDate(this.state.campos["fecha_nac"])))) {
 
             errores["fecha_nac"] = "*Campo inválido";
-            this.setState({ errores });
+            this.setState({
+                errores
+            });
             e.preventDefault();
             e.stopPropagation();
 
         } else if ((!this.state.campos["fecha_nac"]) || (!isDate(this.state.campos["fecha_nac"]))) {
 
             errores["fecha_nac"] = "*Campo inválido";
-            this.setState({ errores });
+            this.setState({
+                errores
+            });
             e.preventDefault();
             e.stopPropagation();
-
 
         } else if (form.checkValidity() === false) {
 
@@ -69,7 +75,9 @@ class RegistroProductor extends Component {
             e.preventDefault();
             this.crearUsuario(e);
         }
-        this.setState({ validated: true });
+        this.setState({
+            validated: true
+        });
     }
 
     detectarCambios(e) {
@@ -84,13 +92,17 @@ class RegistroProductor extends Component {
         let campos = this.state.campos;
         campos["fecha_nac"] = e;
 
-        this.setState({ campos })
+        this.setState({
+            campos
+        })
     }
 
     limpiarCampos() {
         this.refs.form.reset();
         let campos = {}
-        this.setState({ campos: campos });
+        this.setState({
+            campos: campos
+        });
     }
 
     crearUsuario(e) {
@@ -184,53 +196,43 @@ class RegistroProductor extends Component {
                 </div>
                 <Container fluid className="contenedor">
                     <div className="titulosPrincipales">
-                        Creá tu cuenta en CulturaVerde
+                        Creá tu cuenta en Cultura Verde
                     </div>
                     <div className="contenidoRegistro">
                         <Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
                             <div className="nombre" >
                                 <Form.Group as={Row} controlId="validationCustom01">
-                                    <Form.Label column sm={2}>
-                                        Nombre
-                                		</Form.Label>
+                                    <Form.Label column sm={2}>Nombre</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
-                                            type="text"
                                             name="nombre"
                                             pattern="^[a-zA-Z ]*$"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">
-                                            *Campo inválido
-												</Form.Control.Feedback>
+                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
                             </div>
                             <div className="apellido">
                                 <Form.Group as={Row}>
-                                    <Form.Label column sm={2}>
-                                        Apellido
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Apellido</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
-                                            type="text"
                                             name="apellido"
                                             pattern="^[a-zA-Z ]*$"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">
-                                            *Campo inválido
-												</Form.Control.Feedback>
+                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
                             </div>
                             <div className="fechaNacimiento">
                                 <Form.Group as={Row}>
-                                    <Form.Label className="labelLargo" column sm={3}>
-                                        Fecha de nacimiento
-                                </Form.Label>
+                                    <Form.Label className="labelLargo" column sm={3}>Fecha de nacimiento</Form.Label>
                                     <Col sm={10}>
                                         <DatePickerInput
                                             name="fecha_nac"
@@ -244,40 +246,33 @@ class RegistroProductor extends Component {
                                             {this.state.errores["fecha_nac"]}
                                         </div>
                                     </Col>
-
                                 </Form.Group>
                             </div>
                             <div className="razonSocial">
                                 <Form.Group as={Row}>
-                                    <Form.Label column sm={2}>
-                                        Razón social
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Razón social</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
-                                            type="text"
                                             name="razonSocial"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">
-                                            *Campo inválido
-												</Form.Control.Feedback>
+                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
                             </div>
                             <div className="tel">
                                 <Form.Group as={Row} >
-                                    <Form.Label className="labelLargo" column sm={3}>
-                                        Teléfono de contacto
-                                </Form.Label>
+                                    <Form.Label className="labelLargo" column sm={3}>Teléfono de contacto</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
-                                            type="telR"
                                             name="tel"
                                             pattern="[0-9]{8,14}"
                                             maxLength="14"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
                                         />
                                         <Form.Control.Feedback className="errores" type="invalid">
                                             *Campo inválido
@@ -287,41 +282,35 @@ class RegistroProductor extends Component {
                             </div>
                             <div className="email">
                                 <Form.Group as={Row}>
-                                    <Form.Label column sm={2}>
-                                        Email
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Email</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
                                             type="email"
                                             name="email"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">
-                                            *Campo inválido
-												</Form.Control.Feedback>
+                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
                             </div>
                             <div className="password">
                                 <Form.Group as={Row} >
-                                    <Form.Label column sm={2}>
-                                        Password
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Password</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
-                                            type="password"
                                             name="password"
+                                            type="password"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">
-                                            *Campo inválido
-												</Form.Control.Feedback>
+                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
                             </div>
-                            <div className="botonesUsuarios">
+                            <div className="botones">
                                 <Button variant="light" href='/seleccionUsuario'>Atrás</Button>
                                 <Button variant="light" onClick={this.limpiarCampos}>Limpiar</Button>
                                 <Button variant="success" type="submit">Crear</Button>

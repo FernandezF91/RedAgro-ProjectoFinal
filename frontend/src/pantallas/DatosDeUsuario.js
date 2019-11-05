@@ -274,31 +274,27 @@ class DatosDeUsuario extends Component {
                 <div className="contenidoDU">
                     <div className="nombreDU" >
                         <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Nombre
-									</Form.Label>
+                            <Form.Label column sm={4}>Nombre</Form.Label>
                             <Form.Control
                                 required
-                                type="nom"
                                 name="nombre"
                                 defaultValue={this.state.usuario.nombre}
                                 pattern="^[a-zA-Z ]*$"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="camposDatosDeUsuario"
                             />
                         </Form.Group>
                     </div>
                     <div className="apellidoDU" >
                         <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Apellido
-									</Form.Label>
+                            <Form.Label column sm={4}>Apellido</Form.Label>
                             <Form.Control
                                 required
-                                type="ap"
                                 name="apellido"
                                 defaultValue={this.state.usuario.apellido}
                                 pattern="^[a-zA-Z ]*$"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="camposDatosDeUsuario"
                             />
                         </Form.Group>
                     </div>
@@ -306,16 +302,14 @@ class DatosDeUsuario extends Component {
                         this.state.usuario.rol === "Productor" ?
                             <div className="apellidoDU" >
                                 <Form.Group as={Row}>
-                                    <Form.Label column sm={4}>
-                                        Razón Social
-									</Form.Label>
+                                    <Form.Label column sm={4}>Razón Social</Form.Label>
                                     <Form.Control
                                         required
-                                        type="rs"
                                         name="razon_social"
                                         defaultValue={this.state.razon_social}
                                         pattern="^[a-zA-Z ]*$"
                                         onChange={(e) => this.detectarCambios(e)}
+                                        className="camposDatosDeUsuario"
                                     />
                                 </Form.Group>
                             </div>
@@ -323,33 +317,29 @@ class DatosDeUsuario extends Component {
                     }
                     <div className="fechaNac">
                         <Form.Group as={Row}>
-                            <Form.Label column sm={3}>
-                                Fecha de nacimiento
-                                </Form.Label>
+                            <Form.Label column sm={3}>Fecha de nacimiento</Form.Label>
                             <DatePickerInput
                                 ref="datePicker"
                                 name="fecha_nac"
                                 defaultValue={this.state.usuario.fecha_nacimiento}
                                 displayFormat='DD/MM/YYYY'
                                 maxDate={maxDate}
-                                className="calend"
                                 onChange={(e) => this.cambiosFecha(e)}
+                                className="calend camposDatosDeUsuario"
                             />
                         </Form.Group>
                     </div>
                     <div className="telefonoDU" >
                         <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Teléfono de contacto
-									</Form.Label>
+                            <Form.Label column sm={4}>Teléfono de contacto</Form.Label>
                             <Form.Control
                                 required
-                                type="tel"
                                 name="telefono"
                                 defaultValue={this.state.usuario.telefono}
                                 pattern="[0-9]{8,14}"
                                 maxLength="14"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="camposDatosDeUsuario"
                             />
                         </Form.Group>
                     </div>

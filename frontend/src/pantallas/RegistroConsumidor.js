@@ -181,53 +181,44 @@ class RegistroConsumidor extends Component {
                 </div>
                 <Container fluid className="contenedor">
                     <div className="titulosPrincipales">
-                        Creá tu cuenta en CulturaVerde
+                        Creá tu cuenta en Cultura Verde
                     </div>
-                    <div className="contenidoRegistro">
-                        <Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+
+                    <Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+                        <div className="contenidoRegistro">
                             <div className="nombre" >
                                 <Form.Group as={Row} controlId="validationCustom01">
-                                    <Form.Label column sm={2}>
-                                        Nombre
-                                		</Form.Label>
+                                    <Form.Label column sm={2}>Nombre</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
-                                            type="text"
                                             name="nombre"
                                             pattern="^[a-zA-Z ]*$"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">
-                                            *Campo inválido
-												</Form.Control.Feedback>
+                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
                             </div>
                             <div className="apellido">
                                 <Form.Group as={Row}>
-                                    <Form.Label column sm={2}>
-                                        Apellido
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Apellido</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
-                                            type="text"
                                             name="apellido"
                                             pattern="^[a-zA-Z ]*$"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">
-                                            *Campo inválido
-										</Form.Control.Feedback>
+                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
                             </div>
                             <div className="fechaNacimiento">
                                 <Form.Group as={Row}>
-                                    <Form.Label className="labelLargo" column sm={3}>
-                                        Fecha de nacimiento
-                                </Form.Label>
+                                    <Form.Label className="labelLargo" column sm={3}>Fecha de nacimiento</Form.Label>
                                     <Col sm={10}>
                                         <DatePickerInput
                                             name="fecha_nac"
@@ -236,6 +227,7 @@ class RegistroConsumidor extends Component {
                                             className="calendario"
                                             onChange={(e) => this.cambiosFecha(e)}
                                             value={this.state.campos["fecha_nac"]}
+                                            className="camposDatosDeUsuario"
                                         />
                                         <div className="errorConsu">
                                             {this.state.errores["fecha_nac"]}
@@ -245,67 +237,57 @@ class RegistroConsumidor extends Component {
                             </div>
                             <div className="tel">
                                 <Form.Group as={Row} >
-                                    <Form.Label className="labelLargo" column sm={3}>
-                                        Teléfono de contacto
-                                </Form.Label>
+                                    <Form.Label className="labelLargo" column sm={3}>Teléfono de contacto</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
-                                            type="telR"
                                             name="tel"
                                             pattern="[0-9]{8,14}"
                                             onChange={(e) => this.detectarCambios(e)}
                                             maxLength="14"
+                                            className="camposDatosDeUsuario"
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">
-                                            *Campo inválido
-										</Form.Control.Feedback>
+                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
                             </div>
                             <div className="email">
                                 <Form.Group as={Row}>
-                                    <Form.Label column sm={2}>
-                                        Email
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Email</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
                                             type="email"
                                             name="email"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">
-                                            *Campo inválido
-												</Form.Control.Feedback>
+                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
                             </div>
                             <div className="password">
                                 <Form.Group as={Row} >
-                                    <Form.Label column sm={2}>
-                                        Password
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Password</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
                                             required
-                                            type="password"
                                             name="password"
+                                            type="password"
                                             onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">
-                                            *Campo inválido
-												</Form.Control.Feedback>
+                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
                                     </Col>
                                 </Form.Group>
                             </div>
-                            <div className="botonesUsuarios">
-                                <Button variant="light" href='/seleccionUsuario'>Atrás</Button>
-                                <Button variant="light" onClick={this.limpiarCampos}>Limpiar</Button>
-                                <Button variant="success" type="submit">Crear</Button>
-                            </div>
-                        </Form>
-                    </div>
+                        </div>
+                        <div className="botones">
+                            <Button variant="light" href='/seleccionUsuario'>Atrás</Button>
+                            <Button variant="light" onClick={this.limpiarCampos}>Limpiar</Button>
+                            <Button variant="success" type="submit">Crear</Button>
+                        </div>
+                    </Form>
                     <section>
                         <Modal
                             visible={this.state.visible}
