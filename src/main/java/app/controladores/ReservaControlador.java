@@ -227,7 +227,8 @@ public class ReservaControlador {
 			alertas.setId(1);
 			alertaNoti.setTipo("Web");
 			alertaNoti.setTitulo("Nueva Reserva");
-			alertaNoti.setDescripcion("Felicitaciones! El/La consumidor/a " + nuevaReserva.getConsumidor().getUsuario().getNombre() + " generó la reserva # "
+			alertaNoti.setDescripcion("Felicitaciones! El/La consumidor/a "
+					+ nuevaReserva.getConsumidor().getUsuario().getNombre() + " generó la reserva # "
 					+ nuevaReserva.getId() + "Accedé a la sección de Reservas para ver el detalle.");
 			alertaNoti.setUsuario(nuevaReserva.getProductor().getUsuario());
 			alertaNoti.setAlerta(alertas);
@@ -286,8 +287,6 @@ public class ReservaControlador {
 			EntidadUsuario consumidor = mapeoUsuario.mapToEntity(reserva.getConsumidor().getUsuario());
 			EntidadAlerta alertas = new EntidadAlerta();
 			alertas.setId(1);
-			alertaNoti.setTipo("Web");
-			alertaNoti.setTitulo("Actualización de Reserva");
 
 			int estado = Math.toIntExact(id_estado);
 			switch (estado) {
@@ -297,32 +296,38 @@ public class ReservaControlador {
 			}
 			case 4: {
 				alertaNoti.setDescripcion("Tu reserva #" + reserva.getId()
-						+ " está finalizada! Accedé a la sección de Reservas para ver el detalle.");
-				alertaNoti.setUsuario(productor);
-				alertaNoti.setAlerta(alertas);
-				listaAlertas.add(alertaNoti);
+						+ " está finalizada! Accedé a la sección de Reservas para ver el detalle.");			
 				break;
 			}
 			case 5: {
 				alertaNoti.setDescripcion("Tu reserva #" + reserva.getId()
 						+ " ha sido cancelada. Accedé a la sección de Reservas para ver el detalle.");
-				alertaNoti.setUsuario(productor);
-				alertaNoti.setAlerta(alertas);
-				listaAlertas.add(alertaNoti);
+				
 				break;
 			}
 			default: {
 				alertaNoti.setDescripcion("Tu reserva #" + reserva.getId()
 						+ " cambió de estado. Accedé a la sección de Reservas para ver el detalle.");
-				break;
 			}
 			}
-
+			
+			if (estado == 4 || estado == 5) {
+				EntidadAlertaNotificaciones alertaNoti2 = new EntidadAlertaNotificaciones();
+				alertaNoti2.setTipo("Web");
+				alertaNoti2.setTitulo("Actualización de Reserva");
+				alertaNoti2.setDescripcion(alertaNoti.getDescripcion());
+				alertaNoti2.setAlerta(alertas);
+				alertaNoti2.setUsuario(productor);
+				listaAlertas.add(alertaNoti2);				
+			} 
+			alertaNoti.setTipo("Web");
+			alertaNoti.setTitulo("Actualización de Reserva");
 			alertaNoti.setUsuario(consumidor);
 			alertaNoti.setAlerta(alertas);
 			listaAlertas.add(alertaNoti);
+
 			alertaNotiDAO.saveAll(listaAlertas);
-			
+
 			// Genero los mails de alertas
 			String mailConsumidor = consumidor.getUsuario();
 			String mailProductor = productor.getUsuario();
