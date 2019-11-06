@@ -21,10 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 import app.clases.ListadoCalificaciones;
 import app.clases.MailNuevaCalificacion;
 import app.clases.Reserva;
+import app.daos.AlertaNotificacionesDao;
 import app.daos.CalificacionDao;
 import app.daos.ReservaDao;
 import app.mappers.ReservaMapper;
+import app.mappers.UsuarioMapper;
+import app.modelos.EntidadAlerta;
+import app.modelos.EntidadAlertaNotificaciones;
 import app.modelos.EntidadCalificacion;
+import app.modelos.EntidadUsuario;
 
 @RestController
 public class CalificacionControlador {
@@ -34,11 +39,16 @@ public class CalificacionControlador {
 
 	@Autowired
 	ReservaDao reservaDao;
+	
+	@Autowired
+	AlertaNotificacionesDao alertaNotiDAO;
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/guardarCalificacion")
 	public ResponseEntity<String> guardarCalificacion(@RequestParam long reserva_id,
 			@RequestBody EntidadCalificacion calificacionAGuardar) {
+		
+		UsuarioMapper mapeoUsuario = new UsuarioMapper();
 
 		try {
 			EntidadCalificacion calificacion = new EntidadCalificacion();
@@ -58,6 +68,19 @@ public class CalificacionControlador {
 						reserva.getProductor().getUsuario().getUsuario(), reserva);
 
 				mailConsumidor.enviarMail();
+				
+				// Guardo alerta en la base
+				EntidadAlertaNotificaciones alertaNoti = new EntidadAlertaNotificaciones();
+				EntidadAlerta alertas = new EntidadAlerta();
+				EntidadUsuario productor = mapeoUsuario.mapToEntity(reserva.getProductor().getUsuario());
+				alertas.setId(1);
+				alertaNoti.setTipo("Web");
+				alertaNoti.setTitulo("Nueva Calificación");
+				alertaNoti.setDescripcion("Felicitaciones! El/La consumidor/a " + reserva.getConsumidor().getUsuario().getNombre() + " te calificó por la atención brindada durante la reserva #"
+						+ reserva.getId() + ". Accedé a la sección de Calificaciones para ver el detalle.");
+				alertaNoti.setUsuario(productor);
+				alertaNoti.setAlerta(alertas);
+				alertaNotiDAO.save(alertaNoti);
 
 			} catch (AddressException e) {
 				// TODO Auto-generated catch block
