@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.daos.AlertaDao;
 import app.daos.AlertaNotificacionesDao;
+import app.daos.ReservaDao;
 import app.modelos.EntidadAlerta;
 import app.modelos.EntidadAlertaNotificaciones;
 import app.modelos.EntidadReserva;
 
 @RestController
 public class AlertaNotificacionesControlador {
+	
+	@Autowired
+	ReservaDao reservaDao;
 
 	@Autowired
 	AlertaDao alertaDAO;
@@ -35,10 +39,11 @@ public class AlertaNotificacionesControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/AlertaNotificaciones/guardarAlertaReserva")
-	public boolean guardarAlertaNuevaReserva(@RequestParam String tipoApp, @RequestBody EntidadReserva reserva) {
+	public boolean guardarAlertaNuevaReserva(@RequestParam String tipoApp, @RequestParam Long idReserva) {
 		try {
+			EntidadReserva reserva = reservaDao.obtenerReservaById(idReserva);
 			EntidadAlertaNotificaciones alertaNoti = new EntidadAlertaNotificaciones();
-			EntidadAlerta alerta = new EntidadAlerta(); //alertaDAO.obtenerAlertaById(1);
+			EntidadAlerta alerta = new EntidadAlerta(); 
 			alerta.setId(1);
 
 			alertaNoti.setTipo(tipoApp);
