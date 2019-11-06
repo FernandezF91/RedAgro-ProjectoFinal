@@ -325,7 +325,7 @@ class DatosDeUsuario extends Component {
                                 displayFormat='DD/MM/YYYY'
                                 maxDate={maxDate}
                                 onChange={(e) => this.cambiosFecha(e)}
-                                className="calend camposDatosDeUsuario"
+                                className="col-md-3 padding0Inputs camposDatosDeUsuario"
                             />
                         </Form.Group>
                     </div>

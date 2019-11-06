@@ -1,14 +1,16 @@
-import React, { Component } from 'react'
-import { Form, Row, Button } from 'react-bootstrap';
-import 'moment/locale/es';
-import { DatePickerInput } from 'rc-datepicker';
 import 'rc-datepicker/lib/style.css';
-import Select from 'react-select';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Loader from 'react-loader-spinner';
-
 import '../diseños/nuevoProducto.css';
 import '../diseños/estilosGlobales.css';
+
+import React, { Component } from 'react';
+import { Form, Row, Button, InputGroup } from 'react-bootstrap';
+import { MDBCol, MDBModal } from "mdbreact";
+import { DatePickerInput } from 'rc-datepicker';
+import Select from 'react-select';
+import Loader from 'react-loader-spinner';
+import moment from 'moment';
+
+import 'moment/locale/es';
 import Modal from 'react-awesome-modal';
 
 import { FilePond, registerPlugin } from 'react-filepond';
@@ -393,183 +395,189 @@ class NuevoProducto extends Component {
         )
 
         return (
-            <div className="container">
+            <div>
                 <div className="titulosPrincipales">Nuevo producto</div>
-                <div className="condicionesInputsCO">(*) Campos obligatorios</div>
+                <div className="condicionesInputsTitulo">(*) Campos obligatorios</div>
+                <br />
                 <Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
-                    <div className="titulo">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>*Título</Form.Label>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" className="labelCampoTextarea">
+                            <Form.Label column>*Título</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Form.Control
                                 value={this.state.campos["titulo"]}
-                                type="titulo"
                                 name="titulo"
                                 maxLength="100"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="col-md-8"
                             />
-                        </Form.Group>
-                        <div className="condicionesInputs">(*) 100 caracteres como máximo</div>
-                    </div>
-                    <div className="descripcion" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Descripción
-									</Form.Label>
+                            <div className="condicionesInputs col-md-8">(*) 100 caracteres como máximo</div>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" className="labelCampoTextarea">
+                            <Form.Label column>*Descripción</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Form.Control
                                 value={this.state.campos["descripcion"]}
                                 as="textarea"
                                 rows="3"
-                                type="desc"
                                 name="descripcion"
                                 maxLength="255"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="col-md-8"
                             />
-                        </Form.Group>
-                        <div className="condicionesInputs">(*) 255 caracteres como máximo</div>
-                    </div>
-                    <div className="dropdownCategoria">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Categoria
-								</Form.Label>
+                            <div className="condicionesInputs col-md-8">(*) 255 caracteres como máximo</div>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>*Categoria</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Select
                                 value={this.state.valueCat}
-                                className="selectCategoria"
+                                className="selectFormularios col-md-8"
                                 name="categoria"
                                 options={categorias}
                                 placeholder="Seleccione un item..."
                                 onChange={(opt, a, value) => this.cambiosSelectCategoria(opt, a, value)}
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="dropdownTipoProducto">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Tipo de producto
-								</Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>Tipo de producto</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Select
                                 isLoading={this.state.loadingTipo}
                                 isDisabled={this.state.disabled}
                                 value={this.state.valueTp}
-                                className="selectTipoProducto"
+                                className="selectFormularios col-md-8"
                                 name="tipo_producto"
                                 options={this.state.tipos_producto}
                                 placeholder="Seleccione un item..."
                                 onChange={(opt, a, value) => this.cambiosSelectTipoProducto(opt, a, value)}
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="dropdownTipoProduccion">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Tipo de Producción
-								</Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>*Tipo de producción</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Select
                                 value={this.state.valueTprod}
-                                className="selectTipoProduccion"
+                                className="selectFormularios col-md-8"
                                 name="tipo_produccion"
                                 options={tipoProduccion}
                                 placeholder="Seleccione un item..."
                                 onChange={(opt, a, value) => this.cambiosSelectTprod(opt, a, value)}
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="unidad_venta">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Unidad de venta
-                                </Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>*Unidad de venta</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Select
                                 value={this.state.valueUnidadVenta}
-                                className="selectTipoUnidad"
+                                className="selectFormularios col-md-8"
                                 name="unidad_venta"
                                 options={tipoUnidadVenta}
                                 placeholder="Seleccione un item..."
                                 onChange={(opt, a, value) => this.cambiosSelectUnidadV(opt, a, value)}
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="contenido">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Contenido
-                                </Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>Contenido</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Form.Control
                                 value={this.state.campos["contenido"]}
-                                type="contenido"
                                 name="contenido"
                                 disabled={this.state.disabled2}
                                 maxLength="50"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="col-md-8"
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="stock">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Cantidad disponible
-                                </Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>*Cantidad disponible</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Form.Control
                                 value={this.state.campos["stock"]}
                                 type="number"
                                 name="stock"
                                 min="0"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="col-md-8"
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="precio">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Precio (por unidad de venta)
-                                </Form.Label>
-                            <InputGroup className="estiloCampoPrecio">
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>*Precio (por unidad de venta)</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <InputGroup className="col-md-3 padding0Inputs">
                                 <InputGroup.Prepend>
-                                    <InputGroup.Text className="iconoPrecio sinBorde">$</InputGroup.Text>
+                                    <InputGroup.Text className="iconoInputGroupBordeDerecho">$</InputGroup.Text>
                                 </InputGroup.Prepend>
                                 <Form.Control
                                     value={this.state.campos["precio"]}
-                                    type="text"
                                     name="precio"
                                     onChange={(e) => this.detectarCambios(e)}
-                                    className="campoSinBordeNumeros inputDerecha"
+                                    className="inputDerecha"
                                 />
                             </InputGroup>
-                        </Form.Group>
-                    </div>
-                    <div className="tiempo_preparacion">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Tiempo de preparación (en días)
-                                </Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>Tiempo de preparación (en días)</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Form.Control
                                 value={this.state.campos["tiempo_preparacion"]}
                                 type="number"
                                 min="1"
                                 name="tiempo_preparacion"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="col-md-8"
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="fechaVencimiento">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Fecha de vencimiento
-                                </Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>Fecha de vencimiento</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <DatePickerInput
                                 name="fecha_ven"
                                 displayFormat='DD/MM/YYYY'
                                 minDate={minDate}
-                                className="calen"
+                                className="col-md-3 padding0Inputs"
                                 value={this.state.campos["fecha_ven"]}
                                 onChange={(e) => this.cambiosFecha(e)}
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="imagenes">
-                        <div className="tituloImagen">*Imágenes</div>
+                        </MDBCol>
+                    </Form.Group>
+                    <br />
+                    <div>
+                        <span md="3">*Imágenes</span>
+                        <br />
                         <FilePond
-                            className="cursorManito"
+                            className="cursorManito cajaImagenesWidth"
                             ref={this.featurePond}
                             allowMultiple={true}
                             maxFiles={5}
@@ -582,9 +590,9 @@ class NuevoProducto extends Component {
                                     files: fileItems.map(fileItem => fileItem.file)
                                 });
                             }} />
+                        <div className="condicionesInputs">(*) 5 imágenes como máximo</div>
                     </div>
-                    <div className="condicionesInputsImg">(*) 5 imágenes como máximo</div>
-                    <div className="botones">
+                    < div className="botones">
                         <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                         <Button variant="light" onClick={() => this.limpiarCampos()}>Limpiar</Button>
                         <Button variant="success" type="submit">Crear</Button>

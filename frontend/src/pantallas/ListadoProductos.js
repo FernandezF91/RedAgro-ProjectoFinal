@@ -453,7 +453,7 @@ class ListadoProductos extends Component {
                                         className="inputDerecha"
                                     />
                                     <InputGroup.Append>
-                                        <InputGroup.Text className="iconoPrecio sinBorde inputIcono">%</InputGroup.Text>
+                                        <InputGroup.Text className="iconoInputGroupBordeIzquierdo">%</InputGroup.Text>
                                     </InputGroup.Append>
                                 </InputGroup>
                                 {

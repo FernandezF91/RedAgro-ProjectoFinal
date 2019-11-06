@@ -23,24 +23,6 @@
 	outline: none;
 }
 
-.condicionesInputs {
-	margin-left: -15%;
-	color: #cc0000;
-	font-size: 13px;
-	margin-bottom: 15px;
-}
-
-.condicionesInputsImg {
-	color: #cc0000;
-	font-size: 13px;
-}
-
-.condicionesInputsCO {
-	margin-left: -18%;
-	color: #cc0000;
-	font-size: 13px;
-}
-
 #number {
 	width: 16%;
 }

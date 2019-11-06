@@ -1,15 +1,17 @@
-import React, { Component } from 'react'
-import { Form, Row, Button, InputGroup } from 'react-bootstrap';
-import 'moment/locale/es';
-import { DatePickerInput } from 'rc-datepicker';
 import 'rc-datepicker/lib/style.css';
+import '../diseños/nuevoProducto.css';
+import '../diseños/estilosGlobales.css';
+
+import React, { Component } from 'react';
+import { Form, Button, InputGroup } from 'react-bootstrap';
+import { MDBCol, MDBRow, MDBModal } from "mdbreact";
+import { DatePickerInput } from 'rc-datepicker';
 import Select from 'react-select';
 import Loader from 'react-loader-spinner';
 import moment from 'moment';
-import { MDBModal } from 'mdbreact';
 
-import '../diseños/nuevoProducto.css';
-import '../diseños/estilosGlobales.css';
+import 'moment/locale/es';
+import Modal from 'react-awesome-modal';
 
 import { FilePond, registerPlugin } from 'react-filepond';
 // Import FilePond styles
@@ -19,8 +21,7 @@ import 'filepond/dist/filepond.min.css';
 // Note: These need to be installed separately
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondTypeValidate from "filepond-plugin-file-validate-type";
-//import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'; import { isDate } from 'moment';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 const minDate = new Date();
 
@@ -98,7 +99,7 @@ class EditarProducto extends Component {
                         stock: data.stock,
                         tipoDeUnidad: data.unidad_venta,
                         tipoDeProduccion: data.tipo_produccion,
-                        precio: data.precio,
+                        precio: data.precio.toString().replace(".", ","),
                         fechaDeVencimiento: data.fecha_vencimiento,
                         tiempoDePreparacion: data.tiempo_preparacion,
                         contenido: data.contenido,
@@ -119,7 +120,9 @@ class EditarProducto extends Component {
                         if (producto.fechaDeVencimiento !== "-") {
                             campos["fecha_vencimiento"] = producto.fechaDeVencimiento;
                         }
+
                         campos["precio"] = producto.precio;
+
                         campos["stock"] = producto.stock;
                         campos["contenido"] = producto.contenido;
                         campos["tiempo_preparacion"] = producto.tiempoDePreparacion;
@@ -186,11 +189,11 @@ class EditarProducto extends Component {
         if (!this.state.campos["precio"]) {
             validaciones["precio"] = "Campo requerido";
             showModal = true;
-        } else if (!regularExp.numerosDecimales.test(this.state.campos["precio"])) {
-            validaciones["precio"] = "Formato invalido reg";
+        } else if (this.state.campos["precio"] < 0) {
+            validaciones["precio"] = "Precio inválido";
             showModal = true;
-        } else if (isNaN(this.state.campos["precio"])) {
-            validaciones["precio"] = "Formato invalido nan";
+        } else if (!regularExp.numerosDecimales.test(this.state.campos["precio"])) {
+            validaciones["precio"] = "Formato invalido";
             showModal = true;
         }
 
@@ -253,8 +256,7 @@ class EditarProducto extends Component {
                     "titulo": this.state.campos["titulo"],
                     "descripcion": this.state.campos["descripcion"],
                     "fecha_vencimiento": this.state.campos["fecha_vencimiento"],
-                    //"precio": this.state.campos["precio"].replace(",", "."),
-                    "precio": this.state.campos["precio"],
+                    "precio": this.state.campos["precio"].replace(",", "."),
                     "stock": this.state.campos["stock"],
                     "tiempo_preparacion": this.state.campos["tiempo_preparacion"],
                     "contenido": this.state.campos["contenido"]
@@ -366,206 +368,220 @@ class EditarProducto extends Component {
         )
 
         return (
-            <div className="container">
+            <div>
                 <div className="titulosPrincipales">Editar producto</div>
-                <div className="condicionesInputsCO">(*) Campos obligatorios</div>
+                <div className="condicionesInputsTitulo">(*) Campos obligatorios</div>
+                <br />
                 <Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
-                    <div className="titulo">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>*Título</Form.Label>
-                            <Form.Control
-                                value={this.state.campos["titulo"]}
-                                type="titulo"
-                                name="titulo"
-                                onChange={(e) => this.detectarCambios(e)}
-                                maxLength="100"
-                            />
-                            {
-                                (this.state.validaciones["titulo"]) &&
-                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["titulo"]} />
-                            }
-                        </Form.Group>
-                        <div className="condicionesInputs">(*) 100 caracteres como máximo</div>
-                    </div>
-                    <div className="descripcion" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Descripción
-									</Form.Label>
-                            <Form.Control
-                                value={this.state.campos["descripcion"]}
-                                as="textarea"
-                                rows="3"
-                                type="desc"
-                                name="descripcion"
-                                maxLength="255"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                            {
-                                (this.state.validaciones["descripcion"]) &&
-                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["descripcion"]} />
-                            }
-                        </Form.Group>
-                        <div className="condicionesInputs">(*) 255 caracteres como máximo</div>
-                    </div>
-                    <div className="dropdownCategoria">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Categoria
-								</Form.Label>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" className="labelCampoTextarea">
+                            <Form.Label column>*Título</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["titulo"]}
+                                    name="titulo"
+                                    maxLength="100"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["titulo"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["titulo"]} />
+                                }
+                            </MDBRow>
+                            <div className="condicionesInputs col-md-8">(*) 100 caracteres como máximo</div>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" className="labelCampoTextarea">
+                            <Form.Label column>*Descripción</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["descripcion"]}
+                                    as="textarea"
+                                    rows="3"
+                                    name="descripcion"
+                                    maxLength="255"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["descripcion"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["descripcion"]} />
+                                }
+                            </MDBRow>
+                            <div className="condicionesInputs col-md-8">(*) 255 caracteres como máximo</div>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>*Categoria</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Select
                                 isDisabled={true}
                                 value={this.state.categoria}
-                                className="selectCategoria"
+                                className="selectFormulariosDisabled col-md-8"
                                 name="categoria"
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="dropdownTipoProducto">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Tipo de producto
-								</Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>Tipo de producto</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Select
                                 isDisabled={true}
                                 value={this.state.tipoProducto}
-                                className="selectTipoProducto"
+                                className="selectFormulariosDisabled col-md-8"
                                 name="tipo_producto"
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="dropdownTipoProduccion">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Tipo de Producción
-								</Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>*Tipo de producción</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Select
                                 isDisabled={true}
                                 value={this.state.tipoProduccion}
-                                className="selectTipoProduccion"
+                                className="selectFormulariosDisabled col-md-8"
                                 name="tipo_produccion"
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="unidad_venta">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Unidad de venta
-                                </Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>*Unidad de venta</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
                             <Select
                                 isDisabled={true}
                                 value={this.state.valueUnidadVenta}
-                                className="selectTipoUnidad"
+                                className="selectFormulariosDisabled col-md-8"
                                 name="unidad_venta"
                             />
-                        </Form.Group>
-                    </div>
-                    <div className="contenido">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Contenido
-                                </Form.Label>
-                            <Form.Control
-                                value={this.state.campos["contenido"]}
-                                type="contenido"
-                                name="contenido"
-                                maxLength="50"
-                                onChange={(e) => this.detectarCambios(e)}
-                                disabled={this.state.contenidoDeshabilitado}
-                            />
-                            {
-                                (this.state.validaciones["contenido"]) &&
-                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["contenido"]} />
-                            }
-                        </Form.Group>
-                    </div>
-                    <div className="stock">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Cantidad disponible
-                                </Form.Label>
-                            <Form.Control
-                                value={this.state.campos["stock"]}
-                                type="number"
-                                name="stock"
-                                min="0"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                            {
-                                (this.state.validaciones["stock"]) &&
-                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["stock"]} />
-                            }
-                        </Form.Group>
-                    </div>
-                    <div className="precio">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                *Precio (por unidad de venta)
-                                </Form.Label>
-                            <InputGroup className="estiloCampoPrecio">
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text className="iconoPrecio sinBorde">$</InputGroup.Text>
-                                </InputGroup.Prepend>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>Contenido</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
                                 <Form.Control
-                                    value={this.state.campos["precio"]}
-                                    type="text"
-                                    name="precio"
+                                    value={this.state.campos["contenido"]}
+                                    name="contenido"
+                                    maxLength="50"
                                     onChange={(e) => this.detectarCambios(e)}
-                                    className="campoSinBordeNumeros inputDerecha"
+                                    disabled={this.state.contenidoDeshabilitado}
+                                    className="col-md-8"
                                 />
-                            </InputGroup>
-                            {
-                                (this.state.campos["precio"] <= 0) &&
-                                <i className="fa fa-exclamation-circle mensajeErrorForm" title="El precio debe ser mayor a 0" />
-                            }
-                            {
-                                (this.state.validaciones["precio"]) &&
-                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["precio"]} />
-                            }
-                        </Form.Group>
-
-                    </div>
-                    <div className="tiempo_preparacion">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Tiempo de preparación (en días)
-                                </Form.Label>
-                            <Form.Control
-                                value={this.state.campos["tiempo_preparacion"]}
-                                type="number"
-                                name="tiempo_preparacion"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                            {
-                                (this.state.validaciones["tiempo_preparacion"] && this.state.campos["tiempo_preparacion"] <= 0) &&
-                                <i className="fa fa-exclamation-circle mensajeErrorForm" title="El tiempo de preparación no puede ser menor a 0" />
-                            }
-                        </Form.Group>
-                    </div>
-                    <div className="fechaVencimiento">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Fecha de vencimiento
-                                </Form.Label>
-                            <DatePickerInput
-                                name="fecha_vencimiento"
-                                displayFormat='DD/MM/YYYY'
-                                minDate={minDate}
-                                className="calen"
-                                value={this.state.campos["fecha_vencimiento"]}
-                                onChange={(e) => this.cambiosFecha(e)}
-                            />
-                            {
-                                (this.state.validaciones["fecha_vencimiento"]) &&
-                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["fecha_vencimiento"]} />
-                            }
-                        </Form.Group>
-                    </div>
-                    <div className="imagenes">
-                        <div className="tituloImagen">*Imágenes</div>
+                                {
+                                    (this.state.validaciones["contenido"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["contenido"]} />
+                                }
+                            </MDBRow>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>*Cantidad disponible</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["stock"]}
+                                    type="number"
+                                    name="stock"
+                                    min="0"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["stock"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["stock"]} />
+                                }
+                            </MDBRow>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>*Precio (por unidad de venta)</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
+                                <InputGroup className="col-md-3 padding0Inputs">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text className="iconoInputGroupBordeDerecho">$</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <Form.Control
+                                        value={this.state.campos["precio"]}
+                                        name="precio"
+                                        onChange={(e) => this.detectarCambios(e)}
+                                        className="inputDerecha"
+                                    />
+                                </InputGroup>
+                                {
+                                    (this.state.validaciones["precio"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["precio"]} />
+                                }
+                            </MDBRow>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>Tiempo de preparación (en días)</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["tiempo_preparacion"]}
+                                    type="number"
+                                    name="tiempo_preparacion"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["tiempo_preparacion"] && this.state.campos["tiempo_preparacion"] <= 0) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title="El tiempo de preparación no puede ser menor a 0" />
+                                }
+                            </MDBRow>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4">
+                            <Form.Label column>Fecha de vencimiento</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
+                                <DatePickerInput
+                                    name="fecha_vencimiento"
+                                    displayFormat='DD/MM/YYYY'
+                                    minDate={minDate}
+                                    className="col-md-3 padding0Inputs"
+                                    value={this.state.campos["fecha_vencimiento"]}
+                                    onChange={(e) => this.cambiosFecha(e)}
+                                />
+                                {
+                                    (this.state.validaciones["fecha_vencimiento"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["fecha_vencimiento"]} />
+                                }
+                            </MDBRow>
+                        </MDBCol>
+                    </Form.Group>
+                    <br />
+                    <div>
+                        <span md="3">*Imágenes</span>
+                        <br />
                         <FilePond
-                            files={this.state.files}
-                            className="cursorManito"
+                            className="cursorManito cajaImagenesWidth"
                             ref={this.featurePond}
                             allowMultiple={true}
                             maxFiles={5}
@@ -578,8 +594,8 @@ class EditarProducto extends Component {
                                     files: fileItems.map(fileItem => fileItem.file)
                                 });
                             }} />
+                        <div className="condicionesInputs">(*) 5 imágenes como máximo</div>
                     </div>
-                    <div className="condicionesInputsImg">(*) 5 imágenes como máximo</div>
                     <div className="botones">
                         <Button variant="light" onClick={this.mostrarListadoDeProductos}>Cancelar</Button>
                         <Button variant="light" onClick={() => this.limpiarCampos()}>Limpiar</Button>

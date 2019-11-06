@@ -55,7 +55,7 @@ class CargarHistorico extends Component {
 		this.subirArchivos = this.subirArchivos.bind(this);
 		this.validarCampos = this.validarCampos.bind(this);
 		this.cerrarModal = this.cerrarModal.bind(this);
-	    this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+		this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 
 	}
 
@@ -73,7 +73,7 @@ class CargarHistorico extends Component {
 		if (this.state.files.length === 0) {
 
 			this.setState({
-				showModal:true,
+				showModal: true,
 				mensaje: "Tenés que cargar un archivo",
 				formOK: false,
 			});
@@ -95,14 +95,13 @@ class CargarHistorico extends Component {
 
 
 			var formato = file.name.split(".")
-			
-			if(formato[1]==="csv")
-			{
+
+			if (formato[1] === "csv") {
 				let data = new FormData();
 				data.append('file', file);
 				data.append('name', file.name);
 
-		
+
 				fetch(path, {
 					method: 'POST',
 					body: data
@@ -111,7 +110,7 @@ class CargarHistorico extends Component {
 					if (response.status !== 200) {
 
 						_this.setState({
-							showModal:true,
+							showModal: true,
 							mensaje: "Ocurrió algún error inesperado. Intenta nuevamente",
 							formOK: false,
 							resultadoRequest: false
@@ -122,7 +121,7 @@ class CargarHistorico extends Component {
 						function (response) {
 
 							_this.setState({
-								showModal:true,
+								showModal: true,
 								mensaje: "El archivo se guardo correctamente",
 								formOK: true,
 								resultadoRequest: true
@@ -131,15 +130,15 @@ class CargarHistorico extends Component {
 						});
 
 				});
-	
-			}else{
+
+			} else {
 
 
-              _this.setState({
-							showModal:true,
-							mensaje: "El archivo debe ser .csv",
-							formOK: false,
-                });
+				_this.setState({
+					showModal: true,
+					mensaje: "El archivo debe ser .csv",
+					formOK: false,
+				});
 			}
 
 		}
@@ -149,83 +148,79 @@ class CargarHistorico extends Component {
 
 	cerrarModal() {
 
-		if(this.state.formOK===true){
+		if (this.state.formOK === true) {
 
-       this.mostrarPantallaPrincipal()
+			this.mostrarPantallaPrincipal()
 
 		}
-        this.setState({
-            showModal: false
-        })
-    }
+		this.setState({
+			showModal: false
+		})
+	}
 
 
 	render() {
 
 		if (this.state.loading) return (
-            <Loader
-                type="Grid"
-                color="#28A745"
-                height={150}
-                width={150}
-                className="loader"
-            />
+			<Loader
+				type="Grid"
+				color="#28A745"
+				height={150}
+				width={150}
+				className="loader"
+			/>
 		)
-		
-		return (
-			<div className="container">
-				<div className="imagenes">
-					<div className="titulosPrincipales">Cargar archivos históricos</div>
-				</div>
-				<br></br>
-				<div className="imagenes">
-					<div className="titulosPrincipales"></div>
-					<h5>Seleccione los archivos históricos a cargar</h5>
-					<FilePond
-						ref="filep"
-						allowMultiple={false}
-						maxFiles={1}
-						labelIdle={"Arrastre o suba sus archivos aquí"}
-						onupdatefiles={(fileItems) => {
-							// Set current file objects to this.state
-							this.setState({
-								files: fileItems.map(fileItem => fileItem.file)
-							});
 
-						}} />
+		return (
+			<div>
+				<div className="titulosPrincipales">Cargar archivos históricos</div>
+				<span md="3">Seleccione los archivos históricos a cargar</span>
+				<FilePond
+					className="cursorManito cajaImagenesWidth"
+					ref="filep"
+					allowMultiple={false}
+					maxFiles={1}
+					labelIdle={"Arrastre o suba sus archivos aquí"}
+					onupdatefiles={(fileItems) => {
+						// Set current file objects to this.state
+						this.setState({
+							files: fileItems.map(fileItem => fileItem.file)
+						});
+					}}
+				/>
+				<div>
+					<Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+					<Button variant="success" onClick={() => this.subirArchivos()}>Guardar</Button>
 				</div>
 				{
-                    (this.state.showModal) &&
-                    (
-                        <MDBModal isOpen={this.state.showModal} centered size="sm">
-                            <div className="modalMargenes">
-                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                                <br />
-                                {(this.state.resultadoRequest === true) ?
-                                    (
-                                        <div>
-                                            <i className="fas fa-check-circle iconoModalOk" />
-                                            <br />
-                                            <br />
-                                            <h5>{this.state.mensaje}</h5>
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <i className="fas fa-exclamation-circle iconoModalError" />
-                                            <br />
-                                            <br />
-                                            <h5>{this.state.mensaje}</h5>
-                                        </div>
-                                    )
-                                }
-                            </div>
-                        </MDBModal>
-                    )
-                }
-				<div >
-					<Button variant="success" onClick={()=>this.subirArchivos()}>Guardar</Button>
-				</div>
-			</div>
+					(this.state.showModal) &&
+					(
+						<MDBModal isOpen={this.state.showModal} centered size="sm">
+							<div className="modalMargenes">
+								<i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+								<br />
+								{(this.state.resultadoRequest === true) ?
+									(
+										<div>
+											<i className="fas fa-check-circle iconoModalOk" />
+											<br />
+											<br />
+											<h5>{this.state.mensaje}</h5>
+										</div>
+									) : (
+										<div>
+											<i className="fas fa-exclamation-circle iconoModalError" />
+											<br />
+											<br />
+											<h5>{this.state.mensaje}</h5>
+										</div>
+									)
+								}
+							</div>
+						</MDBModal>
+					)
+				}
+			</div >
 
 		)
 	}

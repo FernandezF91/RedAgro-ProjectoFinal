@@ -198,8 +198,9 @@ class RegistroProductor extends Component {
                     <div className="titulosPrincipales">
                         Creá tu cuenta en Cultura Verde
                     </div>
-                    <div className="contenidoRegistro">
-                        <Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+
+                    <Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+                        <div className="contenidoRegistro">
                             <div className="nombre" >
                                 <Form.Group as={Row} controlId="validationCustom01">
                                     <Form.Label column sm={2}>Nombre</Form.Label>
@@ -310,13 +311,14 @@ class RegistroProductor extends Component {
                                     </Col>
                                 </Form.Group>
                             </div>
-                            <div className="botones">
-                                <Button variant="light" href='/seleccionUsuario'>Atrás</Button>
-                                <Button variant="light" onClick={this.limpiarCampos}>Limpiar</Button>
-                                <Button variant="success" type="submit">Crear</Button>
-                            </div>
-                        </Form>
-                    </div>
+                        </div>
+                        <div className="botones">
+                            <Button variant="light" href='/seleccionUsuario'>Atrás</Button>
+                            <Button variant="light" onClick={this.limpiarCampos}>Limpiar</Button>
+                            <Button variant="success" type="submit">Crear</Button>
+                        </div>
+                    </Form>
+
                     <section>
                         <Modal
                             visible={this.state.visible}

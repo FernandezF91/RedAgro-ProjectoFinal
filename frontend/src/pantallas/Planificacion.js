@@ -1,38 +1,37 @@
 import React, { Component } from 'react'
 import { Form, Row, Button } from 'react-bootstrap';
 import Select from 'react-select';
-import { MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
+import { MDBCol, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
 import { Link } from 'react-router-dom';
-    import '../diseños/estilosGlobales.css';
+import '../diseños/estilosGlobales.css';
 import '../diseños/Planificacion.css';
 
 const mostrarZonas = [
     { label: "CABA y Gran Buenos Aires", value: "CABA" },
     { label: "Buenos Aires", value: "BUENOSAIRES" },
     { label: "Catamarca", value: "CATAMARCA" },
-	{ label: "Chaco", value: "CHACO"},
-	{ label: "Chubut", value: "CHUBUT" },
+    { label: "Chaco", value: "CHACO" },
+    { label: "Chubut", value: "CHUBUT" },
     { label: "Córdoba", value: "CORDOBA" },
     { label: "Corrientes", value: "CORRIENTES" },
-	{ label: "Entre Ríos", value: "ENTRERIOS"},
-	{ label: "Formosa", value: "FORMOSA" },
+    { label: "Entre Ríos", value: "ENTRERIOS" },
+    { label: "Formosa", value: "FORMOSA" },
     { label: "Jujuy", value: "JUJUY" },
     { label: "La Pampa", value: "LAPAMPA" },
-	{ label: "La Rioja", value: "LARIOJA"},
-	{ label: "Mendoza", value: "MENDOZA" },
+    { label: "La Rioja", value: "LARIOJA" },
+    { label: "Mendoza", value: "MENDOZA" },
     { label: "Misiones", value: "MISIONES" },
     { label: "Neuquén", value: "NEUQUEN" },
-	{ label: "Rio Negro", value: "RIO NEGRO"},
-	{ label: "Salta", value: "SALTA" },
+    { label: "Rio Negro", value: "RIO NEGRO" },
+    { label: "Salta", value: "SALTA" },
     { label: "San Juan", value: "SANJUAN" },
     { label: "San Luis", value: "SANLUIS" },
-	{ label: "Santa Cruz", value: "SANTACRUZ"},
-	{ label: "Santa Fe", value: "SANTAFE" },
+    { label: "Santa Cruz", value: "SANTACRUZ" },
+    { label: "Santa Fe", value: "SANTAFE" },
     { label: "Santiago del Estero", value: "SANTIAGO" },
     { label: "Tierra del Fuego", value: "TIERRA" },
-	{ label: "Tucumán", value: "TUCUMAN"}
+    { label: "Tucumán", value: "TUCUMAN" }
 ];
-
 
 const mostrarPeriodo = [
     { label: "Verano", value: "Verano" },
@@ -90,7 +89,7 @@ class Planificacion extends Component {
         var _this = this;
         e.preventDefault();
 
-        _this.setState({alimentosAProducir:[]})
+        _this.setState({ alimentosAProducir: [] })
 
         var path_principal = "http://localhost:3000/redAgro/obtenerResultados?periodo=";
         var periodo = this.periodo;
@@ -122,35 +121,35 @@ class Planificacion extends Component {
                         response.forEach(element => {
                             _this.setState({ alimentosAProducir: [..._this.state.alimentosAProducir, element] });
                         });
-        
-                     //   mostrarProduccion(_this.state.alimentosAProducir)
+
+                        //   mostrarProduccion(_this.state.alimentosAProducir)
                     });
             });
     }
 
-    retornaLista(){
-                var i = 1
+    retornaLista() {
+        var i = 1
         return this.state.alimentosAProducir.map(producto => {
-             var itemRow = []
-             //[<tr key={"row-data-"} >
+            var itemRow = []
+            //[<tr key={"row-data-"} >
             //     <td>
             //         {"producto"}
             //     </td>
             // </tr>
 
-          //  ];
+            //  ];
 
             itemRow.push(
-                        <tr>
-         
-                            <td> {i + " " + producto} </td>
-                        </tr>
-                    );
-                     i++
+                <tr>
+
+                    <td> {i + " " + producto} </td>
+                </tr>
+            );
+            i++
             return itemRow;
-        
+
         })
-       
+
     }
 
     mostrarMensajeOk() {
@@ -163,51 +162,64 @@ class Planificacion extends Component {
 
     render() {
         return (
-            <div className="container">
-                <div className="titulosPrincipales">Planificar Producción</div>
+            <div>
+                <div className="titulosPrincipales">Planificar producción</div>
                 <Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
-                    <div className="dropdownPeriodo">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={3}>
-                                Período
-							</Form.Label>
-                            <Select value={this.state.valueCat} className="selectPeriodo" name="periodo" options={mostrarPeriodo} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectPeriodo(opt, a, value)} />
-                        </Form.Group>
-                    </div>
-                     <div className="dropdownPeriodo">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={3}>
-                                Zona de venta
-							</Form.Label>
-                            <Select value={this.state.valueCat} className="selectPeriodo" name="zonas" options={mostrarZonas} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectZona(opt, a, value)} />
-                        </Form.Group>
-                    </div>
+
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" className="labelCampoTextarea">
+                            <Form.Label column>Periodo</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <Select
+                                value={this.state.valueCat}
+                                className="selectFormularios col-md-8"
+                                name="periodo"
+                                options={mostrarPeriodo}
+                                placeholder="Seleccione un item..."
+                                onChange={(opt, a, value) => this.cambiosSelectPeriodo(opt, a, value)}
+                            />
+                        </MDBCol>
+                    </Form.Group>
+
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" className="labelCampoTextarea">
+                            <Form.Label column>Zona de venta</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <Select
+                                value={this.state.valueCat}
+                                className="selectFormularios col-md-8"
+                                name="zonas"
+                                options={mostrarZonas}
+                                placeholder="Seleccione un item..."
+                                onChange={(opt, a, value) => this.cambiosSelectZona(opt, a, value)}
+                            />
+                        </MDBCol>
+                    </Form.Group>
                     <div className="botones">
                         <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                         <Button variant="success" type="submit">Planificar</Button>
                     </div>
-
-                    <div className="titulosPrincipales">Productos a producir</div>
-                    <div className="tabla_puntos">
-                    {this.state.alimentosAProducir.length>0?
-                     <MDBTable striped hover>
+                </Form>
+                <div className="titulosPrincipales">Productos a producir</div>
+                <div className="tabla_puntos">
+                    {this.state.alimentosAProducir.length > 0 ?
+                        <MDBTable striped hover>
                             <MDBTableHead columns={columnas} />
-                            <MDBTableBody>    
-                            {this.retornaLista()}              
+                            <MDBTableBody>
+                                {this.retornaLista()}
                             </MDBTableBody>
                         </MDBTable>
                         :
                         <div className="sinPuntosDeVenta">
-                            <i className="fas fa-chart-bar iconoGrande"></i>
+                            <i className="fas fa-chart-line iconoGrande"></i>
                             <br />
                             <h5>No has solicitado aún la planificación </h5>
                         </div>
-                
                     }
-                </div> 
-
-                </Form>
-            </div>
+                </div>
+            </div >
 
         );
     };

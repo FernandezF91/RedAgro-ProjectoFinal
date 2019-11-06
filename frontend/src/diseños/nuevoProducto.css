@@ -23,29 +23,7 @@
 	outline: none;
 }
 
-.condicionesInputs {
-	margin-left: -15%;
-	color: #cc0000;
-	font-size: 13px;
-	margin-bottom: 15px;
-}
-
-.condicionesInputsImg {
-	color: #cc0000;
-	font-size: 13px;
-}
-
-.condicionesInputsCO {
-	margin-left: -18%;
-	color: #cc0000;
-	font-size: 13px;
-}
-
 #number {
-	width: 16%;
-}
-
-.calen {
 	width: 16%;
 }
 
@@ -71,29 +49,19 @@
 	margin-bottom: 12px;
 }
 
-.estiloCampoPrecio {
-	width: 175px !important;
-	text-align: right;
-	border: 1px solid #ced4da;
-	border-radius: .25rem;
-	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-	display: flex !important;
-	flex-direction: row !important;
-	flex-wrap: nowrap !important;
-}
-
-.campoSinBordeNumeros {
-	border-bottom: none !important;
-	border-top: none !important;
+.iconoInputGroupBordeDerecho {
 	border-right: none !important;
-	border-left: 1px solid #ced4da;
-}
-
-.iconoPrecio {
 	width: 100%;
 	height: 100%;
 }
 
-.campoSinBorde {
-	border: none !important;
+.cajaImagenesWidth {
+	width: 850px;
+	margin: auto;
+}
+
+.iconoInputGroupBordeIzquierdo {
+	border-left: none !important;
+	width: 100%;
+	height: 100%;
 }

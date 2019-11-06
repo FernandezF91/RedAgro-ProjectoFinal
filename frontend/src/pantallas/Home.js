@@ -180,9 +180,12 @@ class HomePage extends Component {
                             <ResultadoBusquedaSinLogin
                                 busqueda={this.state.busqueda} />
                             :
-                            <CarouselProductos
-                                listadoProductos={lista}
-                                mostrarDetalleProducto={this.mostrarDetalleProducto} />
+                            <div>
+                                <div className="titulosPrincipales">Novedades</div>
+                                <CarouselProductos
+                                    listadoProductos={lista}
+                                    mostrarDetalleProducto={this.mostrarDetalleProducto} />
+                            </div>
                     }
                     {
                         <MDBModal isOpen={this.state.showModal} centered size="sm">
