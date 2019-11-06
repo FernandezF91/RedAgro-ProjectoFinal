@@ -31,10 +31,14 @@ import app.clases.ResultadosEstadisticas;
 import app.daos.ProductoProductorDao;
 import app.daos.PuntoEntregaDao;
 import app.daos.ReservaDao;
+import app.daos.AlertaDao;
+import app.daos.AlertaNotificacionesDao;
 import app.daos.DetalleReservaDao;
 import app.daos.UsuarioDao;
 import app.modelos.EntidadReserva;
 import app.modelos.EntidadPuntoEntrega;
+import app.modelos.EntidadAlerta;
+import app.modelos.EntidadAlertaNotificaciones;
 import app.modelos.EntidadDetalleReserva;
 import app.modelos.EntidadProductoProductor;
 import app.mappers.ReservaMapper;
@@ -56,6 +60,12 @@ public class ReservaControlador {
 
 	@Autowired
 	PuntoEntregaDao puntoEntregaDAO;
+	
+	@Autowired
+	AlertaDao alertaDAO;
+	
+	@Autowired
+	AlertaNotificacionesDao alertaNotiDAO;
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/get_reservas_usuario")
@@ -208,6 +218,22 @@ public class ReservaControlador {
 			// Guardo el detalle y actualizo stock
 			detalleReservaDao.saveAll(detalles);
 			productoProductorDao.saveAll(productos);
+			
+			//Guardo alerta en la base
+			//AlertaNotificacionesControlador alerta = new AlertaNotificacionesControlador();
+			//alerta.guardarAlertaNuevaReserva("Web", nuevaReserva);
+			EntidadAlertaNotificaciones alertaNoti = new EntidadAlertaNotificaciones();
+			//EntidadAlerta alertas = alertaDAO.obtenerAlertaById(1);
+			EntidadAlerta alertas = new EntidadAlerta(); //alertaDAO.obtenerAlertaById(1);
+			alertas.setId(1);
+
+			alertaNoti.setTipo("Web");
+			alertaNoti.setTitulo("Nueva Reserva");
+			alertaNoti.setDescripcion("El consumidor " + nuevaReserva.getConsumidor().getUsuario().getNombre() + " " 
+			+ nuevaReserva.getConsumidor().getUsuario().getApellido()+ " generó la reserva #"+nuevaReserva.getId());
+			alertaNoti.setUsuario(nuevaReserva.getProductor().getUsuario());
+			alertaNoti.setAlerta(alertas);
+			alertaNotiDAO.save(alertaNoti);
 
 			try {
 				usuario = mapeo.mapFromEntity(nuevaReserva).getConsumidor().getUsuario().getUsuario();

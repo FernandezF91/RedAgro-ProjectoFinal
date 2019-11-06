@@ -143,15 +143,13 @@ class LoginForm extends Component {
                         <div className="encabezadoLogin">
                             <Form>
                                 <Form.Group as={Row} controlId="formHorizontalEmail" className="usuarioLogin">
-                                    <Form.Label column sm={2}>
-                                        Usuario
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Usuario</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
-                                            type="email"
                                             name="username"
                                             onChange={(e) => this.detectarCambios(e)}
                                             onKeyPress={this.onKeyPress}
+                                            className="camposDatosDeUsuario"
                                         />
                                         <div className="error">
                                             {this.state.errores["username"]}
@@ -159,15 +157,14 @@ class LoginForm extends Component {
                                     </Col>
                                 </Form.Group>
                                 <Form.Group as={Row} controlId="formHorizontalPassword" className="passwordLogin">
-                                    <Form.Label column sm={2}>
-                                        Password
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Password</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
-                                            type="password"
                                             name="password"
+                                            type="password"
                                             onChange={(e) => this.detectarCambios(e)}
                                             onKeyPress={this.onKeyPress}
+                                            className="camposDatosDeUsuario"
                                         />
                                         <div className="error">
                                             {this.state.errores["password"]}
@@ -176,7 +173,7 @@ class LoginForm extends Component {
                                 </Form.Group>
                             </Form>
                         </div>
-                        <div className="botonesLogin">
+                        <div className="botones">
                             <Button variant="light" href="/seleccionUsuario">Registrar</Button>
                             <Button variant="success" onClick={this.validarDatos}>Ingresar</Button>
                         </div>

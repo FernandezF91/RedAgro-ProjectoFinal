@@ -109,7 +109,7 @@ class DetalleBusqueda extends Component {
             ButterToast.raise({
                 content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_RED}
                     content={() => <div className="mensajeToast">No se encuentra disponible el stock solicitado.</div>}
-                    title="CulturaVerde"
+                    title="Cultura Verde"
                     icon={<i className="fa fa-shopping-cart iconoToast" />}
                 />
             });
@@ -145,7 +145,7 @@ class DetalleBusqueda extends Component {
                 ButterToast.raise({
                     content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_RED}
                         content={() => <div className="mensajeToast">No está disponible el stock seleccionado. Reintentá disminuyendo la cantidad ;)</div>}
-                        title="CulturaVerde"
+                        title="Cultura Verde"
                         icon={<i className="fa fa-shopping-cart iconoToast" />}
                     />
                 });
@@ -174,7 +174,7 @@ class DetalleBusqueda extends Component {
                     ButterToast.raise({
                         content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_GREEN}
                             content={() => <div className="mensajeToast">Se agregó un nuevo producto a tu carrito</div>}
-                            title="CulturaVerde"
+                            title="Cultura Verde"
                             icon={<i className="fa fa-shopping-cart iconoToast" />}
                         />
                     });

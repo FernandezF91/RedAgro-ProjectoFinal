@@ -23,7 +23,14 @@ public class PlanificacionControlador {
 		List<String> lista = new ArrayList<String>();
 		Planificador p = new Planificador(periodo, provincia);
 		
+		
+				
+				p.crearRed();
 				lista = p.obtenerResultados();
+//				p.escribirResultados();
+//				p.run(lista);
+//				p.tutorial2();
+				
 		
 		return lista;
 	}

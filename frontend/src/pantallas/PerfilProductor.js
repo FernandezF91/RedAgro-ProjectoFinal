@@ -2,11 +2,10 @@ import '../diseños/PerfilProductor.css'
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import { MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBCardBody, MDBCardImage, MDBCardText, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBContainer } from "mdbreact";
+import { MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBCardBody, MDBCardText, MDBContainer } from "mdbreact";
 import BeautyStars from 'beauty-stars';
 import ResumenFechasEntrega from "./principales/ResumenFechasEntrega";
 import CarouselProductos from './CarouselProductos'
-import NumberFormat from 'react-number-format';
 import moment from 'moment';
 
 moment.locale('es');
@@ -288,7 +287,7 @@ class PerfilProductor extends Component {
 
     generoItemFechas(item) {
         const itemMDBRows = [
-            <tr key={"MDBRow-data-" + item.fecha}>
+            <tr key={"MDBRow-data-" + item.fecha} className="border-bottom">
                 <td>
                     <div className="primeraColumna">
                         {item.fecha}
@@ -341,8 +340,10 @@ class PerfilProductor extends Component {
                             <MDBCol>
                                 <MDBCard className="mb-4">
                                     <MDBCardBody>
-                                        <MDBCardTitle> <i className="fas fa-star" /> Mis calificaciones</MDBCardTitle>
-                                        <div className="columnaTablaCentrada">
+                                        <MDBCardTitle className="margenTitulosResumen">
+                                            <i className="fas fa-star iconoTituloResumen" /> Mis calificaciones
+                                        </MDBCardTitle>
+                                        <div className="resumenCentrado columnaTablaCentrada">
                                             <BeautyStars
                                                 value={this.state.calificacion}
                                                 activeColor="#28A745"
@@ -361,9 +362,9 @@ class PerfilProductor extends Component {
                         <MDBRow>
                             <MDBCol>
                                 <MDBCard>
-                                    <MDBCardBody className="text-center">
-                                        <MDBCardTitle>
-                                            <i className="fas fa-map-marker-alt" /> Próximas fechas de entrega
+                                    <MDBCardBody className="text-center margenTitulosResumen">
+                                        <MDBCardTitle className="margenTitulosResumen">
+                                            <i className="fas fa-map-marker-alt iconoTituloResumen" /> Próximas fechas de entrega
                                         </MDBCardTitle>
                                         <MDBCardText className="resumenCentrado">
                                             <ResumenFechasEntrega

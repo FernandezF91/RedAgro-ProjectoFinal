@@ -44,7 +44,11 @@ const ResumenPuntosEntrega = ({ listadoPuntosEntrega, resultadoRequest, vistaPro
                     ) : (
                             <div>
                                 <br />
+                                <br />
+                                <br />
                                 <i className="fas fa-map-marker-alt iconoGrandePrincipales" />
+                                <br />
+                                <br />
                                 <br />
                                 <br />
                                 <h6>No hay fechas de entrega para los próximos 30 días!</h6>
@@ -58,7 +62,12 @@ const ResumenPuntosEntrega = ({ listadoPuntosEntrega, resultadoRequest, vistaPro
                 ) : (
                         <div>
                             <br />
+                            <br />
+                            <br />
                             <i className="fas fa-map-marker-alt iconoGrandePrincipales" />
+                            <br />
+                            <br />
+                            <br />
                             <br />
                             <br />
                             <h6 className="grey-text">Ups! Ocurrió un error al obtener las fechas de entrega. Reintentá en unos minutos!</h6>

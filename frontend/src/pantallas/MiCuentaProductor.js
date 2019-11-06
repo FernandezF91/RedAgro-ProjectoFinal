@@ -282,7 +282,7 @@ class MiCuenta extends Component {
 
     generoItemCalificaciones(item) {
         const itemMDBRows = [
-            <tr key={"MDBRow-data-" + item.id}>
+            <tr key={"MDBRow-data-" + item.id} className="border-bottom">
                 <td>
                     <div className="primeraColumna">
                         {item.fecha}
@@ -303,7 +303,7 @@ class MiCuenta extends Component {
 
     generoItemFechas(item) {
         const itemMDBRows = [
-            <tr key={"MDBRow-data-" + item.fecha}>
+            <tr key={"MDBRow-data-" + item.fecha} className="border-bottom">
                 <td>
                     <div className="primeraColumna">
                         {item.fecha}
@@ -324,7 +324,7 @@ class MiCuenta extends Component {
 
     generoItemProducto(item) {
         const itemMDBRows = [
-            <tr key={"MDBRow-data-" + item.id}>
+            <tr key={"MDBRow-data-" + item.id} className="border-bottom">
                 <td>
                     <div className="primeraColumna alineacionResumenJustificado">
                         {item.titulo}
@@ -388,7 +388,7 @@ class MiCuenta extends Component {
                                 <MDBCardText className="resumenCentrado">
                                     <ResumenProductosProductor
                                         listadoProductosProductor={bodyProductos}
-                                        resultadoRequest={this.state.resultadoRequestCalificaciones}
+                                        resultadoRequest={this.state.resultadoRequestProductosProductor}
                                     />
                                 </MDBCardText>
                             </MDBCardBody>
@@ -420,7 +420,7 @@ class MiCuenta extends Component {
                                     <ResumenCalificaciones
                                         cantidadEstrellas={this.state.cantidadEstrellas}
                                         listadoCalificaciones={bodyCalificaciones}
-                                        resultadoRequest={this.state.resultadoRequestProductosProductor}
+                                        resultadoRequest={this.state.resultadoRequestCalificaciones}
                                     />
                                 </MDBCardText>
                             </MDBCardBody>

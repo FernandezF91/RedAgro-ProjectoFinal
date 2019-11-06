@@ -15,9 +15,12 @@
 }
 
 .botones {
-	margin-top: 10px;
+	font-size: 15px;
 	display: flex;
 	flex-direction: row;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	justify-content: center;
 }
 
 #autocomplete {

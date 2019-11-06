@@ -13,7 +13,3 @@
 .contenidoDU {
 	margin-top: 20px;
 }
-
-.form-control[type="ap"], .form-control[type="nom"], .form-control[type="tel"], .form-control[type="mail"], .form-control[type="rs"] {
-	width: 35%;
-}

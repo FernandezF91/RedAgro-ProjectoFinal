@@ -104,7 +104,7 @@ class FormaRetiro extends Component {
                                         </Col>
                                     </Form.Group>
                                 </div>
-                                <Row className="botonesRegistro">
+                                <Row className="botones">
                                     <Button variant="light" href='/login'>Cancelar</Button>
                                     <Button variant="light" type="submit">Limpiar</Button>
                                     <Button variant="success">Siguiente</Button>

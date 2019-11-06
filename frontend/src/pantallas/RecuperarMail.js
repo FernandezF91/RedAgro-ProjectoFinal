@@ -111,10 +111,15 @@ class RecuperarEmail extends Component {
                                 <div className="Correoelectronico">
                                     <Form.Group as={Row} controlId="formHorizontalEmail">
                                         <Form.Label>
-                                            Correo electronico
+                                            Mail
                                 		</Form.Label>
                                         <Col>
-                                            <Form.Control type="email" name="emailuser" onChange={(e) => this.detectarCambios(e)} />
+                                            <Form.Control
+                                                type="email"
+                                                name="emailuser"
+                                                onChange={(e) => this.detectarCambios(e)}
+                                                className="camposDatosDeUsuario"
+                                            />
                                             <div className="error">{this.state.error}</div>
                                         </Col>
                                     </Form.Group>

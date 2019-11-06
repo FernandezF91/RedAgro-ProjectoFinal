@@ -182,7 +182,7 @@ class Planificacion extends Component {
                             <Select value={this.state.valueCat} className="selectPeriodo" name="zonas" options={mostrarZonas} placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectZona(opt, a, value)} />
                         </Form.Group>
                     </div>
-                    <div className="botonesNuevoProducto">
+                    <div className="botones">
                         <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                         <Button variant="success" type="submit">Planificar</Button>
                     </div>
