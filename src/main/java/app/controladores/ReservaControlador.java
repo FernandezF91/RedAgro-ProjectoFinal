@@ -227,9 +227,8 @@ public class ReservaControlador {
 			alertas.setId(1);
 			alertaNoti.setTipo("Web");
 			alertaNoti.setTitulo("Nueva Reserva");
-			alertaNoti.setDescripcion("Felicitaciones! El/La consumidor/a " + nuevaReserva.getConsumidor().getUsuario().getNombre() + " "
-					+ nuevaReserva.getConsumidor().getUsuario().getApellido() + " generó la reserva #"
-					+ nuevaReserva.getId());
+			alertaNoti.setDescripcion("Felicitaciones! El/La consumidor/a " + nuevaReserva.getConsumidor().getUsuario().getNombre() + " generó la reserva # "
+					+ nuevaReserva.getId() + "Accedé a la sección de Reservas para ver el detalle.");
 			alertaNoti.setUsuario(nuevaReserva.getProductor().getUsuario());
 			alertaNoti.setAlerta(alertas);
 			alertaNotiDAO.save(alertaNoti);
@@ -298,7 +297,7 @@ public class ReservaControlador {
 			}
 			case 4: {
 				alertaNoti.setDescripcion("Tu reserva #" + reserva.getId()
-						+ " está finalizada! Accedé a la sección de reservas para ver el detalle.");
+						+ " está finalizada! Accedé a la sección de Reservas para ver el detalle.");
 				alertaNoti.setUsuario(productor);
 				alertaNoti.setAlerta(alertas);
 				listaAlertas.add(alertaNoti);
@@ -306,7 +305,7 @@ public class ReservaControlador {
 			}
 			case 5: {
 				alertaNoti.setDescripcion("Tu reserva #" + reserva.getId()
-						+ " ha sido cancelada. Accedé a la sección de reservas para ver el detalle.");
+						+ " ha sido cancelada. Accedé a la sección de Reservas para ver el detalle.");
 				alertaNoti.setUsuario(productor);
 				alertaNoti.setAlerta(alertas);
 				listaAlertas.add(alertaNoti);
@@ -314,7 +313,7 @@ public class ReservaControlador {
 			}
 			default: {
 				alertaNoti.setDescripcion("Tu reserva #" + reserva.getId()
-						+ " cambió de estado. Accedé a la sección de reservas para ver el detalle.");
+						+ " cambió de estado. Accedé a la sección de Reservas para ver el detalle.");
 				break;
 			}
 			}
