@@ -5,6 +5,9 @@ import Select from 'react-select';
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css';
 import Modal from 'react-awesome-modal';
+import { MDBModal } from 'mdbreact';
+import Loader from 'react-loader-spinner';
+
 import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
 // Import the Image EXIF Orientation and Image Preview plugins
 // Note: These need to be installed separately
@@ -41,18 +44,18 @@ class CargarHistorico extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			campos: [],
 			files: "",
-			titulo: "",
 			mensaje: "",
-			zona: String,
-			visible: "",
 			formOK: "",
+			loading: false,
+			resultadoRequest: 0,
+			showModal: false,
 			id: this.props.id_productor,
 		}
 		this.subirArchivos = this.subirArchivos.bind(this);
 		this.validarCampos = this.validarCampos.bind(this);
-		//  this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+		this.cerrarModal = this.cerrarModal.bind(this);
+	    this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
 
 	}
 
@@ -65,30 +68,13 @@ class CargarHistorico extends Component {
 		})
 	}
 
-	mostrarMensajeOk() {
-		this.setState({
-			visible: true
-		});
-	}
-
-	closeModal() {
-		if (this.state.formOK === true) {
-			this.mostrarPantallaPrincipal()
-			return;
-		}
-
-		this.setState({
-			visible: false
-		});
-	}
-
 	validarCampos() {
-		if ((this.state.files.length === 0) || (this.state.zona === "")) {
+
+		if (this.state.files.length === 0) {
 
 			this.setState({
-				visible: true,
-				titulo: "Error",
-				mensaje: "Campos incompletos o incorrectos",
+				showModal:true,
+				mensaje: "Tenés que cargar un archivo",
 				formOK: false,
 			});
 
@@ -101,15 +87,22 @@ class CargarHistorico extends Component {
 	subirArchivos() {
 		var _this = this
 
-		const path = "http://localhost:3000/redAgro/uploadFile?zona=" + this.state.zona;
+		var file = _this.state.files[0]
+
+		const path = "http://localhost:3000/redAgro/uploadFile";
 
 		if (_this.validarCampos()) {
-			_this.state.files.forEach((fileItem) => {
 
+
+			var formato = file.name.split(".")
+			
+			if(formato[1]==="csv")
+			{
 				let data = new FormData();
-				data.append('file', fileItem);
-				data.append('name', fileItem.name);
+				data.append('file', file);
+				data.append('name', file.name);
 
+		
 				fetch(path, {
 					method: 'POST',
 					body: data
@@ -118,10 +111,10 @@ class CargarHistorico extends Component {
 					if (response.status !== 200) {
 
 						_this.setState({
-							visible: true,
-							titulo: "Error",
+							showModal:true,
 							mensaje: "Ocurrió algún error inesperado. Intenta nuevamente",
 							formOK: false,
+							resultadoRequest: false
 						});
 						return;
 					}
@@ -129,43 +122,60 @@ class CargarHistorico extends Component {
 						function (response) {
 
 							_this.setState({
-								visible: true,
-								titulo: "Ok",
+								showModal:true,
 								mensaje: "El archivo se guardo correctamente",
 								formOK: true,
+								resultadoRequest: true
 							});
 
 						});
 
-					_this.mostrarMensajeOk();
 				});
-			})
+	
+			}else{
 
+
+              _this.setState({
+							showModal:true,
+							mensaje: "El archivo debe ser .csv",
+							formOK: false,
+                });
+			}
 
 		}
 
 	}
-	cambiosSelectZona(opt, a, value) {
-		this.setState({ zona: opt.value });
-	}
+
+
+	cerrarModal() {
+
+		if(this.state.formOK===true){
+
+       this.mostrarPantallaPrincipal()
+
+		}
+        this.setState({
+            showModal: false
+        })
+    }
 
 
 	render() {
+
+		if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+		)
+		
 		return (
 			<div className="container">
 				<div className="imagenes">
 					<div className="titulosPrincipales">Cargar archivos históricos</div>
-				</div>
-				<br></br>
-				<h5>Seleccione zona de venta de sus productos</h5>
-				<div className="dropdownPeriodo">
-					<Form.Group as={Row}>
-						<Form.Label column sm={3}>
-							Zona de venta
-							</Form.Label>
-						<Select value={this.state.valueCat} className="selectPeriodo" name="zonas" options={mostrarZonas}
-							placeholder="Seleccione un item..." onChange={(opt, a, value) => this.cambiosSelectZona(opt, a, value)} />
-					</Form.Group>
 				</div>
 				<br></br>
 				<div className="imagenes">
@@ -184,23 +194,36 @@ class CargarHistorico extends Component {
 
 						}} />
 				</div>
-				<section>
-					<Modal
-						visible={this.state.visible}
-						width="400"
-						height="120"
-						effect="fadeInUp"
-						onClickAway={() => this.closeModal()}
-					>
-						<div>
-							<h1>{this.state.titulo}</h1>
-							<p>{this.state.mensaje}</p>
-							<a href="javasript.void(0)" onClick={() => this.closeModal()}>Volver</a>
-						</div>
-					</Modal>
-				</section>
+				{
+                    (this.state.showModal) &&
+                    (
+                        <MDBModal isOpen={this.state.showModal} centered size="sm">
+                            <div className="modalMargenes">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <br />
+                                {(this.state.resultadoRequest === true) ?
+                                    (
+                                        <div>
+                                            <i className="fas fa-check-circle iconoModalOk" />
+                                            <br />
+                                            <br />
+                                            <h5>{this.state.mensaje}</h5>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <i className="fas fa-exclamation-circle iconoModalError" />
+                                            <br />
+                                            <br />
+                                            <h5>{this.state.mensaje}</h5>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </MDBModal>
+                    )
+                }
 				<div >
-					<Button variant="success" onClick={this.validarCampos}>Guardar</Button>
+					<Button variant="success" onClick={()=>this.subirArchivos()}>Guardar</Button>
 				</div>
 			</div>
 

@@ -22,9 +22,9 @@ public class HistoricoControlador {
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@PostMapping(path = "redAgro/uploadFile")
-	public void submit(@RequestParam("file") MultipartFile file, @RequestParam("zona") String zona) throws IOException {
+	public void submit(@RequestParam("file") MultipartFile file) throws IOException {
 		HistoricoMapper mapper = new HistoricoMapper();
-		ArrayList<EntidadHistorico> historicos = mapper.mapToEntity(file, zona);
+		ArrayList<EntidadHistorico> historicos = mapper.mapToEntity(file);
 		historicos.forEach(h -> historicoDao.save(h));
 		// insertarHistorico(h.getCantidad_vendida(), h.getTipo_certificacion(),
 		// h.getTipo_produccion(), h.getProducto().getId(), h.getProductor().getId()));

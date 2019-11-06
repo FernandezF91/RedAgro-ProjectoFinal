@@ -21,7 +21,7 @@ import app.modelos.EntidadProductor;
 
 public class HistoricoMapper {
 
-	public ArrayList<EntidadHistorico> mapToEntity	(MultipartFile multiPartFile, String zona) throws IOException {
+	public ArrayList<EntidadHistorico> mapToEntity	(MultipartFile multiPartFile) throws IOException {
 		String row;
 		File file = convertMultiPartToFile(multiPartFile);
 		BufferedReader csvReader = new BufferedReader (new FileReader (file));
@@ -33,7 +33,7 @@ public class HistoricoMapper {
 			entidad.setTipo_producto(data[1]);
 			entidad.setCantidad_vendida(Integer.parseInt(data[2]));
 			entidad.setMes(Integer.parseInt(data[3]));
-			entidad.setZona(zona);
+			entidad.setZona(data[4]);
 //			EntidadProducto producto = new EntidadProducto();
 //			producto.setId(Integer.parseInt(data[3]));
 //			entidad.setProducto(producto);
