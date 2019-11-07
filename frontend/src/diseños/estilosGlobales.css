@@ -441,3 +441,7 @@ input[type=text] {
 .text-aling-start {
     text-align: start;
 }
+
+.justifyContentCenter {
+	justify-content: center;
+}

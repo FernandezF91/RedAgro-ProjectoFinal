@@ -3,15 +3,14 @@ import '../diseños/nuevoProducto.css';
 import '../diseños/estilosGlobales.css';
 
 import React, { Component } from 'react';
-import { Form, Row, Button, InputGroup } from 'react-bootstrap';
-import { MDBCol, MDBModal } from "mdbreact";
+import { Form, Button, InputGroup } from 'react-bootstrap';
+import { MDBCol, MDBRow, MDBModal } from "mdbreact";
 import { DatePickerInput } from 'rc-datepicker';
 import Select from 'react-select';
 import Loader from 'react-loader-spinner';
 import moment from 'moment';
 
 import 'moment/locale/es';
-import Modal from 'react-awesome-modal';
 
 import { FilePond, registerPlugin } from 'react-filepond';
 // Import FilePond styles
@@ -21,7 +20,7 @@ import 'filepond/dist/filepond.min.css';
 // Note: These need to be installed separately
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondTypeValidate from "filepond-plugin-file-validate-type";
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'; import { isDate } from 'moment';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
 const minDate = new Date();
 
@@ -65,15 +64,17 @@ class NuevoProducto extends Component {
             tipos_producto: [],
             formOk: false,
             visibleOk: false,
-            valueCat: [],
-            valueTp: [],
-            valueTprod: [],
+            valueCategoria: [],
+            valueTipoProducto: [],
+            valueTipoProduccion: [],
             valueUnidadVenta: [],
-            disabled: true,
-            disabled2: false,
+            validaciones: [],
+            disabledTipoProducto: true,
+            disabledContenido: false,
             id: this.props.id_productor,
             loading: true,
-            showModal: false
+            showModal: false,
+            resultadoRequest: 0
         }
 
         this.featurePond = React.createRef();
@@ -82,6 +83,8 @@ class NuevoProducto extends Component {
         this.validarCampos = this.validarCampos.bind(this);
         this.subirArchivos = this.subirArchivos.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarSeguirCargando = this.cerrarSeguirCargando.bind(this);
+        this.cerrarModalError = this.cerrarModalError.bind(this);
     }
 
     componentDidMount() {
@@ -92,6 +95,20 @@ class NuevoProducto extends Component {
 
     cerrarModal() {
         this.setState({
+            showModal: false,
+        })
+        this.mostrarListadoDeProductos();
+    }
+
+    cerrarSeguirCargando() {
+        this.setState({
+            showModal: false,
+        })
+        this.limpiarCampos();
+    }
+
+    cerrarModalError() {
+        this.setState({
             showModal: false
         })
     }
@@ -99,42 +116,95 @@ class NuevoProducto extends Component {
     detectarCambios(e) {
         let campos = this.state.campos;
         campos[e.target.name] = e.target.value;
+
+        let validaciones = this.state.validaciones;
+        validaciones[e.target.name] = "";
+
         this.setState({
-            campos
+            campos,
+            validaciones
         })
     }
 
-    validarFecha() {
-        return !isDate(this.state.campos["fecha_ven"]);
-    }
-
     validarCampos() {
-        if ((!this.state.campos["categoria"]) || (!this.state.campos["tipo_produccion"]) || (!this.state.campos["unidad_venta"])
-            || (!this.state.campos["stock"]) || (!this.state.campos["precio"]) || (!regularExp.numerosDecimales.test(this.state.campos["precio"]))
-            || (!isNaN((this.state.campos["precio"])) && (this.state.campos["precio"]) < 1)
-            || (this.state.campos["categoria"] !== "Variado" ? !this.state.campos["tipo_producto"] : false)
-            || (!this.state.campos["descripcion"]) || (!this.state.campos["titulo"]) || (this.state.files.length === 0) ||
-            (!this.state.campos["fecha_ven"] ? false : this.validarFecha())) {
+        var showModal = false;
+        this.setState({
+            validaciones: []
+        });
+        let validaciones = [];
+        if (!this.state.campos["stock"]) {
+            validaciones["stock"] = "Campo requerido";
+            showModal = true;
+        }
 
+        if (!this.state.campos["precio"]) {
+            validaciones["precio"] = "Campo requerido";
+            showModal = true;
+        } else if (this.state.campos["precio"] < 0) {
+            validaciones["precio"] = "Precio inválido";
+            showModal = true;
+        } else if (!regularExp.numerosDecimales.test(this.state.campos["precio"])) {
+            validaciones["precio"] = "Formato invalido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["descripcion"]) {
+            validaciones["descripcion"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["titulo"]) {
+            validaciones["titulo"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (this.state.campos["fecha_vencimiento"] && moment(this.state.campos["fecha_vencimiento"], 'DD/MM/YYYY').format('YYYY-MM-DD') === "Invalid date") {
+            validaciones["fecha_vencimiento"] = "Formato incorrecto";
+            showModal = true;
+        }
+
+        if (this.state.validaciones["fecha_vencimientoAUX"] === "Invalid date") {
+            validaciones["fecha_vencimiento"] = "Formato incorrecto";
+            showModal = true;
+        }
+
+        if (!this.state.campos["categoria"]) {
+            validaciones["categoria"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (this.state.campos["categoria"] !== "Variado" && !this.state.campos["tipo_producto"]) {
+            validaciones["tipo_producto"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["unidad_venta"]) {
+            validaciones["unidad_venta"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["tipo_produccion"]) {
+            validaciones["tipo_produccion"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (this.state.files.length === 0) {
+            validaciones["imagenes"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (showModal) {
             this.setState({
-                visible: true,
-                titulo: "Error",
-                mensaje: "Campos incompletos o incorrectos",
-                loading: false
+                validaciones: validaciones,
+                showModal: showModal,
+                mensaje: "Ups! Campos incompletos o incorrectos",
+                loading: false,
+                resultadoRequest: 0
             });
             return false;
+        } else {
+            return true;
         }
-        return true;
-    }
-
-    closeModalSeguirCargando() {
-        this.setState({
-            visibleOk: false,
-            formOk: false,
-            disabled: false,
-            disabled2: false
-        });
-        this.limpiarCampos();
     }
 
     closeModal() {
@@ -166,7 +236,7 @@ class NuevoProducto extends Component {
             var body = JSON.stringify({
                 "titulo": this.state.campos["titulo"],
                 "descripcion": this.state.campos["descripcion"],
-                "fecha_vencimiento": this.state.campos["fecha_ven"],
+                "fecha_vencimiento": this.state.campos["fecha_vencimiento"],
                 "precio": this.state.campos["precio"].replace(",", "."),
                 "stock": this.state.campos["stock"],
                 "unidad_venta": this.state.campos["unidad_venta"],
@@ -186,9 +256,9 @@ class NuevoProducto extends Component {
                     if (response.status !== 200) {
 
                         _this.setState({
-                            visible: true,
-                            titulo: "Error",
-                            mensaje: "Ocurrió algún error inesperado. Intenta nuevamente",
+                            showModal: true,
+                            resultadoRequest: response.status,
+                            mensaje: "Ocurrió un error al crear el producto. Reintentá en unos minutos.",
                             loading: false
                         });
                         return;
@@ -231,15 +301,24 @@ class NuevoProducto extends Component {
 
     mostrarMensajeOk() {
         this.setState({
-            formOk: true,
-            visibleOk: true
+            showModal: true,
+            loading: false,
+            resultadoRequest: 200,
+            mensaje: "Producto creado correctamente!"
         });
     }
 
     cambiosFecha(e) {
         let campos = this.state.campos;
-        campos["fecha_ven"] = e;
-        this.setState({ campos })
+        campos["fecha_vencimiento"] = e;
+
+        let validaciones = this.state.validaciones;
+        validaciones["fecha_vencimientoAUX"] = e;
+
+        this.setState({
+            campos,
+            validaciones
+        });
     }
 
     limpiarCampos() {
@@ -250,7 +329,7 @@ class NuevoProducto extends Component {
         campos["categoria"] = "";
         campos["tipo_producto"] = "";
         campos["tipo_produccion"] = "";
-        campos["fecha_ven"] = "";
+        campos["fecha_vencimiento"] = "";
         campos["stock"] = "";
         campos["precio"] = "";
         campos["tiempo_preparacion"] = "";
@@ -263,45 +342,47 @@ class NuevoProducto extends Component {
 
         this.setState({
             campos: campos,
+            validaciones: [],
             files: files,
-            valueCat: [],
-            valueTp: [],
-            valueTprod: [],
-            valueUnidadVenta: []
+            valueCategoria: [],
+            valueTipoProducto: [],
+            valueTipoProduccion: [],
+            valueUnidadVenta: [],
+            disabledTipoProducto: false,
+            disabledContenido: false
         });
     }
 
-    cambiosSelectTprod(opt, a, value) {
+    cambioTipoProduccion(opt, a, value) {
         let campos = this.state.campos;
-        campos[a.name] = opt.label;
+        campos["tipo_produccion"] = opt.label;
+
         this.setState({
             campos,
-            valueTprod: value
+            valueTipoProduccion: value
         })
     }
 
-    cambiosSelectUnidadV(opt, a, value) {
+    cambioUnidadDeVenta(opt, a, value) {
         let campos = this.state.campos;
-        campos[a.name] = opt.label;
+        campos["unidad_venta"] = opt.label;
 
         this.setState({
             campos,
             valueUnidadVenta: value,
-            disabled2: false
+            disabledContenido: false
         })
 
         if (this.state.campos["unidad_venta"] === "Kilogramo") {
-
             this.setState({
-                disabled2: true
+                disabledContenido: true
             });
-
         }
     }
 
-    cambiosSelectTipoProducto(opt, a, value) {
+    cambioTipoProducto(opt, a, value) {
         this.setState({
-            valueTp: value
+            valueTipoProducto: value
         });
         let campos = this.state.campos;
         campos[a.name] = opt.value;
@@ -312,8 +393,8 @@ class NuevoProducto extends Component {
 
     cambiosSelectCategoria(opt, a, value) {
         this.setState({
-            valueCat: value,
-            valueTp: "",
+            valueCategoria: value,
+            valueTipoProducto: "",
             tipos_producto: [],
             loadingTipo: true
         });
@@ -322,7 +403,7 @@ class NuevoProducto extends Component {
 
         if (this.state.campos["categoria"] === "Variado") {
             this.setState({
-                disabled: true,
+                disabledTipoProducto: true,
                 loadingTipo: false
             })
         }
@@ -367,7 +448,7 @@ class NuevoProducto extends Component {
                             }]
                         }));
                         _this.setState({
-                            disabled: false,
+                            disabledTipoProducto: false,
                             loadingTipo: false
                         })
                     });
@@ -405,14 +486,22 @@ class NuevoProducto extends Component {
                             <Form.Label column>*Título</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Form.Control
-                                value={this.state.campos["titulo"]}
-                                name="titulo"
-                                maxLength="100"
-                                onChange={(e) => this.detectarCambios(e)}
-                                className="col-md-8"
-                            />
-                            <div className="condicionesInputs col-md-8">(*) 100 caracteres como máximo</div>
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["titulo"]}
+                                    name="titulo"
+                                    maxLength="100"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["titulo"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["titulo"]} />
+                                }
+                            </MDBRow>
+                            <MDBRow>
+                                <div className="condicionesInputs col-md-8">(*) 100 caracteres como máximo</div>
+                            </MDBRow>
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -420,15 +509,21 @@ class NuevoProducto extends Component {
                             <Form.Label column>*Descripción</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Form.Control
-                                value={this.state.campos["descripcion"]}
-                                as="textarea"
-                                rows="3"
-                                name="descripcion"
-                                maxLength="255"
-                                onChange={(e) => this.detectarCambios(e)}
-                                className="col-md-8"
-                            />
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["descripcion"]}
+                                    as="textarea"
+                                    rows="3"
+                                    name="descripcion"
+                                    maxLength="255"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["descripcion"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm labelCampoTextarea" title={this.state.validaciones["descripcion"]} />
+                                }
+                            </MDBRow>
                             <div className="condicionesInputs col-md-8">(*) 255 caracteres como máximo</div>
                         </MDBCol>
                     </Form.Group>
@@ -437,14 +532,20 @@ class NuevoProducto extends Component {
                             <Form.Label column>*Categoria</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Select
-                                value={this.state.valueCat}
-                                className="selectFormularios col-md-8"
-                                name="categoria"
-                                options={categorias}
-                                placeholder="Seleccione un item..."
-                                onChange={(opt, a, value) => this.cambiosSelectCategoria(opt, a, value)}
-                            />
+                            <MDBRow>
+                                <Select
+                                    value={this.state.valueCategoria}
+                                    className="selectFormularios col-md-8"
+                                    name="categoria"
+                                    options={categorias}
+                                    placeholder="Seleccione un item..."
+                                    onChange={(opt, a, value) => this.cambiosSelectCategoria(opt, a, value)}
+                                />
+                                {
+                                    (this.state.validaciones["categoria"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["categoria"]} />
+                                }
+                            </MDBRow>
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -452,16 +553,22 @@ class NuevoProducto extends Component {
                             <Form.Label column>Tipo de producto</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Select
-                                isLoading={this.state.loadingTipo}
-                                isDisabled={this.state.disabled}
-                                value={this.state.valueTp}
-                                className="selectFormularios col-md-8"
-                                name="tipo_producto"
-                                options={this.state.tipos_producto}
-                                placeholder="Seleccione un item..."
-                                onChange={(opt, a, value) => this.cambiosSelectTipoProducto(opt, a, value)}
-                            />
+                            <MDBRow>
+                                <Select
+                                    isLoading={this.state.loadingTipo}
+                                    isDisabled={this.state.disabledTipoProducto}
+                                    value={this.state.valueTipoProducto}
+                                    className="selectFormularios col-md-8"
+                                    name="tipo_producto"
+                                    options={this.state.tipos_producto}
+                                    placeholder="Seleccione un item..."
+                                    onChange={(opt, a, value) => this.cambioTipoProducto(opt, a, value)}
+                                />
+                                {
+                                    (this.state.validaciones["tipoProducto"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["tipoProducto"]} />
+                                }
+                            </MDBRow>
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -469,14 +576,20 @@ class NuevoProducto extends Component {
                             <Form.Label column>*Tipo de producción</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Select
-                                value={this.state.valueTprod}
-                                className="selectFormularios col-md-8"
-                                name="tipo_produccion"
-                                options={tipoProduccion}
-                                placeholder="Seleccione un item..."
-                                onChange={(opt, a, value) => this.cambiosSelectTprod(opt, a, value)}
-                            />
+                            <MDBRow>
+                                <Select
+                                    value={this.state.valueTipoProduccion}
+                                    className="selectFormularios col-md-8"
+                                    name="tipo_produccion"
+                                    options={tipoProduccion}
+                                    placeholder="Seleccione un item..."
+                                    onChange={(opt, a, value) => this.cambioTipoProduccion(opt, a, value)}
+                                />
+                                {
+                                    (this.state.validaciones["tipo_produccion"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["tipo_produccion"]} />
+                                }
+                            </MDBRow>
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -484,14 +597,20 @@ class NuevoProducto extends Component {
                             <Form.Label column>*Unidad de venta</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Select
-                                value={this.state.valueUnidadVenta}
-                                className="selectFormularios col-md-8"
-                                name="unidad_venta"
-                                options={tipoUnidadVenta}
-                                placeholder="Seleccione un item..."
-                                onChange={(opt, a, value) => this.cambiosSelectUnidadV(opt, a, value)}
-                            />
+                            <MDBRow>
+                                <Select
+                                    value={this.state.valueUnidadVenta}
+                                    className="selectFormularios col-md-8"
+                                    name="unidad_venta"
+                                    options={tipoUnidadVenta}
+                                    placeholder="Seleccione un item..."
+                                    onChange={(opt, a, value) => this.cambioUnidadDeVenta(opt, a, value)}
+                                />
+                                {
+                                    (this.state.validaciones["unidad_venta"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["unidad_venta"]} />
+                                }
+                            </MDBRow>
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -499,14 +618,20 @@ class NuevoProducto extends Component {
                             <Form.Label column>Contenido</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Form.Control
-                                value={this.state.campos["contenido"]}
-                                name="contenido"
-                                disabled={this.state.disabled2}
-                                maxLength="50"
-                                onChange={(e) => this.detectarCambios(e)}
-                                className="col-md-8"
-                            />
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["contenido"]}
+                                    name="contenido"
+                                    disabled={this.state.disabledContenido}
+                                    maxLength="50"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["contenido"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["contenido"]} />
+                                }
+                            </MDBRow>
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -514,14 +639,20 @@ class NuevoProducto extends Component {
                             <Form.Label column>*Cantidad disponible</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Form.Control
-                                value={this.state.campos["stock"]}
-                                type="number"
-                                name="stock"
-                                min="0"
-                                onChange={(e) => this.detectarCambios(e)}
-                                className="col-md-8"
-                            />
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["stock"]}
+                                    type="number"
+                                    name="stock"
+                                    min="0"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["stock"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["stock"]} />
+                                }
+                            </MDBRow>
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -529,17 +660,23 @@ class NuevoProducto extends Component {
                             <Form.Label column>*Precio (por unidad de venta)</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <InputGroup className="col-md-3 padding0Inputs">
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text className="iconoInputGroupBordeDerecho">$</InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <Form.Control
-                                    value={this.state.campos["precio"]}
-                                    name="precio"
-                                    onChange={(e) => this.detectarCambios(e)}
-                                    className="inputDerecha"
-                                />
-                            </InputGroup>
+                            <MDBRow>
+                                <InputGroup className="col-md-3 padding0Inputs">
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text className="iconoInputGroupBordeDerecho">$</InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <Form.Control
+                                        value={this.state.campos["precio"]}
+                                        name="precio"
+                                        onChange={(e) => this.detectarCambios(e)}
+                                        className="inputDerecha"
+                                    />
+                                </InputGroup>
+                                {
+                                    (this.state.validaciones["precio"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["precio"]} />
+                                }
+                            </MDBRow>
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -547,14 +684,20 @@ class NuevoProducto extends Component {
                             <Form.Label column>Tiempo de preparación (en días)</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Form.Control
-                                value={this.state.campos["tiempo_preparacion"]}
-                                type="number"
-                                min="1"
-                                name="tiempo_preparacion"
-                                onChange={(e) => this.detectarCambios(e)}
-                                className="col-md-8"
-                            />
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["tiempo_preparacion"]}
+                                    type="number"
+                                    min="1"
+                                    name="tiempo_preparacion"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["tiempo"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["tiempo"]} />
+                                }
+                            </MDBRow>
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -562,19 +705,31 @@ class NuevoProducto extends Component {
                             <Form.Label column>Fecha de vencimiento</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <DatePickerInput
-                                name="fecha_ven"
-                                displayFormat='DD/MM/YYYY'
-                                minDate={minDate}
-                                className="col-md-3 padding0Inputs"
-                                value={this.state.campos["fecha_ven"]}
-                                onChange={(e) => this.cambiosFecha(e)}
-                            />
+                            <MDBRow>
+                                <DatePickerInput
+                                    name="fecha_vencimiento"
+                                    displayFormat='DD/MM/YYYY'
+                                    minDate={minDate}
+                                    className="col-md-3 padding0Inputs"
+                                    value={this.state.campos["fecha_vencimiento"]}
+                                    onChange={(e) => this.cambiosFecha(e)}
+                                />
+                                {
+                                    (this.state.validaciones["fecha_vencimiento"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["fecha_vencimiento"]} />
+                                }
+                            </MDBRow>
                         </MDBCol>
                     </Form.Group>
                     <br />
                     <div>
-                        <span md="3">*Imágenes</span>
+                        <MDBRow className="justifyContentCenter">
+                            <span md="3">*Imágenes</span>
+                            {
+                                (this.state.validaciones["imagenes"]) &&
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["imagenes"]} />
+                            }
+                        </MDBRow>
                         <br />
                         <FilePond
                             className="cursorManito cajaImagenesWidth"
@@ -592,40 +747,47 @@ class NuevoProducto extends Component {
                             }} />
                         <div className="condicionesInputs">(*) 5 imágenes como máximo</div>
                     </div>
-                    < div className="botones">
+                    <br />
+                    <div className="botones">
                         <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                         <Button variant="light" onClick={() => this.limpiarCampos()}>Limpiar</Button>
                         <Button variant="success" type="submit">Crear</Button>
                     </div>
                 </Form>
-                <section>
-                    <Modal
-                        visible={this.state.visible}
-                        width="400"
-                        height="120"
-                        effect="fadeInUp"
-                        onClickAway={() => this.closeModal()}
-                    >
-                        <div>
-                            <h1>{this.state.titulo}</h1>
-                            <p>{this.state.mensaje}</p>
-                            <a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
-                        </div>
-                    </Modal>
-                    <Modal
-                        visible={this.state.visibleOk}
-                        width="400"
-                        height="160"
-                        effect="fadeInUp"
-                    >
-                        <div>
-                            <h1>Producto guardado</h1>
-                            <p>¿Querés seguir cargando productos?</p>
-                            <Button variant="light" onClick={() => this.closeModal()}>No</Button>
-                            <Button variant="success" onClick={() => this.closeModalSeguirCargando()}>Si</Button>
-                        </div>
-                    </Modal>
-                </section>
+                {
+                    (this.state.showModal) &&
+                    (
+
+                        (this.state.resultadoRequest === 200) ?
+                            (
+                                <MDBModal isOpen={this.state.showModal} centered>
+                                    <div className="modalMargenes">
+                                        <i className="fas fa-check-circle iconoModalOk" />
+                                        <br />
+                                        <br />
+                                        <h5>{this.state.mensaje}</h5>
+                                        <h5>¿Querés seguir cargando productos?</h5>
+
+                                        <div className="botones">
+                                            <Button variant="light" type="submit" onClick={this.cerrarModal}>No</Button>
+                                            <Button variant="success" type="submit" onClick={this.cerrarSeguirCargando}>Si</Button>
+                                        </div>
+                                    </div>
+                                </MDBModal>
+                            ) : (
+                                <MDBModal isOpen={this.state.showModal} centered size="sm">
+                                    <div className="modalMargenes">
+                                        <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                                        <br />
+                                        <i className="fas fa-exclamation-circle iconoModalError" />
+                                        <br />
+                                        <br />
+                                        <h5>{this.state.mensaje}</h5>
+                                    </div>
+                                </MDBModal>
+                            )
+                    )
+                }
             </div>
         );
     };
