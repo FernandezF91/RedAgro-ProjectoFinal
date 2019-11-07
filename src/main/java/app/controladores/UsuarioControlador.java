@@ -25,6 +25,7 @@ import app.modelos.EntidadUsuario;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import java.util.Optional;
 
 @RestController
 public class UsuarioControlador {
@@ -80,6 +81,17 @@ public class UsuarioControlador {
 			e.printStackTrace();
 		}
 
+	}
+
+
+	@CrossOrigin(origins = "*")
+	@PostMapping(path = "redAgro/registrar_token")
+	public void registrarToken(@RequestBody EntidadUsuario usuario) {
+		Optional<EntidadUsuario> optionalUser = usuarioDAO.findById(usuario.getId());
+		optionalUser.map(user -> {
+			user.setDeviceToken(usuario.getDeviceToken());
+			return usuarioDAO.save(user);
+		});
 	}
 
 	@CrossOrigin(origins = "*")

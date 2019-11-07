@@ -3,9 +3,9 @@ package app.clases;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-public class MailRecuperarContraseña extends MailSender{
+public class MailRecuperarContrasena extends MailSender{
 
-	public MailRecuperarContraseña(String to, Long id) {
+	public MailRecuperarContrasena(String to, Long id) {
 		this.setTo(to);
 		this.setContenido_email(
 				"<div> <h1>Recuperá tu contraseña</h1>"

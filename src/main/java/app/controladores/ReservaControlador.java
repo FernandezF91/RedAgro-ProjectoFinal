@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 
 import app.firebase.PushNotificationService;
 import app.modelos.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +49,9 @@ import app.modelos.EntidadProductoProductor;
 import app.mappers.ReservaMapper;
 import app.mappers.UsuarioMapper;
 
+//"Nuevas reservas"
+// "Actualización de reservas"
+
 @RestController
 public class ReservaControlador {
 
@@ -73,6 +78,7 @@ public class ReservaControlador {
 
 	@Autowired
 	private PushNotificationService pushNotificationService;
+	private Logger logger = LoggerFactory.getLogger(ReservaControlador.class);
 
 	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/get_reservas_usuario")
@@ -244,12 +250,7 @@ public class ReservaControlador {
 				MailNuevaReserva mailConsumidor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva));
 
 				mailConsumidor.enviarMail();
-
-				// Envio notificacion a los dispositivos
-				PushNotificationRequest notificationRequest = new PushNotificationRequest("Nueva Reserva", "Hey alguien hizo una reserva!");
-				String deviceToken = reserva.getProductor().getUsuario().getDeviceToken();
-				notificationRequest.setToken(deviceToken);
-				pushNotificationService.sendPushNotificationToToken(notificationRequest);
+				notificarUsuario(reserva.getProductor().getUsuario(), "Nuevas reservas");
 			} catch (AddressException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -259,7 +260,6 @@ public class ReservaControlador {
 			}
 
 			String id_reserva = idReserva.toString();
-
 			return new ResponseEntity<>("Reserva #" + id_reserva + " creada correctamente!", HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -364,14 +364,8 @@ public class ReservaControlador {
 				reservaDao.actualizarFechaAlFinalizar(id_reserva);
 			}
 
-			// Envio notificacion a los dispositivos
-			PushNotificationRequest notificationRequest = new PushNotificationRequest("Nueva Reserva", "Hey alguien hizo una reserva!");
-			String productorDeviceToken = entidadReserva.getProductor().getUsuario().getDeviceToken();
-			String ConsumidorDeviceToken = entidadReserva.getProductor().getUsuario().getDeviceToken();
-			notificationRequest.setToken(productorDeviceToken);
-			pushNotificationService.sendPushNotificationToToken(notificationRequest);
-			notificationRequest.setToken(ConsumidorDeviceToken);
-			pushNotificationService.sendPushNotificationToToken(notificationRequest);
+			notificarUsuario(entidadReserva.getProductor().getUsuario(), "Actualización de reservas");
+			notificarUsuario(entidadReserva.getConsumidor().getUsuario(), "Actualización de reservas");
 
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
 
@@ -402,6 +396,30 @@ public class ReservaControlador {
 			return new ResponseEntity<>(cantidad, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Ocurrió un error al buscar las reservas.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	private void notificarUsuario(EntidadUsuario usuario, String nombreAlerta) {
+		logger.info("Por enviar notification...");
+		ArrayList<EntidadAlertaNotificaciones> alertas = alertaNotiDAO.obtenerNotificacionesByUsuario(usuario.getId());
+		boolean notificationEnabled = alertas.stream().anyMatch(alerta -> alerta.getAlerta().getNombre().equals(nombreAlerta));
+		if (!notificationEnabled) {
+			return;
+		}
+
+		String title = "Actualización de reserva";
+		String message = "Hey! alguien ha actualizado una reserva.";
+
+		if (nombreAlerta.equals("Nuevas reservas")) {
+			title = "Nuevas reserva";
+			message = "Hey alguien hizo una reserva!";
+		}
+
+		PushNotificationRequest notificationRequest = new PushNotificationRequest(title, message);
+		String deviceToken = usuario.getDeviceToken();
+		if (deviceToken != null && !deviceToken.isEmpty()) {
+			notificationRequest.setToken(deviceToken);
+			pushNotificationService.sendPushNotificationToToken(notificationRequest);
 		}
 	}
 }
