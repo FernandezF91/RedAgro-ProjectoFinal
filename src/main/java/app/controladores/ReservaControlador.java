@@ -10,6 +10,8 @@ import javax.mail.internet.AddressException;
 import java.math.BigInteger;
 import java.math.BigDecimal;
 
+import app.firebase.PushNotificationService;
+import app.modelos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +35,6 @@ import app.daos.PuntoEntregaDao;
 import app.daos.ReservaDao;
 import app.daos.DetalleReservaDao;
 import app.daos.UsuarioDao;
-import app.modelos.EntidadReserva;
-import app.modelos.EntidadPuntoEntrega;
-import app.modelos.EntidadDetalleReserva;
-import app.modelos.EntidadProductoProductor;
 import app.mappers.ReservaMapper;
 
 @RestController
@@ -56,6 +54,10 @@ public class ReservaControlador {
 
 	@Autowired
 	PuntoEntregaDao puntoEntregaDAO;
+
+	@Autowired
+	private PushNotificationService pushNotificationService;
+
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping(path = "redAgro/get_reservas_usuario")
@@ -215,6 +217,11 @@ public class ReservaControlador {
 
 				mailConsumidor.enviarMail();
 
+				// Envio notificacion a los dispositivos
+				PushNotificationRequest notificationRequest = new PushNotificationRequest("Nueva Reserva", "Hey alguien hizo una reserva!");
+				String deviceToken = reserva.getProductor().getUsuario().getDeviceToken();
+				notificationRequest.setToken(deviceToken);
+				pushNotificationService.sendPushNotificationToToken(notificationRequest);
 			} catch (AddressException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -253,7 +260,8 @@ public class ReservaControlador {
 				}
 			}
 			// Genero los mails de alertas
-			Reserva reserva = mapeo.mapFromEntity(reservaDao.obtenerReservaById(id_reserva));
+			EntidadReserva entidadReserva = reservaDao.obtenerReservaById(id_reserva);
+			Reserva reserva = mapeo.mapFromEntity(entidadReserva);
 			String mailConsumidor = reserva.getConsumidor().getUsuario().getUsuario();
 			String mailProductor = reserva.getProductor().getUsuario().getUsuario();
 			try {
@@ -277,6 +285,15 @@ public class ReservaControlador {
 			if (reserva.getFecha() == null && (id_estado == 4 || id_estado == 5)) {
 				reservaDao.actualizarFechaAlFinalizar(id_reserva);
 			}
+
+			// Envio notificacion a los dispositivos
+			PushNotificationRequest notificationRequest = new PushNotificationRequest("Nueva Reserva", "Hey alguien hizo una reserva!");
+			String productorDeviceToken = entidadReserva.getProductor().getUsuario().getDeviceToken();
+			String ConsumidorDeviceToken = entidadReserva.getProductor().getUsuario().getDeviceToken();
+			notificationRequest.setToken(productorDeviceToken);
+			pushNotificationService.sendPushNotificationToToken(notificationRequest);
+			notificationRequest.setToken(ConsumidorDeviceToken);
+			pushNotificationService.sendPushNotificationToToken(notificationRequest);
 
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
 

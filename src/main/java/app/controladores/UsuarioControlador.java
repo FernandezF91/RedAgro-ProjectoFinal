@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.clases.MailConfirmacion;
-import app.clases.MailRecuperarContraseña;
+import app.clases.MailRecuperarContrasena;
 import app.daos.ConsumidorDao;
 import app.daos.ProductorDao;
 import app.daos.UsuarioDao;
@@ -174,7 +174,7 @@ public class UsuarioControlador {
 
 		if (eu != null) {
 
-			MailRecuperarContraseña mrc = new MailRecuperarContraseña(email, eu.getId());
+			MailRecuperarContrasena mrc = new MailRecuperarContrasena(email, eu.getId());
 
 			try {
 				mrc.enviarMail();
