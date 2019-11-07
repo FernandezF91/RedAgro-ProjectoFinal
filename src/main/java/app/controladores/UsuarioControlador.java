@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.clases.MailConfirmacion;
-import app.clases.MailRecuperarContraseña;
+import app.clases.MailRecuperarContrasena;
 import app.daos.ConsumidorDao;
 import app.daos.ProductorDao;
 import app.daos.UsuarioDao;
@@ -25,6 +25,7 @@ import app.modelos.EntidadUsuario;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import java.util.Optional;
 
 @RestController
 public class UsuarioControlador {
@@ -80,6 +81,17 @@ public class UsuarioControlador {
 			e.printStackTrace();
 		}
 
+	}
+
+
+	@CrossOrigin(origins = "*")
+	@PostMapping(path = "redAgro/registrar_token")
+	public void registrarToken(@RequestBody EntidadUsuario usuario) {
+		Optional<EntidadUsuario> optionalUser = usuarioDAO.findById(usuario.getId());
+		optionalUser.map(user -> {
+			user.setDeviceToken(usuario.getDeviceToken());
+			return usuarioDAO.save(user);
+		});
 	}
 
 	@CrossOrigin(origins = "*")
@@ -186,7 +198,7 @@ public class UsuarioControlador {
 
 		if (eu != null) {
 
-			MailRecuperarContraseña mrc = new MailRecuperarContraseña(email, eu.getId());
+			MailRecuperarContrasena mrc = new MailRecuperarContrasena(email, eu.getId());
 
 			try {
 				mrc.enviarMail();
