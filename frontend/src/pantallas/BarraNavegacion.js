@@ -9,7 +9,7 @@ class BarraNavegacion extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            rolUsuario: this.props.rolUsuario,
+            usuario: this.props.usuario,
             busqueda: '',
         }
         this.onKeyPress = this.onKeyPress.bind(this);
@@ -49,7 +49,7 @@ class BarraNavegacion extends Component {
     }
 
     render() {
-        const rolDeUsuario = this.state.rolUsuario;
+        const rolDeUsuario = this.state.usuario.rol;
         return (
             <Navbar collapseOnSelect expand="lg" className="barraNavegacion sombraBarra" >
                 <Navbar.Brand className="culturaVerde" href="/">
@@ -80,7 +80,7 @@ class BarraNavegacion extends Component {
                         <Nav className="iconos">
                             <Nav className="menuUsuario">
                                 <i className="fas fa-user iconosBarra" />
-                                <NavDropdown title="Usuario" id="nav-dropdown" className="subMenu">
+                                <NavDropdown title={this.state.usuario.nombre} id="nav-dropdown" className="subMenu">
                                     <NavDropdown.Item>
                                         <Link to={'/principalConsumidores/MiCuenta'}>Mi cuenta</Link>
                                     </NavDropdown.Item>
@@ -88,7 +88,6 @@ class BarraNavegacion extends Component {
                                     <NavDropdown.Item onClick={this.logout}>Salir</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
-
                             <Nav className="menuUsuario">
                                 <i className="fas fa-bell iconosBarra" />
                             </Nav>
@@ -99,12 +98,16 @@ class BarraNavegacion extends Component {
                                     <Badge>{this.props.productosSeleccionados.length}</Badge>
                                 </Link>
                             </Nav.Item>
+                            <div className="verticalDivider" role="separator" />
+                            <Nav.Item className="menuUsuario">
+                                <i className="fas fa-info-circle iconosBarra" />
+                            </Nav.Item>
                         </Nav>
                     ) : (
                             <Nav className="iconosProd">
                                 <Nav className="menuUsuario">
                                     <i className="fas fa-user iconosBarra" />
-                                    <NavDropdown onSelect={this.mostrarPantallaPrincipal} title="Usuario" id="nav-dropdown" className="subMenu">
+                                    <NavDropdown onSelect={this.mostrarPantallaPrincipal} title={this.state.usuario.nombre} id="nav-dropdown" className="subMenu">
                                         <NavDropdown.Item>
                                             <Link to={'/principalProductores/MiCuenta'}>Mi cuenta</Link>
                                         </NavDropdown.Item>
@@ -115,6 +118,10 @@ class BarraNavegacion extends Component {
                                 <Nav className="menuUsuario">
                                     <i className="fas fa-bell iconosBarra" />
                                 </Nav>
+                                <div className="verticalDivider" role="separator" />
+                                <Nav.Item className="menuUsuario">
+                                    <i className="fas fa-info-circle iconosBarra" />
+                                </Nav.Item>
                             </Nav>
                         )}
                 </Navbar.Collapse>

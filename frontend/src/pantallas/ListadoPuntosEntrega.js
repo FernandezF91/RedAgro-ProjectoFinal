@@ -3,13 +3,12 @@ import '../diseños/ListadoPuntosEntrega.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import React, { Component } from 'react';
 import PuntoDeEntrega from './PuntoDeEntrega';
+import DetalleFechasEntrega from './DetalleFechasEntrega';
 import Paginacion from './Paginacion';
 import { Button } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom';
 import Select from 'react-select';
 import Loader from 'react-loader-spinner';
 import Modal from 'react-awesome-modal';
-import moment from 'moment';
 
 const tamañosListado = [
     { label: "5", value: "5" },
@@ -42,9 +41,6 @@ class ListadoPuntosEntrega extends Component {
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.handleRowAccion = this.handleRowAccion.bind(this);
         this.actualizarEstadoPunto = this.actualizarEstadoPunto.bind(this);
-        this.cargarFechas = this.cargarFechas.bind(this);
-        this.cargarFilas = this.cargarFilas.bind(this);
-        this.clickMostrarFechas = this.clickMostrarFechas.bind(this);
     }
 
     mostrarPantallaPrincipal() {
@@ -131,35 +127,7 @@ class ListadoPuntosEntrega extends Component {
         }
     }
 
-    cargarFechas(rowId) {
-        var _this = this;
-        fetch("http://localhost:3000/redAgro/fechas_punto_entrega?id_punto_entrega=" + rowId, {
-            method: "GET",
-            headers: {
-                'Content-type': 'application/json;charset=UTF-8',
-            }
-        })
-            .then(function (response) {
-                if (response.status !== 200) {
-                    _this.setState({
-                        visible2: true,
-                        accion: false,
-                        titulo: "Error",
-                        mensaje: "Ocurrió algún error inesperado. Intentá nuevamente"
-                    });
-                    return;
-                }
-
-                response.json().then(
-                    function (response) {
-                        response.forEach(element => {
-                            _this.setState({ fechas_entrega: [..._this.state.fechas_entrega, element] });
-                        });
-                    });
-            });
-    }
-
-    clickMostrarFechas(rowId) {
+    handleRowClick(rowId) {
         const currentExpandedRows = this.state.expandedRows;
         const isRowCurrentlyExpanded = currentExpandedRows.includes(rowId);
 
@@ -167,14 +135,16 @@ class ListadoPuntosEntrega extends Component {
             currentExpandedRows.filter(id => id !== rowId) :
             currentExpandedRows.concat(rowId);
 
-        this.setState({ expandedRows: newExpandedRows });
+        this.setState({ 
+            expandedRows: newExpandedRows 
+        });
     }
 
-    cargarFilas(item) {
-        const clickFechas = () => this.clickMostrarFechas(item.id);
+    generoItem(item) {
+        const clickCallback = () => this.handleRowClick(item.id);
         const clickAltaBaja = () => this.handleRowAccion(item.id, item.activo);
 
-        const itemRow = [
+        const itemRows = [
             <tr key={"row-data-" + item.id}>
                 <td>
                     {item.descripcion}
@@ -189,41 +159,32 @@ class ListadoPuntosEntrega extends Component {
                     {item.direccion}
                 </td>
                 <td>
-                    <i className="far fa-calendar-alt iconosTabla" title="Ver fechas" onClick={clickFechas} />
+                    <i className="far fa-calendar-alt iconosTabla cursorManito" title="Ver fechas" onClick={clickCallback} />
                 </td>
                 <td>
                     {
                         item.activo === false ?
-                            <i className="fa fa-times-circle rojo iconosTabla" onClick={clickAltaBaja} title="Baja" />
+                            <i className="fa fa-times-circle rojo iconosTabla cursorManito" onClick={clickAltaBaja} title="Baja" />
                             :
-                            <i className="fa fa-check-circle verde iconosTabla" onClick={clickAltaBaja} title="Alta" />
+                            <i className="fa fa-check-circle verde iconosTabla cursorManito" onClick={clickAltaBaja} title="Alta" />
                     }
                 </td>
             </tr>
         ];
 
         if (this.state.expandedRows.includes(item.id)) {
-            const fechas_filtradas = this.state.fechas_entrega.filter(fecha => fecha.punto_entrega.id === item.id)
-            fechas_filtradas.forEach(fecha => {
-                itemRow.push(
-                    <tr key={"row-expanded-" + item.id}>
-                        <td />
-                        <td> {moment(fecha.fecha, 'DD-MM-YYYY').format('DD/MM/YYYY')} </td>
-                        <td> {fecha.hora_inicio} </td>
-                        <td> {fecha.hora_fin} </td>
-                        <td />
-                    </tr>
-                );
-            }
-            )
+            itemRows.push(
+                <DetalleFechasEntrega item={item} />
+            );
         }
-        return itemRow;
+        return itemRows;
     }
 
     componentDidMount() {
         var _this = this;
 
-        fetch("http://localhost:3000/redAgro/puntos_productor?id=" + this.state.id, {
+        var path = "http://localhost:3000/redAgro/listadoPuntosEntregaProductor?productor_id=" + this.state.id
+        fetch(path, {
             method: "GET",
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
@@ -274,11 +235,17 @@ class ListadoPuntosEntrega extends Component {
         let actualizarListado = [];
         actualizarListado.push(tamaño);
         if (tamaño.value === "Todo") {
-            this.setState({ puntosPerPage: this.state.puntos_entrega.length })
+            this.setState({
+                puntosPerPage: this.state.puntos_entrega.length
+            })
         } else {
-            this.setState({ puntosPerPage: tamaño.value })
+            this.setState({
+                puntosPerPage: tamaño.value
+            })
         }
-        this.setState({ defaultListado: actualizarListado });
+        this.setState({
+            defaultListado: actualizarListado
+        });
     }
 
     render() {
@@ -289,7 +256,7 @@ class ListadoPuntosEntrega extends Component {
         const lista = puntos_entrega.slice(indexOfFirstPunto, indexOfLastPunto);
         let body = [];
         lista.forEach(item => {
-            body.push(this.cargarFilas(item));
+            body.push(this.generoItem(item));
         })
 
         if (this.state.loading) return (
@@ -308,7 +275,7 @@ class ListadoPuntosEntrega extends Component {
                 {
                     puntos_entrega.length > 0 ?
                         <div className="opcionesCantidad">
-                            <span className="tituloCantidad">Puntos de entrega por página</span>
+                            <span className="align-center">Puntos de entrega por página</span>
                             <Select className="cantidadItemsListado"
                                 value={defaultListado}
                                 options={tamañosListado}
@@ -360,4 +327,4 @@ class ListadoPuntosEntrega extends Component {
         );
     };
 }
-export default withRouter(ListadoPuntosEntrega);
+export default ListadoPuntosEntrega;

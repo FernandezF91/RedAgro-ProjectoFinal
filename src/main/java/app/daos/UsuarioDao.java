@@ -8,13 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import app.modelos.EntidadProductor;
 import app.modelos.EntidadUsuario;
 
 public interface UsuarioDao extends JpaRepository<EntidadUsuario, Long> {
 
 	@Query("select u from EntidadUsuario u where u.usuario = ?1 and u.contraseña = ?2 and u.activo=true")
 	EntidadUsuario autenticaUsuario(String u, String c);
+	
+	@Query("select u from EntidadUsuario u where u.usuario = ?1 and u.contraseña = ?2")
+	EntidadUsuario obtenerUsuarioByLogin(String u, String c);
 	
 	@Transactional
 	@Modifying

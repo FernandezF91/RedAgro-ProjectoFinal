@@ -3,7 +3,6 @@ package app.controladores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.sql.Time;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +35,7 @@ public class PuntoDeEntregaControlador {
 	@Autowired
 	FechaEntregaDao fechaEntregaDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/puntos_productor")
 	public List<PuntoEntrega> listadoPuntosDeEntregaProductor(@RequestParam long id) {
 
@@ -55,7 +54,7 @@ public class PuntoDeEntregaControlador {
 		return puntos_entrega;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/puntos_entrega_productor")
 	public List<PuntoEntrega> obtenerPuntosDeEntregaProductores() {
 
@@ -71,7 +70,7 @@ public class PuntoDeEntregaControlador {
 		return puntos_entrega;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/puntos_productor_activos")
 	public List<PuntoEntrega> listadoPuntosDeEntregaActivos(@RequestParam String fecha, @RequestParam long id) {
 
@@ -81,34 +80,36 @@ public class PuntoDeEntregaControlador {
 
 		entidad_puntos = puntoEntregaDAO.obtenerPuntosEntregaActivos(fecha, id);
 
-		puntos_entrega = entidad_puntos.stream().map(entidad ->
-
-		punto_entrega_mapper.mapFromEntity(entidad)).collect(Collectors.toList());
+		puntos_entrega = entidad_puntos.stream().map(entidad -> punto_entrega_mapper.mapFromEntity(entidad))
+				.collect(Collectors.toList());
 
 		return puntos_entrega;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/subir_punto_entrega")
 	public ResponseEntity<Object> subirPuntoDeEntrega(@RequestBody EntidadPuntoEntrega punto_entrega,
 			@RequestParam long id_productor, @RequestParam String descripcion, @RequestParam String fecha_entrega,
 			@RequestParam String hora_inicio, @RequestParam String hora_fin) {
 
-		EntidadProductor p = new EntidadProductor();
-		EntidadFechaEntrega fe = new EntidadFechaEntrega();
-		EntidadPuntoEntrega pe = new EntidadPuntoEntrega();
+		EntidadProductor productor = new EntidadProductor();
+		EntidadFechaEntrega fechaEntrega = new EntidadFechaEntrega();
+		EntidadPuntoEntrega puntoEntrega = new EntidadPuntoEntrega();
 		List<EntidadFechaEntrega> fechas = new ArrayList<EntidadFechaEntrega>();
 
-		pe = puntoEntregaDAO.obtenerPuntosEntregaPorLatitud(punto_entrega.getLatitud(), punto_entrega.getLongitud());
-		p = productorDAO.obtenerProductor(id_productor);
+		puntoEntrega = puntoEntregaDAO.obtenerPuntosEntregaPorLatitud(punto_entrega.getLatitud(),
+				punto_entrega.getLongitud());
+		productor = productorDAO.obtenerProductor(id_productor);
 
-		if (pe == null) {
+		if (puntoEntrega == null) {
+			String descripcionCap = descripcion.substring(0, 1).toUpperCase() + descripcion.substring(1);
+
 			punto_entrega.setActivo(true);
-			punto_entrega.setProductor(p);
-			punto_entrega.setDescripcion(descripcion);
-			pe = puntoEntregaDAO.save(punto_entrega);
+			punto_entrega.setProductor(productor);
+			punto_entrega.setDescripcion(descripcionCap);
+			puntoEntrega = puntoEntregaDAO.save(punto_entrega);
 		} else {
-			fechas = fechaEntregaDAO.obtenerHorariosDeUnaFecha(pe.getId(), fecha_entrega);
+			fechas = fechaEntregaDAO.obtenerHorariosDeUnaFecha(puntoEntrega.getId(), fecha_entrega);
 		}
 
 		for (EntidadFechaEntrega f : fechas) {
@@ -124,7 +125,7 @@ public class PuntoDeEntregaControlador {
 								+ ". Reintentá con otro horario ;)",
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			} else {
-				
+
 				if (horaFin >= horaInicioGuardada) {
 					return new ResponseEntity<>(
 							"Hey!  Para la fecha de entrega elegida, ya existe un horario de entrega que inicia a las "
@@ -135,18 +136,18 @@ public class PuntoDeEntregaControlador {
 			}
 		}
 
-		fe.setPunto_entrega(pe);
-		fe.setFecha(fecha_entrega);
-		fe.setHora_inicio(hora_inicio);
-		fe.setHora_fin(hora_fin);
-		fechaEntregaDAO.save(fe);
-		long id = pe.getId();
+		fechaEntrega.setPunto_entrega(puntoEntrega);
+		fechaEntrega.setFecha(fecha_entrega);
+		fechaEntrega.setHora_inicio(hora_inicio);
+		fechaEntrega.setHora_fin(hora_fin);
+		fechaEntregaDAO.save(fechaEntrega);
+		long id = puntoEntrega.getId();
 
-		return new ResponseEntity<>(id,HttpStatus.OK);
+		return new ResponseEntity<>(id, HttpStatus.OK);
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/modificar_punto")
 	public void modificarEstadoDePunto(@RequestParam long id, @RequestParam String accion) {
 
@@ -158,5 +159,24 @@ public class PuntoDeEntregaControlador {
 
 		}
 		puntoEntregaDAO.modificarPunto(id, false);
+	}
+
+	@CrossOrigin(origins = "*")
+	@GetMapping(path = "redAgro/listadoPuntosEntregaProductor")
+	public List<PuntoEntrega> listadoPuntosEntregaProductor(@RequestParam long productor_id) {
+
+		PuntoEntregaMapper punto_entrega_mapper = new PuntoEntregaMapper();
+		List<EntidadPuntoEntrega> entidad_puntos = new ArrayList<EntidadPuntoEntrega>();
+		List<PuntoEntrega> puntos_entrega = new ArrayList<PuntoEntrega>();
+		EntidadProductor productor = new EntidadProductor();
+
+		productor = productorDAO.obtenerProductor(productor_id);
+
+		entidad_puntos = puntoEntregaDAO.obtenerPuntosEntregaProductor(productor);
+
+		puntos_entrega = entidad_puntos.stream().map(entidad -> punto_entrega_mapper.mapFromEntityWithFechas(entidad))
+				.collect(Collectors.toList());
+
+		return puntos_entrega;
 	}
 }

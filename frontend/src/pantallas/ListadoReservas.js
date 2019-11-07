@@ -120,7 +120,7 @@ class ListadoReservas extends Component {
                 {
                     (tipoUsuario === "Consumidor") ?
                         <td>
-                            {item.productor.nombre + " " + item.productor.apellido}
+                            {item.productor.razon_social}
                             <br />
                             Tel: {item.productor.telefono}
                         </td>
@@ -466,7 +466,7 @@ class ListadoReservas extends Component {
                 {
                     reservasRealizadas.length > 0 ?
                         <div className="opcionesCantidad">
-                            <span className="tituloCantidad">Reservas por página</span>
+                            <span className="align-center">Reservas por página</span>
                             <Select className="cantidadItemsListado"
                                 value={defaultListado}
                                 options={tamañosListado}
@@ -533,13 +533,13 @@ class ListadoReservas extends Component {
                                     <BeautyStars
                                         value={this.state.cantidadEstrellas}
                                         activeColor="#28A745"
-                                        inactiveColor="#757877"
+                                        inactiveColor="#CCC"
                                     />
                                     :
                                     <BeautyStars
                                         value={this.state.cantidadEstrellas}
                                         activeColor="#28A745"
-                                        inactiveColor="#757877"
+                                        inactiveColor="#CCC"
                                         onChange={cantidadEstrellas => this.setState({ cantidadEstrellas })}
                                     />
                                 }
@@ -556,6 +556,7 @@ class ListadoReservas extends Component {
                                 onChange={(e) => this.detectarCambiosComentario(e)}
                                 className="textCalificacion"
                                 disabled={this.state.verCalificacion}
+                                maxLength="100"
                             />
                             {
                                 (!this.state.verCalificacion) &&

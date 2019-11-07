@@ -10,9 +10,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Alertas_Notificaciones")
+@Table(name = "Alerta_Notificaciones")
 
-public class EntidadAlertasNotificaciones {
+public class EntidadAlertaNotificaciones {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,11 +67,11 @@ public class EntidadAlertasNotificaciones {
 		this.usuario = usuario;
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

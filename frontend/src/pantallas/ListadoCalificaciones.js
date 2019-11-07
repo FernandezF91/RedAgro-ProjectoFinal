@@ -15,7 +15,7 @@ const tamañosListado = [
     { label: "Todo", value: "Todo" },
 ];
 
-class Calificaciones extends Component {
+class ListadoCalificaciones extends Component {
 
     constructor(props) {
         super(props);
@@ -45,7 +45,7 @@ class Calificaciones extends Component {
                         <BeautyStars
                             value={item.valor}
                             activeColor="#28A745"
-                            inactiveColor="#757877"
+                            inactiveColor="#CCC"
                             size="16px"
                         />
                     </div>
@@ -129,7 +129,7 @@ class Calificaciones extends Component {
                 {
                     calificacionesRecibidas.length > 0 ?
                         <div className="opcionesCantidad">
-                            <span className="tituloCantidad">Calificaciones por página</span>
+                            <span className="align-center">Calificaciones por página</span>
                             <Select className="cantidadItemsListado"
                                 value={defaultListado}
                                 options={tamañosListado}
@@ -152,4 +152,4 @@ class Calificaciones extends Component {
         );
     };
 }
-export default Calificaciones;
+export default ListadoCalificaciones;

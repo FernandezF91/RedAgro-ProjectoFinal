@@ -51,11 +51,17 @@ public class UsuarioControlador {
 	@Autowired
 	ProductorDao productorDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/usuario_consumidor")
 	public void agregarUsuarioConsumidor(@RequestBody EntidadUsuario usuario) {
 
+		String nombre = usuario.getNombre().substring(0, 1).toUpperCase() + usuario.getNombre().substring(1);
+		String apellido = usuario.getApellido().substring(0, 1).toUpperCase() + usuario.getApellido().substring(1);
+		
+		usuario.setNombre(nombre);
+		usuario.setApellido(apellido);
 		usuario.setActivo(false);
+		
 		EntidadUsuario userNuevo = usuarioDAO.save(usuario);
 
 		EntidadConsumidor entidadConsumidor = new EntidadConsumidor();
@@ -76,20 +82,27 @@ public class UsuarioControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/usuario_productor")
 	public void agregarUsuarioProductor(@RequestBody EntidadUsuario usuario, @RequestParam String razon_social) {
 
 		EntidadUsuario userNuevo = new EntidadUsuario();
 		EntidadProductor entidadProductor = new EntidadProductor();
 
+		String nombre = usuario.getNombre().substring(0, 1).toUpperCase() + usuario.getNombre().substring(1);
+		String apellido = usuario.getApellido().substring(0, 1).toUpperCase() + usuario.getApellido().substring(1);
+		
+		usuario.setNombre(nombre);
+		usuario.setApellido(apellido);
 		usuario.setActivo(false);
 
 		userNuevo = usuarioDAO.save(usuario);
 
 		entidadProductor.setId(userNuevo.getId());
 		entidadProductor.setUsuario(userNuevo);
-		entidadProductor.setRazon_social(razon_social);
+		
+		String razonSocialCap = razon_social.substring(0, 1).toUpperCase() + razon_social.substring(1);
+		entidadProductor.setRazon_social(razonSocialCap);
 
 		productorDAO.save(entidadProductor);
 
@@ -104,7 +117,7 @@ public class UsuarioControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/update_usuario")
 	public void updateUsuario(@RequestBody EntidadUsuario usuario, @RequestParam Long id) {
 
@@ -112,7 +125,7 @@ public class UsuarioControlador {
 				usuario.getFecha_nacimiento(), id);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/validar_usuario_duplicado")
 	public ResponseEntity<String> validarUsuarioDuplicado(@RequestParam String mail) {
 		UsuarioMapper userMapper = new UsuarioMapper();
@@ -134,7 +147,7 @@ public class UsuarioControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/modificar_contraseña")
 	public void modificacionContraseña(@RequestParam String c, @RequestParam Long id) {
 
@@ -142,20 +155,20 @@ public class UsuarioControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/get_tipo_usuario")
 	public String obtenerTipoUsuario(@RequestParam long id) {
 		String tipoUsuario = usuarioDAO.obtenerTipoUsuario(id);
 		return tipoUsuario;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@DeleteMapping(path = "redAgro/borrar_usuario/{id}")
 	public void deleteItem(@PathVariable long id) {
 		usuarioDAO.deleteById(id);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/confirmar_cuenta")
 	public void confirmarCuenta(@RequestParam Long id) {
 
@@ -163,9 +176,8 @@ public class UsuarioControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/recuperar_email")
-
 	public ResponseEntity<Object> confirmarCuenta(@RequestParam String email) {
 
 		EntidadUsuario eu = new EntidadUsuario();

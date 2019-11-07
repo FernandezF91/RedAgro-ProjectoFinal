@@ -49,34 +49,36 @@ public class ProductoProductorControlador {
 	@Autowired
 	UsuarioDao usuarioDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
 	public Long agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor,
 			@RequestParam long id_producto) {
 
 		EntidadProducto prod = productoDao.obtenerProducto(id_producto);
-
 		EntidadProductor productor = productorDao.obtenerProductor(id_productor);
 
 		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
-
 		EntidadProductoProductor productoNuevo = new EntidadProductoProductor();
-		productoNuevo.setTitulo(producto.getTitulo());
-		productoNuevo.setDescripcion(producto.getDescripcion());
+
+		String titulo = producto.getTitulo().substring(0, 1).toUpperCase() + producto.getTitulo().substring(1);
+		String descripcion = producto.getDescripcion().substring(0, 1).toUpperCase() + producto.getDescripcion().substring(1);
+
+		productoNuevo.setTitulo(titulo);
+		productoNuevo.setDescripcion(descripcion);
 		productoNuevo.setFecha_vencimiento(producto.getFecha_vencimiento());
 		productoNuevo.setPrecio(producto.getPrecio());
 		productoNuevo.setStock(producto.getStock());
 		productoNuevo.setImagenes(null);
 		productoNuevo.setTiempo_preparacion(producto.getTiempo_preparacion());
 		productoNuevo.setTipo_produccion(producto.getTipo_produccion());
-		
+
 		String contenido = producto.getContenido();
 		if (contenido == "") {
 			productoNuevo.setContenido(null);
 		} else {
 			productoNuevo.setContenido(contenido);
 		}
-		
+
 		productoNuevo.setUnidad_venta(producto.getUnidad_venta());
 		productoNuevo.setProducto(prod);
 		productoNuevo.setProductor(productor);
@@ -107,7 +109,7 @@ public class ProductoProductorControlador {
 		return id;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProductosProductor")
 	public List<ProductoProductor> obtenerProductosProductor(@RequestParam long id) {
 
@@ -117,7 +119,7 @@ public class ProductoProductorControlador {
 		return productosMapeados;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProductosProductorBusqueda")
 	public List<ProductoProductor> obtenerProductosProductorBusqueda(@RequestParam long id) {
 
@@ -127,7 +129,7 @@ public class ProductoProductorControlador {
 		return productosMapeados;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProductos")
 	public List<ProductoProductor> obtenerProductos(@RequestParam String busqueda) {
 
@@ -151,7 +153,7 @@ public class ProductoProductorControlador {
 		return productosMapeados;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProductosPorLista")
 	public List<ProductoProductor> obtenerProductosPorLista(@RequestParam List<Long> idProducto) {
 
@@ -167,7 +169,7 @@ public class ProductoProductorControlador {
 		return listado;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProducto/{id}")
 	public ProductoProductor obtenerProductosPorId(@PathVariable Long id) {
 
@@ -177,7 +179,7 @@ public class ProductoProductorControlador {
 		return producto;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProductosARevisar")
 	public ResponseEntity<Object> obtenerProductosARevisar(@RequestParam long id_productor) {
 		try {
@@ -191,7 +193,21 @@ public class ProductoProductorControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin("*")
+	@GetMapping(path = "redAgro/ProductosProductor/obtenerProductosPantallaInicial")
+	public ResponseEntity<Object> obtenerProductosPantallaInicial() {
+		try {
+			List<EntidadProductoProductor> resultados = productoProductorDao.obtenerProductosPantallaSinLogin();
+			ProductoProductorMapper productoMapper = new ProductoProductorMapper();
+			List<ProductoProductor> productosMapeados = productoMapper.mapFromEntity(resultados);
+
+			return new ResponseEntity<>(productosMapeados, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Ocurrió un error al buscar los productos.", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/actualizarEstadoProducto")
 	public ResponseEntity<String> actualizarEstadoProducto(@RequestParam long id_producto_productor,
 			@RequestParam boolean activo) {
@@ -205,7 +221,7 @@ public class ProductoProductorControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/actualizarProductoProductor")
 	public ResponseEntity<String> actualizarProductoProductor(@RequestBody EntidadProductoProductor producto,
 			@RequestParam long id_producto_productor) {
@@ -213,23 +229,24 @@ public class ProductoProductorControlador {
 			EntidadProductoProductor productoAActualizar = productoProductorDao
 					.obtenerProductoById(id_producto_productor);
 
-			productoAActualizar.setTitulo(producto.getTitulo());
-			productoAActualizar.setDescripcion(producto.getDescripcion());
+			String titulo = producto.getTitulo().substring(0, 1).toUpperCase() + producto.getTitulo().substring(1);
+			String descripcion = producto.getDescripcion().substring(0, 1).toUpperCase() + producto.getDescripcion().substring(1);
+			
+			productoAActualizar.setTitulo(titulo);
+			productoAActualizar.setDescripcion(descripcion);
 			productoAActualizar.setFecha_vencimiento(producto.getFecha_vencimiento());
 			productoAActualizar.setPrecio(producto.getPrecio());
 			productoAActualizar.setStock(producto.getStock());
 			productoAActualizar.setTiempo_preparacion(producto.getTiempo_preparacion());
 			productoAActualizar.setContenido(producto.getContenido());
-			//productoAActualizar.setImagenes(null);
+			// productoAActualizar.setImagenes(null);
 
 			productoProductorDao.save(productoAActualizar).getId();
 
 			return new ResponseEntity<>("Producto actualizado correctamente!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(
-					"Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
 }

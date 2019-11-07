@@ -2,9 +2,10 @@
 import '../diseños/PrincipalUsuarios.css';
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react'
-import { NavDropdown, Container, Row, Col } from 'react-bootstrap';
+import { NavDropdown } from 'react-bootstrap';
 import { Route, Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { MDBCol, MDBRow, MDBContainer } from 'mdbreact';
 
 import MiCuenta from './MiCuentaConsumidor';
 import ListadoReservas from '../pantallas/ListadoReservas';
@@ -180,36 +181,35 @@ class PantallaPrincipalconsumidores extends Component {
         });
 
         const item = [
-            <Row>
-                <Col className="scrollMenuCategorias">
+            <MDBRow>
+                <MDBCol className="scrollMenuCategorias">
                     {
                         verduras.map(v => {
-                            return <Row id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(v.tipo)}>
+                            return <MDBRow id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(v.tipo)}>
                                 {v.tipo}
-                            </Row>
+                            </MDBRow>
                         })
                     }
-                </Col>
-                <Col className="scrollMenuCategorias">
+                </MDBCol>
+                <MDBCol className="scrollMenuCategorias">
                     {
                         frutas.map(f => {
-                            return <Row id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(f.tipo)}>
+                            return <MDBRow id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(f.tipo)}>
                                 {f.tipo}
-                            </Row>
+                            </MDBRow>
                         })
                     }
-                </Col>
-                <Col className="scrollMenuCategorias">
+                </MDBCol>
+                <MDBCol className="scrollMenuCategorias">
                     {
                         otros.map(o => {
-                            return <Row id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(o.tipo)}>
+                            return <MDBRow id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(o.tipo)}>
                                 {o.tipo}
-                            </Row>
+                            </MDBRow>
                         })
                     }
-                </Col>
-            </Row>
-
+                </MDBCol>
+            </MDBRow>
         ]
 
         tipos.push(item)
@@ -221,79 +221,82 @@ class PantallaPrincipalconsumidores extends Component {
             <div className="fondo">
                 <BarraNavegacion
                     productosSeleccionados={this.state.productosSeleccionados}
-                    rolUsuario={this.state.rolUsuario}
-                    handleNuevaBusqueda={this.handleNuevaBusqueda} />
-
-                <Container fluid className="contenedor">
-                    <Row className="filaContenedora">
-                        <Col sm={2} className="menuConsumidor">
-                            <Row className="cuenta">
-                                <Link to={'/principalConsumidores/MiCuenta'} className="linkMiCuenta">
-                                    <i className="fas fa-bars iconoMiCuenta" />
-                                    <h4>Mi cuenta</h4>
-                                </Link>
-                            </Row>
-                            <NavDropdown.Divider className="divisor" />
-                            <Row className="itemsSubmenu">
-                                <i className="fas fa-shopping-basket iconosMenuLateral" />
-                                <NavDropdown title="Comprar" id="compra_drop" className="com_drop">
-                                    <NavDropdown.Item>
-                                        <Link to="/principalConsumidores/Geolocalizacion" id="items">Geolocalización</Link>
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown title="Categorias" id="categoria_drop" drop="right">
-                                        <NavDropdown.Item id="itemArea" className="cursor">
-                                            <Row className="titulos">
-                                                <Col id="categorias">Verduras</Col>
-                                                <Col id="categorias">Frutas</Col>
-                                                <Col id="categorias">Otros</Col>
-                                            </Row>
-                                            <NavDropdown.Divider />
-                                            {this.cargarProductos()}
-                                        </NavDropdown.Item>
-                                    </NavDropdown >
-                                </NavDropdown>
-                            </Row>
-                            <Row className="itemsMenuReservas">
-                                <i className="fas fa-tasks iconosMenuLateral" />
-                                <Link to={'/principalConsumidores/ListadoReservas'}>
-                                    <p>Reservas</p>
-                                </Link>
-                            </Row>
-                            <Row>
-                                <i className="fas fa-user-edit iconosMenuLateral" />
-                                <Link to={'/principalConsumidores/PreferenciasConsumidor'}>
-                                    <p>Preferencias</p>
-                                </Link>
-                            </Row>
-                            <Row>
-                                <i className="fas fa-bell iconosMenuLateral" />
-                                <Link to={'/principalConsumidores/Alertas'}>
-                                    <p>Alertas</p>
-                                </Link>
-                            </Row>
-                            <Row className="itemsSubmenu">
-                                <i className="fas fa-cogs iconosMenuLateral" />
-                                <div className="conf_drop">
-                                    <NavDropdown title="Configuración" id="config_dropConsu">
+                    usuario={this.state.user}
+                    handleNuevaBusqueda={this.handleNuevaBusqueda}
+                />
+                <MDBContainer fluid className="contenedor">
+                    <MDBRow className="filaContenedora">
+                        <MDBCol md="2" className="menuConsumidor">
+                            <div className="margenMenuLateral">
+                                <MDBRow>
+                                    <Link to={'/principalConsumidores/MiCuenta'} className="linkMiCuenta">
+                                        <i className="fas fa-bars iconoMiCuenta" />
+                                        <h4>Mi cuenta</h4>
+                                    </Link>
+                                </MDBRow>
+                                <NavDropdown.Divider className="divisor" />
+                                <MDBRow className="itemsSubmenu">
+                                    <i className="fas fa-shopping-basket iconosMenuLateral" />
+                                    <NavDropdown title="Comprar" id="compra_drop" className="com_drop">
                                         <NavDropdown.Item>
-                                            <Link to="/principalConsumidores/EditarDatos" id="items">Editar mis datos</Link>
+                                            <Link to="/principalConsumidores/Geolocalizacion" id="items">Geolocalización</Link>
                                         </NavDropdown.Item>
                                         <NavDropdown.Divider />
-                                        <NavDropdown.Item>
-                                            <Link to="/principalConsumidores/modificarContraseña" id="items">Modificar contraseña</Link>
-                                        </NavDropdown.Item>
+                                        <NavDropdown title="Categorias" id="categoria_drop" drop="right">
+                                            <NavDropdown.Item id="itemArea" className="cursor">
+                                                <MDBRow className="titulos">
+                                                    <MDBCol id="categorias">Verduras</MDBCol>
+                                                    <MDBCol id="categorias">Frutas</MDBCol>
+                                                    <MDBCol id="categorias">Otros</MDBCol>
+                                                </MDBRow>
+                                                <NavDropdown.Divider />
+                                                {this.cargarProductos()}
+                                            </NavDropdown.Item>
+                                        </NavDropdown >
                                     </NavDropdown>
-                                </div>
-                            </Row>
-                        </Col>
-                        <Col className="ruteo">
+                                </MDBRow>
+                                <MDBRow className="itemsMenuReservas">
+                                    <i className="fas fa-tasks iconosMenuLateral" />
+                                    <Link to={'/principalConsumidores/ListadoReservas'}>
+                                        <p>Reservas</p>
+                                    </Link>
+                                </MDBRow>
+                                <MDBRow>
+                                    <i className="fas fa-user-edit iconosMenuLateral" />
+                                    <Link to={'/principalConsumidores/PreferenciasConsumidor'}>
+                                        <p>Preferencias</p>
+                                    </Link>
+                                </MDBRow>
+                                <MDBRow>
+                                    <i className="fas fa-bell iconosMenuLateral" />
+                                    <Link to={'/principalConsumidores/Alertas'}>
+                                        <p>Alertas</p>
+                                    </Link>
+                                </MDBRow>
+                                <MDBRow className="itemsSubmenu">
+                                    <i className="fas fa-cogs iconosMenuLateral" />
+                                    <div className="conf_drop">
+                                        <NavDropdown title="Configuración" id="config_dropConsu">
+                                            <NavDropdown.Item>
+                                                <Link to="/principalConsumidores/EditarDatos" id="items">Editar mis datos</Link>
+                                            </NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item>
+                                                <Link to="/principalConsumidores/modificarContraseña" id="items">Modificar contraseña</Link>
+                                            </NavDropdown.Item>
+                                        </NavDropdown>
+                                    </div>
+                                </MDBRow>
+                            </div>
+                        </MDBCol>
+                        <MDBCol className="ruteo">
                             <Route path={'/principalConsumidores/MiCuenta'}
                                 render={(props) =>
                                     <MiCuentaRouter
                                         id_usuario={this.state.id}
                                         rolUsuario={this.state.rolUsuario}
                                         usuario={this.state.user}
+                                        handleDetalleProducto={this.handleDetalleProducto}
                                     />
                                 }
                             />
@@ -384,12 +387,14 @@ class PantallaPrincipalconsumidores extends Component {
 
                             <Route path={'/principalConsumidores/PerfilProductor/:nombrePerfil'}
                                 render={(props) =>
-                                    <PerfilProductorRouter />
+                                    <PerfilProductorRouter
+                                        handleDetalleProducto={this.handleDetalleProducto}
+                                    />
                                 }
                             />
-                        </Col>
-                    </Row>
-                </Container>
+                        </MDBCol>
+                    </MDBRow>
+                </MDBContainer>
             </div >
         );
     };

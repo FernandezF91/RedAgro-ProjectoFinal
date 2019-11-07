@@ -21,4 +21,8 @@ public interface CalificacionDao extends JpaRepository<EntidadCalificacion, Long
 	@Query(value = " SELECT c.* FROM Calificacion c JOIN Reserva r ON c.reserva_id = r.id "
 			+ "WHERE r.productor_id = ?1 ORDER BY c.id DESC LIMIT 0, 5", nativeQuery = true)
 	List<EntidadCalificacion> obtenerUltimasCalificacionesPorProductor(long productor_id);
+	
+	@Query(value = " SELECT COUNT(R.id) FROM Calificacion c JOIN Reserva R ON c.reserva_id = r.id "
+			+ " WHERE r.productor_id = ?1 ", nativeQuery = true)
+	String obtenerCantidadDeReservasCalificadas(long productor_id);
 }

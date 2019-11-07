@@ -30,10 +30,11 @@ const PasosCheckout = (props) => {
                             <Form.Label column sm={4}> Usuario </Form.Label>
                             <Form.Control
                                 required
-                                type="nom"
                                 name="nombre"
                                 defaultValue={props.usuario.usuario}
-                                disabled />
+                                disabled
+                                className="camposDatosDeUsuario"
+                            />
                         </Form.Group>
                     </div>
                     <div className="nombreDU" >
@@ -43,20 +44,22 @@ const PasosCheckout = (props) => {
                                 (props.datosPersonaRetiro.disabled === true) ?
                                     <Form.Control
                                         required
-                                        type="nom"
                                         name="nombre"
                                         value={props.datosPersonaRetiro.nombre}
                                         pattern="^[a-zA-Z ]*$"
                                         onChange={props.handleDatosPersonales}
-                                        disabled />
+                                        disabled
+                                        className="camposDatosDeUsuario"
+                                    />
                                     :
                                     <Form.Control
                                         required
-                                        type="nom"
                                         name="nombre"
                                         value={props.datosPersonaRetiro.nombre}
                                         pattern="^[a-zA-Z ]*$"
-                                        onChange={props.handleDatosPersonales} />
+                                        onChange={props.handleDatosPersonales}
+                                        className="camposDatosDeUsuario"
+                                    />
                             }
                         </Form.Group>
                     </div>
@@ -67,36 +70,37 @@ const PasosCheckout = (props) => {
                                 (props.datosPersonaRetiro.disabled === true) ?
                                     <Form.Control
                                         required
-                                        type="ap"
                                         name="apellido"
                                         value={props.datosPersonaRetiro.apellido}
                                         pattern="^[a-zA-Z ]*$"
                                         onChange={props.handleDatosPersonales}
                                         disabled
+                                        className="camposDatosDeUsuario"
                                     />
                                     :
                                     <Form.Control
                                         required
-                                        type="ap"
                                         name="apellido"
                                         value={props.datosPersonaRetiro.apellido}
                                         pattern="^[a-zA-Z ]*$"
                                         onChange={props.handleDatosPersonales}
+                                        className="camposDatosDeUsuario"
                                     />
                             }
                         </Form.Group>
                     </div>
-
                     <div className="telefonoDU" >
                         <Form.Group as={Row}>
                             <Form.Label column sm={4}>Teléfono de contacto</Form.Label>
                             <Form.Control
                                 required
-                                type="tel"
                                 name="telefono"
                                 defaultValue={props.usuario.telefono}
                                 disabled
-                                pattern="[0-9]{8,14}" />
+                                pattern="[0-9]{8,14}"
+                                maxLength="14"
+                                className="camposDatosDeUsuario"
+                            />
                         </Form.Group>
                     </div>
                 </div>
@@ -155,7 +159,7 @@ const PasosCheckout = (props) => {
                                     options={props.selector.fechasEntrega}
                                     placeholder="Seleccione una fecha de retiro..."
                                     onChange={newFecha => props.actualizarFechaEntrega(newFecha)} />
-                                
+
                                 <Select className="dropdownHorarios"
                                     isDisabled={props.selectorHorarios.selectorHorariosDisabled}
                                     value={props.seleccionado.horarioEntrega}
@@ -198,7 +202,7 @@ const PasosCheckout = (props) => {
                             <ListGroup>
                                 {
                                     props.productosSeleccionados.map(item => (
-                                        <ListGroup.Item key={item.id}>
+                                        <ListGroup.Item key={item.id} className="sinBordesCajaCheckout">
                                             <Row>
                                                 <Col>
                                                     <Image
@@ -258,7 +262,7 @@ const PasosCheckout = (props) => {
                                         </ListGroup.Item>
                                     ))
                                 }
-                                <ListGroup.Item key="footer" className="cardFooter">
+                                <ListGroup.Item key="footer" className="cardFooter sinBordesCajaCheckout bordesPrecioCheckout">
                                     Total
                                         <NumberFormat
                                         value={props.getTotalReserva(props.productosSeleccionados)}

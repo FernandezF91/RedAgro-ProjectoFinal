@@ -132,46 +132,45 @@ class ModificarContraseña extends Component {
             <div>
                 <div className="titulosPrincipales">Modificar contraseña</div>
                 <div className="contenidoMF">
-                    <div className="contraseñaActual" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Contraseña actual
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={4}>
+                            Contraseña actual
 									</Form.Label>
-                            <Form.Control
-                                required
-                                type="password"
-                                name="contraseñaActual"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="contraseñaNueva" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Contraseña nueva
+                        <Form.Control
+                            required
+                            type="password"
+                            name="contraseñaActual"
+                            onChange={(e) => this.detectarCambios(e)}
+                            className="camposDatosDeUsuario"
+                        />
+                    </Form.Group>
+
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={4}>
+                            Contraseña nueva
 									</Form.Label>
-                            <Form.Control
-                                required
-                                type="password"
-                                name="contraseñaNueva"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="confirmarContraseña" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Confirmar contraseña
+                        <Form.Control
+                            required
+                            type="password"
+                            name="contraseñaNueva"
+                            onChange={(e) => this.detectarCambios(e)}
+                            className="camposDatosDeUsuario"
+                        />
+                    </Form.Group>
+                    <Form.Group as={Row}>
+                        <Form.Label column sm={4}>
+                            Confirmar contraseña
 									</Form.Label>
-                            <Form.Control
-                                required
-                                type="password"
-                                name="confirmarContraseña"
-                                onChange={(e) => this.detectarCambios(e)}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="botonesNuevoProducto">
+                        <Form.Control
+                            required
+                            type="password"
+                            name="confirmarContraseña"
+                            onChange={(e) => this.detectarCambios(e)}
+                            className="camposDatosDeUsuario"
+                        />
+                    </Form.Group>
+
+                    <div className="botones">
                         <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                         <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
                     </div>

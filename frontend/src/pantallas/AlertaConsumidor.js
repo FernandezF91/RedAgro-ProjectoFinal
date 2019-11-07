@@ -288,7 +288,7 @@ class AlertaConsumidor extends Component {
                 <div className="descripcionPagina">
                     <h5>Configurá las alertas que recibiras por mail:</h5>
                 </div>
-                <form onSubmit={this.guardarConfiguracionAlertas}>
+                <form onSubmit={this.guardarConfiguracionAlertas} className="formAlertas">
                     <div className="radioButtons" align="left">
                         <h5>
                             <label className="checkbox-inline">

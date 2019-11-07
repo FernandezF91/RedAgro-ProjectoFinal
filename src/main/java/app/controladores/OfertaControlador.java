@@ -21,7 +21,7 @@ public class OfertaControlador {
 	@Autowired
 	ProductoProductorDao productoProductorDao;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/guardarOferta")
 	public ResponseEntity<String> guardarOferta(@RequestParam long id_producto_productor,
 			@RequestParam int porcentaje, @RequestParam boolean activo, @RequestParam long id_oferta) {

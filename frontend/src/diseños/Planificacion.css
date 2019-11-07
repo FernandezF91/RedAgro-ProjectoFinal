@@ -1,23 +1,12 @@
-.botonesNuevoProducto {
-	font-size: 15px;
-	display: flex;
-	flex-direction: row;
-	margin-top: 20px;
-	margin-bottom: 20px;
-	justify-content: center;
-}
-
 .form-control[type="desc"] {
 	width: 50%;
 	height: 100px;
 }
 
-
-.form-control[type="titulo"], .form-control[type="contenido"]{
-
-width:50%;
-
+.form-control[type="titulo"], .form-control[type="contenido"] {
+	width: 50%;
 }
+
 .form-label {
 	text-align: right;
 }
@@ -32,24 +21,6 @@ width:50%;
 	pointer-events: none;
 	width: 300px;
 	outline: none;
-}
-
-.condicionesInputs {
-	margin-left: -15%;
-	color: #cc0000;
-	font-size: 13px;
-	margin-bottom: 15px;
-}
-
-.condicionesInputsImg {
-	color: #cc0000;
-	font-size: 13px;
-}
-
-.condicionesInputsCO {
-	margin-left: -18%;
-	color: #cc0000;
-	font-size: 13px;
 }
 
 #number {

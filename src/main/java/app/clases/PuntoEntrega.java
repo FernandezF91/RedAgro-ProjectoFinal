@@ -4,14 +4,13 @@ import java.util.List;
 
 public class PuntoEntrega {
 
-	public PuntoEntrega(Long id, Productor productor,
-			// List<FechaEntrega> fechas_entrega,
-			String descripcion, String pais, String provincia, String localidad, String cod_postal, String direccion,
-			double latitud, double longitud, boolean activo) {
+	public PuntoEntrega(Long id, Productor productor, List<FechaEntrega> fechas_entrega, String descripcion,
+			String pais, String provincia, String localidad, String cod_postal, String direccion, double latitud,
+			double longitud, boolean activo) {
 
 		this.setId(id);
 		this.setProductor(productor);
-		// this.setFechas_entrega(fechas_entrega); Lo comento momentaneamente
+		this.setFechas_entrega(fechas_entrega);
 		this.setDescripcion(descripcion);
 		this.setPais(pais);
 		this.setProvincia(provincia);

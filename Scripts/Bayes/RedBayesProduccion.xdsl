@@ -28,7 +28,7 @@
 			<probabilities>0.3465686274509803 0.3204248366013071 0.0001633986928104574 0.2174836601307189 0.0001633986928104574 0.0001633986928104574 0.0001633986928104574 0.0001633986928104574 0.1145424836601307 0.0001633986928104574 0.1487619047619047 0.1925714285714285 0.0001904761904761904 0.3392380952380952 0.0001904761904761904 0.0001904761904761904 0.0001904761904761904 0.0001904761904761904 0.3182857142857142 0.0001904761904761904 0.2266423357664233 0.2010948905109489 0.0003649635036496349 0.15 0.0003649635036496349 0.0003649635036496349 0.0003649635036496349 0.0003649635036496349 0.4200729927007298 0.0003649635036496349 0.0001779359430604982 0.0001779359430604982 0.3062277580071174 0.0001779359430604982 0.1887900355871886 0.08202846975088968 0.09270462633451958 0.08558718861209964 0.0001779359430604982 0.243950177935943 0.0001538461538461538 0.0001538461538461538 0.1447692307692307 0.0001538461538461538 0.2293846153846154 0.1463076923076923 0.2201538461538461 0.1555384615384615 0.0001538461538461538 0.1032307692307692 0.0001107419712070874 0.0001107419712070874 0.09534883720930232 0.0001107419712070874 0.1075304540420819 0.2337763012181617 0.1739756367663344 0.2249169435215947 0.0001107419712070874 0.1640088593576966</probabilities>
 		</cpt>
 		<cpt id="provincia">
-			<state id="SBuenos_Aires" />
+			<state id="BUENOSAIRES" />
 			<state id="CABA" />
 			<state id="NEUQUEN" />
 			<state id="TUCUMAN" />
@@ -59,7 +59,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>676 325 748 373</position>
+				<position>705 374 777 422</position>
 				<barchart active="true" width="128" height="64" />
 			</node>
 			<node id="Alimento">
@@ -67,7 +67,7 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>382 434 454 482</position>
+				<position>420 450 492 498</position>
 				<barchart active="true" width="128" height="198" />
 			</node>
 			<node id="provincia">
@@ -75,15 +75,15 @@
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>132 275 204 323</position>
-				<barchart active="true" width="128" height="90" />
+				<position>97 307 169 355</position>
+				<barchart active="true" width="194" height="90" />
 			</node>
 			<node id="periodo">
 				<name>periodo</name>
 				<interior color="e5f6f7" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>137 53 209 101</position>
+				<position>129 66 201 114</position>
 				<barchart active="true" width="128" height="90" />
 			</node>
 			<node id="temperatura">
@@ -99,7 +99,7 @@
 				<interior color="ffff80" />
 				<outline color="000080" />
 				<font color="000000" name="Arial" size="8" />
-				<position>458 160 530 208</position>
+				<position>463 195 535 243</position>
 				<barchart active="true" width="240" height="72" />
 			</node>
 		</genie>

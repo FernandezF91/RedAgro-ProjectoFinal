@@ -25,15 +25,6 @@
     border-color: #28a745 !important;
 }
 
-.cantidadItemsListado {
-    width: 150px;
-    margin-left: 10px;
-}
-
-.tituloCantidad {
-    align-self: center;
-}
-
 .modal-dialog {
     width: 400px !important;
 }

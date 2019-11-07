@@ -13,7 +13,7 @@ import '../diseños/estilosGlobales.css';
 import '../diseños/Checkout.css'
 
 const pasos = [
-    'Confirmá tu datos personales',
+    'Confirmá tus datos personales',
     'Elegí una forma de retiro',
     'Resumen de la reserva'
 ];
@@ -579,7 +579,7 @@ class Checkout extends Component {
 
         return (
             <div className="containerPrincipal">
-                <div className="titulosPrincipales">Finalizar la Reserva</div>
+                <div className="titulosPrincipales">Finalizar la reserva</div>
                 <MuiThemeProvider theme={theme}>
                     <Stepper alternativeLabel nonLinear activeStep={activeStep} >
                         {pasos.map(label => (

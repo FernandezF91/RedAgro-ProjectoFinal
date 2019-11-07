@@ -2,10 +2,10 @@ import '../diseños/PerfilProductor.css'
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import { MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBCardBody, MDBCardImage, MDBCardText, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBContainer } from "mdbreact";
+import { MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBCardBody, MDBCardText, MDBContainer } from "mdbreact";
 import BeautyStars from 'beauty-stars';
 import ResumenFechasEntrega from "./principales/ResumenFechasEntrega";
-import NumberFormat from 'react-number-format';
+import CarouselProductos from './CarouselProductos'
 import moment from 'moment';
 
 moment.locale('es');
@@ -23,6 +23,7 @@ class PerfilProductor extends Component {
                 puntosEntrega: {},
             },
             calificacion: {},
+            cantidadDeReservasCalificadas: "",
             productos: [],
             listaFechasEntrega: [],
             loading: true,
@@ -31,6 +32,11 @@ class PerfilProductor extends Component {
             tamañoListado: 3,
             resultadoRequest: '',
         }
+        this.mostrarDetalleProducto = this.mostrarDetalleProducto.bind(this);
+    }
+
+    mostrarDetalleProducto = (productoSeleccionado) => {
+        this.props.handleDetalleProducto(productoSeleccionado.id);
     }
 
     componentDidMount() {
@@ -84,6 +90,7 @@ class PerfilProductor extends Component {
                     var id_productor = data.id;
                     this.obtenerProductos(id_productor);
                     this.obtenerCalificaciones(id_productor);
+                    this.obtenerCantidadDeReservasCalificadas(id_productor);
                     this.obtenerListadoFechasEntrega(id_productor);
 
                 } else {
@@ -95,51 +102,6 @@ class PerfilProductor extends Component {
 
     nextPage = (pageNumber) => {
         this.setState({ paginaActual: pageNumber });
-    }
-
-    generarProductosAMostrar = (item) => {
-        return (
-            <MDBCol md="4" key={item.id}>
-                <MDBCard className="mb-2">
-                    <MDBCardImage
-                        className="imagenesBusqueda"
-                        src={"data:" + item.imagenes[0].tipo_contenido + ";base64," + item.imagenes[0].image}
-                        alt="ImagenBusqueda"
-                        overlay="white-slight"
-                        height="150x" width="auto" />
-
-                    <MDBCardBody className="text-center">
-                        <h6 className="grey-text">{item.tipo}</h6>
-                        <MDBCardTitle>
-                            <strong className="dark-grey-text">{item.titulo}</strong>
-                        </MDBCardTitle>
-                        <MDBCardText>
-                            <strong className="float-center">
-                                {
-                                    (item.oferta === null || item.oferta === undefined) ?
-                                        <div>
-                                            <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                        </div>
-                                        :
-                                        (item.oferta.activo) ?
-                                            <div title="Producto en oferta!">
-                                                <strike>
-                                                    <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                                </strike>
-                                                <br />
-                                                <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                            </div>
-                                            :
-                                            <div>
-                                                <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                            </div>
-                                }
-                            </strong>
-                        </MDBCardText>
-                    </MDBCardBody>
-                </MDBCard>
-            </MDBCol>
-        )
     }
 
     crearListaDeProductos(numberOfPages, productosPerPage, productos) {
@@ -217,23 +179,18 @@ class PerfilProductor extends Component {
             .then(response => {
                 try {
                     if (response.status === 200) {
-                        this.setState({
-                            resultadoRequest: response.status
-                        });
                         return response.json();
                     }
                     else {
                         console.log(response.status);
                         this.setState({
                             loading: false,
-                            resultadoRequest: response.status
                         });
                     }
                 } catch (error) {
                     console.log(error);
                     this.setState({
-                        loading: false,
-                        resultadoRequest: response.status
+                        loading: false
                     });
                 }
             })
@@ -243,7 +200,47 @@ class PerfilProductor extends Component {
                         calificacion: data,
                     })
                 } else {
-                    this.setState({ loading: false });
+                    this.setState({
+                        loading: false
+                    });
+                }
+            })
+    }
+
+    obtenerCantidadDeReservasCalificadas(id_productor) {
+        var path = "http://localhost:3000/redAgro/obtenerCantidadDeReservasCalificadas?id_productor=" + id_productor;
+        fetch(path)
+            .catch(error => console.error(error))
+            .then(response => {
+                try {
+                    if (response.status === 200) {
+                        return response.text();
+                    }
+                    else {
+                        console.log(response.status);
+                        this.setState({
+                            loading: false
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                    this.setState({
+                        loading: false
+                    });
+                }
+            })
+            .then(data => {
+                console.log(data);
+                if (data !== undefined) {
+
+                    this.setState({
+                        cantidadDeReservasCalificadas: data,
+                    })
+                    console.log(this.state.cantidadDeReservasCalificadas);
+                } else {
+                    this.setState({
+                        loading: false
+                    });
                 }
             })
     }
@@ -290,15 +287,17 @@ class PerfilProductor extends Component {
 
     generoItemFechas(item) {
         const itemMDBRows = [
-            <tr key={"MDBRow-data-" + item.fecha}>
-                <td>{item.fecha}</td>
+            <tr key={"MDBRow-data-" + item.fecha} className="border-bottom">
                 <td>
-                    <div className="overflowDescripcion" title={item.descripcion}>
-                        {item.descripcion}
+                    <div className="primeraColumna">
+                        {item.fecha}
                     </div>
                 </td>
                 <td>
-                    <div className="overflowDescripcion" title={item.direccion}>
+                    {item.descripcion}
+                </td>
+                <td>
+                    <div className="ultimaColumna" title={item.direccion}>
                         {item.direccion}
                     </div>
                 </td>
@@ -331,7 +330,7 @@ class PerfilProductor extends Component {
             <div>
                 <MDBRow>
                     <div className="nombreDelPerfil titulosPrincipales tituloMiCuenta">
-                        {this.state.datosProductor.nombre}
+                        {this.state.datosProductor.razon_social}
                         <h6 className="grey-text">{fecha} que forma parte de Cultura Verde</h6>
                     </div>
                 </MDBRow>
@@ -340,20 +339,22 @@ class PerfilProductor extends Component {
                         <MDBRow>
                             <MDBCol>
                                 <MDBCard className="mb-4">
-                                    <MDBCardBody className="text-center">
-                                        <MDBCardTitle> <i className="fas fa-star" /> Mis calificaciones</MDBCardTitle>
-                                        {
-                                            this.state.datosProductor.calificacion === "Aún no hay calificaciones" || this.state.datosProductor.calificacion === undefined ?
-                                                'Aún no hay calificaciones' :
-                                                <div>
-                                                    <h6 className="grey-text">Promedio realizado en base a 1 reservas calificadas.</h6>
-                                                    <BeautyStars
-                                                        value={this.state.datosProductor.calificacion}
-                                                        activeColor="#28A745"
-                                                        inactiveColor="#757877"
-                                                        size="24px" />
-                                                </div>
-                                        }
+                                    <MDBCardBody>
+                                        <MDBCardTitle className="margenTitulosResumen">
+                                            <i className="fas fa-star iconoTituloResumen" /> Mis calificaciones
+                                        </MDBCardTitle>
+                                        <div className="resumenCentrado columnaTablaCentrada">
+                                            <BeautyStars
+                                                value={this.state.calificacion}
+                                                activeColor="#28A745"
+                                                inactiveColor="#CCC"
+                                                size="24px"
+                                            />
+                                        </div>
+                                        <br />
+                                        <h6 className="grey-text leyendaCajaCalificaciones">
+                                            {this.state.cantidadDeReservasCalificadas}
+                                        </h6>
                                     </MDBCardBody>
                                 </MDBCard>
                             </MDBCol>
@@ -361,9 +362,9 @@ class PerfilProductor extends Component {
                         <MDBRow>
                             <MDBCol>
                                 <MDBCard>
-                                    <MDBCardBody className="text-center">
-                                        <MDBCardTitle>
-                                            <i className="fas fa-map-marker-alt" /> Próximas fechas de entrega
+                                    <MDBCardBody className="text-center margenTitulosResumen">
+                                        <MDBCardTitle className="margenTitulosResumen">
+                                            <i className="fas fa-map-marker-alt iconoTituloResumen" /> Próximas fechas de entrega
                                         </MDBCardTitle>
                                         <MDBCardText className="resumenCentrado">
                                             <ResumenFechasEntrega
@@ -386,23 +387,9 @@ class PerfilProductor extends Component {
                                     </h4>
                                 </MDBCardTitle>
                                 <MDBContainer className="listadoDeProductos">
-                                    <MDBCarousel activeItem={1} length={lista.length} slide={true} showControls={true} showIndicators={true} multiItem>
-                                        <MDBCarouselInner>
-                                            {
-                                                lista.map((itemLista, index) => (
-                                                    <MDBCarouselItem itemId={index + 1}>
-                                                        <MDBRow>
-                                                            {
-                                                                itemLista.map((item) => (
-                                                                    this.generarProductosAMostrar(item)
-                                                                ))
-                                                            }
-                                                        </MDBRow>
-                                                    </MDBCarouselItem>
-                                                ))
-                                            }
-                                        </MDBCarouselInner>
-                                    </MDBCarousel>
+                                    <CarouselProductos
+                                        listadoProductos={lista}
+                                        mostrarDetalleProducto={this.mostrarDetalleProducto} />
                                 </MDBContainer>
                             </MDBCardBody>
                         </MDBCard>

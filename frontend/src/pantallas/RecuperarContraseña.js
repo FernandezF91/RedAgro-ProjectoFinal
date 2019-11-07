@@ -126,7 +126,7 @@ class RecuperarContraseña extends Component {
 
         return (
             <div className="fondo">
-                <Navbar className="barraNavegacion">
+                <Navbar className="barraNavegacion alturaBarra">
                     <Link to={'/'} className="culturaVerde">
                         <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
                     </Link>
@@ -151,6 +151,7 @@ class RecuperarContraseña extends Component {
                                     type="password"
                                     name="contraseñaNueva"
                                     onChange={(e) => this.detectarCambios(e)}
+                                    className="camposDatosDeUsuario"
                                 />
                             </Form.Group>
                         </div>
@@ -164,12 +165,13 @@ class RecuperarContraseña extends Component {
                                     required
                                     type="password"
                                     name="confirmarContraseña"
+                                    className="camposDatosDeUsuario"
                                     onChange={(e) => this.detectarCambios(e)}
                                 />
                             </Form.Group>
                         </div>
                     </div>
-                    <div className="botons">
+                    <div className="botones">
                         <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                         <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
                     </div>

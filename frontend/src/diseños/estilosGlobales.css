@@ -49,6 +49,7 @@ input[type=text] {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
 .culturaVerde {
@@ -79,14 +80,6 @@ input[type=text] {
     padding-top: 20px;
     padding-bottom: 20px;
     font-size: 32px;
-}
-
-.form-control[type="text"], .form-control[type="email"], .form-control[type="password"], .form-control[type="telR"], .form-control[type="number"] {
-    width: 40%;
-}
-
-.selectTipoProducto, .selectTipoUnidad, .selectTipoProduccion, .selectCategoria, .selectPeriodo {
-    width: 50%;
 }
 
 .iconosBarra {
@@ -199,7 +192,7 @@ input[type=text] {
 }
 
 .cantidadItemsListado {
-    width: 150px;
+    width: 120px;
     margin-left: 10px;
 }
 
@@ -214,9 +207,18 @@ input[type=text] {
     justify-content: flex-end;
     padding-right: 5%;
     margin-bottom: 20px;
+    float: right;
 }
 
-.tituloCantidad {
+.opcionesCantidadBusqueda {
+    display: flex;
+    margin-bottom: 20px;
+    float: right;
+    padding-right: 5%;
+    align-items: center;
+}
+
+.align-center {
     align-self: center;
 }
 
@@ -308,7 +310,6 @@ input[type=text] {
 }
 
 .overflowTexto {
-    max-width: 160px;
     overflow: hidden;
     display: inline-block;
     border: none;
@@ -316,13 +317,16 @@ input[type=text] {
     white-space: nowrap;
 }
 
-.overflowDescripcion {
-    max-width: 100px;
-    overflow: hidden;
-    display: inline-block;
-    border: none;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.primeraColumna {
+    padding-left: 6px !important;
+}
+
+.ultimaColumna {
+    padding-right: 6px !important;
+}
+
+.alineacionResumenJustificado {
+    text-align: justify !important;
 }
 
 .iconoGrandePrincipales {
@@ -341,4 +345,103 @@ input[type=text] {
 
 .listadosSinItems {
     margin-top: 15px;
+}
+
+.margenTitulosResumen {
+    margin-left: 0px;
+    margin-bottom: 8px;
+    font-size: 22px;
+}
+
+.iconoTituloResumen {
+    font-size: 22px;
+    margin-right: 5px;
+    color: #555;
+}
+
+.alturaTarjetasResumen {
+    height: 400px !important;
+}
+
+.tablaResumen {
+    min-height: 270px !important;
+    max-height: 270px !important;
+}
+
+.table-wrapper-scroll-y {
+    max-height: 270px !important;
+    overflow-y: auto;
+    overflow-x: hidden !important;
+}
+
+.alturaTablaCalificaciones {
+    max-height: 240px !important;
+}
+
+.table-wrapper-scroll-y::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.table-wrapper-scroll-y::-webkit-scrollbar-track {
+    background: #DDD;
+    border-radius: 10px;
+}
+
+.table-wrapper-scroll-y::-webkit-scrollbar-thumb {
+    background: #CCC;
+    border-radius: 10px;
+}
+
+.tablaDetalleFechasEntrega {
+    max-width: 600px;
+    margin: auto;
+}
+
+.leyendaCajaCalificaciones {
+    margin-top: 10px;
+}
+
+.verticalDivider {
+    width: 0;
+    overflow: hidden;
+    border-right: 1px solid #006400;
+    margin-right: 20px;
+    opacity: 0.2;
+}
+
+.condicionesInputs {
+    color: #CC0000;
+    font-size: 13px;
+}
+
+.condicionesInputsTitulo {
+    font-size: 13px;
+}
+
+.selectFormularios {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.selectFormulariosDisabled {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.padding0Inputs {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.labelCampoTextarea {
+    align-self: start !important;
+}
+
+.text-aling-start {
+    text-align: start;
+}
+
+.justifyContentCenter {
+	justify-content: center;
 }

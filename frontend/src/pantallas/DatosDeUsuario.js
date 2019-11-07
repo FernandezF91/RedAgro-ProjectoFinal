@@ -1,8 +1,6 @@
-
+import '../diseños/DatosDeUsuario.css';
 import React, { Component } from 'react'
 import { Form, Row, Button } from 'react-bootstrap';
-// import '../diseños/estilosGlobales.css';
-import '../diseños/DatosDeUsuario.css';
 import { DatePickerInput } from 'rc-datepicker';
 import Modal from 'react-awesome-modal';
 import { isDate } from 'moment';
@@ -28,6 +26,7 @@ class DatosDeUsuario extends Component {
             mensaje: "",
             titulo: "",
             formOk: false,
+            razon_social: "",
             id: this.props.usuario.id //para ir pasando el ID del usuario de pantalla a pantalla
         }
 
@@ -43,7 +42,45 @@ class DatosDeUsuario extends Component {
         campos["fecha_nac"] = new Date(this.state.usuario.fecha_nacimiento);
         campos["telefono"] = this.state.usuario.telefono;
 
-        this.setState({ campos: campos });
+        if (this.state.usuario.rol === "Productor") {
+            var path = "http://localhost:3000/redAgro/productor/obtenerRazonSocial?id=" + this.state.id;
+            fetch(path)
+                .catch(error => console.error(error))
+                .then(response => {
+                    try {
+                        if (response.status === 200) {
+                            this.setState({
+                                resultadoRequest: response.status
+                            });
+                            return response.json();
+                        }
+                        else {
+                            console.log(response.status);
+                            this.setState({
+                                loading: false,
+                                resultadoRequest: response.status
+                            });
+                        }
+                    } catch (error) {
+                        console.log(error);
+                        this.setState({
+                            loading: false,
+                            resultadoRequest: response.status
+                        });
+                    }
+                })
+                .then(data => {
+                    if (data !== undefined) {
+                        campos["razon_social"] = data.razon_social;
+                        this.setState({
+                            campos: campos,
+                            razon_social: data.razon_social
+                        });
+                    }
+                })
+        } else {
+            this.setState({ campos: campos });
+        }
     }
 
     detectarCambios(e) {
@@ -90,7 +127,7 @@ class DatosDeUsuario extends Component {
                     "contraseña": this.state.usuario.contraseña,
                     "rol": this.state.usuario.rol,
                     "activo": this.state.usuario.activo,
-                    "razon_social": this.state.usuario.razon_social,
+                    "razon_social": this.state.razon_social,
                     "alertas": []
                 }))
             })
@@ -138,6 +175,7 @@ class DatosDeUsuario extends Component {
         if ((this.state.campos["nombre"] === this.state.usuario.nombre) &&
             (this.state.campos["apellido"] === this.state.usuario.apellido) &&
             (this.state.campos["telefono"] === this.state.usuario.telefono) &&
+            (this.state.campos["razon_social"] === this.razon_social) &&
             (this.state.campos["fecha_nac"].getTime() === new Date(this.state.usuario.fecha_nacimiento).getTime())) {
 
             this.setState({
@@ -156,6 +194,38 @@ class DatosDeUsuario extends Component {
 
         if (_this.validarCampos()) {
 
+            if (this.state.usuario.rol === "Productor" && (this.state.razon_social !== this.state.campos["razon_social"])) {
+                var path = "http://localhost:3000/redAgro/productor/actualizarRazonSocial?id=" + this.state.id + "&razon_social=" + this.state.campos["razon_social"];
+                fetch(path, {
+                    method: "PUT",
+                    headers: {
+                        'Content-type': 'application/json;charset=UTF-8'
+                    }
+                })
+                    .then(function (response) {
+                        var status = response.status;
+                        response.text().then(
+                            function (response) {
+                                if (status !== 200) {
+                                    _this.setState({
+                                        visible: true,
+                                        titulo: "Error",
+                                        mensaje: response
+                                    });
+                                }
+                                else {
+                                    _this.actualizarStorage();
+                                    _this.setState({
+                                        visible: true,
+                                        titulo: "Modificación exitosa",
+                                        mensaje: "",
+                                        formOk: true
+                                    });
+                                }
+                            }
+                        )
+                    })
+            }
             var path_principal = "http://localhost:3000/redAgro/update_usuario?id=";
 
             var path_final = path_principal + _this.state.id;
@@ -204,63 +274,72 @@ class DatosDeUsuario extends Component {
                 <div className="contenidoDU">
                     <div className="nombreDU" >
                         <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Nombre
-									</Form.Label>
+                            <Form.Label column sm={4}>Nombre</Form.Label>
                             <Form.Control
                                 required
-                                type="nom"
                                 name="nombre"
                                 defaultValue={this.state.usuario.nombre}
                                 pattern="^[a-zA-Z ]*$"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="camposDatosDeUsuario"
                             />
                         </Form.Group>
                     </div>
                     <div className="apellidoDU" >
                         <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Apellido
-									</Form.Label>
+                            <Form.Label column sm={4}>Apellido</Form.Label>
                             <Form.Control
                                 required
-                                type="ap"
                                 name="apellido"
                                 defaultValue={this.state.usuario.apellido}
                                 pattern="^[a-zA-Z ]*$"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="camposDatosDeUsuario"
                             />
                         </Form.Group>
                     </div>
+                    {
+                        this.state.usuario.rol === "Productor" ?
+                            <div className="apellidoDU" >
+                                <Form.Group as={Row}>
+                                    <Form.Label column sm={4}>Razón Social</Form.Label>
+                                    <Form.Control
+                                        required
+                                        name="razon_social"
+                                        defaultValue={this.state.razon_social}
+                                        pattern="^[a-zA-Z ]*$"
+                                        onChange={(e) => this.detectarCambios(e)}
+                                        className="camposDatosDeUsuario"
+                                    />
+                                </Form.Group>
+                            </div>
+                            : ''
+                    }
                     <div className="fechaNac">
                         <Form.Group as={Row}>
-                            <Form.Label column sm={3}>
-                                Fecha de nacimiento
-                                </Form.Label>
+                            <Form.Label column sm={3}>Fecha de nacimiento</Form.Label>
                             <DatePickerInput
                                 ref="datePicker"
                                 name="fecha_nac"
                                 defaultValue={this.state.usuario.fecha_nacimiento}
                                 displayFormat='DD/MM/YYYY'
                                 maxDate={maxDate}
-                                className="calend"
                                 onChange={(e) => this.cambiosFecha(e)}
+                                className="col-md-3 padding0Inputs camposDatosDeUsuario"
                             />
                         </Form.Group>
                     </div>
                     <div className="telefonoDU" >
                         <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Teléfono de contacto
-									</Form.Label>
+                            <Form.Label column sm={4}>Teléfono de contacto</Form.Label>
                             <Form.Control
                                 required
-                                type="tel"
                                 name="telefono"
                                 defaultValue={this.state.usuario.telefono}
                                 pattern="[0-9]{8,14}"
                                 maxLength="14"
                                 onChange={(e) => this.detectarCambios(e)}
+                                className="camposDatosDeUsuario"
                             />
                         </Form.Group>
                     </div>
@@ -275,8 +354,8 @@ class DatosDeUsuario extends Component {
                         width="460"
                         height="120"
                         effect="fadeInUp"
-                        onClickAway={() => this.closeModal()}
-                    >
+                        onClickAway={() => this.closeModal()}>
+
                         <div>
                             <h1>{this.state.titulo}</h1>
                             <p>{this.state.mensaje}</p>

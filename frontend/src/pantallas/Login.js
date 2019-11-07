@@ -64,7 +64,7 @@ class LoginForm extends Component {
             errores["password"] = "*Campo inválido";
 
         } else {
-            const path_principal = "http://localhost:3000/redAgro/login?u=";
+            const path_principal = "http://localhost:3000/redAgro/login/usuario?u=";
 
             var username = this.state.fields["username"];
             var password = this.state.fields["password"];
@@ -80,34 +80,26 @@ class LoginForm extends Component {
                 },
             })
                 .then(function (response) {
-                    if (response.status !== 200) {
-                        let mensajeError = "Ocurrió algun problema, intenta nuevamente"
-                        _this.setState({
-                            visible: true,
-                            mensajeError: mensajeError
-                        });
-                        return;
-                    }
-
+                    var status = response.status;
                     response.text().then(
                         function (response) {
-                            if (response !== "") {
+                            if (status !== 200) {
+                                let mensajeError = response;
+                                _this.setState({
+                                    showModal: true,
+                                    mensajeError: mensajeError
+                                });
+                            }
+                            else {
                                 _this.setState({ usuario: JSON.parse(response) });
                                 if (_this.state.usuario.rol === "Productor") {
                                     _this.mostrarPantallaProductor();
                                 } else {
                                     _this.mostrarPantallaConsumidor();
                                 }
-
-                            } else {
-                                let mensajeError = "Cuenta inexistente o datos incorrectos";
-                                _this.setState({
-                                    showModal: true,
-                                    mensajeError: mensajeError
-                                });
                             }
-
-                        });
+                        }
+                    )
                 });
         }
         this.setState({
@@ -140,7 +132,7 @@ class LoginForm extends Component {
     render() {
         return (
             <div className="fondo">
-                <Navbar className="barraNavegacion">
+                <Navbar className="barraNavegacion alturaBarra">
                     <Link to={'/'} className="culturaVerde">
                         <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
                     </Link>
@@ -151,15 +143,13 @@ class LoginForm extends Component {
                         <div className="encabezadoLogin">
                             <Form>
                                 <Form.Group as={Row} controlId="formHorizontalEmail" className="usuarioLogin">
-                                    <Form.Label column sm={2}>
-                                        Usuario
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Usuario</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
-                                            type="email"
                                             name="username"
                                             onChange={(e) => this.detectarCambios(e)}
                                             onKeyPress={this.onKeyPress}
+                                            className="camposDatosDeUsuario"
                                         />
                                         <div className="error">
                                             {this.state.errores["username"]}
@@ -167,15 +157,14 @@ class LoginForm extends Component {
                                     </Col>
                                 </Form.Group>
                                 <Form.Group as={Row} controlId="formHorizontalPassword" className="passwordLogin">
-                                    <Form.Label column sm={2}>
-                                        Password
-                                </Form.Label>
+                                    <Form.Label column sm={2}>Password</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control
-                                            type="password"
                                             name="password"
+                                            type="password"
                                             onChange={(e) => this.detectarCambios(e)}
                                             onKeyPress={this.onKeyPress}
+                                            className="camposDatosDeUsuario"
                                         />
                                         <div className="error">
                                             {this.state.errores["password"]}
@@ -184,7 +173,7 @@ class LoginForm extends Component {
                                 </Form.Group>
                             </Form>
                         </div>
-                        <div className="botonesLogin">
+                        <div className="botones">
                             <Button variant="light" href="/seleccionUsuario">Registrar</Button>
                             <Button variant="success" onClick={this.validarDatos}>Ingresar</Button>
                         </div>

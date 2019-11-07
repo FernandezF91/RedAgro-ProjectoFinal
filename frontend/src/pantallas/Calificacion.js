@@ -44,7 +44,7 @@ const calificacion = ({ lista }) => {
                     <br />
                     <br />
                     <h5>Ups! No tenes calificaciones! </h5>
-                    <h6 className="grey-text">Revisa el estado de tus reservas por <Link to={'./ListadoReservas'}>acá</Link></h6>
+                    <h6 className="grey-text">Revisá el estado de tus reservas por <Link to={'./ListadoReservas'}>acá</Link></h6>
                 </div>
             }
         </div >

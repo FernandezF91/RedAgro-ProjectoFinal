@@ -51,3 +51,12 @@
     left: 50%;
     margin-left: -75px !important;
 }
+
+.cantidadDeBusqueda {
+    padding-left: 5%;
+    align-items: center;
+}
+
+.cantidadDeBusquedaDiv {
+    height: 38px;
+}

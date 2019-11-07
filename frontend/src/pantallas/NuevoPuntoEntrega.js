@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import { Form, Row, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
+import { MDBCol, MDBModal } from "mdbreact";
 import { GoogleApiWrapper } from 'google-maps-react';
 import { DatePickerInput } from 'rc-datepicker';
 import TimeField from 'react-simple-timefield';
 import Modal from 'react-awesome-modal';
 import Geocode from "react-geocode";
+import Loader from 'react-loader-spinner';
 
 import '../diseños/NuevoPuntoEntrega.css';
 import { isDate } from 'moment';
 
 const minDate = new Date();
+minDate.setDate(minDate.getDate() + 1);
 
 Geocode.setApiKey('AIzaSyAKxBrG2z8psH-fGJfFDXI-Arn-LkniaqI');
 Geocode.setLanguage("es");
 Geocode.setRegion("ar");
 
-class IngresarPuntoEntrega extends Component {
+class NuevoPuntoEntrega extends Component {
 
     constructor(props) {
         super(props)
@@ -35,7 +38,8 @@ class IngresarPuntoEntrega extends Component {
             formOk: "",
             lat: "",
             lng: "",
-            id_punto_entrega: ""
+            id_punto_entrega: "",
+            loading: false
         }
 
         this.autocompleteInput = React.createRef();
@@ -76,7 +80,7 @@ class IngresarPuntoEntrega extends Component {
             campos["direccion"] = place.name;
             campos["localidad"] = address[2].short_name;
             campos["provincia"] = address[4].long_name;
-            campos["cod_postal"] = address[6].short_name;
+            campos["codigoPostal"] = address[6].short_name;
             campos["pais"] = address[5].long_name;
 
             this.setState({ campos: campos, direccion: formatted_address, direccOk: true });
@@ -155,7 +159,7 @@ class IngresarPuntoEntrega extends Component {
             }
         }
 
-        if( this.state.campos["fecha_entrega"] === undefined){
+        if (this.state.campos["fecha_entrega"] === undefined) {
             this.setState({
                 visible: true,
                 titulo: "Error",
@@ -165,13 +169,20 @@ class IngresarPuntoEntrega extends Component {
         }
 
         if (this.state.id_punto_entrega !== "") {
-
+            this.setState({
+                loading: true
+            });
             const path = "http://localhost:3000/redAgro/subir_fecha_entrega?id_punto_entrega=";
 
             const path_final = path + _this.state.id_punto_entrega
 
             let fecha_entrega = this.state.campos["fecha_entrega"]
-            let dia = fecha_entrega.getDate();
+            let dia;
+            if (fecha_entrega.getDate() < 10) {
+                dia = "0" + fecha_entrega.getDate().toString();
+            } else {
+                dia = fecha_entrega.getDate().toString();
+            }
             let mes = fecha_entrega.getMonth() + 1;
             let año = fecha_entrega.getFullYear();
             var fecha = dia + '-' + mes + '-' + año;
@@ -202,7 +213,14 @@ class IngresarPuntoEntrega extends Component {
                     }
                     response.text().then(
                         function (response) {
-                            _this.setState({ visible2: true, formOk: true, direccion: "", lat: "", lng: "" })
+                            _this.setState({
+                                loading: false,
+                                visible2: true,
+                                formOk: true,
+                                direccion: "",
+                                lat: "",
+                                lng: ""
+                            })
                         });
                 });
 
@@ -211,7 +229,7 @@ class IngresarPuntoEntrega extends Component {
         }
 
         if (!this.state.campos["descripcion"] || !this.state.campos["provincia"] || !this.state.campos["localidad"] || !this.state.campos["direccion"]
-            || !this.state.campos["cod_postal"] || !isDate(this.state.campos["fecha_entrega"])
+            || !this.state.campos["codigoPostal"] || !isDate(this.state.campos["fecha_entrega"])
             || !this.state.campos["fecha_entrega"] || !this.state.campos["hora_fin"] || !this.state.campos["hora_inicio"]) {
 
             this.setState({ visible: true, mensaje: "Campos incompletos o incorrectos", titulo: "Error" })
@@ -235,7 +253,12 @@ class IngresarPuntoEntrega extends Component {
                 const path = "http://localhost:3000/redAgro/subir_punto_entrega?id_productor=";
 
                 let fecha_entrega = this.state.campos["fecha_entrega"]
-                let dia = fecha_entrega.getDate();
+                let dia;
+                if (fecha_entrega.getDate() < 10) {
+                    dia = "0" + fecha_entrega.getDate().toString();
+                } else {
+                    dia = fecha_entrega.getDate().toString();
+                }
                 let mes = fecha_entrega.getMonth() + 1;
                 let año = fecha_entrega.getFullYear();
                 var fecha = dia + '-' + mes + '-' + año;
@@ -254,7 +277,7 @@ class IngresarPuntoEntrega extends Component {
                         "provincia": this.state.campos["provincia"],
                         "localidad": this.state.campos["localidad"],
                         "direccion": this.state.campos["direccion"],
-                        "cod_postal": this.state.campos["cod_postal"],
+                        "cod_postal": this.state.campos["codigoPostal"],
                         "latitud": this.state.lat,
                         "longitud": this.state.lng
                     }),
@@ -292,143 +315,153 @@ class IngresarPuntoEntrega extends Component {
     }
 
     render() {
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
+
         return (
-            <div className="container">
+            <div>
                 <div className="titulosPrincipales">Nuevo punto de entrega</div>
-                <div className="formularioPuntoEntrega">
-                    <div className="inputs">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Nombre
-                            </Form.Label>
-
-                            <input
-                                id="descripcion"
-                                placeholder="Ingresá el nombre con el que vas a identificar a este punto de entrega"
-                                value={this.state.campos["descripcion"]}
-                                onChange={(e) => this.detectarCambiosDescripcion(e)}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="inputs">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Ubicación
-                        </Form.Label>
-                            <input
-                                ref={this.autocompleteInput}
-                                id="autocomplete"
-                                placeholder="Ingresá la dirección de tu punto de entrega"
-                                name="direccion_entrega"
-                                disabled={this.state.disabled2}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="inputs">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                País
-                        </Form.Label>
-                            <input
-                                name="pais"
-                                disabled="true"
-                                value={this.state.campos["pais"]}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="inputs">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Provincia
-                        </Form.Label>
-                            <input
-                                name="provincia"
-                                value={this.state.campos["provincia"]}
-                                disabled={this.state.disabled}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="inputs">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Localidad
-                        </Form.Label>
-                            <input
-                                name="localidad"
-                                value={this.state.campos["localidad"]}
-                                disabled={this.state.disabled}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="inputs">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Dirección
-                            </Form.Label>
-                            <input
-                                name="direccion"
-                                value={this.state.campos["direccion"]}
-                                disabled={this.state.disabled}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="inputs">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Código postal
-                            </Form.Label>
-                            <input
-                                name="cod_postal"
-                                value={this.state.campos["cod_postal"]}
-                                disabled={this.state.disabled}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="inputs">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Fecha de entrega
-                            </Form.Label>
-                            <DatePickerInput
-                                className="fecha_entrega"
-                                name="fecha_entrega"
-                                displayFormat='DD/MM/YYYY'
-                                minDate={minDate}
-                                onChange={(e) => this.cambiosFecha(e)}
-                                value={this.state.campos["fecha_entrega"]}
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="inputs">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>
-                                Horario de entrega
-                            </Form.Label>
-                            <div>
-                                <TimeField
-                                    className="hora_inicio"
-                                    name="hora_inicio"
-                                    value={this.state.campos["hora_inicio"]}
-                                    onChange={(event, valor) => this.cambiosHora(valor, "hora_inicio")}
-                                    style={{ width: 100 }}
-                                />
-                                a
-                                <TimeField
-                                    className="hora_fin"
-                                    name="hora_fin"
-                                    value={this.state.campos["hora_fin"]}
-                                    onChange={(event, valor) => this.cambiosHora(valor, "hora_fin")}
-                                    style={{ width: 100 }}
-                                />
-                                hs
-
-                            </div>
-                        </Form.Group>
-                    </div>
-                    <div className="botones">
-                        <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
-                        <Button variant="success" onClick={() => this.validarFormulario()}>Guardar</Button>
-                    </div>
+                <Form.Group className="col-md-12">
+                    <MDBCol md="4">
+                        <Form.Label column>Nombre del punto de entrega</Form.Label>
+                    </MDBCol>
+                    <MDBCol md="8">
+                        <Form.Control
+                            id="descripcion"
+                            value={this.state.campos["descripcion"]}
+                            onChange={(e) => this.detectarCambiosDescripcion(e)}
+                            className="col-md-8"
+                        />
+                    </MDBCol>
+                </Form.Group>
+                <Form.Group className="col-md-12">
+                    <MDBCol md="4">
+                        <Form.Label column>Ubicación del punto de entrega</Form.Label>
+                    </MDBCol>
+                    <MDBCol md="8">
+                        <Form.Control
+                            ref={this.autocompleteInput}
+                            id="autocomplete"
+                            name="direccion_entrega"
+                            disabled={this.state.disabled2}
+                            className="col-md-8"
+                            placeholder=""
+                        />
+                    </MDBCol>
+                </Form.Group>
+                <Form.Group className="col-md-12">
+                    <MDBCol md="4">
+                        <Form.Label column>País</Form.Label>
+                    </MDBCol>
+                    <MDBCol md="8">
+                        <Form.Control
+                            name="pais"
+                            disabled="true"
+                            value={this.state.campos["pais"]}
+                            className="col-md-8"
+                        />
+                    </MDBCol>
+                </Form.Group>
+                <Form.Group className="col-md-12">
+                    <MDBCol md="4">
+                        <Form.Label column>Provincia</Form.Label>
+                    </MDBCol>
+                    <MDBCol md="8">
+                        <Form.Control
+                            name="provincia"
+                            value={this.state.campos["provincia"]}
+                            disabled={this.state.disabled}
+                            className="col-md-8"
+                        />
+                    </MDBCol>
+                </Form.Group>
+                <Form.Group className="col-md-12">
+                    <MDBCol md="4">
+                        <Form.Label column>Localidad</Form.Label>
+                    </MDBCol>
+                    <MDBCol md="8">
+                        <Form.Control
+                            name="localidad"
+                            value={this.state.campos["localidad"]}
+                            disabled={this.state.disabled}
+                            className="col-md-8"
+                        />
+                    </MDBCol>
+                </Form.Group>
+                <Form.Group className="col-md-12">
+                    <MDBCol md="4">
+                        <Form.Label column>Dirección</Form.Label>
+                    </MDBCol>
+                    <MDBCol md="8">
+                        <Form.Control
+                            name="direccion"
+                            value={this.state.campos["direccion"]}
+                            disabled={this.state.disabled}
+                            className="col-md-8"
+                        />
+                    </MDBCol>
+                </Form.Group>
+                <Form.Group className="col-md-12">
+                    <MDBCol md="4">
+                        <Form.Label column>Código postal</Form.Label>
+                    </MDBCol>
+                    <MDBCol md="8">
+                        <Form.Control
+                            name="codigoPostal"
+                            value={this.state.campos["codigoPostal"]}
+                            disabled={this.state.disabled}
+                            className="col-md-8"
+                        />
+                    </MDBCol>
+                </Form.Group>
+                <Form.Group className="col-md-12">
+                    <MDBCol md="4">
+                        <Form.Label column>Fecha de entrega</Form.Label>
+                    </MDBCol>
+                    <MDBCol md="8">
+                        <DatePickerInput
+                            name="fecha_entrega"
+                            displayFormat='DD/MM/YYYY'
+                            minDate={minDate}
+                            className="col-md-3 padding0Inputs"
+                            value={this.state.campos["fecha_entrega"]}
+                            onChange={(e) => this.cambiosFecha(e)}
+                        />
+                    </MDBCol>
+                </Form.Group>
+                <Form.Group className="col-md-12">
+                    <MDBCol md="4">
+                        <Form.Label column>Horario de entrega</Form.Label>
+                    </MDBCol>
+                    <MDBCol md="8" className="text-aling-start">
+                        <TimeField
+                            className="hora_inicio col-md-2"
+                            name="hora_inicio"
+                            value={this.state.campos["hora_inicio"]}
+                            onChange={(event, valor) => this.cambiosHora(valor, "hora_inicio")}
+                            style={{ width: 80 }}
+                        />
+                        a
+                        <TimeField
+                            className="hora_fin col-md-2"
+                            name="hora_fin"
+                            value={this.state.campos["hora_fin"]}
+                            onChange={(event, valor) => this.cambiosHora(valor, "hora_fin")}
+                            style={{ width: 80 }}
+                        />
+                        hs
+                    </MDBCol>
+                </Form.Group>
+                <div className="botones">
+                    <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                    <Button variant="success" onClick={() => this.validarFormulario()}>Guardar</Button>
                 </div>
                 <section>
                     <Modal
@@ -458,11 +491,11 @@ class IngresarPuntoEntrega extends Component {
                         </div>
                     </Modal>
                 </section>
-            </div>
+            </div >
         );
     };
 }
 
 export default GoogleApiWrapper({
     apiKey: 'AIzaSyAKxBrG2z8psH-fGJfFDXI-Arn-LkniaqI'
-})(IngresarPuntoEntrega);
+})(NuevoPuntoEntrega);

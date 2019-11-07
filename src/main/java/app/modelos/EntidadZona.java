@@ -8,29 +8,30 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Alerta")
-public class EntidadAlerta {
+@Table(name = "zona_venta")
+public class EntidadZona {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
-	@Column(name = "nombre", nullable = false)
-	private String nombre;
-
-	public long getId() {
+	@Column(name = "zona", nullable = false)
+	private String zona;
+	
+	
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getZona() {
+		return zona;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setZona(String zona) {
+		this.zona= zona;
 	}
 }

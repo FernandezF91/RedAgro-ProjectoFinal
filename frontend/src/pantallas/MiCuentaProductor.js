@@ -281,52 +281,64 @@ class MiCuenta extends Component {
     }
 
     generoItemCalificaciones(item) {
-        const itemRows = [
-            <tr key={"row-data-" + item.id}>
-                <td>{item.fecha}</td>
-                <td>{item.valor}</td>
+        const itemMDBRows = [
+            <tr key={"MDBRow-data-" + item.id} className="border-bottom">
                 <td>
-                    <div className="overflowTexto" title={item.comentario}>
+                    <div className="primeraColumna">
+                        {item.fecha}
+                    </div>
+                </td>
+                <td>
+                    {item.valor}
+                </td>
+                <td>
+                    <div className="ultimaColumna alineacionResumenJustificado">
                         {item.comentario}
                     </div>
                 </td>
             </tr>
         ];
-        return itemRows;
+        return itemMDBRows;
     }
 
     generoItemFechas(item) {
-        const itemRows = [
-            <tr key={"row-data-" + item.fecha}>
-                <td>{item.fecha}</td>
+        const itemMDBRows = [
+            <tr key={"MDBRow-data-" + item.fecha} className="border-bottom">
                 <td>
-                    <div className="overflowDescripcion" title={item.descripcion}>
-                        {item.descripcion}
+                    <div className="primeraColumna">
+                        {item.fecha}
                     </div>
                 </td>
                 <td>
-                    <div className="overflowDescripcion" title={item.direccion}>
+                    {item.descripcion}
+                </td>
+                <td>
+                    <div className="ultimaColumna" title={item.direccion}>
                         {item.direccion}
                     </div>
                 </td>
             </tr>
         ];
-        return itemRows;
+        return itemMDBRows;
     }
 
     generoItemProducto(item) {
-        const itemRows = [
-            <tr key={"row-data-" + item.id}>
+        const itemMDBRows = [
+            <tr key={"MDBRow-data-" + item.id} className="border-bottom">
                 <td>
-                    <div className="overflowTexto" title={item.titulo}>
+                    <div className="primeraColumna alineacionResumenJustificado">
                         {item.titulo}
                     </div>
                 </td>
                 <td>{item.stock}</td>
-                <td>{item.fecha}</td>
+                <td>
+                    <div className="ultimaColumna">
+                        {item.fecha}
+                    </div>
+                </td>
             </tr>
         ];
-        return itemRows;
+        return itemMDBRows;
     }
 
     render() {
@@ -369,14 +381,14 @@ class MiCuenta extends Component {
                 <MDBRow>
                     <MDBCol md="4">
                         <MDBCard className="mb-4">
-                            <MDBCardBody className="text-center">
-                                <MDBCardTitle>
-                                    <h4><i className="fas fa-store" /> Productos a revisar</h4>
+                            <MDBCardBody className="text-center alturaTarjetasResumen">
+                                <MDBCardTitle className="margenTitulosResumen">
+                                    <i className="fas fa-store iconoTituloResumen" /> Productos a revisar
                                 </MDBCardTitle>
                                 <MDBCardText className="resumenCentrado">
                                     <ResumenProductosProductor
                                         listadoProductosProductor={bodyProductos}
-                                        resultadoRequest={this.state.resultadoRequestCalificaciones}
+                                        resultadoRequest={this.state.resultadoRequestProductosProductor}
                                     />
                                 </MDBCardText>
                             </MDBCardBody>
@@ -384,9 +396,9 @@ class MiCuenta extends Component {
                     </MDBCol>
                     <MDBCol md="4">
                         <MDBCard className="mb-4">
-                            <MDBCardBody className="text-center">
-                                <MDBCardTitle>
-                                    <h4><i className="fas fa-map-marker-alt" /> Próximas fechas de entrega</h4>
+                            <MDBCardBody className="text-center alturaTarjetasResumen">
+                                <MDBCardTitle className="margenTitulosResumen">
+                                    <i className="fas fa-map-marker-alt iconoTituloResumen" /> Próximas fechas
                                 </MDBCardTitle>
                                 <MDBCardText className="resumenCentrado">
                                     <ResumenFechasEntrega
@@ -400,15 +412,15 @@ class MiCuenta extends Component {
                     </MDBCol>
                     <MDBCol md="4">
                         <MDBCard className="mb-4">
-                            <MDBCardBody className="text-center">
-                                <MDBCardTitle>
-                                    <h4><i className="fas fa-star" /> Calificaciones</h4>
+                            <MDBCardBody className="text-center alturaTarjetasResumen">
+                                <MDBCardTitle className="margenTitulosResumen">
+                                    <i className="fas fa-star iconoTituloResumen" /> Calificaciones
                                 </MDBCardTitle>
                                 <MDBCardText className="resumenCentrado">
                                     <ResumenCalificaciones
                                         cantidadEstrellas={this.state.cantidadEstrellas}
                                         listadoCalificaciones={bodyCalificaciones}
-                                        resultadoRequest={this.state.resultadoRequestProductosProductor}
+                                        resultadoRequest={this.state.resultadoRequestCalificaciones}
                                     />
                                 </MDBCardText>
                             </MDBCardBody>

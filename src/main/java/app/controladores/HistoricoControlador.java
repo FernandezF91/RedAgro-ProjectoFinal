@@ -20,12 +20,13 @@ public class HistoricoControlador {
 	@Autowired
 	HistoricoDao historicoDao;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/uploadFile")
 	public void submit(@RequestParam("file") MultipartFile file) throws IOException {
 		HistoricoMapper mapper = new HistoricoMapper();
 		ArrayList<EntidadHistorico> historicos = mapper.mapToEntity(file);
 		historicos.forEach(h -> historicoDao.save(h));
+		mapper.escribirCsv(historicoDao.findAll());
 		// insertarHistorico(h.getCantidad_vendida(), h.getTipo_certificacion(),
 		// h.getTipo_produccion(), h.getProducto().getId(), h.getProductor().getId()));
 	}
