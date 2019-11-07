@@ -58,12 +58,8 @@ class NuevoProducto extends Component {
         this.state = {
             campos: {},
             files: "",
-            titulo: "",
-            visible: false,
             mensaje: "",
             tipos_producto: [],
-            formOk: false,
-            visibleOk: false,
             valueCategoria: [],
             valueTipoProducto: [],
             valueTipoProduccion: [],
@@ -205,16 +201,6 @@ class NuevoProducto extends Component {
         } else {
             return true;
         }
-    }
-
-    closeModal() {
-        if (this.state.formOk === true) {
-            this.mostrarPantallaPrincipal();
-        }
-
-        this.setState({
-            visible: false
-        });
     }
 
     handleSubmit(e) {
@@ -425,9 +411,9 @@ class NuevoProducto extends Component {
             .then(function (response) {
                 if (response.status !== 200) {
                     _this.setState({
-                        visible: true,
-                        titulo: "Error",
-                        mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                        showModal: true,
+                        resultadoRequest: response.status,
+                        mensaje: "Ocurrió un error al cargar el listado de tipos de producto. Reintentá en unos minutos."
                     });
                     return;
                 }

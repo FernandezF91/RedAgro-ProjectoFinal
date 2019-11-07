@@ -22,6 +22,7 @@ import BarraNavegacion from './BarraNavegacion';
 import Planificación from '../pantallas/Planificacion';
 import ListadoCalificaciones from '../pantallas/ListadoCalificaciones';
 import EditarProducto from "../pantallas/EditarProducto";
+import DatosDeContacto from "../pantallas/DatosDeContactos";
 
 //hacerlo con todas las pantallas nuevas para que funcione el ruteo e ir pasando el ID del usuario
 const MiCuentaRouter = withRouter(MiCuenta);
@@ -37,6 +38,7 @@ const HitoricoRouter = withRouter(CargarHistorico);
 const PlanificacionRouter = withRouter(Planificación);
 const ListadoCalificacionesRouter = withRouter(ListadoCalificaciones);
 const EditarProductoRouter = withRouter(EditarProducto);
+const DatosDeContactoRouter = withRouter(DatosDeContacto);
 
 class PantallaPrincipalProductores extends Component {
     constructor(props) {
@@ -171,6 +173,10 @@ class PantallaPrincipalProductores extends Component {
                                         </NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item>
+                                            <Link to="/principalProductores/DatosDeContacto" id="items">Contactos</Link>
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item>
                                             <Link to="/principalProductores/ModificarContraseña" id="items">Modificar contraseña</Link>
                                         </NavDropdown.Item>
                                     </NavDropdown>
@@ -276,6 +282,13 @@ class PantallaPrincipalProductores extends Component {
                             <Route path={'/principalProductores/EditarProducto/:idProducto'}
                                 render={(props) =>
                                     <EditarProductoRouter
+                                        id_productor={this.state.id}
+                                    />
+                                }
+                            />
+                            <Route path={'/principalProductores/DatosDeContacto'}
+                                render={(props) =>
+                                    <DatosDeContactoRouter
                                         id_productor={this.state.id}
                                     />
                                 }
