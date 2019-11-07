@@ -6,12 +6,9 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.Collections;
 import smile.*;
-import smile.learning.BayesianSearch;
 import smile.learning.DataSet;
-import smile.learning.NaiveBayes;
 import smile.learning.TAN;
 
-@SuppressWarnings("deprecation")
 public class Planificador {
 	private String periodo;
 	private String provincia;
