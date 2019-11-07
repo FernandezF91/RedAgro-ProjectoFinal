@@ -9,7 +9,6 @@ import { DatePickerInput } from 'rc-datepicker';
 import Select from 'react-select';
 import Loader from 'react-loader-spinner';
 import moment from 'moment';
-import Gallery from 'react-grid-gallery';
 
 import 'moment/locale/es';
 
@@ -50,9 +49,7 @@ class EditarProducto extends Component {
             productoAEditar: {},
             validaciones: [],
             resultadoRequest: 0,
-            contenidoDeshabilitado: false,
-            currentImage: 0,
-            listadoImagenes: []
+            contenidoDeshabilitado: false
         }
 
         this.featurePond = React.createRef();
@@ -61,8 +58,6 @@ class EditarProducto extends Component {
         this.subirArchivos = this.subirArchivos.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
         this.cerrarModalError = this.cerrarModalError.bind(this);
-        this.onCurrentImageChange = this.onCurrentImageChange.bind(this);
-        this.deleteImage = this.deleteImage.bind(this);
     }
 
     componentDidMount() {
@@ -131,23 +126,6 @@ class EditarProducto extends Component {
                         campos["contenido"] = producto.contenido;
                         campos["tiempo_preparacion"] = producto.tiempoDePreparacion;
 
-                        var listadoImagenes = []
-
-                        producto.imagenes.forEach((o) => {
-                            var imagen = {
-                                src: "data:" + o.tipo_contenido + ";base64," + o.image,
-                                thumbnail: "data:" + o.tipo_contenido + ";base64," + o.image,
-                                thumbnailWidth: 100,
-                                thumbnailHeight: 100,
-                                isSelected: true,
-                                caption: "After Rain (Jeshu John - designerspics.com)"
-                            }
-                            listadoImagenes.push(imagen);
-                        });;
-
-                        this.setState({
-                            listadoImagenes
-                        })
                     }
 
                     this.setState({
@@ -173,20 +151,6 @@ class EditarProducto extends Component {
                     })
                 }
             })
-    }
-
-    onCurrentImageChange(index) {
-        this.setState({ currentImage: index });
-    }
-
-    deleteImage() {
-        if (window.confirm(`Are you sure you want to delete image number ${this.state.currentImage}?`)) {
-            var images = this.state.images.slice();
-            images.splice(this.state.currentImage, 1)
-            this.setState({
-                images: images
-            });
-        }
     }
 
     cerrarModal() {
@@ -456,11 +420,11 @@ class EditarProducto extends Component {
                         <MDBCol md="4">
                             <Form.Label column>*Categoria</Form.Label>
                         </MDBCol>
-                        <MDBCol md="8" className="paddingColumn0">
+                        <MDBCol md="8">
                             <Select
                                 isDisabled={true}
                                 value={this.state.categoria}
-                                className="selectFormularios col-md-8"
+                                className="selectFormulariosDisabled col-md-8"
                                 name="categoria"
                             />
                         </MDBCol>
@@ -469,11 +433,11 @@ class EditarProducto extends Component {
                         <MDBCol md="4">
                             <Form.Label column>Tipo de producto</Form.Label>
                         </MDBCol>
-                        <MDBCol md="8" className="paddingColumn0">
+                        <MDBCol md="8">
                             <Select
                                 isDisabled={true}
                                 value={this.state.tipoProducto}
-                                className="selectFormularios col-md-8"
+                                className="selectFormulariosDisabled col-md-8"
                                 name="tipo_producto"
                             />
                         </MDBCol>
@@ -482,11 +446,11 @@ class EditarProducto extends Component {
                         <MDBCol md="4">
                             <Form.Label column>*Tipo de producción</Form.Label>
                         </MDBCol>
-                        <MDBCol md="8" className="paddingColumn0">
+                        <MDBCol md="8">
                             <Select
                                 isDisabled={true}
                                 value={this.state.tipoProduccion}
-                                className="selectFormularios col-md-8"
+                                className="selectFormulariosDisabled col-md-8"
                                 name="tipo_produccion"
                             />
                         </MDBCol>
@@ -495,11 +459,11 @@ class EditarProducto extends Component {
                         <MDBCol md="4">
                             <Form.Label column>*Unidad de venta</Form.Label>
                         </MDBCol>
-                        <MDBCol md="8" className="paddingColumn0">
+                        <MDBCol md="8">
                             <Select
                                 isDisabled={true}
                                 value={this.state.valueUnidadVenta}
-                                className="selectFormularios col-md-8"
+                                className="selectFormulariosDisabled col-md-8"
                                 name="unidad_venta"
                             />
                         </MDBCol>
@@ -611,31 +575,6 @@ class EditarProducto extends Component {
                             </MDBRow>
                         </MDBCol>
                     </Form.Group>
-                    <br />
-                    <div style={{
-                        display: "block",
-                        minHeight: "1px",
-                        border: "1px solid #ddd",
-                        overflow: "auto",
-                        width: "70%",
-                        margin: "auto"
-                    }}>
-                        <div style={{
-                            padding: "2px",
-                            color: "#666"
-                        }}>Current image: {this.state.currentImage}</div>
-                        <Gallery
-                            images={this.state.listadoImagenes}
-                            enableLightbox={true}
-                            enableImageSelection={false}
-                            currentImageWillChange={this.onCurrentImageChange}
-                            maxRows={1}
-
-                            customControls={[
-                                <button key="deleteImage" onClick={this.deleteImage}>Delete Image</button>
-                            ]}
-                        />
-                    </div>
                     <br />
                     <div>
                         <span md="3">*Imágenes</span>

@@ -1,9 +1,9 @@
 import '../diseños/estilosGlobales.css';
 import '../diseños/Alertas.css';
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 import Loader from 'react-loader-spinner';
-import { MDBModal, MDBRow, MDBCol } from 'mdbreact';
+import { MDBModal } from 'mdbreact';
 
 class AlertaProductor extends Component {
     constructor(props) {
@@ -194,7 +194,7 @@ class AlertaProductor extends Component {
             body: JSON.stringify(configuraciones)
         })
             .then(function (response) {
-                if (response.status !== 504) {
+                if (response.status !== 504 ) {
                     response.text().then(
                         function (response) {
                             _this.setState({
@@ -218,7 +218,7 @@ class AlertaProductor extends Component {
                     });
                     return;
                 }
-
+                
             })
     };
 
@@ -260,13 +260,13 @@ class AlertaProductor extends Component {
         )
 
         return (
-            <div>
+            <div className="container">
                 <div className="titulosPrincipales">Alertas</div>
                 <br />
                 <div className="descripcionPagina">
                     <h5>Configurá las alertas que recibiras por mail:</h5>
                 </div>
-                <Form onSubmit={this.handleFormSubmit} className="formAlertas">
+                <form onSubmit={this.handleFormSubmit}>
                     <div className="radioButtons" align="left">
                         <h5>
                             <label className="checkbox-inline">
@@ -280,44 +280,41 @@ class AlertaProductor extends Component {
                                 Actualización de reservas
                                 </label>
                         </h5>
-                        <MDBRow>
-                            <label className="radio-inline">
-                                <input
-                                    type="radio"
-                                    value="En el momento"
-                                    checked={this.state.selectedRadioOptionActualizacion === "En el momento"}
-                                    onChange={this.handleRadioChangeActualizacion}
-                                    className="radio-button-input radio"
-                                    disabled={this.state.disabledActualizacion}
-                                />
-                                En el momento
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="En el momento"
+                                checked={this.state.selectedRadioOptionActualizacion === "En el momento"}
+                                onChange={this.handleRadioChangeActualizacion}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledActualizacion}
+                            />
+                            En el momento
                         </label>
-                            <br />
-                            <label className="radio-inline">
-                                <input
-                                    type="radio"
-                                    value="Diariamente"
-                                    checked={this.state.selectedRadioOptionActualizacion === "Diariamente"}
-                                    onChange={this.handleRadioChangeActualizacion}
-                                    className="radio-button-input radio"
-                                    disabled={this.state.disabledActualizacion}
-                                />
-                                Diariamente
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Diariamente"
+                                checked={this.state.selectedRadioOptionActualizacion === "Diariamente"}
+                                onChange={this.handleRadioChangeActualizacion}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledActualizacion}
+                            />
+                            Diariamente
                         </label>
-                            <br />
-                            <label className="radio-inline">
-                                <input
-                                    type="radio"
-                                    value="Semanalmente"
-                                    checked={this.state.selectedRadioOptionActualizacion === "Semanalmente"}
-                                    onChange={this.handleRadioChangeActualizacion}
-                                    className="radio-button-input radio"
-                                    disabled={this.state.disabledActualizacion}
-                                />
-                                Semanalmente
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Semanalmente"
+                                checked={this.state.selectedRadioOptionActualizacion === "Semanalmente"}
+                                onChange={this.handleRadioChangeActualizacion}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledActualizacion}
+                            />
+                            Semanalmente
                         </label>
-                        </MDBRow>
-
                     </div>
                     <div className="radioButtons" align="left">
                         <h5>
@@ -332,43 +329,41 @@ class AlertaProductor extends Component {
                                 Nuevos mensajes
                                 </label>
                         </h5>
-                        <MDBRow>
-                            <label className="radio-inline">
-                                <input
-                                    type="radio"
-                                    value="En el momento"
-                                    checked={this.state.selectedRadioOptionMensajes === "En el momento"}
-                                    onChange={this.handleRadioChangeMensajes}
-                                    className="radio-button-input radio"
-                                    disabled={this.state.disabledMensajes}
-                                />
-                                En el momento
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="En el momento"
+                                checked={this.state.selectedRadioOptionMensajes === "En el momento"}
+                                onChange={this.handleRadioChangeMensajes}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledMensajes}
+                            />
+                            En el momento
                         </label>
-                            <br />
-                            <label className="radio-inline">
-                                <input
-                                    type="radio"
-                                    value="Diariamente"
-                                    checked={this.state.selectedRadioOptionMensajes === "Diariamente"}
-                                    onChange={this.handleRadioChangeMensajes}
-                                    className="radio-button-input radio"
-                                    disabled={this.state.disabledMensajes}
-                                />
-                                Diariamente
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Diariamente"
+                                checked={this.state.selectedRadioOptionMensajes === "Diariamente"}
+                                onChange={this.handleRadioChangeMensajes}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledMensajes}
+                            />
+                            Diariamente
                         </label>
-                            <br />
-                            <label className="radio-inline">
-                                <input
-                                    type="radio"
-                                    value="Semanalmente"
-                                    checked={this.state.selectedRadioOptionMensajes === "Semanalmente"}
-                                    onChange={this.handleRadioChangeMensajes}
-                                    className="radio-button-input radio"
-                                    disabled={this.state.disabledMensajes}
-                                />
-                                Semanalmente
+                        <br />
+                        <label className="radio-inline">
+                            <input
+                                type="radio"
+                                value="Semanalmente"
+                                checked={this.state.selectedRadioOptionMensajes === "Semanalmente"}
+                                onChange={this.handleRadioChangeMensajes}
+                                className="radio-button-input radio"
+                                disabled={this.state.disabledMensajes}
+                            />
+                            Semanalmente
                         </label>
-                        </MDBRow>
                     </div>
                     <div className="radioButtons" align="left">
                         <h5>
@@ -419,7 +414,7 @@ class AlertaProductor extends Component {
                             Semanalmente
                         </label>
                     </div>
-                </Form>
+                </form >
                 <div className="botones">
                     <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
                     <Button variant="success" type="submit" onClick={this.handleFormSubmit}>Guardar</Button>
