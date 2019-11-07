@@ -102,3 +102,5 @@ typings/
 .
 bin/target/classes/META-INF/MANIFEST.MF
 package-lock.json
+frontend/package-lock.json
+frontend/package.json
