@@ -43,7 +43,7 @@ public class PreferenciaControlador {
 	@Autowired
 	ProductoProductorDao productoProductorDao;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerPreferencias")
 	@ResponseBody
 	public ArrayList<Preferencia> obtenerPreferencias(@RequestParam Long id) {
@@ -53,7 +53,7 @@ public class PreferenciaControlador {
 		return preferencias;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/guardarPreferencias")
 	public ResponseEntity<String> guardarPreferencias(@RequestParam long id,
 			@RequestBody ArrayList<Producto> ProductosSeleccionados) {
@@ -113,7 +113,7 @@ public class PreferenciaControlador {
 		return new ResponseEntity<>("No hubo cambios", HttpStatus.OK);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/preferencias/obtenerProductos")
 	public List<ProductoProductor> obtenerProductosDePreferencias(@RequestParam Long id) {
 		ArrayList<Preferencia> preferencias = this.obtenerPreferencias(id);

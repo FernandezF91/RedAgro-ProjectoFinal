@@ -20,7 +20,7 @@ public class EstadoReservaControlador {
 	@Autowired
 	EstadoReservaDao EstadoReservaDAO;
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerEstadosReserva")
 	@ResponseBody
 	public List<EstadoReserva> obtenerEstadosReserva() {

@@ -20,7 +20,7 @@ public class LoginControlador {
 	@Autowired
 	UsuarioDao usuarioDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/login")
 	@ResponseBody
 	public Usuario autenticacion(@RequestParam String u, @RequestParam String c) {
@@ -39,7 +39,7 @@ public class LoginControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/login/usuario")
 	@ResponseBody
 	public ResponseEntity<Object> loginUsuario(@RequestParam String u, @RequestParam String c) {

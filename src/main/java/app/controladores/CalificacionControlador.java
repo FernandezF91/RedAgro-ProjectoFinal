@@ -43,7 +43,7 @@ public class CalificacionControlador {
 	@Autowired
 	AlertaNotificacionesDao alertaNotiDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/guardarCalificacion")
 	public ResponseEntity<String> guardarCalificacion(@RequestParam long reserva_id,
 			@RequestBody EntidadCalificacion calificacionAGuardar) {
@@ -97,7 +97,7 @@ public class CalificacionControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerCalificaciones")
 	public List<ListadoCalificaciones> obtenerCalificaciones(@RequestParam long id_productor) {
 
@@ -114,7 +114,7 @@ public class CalificacionControlador {
 		return listaCalificaciones;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerPromedioCalificaciones")
 	public ResponseEntity<Object> obtenerPromedioCalificaciones(@RequestParam long id_productor) {
 		try {
@@ -130,7 +130,7 @@ public class CalificacionControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerUltimasCalificacionesPorProductor")
 	public ResponseEntity<Object> obtenerUltimasCalificacionesPorProductor(@RequestParam long id_productor) {
 		try {
@@ -144,7 +144,7 @@ public class CalificacionControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerCantidadDeReservasCalificadas")
 	public ResponseEntity<Object> obtenerCantidadDeReservasCalificadas(@RequestParam long id_productor) {
 		try {

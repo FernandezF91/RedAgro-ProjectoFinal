@@ -11,7 +11,6 @@ import Loader from 'react-loader-spinner';
 import moment from 'moment';
 
 import 'moment/locale/es';
-import Modal from 'react-awesome-modal';
 
 import { FilePond, registerPlugin } from 'react-filepond';
 // Import FilePond styles

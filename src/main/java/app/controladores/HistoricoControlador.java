@@ -20,7 +20,7 @@ public class HistoricoControlador {
 	@Autowired
 	HistoricoDao historicoDao;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/uploadFile")
 	public void submit(@RequestParam("file") MultipartFile file) throws IOException {
 		HistoricoMapper mapper = new HistoricoMapper();

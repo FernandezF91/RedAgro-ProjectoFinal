@@ -49,7 +49,7 @@ public class ProductoProductorControlador {
 	@Autowired
 	UsuarioDao usuarioDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
 	public Long agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor,
 			@RequestParam long id_producto) {
@@ -109,7 +109,7 @@ public class ProductoProductorControlador {
 		return id;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProductosProductor")
 	public List<ProductoProductor> obtenerProductosProductor(@RequestParam long id) {
 
@@ -119,7 +119,7 @@ public class ProductoProductorControlador {
 		return productosMapeados;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProductosProductorBusqueda")
 	public List<ProductoProductor> obtenerProductosProductorBusqueda(@RequestParam long id) {
 
@@ -129,7 +129,7 @@ public class ProductoProductorControlador {
 		return productosMapeados;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProductos")
 	public List<ProductoProductor> obtenerProductos(@RequestParam String busqueda) {
 
@@ -153,7 +153,7 @@ public class ProductoProductorControlador {
 		return productosMapeados;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProductosPorLista")
 	public List<ProductoProductor> obtenerProductosPorLista(@RequestParam List<Long> idProducto) {
 
@@ -169,7 +169,7 @@ public class ProductoProductorControlador {
 		return listado;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProducto/{id}")
 	public ProductoProductor obtenerProductosPorId(@PathVariable Long id) {
 
@@ -179,7 +179,7 @@ public class ProductoProductorControlador {
 		return producto;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerProductosARevisar")
 	public ResponseEntity<Object> obtenerProductosARevisar(@RequestParam long id_productor) {
 		try {
@@ -193,7 +193,7 @@ public class ProductoProductorControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin("*")
 	@GetMapping(path = "redAgro/ProductosProductor/obtenerProductosPantallaInicial")
 	public ResponseEntity<Object> obtenerProductosPantallaInicial() {
 		try {
@@ -207,7 +207,7 @@ public class ProductoProductorControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/actualizarEstadoProducto")
 	public ResponseEntity<String> actualizarEstadoProducto(@RequestParam long id_producto_productor,
 			@RequestParam boolean activo) {
@@ -221,7 +221,7 @@ public class ProductoProductorControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/actualizarProductoProductor")
 	public ResponseEntity<String> actualizarProductoProductor(@RequestBody EntidadProductoProductor producto,
 			@RequestParam long id_producto_productor) {

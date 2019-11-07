@@ -45,10 +45,6 @@
 	background-color: green;
 }
 
-.tituloImagen {
-	margin-bottom: 12px;
-}
-
 .iconoInputGroupBordeDerecho {
 	border-right: none !important;
 	width: 100%;
@@ -56,7 +52,7 @@
 }
 
 .cajaImagenesWidth {
-	width: 850px;
+	width: 70%;
 	margin: auto;
 }
 

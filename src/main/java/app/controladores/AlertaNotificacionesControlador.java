@@ -29,7 +29,7 @@ public class AlertaNotificacionesControlador {
 	@Autowired
 	AlertaNotificacionesDao alertaNotificacionDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/AlertaNotificaciones/obtenerAlertasByUsuario")
 	public ArrayList<EntidadAlertaNotificaciones> obtenerAlertasByUsuario(@RequestParam long id_usuario) {
 		ArrayList<EntidadAlertaNotificaciones> alertas = alertaNotificacionDAO
@@ -37,7 +37,7 @@ public class AlertaNotificacionesControlador {
 		return alertas;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/AlertaNotificaciones/guardarAlertaReserva")
 	public boolean guardarAlertaNuevaReserva(@RequestParam String tipoApp, @RequestParam Long idReserva) {
 		try {
