@@ -1,5 +1,7 @@
 package app.controladores;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,6 @@ public class LoginControlador {
 	public Usuario autenticacion(@RequestParam String u, @RequestParam String c) {
 
 		UsuarioMapper userMapper = new UsuarioMapper();
-
 		EntidadUsuario usuario = usuarioDAO.autenticaUsuario(u, c);
 
 		if (usuario == null) {

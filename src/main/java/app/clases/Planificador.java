@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Collections;
-import smile.*;
-import smile.learning.DataSet;
-import smile.learning.TAN;
+//import smile.*;
+//import smile.learning.DataSet;
+//import smile.learning.TAN;
 
 public class Planificador {
 	private String periodo;
@@ -32,44 +32,44 @@ public class Planificador {
 		this.setProvincia(provincia);
 	}
 
-	public void crearRed() {
-		
-		DataSet ds = new DataSet();
-		ds.readFile("c:/Bayes/BayesCulturaVerde.csv");
-		TAN tanSearch = new TAN();
-		tanSearch.setClassVariableId("Ventas");
-		Network net = tanSearch.learn(ds);
-		net.writeFile("C:/Bayes/BayesCulturaVerde.xdsl");
-	}
+//	public void crearRed() {
+//
+//		DataSet ds = new DataSet();
+//		ds.readFile("c:/Bayes/BayesCulturaVerde.csv");
+//		TAN tanSearch = new TAN();
+//		tanSearch.setClassVariableId("Ventas");
+//		Network net = tanSearch.learn(ds);
+//		net.writeFile("C:/Bayes/BayesCulturaVerde.xdsl");
+//	}
 	
 	
 	
-	public List<String> obtenerResultados() {
-
-		Map<Integer, String> Registros = new TreeMap<Integer, String>();
-		List<String> alimentos = new ArrayList<String>();
-		List<String> planificados = new ArrayList<String>();
-
-		Network net = new Network();
-		net.readFile("C:/Bayes/BayesCulturaVerde.xdsl");
-		net.setEvidence("periodo", this.getPeriodo());
-		// System.out.println(this.getPeriodo());
-		net.setEvidence("provincia", this.getProvincia());
-		net.setEvidence("Ventas", "ventasMayor");
-		net.updateBeliefs();
-		double[] lista = net.getNodeValue("tipo");
-
-		for (int i = 0; i < lista.length; i++) {
-			int clave = (int) (lista[i] * 100);
-			Registros.put(clave, net.getOutcomeId("tipo", i));
-		}
-
-		Registros.forEach((k, v) -> alimentos.add(v));
-		Collections.reverse(alimentos);
-		planificados = alimentos.subList(0, 5);
-		System.out.println(planificados);
-		return planificados;
-	}
+//	public List<String> obtenerResultados() {
+//
+//		Map<Integer, String> Registros = new TreeMap<Integer, String>();
+//		List<String> alimentos = new ArrayList<String>();
+//		List<String> planificados = new ArrayList<String>();
+//
+//		Network net = new Network();
+//		net.readFile("C:/Bayes/BayesCulturaVerde.xdsl");
+//		net.setEvidence("periodo", this.getPeriodo());
+//		// System.out.println(this.getPeriodo());
+//		net.setEvidence("provincia", this.getProvincia());
+//		net.setEvidence("Ventas", "ventasMayor");
+//		net.updateBeliefs();
+//		double[] lista = net.getNodeValue("tipo");
+//
+//		for (int i = 0; i < lista.length; i++) {
+//			int clave = (int) (lista[i] * 100);
+//			Registros.put(clave, net.getOutcomeId("tipo", i));
+//		}
+//
+//		Registros.forEach((k, v) -> alimentos.add(v));
+//		Collections.reverse(alimentos);
+//		planificados = alimentos.subList(0, 5);
+//		System.out.println(planificados);
+//		return planificados;
+//	}
 	
 //	public void escribirResultados() {
 //		Network net = new Network();
@@ -408,8 +408,6 @@ public class Planificador {
 //        printAllPosteriors(net);
 //
 //    }
-
-    
 
 	public String getPeriodo() {
 		return periodo;
