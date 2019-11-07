@@ -62,11 +62,6 @@
     <artifactId>spring-messaging</artifactId>
     <version>4.0.0.RELEASE</version>
 </dependency>
-<dependency>
-			<groupId>com.google.firebase</groupId>
-			<artifactId>firebase-admin</artifactId>
-			<version>6.8.1</version>
-		</dependency>
 	</dependencies>
 
 	<build>

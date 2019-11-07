@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.clases.Planificador;
-//import smile.*;
+import smile.*;
 
 @RestController
 
@@ -21,13 +21,16 @@ public class PlanificacionControlador {
 	public List<String> obtenerPlanificacion(@RequestParam String periodo, @RequestParam String provincia){
 		
 		List<String> lista = new ArrayList<String>();
-//		Planificador p = new Planificador(periodo, provincia);
-//				p.crearRed();
-//				lista = p.obtenerResultados();
+		Planificador p = new Planificador(periodo, provincia);
+		
+		
+				
+				p.crearRed();
+				lista = p.obtenerResultados();
 //				p.escribirResultados();
 //				p.run(lista);
 //				p.tutorial2();
-
+				
 		
 		return lista;
 	}

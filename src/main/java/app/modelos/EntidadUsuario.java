@@ -68,9 +68,6 @@ public class EntidadUsuario {
 	@Column(name = "activo")
 	private Boolean activo;
 
-	@Column(name = "device_token")
-	private String deviceToken;
-
 	public Long getId() {
 		return id;
 	}
@@ -166,19 +163,12 @@ public class EntidadUsuario {
 	public void setProductor(EntidadProductor productor) {
 		this.productor = productor;
 	}
-
+	
 	public Date getFecha_creacion() {
 		return fecha_creacion;
 	}
 
 	public void setFecha_creacion(Date fecha_creacion) {
 		this.fecha_creacion = fecha_creacion;
-	}
-	public String getDeviceToken() {
-		return deviceToken;
-	}
-
-	public void setDeviceToken(String token) {
-		this.deviceToken = token;
 	}
 }

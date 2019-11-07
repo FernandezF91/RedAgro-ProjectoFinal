@@ -10,10 +10,6 @@ import javax.mail.internet.AddressException;
 import java.math.BigInteger;
 import java.math.BigDecimal;
 
-import app.firebase.PushNotificationService;
-import app.modelos.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,9 +45,6 @@ import app.modelos.EntidadProductoProductor;
 import app.mappers.ReservaMapper;
 import app.mappers.UsuarioMapper;
 
-//"Nuevas reservas"
-// "Actualización de reservas"
-
 @RestController
 public class ReservaControlador {
 
@@ -75,10 +68,6 @@ public class ReservaControlador {
 
 	@Autowired
 	AlertaNotificacionesDao alertaNotiDAO;
-
-	@Autowired
-	private PushNotificationService pushNotificationService;
-	private Logger logger = LoggerFactory.getLogger(ReservaControlador.class);
 
 	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/get_reservas_usuario")
@@ -250,7 +239,7 @@ public class ReservaControlador {
 				MailNuevaReserva mailConsumidor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva));
 
 				mailConsumidor.enviarMail();
-				notificarUsuario(reserva.getProductor().getUsuario(), "Nuevas reservas");
+
 			} catch (AddressException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -260,6 +249,7 @@ public class ReservaControlador {
 			}
 
 			String id_reserva = idReserva.toString();
+
 			return new ResponseEntity<>("Reserva #" + id_reserva + " creada correctamente!", HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -288,11 +278,7 @@ public class ReservaControlador {
 					}
 				}
 			}
-			// Genero los mails de alertas
-			EntidadReserva entidadReserva = reservaDao.obtenerReservaById(id_reserva);
-			Reserva reserva = mapeo.mapFromEntity(entidadReserva);
-			String mailConsumidor = reserva.getConsumidor().getUsuario().getUsuario();
-			String mailProductor = reserva.getProductor().getUsuario().getUsuario();
+			Reserva reserva = mapeo.mapFromEntity(reservaDao.obtenerReservaById(id_reserva));
 
 			// Guardo alerta en la base
 			List<EntidadAlertaNotificaciones> listaAlertas = new ArrayList<EntidadAlertaNotificaciones>();
@@ -342,6 +328,10 @@ public class ReservaControlador {
 
 			alertaNotiDAO.saveAll(listaAlertas);
 
+			// Genero los mails de alertas
+			String mailConsumidor = consumidor.getUsuario();
+			String mailProductor = productor.getUsuario();
+
 			try {
 
 				MailActualizacionReserva mensajeConsumidor = new MailActualizacionReserva(mailConsumidor,
@@ -363,9 +353,6 @@ public class ReservaControlador {
 			if (reserva.getFecha() == null && (id_estado == 4 || id_estado == 5)) {
 				reservaDao.actualizarFechaAlFinalizar(id_reserva);
 			}
-
-			notificarUsuario(entidadReserva.getProductor().getUsuario(), "Actualización de reservas");
-			notificarUsuario(entidadReserva.getConsumidor().getUsuario(), "Actualización de reservas");
 
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
 
@@ -396,30 +383,6 @@ public class ReservaControlador {
 			return new ResponseEntity<>(cantidad, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Ocurrió un error al buscar las reservas.", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	private void notificarUsuario(EntidadUsuario usuario, String nombreAlerta) {
-		logger.info("Por enviar notification...");
-		ArrayList<EntidadAlertaNotificaciones> alertas = alertaNotiDAO.obtenerNotificacionesByUsuario(usuario.getId());
-		boolean notificationEnabled = alertas.stream().anyMatch(alerta -> alerta.getAlerta().getNombre().equals(nombreAlerta));
-		if (!notificationEnabled) {
-			return;
-		}
-
-		String title = "Actualización de reserva";
-		String message = "Hey! alguien ha actualizado una reserva.";
-
-		if (nombreAlerta.equals("Nuevas reservas")) {
-			title = "Nuevas reserva";
-			message = "Hey alguien hizo una reserva!";
-		}
-
-		PushNotificationRequest notificationRequest = new PushNotificationRequest(title, message);
-		String deviceToken = usuario.getDeviceToken();
-		if (deviceToken != null && !deviceToken.isEmpty()) {
-			notificationRequest.setToken(deviceToken);
-			pushNotificationService.sendPushNotificationToToken(notificationRequest);
 		}
 	}
 }

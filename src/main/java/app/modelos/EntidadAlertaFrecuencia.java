@@ -15,7 +15,7 @@ public class EntidadAlertaFrecuencia {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "frecuencia")
+	@Column(name = "frecuencia", nullable = false)
 	private String frecuencia;
 
 	public Long getId() {
