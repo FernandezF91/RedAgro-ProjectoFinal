@@ -1,2 +1,6 @@
-frutas,Banana,100,1,CABA
-verduras,Tomate,1100,1,NEUQUEN
+frutas,Banana,100,1,CABA,2018
+frutas,Manzana,500,2,CABA,2018
+frutas,Banana,100,3,CABA,2019
+verduras,Tomate,1100,1,NEUQUEN,2018
+verduras,Tomate,1100,2,NEUQUEN,2018
+verduras,Tomate,1100,3,NEUQUEN,2019

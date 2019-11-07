@@ -26,6 +26,7 @@ public class HistoricoControlador {
 		HistoricoMapper mapper = new HistoricoMapper();
 		ArrayList<EntidadHistorico> historicos = mapper.mapToEntity(file);
 		historicos.forEach(h -> historicoDao.save(h));
+		mapper.escribirCsv(historicoDao.findAll());
 		// insertarHistorico(h.getCantidad_vendida(), h.getTipo_certificacion(),
 		// h.getTipo_produccion(), h.getProducto().getId(), h.getProductor().getId()));
 	}
