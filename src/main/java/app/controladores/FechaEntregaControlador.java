@@ -31,7 +31,7 @@ public class FechaEntregaControlador {
 	@Autowired
 	FechaEntregaDao fechaEntregaDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/subir_fecha_entrega")
 	public void obtenerPuntosDeEntregaProductores(@RequestBody EntidadFechaEntrega entidad,
 			@RequestParam long id_punto_entrega) {
@@ -46,7 +46,7 @@ public class FechaEntregaControlador {
 		fechaEntregaDAO.save(ef);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/fechas_punto_entrega")
 	public List<FechaEntrega> obtenerFechasPuntoDeEntrega(@RequestParam long id_punto_entrega) {
 
@@ -64,7 +64,7 @@ public class FechaEntregaControlador {
 		return fe;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/fechas_entrega/filtradasPor")
 	public List<FechaEntrega> obtenerFechasFiltradasPtoEntrega(@RequestParam long id_punto_entrega,
 			@RequestParam String fecha) {
@@ -80,7 +80,7 @@ public class FechaEntregaControlador {
 		return fe;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerEntregasProximoMes")
 	public ResponseEntity<Object> obtenerEntregasProximoMes(@RequestParam long id_productor) {
 		try {

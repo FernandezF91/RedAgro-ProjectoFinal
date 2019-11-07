@@ -35,7 +35,7 @@ public class PuntoDeEntregaControlador {
 	@Autowired
 	FechaEntregaDao fechaEntregaDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/puntos_productor")
 	public List<PuntoEntrega> listadoPuntosDeEntregaProductor(@RequestParam long id) {
 
@@ -54,7 +54,7 @@ public class PuntoDeEntregaControlador {
 		return puntos_entrega;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/puntos_entrega_productor")
 	public List<PuntoEntrega> obtenerPuntosDeEntregaProductores() {
 
@@ -70,7 +70,7 @@ public class PuntoDeEntregaControlador {
 		return puntos_entrega;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/puntos_productor_activos")
 	public List<PuntoEntrega> listadoPuntosDeEntregaActivos(@RequestParam String fecha, @RequestParam long id) {
 
@@ -86,7 +86,7 @@ public class PuntoDeEntregaControlador {
 		return puntos_entrega;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/subir_punto_entrega")
 	public ResponseEntity<Object> subirPuntoDeEntrega(@RequestBody EntidadPuntoEntrega punto_entrega,
 			@RequestParam long id_productor, @RequestParam String descripcion, @RequestParam String fecha_entrega,
@@ -147,7 +147,7 @@ public class PuntoDeEntregaControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/modificar_punto")
 	public void modificarEstadoDePunto(@RequestParam long id, @RequestParam String accion) {
 
@@ -161,7 +161,7 @@ public class PuntoDeEntregaControlador {
 		puntoEntregaDAO.modificarPunto(id, false);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/listadoPuntosEntregaProductor")
 	public List<PuntoEntrega> listadoPuntosEntregaProductor(@RequestParam long productor_id) {
 

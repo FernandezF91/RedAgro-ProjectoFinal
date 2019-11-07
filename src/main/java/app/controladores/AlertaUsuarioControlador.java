@@ -39,7 +39,7 @@ public class AlertaUsuarioControlador {
 	@Autowired
 	UsuarioDao usuarioDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtenerConfiguracionAlertas")
 	@ResponseBody
 	public ArrayList<AlertaUsuario> obtenerConfiguracionAlertas(@RequestParam long id_usuario) {
@@ -49,7 +49,7 @@ public class AlertaUsuarioControlador {
 		return alertas;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/guardarConfiguracionAlertas")
 	public ResponseEntity<String> guardarConfiguracionAlertas(@RequestParam long id_usuario,
 			@RequestBody ArrayList<AlertaConfiguracion> alertasAGuardar) {
@@ -87,7 +87,7 @@ public class AlertaUsuarioControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/Alertas/NuevoMensaje")
 	public ResponseEntity<String> notificarNuevoMensaje(@RequestParam long id_Emisor, @RequestParam long id_Receptor) {
 

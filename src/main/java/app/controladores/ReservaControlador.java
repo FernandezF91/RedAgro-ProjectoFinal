@@ -69,7 +69,7 @@ public class ReservaControlador {
 	@Autowired
 	AlertaNotificacionesDao alertaNotiDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/get_reservas_usuario")
 	@ResponseBody
 	public List<Reserva> obtenerReservasByUsuario(@RequestParam Long id) {
@@ -90,7 +90,7 @@ public class ReservaControlador {
 	}
 
 	// Solo contabiliza los ultimos 3 meses
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "redAgro/obtenerMetricasReservasPorEstado", method = RequestMethod.GET)
 	public List<ResultadosEstadisticas> obtenerMetricasReservasPorEstado(@RequestParam Long id_usuario) {
 		List<Object[]> resultados = reservaDao.obtenerMetricasReservasPorEstado(id_usuario);
@@ -105,7 +105,7 @@ public class ReservaControlador {
 	}
 
 	// Solo contabiliza los ultimos 3 meses
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "redAgro/obtenerMetricasProductosVendidos", method = RequestMethod.GET)
 	public List<ResultadosEstadisticas> obtenerMetricasProductosVendidos(@RequestParam Long id_usuario) {
 		List<Object[]> resultados = reservaDao.obtenerMetricasProductosVendidos(id_usuario);
@@ -119,7 +119,7 @@ public class ReservaControlador {
 		return estadisticas;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@RequestMapping(value = "redAgro/obtenerMetricasReservasPorMes", method = RequestMethod.GET)
 	public List<ResultadosEstadisticas> obtenerMetricasReservasPorMes(@RequestParam Long id_usuario) {
 		List<Object[]> resultados = reservaDao.obtenerMetricasReservasPorMes(id_usuario);
@@ -172,7 +172,7 @@ public class ReservaControlador {
 		return estadisticas;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/generarReserva")
 	public ResponseEntity<String> generarReserva(@RequestBody EntidadReserva reserva) {
 
@@ -258,7 +258,7 @@ public class ReservaControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/actualizarEstadoReserva")
 	public ResponseEntity<String> actualizarEstadoReserva(@RequestParam long id_reserva, @RequestParam long id_estado) {
 		ReservaMapper mapeo = new ReservaMapper();
@@ -362,7 +362,7 @@ public class ReservaControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(value = "redAgro/obtenerCantidadReservasDisponiblesConsumidor")
 	public ResponseEntity<Object> obtenerCantidadReservasDisponiblesConsumidor(@RequestParam Long id_consumidor) {
 		try {
@@ -375,7 +375,7 @@ public class ReservaControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(value = "redAgro/obtenerCantidadReservasPendientesProductor")
 	public ResponseEntity<Object> obtenerCantidadReservasPendientesProductor(@RequestParam Long id_productor) {
 		try {

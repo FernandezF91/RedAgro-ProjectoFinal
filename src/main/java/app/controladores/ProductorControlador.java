@@ -25,7 +25,7 @@ public class ProductorControlador {
 	@Autowired
 	UsuarioDao usuarioDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/usuario/obtenerUsuarioByMail")
 	public Productor obtenerUsuarioByMail(@RequestParam String usuario) {
 		ProductorMapper mapeo = new ProductorMapper();
@@ -36,7 +36,7 @@ public class ProductorControlador {
 		return mapeo.mapFromEntity(p);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/productor/obtenerRazonSocial")
 	public ResponseEntity<Object> obtenerRazonSocial(@RequestParam Long id) {
 		try {
@@ -50,7 +50,7 @@ public class ProductorControlador {
 		}
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/productor/actualizarRazonSocial")
 	public ResponseEntity<Object> updateRazonSocial(@RequestParam Long id, @RequestParam String razon_social) {
 		try {

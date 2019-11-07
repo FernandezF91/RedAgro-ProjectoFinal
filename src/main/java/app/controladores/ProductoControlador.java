@@ -30,7 +30,7 @@ public class ProductoControlador {
 	@Autowired
 	ProductorDao productorDao;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
     @GetMapping(path = "redAgro/obtenerTiposProducto")
     public List<Producto> obtenerTiposdeProducto(@RequestParam String categoria_producto){   	
     
@@ -46,7 +46,7 @@ public class ProductoControlador {
 		
     }
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtener_tipo_productos")
 	public ArrayList<Producto> obtenerTipoProducto(@RequestParam String categoria) {
 
@@ -61,7 +61,7 @@ public class ProductoControlador {
 		return productos;
 	}
 	
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtener_productos")
 	public List<Producto> obtenerProductos() {
 

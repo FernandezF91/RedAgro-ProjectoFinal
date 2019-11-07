@@ -51,7 +51,7 @@ public class UsuarioControlador {
 	@Autowired
 	ProductorDao productorDAO;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/usuario_consumidor")
 	public void agregarUsuarioConsumidor(@RequestBody EntidadUsuario usuario) {
 
@@ -82,7 +82,7 @@ public class UsuarioControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/usuario_productor")
 	public void agregarUsuarioProductor(@RequestBody EntidadUsuario usuario, @RequestParam String razon_social) {
 
@@ -117,7 +117,7 @@ public class UsuarioControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/update_usuario")
 	public void updateUsuario(@RequestBody EntidadUsuario usuario, @RequestParam Long id) {
 
@@ -125,7 +125,7 @@ public class UsuarioControlador {
 				usuario.getFecha_nacimiento(), id);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/validar_usuario_duplicado")
 	public ResponseEntity<String> validarUsuarioDuplicado(@RequestParam String mail) {
 		UsuarioMapper userMapper = new UsuarioMapper();
@@ -147,7 +147,7 @@ public class UsuarioControlador {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/modificar_contraseña")
 	public void modificacionContraseña(@RequestParam String c, @RequestParam Long id) {
 
@@ -155,20 +155,20 @@ public class UsuarioControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/get_tipo_usuario")
 	public String obtenerTipoUsuario(@RequestParam long id) {
 		String tipoUsuario = usuarioDAO.obtenerTipoUsuario(id);
 		return tipoUsuario;
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@DeleteMapping(path = "redAgro/borrar_usuario/{id}")
 	public void deleteItem(@PathVariable long id) {
 		usuarioDAO.deleteById(id);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/confirmar_cuenta")
 	public void confirmarCuenta(@RequestParam Long id) {
 
@@ -176,7 +176,7 @@ public class UsuarioControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/recuperar_email")
 	public ResponseEntity<Object> confirmarCuenta(@RequestParam String email) {
 

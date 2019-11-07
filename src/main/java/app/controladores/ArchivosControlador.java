@@ -30,7 +30,7 @@ public class ArchivosControlador {
 	@Autowired
 	ImagenDao imagenDao;
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/subir_archivos")
 	public ResponseEntity<Void> procesamientoDeArchivos(@NotNull @RequestParam("file") MultipartFile multipartFile,
 			@RequestParam("producto_productor") EntidadProductoProductor producto_productor) throws IOException {
@@ -46,7 +46,7 @@ public class ArchivosControlador {
 
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/obtener_imagen")
 	public ResponseEntity<byte[]> obtenerImagen(@RequestParam Long id) {
 
