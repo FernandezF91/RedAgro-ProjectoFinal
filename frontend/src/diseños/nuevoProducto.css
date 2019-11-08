@@ -61,3 +61,10 @@
 	width: 100%;
 	height: 100%;
 }
+
+.cajaImagenesActuales {
+	border: 1.5px solid darkgray;
+	border-radius: .5em;
+	background-color: #EEE;
+	min-height: 100px !important;
+}
