@@ -70,10 +70,9 @@ public class ReservaControlador {
 
 	@Autowired
 	AlertaNotificacionesDao alertaNotiDAO;
-	
+
 	@Autowired
 	AlertaUsuarioDao alertaUsuarioDAO;
-
 
 	@Autowired
 	private PushNotificationService pushNotificationService;
@@ -231,30 +230,33 @@ public class ReservaControlador {
 			detalleReservaDao.saveAll(detalles);
 			productoProductorDao.saveAll(productos);
 
-			//Guardo las notificaciones de Web y Mobile
+			// Guardo las notificaciones de Web y Mobile
 			EntidadAlertaNotificaciones alertaNoti = new EntidadAlertaNotificaciones();
 			EntidadAlerta alertas = new EntidadAlerta();
 			alertas.setId(1);
 			alertaNoti.setTipo("Web");
 			alertaNoti.setTitulo("Nueva Reserva");
-			alertaNoti.setDescripcion("Felicitaciones! El/La consumidor/a "
-					+ nuevaReserva.getConsumidor().getUsuario().getNombre() + " generó la reserva # "
-					+ nuevaReserva.getId() + ". Accedé a la sección de Reservas para ver el detalle.");
+			alertaNoti.setDescripcion(
+					"Felicitaciones! Tu consumidor, " + nuevaReserva.getConsumidor().getUsuario().getNombre() + " "
+							+ nuevaReserva.getConsumidor().getUsuario().getApellido() + ", generó la reserva # "
+							+ nuevaReserva.getId() + ". Accedé a la sección de Reservas para ver el detalle.");
 			alertaNoti.setUsuario(nuevaReserva.getProductor().getUsuario());
 			alertaNoti.setAlerta(alertas);
 			alertaNotiDAO.save(alertaNoti);
-			
+
 			notificarUsuario(reserva.getProductor().getUsuario(), "Nuevas reservas");
 
 			try {
 				usuario = mapeo.mapFromEntity(nuevaReserva).getConsumidor().getUsuario().getUsuario();
-				MailNuevaReserva mailConsumidor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva), "Consumidor");
+				MailNuevaReserva mailConsumidor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva),
+						"Consumidor");
 				mailConsumidor.enviarMail();
-				
+
 				usuario = mapeo.mapFromEntity(nuevaReserva).getProductor().getUsuario().getUsuario();
-				MailNuevaReserva mailProductor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva), "Productor");
+				MailNuevaReserva mailProductor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva),
+						"Productor");
 				mailProductor.enviarMail();
-				
+
 			} catch (AddressException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -274,7 +276,8 @@ public class ReservaControlador {
 
 	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/actualizarEstadoReserva")
-	public ResponseEntity<String> actualizarEstadoReserva(@RequestParam long id_reserva, @RequestParam long id_estado, @RequestParam(required=false) String rol) {
+	public ResponseEntity<String> actualizarEstadoReserva(@RequestParam long id_reserva, @RequestParam long id_estado,
+			@RequestParam(required = false) String rol) {
 		ReservaMapper mapeo = new ReservaMapper();
 		UsuarioMapper mapeoUsuario = new UsuarioMapper();
 		try {
@@ -314,13 +317,13 @@ public class ReservaControlador {
 			}
 			case 4: {
 				alertaNoti.setDescripcion("Tu reserva #" + reserva.getId()
-						+ " está finalizada! Accedé a la sección de Reservas para ver el detalle.");			
+						+ " está finalizada! Accedé a la sección de Reservas para ver el detalle.");
 				break;
 			}
 			case 5: {
 				alertaNoti.setDescripcion("Tu reserva #" + reserva.getId()
 						+ " ha sido cancelada. Accedé a la sección de Reservas para ver el detalle.");
-				
+
 				break;
 			}
 			default: {
@@ -328,7 +331,7 @@ public class ReservaControlador {
 						+ " cambió de estado. Accedé a la sección de Reservas para ver el detalle.");
 			}
 			}
-			
+
 			if (estado == 4 || estado == 5) {
 				EntidadAlertaNotificaciones alertaNoti2 = new EntidadAlertaNotificaciones();
 				alertaNoti2.setTipo("Web");
@@ -336,8 +339,8 @@ public class ReservaControlador {
 				alertaNoti2.setDescripcion(alertaNoti.getDescripcion());
 				alertaNoti2.setAlerta(alertas);
 				alertaNoti2.setUsuario(productor);
-				listaAlertas.add(alertaNoti2);				
-			} 
+				listaAlertas.add(alertaNoti2);
+			}
 			alertaNoti.setTipo("Web");
 			alertaNoti.setTitulo("Actualización de Reserva");
 			alertaNoti.setUsuario(consumidor);
@@ -367,18 +370,17 @@ public class ReservaControlador {
 			if (reserva.getFecha() == null && (id_estado == 4 || id_estado == 5)) {
 				reservaDao.actualizarFechaAlFinalizar(id_reserva);
 			}
-				
-				if(rol.equals("Productor")) {
-				
+
+			if (rol.equals("Productor")) {
+
 				notificarUsuario(entidadReserva.getConsumidor().getUsuario(), "Actualización de reservas");
-				
-			}else {
-				
+
+			} else {
+
 				notificarUsuario(entidadReserva.getProductor().getUsuario(), "Actualización de reservas");
-				
+
 			}
 
-	
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -414,7 +416,8 @@ public class ReservaControlador {
 	private void notificarUsuario(EntidadUsuario usuario, String nombreAlerta) {
 		logger.info("Por enviar notification...");
 		ArrayList<EntidadAlertaUsuario> alertas = alertaUsuarioDAO.obtenerConfiguracionAlertas(usuario.getId());
-		boolean notificationEnabled = alertas.stream().anyMatch(alerta -> alerta.getAlerta().getNombre().equals(nombreAlerta));
+		boolean notificationEnabled = alertas.stream()
+				.anyMatch(alerta -> alerta.getAlerta().getNombre().equals(nombreAlerta));
 		if (!notificationEnabled) {
 			return;
 		}
