@@ -39,7 +39,7 @@ public class CalificacionControlador {
 
 	@Autowired
 	ReservaDao reservaDao;
-	
+
 	@Autowired
 	AlertaNotificacionesDao alertaNotiDAO;
 
@@ -47,14 +47,17 @@ public class CalificacionControlador {
 	@PostMapping(path = "redAgro/guardarCalificacion")
 	public ResponseEntity<String> guardarCalificacion(@RequestParam long reserva_id,
 			@RequestBody EntidadCalificacion calificacionAGuardar) {
-		
+
 		UsuarioMapper mapeoUsuario = new UsuarioMapper();
 
 		try {
 			EntidadCalificacion calificacion = new EntidadCalificacion();
 
-			String comentario = calificacionAGuardar.getComentario().substring(0, 1).toUpperCase()
-					+ calificacionAGuardar.getComentario().substring(1);
+			String comentario = null;
+			if (calificacionAGuardar.getComentario() != "") {
+				comentario = calificacionAGuardar.getComentario().substring(0, 1).toUpperCase()
+						+ calificacionAGuardar.getComentario().substring(1);
+			}
 
 			calificacion.setReservaId(reserva_id);
 			calificacion.setValor(calificacionAGuardar.getValor());
@@ -68,7 +71,7 @@ public class CalificacionControlador {
 						reserva.getProductor().getUsuario().getUsuario(), reserva);
 
 				mailConsumidor.enviarMail();
-				
+
 				// Guardo alerta en la base
 				EntidadAlertaNotificaciones alertaNoti = new EntidadAlertaNotificaciones();
 				EntidadAlerta alertas = new EntidadAlerta();
@@ -76,8 +79,10 @@ public class CalificacionControlador {
 				alertas.setId(1);
 				alertaNoti.setTipo("Web");
 				alertaNoti.setTitulo("Nueva Calificación");
-				alertaNoti.setDescripcion("Felicitaciones! El/La consumidor/a " + reserva.getConsumidor().getUsuario().getNombre() + " te calificó por la atención brindada durante la reserva #"
-						+ reserva.getId() + ". Accedé a la sección de Calificaciones para ver el detalle.");
+				alertaNoti.setDescripcion(
+						"Felicitaciones! El/La consumidor/a " + reserva.getConsumidor().getUsuario().getNombre()
+								+ " te calificó por la atención brindada durante la reserva #" + reserva.getId()
+								+ ". Accedé a la sección de Calificaciones para ver el detalle.");
 				alertaNoti.setUsuario(productor);
 				alertaNoti.setAlerta(alertas);
 				alertaNotiDAO.save(alertaNoti);
@@ -152,12 +157,12 @@ public class CalificacionControlador {
 			if (resultado != null && Integer.valueOf(resultado) > 0) {
 				String respuesta = "Promedio realizado en base a ";
 				if (Integer.valueOf(resultado) == 1) {
-					respuesta = respuesta + "1 reserva calificada"; 
+					respuesta = respuesta + "1 reserva calificada";
 					return new ResponseEntity<>("Promedio realizado en base a 1 reserva calificada", HttpStatus.OK);
 				} else {
-					respuesta = respuesta + resultado + " reservas calificadas"; 
+					respuesta = respuesta + resultado + " reservas calificadas";
 				}
-				return new ResponseEntity<>(respuesta, HttpStatus.OK);	
+				return new ResponseEntity<>(respuesta, HttpStatus.OK);
 			}
 			return new ResponseEntity<>("Aún no hay calificaciones", HttpStatus.OK);
 		} catch (Exception e) {
