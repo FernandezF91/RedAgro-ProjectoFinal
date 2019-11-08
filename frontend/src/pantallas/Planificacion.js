@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Form, Row, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import { MDBCol, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
-import { Link } from 'react-router-dom';
 import '../diseños/estilosGlobales.css';
 import '../diseños/Planificacion.css';
 

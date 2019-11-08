@@ -1,14 +1,12 @@
 import '../diseños/estilosGlobales.css';
 import React, { Component } from 'react';
 import { FilePond } from 'react-filepond';
-import Select from 'react-select';
 // Import FilePond styles
 import 'filepond/dist/filepond.min.css';
-import Modal from 'react-awesome-modal';
 import { MDBModal } from 'mdbreact';
 import Loader from 'react-loader-spinner';
 
-import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 // Import the Image EXIF Orientation and Image Preview plugins
 // Note: These need to be installed separately
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
@@ -132,7 +130,6 @@ class CargarHistorico extends Component {
 				});
 
 			} else {
-
 
 				_this.setState({
 					showModal: true,

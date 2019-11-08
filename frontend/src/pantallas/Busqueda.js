@@ -34,7 +34,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                                             <h6 className="grey-text">{item.tipo}</h6>
                                             <MDBCardTitle>
                                                 <strong>
-                                                    <a className="dark-grey-text" onClick={() => mostrarDetalleProducto(item)} title="Clickeá para ver el detalle del producto">{item.titulo}</a>
+                                                    <button type="button" className="dark-grey-text link-button" onClick={() => mostrarDetalleProducto(item)} title="Clickeá para ver el detalle del producto">{item.titulo}</button>
                                                 </strong>
                                             </MDBCardTitle>
                                             <MDBCardText>
