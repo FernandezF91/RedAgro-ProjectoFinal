@@ -232,7 +232,7 @@ public class ReservaControlador {
 			detalleReservaDao.saveAll(detalles);
 			productoProductorDao.saveAll(productos);
 
-			// Guardo alerta en la base
+			//Guardo las notificaciones de Web y Mobile
 			EntidadAlertaNotificaciones alertaNoti = new EntidadAlertaNotificaciones();
 			EntidadAlerta alertas = new EntidadAlerta();
 			alertas.setId(1);
@@ -244,13 +244,18 @@ public class ReservaControlador {
 			alertaNoti.setUsuario(nuevaReserva.getProductor().getUsuario());
 			alertaNoti.setAlerta(alertas);
 			alertaNotiDAO.save(alertaNoti);
+			
+			notificarUsuario(reserva.getProductor().getUsuario(), "Nuevas reservas");
 
 			try {
 				usuario = mapeo.mapFromEntity(nuevaReserva).getConsumidor().getUsuario().getUsuario();
-				MailNuevaReserva mailConsumidor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva));
-
+				MailNuevaReserva mailConsumidor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva), "Consumidor");
 				mailConsumidor.enviarMail();
-				notificarUsuario(reserva.getProductor().getUsuario(), "Nuevas reservas");
+				
+				usuario = mapeo.mapFromEntity(nuevaReserva).getProductor().getUsuario().getUsuario();
+				MailNuevaReserva mailProductor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva), "Productor");
+				mailProductor.enviarMail();
+				
 			} catch (AddressException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
