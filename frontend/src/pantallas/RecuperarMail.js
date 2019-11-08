@@ -40,7 +40,7 @@ class RecuperarEmail extends Component {
             return;
         }
 
-        const path = "redAgro/recuperar_email?email="
+        const path = "http://localhost:3000/redAgro/recuperar_email?email="
 
         const final_path = path + this.state.campos["emailuser"];
 

@@ -66,7 +66,7 @@ class ListadoCalificaciones extends Component {
     componentDidMount() {
         var _this = this;
 
-        var path = "redAgro/obtenerCalificaciones?id_productor=" + _this.state.id_productor;
+        var path = "http://localhost:3000/redAgro/obtenerCalificaciones?id_productor=" + _this.state.id_productor;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => {

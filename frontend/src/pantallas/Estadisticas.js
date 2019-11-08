@@ -27,7 +27,7 @@ class Estadisticas extends Component {
 
     componentDidMount() {
         //GraficoPie
-        var path = "redAgro/obtenerMetricasReservasPorEstado?id_usuario=" + this.state.id;
+        var path = "http://localhost:3000/redAgro/obtenerMetricasReservasPorEstado?id_usuario=" + this.state.id;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })
@@ -43,7 +43,7 @@ class Estadisticas extends Component {
             })
 
         //GraficoBar
-        path = "redAgro/obtenerMetricasProductosVendidos?id_usuario=" + this.state.id;
+        path = "http://localhost:3000/redAgro/obtenerMetricasProductosVendidos?id_usuario=" + this.state.id;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })
@@ -59,7 +59,7 @@ class Estadisticas extends Component {
             })
 
         //GraficoLine
-        path = "redAgro/obtenerMetricasReservasPorMes?id_usuario=" + this.state.id;
+        path = "http://localhost:3000/redAgro/obtenerMetricasReservasPorMes?id_usuario=" + this.state.id;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })

@@ -90,7 +90,7 @@ class Planificacion extends Component {
 
         _this.setState({ alimentosAProducir: [] })
 
-        var path_principal = "redAgro/obtenerResultados?periodo=";
+        var path_principal = "http://localhost:3000/redAgro/obtenerResultados?periodo=";
         var periodo = this.periodo;
         //_this.props.id_productor;
         var provincia = this.zona;

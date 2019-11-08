@@ -237,7 +237,7 @@ class ListadoProductos extends Component {
         if (this.validarPorcentaje()) {
             var _this = this;
 
-            var path = "redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta + "&id_oferta=";
+            var path = "http://localhost:3000/redAgro/guardarOferta?id_producto_productor=" + _this.state.idProductoOferta + "&porcentaje=" + _this.state.porcentaje + "&activo=" + _this.state.checkOferta + "&id_oferta=";
             if (_this.state.idOferta === null || _this.state.idOferta === undefined) {
                 path += "0";
             } else {
@@ -285,7 +285,7 @@ class ListadoProductos extends Component {
         if (this.state.activo) {
             nuevoEstado = false;
         }
-        const path = "redAgro/actualizarEstadoProducto?id_producto_productor=" + this.state.idProductoProductor + "&activo=" + nuevoEstado;
+        const path = "http://localhost:3000/redAgro/actualizarEstadoProducto?id_producto_productor=" + this.state.idProductoProductor + "&activo=" + nuevoEstado;
         fetch(path,
             {
                 method: "PUT"
@@ -312,7 +312,7 @@ class ListadoProductos extends Component {
     }
 
     componentDidMount() {
-        var path = "redAgro/obtenerProductosProductor?id=" + this.state.id;
+        var path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + this.state.id;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })

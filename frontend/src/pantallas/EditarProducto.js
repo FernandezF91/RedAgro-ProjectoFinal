@@ -70,7 +70,7 @@ class EditarProducto extends Component {
     }
 
     componentDidMount() {
-        const path = "redAgro/obtenerProducto/" + this.props.match.params.idProducto;
+        const path = "http://localhost:3000/redAgro/obtenerProducto/" + this.props.match.params.idProducto;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -307,7 +307,7 @@ class EditarProducto extends Component {
         e.preventDefault();
 
         if (_this.validarCampos()) {
-            var path = "redAgro/actualizarProductoProductor?id_producto_productor=" + _this.state.productoAEditar.id;
+            var path = "http://localhost:3000/redAgro/actualizarProductoProductor?id_producto_productor=" + _this.state.productoAEditar.id;
 
             fetch(path, {
                 method: "POST",
@@ -362,7 +362,7 @@ class EditarProducto extends Component {
 
     eliminarFotos(listadoImagenesAEliminar) {
         listadoImagenesAEliminar.forEach((img) => {
-            var path = "redAgro/eliminarFoto?id=" + img.id;
+            var path = "http://localhost:3000/redAgro/eliminarFoto?id=" + img.id;
 
             fetch(path, {
                 method: 'PUT',
@@ -390,7 +390,7 @@ class EditarProducto extends Component {
     }
 
     subirArchivos(producto_productor) {
-        const path = "redAgro/subir_archivos?producto_productor=";
+        const path = "http://localhost:3000/redAgro/subir_archivos?producto_productor=";
 
         this.state.files.forEach((fileItem) => {
 

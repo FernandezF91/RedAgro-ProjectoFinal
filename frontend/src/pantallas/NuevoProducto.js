@@ -211,7 +211,7 @@ class NuevoProducto extends Component {
         e.preventDefault();
 
         if (_this.validarCampos()) {
-            var path_principal = "redAgro/usuario_productor/nuevo_producto?id_productor=";
+            var path_principal = "http://localhost:3000/redAgro/usuario_productor/nuevo_producto?id_productor=";
             var id_productor = _this.props.id_productor;
             var id_producto = 1; //para el caso de variado
             if (this.state.campos["categoria"] !== "Variado") {
@@ -263,7 +263,7 @@ class NuevoProducto extends Component {
     }
 
     subirArchivos(producto_productor) {
-        const path = "redAgro/subir_archivos?producto_productor=";
+        const path = "http://localhost:3000/redAgro/subir_archivos?producto_productor=";
 
         this.state.files.forEach((fileItem) => {
 
@@ -399,7 +399,7 @@ class NuevoProducto extends Component {
     obtenerTiposProducto(categoria) {
         var _this = this;
 
-        const path_principal = "redAgro/obtenerTiposProducto?categoria_producto=";
+        const path_principal = "http://localhost:3000/redAgro/obtenerTiposProducto?categoria_producto=";
         const path_final = path_principal + categoria;
 
         fetch(path_final, {

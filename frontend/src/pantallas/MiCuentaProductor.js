@@ -56,7 +56,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path_usuario = "redAgro/obtenerCantidadReservasPendientesProductor?id_productor=" + _this.state.id_usuario;
+        var path_usuario = "http://localhost:3000/redAgro/obtenerCantidadReservasPendientesProductor?id_productor=" + _this.state.id_usuario;
 
         fetch(path_usuario)
             .catch(err => console.error(err))
@@ -94,7 +94,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path_usuario = "redAgro/obtenerPromedioCalificaciones?id_productor=" + _this.state.id_usuario;
+        var path_usuario = "http://localhost:3000/redAgro/obtenerPromedioCalificaciones?id_productor=" + _this.state.id_usuario;
 
         fetch(path_usuario)
             .catch(err => console.error(err))
@@ -126,7 +126,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path = "redAgro/obtenerUltimasCalificacionesPorProductor?id_productor=" + _this.state.id_usuario;
+        var path = "http://localhost:3000/redAgro/obtenerUltimasCalificacionesPorProductor?id_productor=" + _this.state.id_usuario;
 
         fetch(path)
             .catch(err => console.error(err))
@@ -166,7 +166,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path = "redAgro/obtenerEntregasProximoMes?id_productor=" + _this.state.id_usuario;
+        var path = "http://localhost:3000/redAgro/obtenerEntregasProximoMes?id_productor=" + _this.state.id_usuario;
 
         fetch(path)
             .catch(err => console.error(err))
@@ -206,7 +206,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path = "redAgro/obtenerProductosARevisar?id_productor=" + _this.state.id_usuario;
+        var path = "http://localhost:3000/redAgro/obtenerProductosARevisar?id_productor=" + _this.state.id_usuario;
 
         fetch(path)
             .catch(err => console.error(err))
