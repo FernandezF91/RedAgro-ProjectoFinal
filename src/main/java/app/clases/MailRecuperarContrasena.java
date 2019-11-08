@@ -7,8 +7,10 @@ public class MailRecuperarContrasena extends MailSender{
 
 	public MailRecuperarContrasena(String to, Long id) {
 		this.setTo(to);
-		this.setContenido_email(
-				"<div> <h1>Recuperá tu contraseña</h1>"
+		this.setContenido_email("<div> "
+				+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
+				+ "<br>"
+				+ "<h1>Recuperá tu contraseña</h1>"
 				+"No te preocupes!!"
 				+ "<br>"
 				+ "<br>"

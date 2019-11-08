@@ -13,7 +13,10 @@ public class MailActualizacionReserva extends MailSender {
 		case "Disponible": {
 
 			if (usuario.getRol().equals("Productor")) {
-				this.setContenido_email("<div>Hola " + usuario.getNombre() + ", " + "</br>"
+				this.setContenido_email("<div>"
+						+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
+						+ "<br> <br>"
+						+ "Hola " + usuario.getNombre() + ", " + "<br>"
 						+ "<p> Se ha actualizado el estado de tu reserva #" + reserva.getId() + " a <em><strong>"
 						+ reserva.getEstado_reserva().getNombre()
 						+ "</strong></em>. Acordate que podes contactar a tu consumidor "
@@ -25,16 +28,20 @@ public class MailActualizacionReserva extends MailSender {
 			} else {
 
 				if (reserva.getForma_retiro().equals("Acuerda con Productor")) {
-					this.setContenido_email("<div>Hola " + usuario.getNombre() + ", " + "</br>"
-							+ "<p>Ya podes retirar tu reserva #" + reserva.getId()
-							+ " por el punto de entrega acordado! "
+					this.setContenido_email("<div>"
+							+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
+							+ "<br> <br>"
+							+ "Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Ya podes retirar tu reserva #"
+							+ reserva.getId() + " por el punto de entrega acordado! "
 							+ "No te olvides de llevar los datos de tu reserva para que no haya inconvenientes al momento del retiro. </p>"
 							+ "<br>" + "Saludos," + "<br>" + "Equipo de Cultura Verde");
 
 				} else {
-					this.setContenido_email("<div>Hola " + usuario.getNombre() + ", " + "</br>"
-							+ "<p>Ya podes retirar tu reserva #" + reserva.getId() + " por "
-							+ reserva.getPunto_entrega().getDireccion() + ", "
+					this.setContenido_email("<div>"
+							+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
+							+ "<br> <br>"
+							+ "Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Ya podes retirar tu reserva #"
+							+ reserva.getId() + " por " + reserva.getPunto_entrega().getDireccion() + ", "
 							+ reserva.getPunto_entrega().getLocalidad()
 							+ "No te olvides de chequear el horario de atención y de llevar los datos de tu reserva para que no haya inconvenientes al momento del retiro. </p>"
 							+ "<br>" + "Saludos," + "<br>" + "Equipo de Cultura Verde");
@@ -46,19 +53,23 @@ public class MailActualizacionReserva extends MailSender {
 		}
 
 		case "Finalizado": {
-			this.setContenido_email(
-					"<div>Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Tu reserva #" + reserva.getId()
-							+ " se encuentra finalizada! Muchas gracias por ser parte de Cultura verde :) </p>"
-							+ "<br>Saludos," + "<br>" + "Equipo de Cultura Verde");
+			this.setContenido_email("<div>"
+					+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
+					+ "<br> <br>"
+					+ "Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Tu reserva #" + reserva.getId()
+					+ " se encuentra finalizada! Muchas gracias por ser parte de Cultura verde :) </p>" + "<br>Saludos,"
+					+ "<br>" + "Equipo de Cultura Verde");
 			this.setAsunto("Tu reserva #" + reserva.getId() + " fue actualizada!");
 			break;
 
 		}
 
 		case "Cancelado": {
-			this.setContenido_email("<div>Hola " + usuario.getNombre() + ", " + "</br>"
-					+ "<p>Lamentamos informarte que tu reserva #" + reserva.getId() + " fue cancelada. </p>"
-					+ "<br>Saludos," + "<br>" + "Equipo de Cultura Verde");
+			this.setContenido_email("<div>"
+					+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
+					+ "<br> <br>"
+					+ "Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Lamentamos informarte que tu reserva #"
+					+ reserva.getId() + " fue cancelada. </p>" + "<br>Saludos," + "<br>" + "Equipo de Cultura Verde");
 			this.setAsunto("Tu reserva #" + reserva.getId() + " fue actualizada!");
 			break;
 		}
@@ -70,7 +81,10 @@ public class MailActualizacionReserva extends MailSender {
 			else
 				rol = "consumidor";
 
-			this.setContenido_email("<div>Hola " + usuario.getNombre() + ", " + "</br>"
+			this.setContenido_email("<div>"
+					+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
+					+ "<br> <br>"
+					+ "Hola " + usuario.getNombre() + ", " + "</br>"
 					+ "<p> Se ha actualizado el estado de tu reserva #" + reserva.getId() + " a <em><strong>"
 					+ reserva.getEstado_reserva().getNombre() + "</strong></em>. Acordate que podes contactar a tu "
 					+ rol + " y seguir el estado de tu reserva ingresando a tu cuenta en Cultura Verde. </p>"

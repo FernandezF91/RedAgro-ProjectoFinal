@@ -7,7 +7,10 @@ public class MailProductoInteres extends MailSender {
 
 	public MailProductoInteres(String to, String nombre, ProductoProductor producto) {
 		this.setTo(to);
-		this.setContenido_email("<div><p>Hola " + nombre + "! </br>" + "El/La productor/a "
+		this.setContenido_email("<div>"
+				+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
+				+ "<br>"
+				+ "<p>Hola " + nombre + "! </br>" + "El/La productor/a "
 				+ producto.getProductor().getUsuario().getNombre() + " "
 				+ producto.getProductor().getUsuario().getApellido()
 				+ " ha agregado un producto que podría interesarte: </p>" + "<h4>" + producto.getTitulo() + "</h4>"
