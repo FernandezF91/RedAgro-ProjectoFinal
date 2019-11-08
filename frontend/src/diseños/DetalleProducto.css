@@ -6,7 +6,7 @@
 
 .tituloProducto{
     margin-top: 10px;
-    font-weight: 500;
+    font-weight: 600;
     color: #4f4f4f !important;
 }
 
@@ -37,4 +37,14 @@
 
 .imagenProducto {
     align-self: center;
+}
+
+.detalle-link-button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline;
+    text-decoration: underline;
+    margin: 0;
+    padding: 0;
 }

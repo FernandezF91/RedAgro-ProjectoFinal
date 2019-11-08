@@ -186,7 +186,7 @@ class DetalleBusqueda extends Component {
         }
     }
 
-    mostrarPerfilProductor = (usuario) =>{
+    mostrarPerfilProductor = (usuario) => {
         this.props.handlePerfilProductor(usuario.split("@")[0]);
     }
 
@@ -260,7 +260,9 @@ class DetalleBusqueda extends Component {
                         }
                         <div className="descripcionProductor">
                             Producido por:
-                        <h6><a onClick={() =>this.mostrarPerfilProductor(this.state.producto.productor.usuario)}>{this.state.producto.productor.razon_social}</a></h6>
+                        <h6><button type="button" className="detalle-link-button" onClick={() => this.mostrarPerfilProductor(this.state.producto.productor.usuario)} title="Ir al perfil del productor">
+                                {this.state.producto.productor.razon_social}
+                            </button></h6>
                         </div>
 
                         <div className="descripcionProducto">
