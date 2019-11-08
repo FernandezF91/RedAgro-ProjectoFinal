@@ -11,7 +11,7 @@ public class MailMensajes extends MailSender {
 		this.setContenido_email("<div>Hola " + usuarioReceptor.getNombre() + ", " + "</br>" + "<p> Tu "
 				+ usuarioEmisor.getRol().toLowerCase() + " <em>" + usuarioEmisor.getNombre() + " "
 				+ usuarioEmisor.getApellido() + "</em> te ha enviado un nuevo mensaje. "
-				+ "Ingresá a Cultura Verde para responder.</p>" + "</br>" + "Saludos," + "<br>"
+				+ "Ingresá a Cultura Verde para responder.</p>" + "<br>" + "Saludos," + "<br>"
 				+ "Equipo de Cultura Verde");
 
 		this.setAsunto("Tenes un nuevo mensaje en Cultura Verde");

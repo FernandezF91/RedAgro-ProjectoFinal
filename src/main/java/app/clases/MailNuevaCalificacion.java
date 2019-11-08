@@ -11,8 +11,8 @@ public class MailNuevaCalificacion extends MailSender {
 				+ "Te han calificado por la atención brindada durante la reserva #" + reserva.getId()  
 				+ "</br>"
 				+ "<p>¿Querés saber que opinaron? Ingresá a cuenta en Cultura Verde para ver el detalle!</p>"
-				+ "</br>"
-				+ "</br>"
+				+ "<br>"
+				+ "<br>"
 				+ "Saludos," + "<br>"
 				+ "Equipo de Cultura Verde");
 
