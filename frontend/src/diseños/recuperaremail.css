@@ -1,23 +1,12 @@
-.formularioRecuContra{
-
-margin-top: 10%
-
+.formularioRecuContra {
+	margin-top: 10%
 }
 
-.encabezadoRecucontra{
-
-margin-top:5%;
-margin-left:27%;
-}
-
-.Correoelectronico{
-
+.Correoelectronico {
 	margin-top: -4%;
-
 }
 
-.form-control[type=recuemail]{
-
-width: 55%;
-
+.encabezadoRecucontra {
+	margin-top: 10px !important;
+	margin: auto;
 }

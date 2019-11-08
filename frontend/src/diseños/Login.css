@@ -1,49 +1,34 @@
 .popup {
-    display: none;
+  display: none;
 }
 
 .popup--visible {
-    display: block;
+  display: block;
 }
 
-
-.formularioLogin{
-
-
-margin-top: 8%;
-
+.formularioLogin {
+  margin-top: 8%;
 }
 
-.encabezadoLogin{
-
-margin-top:10px;
-margin-left:30%;
-
+.encabezadoLogin {
+  margin-top: 10px;
+  margin-left: 30%;
 }
 
-
-.form-group{
-
-display: flex;
+.form-group {
+  display: flex;
   flex: 0 0 auto;
   flex-flow: row wrap;
   align-items: center;
   margin-bottom: 0;
-
 }
 
-
-.botonesLogin{
-
-flex-direction: row;
-display: flex;
-justify-content: center;
-
+.botonesLogin {
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
 }
 
-
-.passwordLogin{
-
-margin-top:3%;
-
+.passwordLogin {
+  margin-top: 3%;
 }

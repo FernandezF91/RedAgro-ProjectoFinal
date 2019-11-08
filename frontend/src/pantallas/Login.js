@@ -153,7 +153,7 @@ class LoginForm extends Component {
                         <h2>Acceso de usuarios</h2>
                         <div className="encabezadoLogin">
                             <Form>
-                                <Form.Group as={Row} controlId="formHorizontalEmail" className="usuarioLogin">
+                                <Form.Group as={Row} controlId="formHorizontalEmail">
                                     <Form.Label column sm={2}>Usuario</Form.Label>
                                     <Col sm={10}>
                                         <Form.Control

@@ -4,7 +4,7 @@ import { Navbar, Container, Row, Form, Col, Button } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/recuperaremail.css';
 import '../diseños/estilosGlobales.css';
-import Modal from 'react-awesome-modal';
+import { MDBModal } from 'mdbreact';
 
 class RecuperarEmail extends Component {
 
@@ -15,13 +15,30 @@ class RecuperarEmail extends Component {
             campos: [],
             titulo: "",
             mensaje: "",
-            visible: "",
-            formOk: false,
-            error: ""
-
+            showModal: "",
+            error: "",
+            showModal: false,
+            mensajeError: "",
+            resultadoRequest: 0
         }
 
         this.validarDatos = this.validarDatos.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarModalError = this.cerrarModalError.bind(this);
+        this.mostrarLogin = this.mostrarLogin.bind(this);
+    }
+
+    cerrarModal() {
+        this.setState({
+            showModal: false,
+        })
+        this.mostrarLogin();
+    }
+
+    cerrarModalError() {
+        this.setState({
+            showModal: false
+        })
     }
 
     detectarCambios(e) {
@@ -56,11 +73,9 @@ class RecuperarEmail extends Component {
                     response.text().then(
                         function (response) {
                             _this.setState({
-                                visible: true,
+                                showModal: true,
                                 mensaje: response,
-                                titulo: "Error",
-                                formOk: false,
-                                error: ""
+                                resultadoRequest: 0
                             });
                         })
                     return;
@@ -69,28 +84,20 @@ class RecuperarEmail extends Component {
                 response.text().then(
                     function (response) {
                         _this.setState({
-                            visible: true,
+                            showModal: true,
                             mensaje: "No te preocupes! Te enviamos un email para que puedas reestablecer tu contraseña",
-                            titulo: "Recuperar contraseña",
-                            formOk: true,
-                            error: ""
+                            resultadoRequest: 200
                         });
 
                     });
             });
     }
 
-    closeModal() {
-        this.setState({
-            visible: false
-        });
+    mostrarLogin() {
+        this.props.history.push({
+            pathname: '/login',
 
-        if (this.state.formOk === true) {
-            this.props.history.push({
-                pathname: '/login',
-
-            })
-        }
+        })
     }
 
     render() {
@@ -104,18 +111,16 @@ class RecuperarEmail extends Component {
                     </Navbar>
                 </div>
                 <Container fluid className="contenedor">
-                    <div className="formularioRecuContra">
+                    <div className="formularioLogin">
                         <h2>Recuperar contraseña</h2>
                         <div className="encabezadoRecucontra">
                             <Form>
-                                <div className="Correoelectronico">
+                                <div className="contenidoRegistro">
                                     <Form.Group as={Row} controlId="formHorizontalEmail">
-                                        <Form.Label>
-                                            Mail
-                                		</Form.Label>
-                                        <Col>
+                                        <Form.Label column >Mail</Form.Label>
+                                        <Col sm={11}>
                                             <Form.Control
-                                                type="email"
+                                                type="username"
                                                 name="emailuser"
                                                 onChange={(e) => this.detectarCambios(e)}
                                                 className="camposDatosDeUsuario"
@@ -131,25 +136,35 @@ class RecuperarEmail extends Component {
                         <Button variant="light" href='/login'>Cancelar</Button>
                         <Button variant="success" onClick={this.validarDatos}>Confirmar</Button>
                     </div>
-                    <section>
-                        <Modal
-                            visible={this.state.visible}
-                            width="500"
-                            height="130"
-                            effect="fadeInUp"
-                            onClickAway={() => this.closeModal()}
-                        >
-                            <div>
-                                <h1>{this.state.titulo}</h1>
-                                <p>
-                                    {this.state.mensaje}
-                                </p>
-                                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
-                            </div>
-                        </Modal>
-                    </section>
+                    {
+                        (this.state.showModal) &&
+                        (
+                            <MDBModal isOpen={this.state.showModal} centered size="sm">
+                                <div className="modalMargenes">
+                                    <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                    <br />
+                                    {(this.state.resultadoRequest === 200) ?
+                                        (
+                                            <div>
+                                                <i className="fas fa-check-circle iconoModalOk" />
+                                                <br />
+                                                <br />
+                                                <h5>{this.state.mensaje}</h5>
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                <i className="fas fa-exclamation-circle iconoModalError" />
+                                                <br />
+                                                <br />
+                                                <h5>{this.state.mensaje}</h5>
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            </MDBModal>
+                        )
+                    }
                 </Container>
-
             </div>
         );
     };
