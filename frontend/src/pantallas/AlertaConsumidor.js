@@ -400,6 +400,7 @@ class AlertaConsumidor extends Component {
                             </MDBCol>
                         </MDBRow>
                     </div>
+                    <br />
                     <div className="radioButtons" align="left">
                         <h5>
                             <label className="checkbox-inline">
