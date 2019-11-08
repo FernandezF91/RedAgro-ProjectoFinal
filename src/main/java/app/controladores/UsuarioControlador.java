@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.hash.Hashing;
+
 import app.clases.MailConfirmacion;
 import app.clases.MailRecuperarContrasena;
 import app.daos.ConsumidorDao;
@@ -25,6 +27,8 @@ import app.modelos.EntidadUsuario;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @RestController
@@ -58,11 +62,15 @@ public class UsuarioControlador {
 
 		String nombre = usuario.getNombre().substring(0, 1).toUpperCase() + usuario.getNombre().substring(1);
 		String apellido = usuario.getApellido().substring(0, 1).toUpperCase() + usuario.getApellido().substring(1);
-		
+
 		usuario.setNombre(nombre);
 		usuario.setApellido(apellido);
 		usuario.setActivo(false);
-		
+		// Hasheo contraseña
+		String passwordHasheada = Hashing.sha256().hashString(usuario.getContraseña(), StandardCharsets.UTF_8)
+				.toString();
+		usuario.setContraseña(passwordHasheada);
+
 		EntidadUsuario userNuevo = usuarioDAO.save(usuario);
 
 		EntidadConsumidor entidadConsumidor = new EntidadConsumidor();
@@ -83,7 +91,6 @@ public class UsuarioControlador {
 
 	}
 
-
 	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/registrar_token")
 	public void registrarToken(@RequestBody EntidadUsuario usuario) {
@@ -103,16 +110,20 @@ public class UsuarioControlador {
 
 		String nombre = usuario.getNombre().substring(0, 1).toUpperCase() + usuario.getNombre().substring(1);
 		String apellido = usuario.getApellido().substring(0, 1).toUpperCase() + usuario.getApellido().substring(1);
-		
+
 		usuario.setNombre(nombre);
 		usuario.setApellido(apellido);
 		usuario.setActivo(false);
+		// Hasheo contraseña
+		String passwordHasheada = Hashing.sha256().hashString(usuario.getContraseña(), StandardCharsets.UTF_8)
+				.toString();
+		usuario.setContraseña(passwordHasheada);
 
 		userNuevo = usuarioDAO.save(usuario);
 
 		entidadProductor.setId(userNuevo.getId());
 		entidadProductor.setUsuario(userNuevo);
-		
+
 		String razonSocialCap = razon_social.substring(0, 1).toUpperCase() + razon_social.substring(1);
 		entidadProductor.setRazon_social(razonSocialCap);
 
@@ -163,7 +174,9 @@ public class UsuarioControlador {
 	@PutMapping(path = "redAgro/modificar_contraseña")
 	public void modificacionContraseña(@RequestParam String c, @RequestParam Long id) {
 
-		usuarioDAO.modificarContraseña(c, id);
+		// Hasheo contraseña
+		String passwordHasheada = Hashing.sha256().hashString(c, StandardCharsets.UTF_8).toString();
+		usuarioDAO.modificarContraseña(passwordHasheada, id);
 
 	}
 
@@ -208,18 +221,17 @@ public class UsuarioControlador {
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return new ResponseEntity<>(
-						"Ocurrió un error al recuperar tu mail. Reintentá en unos minutos. ",							
+				return new ResponseEntity<>("Ocurrió un error al recuperar tu mail. Reintentá en unos minutos. ",
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-			
-			long id = eu.getId();		
-			return new ResponseEntity<>(id,HttpStatus.OK);
+
+			long id = eu.getId();
+			return new ResponseEntity<>(id, HttpStatus.OK);
 
 		} else {
 			return new ResponseEntity<>(
-					"Hey! El mail ingresado no existe en nuestro sistema. Comprobá si esta bien escrito y reintentá :) ",							
+					"Hey! El mail ingresado no existe en nuestro sistema. Comprobá si esta bien escrito y reintentá :) ",
 					HttpStatus.INTERNAL_SERVER_ERROR);
-		}	
+		}
 	}
 }
