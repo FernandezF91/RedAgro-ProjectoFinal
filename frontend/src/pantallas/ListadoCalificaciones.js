@@ -51,8 +51,11 @@ class ListadoCalificaciones extends Component {
                     </div>
                 </td>
                 <td>
-                    {(item.comentario.length > 0) ?
-                        item.comentario
+                    {item.comentario !== null ?
+                        (item.comentario.length > 0) ?
+                            item.comentario
+                            :
+                            "-"
                         :
                         "-"
                     }
