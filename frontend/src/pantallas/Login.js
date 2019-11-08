@@ -83,20 +83,31 @@ class LoginForm extends Component {
                     var status = response.status;
                     response.text().then(
                         function (response) {
-                            if (status !== 200) {
-                                let mensajeError = response;
-                                _this.setState({
-                                    showModal: true,
-                                    mensajeError: mensajeError
-                                });
-                            }
-                            else {
+                            if (status === 200) {
                                 _this.setState({ usuario: JSON.parse(response) });
                                 if (_this.state.usuario.rol === "Productor") {
                                     _this.mostrarPantallaProductor();
                                 } else {
                                     _this.mostrarPantallaConsumidor();
                                 }
+                            } else if (status === 400) {
+                                let mensajeError = response;
+                                _this.setState({
+                                    showModal: true,
+                                    mensajeError: mensajeError
+                                });
+                            } else if (status === 500) {
+                                let mensajeError = response;
+                                _this.setState({
+                                    showModal: true,
+                                    mensajeError: mensajeError
+                                });
+                            } else {
+                                let mensajeError = "Ocurrió un error al obtener los datos de tu usuario. Reintentá en unos minutos.";
+                                _this.setState({
+                                    showModal: true,
+                                    mensajeError: mensajeError
+                                });
                             }
                         }
                     )

@@ -47,11 +47,6 @@
 	max-width: 230px !important;
 }
 
-.divisor {
-	width: 210px;
-	margin-left: -20px;
-}
-
 .subMenu {
 	margin-top: 13px;
 }
@@ -177,6 +172,22 @@ p, h4 {
 	margin-right: 10px;
 }
 
-.margenMenuLateral {
-	margin-left: 15px !important;
+.paddingMenuLateral {
+	padding-left: 12px !important;
+	padding-right: 12px !important;
+}
+
+.scrollMenuCategorias::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.scrollMenuCategorias::-webkit-scrollbar-track {
+    background: #DDD;
+    border-radius: 10px;
+}
+
+.scrollMenuCategorias::-webkit-scrollbar-thumb {
+    background: #CCC;
+    border-radius: 10px;
 }

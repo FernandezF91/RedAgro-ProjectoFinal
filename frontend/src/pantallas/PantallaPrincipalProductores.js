@@ -94,14 +94,14 @@ class PantallaPrincipalProductores extends Component {
                 <MDBContainer fluid className="contenedor">
                     <MDBRow className="filaContenedora">
                         <MDBCol md="2" className="menuConsumidor">
-                            <div className="margenMenuLateral">
+                            <div className="paddingMenuLateral">
                                 <MDBRow>
                                     <Link to={'/principalProductores/MiCuenta'} className="linkMiCuenta">
                                         <i className="fas fa-bars iconoMiCuenta" />
                                         <h4>Mi cuenta</h4>
                                     </Link>
                                 </MDBRow>
-                                <NavDropdown.Divider className="divisor" />
+                                <NavDropdown.Divider />
                                 <MDBRow>
                                     <i className="fas fa-store iconosMenuLateral" />
                                     <NavDropdown title="Productos" id="producto_drop">

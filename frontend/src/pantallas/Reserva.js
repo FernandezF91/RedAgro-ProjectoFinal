@@ -111,7 +111,7 @@ const Reserva = ({ lista, rolUsuario }) => {
 					<br />
 					<h5>Ups! No tenes reservas! </h5>
 					{(rolUsuario === "Consumidor") ?
-						<h6 className="grey-text">Probá buscando productos por <Link to={'.'}>acá</Link></h6>
+						<h6 className="grey-text">Probá buscando productos por <Link to={'/principalConsumidores/MiCuenta'}>acá</Link></h6>
 						:
 						<h6 className="grey-text">Probá publicando tus productos por <Link to={'./NuevoProducto'}>acá</Link></h6>
 					}

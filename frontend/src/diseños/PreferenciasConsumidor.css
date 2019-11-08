@@ -1,22 +1,16 @@
-.opciones{
+.opciones {
 	display: flex;
 	flex-direction: row;
-	justify-content:left;
+	justify-content: left;
 }
 
-.tituloProductos{
+.tituloProductos {
 	width: 100px;
 	text-align: right;
-	margin-top:5px;
+	margin-top: 5px;
 }
 
-.dropdownProductos{
+.dropdownProductos {
 	width: 600px;
 	padding-left: 25px;
-}
-
-.descripcionPagina{
-	text-align: left;
-	line-height: 40px;
-	margin-top:20px;
 }

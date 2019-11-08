@@ -59,12 +59,12 @@ public class LoginControlador {
 
 				return new ResponseEntity<>(
 						"Ups... La cuenta que ingresaste es inexistente o los datos son incorrectos",
-						HttpStatus.INTERNAL_SERVER_ERROR);
+						HttpStatus.BAD_REQUEST);
 			} else {
 				if (usuario.getActivo() != true) {
 					return new ResponseEntity<>(
 							"Hey! Tu usuario no está activo. Revisá tu mail para confirmar la cuenta.",
-							HttpStatus.INTERNAL_SERVER_ERROR);
+							HttpStatus.BAD_REQUEST);
 				} else {
 					return new ResponseEntity<>(userMapper.mapFromEntity(usuario), HttpStatus.OK);
 				}

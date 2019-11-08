@@ -10,7 +10,7 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
         <div>
             {
                 listaDeProductos.length > 0 ?
-                    <MDBContainer >
+                    <MDBContainer>
                         <MDBRow>
                             {listaDeProductos.map((item, index) => (
                                 <MDBCol lg="4" md="6" className="mb-lg-0 mb-4" key={item.id}>
