@@ -240,7 +240,7 @@ public class ReservaControlador {
 			alertaNoti.setTitulo("Nueva Reserva");
 			alertaNoti.setDescripcion("Felicitaciones! El/La consumidor/a "
 					+ nuevaReserva.getConsumidor().getUsuario().getNombre() + " generó la reserva # "
-					+ nuevaReserva.getId() + "Accedé a la sección de Reservas para ver el detalle.");
+					+ nuevaReserva.getId() + ". Accedé a la sección de Reservas para ver el detalle.");
 			alertaNoti.setUsuario(nuevaReserva.getProductor().getUsuario());
 			alertaNoti.setAlerta(alertas);
 			alertaNotiDAO.save(alertaNoti);
