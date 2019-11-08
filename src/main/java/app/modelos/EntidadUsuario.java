@@ -37,6 +37,7 @@ public class EntidadUsuario {
 	@OneToOne(mappedBy = "usuario")
 	private EntidadProductor productor;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "usuario")
 	private List<EntidadAlertaUsuario> alertas_usuario = new ArrayList<>();
 
