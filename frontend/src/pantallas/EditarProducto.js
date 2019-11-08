@@ -52,17 +52,21 @@ class EditarProducto extends Component {
             resultadoRequest: 0,
             contenidoDeshabilitado: false,
             currentImage: 0,
-            listadoImagenes: []
+            listadoImagenes: [],
+            imagenesABorrar: [],
+            cantidadImagenesActuales: 0,
+            cantidadDisponibleImagenes: 5
         }
 
         this.featurePond = React.createRef();
         this.mostrarListadoDeProductos = this.mostrarListadoDeProductos.bind(this);
         this.validarCampos = this.validarCampos.bind(this);
         this.subirArchivos = this.subirArchivos.bind(this);
+        this.eliminarFotos = this.eliminarFotos.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
         this.cerrarModalError = this.cerrarModalError.bind(this);
         this.onCurrentImageChange = this.onCurrentImageChange.bind(this);
-        this.deleteImage = this.deleteImage.bind(this);
+        this.eliminarFoto = this.eliminarFoto.bind(this);
     }
 
     componentDidMount() {
@@ -133,14 +137,19 @@ class EditarProducto extends Component {
 
                         var listadoImagenes = []
 
-                        producto.imagenes.forEach((o) => {
+                        producto.imagenes.forEach((img) => {
+                            console.log(this.state.cantidadImagenesActuales);
+                            this.setState({
+                                cantidadImagenesActuales: this.state.cantidadImagenesActuales + 1
+                            });
+
                             var imagen = {
-                                src: "data:" + o.tipo_contenido + ";base64," + o.image,
-                                thumbnail: "data:" + o.tipo_contenido + ";base64," + o.image,
+                                id: img.id,
+                                src: "data:" + img.tipo_contenido + ";base64," + img.image,
+                                thumbnail: "data:" + img.tipo_contenido + ";base64," + img.image,
                                 thumbnailWidth: 100,
                                 thumbnailHeight: 100,
-                                isSelected: true,
-                                caption: "After Rain (Jeshu John - designerspics.com)"
+                                caption: img.nommbre
                             }
                             listadoImagenes.push(imagen);
                         });;
@@ -180,13 +189,25 @@ class EditarProducto extends Component {
         this.setState({ currentImage: index });
     }
 
-    deleteImage() {
-        if (window.confirm(`Are you sure you want to delete image number ${this.state.currentImage}?`)) {
-            var images = this.state.images.slice();
-            images.splice(this.state.currentImage, 1)
+    eliminarFoto() {
+        if (window.confirm("Estás seguro de eliminar esta foto?")) {
+            var images = this.state.listadoImagenes.slice();
+            images.splice(this.state.currentImage, 1);
+
+            let imagenesABorrar = this.state.imagenesABorrar;
+            imagenesABorrar.push(this.state.listadoImagenes[this.state.currentImage]);
+
             this.setState({
-                images: images
+                listadoImagenes: images,
+                cantidadImagenesActuales: this.state.cantidadImagenesActuales - 1,
+                imagenesABorrar: imagenesABorrar,
+                cantidadDisponibleImagenes: this.state.cantidadDisponibleImagenes + 1
             });
+        }
+
+        console.log(this.state.cantidadImagenesActuales);
+        if (this.state.cantidadImagenesActuales === 1) {
+            document.getElementById("lightboxBackdrop").remove();
         }
     }
 
@@ -243,10 +264,15 @@ class EditarProducto extends Component {
             showModal = true;
         }
 
-        // if (!this.state.campos["files"]) {
-        //     validaciones["files"] = "Campo requerido";
-        //     showModal = true;
-        // }
+        if (this.state.files.length === 0 && this.state.cantidadImagenesActuales === 0) {
+            validaciones["imagenes"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (this.state.files.length === 5 && this.state.cantidadImagenesActuales > 0) {
+            validaciones["imagenes"] = "El máximo permitido son 5 imágenes";
+            showModal = true;
+        }
 
         if (!this.state.campos["fecha_vencimiento"]) {
             validaciones["fecha_vencimiento"] = "Campo requerido";
@@ -324,11 +350,43 @@ class EditarProducto extends Component {
                             showModal: true,
                             loading: false
                         });
-                        //_this.subirArchivos(response);
+                        _this.eliminarFotos(_this.state.imagenesABorrar);
+                        if (this.state.files.length > 0) {
+                            _this.subirArchivos(_this.state.productoAEditar.id);
+                        }
                     }
                 })
 
         }
+    }
+
+    eliminarFotos(listadoImagenesAEliminar) {
+        listadoImagenesAEliminar.forEach((img) => {
+            var path = "http://localhost:3000/redAgro/eliminarFoto?id=" + img.id;
+
+            fetch(path, {
+                method: 'PUT',
+                headers: { 'Content-type': 'application/json;charset=UTF-8' }
+            })
+                .catch(err => console.error(err))
+                .then(response => {
+                    if (response.status === 200) {
+                        return response.text();
+                    } else if (response.status === 504) {
+                        console.log("Timeout");
+                    } else {
+                        console.log("Otro error");
+                    }
+                    this.setState({
+                        mensaje: "Ocurrió un error al eliminar la imagen. Reintentá en unos minutos.",
+                        showModal: true,
+                        resultadoRequest: 0
+                    })
+                })
+                .then(data => {
+                    console.log(data);
+                })
+        })
     }
 
     subirArchivos(producto_productor) {
@@ -614,33 +672,38 @@ class EditarProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <br />
-                    <div style={{
-                        display: "block",
-                        minHeight: "1px",
-                        border: "1px solid #ddd",
-                        overflow: "auto",
-                        width: "70%",
-                        margin: "auto"
-                    }}>
-                        <div style={{
-                            padding: "2px",
-                            color: "#666"
-                        }}>Current image: {this.state.currentImage}</div>
+                    <div>
+                        Imágenes actuales
+                    </div>
+                    <div
+                        style={{
+                            display: "block",
+                            overflow: "auto",
+                            width: "70%",
+                            margin: "auto"
+                        }}
+                        className="cajaImagenesActuales"
+                    >
                         <Gallery
                             images={this.state.listadoImagenes}
                             enableLightbox={true}
-                            enableImageSelection={false}
                             currentImageWillChange={this.onCurrentImageChange}
                             maxRows={1}
 
                             customControls={[
-                                <button key="deleteImage" onClick={this.deleteImage}>Delete Image</button>
+                                <button key="eliminarFoto" onClick={this.eliminarFoto}>Eliminar foto</button>
                             ]}
                         />
                     </div>
                     <br />
                     <div>
-                        <span md="3">*Imágenes</span>
+                        <MDBRow className="justifyContentCenter">
+                            <span md="3">*Imágenes</span>
+                            {
+                                (this.state.validaciones["imagenes"]) &&
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["imagenes"]} />
+                            }
+                        </MDBRow>
                         <br />
                         <FilePond
                             className="cursorManito cajaImagenesWidth"

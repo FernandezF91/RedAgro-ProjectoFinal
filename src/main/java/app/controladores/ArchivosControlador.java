@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,4 +67,18 @@ public class ArchivosControlador {
 
 	}
 
+	@CrossOrigin(origins = "*")
+	@PutMapping(path = "redAgro/eliminarFoto")
+	public ResponseEntity<String> eliminarFoto(@RequestParam Long id) {
+		try {
+
+			imagenDao.borrarImagen(id);
+
+			return new ResponseEntity<>("Imagen eliminada correctamente!", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Ocurrió un error al eliminar la imagen. Reintentá en unos minutos.",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
 }
