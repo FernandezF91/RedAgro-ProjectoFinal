@@ -176,7 +176,10 @@ const PasosCheckout = (props) => {
                 <div className="cardColumns">
                     <CardColumns className="resumenReserva">
                         <Card border="light" className="cardDatosPersonales">
-                            <Card.Header className="cardHeader"><i className="fas fa-store" /> Datos para el retiro</Card.Header>
+                            <Card.Header className="cardHeader">
+                                <i className="fas fa-store iconoCheckout" />
+                                Datos para el retiro
+                            </Card.Header>
                             <Card.Body>
                                 Retira {props.datosReserva.persona_retiro},
                             <br />
@@ -198,7 +201,10 @@ const PasosCheckout = (props) => {
                         </Card>
 
                         <Card border="light">
-                            <Card.Header className="cardHeader"><i className="fas fa-shopping-basket" /> Productos seleccionados</Card.Header>
+                            <Card.Header className="cardHeader">
+                                <i className="fas fa-shopping-basket iconoCheckout" />
+                                Productos seleccionados
+                            </Card.Header>
                             <ListGroup>
                                 {
                                     props.productosSeleccionados.map(item => (

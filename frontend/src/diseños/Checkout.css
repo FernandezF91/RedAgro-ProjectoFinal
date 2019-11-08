@@ -118,3 +118,8 @@
     border-top-style: solid !important;
     border-top-color: rgba(0, 0, 0, 0.125) !important;
 }
+
+.iconoCheckout {
+    margin-right: 5px;
+    color: #555;
+}
