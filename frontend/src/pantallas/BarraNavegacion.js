@@ -4,6 +4,8 @@ import culturaVerde from '../imagenes/cultura-verde-2.png';
 import React, { Component } from 'react';
 import { Navbar, NavDropdown, Badge, Nav, InputGroup, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Notificaciones from './Notificaciones';
+import { Button, UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 class BarraNavegacion extends Component {
     constructor(props) {
@@ -50,6 +52,7 @@ class BarraNavegacion extends Component {
 
     render() {
         const rolDeUsuario = this.state.usuario.rol;
+        const listado = this.props.notificaciones;
         return (
             <Navbar collapseOnSelect expand="lg" className="barraNavegacion sombraBarra" >
                 <Navbar.Brand className="culturaVerde" href="/">
@@ -89,7 +92,8 @@ class BarraNavegacion extends Component {
                                 </NavDropdown>
                             </Nav>
                             <Nav className="menuUsuario">
-                                <i className="fas fa-bell iconosBarra" />
+                                <i id="notificaciones" className="fas fa-bell iconosBarra cursorManito" />
+                                <Notificaciones listado={listado} />
                             </Nav>
 
                             <Nav.Item className="menuUsuario">
@@ -116,7 +120,8 @@ class BarraNavegacion extends Component {
                                     </NavDropdown>
                                 </Nav>
                                 <Nav className="menuUsuario">
-                                    <i className="fas fa-bell iconosBarra" />
+                                    <i id="notificaciones" className="fas fa-bell iconosBarra cursorManito" />
+                                    <Notificaciones listado={listado} />
                                 </Nav>
                                 <div className="verticalDivider" role="separator" />
                                 <Nav.Item className="menuUsuario">

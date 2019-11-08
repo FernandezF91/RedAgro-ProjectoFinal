@@ -48,6 +48,7 @@ class PantallaPrincipalconsumidores extends Component {
             productos: [],
             detalleProducto: {},
             nombrePerfilProductor: {},
+            notificaciones: []
         }
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.handleNuevaBusqueda = this.handleNuevaBusqueda.bind(this);
@@ -65,6 +66,8 @@ class PantallaPrincipalconsumidores extends Component {
         localStorage.setItem('myLocalStorageRolConsumidor', this.state.rolUsuario);
 
         var _this = this;
+
+        _this.obtenerNotificaciones();
 
         fetch("http://localhost:3000/redAgro/obtener_productos", {
             method: "GET",
@@ -216,13 +219,63 @@ class PantallaPrincipalconsumidores extends Component {
         return tipos;
     }
 
+    obtenerNotificaciones() {
+        var _this = this;
+        var path = "http://localhost:3000/redAgro/AlertaNotificaciones/obtenerAlertasByUsuario?id_usuario=" + localStorage.getItem('myLocalStorageIdConsumidor');
+        fetch(path, {
+            method: "GET",
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+            }
+        })
+            .catch(error => console.error(error))
+            .then(response => {
+                try {
+                    if (response.status === 200) {
+                        _this.setState({
+                            resultadoRequest: response.status
+                        });
+                        return response.json();
+                    }
+                    else {
+                        console.log(response.status);
+                        _this.setState({
+                            loading: false,
+                            resultadoRequest: response.status
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                    _this.setState({
+                        loading: false,
+                        resultadoRequest: response.status
+                    });
+                }
+            })
+            .then(data => {
+                if (data !== undefined) {
+                    _this.setState({
+                        notificaciones: data.map((item) => {
+                            return {
+                                id: item.id,
+                                titulo: item.titulo,
+                                descripcion: item.descripcion,
+                            }
+                        })
+                    })
+                }
+            })
+    }
+
     render() {
         return (
             <div className="fondo">
                 <BarraNavegacion
                     productosSeleccionados={this.state.productosSeleccionados}
                     usuario={this.state.user}
+                    notificaciones={this.state.notificaciones}
                     handleNuevaBusqueda={this.handleNuevaBusqueda}
+                    obtenerNotificaciones={this.obtenerNotificaciones}
                 />
                 <MDBContainer fluid className="contenedor">
                     <MDBRow className="filaContenedora">
