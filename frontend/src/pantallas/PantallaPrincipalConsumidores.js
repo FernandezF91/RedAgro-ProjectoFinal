@@ -196,8 +196,8 @@ class PantallaPrincipalconsumidores extends Component {
                 </MDBCol>
                 <MDBCol className="scrollMenuCategorias">
                     {
-                        frutas.map(f => {
-                            return <MDBRow id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(f.tipo)}>
+                        frutas.map((f, index) => {
+                            return <MDBRow key={index} id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(f.tipo)}>
                                 {f.tipo}
                             </MDBRow>
                         })
@@ -205,8 +205,8 @@ class PantallaPrincipalconsumidores extends Component {
                 </MDBCol>
                 <MDBCol className="scrollMenuCategorias">
                     {
-                        otros.map(o => {
-                            return <MDBRow id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(o.tipo)}>
+                        otros.map( (o, index) => {
+                            return <MDBRow key={index} id="subTipos" className="cursorManito" onClick={() => this.handleNuevaBusqueda(o.tipo)}>
                                 {o.tipo}
                             </MDBRow>
                         })

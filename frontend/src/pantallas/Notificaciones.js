@@ -8,8 +8,8 @@ const Notificaciones = (props) => {
             {
                 props.listado.length > 0 ?
                     props.listado.map((item, index) => (
-                        <div>
-                            <PopoverHeader className="notiHeader">{item.titulo}</PopoverHeader>
+                        <div key={index}>
+                            <PopoverHeader>{item.titulo}</PopoverHeader>
                             <PopoverBody>{item.descripcion} </PopoverBody>
                         </div>
                     ))

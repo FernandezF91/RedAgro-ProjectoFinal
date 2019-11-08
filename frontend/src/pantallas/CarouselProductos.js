@@ -11,7 +11,7 @@ const CarouselProductos = (props) => {
                     <MDBCarouselInner>
                         {
                             props.listadoProductos.map((itemLista, index) => (
-                                <MDBCarouselItem itemId={index + 1}>
+                                <MDBCarouselItem itemId={index + 1} key={index}>
                                     <MDBRow>
                                         {
                                             itemLista.map((item) => (
@@ -28,7 +28,7 @@ const CarouselProductos = (props) => {
                                                             <h6 className="grey-text">{item.tipo}</h6>
                                                             <MDBCardTitle>
                                                                 <strong>
-                                                                    <a className="dark-grey-text" onClick={() => props.mostrarDetalleProducto(item)} title="Clickeá para ver el detalle del producto">{item.titulo}</a>
+                                                                    <button type="button" className="dark-grey-text link-button" onClick={() => props.mostrarDetalleProducto(item)} title="Clickeá para ver el detalle del producto">{item.titulo}</button>
                                                                 </strong>
                                                             </MDBCardTitle>
                                                             <MDBCardText>
