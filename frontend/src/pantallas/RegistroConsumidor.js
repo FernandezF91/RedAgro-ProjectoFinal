@@ -227,7 +227,6 @@ class RegistroConsumidor extends Component {
                                             className="calendario"
                                             onChange={(e) => this.cambiosFecha(e)}
                                             value={this.state.campos["fecha_nac"]}
-                                            className="camposDatosDeUsuario"
                                         />
                                         <div className="errorConsu">
                                             {this.state.errores["fecha_nac"]}
