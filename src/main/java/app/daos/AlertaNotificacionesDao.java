@@ -9,6 +9,6 @@ import app.modelos.EntidadAlertaNotificaciones;
 
 public interface AlertaNotificacionesDao extends JpaRepository<EntidadAlertaNotificaciones, Long >{
 	
-	@Query(value = "SELECT * From Alerta_Notificaciones WHERE usuario_id = ?1 ORDER BY id DESC LIMIT 5", nativeQuery = true)
+	@Query(value = "SELECT * From Alerta_Notificaciones WHERE usuario_id = ?1 ORDER BY id DESC LIMIT 4", nativeQuery = true)
 	ArrayList<EntidadAlertaNotificaciones> obtenerNotificacionesByUsuario(long id_usuario);
 }
