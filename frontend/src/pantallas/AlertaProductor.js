@@ -278,7 +278,7 @@ class AlertaProductor extends Component {
                                     className="checkbox-input checkbox"
                                 />
                                 Actualización de reservas
-                                </label>
+                            </label>
                         </h5>
                         <MDBRow>
                             <MDBCol>
@@ -292,7 +292,7 @@ class AlertaProductor extends Component {
                                         disabled={this.state.disabledActualizacion}
                                     />
                                     En el momento
-                                    </label>
+                                </label>
                             </MDBCol>
                             <MDBCol>
                                 <label className="radio-inline">
@@ -305,7 +305,7 @@ class AlertaProductor extends Component {
                                         disabled={this.state.disabledActualizacion}
                                     />
                                     Diariamente
-                                    </label>
+                                </label>
                             </MDBCol>
                             <MDBCol>
                                 <label className="radio-inline">
@@ -318,7 +318,7 @@ class AlertaProductor extends Component {
                                         disabled={this.state.disabledActualizacion}
                                     />
                                     Semanalmente
-                                    </label>
+                                </label>
                             </MDBCol>
                         </MDBRow>
                     </div>
@@ -334,7 +334,7 @@ class AlertaProductor extends Component {
                                     className="checkbox-input checkbox"
                                 />
                                 Nuevos mensajes
-                                </label>
+                            </label>
                         </h5>
                         <MDBRow>
                             <MDBCol>
@@ -348,7 +348,7 @@ class AlertaProductor extends Component {
                                         disabled={this.state.disabledMensajes}
                                     />
                                     En el momento
-                        </label>
+                                </label>
                             </MDBCol>
                             <MDBCol>
                                 <label className="radio-inline">
@@ -361,7 +361,7 @@ class AlertaProductor extends Component {
                                         disabled={this.state.disabledMensajes}
                                     />
                                     Diariamente
-                        </label>
+                                </label>
                             </MDBCol>
                             <MDBCol>
                                 <label className="radio-inline">
@@ -374,7 +374,7 @@ class AlertaProductor extends Component {
                                         disabled={this.state.disabledMensajes}
                                     />
                                     Semanalmente
-                        </label>
+                                </label>
                             </MDBCol>
                         </MDBRow>
                     </div>
@@ -404,7 +404,7 @@ class AlertaProductor extends Component {
                                         disabled={this.state.disabledNuevas}
                                     />
                                     En el momento
-                        </label>
+                                </label>
                             </MDBCol>
                             <MDBCol>
                                 <label className="radio-inline">
@@ -417,7 +417,7 @@ class AlertaProductor extends Component {
                                         disabled={this.state.disabledNuevas}
                                     />
                                     Diariamente
-                        </label>
+                                </label>
                             </MDBCol>
                             <MDBCol>
                                 <label className="radio-inline">
@@ -430,7 +430,7 @@ class AlertaProductor extends Component {
                                         disabled={this.state.disabledNuevas}
                                     />
                                     Semanalmente
-                        </label>
+                                </label>
                             </MDBCol>
                         </MDBRow>
                     </div>
