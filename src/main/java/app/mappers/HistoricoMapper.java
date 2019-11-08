@@ -78,7 +78,7 @@ public class HistoricoMapper {
             titulos.append("tipo"); titulos.append(CSV_SEPARATOR);
             titulos.append("provincia"); titulos.append(CSV_SEPARATOR);
             titulos.append("periodo"); titulos.append(CSV_SEPARATOR);
-            titulos.append("Ventas"); titulos.append(CSV_SEPARATOR);
+            titulos.append("Ventas");
             bw.write(titulos.toString());
             bw.newLine();
             
@@ -109,7 +109,7 @@ public class HistoricoMapper {
                 oneLine.append(mes);
                 oneLine.append(CSV_SEPARATOR);
                 oneLine.append(historico.getCantidad_vendida() > 600 ? "ventasMayor": "ventasModeradas");
-                oneLine.append(CSV_SEPARATOR);
+                //oneLine.append(CSV_SEPARATOR);
                 bw.write(oneLine.toString());
                 bw.newLine();
             }
