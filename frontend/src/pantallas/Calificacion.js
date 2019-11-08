@@ -47,7 +47,7 @@ const calificacion = ({ lista }) => {
                     <h6 className="grey-text">Revisá el estado de tus reservas por <Link to={'./ListadoReservas'}>acá</Link></h6>
                 </div>
             }
-        </div >
+        </div>
     );
 };
 export default calificacion;

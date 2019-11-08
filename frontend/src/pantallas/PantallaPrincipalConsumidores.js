@@ -227,14 +227,14 @@ class PantallaPrincipalconsumidores extends Component {
                 <MDBContainer fluid className="contenedor">
                     <MDBRow className="filaContenedora">
                         <MDBCol md="2" className="menuConsumidor">
-                            <div className="margenMenuLateral">
+                            <div className="paddingMenuLateral">
                                 <MDBRow>
                                     <Link to={'/principalConsumidores/MiCuenta'} className="linkMiCuenta">
                                         <i className="fas fa-bars iconoMiCuenta" />
                                         <h4>Mi cuenta</h4>
                                     </Link>
                                 </MDBRow>
-                                <NavDropdown.Divider className="divisor" />
+                                <NavDropdown.Divider />
                                 <MDBRow className="itemsSubmenu">
                                     <i className="fas fa-shopping-basket iconosMenuLateral" />
                                     <NavDropdown title="Comprar" id="compra_drop" className="com_drop">

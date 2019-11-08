@@ -424,7 +424,7 @@ input[type=text] {
     padding-right: 0 !important;
 }
 
-.selectFormulariosDisabled {
+.padding0Column {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
@@ -443,5 +443,11 @@ input[type=text] {
 }
 
 .justifyContentCenter {
-	justify-content: center;
+    justify-content: center;
+}
+
+.descripcionPagina {
+    text-align: left;
+    line-height: 40px;
+    margin-bottom: 20px;
 }
