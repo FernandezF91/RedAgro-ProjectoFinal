@@ -15,7 +15,7 @@ public class MailRecuperarContrasena extends MailSender{
 				+ "Puedes restablecer tu contraseña haciendo click en el siguiente enlace:"
 				+"<br>"
 				+"<br>"
-				+"<a href="+"http://localhost:3000/recuperar_email/"+id+">"+"<button "+"class="+"button "+"style="+
+				+"<a href="+"redAgro/recuperar_email/"+id+">"+"<button "+"class="+"button "+"style="+
 				"background-color:#4CAF50; border:none; color:white; padding: 15px 32px; text-align: center; text-decoration: none>"
 				+"Recuperar"+"</button>"+"</a><div>"
 				+"<br>"

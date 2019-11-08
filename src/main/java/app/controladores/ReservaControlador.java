@@ -274,7 +274,7 @@ public class ReservaControlador {
 
 	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/actualizarEstadoReserva")
-	public ResponseEntity<String> actualizarEstadoReserva(@RequestParam long id_reserva, @RequestParam long id_estado) {
+	public ResponseEntity<String> actualizarEstadoReserva(@RequestParam long id_reserva, @RequestParam long id_estado, @RequestParam(required=false) String rol) {
 		ReservaMapper mapeo = new ReservaMapper();
 		UsuarioMapper mapeoUsuario = new UsuarioMapper();
 		try {
@@ -367,10 +367,18 @@ public class ReservaControlador {
 			if (reserva.getFecha() == null && (id_estado == 4 || id_estado == 5)) {
 				reservaDao.actualizarFechaAlFinalizar(id_reserva);
 			}
+				
+				if(rol.equals("Productor")) {
+				
+				notificarUsuario(entidadReserva.getConsumidor().getUsuario(), "Actualización de reservas");
+				
+			}else {
+				
+				notificarUsuario(entidadReserva.getProductor().getUsuario(), "Actualización de reservas");
+				
+			}
 
-			notificarUsuario(entidadReserva.getProductor().getUsuario(), "Actualización de reservas");
-			notificarUsuario(entidadReserva.getConsumidor().getUsuario(), "Actualización de reservas");
-
+	
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -412,11 +420,11 @@ public class ReservaControlador {
 		}
 
 		String title = "Actualización de reserva";
-		String message = "Hey! alguien ha actualizado una reserva.";
+		String message = "Se ha actualizado una de tus reservas!";
 
 		if (nombreAlerta.equals("Nuevas reservas")) {
 			title = "Nuevas reserva";
-			message = "Hey alguien hizo una reserva!";
+			message = "Recibiste una reserva por uno de tus productos!";
 		}
 
 		PushNotificationRequest notificationRequest = new PushNotificationRequest(title, message);

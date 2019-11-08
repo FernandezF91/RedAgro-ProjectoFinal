@@ -52,7 +52,7 @@ class Carrito extends Component {
                     parametros = parametros + "&idProducto=" + item.id;
                 }
             });
-            var path = "http://localhost:3000/redAgro/obtenerProductosPorLista?" + parametros
+            var path = "redAgro/obtenerProductosPorLista?" + parametros
             fetch(path)
                 .catch(error => console.error(error))
                 .then(response => {

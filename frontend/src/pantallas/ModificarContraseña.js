@@ -77,7 +77,7 @@ class ModificarContraseña extends Component {
 
     modificarContraseña() {
 
-        const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
+        const path_principal = "redAgro/modificar_contraseña?c=";
         var password = this.state.fields["contraseñaNueva"];
         var id = this.state.user.id;
         const final_path = path_principal + password + "&id=" + id;

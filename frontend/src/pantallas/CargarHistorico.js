@@ -87,7 +87,7 @@ class CargarHistorico extends Component {
 
 		var file = _this.state.files[0]
 
-		const path = "http://localhost:3000/redAgro/uploadFile";
+		const path = "redAgro/uploadFile";
 
 		if (_this.validarCampos()) {
 

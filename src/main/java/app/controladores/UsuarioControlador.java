@@ -172,7 +172,7 @@ public class UsuarioControlador {
 
 	@CrossOrigin(origins = "*")
 	@PutMapping(path = "redAgro/modificar_contraseña")
-	public void modificacionContraseña(@RequestParam String c, @RequestParam Long id) {
+	public void modificacionContrasena(@RequestParam String c, @RequestParam Long id) {
 
 		// Hasheo contraseña
 		String passwordHasheada = Hashing.sha256().hashString(c, StandardCharsets.UTF_8).toString();

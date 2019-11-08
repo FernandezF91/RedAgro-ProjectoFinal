@@ -55,7 +55,7 @@ class ResultadoBusquedaSinLogin extends Component {
     }
 
     realizarBusqueda(busqueda) {
-        var path = "http://localhost:3000/redAgro/obtenerProductos?busqueda=" + busqueda;
+        var path = "redAgro/obtenerProductos?busqueda=" + busqueda;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {

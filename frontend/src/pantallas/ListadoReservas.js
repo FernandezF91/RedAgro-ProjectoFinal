@@ -166,7 +166,7 @@ class ListadoReservas extends Component {
     }
 
     cargarListadoDeEstados() {
-        var path = "http://localhost:3000/redAgro/obtenerEstadosReserva";
+        var path = "redAgro/obtenerEstadosReserva";
         fetch(path)
             .catch(err => console.error(err))
             .then(response => {
@@ -196,7 +196,7 @@ class ListadoReservas extends Component {
         var _this = this;
         _this.cargarListadoDeEstados();
 
-        var path_usuario = "http://localhost:3000/redAgro/get_reservas_usuario?id=" + _this.state.id;
+        var path_usuario = "redAgro/get_reservas_usuario?id=" + _this.state.id;
         fetch(path_usuario)
             .catch(err => console.error(err))
             .then(response => {
@@ -270,7 +270,7 @@ class ListadoReservas extends Component {
             loading: true
         })
 
-        var path = "http://localhost:3000/redAgro/actualizarEstadoReserva?id_reserva=" + _this.state.idReservaActualizar + "&id_estado=" + _this.state.estadoSeleccionado.value;
+        var path = "redAgro/actualizarEstadoReserva?id_reserva=" + _this.state.idReservaActualizar + "&id_estado=" + _this.state.estadoSeleccionado.value+"&rol="+this.props.usuario.rol;
         fetch(path, {
             method: "PUT"
         })
@@ -335,7 +335,7 @@ class ListadoReservas extends Component {
             loading: true
         })
 
-        var path = "http://localhost:3000/redAgro/guardarCalificacion?reserva_id=" + _this.state.idReservaActualizar;
+        var path = "redAgro/guardarCalificacion?reserva_id=" + _this.state.idReservaActualizar;
         fetch(path, {
             method: "POST",
             headers: {

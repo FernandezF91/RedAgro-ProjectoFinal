@@ -43,7 +43,7 @@ class DatosDeUsuario extends Component {
         campos["telefono"] = this.state.usuario.telefono;
 
         if (this.state.usuario.rol === "Productor") {
-            var path = "http://localhost:3000/redAgro/productor/obtenerRazonSocial?id=" + this.state.id;
+            var path = "redAgro/productor/obtenerRazonSocial?id=" + this.state.id;
             fetch(path)
                 .catch(error => console.error(error))
                 .then(response => {
@@ -195,7 +195,7 @@ class DatosDeUsuario extends Component {
         if (_this.validarCampos()) {
 
             if (this.state.usuario.rol === "Productor" && (this.state.razon_social !== this.state.campos["razon_social"])) {
-                var path = "http://localhost:3000/redAgro/productor/actualizarRazonSocial?id=" + this.state.id + "&razon_social=" + this.state.campos["razon_social"];
+                var path = "redAgro/productor/actualizarRazonSocial?id=" + this.state.id + "&razon_social=" + this.state.campos["razon_social"];
                 fetch(path, {
                     method: "PUT",
                     headers: {
@@ -226,7 +226,7 @@ class DatosDeUsuario extends Component {
                         )
                     })
             }
-            var path_principal = "http://localhost:3000/redAgro/update_usuario?id=";
+            var path_principal = "redAgro/update_usuario?id=";
 
             var path_final = path_principal + _this.state.id;
 

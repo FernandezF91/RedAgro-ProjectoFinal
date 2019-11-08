@@ -51,7 +51,7 @@ class ListadoPuntosEntrega extends Component {
     }
 
     actualizarEstadoPunto(accion) {
-        const path_principal = "http://localhost:3000/redAgro/modificar_punto?id=" + this.state.id_punto + "&accion=" + accion;
+        const path_principal = "redAgro/modificar_punto?id=" + this.state.id_punto + "&accion=" + accion;
 
         var _this = this;
 
@@ -183,7 +183,7 @@ class ListadoPuntosEntrega extends Component {
     componentDidMount() {
         var _this = this;
 
-        var path = "http://localhost:3000/redAgro/listadoPuntosEntregaProductor?productor_id=" + this.state.id
+        var path = "redAgro/listadoPuntosEntregaProductor?productor_id=" + this.state.id
         fetch(path, {
             method: "GET",
             headers: {

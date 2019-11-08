@@ -23,7 +23,7 @@ class DetalleBusqueda extends Component {
     }
 
     componentDidMount() {
-        const path = "http://localhost:3000/redAgro/obtenerProducto/" + this.state.id;
+        const path = "redAgro/obtenerProducto/" + this.state.id;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {

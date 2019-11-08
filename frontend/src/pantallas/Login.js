@@ -64,7 +64,7 @@ class LoginForm extends Component {
             errores["password"] = "*Campo inválido";
 
         } else {
-            const path_principal = "http://localhost:3000/redAgro/login/usuario?u=";
+            const path_principal = "redAgro/login/usuario?u=";
 
             var username = this.state.fields["username"];
             var password = this.state.fields["password"];
