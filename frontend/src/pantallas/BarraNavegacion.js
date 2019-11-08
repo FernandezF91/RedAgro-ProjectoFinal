@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import { Navbar, NavDropdown, Badge, Nav, InputGroup, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Notificaciones from './Notificaciones';
-import { Button, UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 class BarraNavegacion extends Component {
     constructor(props) {
