@@ -36,7 +36,7 @@ public abstract class MailSender {
 		generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(this.getTo()));
 		generateMailMessage.setSubject(this.getAsunto());
 		String emailBody = this.getContenido_email();
-		generateMailMessage.setContent(emailBody, "text/html");
+		generateMailMessage.setContent(emailBody, "text/html; charset=ISO-8859-1");
  
 		Transport transport = getMailSession.getTransport("smtp");
  
@@ -71,5 +71,4 @@ public abstract class MailSender {
 		this.asunto = asunto;
 	}
 	
-
 }
