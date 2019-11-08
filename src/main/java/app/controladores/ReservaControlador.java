@@ -1,6 +1,7 @@
 package app.controladores;
 
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -37,15 +38,9 @@ import app.daos.PuntoEntregaDao;
 import app.daos.ReservaDao;
 import app.daos.AlertaDao;
 import app.daos.AlertaNotificacionesDao;
+import app.daos.AlertaUsuarioDao;
 import app.daos.DetalleReservaDao;
 import app.daos.UsuarioDao;
-import app.modelos.EntidadReserva;
-import app.modelos.EntidadUsuario;
-import app.modelos.EntidadPuntoEntrega;
-import app.modelos.EntidadAlerta;
-import app.modelos.EntidadAlertaNotificaciones;
-import app.modelos.EntidadDetalleReserva;
-import app.modelos.EntidadProductoProductor;
 import app.mappers.ReservaMapper;
 import app.mappers.UsuarioMapper;
 
@@ -75,6 +70,10 @@ public class ReservaControlador {
 
 	@Autowired
 	AlertaNotificacionesDao alertaNotiDAO;
+	
+	@Autowired
+	AlertaUsuarioDao alertaUsuarioDAO;
+
 
 	@Autowired
 	private PushNotificationService pushNotificationService;
@@ -401,7 +400,7 @@ public class ReservaControlador {
 
 	private void notificarUsuario(EntidadUsuario usuario, String nombreAlerta) {
 		logger.info("Por enviar notification...");
-		ArrayList<EntidadAlertaNotificaciones> alertas = alertaNotiDAO.obtenerNotificacionesByUsuario(usuario.getId());
+		ArrayList<EntidadAlertaUsuario> alertas = alertaUsuarioDAO.obtenerConfiguracionAlertas(usuario.getId());
 		boolean notificationEnabled = alertas.stream().anyMatch(alerta -> alerta.getAlerta().getNombre().equals(nombreAlerta));
 		if (!notificationEnabled) {
 			return;
