@@ -313,7 +313,8 @@ class EditarProducto extends Component {
                     _this.setState({
                         mensaje: "Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
                         showModal: true,
-                        loading: false
+                        loading: false,
+                        resultadoRequest: 0
                     })
                 })
                 .then(data => {

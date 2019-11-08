@@ -250,15 +250,14 @@ class PreferenciasConsumidor extends Component {
                                             <i className="fas fa-check-circle iconoModalOk" />
                                             <br />
                                             <br />
-                                            <h5>Se aplicaron los cambios!</h5>
+                                            <h5>Preferencias guardadas correctamente!</h5>
                                         </div>
                                     ) : (
                                         <div>
                                             <i className="fas fa-exclamation-circle iconoModalError" />
                                             <br />
                                             <br />
-                                            <h5>Ups! Ocurrio un error! </h5>
-                                            <h6 className="grey-text">Por favor, intenta nuevamente</h6>
+                                            <h5>Ocurrió un error al guardar las preferencias. Reintentá en unos minutos.</h5>
                                         </div>
                                     )
                                 }
