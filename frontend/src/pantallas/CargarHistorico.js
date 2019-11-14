@@ -1,4 +1,4 @@
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import React, { Component } from 'react';
 import { FilePond } from 'react-filepond';
 // Import FilePond styles

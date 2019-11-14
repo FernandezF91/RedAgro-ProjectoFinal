@@ -5,7 +5,7 @@ import { GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import CurrentLocation from './Map';
 import Loader from 'react-loader-spinner';
 
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import '../diseños/Mapa.css';
 
 class Geolocalizacion extends Component {

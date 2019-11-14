@@ -1,14 +1,16 @@
-import React, { Component } from 'react'
-import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import culturaVerde from '../imagenes/cultura-verde-2.png';
-import '../diseños/Registro.css';
-import '../diseños/estilosGlobales.css';
-import 'moment/locale/es';
-import { DatePickerInput } from 'rc-datepicker';
 import 'rc-datepicker/lib/style.css';
+import '../diseños/Registro.css';
+import '../diseños/EstilosGenerales.css';
+
+import React, { Component } from 'react'
+import { Navbar, Container, Form, Col, Row, Button, Nav } from 'react-bootstrap';
+import { MDBCol} from 'mdbreact'
+import { DatePickerInput } from 'rc-datepicker';
 import { isDate } from 'moment';
 import Modal from 'react-awesome-modal';
+
+import culturaVerde from '../imagenes/cultura-verde-2.png';
+import 'moment/locale/es';
 
 const maxDate = new Date();
 
@@ -170,15 +172,19 @@ class RegistroConsumidor extends Component {
 
         return (
             <div className="fondo">
-                <div className="barraNavegacion">
-                    <Navbar className="alturaBarra">
-                        <div className="culturaVerde">
-                            <Link to={'/'}>
-                                <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                            </Link>
-                        </div>
-                    </Navbar>
-                </div>
+                <Navbar className="barraNavegacion alturaBarra">
+                    <MDBCol md="2" className="culturaVerde">
+                        <Navbar.Brand href="/">
+                            <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
+                        </Navbar.Brand>
+                    </MDBCol>
+                    <MDBCol />
+                    <MDBCol md="1">
+                        <Nav.Item className="alturaSeccionesBarra">
+                            <i className="fas fa-info-circle iconosBarra" />
+                        </Nav.Item>
+                    </MDBCol>
+                </Navbar>
                 <Container fluid className="contenedor">
                     <div className="titulosPrincipales">
                         Creá tu cuenta en Cultura Verde

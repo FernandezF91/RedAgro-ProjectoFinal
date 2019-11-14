@@ -1,4 +1,4 @@
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import '../diseños/Alertas.css';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';

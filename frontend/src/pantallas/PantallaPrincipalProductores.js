@@ -1,6 +1,6 @@
 //este import para cabecera
 import '../diseños/PrincipalUsuarios.css';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import React, { Component } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { Route, Link } from 'react-router-dom';

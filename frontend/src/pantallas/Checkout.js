@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
 import PasosCheckout from './PasosCheckout'
 import moment from 'moment';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import '../diseños/Checkout.css'
 
 const pasos = [

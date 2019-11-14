@@ -4,7 +4,7 @@ import ItemCarrito from '../pantallas/ItemCarrito';
 import Loader from 'react-loader-spinner';
 import { MDBModal } from 'mdbreact';
 import ButterToast, { Cinnamon, POS_BOTTOM, POS_RIGHT } from 'butter-toast';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import '../diseños/Carrito.css';
 
 class Carrito extends Component {

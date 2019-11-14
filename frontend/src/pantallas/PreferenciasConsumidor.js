@@ -1,4 +1,4 @@
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import '../diseños/PreferenciasConsumidor.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import React, { Component } from 'react';

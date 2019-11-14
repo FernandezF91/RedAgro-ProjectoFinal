@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
-import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
+import { MDBCol, MDBModal } from 'mdbreact';
+import { Navbar, Container, Form, Col, Row, Button, Nav } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/Login.css';
-import '../diseños/estilosGlobales.css';
-import { MDBModal } from 'mdbreact';
+import '../diseños/EstilosGenerales.css';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -144,9 +143,17 @@ class LoginForm extends Component {
         return (
             <div className="fondo">
                 <Navbar className="barraNavegacion alturaBarra">
-                    <Link to={'/'} className="culturaVerde">
-                        <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                    </Link>
+                    <MDBCol md="2" className="culturaVerde">
+                        <Navbar.Brand href="/">
+                            <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
+                        </Navbar.Brand>
+                    </MDBCol>
+                    <MDBCol />
+                    <MDBCol md="1">
+                        <Nav.Item className="alturaSeccionesBarra">
+                            <i className="fas fa-info-circle iconosBarra" />
+                        </Nav.Item>
+                    </MDBCol>
                 </Navbar>
                 <Container fluid className="contenedor">
                     <div className="formularioLogin">

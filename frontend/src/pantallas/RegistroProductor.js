@@ -1,10 +1,10 @@
 import '../diseños/Registro.css';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import 'rc-datepicker/lib/style.css';
 
 import React, { Component } from 'react'
-import { Navbar, Container, Form, Col, Row, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Navbar, Container, Form, Col, Row, Button, Nav } from 'react-bootstrap';
+import { MDBCol } from 'mdbreact'
 import { DatePickerInput } from 'rc-datepicker';
 import { isDate } from 'moment';
 import Modal from 'react-awesome-modal';
@@ -187,13 +187,19 @@ class RegistroProductor extends Component {
     render() {
         return (
             <div className="fondo">
-                <div className="barraNavegacion">
-                    <Navbar className="alturaBarra">
-                        <Link to={'/'} className="culturaVerde">
+                <Navbar className="barraNavegacion alturaBarra">
+                    <MDBCol md="2" className="culturaVerde">
+                        <Navbar.Brand href="/">
                             <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                        </Link>
-                    </Navbar>
-                </div>
+                        </Navbar.Brand>
+                    </MDBCol>
+                    <MDBCol />
+                    <MDBCol md="1">
+                        <Nav.Item className="alturaSeccionesBarra">
+                            <i className="fas fa-info-circle iconosBarra" />
+                        </Nav.Item>
+                    </MDBCol>
+                </Navbar>
                 <Container fluid className="contenedor">
                     <div className="titulosPrincipales">
                         Creá tu cuenta en Cultura Verde

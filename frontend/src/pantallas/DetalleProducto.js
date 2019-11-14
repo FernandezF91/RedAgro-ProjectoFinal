@@ -1,4 +1,4 @@
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import '../diseños/DetalleProducto.css';
 import React, { Component } from 'react';
 import { Carousel, Container, Row, Col } from 'react-bootstrap';

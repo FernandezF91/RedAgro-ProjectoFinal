@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Navbar, Container, Form, Col, Row, Button, Nav } from 'react-bootstrap';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/FormaRetiro.css';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 
 class FormaRetiro extends Component {
     constructor() {

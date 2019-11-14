@@ -5,14 +5,7 @@
     overflow: auto;
 }
 
-.barraBusqueda {
-    margin-left: 100px;
-}
-
 .barraBusquedaNuevo {
-    width: 500px !important;
-    display: flex;
-    flex: 1;
     border-radius: 6px;
     font-size: 15px;
     font-weight: 400;
@@ -28,6 +21,12 @@ input[type=text] {
     padding: 0px 10px;
     font-size: 15px;
     font-weight: 400;
+}
+
+.alturaSeccionesBarra {
+    height: 50px !important;
+    align-items: center !important;
+    display: flex;
 }
 
 @media (max-width: 1000px) {
@@ -53,7 +52,7 @@ input[type=text] {
 }
 
 .culturaVerde {
-    margin-left: 15.4%;
+    text-align: right;
 }
 
 .contenedor {
@@ -85,9 +84,11 @@ input[type=text] {
 .iconosBarra {
     color: darkgreen;
     font-size: 28px;
-    margin-top: 13px;
-    margin-left: 7px;
-    margin-right: 7px;
+}
+
+.separacionIconosBarra {
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .botonBusqueda {

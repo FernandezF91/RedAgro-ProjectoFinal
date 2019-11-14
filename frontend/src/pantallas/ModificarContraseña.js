@@ -1,8 +1,8 @@
 
 import React, { Component } from 'react'
 import { Form, Row, Button } from 'react-bootstrap';
-import Modal from 'react-awesome-modal';
-import '../diseños/ModificarContraseña.css';
+import { MDBModal } from 'mdbreact';
+import Loader from 'react-loader-spinner';
 
 class ModificarContraseña extends Component {
 
@@ -13,15 +13,31 @@ class ModificarContraseña extends Component {
             fields: [],
             errores: [],
             usuario: {},
-            visible: false,
+            showModal: false,
             mensaje: "",
-            titulo: "",
-            formOk: false,
+            resultadoRequest: 0,
+            loading: false,
             user: this.props.usuario //para ir pasando el ID del usuario de pantalla a pantalla
         }
 
         this.validarDatos = this.validarDatos.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarModalError = this.cerrarModalError.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+    }
+
+    cerrarModal() {
+        this.setState({
+            showModal: false,
+        });
+
+        this.mostrarPantallaPrincipal();
+    }
+
+    cerrarModalError() {
+        this.setState({
+            showModal: false,
+        })
     }
 
     detectarCambios(e) {
@@ -32,31 +48,15 @@ class ModificarContraseña extends Component {
         })
     }
 
-    closeModal() {
-
-        if (this.state.formOk === false) {
-            this.setState({
-                visible: false
-            });
-            return;
-        }
-
-        this.setState({
-            visible: false
-        });
-
-        this.mostrarPantallaPrincipal();
-    }
-
     validarDatos() {
         if ((!this.state.fields["contraseñaNueva"] || !this.state.fields["contraseñaActual"] || !this.state.fields["confirmarContraseña"]) ||
             ((this.state.fields["contraseñaNueva"]) !== (this.state.fields["confirmarContraseña"])) ||
             ((this.state.fields["contraseñaActual"]) !== (this.state.user.contraseña))) {
-
             this.setState({
-                titulo: "Error",
                 mensaje: "Datos incompletos o incorrectos",
-                visible: true
+                resultadoRequest: 0,
+                showModal: true,
+                loading: false
             });
 
             return false;
@@ -64,9 +64,10 @@ class ModificarContraseña extends Component {
 
         if (this.state.fields["contraseñaActual"] === this.state.fields["contraseñaNueva"]) {
             this.setState({
-                titulo: "Error",
+                resultadoRequest: 0,
                 mensaje: "No modificaste tu contraseña",
-                visible: true
+                showModal: true,
+                loading: false
             });
 
             return false;
@@ -76,6 +77,9 @@ class ModificarContraseña extends Component {
     }
 
     modificarContraseña() {
+        this.setState({
+            loading: true
+        });
 
         const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
         var password = this.state.fields["contraseñaNueva"];
@@ -94,11 +98,12 @@ class ModificarContraseña extends Component {
             })
                 .then(function (response) {
                     if (response.status !== 200) {
-                        let mensajeError = "Ocurrió algun problema, intenta nuevamente"
+                        let mensajeError = "Ocurrió un error al actualizar la contraseña. Reintentá en unos minutos."
                         _this.setState({
-                            visible: true,
-                            titulo: "Error",
-                            mensaje: mensajeError
+                            showModal: true,
+                            resultadoRequest: 0,
+                            mensaje: mensajeError,
+                            loading: false
                         });
 
                         return;
@@ -107,10 +112,11 @@ class ModificarContraseña extends Component {
                     response.text().then(
                         function (response) {
                             _this.setState({
-                                visible: true,
-                                titulo: "Modificación exitosa",
-                                mensaje: "",
-                                formOk: true
+                                showModal: true,
+                                mensaje: "Contraseña actualizada correctamente",
+                                resultadoRequest: 200,
+                                loading: false,
+                                fields: []
                             });
                         });
                 });
@@ -133,9 +139,7 @@ class ModificarContraseña extends Component {
                 <div className="titulosPrincipales">Modificar contraseña</div>
                 <div className="contenidoMF">
                     <Form.Group as={Row}>
-                        <Form.Label column sm={4}>
-                            Contraseña actual
-									</Form.Label>
+                        <Form.Label column sm={4}>Contraseña actual</Form.Label>
                         <Form.Control
                             required
                             type="password"
@@ -144,11 +148,8 @@ class ModificarContraseña extends Component {
                             className="camposDatosDeUsuario"
                         />
                     </Form.Group>
-
                     <Form.Group as={Row}>
-                        <Form.Label column sm={4}>
-                            Contraseña nueva
-									</Form.Label>
+                        <Form.Label column sm={4}>Contraseña nueva</Form.Label>
                         <Form.Control
                             required
                             type="password"
@@ -158,9 +159,7 @@ class ModificarContraseña extends Component {
                         />
                     </Form.Group>
                     <Form.Group as={Row}>
-                        <Form.Label column sm={4}>
-                            Confirmar contraseña
-									</Form.Label>
+                        <Form.Label column sm={4}>Confirmar contraseña</Form.Label>
                         <Form.Control
                             required
                             type="password"
@@ -175,21 +174,36 @@ class ModificarContraseña extends Component {
                         <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
                     </div>
                 </div>
-                <section>
-                    <Modal
-                        visible={this.state.visible}
-                        width="460"
-                        height="120"
-                        effect="fadeInUp"
-                        onClickAway={() => this.closeModal()}
-                    >
-                        <div>
-                            <h1>{this.state.titulo}</h1>
-                            <p>{this.state.mensaje}</p>
-                            <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
-                        </div>
-                    </Modal>
-                </section>
+                {
+                    (this.state.showModal) &&
+                    (
+                        <MDBModal isOpen={this.state.showModal} centered size="sm">
+                            <div className="modalMargenes">
+                                {(this.state.resultadoRequest === 200) ?
+                                    (
+                                        <div>
+                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                            <br />
+                                            <i className="fas fa-check-circle iconoModalOk" />
+                                            <br />
+                                            <br />
+                                            <h5>{this.state.mensaje}</h5>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                                            <br />
+                                            <i className="fas fa-exclamation-circle iconoModalError" />
+                                            <br />
+                                            <br />
+                                            <h5>{this.state.mensaje}</h5>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </MDBModal>
+                    )
+                }
             </div>
         );
     };

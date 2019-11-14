@@ -1,4 +1,4 @@
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import React from 'react';
 import NumberFormat from 'react-number-format';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';

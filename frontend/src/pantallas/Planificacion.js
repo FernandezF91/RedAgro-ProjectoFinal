@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Form, Button } from 'react-bootstrap';
 import Select from 'react-select';
 import { MDBCol, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import '../diseños/Planificacion.css';
 
 const mostrarZonas = [

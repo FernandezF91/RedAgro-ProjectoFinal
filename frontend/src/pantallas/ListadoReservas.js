@@ -1,5 +1,5 @@
 import '../diseños/Reservas.css';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Reserva from '../pantallas/Reserva';
 import DetalleReserva from '../pantallas/DetalleReserva';

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Container, Button, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Button, Navbar, Nav } from 'react-bootstrap';
+import { MDBCol } from 'mdbreact';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import '../diseños/seleccionUsuario.css';
 
 class SeleccionUsuario extends Component {
@@ -18,13 +18,19 @@ class SeleccionUsuario extends Component {
     render() {
         return (
             <div className="fondo">
-                <div className="barraNavegacion">
-                    <Navbar className="alturaBarra">
-                        <Link to={'/'} className="culturaVerde">
+                <Navbar className="barraNavegacion alturaBarra">
+                    <MDBCol md="2" className="culturaVerde">
+                        <Navbar.Brand href="/">
                             <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                        </Link>
-                    </Navbar>
-                </div>
+                        </Navbar.Brand>
+                    </MDBCol>
+                    <MDBCol />
+                    <MDBCol md="1">
+                        <Nav.Item className="alturaSeccionesBarra">
+                            <i className="fas fa-info-circle iconosBarra" />
+                        </Nav.Item>
+                    </MDBCol>
+                </Navbar>
                 <Container fluid className="contenedor">
                     <div className="contenidoSeleccion">
                         <div className="tituloSeleccion">

@@ -1,6 +1,6 @@
 import 'rc-datepicker/lib/style.css';
 import '../diseños/nuevoProducto.css';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 
 import React, { Component } from 'react';
 import { Form, Button, InputGroup } from 'react-bootstrap';

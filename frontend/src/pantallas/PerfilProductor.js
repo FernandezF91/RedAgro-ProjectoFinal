@@ -1,5 +1,5 @@
 import '../diseños/PerfilProductor.css'
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
 import { MDBRow, MDBCol, MDBCard, MDBCardTitle, MDBCardBody, MDBCardText, MDBContainer } from "mdbreact";

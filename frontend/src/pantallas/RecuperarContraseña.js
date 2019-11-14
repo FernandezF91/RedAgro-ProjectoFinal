@@ -1,10 +1,13 @@
 
+import '../diseños/recuperaremail.css';
+import '../diseños/EstilosGenerales.css';
+
 import React, { Component } from 'react'
-import { Navbar, Container, Form, Row, Button } from 'react-bootstrap';
-import Modal from 'react-awesome-modal';
-import '../diseños/RecuperarContraseña.css';
+import { Navbar, Container, Row, Col, Form, Button, Nav } from 'react-bootstrap';
+import { MDBCol, MDBModal } from 'mdbreact';
+import Loader from 'react-loader-spinner';
+
 import culturaVerde from '../imagenes/cultura-verde-2.png';
-import { Link } from 'react-router-dom';
 
 class RecuperarContraseña extends Component {
 
@@ -15,15 +18,37 @@ class RecuperarContraseña extends Component {
             fields: [],
             errores: [],
             usuario: {},
-            visible: false,
+            showModal: false,
             mensaje: "",
-            titulo: "",
-            formOk: false,
+            resultadoRequest: 0,
+            loading: false,
             id: this.props.match.params.id
         }
 
         this.validarDatos = this.validarDatos.bind(this);
-        this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarModalError = this.cerrarModalError.bind(this);
+        this.mostrarLogin = this.mostrarLogin.bind(this);
+    }
+
+    cerrarModal() {
+        this.setState({
+            showModal: false,
+        })
+        this.mostrarLogin();
+    }
+
+    cerrarModalError() {
+        this.setState({
+            showModal: false
+        })
+    }
+
+    mostrarLogin() {
+        this.props.history.push({
+            pathname: '/login',
+
+        })
     }
 
     componentDidMount() {
@@ -42,30 +67,17 @@ class RecuperarContraseña extends Component {
         })
     }
 
-    closeModal() {
-        if (this.state.formOk === false) {
-            this.setState({
-                visible: false
-            });
-            return;
-        }
-
-        this.setState({
-            visible: false
-        });
-
-        this.mostrarPantallaPrincipal();
-    }
-
     validarDatos() {
         if ((!this.state.fields["contraseñaNueva"] || !this.state.fields["confirmarContraseña"]) ||
             ((this.state.fields["contraseñaNueva"]) !== (this.state.fields["confirmarContraseña"]))) {
 
             this.setState({
-                titulo: "Error",
                 mensaje: "Datos incompletos o incorrectos",
-                visible: true
+                showModal: true,
+                resultadoRequest: 0,
+                loading: false
             });
+
 
             return false;
         }
@@ -73,6 +85,9 @@ class RecuperarContraseña extends Component {
     }
 
     modificarContraseña() {
+        this.setState({
+            loading: true
+        });
         const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
         var password = this.state.fields["contraseñaNueva"];
         var id = this.state.id;
@@ -91,13 +106,11 @@ class RecuperarContraseña extends Component {
             })
                 .then(function (response) {
                     if (response.status !== 200) {
-                        // alert("Ocurrió algún problema. Intenta nuevamente")
-                        let mensajeError = "Ocurrió algun problema, intenta nuevamente"
-
                         _this.setState({
-                            visible: true,
-                            titulo: "Error",
-                            mensaje: mensajeError
+                            showModal: true,
+                            mensaje: "Ocurrió un error al actualizar la contraseña. Reintentá en unos minutos.",
+                            resultadoRequest: 0,
+                            loading: false
                         });
                         return;
                     }
@@ -105,93 +118,126 @@ class RecuperarContraseña extends Component {
                     response.text().then(
                         function (response) {
                             _this.setState({
-                                visible: true,
-                                titulo: "Modificación exitosa",
-                                mensaje: "",
-                                formOk: true
+                                showModal: true,
+                                mensaje: "Contraseña actualizada correctamente",
+                                resultadoRequest: 200,
+                                loading: false
                             });
                         });
                 });
         }
     }
 
-    mostrarPantallaPrincipal() {
-        this.props.history.push({
-            pathname: '/login',
-        })
-
-    }
-
     render() {
+        if (this.state.loading) return (
+            <div className="fondo">
+                <Navbar className="barraNavegacion alturaBarra">
+                    <MDBCol md="2" className="culturaVerde">
+                        <Navbar.Brand href="/">
+                            <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
+                        </Navbar.Brand>
+                    </MDBCol>
+                    <MDBCol />
+                    <MDBCol md="1">
+                        <Nav.Item className="alturaSeccionesBarra">
+                            <i className="fas fa-info-circle iconosBarra" />
+                        </Nav.Item>
+                    </MDBCol>
+                </Navbar>
+                <Container fluid className="contenedor">
+                    <Loader
+                        type="Grid"
+                        color="#28A745"
+                        height={150}
+                        width={150}
+                        className="loader loaderWhitesmoke"
+                    />
+                </Container>
+            </div>
+        )
 
         return (
             <div className="fondo">
                 <Navbar className="barraNavegacion alturaBarra">
-                    <Link to={'/'} className="culturaVerde">
-                        <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                    </Link>
+                    <MDBCol md="2" className="culturaVerde">
+                        <Navbar.Brand href="/">
+                            <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
+                        </Navbar.Brand>
+                    </MDBCol>
+                    <MDBCol />
+                    <MDBCol md="1">
+                        <Nav.Item className="alturaSeccionesBarra">
+                            <i className="fas fa-info-circle iconosBarra" />
+                        </Nav.Item>
+                    </MDBCol>
                 </Navbar>
                 <Container fluid className="contenedor">
-                    <br>
-                    </br>
-                    <br>
-                    </br>
-                    <br>
-                    </br>
-                    <div className="titulosPrincipales">Modificar contraseña</div>
-                    <div className="mF">
-                        <div className="contraseñaNueva" >
-                            <Form.Group as={Row}>
-                                <Form.Label column sm={4}>
-                                    Contraseña nueva
-									</Form.Label>
-                                <Form.Control
-                                    id="passCN"
-                                    required
-                                    type="password"
-                                    name="contraseñaNueva"
-                                    onChange={(e) => this.detectarCambios(e)}
-                                    className="camposDatosDeUsuario"
-                                />
-                            </Form.Group>
-                        </div>
-                        <div className="confirmarContraseña" >
-                            <Form.Group as={Row}>
-                                <Form.Label column sm={4}>
-                                    Confirmar contraseña
-									</Form.Label>
-                                <Form.Control
-                                    id="passCC"
-                                    required
-                                    type="password"
-                                    name="confirmarContraseña"
-                                    className="camposDatosDeUsuario"
-                                    onChange={(e) => this.detectarCambios(e)}
-                                />
-                            </Form.Group>
+                    <div className="formularioLogin">
+                        <h2>Modificar contraseña</h2>
+                        <div className="encabezadoRecucontra">
+                            <Form>
+                                <Form.Group as={Row}>
+                                    <Form.Label column>Contraseña nueva</Form.Label>
+                                    <Col sm={7}>
+                                        <Form.Control
+                                            required
+                                            type="password"
+                                            name="contraseñaNueva"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
+                                        />
+                                    </Col>
+                                </Form.Group>
+                                <Form.Group as={Row}>
+                                    <Form.Label column>Confirmar contraseña</Form.Label>
+                                    <Col sm={7}>
+                                        <Form.Control
+                                            required
+                                            type="password"
+                                            name="contraseñaNueva"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
+                                        />
+                                    </Col>
+                                </Form.Group>
+                            </Form>
                         </div>
                     </div>
                     <div className="botones">
-                        <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
+                        <Button variant="light" onClick={this.mostrarLogin}>Cancelar</Button>
                         <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
                     </div>
-                    <section>
-                        <Modal
-                            visible={this.state.visible}
-                            width="460"
-                            height="120"
-                            effect="fadeInUp"
-                            onClickAway={() => this.closeModal()}
-                        >
-                            <div>
-                                <h1>{this.state.titulo}</h1>
-                                <p>{this.state.mensaje}</p>
-                                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
-                            </div>
-                        </Modal>
-                    </section>
+                    {
+                        (this.state.showModal) &&
+                        (
+                            <MDBModal isOpen={this.state.showModal} centered size="sm">
+                                <div className="modalMargenes">
+                                    {(this.state.resultadoRequest === 200) ?
+                                        (
+                                            <div>
+                                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                                <br />
+                                                <i className="fas fa-check-circle iconoModalOk" />
+                                                <br />
+                                                <br />
+                                                <h5>{this.state.mensaje}</h5>
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                                                <br />
+                                                <i className="fas fa-exclamation-circle iconoModalError" />
+                                                <br />
+                                                <br />
+                                                <h5>{this.state.mensaje}</h5>
+                                            </div>
+                                        )
+                                    }
+                                </div>
+                            </MDBModal>
+                        )
+                    }
                 </Container>
-
             </div>
         );
     };

@@ -1,4 +1,4 @@
-import '../../diseños/estilosGlobales.css';
+import '../../diseños/EstilosGenerales.css';
 import React from 'react';
 import BeautyStars from 'beauty-stars';
 import { Link } from 'react-router-dom';

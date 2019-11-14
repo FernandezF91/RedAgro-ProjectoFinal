@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import '../diseños/Carrito.css';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 
 const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarProducto, getTotalCarrito, validarItemsCarrito }) => {
 

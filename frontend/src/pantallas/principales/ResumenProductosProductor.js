@@ -1,4 +1,4 @@
-import '../../diseños/estilosGlobales.css';
+import '../../diseños/EstilosGenerales.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
