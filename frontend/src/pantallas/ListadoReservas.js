@@ -270,7 +270,7 @@ class ListadoReservas extends Component {
             loading: true
         })
 
-        var path = "http://localhost:3000/redAgro/actualizarEstadoReserva?id_reserva=" + _this.state.idReservaActualizar + "&id_estado=" + _this.state.estadoSeleccionado.value;
+        var path = "http://localhost:3000/redAgro/actualizarEstadoReserva?id_reserva=" + _this.state.idReservaActualizar + "&id_estado=" + _this.state.estadoSeleccionado.value+"&rol="+this.props.usuario.rol;
         fetch(path, {
             method: "PUT"
         })
