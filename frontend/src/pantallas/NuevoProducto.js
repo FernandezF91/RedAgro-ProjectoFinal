@@ -25,7 +25,7 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 const minDate = new Date();
 
 const regularExp = {
-    numerosDecimales: /^[0-9]*(\,[0-9]{0,2})?$/
+    numerosDecimales: /^[0-9]*(,[0-9]{0,2})?$/
 }
 
 registerPlugin(FilePondPluginImagePreview, FilePondTypeValidate);
