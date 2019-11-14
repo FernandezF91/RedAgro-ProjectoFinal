@@ -1,7 +1,8 @@
 import '../diseños/PrincipalUsuarios.css';
-import '../diseños/estilosGlobales.css';
+import '../diseños/EstilosGenerales.css';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import React, { Component } from 'react';
+import { MDBCol, MDBRow, MDBAlert } from "mdbreact";
 import { Navbar, NavDropdown, Badge, Nav, InputGroup, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Notificaciones from './Notificaciones';
@@ -53,15 +54,16 @@ class BarraNavegacion extends Component {
         const rolDeUsuario = this.state.usuario.rol;
         const listado = this.props.notificaciones;
         return (
-            <Navbar collapseOnSelect expand="lg" className="barraNavegacion sombraBarra" >
-                <Navbar.Brand className="culturaVerde" href="/">
-                    <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                </Navbar.Brand>
-
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
-                    {rolDeUsuario === "Consumidor" &&
-                        <div>
+            <Navbar expand="lg" className="barraNavegacion sombraBarra" >
+                <MDBCol md="2" className="culturaVerde">
+                    <Navbar.Brand href="/">
+                        <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
+                    </Navbar.Brand>
+                </MDBCol>
+                <MDBCol md="1" />
+                {rolDeUsuario === "Consumidor" ? (
+                    <MDBCol md="5">
+                        <MDBRow className="alturaSeccionesBarra">
                             <InputGroup className="barraBusquedaNuevo">
                                 <FormControl
                                     placeholder="Buscar productos y productores.."
@@ -75,40 +77,45 @@ class BarraNavegacion extends Component {
                                     </InputGroup.Text>
                                 </InputGroup.Append>
                             </InputGroup>
-                        </div>
-                    }
+                        </MDBRow>
+                    </MDBCol>
+                ) : (
+                        <MDBCol md="5" />
+                    )
+                }
+                {(rolDeUsuario === "Consumidor") ? (
+                    <MDBCol>
+                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav">
+                            <Nav className="alturaSeccionesBarra">
+                                <Nav.Item className="alturaSeccionesBarra separacionIconosBarra">
+                                    <i className="fas fa-user iconosBarra" />
+                                    <NavDropdown title={this.state.usuario.nombre} id="nav-dropdown" className="subMenu">
+                                        <NavDropdown.Item>
+                                            <Link to={'/principalConsumidores/MiCuenta'}>Mi cuenta</Link>
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item onClick={this.logout}>Salir</NavDropdown.Item>
+                                    </NavDropdown>
+                                </Nav.Item>
+                                <Nav.Item className="alturaSeccionesBarra separacionIconosBarra">
+                                    <i id="notificaciones" className="fas fa-bell iconosBarra cursorManito" />
+                                    <Notificaciones listado={listado} />
+                                </Nav.Item>
 
-                    {(rolDeUsuario === "Consumidor") ? (
-                        <Nav className="iconos">
-                            <Nav className="menuUsuario">
-                                <i className="fas fa-user iconosBarra" />
-                                <NavDropdown title={this.state.usuario.nombre} id="nav-dropdown" className="subMenu">
-                                    <NavDropdown.Item>
-                                        <Link to={'/principalConsumidores/MiCuenta'}>Mi cuenta</Link>
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item onClick={this.logout}>Salir</NavDropdown.Item>
-                                </NavDropdown>
+                                <Nav.Item className="alturaSeccionesBarra separacionIconosBarra">
+                                    <Link to={'/principalConsumidores/Carrito'}>
+                                        <i className="fas fa-shopping-cart iconosBarra" />
+                                        <Badge>{this.props.productosSeleccionados.length}</Badge>
+                                    </Link>
+                                </Nav.Item>
                             </Nav>
-                            <Nav className="menuUsuario">
-                                <i id="notificaciones" className="fas fa-bell iconosBarra cursorManito" />
-                                <Notificaciones listado={listado} />
-                            </Nav>
-
-                            <Nav.Item className="menuUsuario">
-                                <Link to={'/principalConsumidores/Carrito'}>
-                                    <i className="fas fa-shopping-cart iconosBarra" />
-                                    <Badge>{this.props.productosSeleccionados.length}</Badge>
-                                </Link>
-                            </Nav.Item>
-                            <div className="verticalDivider" role="separator" />
-                            <Nav.Item className="menuUsuario">
-                                <i className="fas fa-info-circle iconosBarra" />
-                            </Nav.Item>
-                        </Nav>
-                    ) : (
-                            <Nav className="iconosProd">
-                                <Nav className="menuUsuario">
+                        </Navbar.Collapse>
+                    </MDBCol>
+                ) : (
+                        <MDBCol>
+                            <Nav className="alturaSeccionesBarra">
+                                <Nav.Item className="alturaSeccionesBarra separacionIconosBarra">
                                     <i className="fas fa-user iconosBarra" />
                                     <NavDropdown onSelect={this.mostrarPantallaPrincipal} title={this.state.usuario.nombre} id="nav-dropdown" className="subMenu">
                                         <NavDropdown.Item>
@@ -117,18 +124,20 @@ class BarraNavegacion extends Component {
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item onClick={this.logout}>Salir</NavDropdown.Item>
                                     </NavDropdown>
-                                </Nav>
-                                <Nav className="menuUsuario">
+                                </Nav.Item>
+                                <Nav.Item className="alturaSeccionesBarra separacionIconosBarra">
                                     <i id="notificaciones" className="fas fa-bell iconosBarra cursorManito" />
                                     <Notificaciones listado={listado} />
-                                </Nav>
-                                <div className="verticalDivider" role="separator" />
-                                <Nav.Item className="menuUsuario">
-                                    <i className="fas fa-info-circle iconosBarra" />
                                 </Nav.Item>
                             </Nav>
-                        )}
-                </Navbar.Collapse>
+                        </MDBCol>
+                    )
+                }
+                <MDBCol md="1">
+                    <Nav.Item className="alturaSeccionesBarra">
+                        <i className="fas fa-info-circle iconosBarra" />
+                    </Nav.Item>
+                </MDBCol>
             </Navbar>
         );
     }

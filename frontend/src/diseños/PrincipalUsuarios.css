@@ -3,28 +3,6 @@
 	min-height: calc(100vh - 78px);
 }
 
-.imagenUsuario {
-	margin-left: -2%;
-	margin-top: 5.2%;
-	flex: 1;
-}
-
-.imagenUsuarioProd {
-	margin-left: -2%;
-	margin-top: 6%;
-	flex: 1;
-}
-
-.menuUsuario {
-	margin-left: -14px;
-	margin-right: 20px;
-}
-
-.iconos {
-	margin-left: 40px;
-	flex-direction: column;
-}
-
 .iconosProd {
 	margin-left: 570px;
 	flex-direction: column;

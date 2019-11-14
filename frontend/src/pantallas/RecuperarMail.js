@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
-import { Navbar, Container, Row, Form, Col, Button } from 'react-bootstrap';
-import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/recuperaremail.css';
-import '../diseños/estilosGlobales.css';
-import { MDBModal } from 'mdbreact';
+import '../diseños/EstilosGenerales.css';
+
+import React, { Component } from 'react'
+import { Navbar, Container, Row, Form, Col, Button, Nav } from 'react-bootstrap';
+import { MDBModal, MDBCol } from 'mdbreact';
+
+import culturaVerde from '../imagenes/cultura-verde-2.png';
 
 class RecuperarEmail extends Component {
 
@@ -15,7 +16,6 @@ class RecuperarEmail extends Component {
             campos: [],
             titulo: "",
             mensaje: "",
-            showModal: "",
             error: "",
             showModal: false,
             mensajeError: "",
@@ -69,7 +69,7 @@ class RecuperarEmail extends Component {
         })
             .then(function (response) {
                 if (response.status !== 200) {
-
+                    //Cambiar aca
                     response.text().then(
                         function (response) {
                             _this.setState({
@@ -103,13 +103,19 @@ class RecuperarEmail extends Component {
     render() {
         return (
             <div className="fondo">
-                <div className="barraNavegacion">
-                    <Navbar className="alturaBarra">
-                        <Link to={'/'} className="culturaVerde">
+                <Navbar className="barraNavegacion alturaBarra">
+                    <MDBCol md="2" className="culturaVerde">
+                        <Navbar.Brand href="/">
                             <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                        </Link>
-                    </Navbar>
-                </div>
+                        </Navbar.Brand>
+                    </MDBCol>
+                    <MDBCol />
+                    <MDBCol md="1">
+                        <Nav.Item className="alturaSeccionesBarra">
+                            <i className="fas fa-info-circle iconosBarra" />
+                        </Nav.Item>
+                    </MDBCol>
+                </Navbar>
                 <Container fluid className="contenedor">
                     <div className="formularioLogin">
                         <h2>Recuperar contraseña</h2>

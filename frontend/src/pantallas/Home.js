@@ -1,13 +1,16 @@
-import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/Home.css';
-import '../diseños/estilosGlobales.css';
-import { MDBModal } from 'mdbreact';
-import { Link } from 'react-router-dom';
+import '../diseños/EstilosGenerales.css';
+
 import React, { Component } from 'react';
+import { Navbar, Nav, InputGroup, FormControl, Container } from 'react-bootstrap';
+import { MDBModal, MDBCol, MDBRow } from 'mdbreact';
+import { Link } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
+
 import CarouselProductos from './CarouselProductos'
-import { Navbar, Nav, Row, InputGroup, FormControl, Container } from 'react-bootstrap';
 import ResultadoBusquedaSinLogin from './ResultadoBusquedaSinLogin';
+
+import culturaVerde from '../imagenes/cultura-verde-2.png';
 
 class HomePage extends Component {
 
@@ -139,41 +142,42 @@ class HomePage extends Component {
 
         return (
             <div className="fondo">
-                <div className="barraNavegacion">
-                    <Navbar className="alturaBarra">
+                <Navbar className="barraNavegacion alturaBarra">
+                    <MDBCol md="2" className="culturaVerde">
                         <div className="culturaVerde">
                             <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
                         </div>
-                        <div className="barraBusqueda">
-                            <Row>
-                                <InputGroup className="barraBusquedaNuevo">
-                                    <FormControl
-                                        placeholder="Buscar productos y productores.."
-                                        aria-label="Buscar productos y productores.."
-                                        onKeyPress={this.onKeyPress}
-                                        ref={input => (this.busqueda = input)}
-                                    />
-
-                                    <InputGroup.Append>
-                                        <InputGroup.Text className="botonBusqueda cursorManito" onClick={this.handleInputChange}>
-                                            <i className="fa fa-search iconoBusqueda" />
-                                        </InputGroup.Text>
-                                    </InputGroup.Append>
-                                </InputGroup>
-                            </Row>
-                        </div>
-                        <div className="textos">
-                            <Nav>
-                                <Nav.Link href='/login'>Ingresar</Nav.Link>
-                                <Nav.Link href='/seleccionUsuario'>Creá tu cuenta</Nav.Link>
-                            </Nav>
-                        </div>
-                        <div className="verticalDivider" role="separator" />
-                        <Nav.Item className="menuUsuario">
+                    </MDBCol>
+                    <MDBCol md="1" />
+                    <MDBCol md="5">
+                        <MDBRow className="alturaSeccionesBarra">
+                            <InputGroup className="barraBusquedaNuevo">
+                                <FormControl
+                                    placeholder="Buscar productos y productores.."
+                                    aria-label="Buscar productos y productores.."
+                                    onKeyPress={this.onKeyPress}
+                                    ref={input => (this.busqueda = input)}
+                                />
+                                <InputGroup.Append>
+                                    <InputGroup.Text className="botonBusqueda cursorManito" onClick={this.handleInputChange}>
+                                        <i className="fa fa-search iconoBusqueda" />
+                                    </InputGroup.Text>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </MDBRow>
+                    </MDBCol>
+                    <MDBCol>
+                        <Nav className="alturaSeccionesBarra">
+                            <Nav.Link href='/login'>Ingresar</Nav.Link>
+                            <Nav.Link href='/seleccionUsuario'>Creá tu cuenta</Nav.Link>
+                        </Nav>
+                    </MDBCol>
+                    <MDBCol md="1">
+                        <Nav.Item className="alturaSeccionesBarra">
                             <i className="fas fa-info-circle iconosBarra" />
                         </Nav.Item>
-                    </Navbar>
-                </div>
+                    </MDBCol>
+                </Navbar>
                 <Container fluid className="contenedor">
                     {
                         this.state.busqueda !== "" ?
@@ -209,7 +213,7 @@ class HomePage extends Component {
                         </MDBModal>
                     }
                 </Container>
-            </div>
+            </div >
         );
     }
 }
