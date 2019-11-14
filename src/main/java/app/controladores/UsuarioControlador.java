@@ -179,6 +179,29 @@ public class UsuarioControlador {
 		usuarioDAO.modificarContraseña(passwordHasheada, id);
 
 	}
+	
+	@CrossOrigin(origins = "*")
+	@PutMapping(path = "redAgro/usuario/modificar_contraseña")
+	public ResponseEntity<Object> modificarContraseña(@RequestParam String u, @RequestParam String ca, @RequestParam String cn) {
+		
+		String passwordHasheada = Hashing.sha256().hashString(ca, StandardCharsets.UTF_8).toString();
+		EntidadUsuario usuario = usuarioDAO.obtenerUsuarioByLogin(u, passwordHasheada);
+		if (usuario == null)
+			return new ResponseEntity<>("La contraseña actual que ingresaste es inválida. Reintentá nuevamente. ",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		else
+		{	try {
+			    passwordHasheada = Hashing.sha256().hashString(cn, StandardCharsets.UTF_8).toString();
+				usuarioDAO.modificarContraseña(passwordHasheada, usuario.getId());
+				return new ResponseEntity<>("Tu contraseña fue actualizada correctamente!", HttpStatus.OK);
+			
+			}catch(Exception e) {
+				return new ResponseEntity<>(
+						"Ocurrió un error al actualizar la contraseña. Reintentá en unos minutos.",
+						HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
+	}
 
 	@CrossOrigin(origins = "*")
 	@GetMapping(path = "redAgro/get_tipo_usuario")
@@ -186,6 +209,8 @@ public class UsuarioControlador {
 		String tipoUsuario = usuarioDAO.obtenerTipoUsuario(id);
 		return tipoUsuario;
 	}
+	
+
 
 	@CrossOrigin(origins = "*")
 	@DeleteMapping(path = "redAgro/borrar_usuario/{id}")

@@ -77,8 +77,6 @@ class RecuperarContraseña extends Component {
                 resultadoRequest: 0,
                 loading: false
             });
-
-
             return false;
         }
         return true;
@@ -97,12 +95,7 @@ class RecuperarContraseña extends Component {
         if (_this.validarDatos()) {
 
             fetch(final_path, {
-                method: "PUT",
-                // headers: {
-
-                //     'Content-type': 'application/json;charset=UTF-8',
-
-                // },
+                method: "PUT"
             })
                 .then(function (response) {
                     if (response.status !== 200) {
@@ -194,7 +187,7 @@ class RecuperarContraseña extends Component {
                                         <Form.Control
                                             required
                                             type="password"
-                                            name="contraseñaNueva"
+                                            name="confirmarContraseña"
                                             onChange={(e) => this.detectarCambios(e)}
                                             className="camposDatosDeUsuario"
                                         />
