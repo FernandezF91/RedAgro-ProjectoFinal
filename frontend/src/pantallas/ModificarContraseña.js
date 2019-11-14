@@ -22,7 +22,6 @@ class ModificarContraseña extends Component {
 
         this.validarDatos = this.validarDatos.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
-        this.cerrarModalError = this.cerrarModalError.bind(this);
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
     }
 
@@ -30,14 +29,6 @@ class ModificarContraseña extends Component {
         this.setState({
             showModal: false,
         });
-
-        this.mostrarPantallaPrincipal();
-    }
-
-    cerrarModalError() {
-        this.setState({
-            showModal: false,
-        })
     }
 
     detectarCambios(e) {
@@ -134,6 +125,16 @@ class ModificarContraseña extends Component {
     }
 
     render() {
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
+
         return (
             <div>
                 <div className="titulosPrincipales">Modificar contraseña</div>
@@ -179,11 +180,11 @@ class ModificarContraseña extends Component {
                     (
                         <MDBModal isOpen={this.state.showModal} centered size="sm">
                             <div className="modalMargenes">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <br />
                                 {(this.state.resultadoRequest === 200) ?
                                     (
                                         <div>
-                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                                            <br />
                                             <i className="fas fa-check-circle iconoModalOk" />
                                             <br />
                                             <br />
@@ -191,8 +192,6 @@ class ModificarContraseña extends Component {
                                         </div>
                                     ) : (
                                         <div>
-                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
-                                            <br />
                                             <i className="fas fa-exclamation-circle iconoModalError" />
                                             <br />
                                             <br />
