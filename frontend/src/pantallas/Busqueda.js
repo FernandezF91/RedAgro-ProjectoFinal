@@ -1,6 +1,5 @@
 import '../diseños/ResultadoBusqueda.css';
 import React from "react";
-import { Link } from 'react-router-dom';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardImage, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBBtn } from "mdbreact";
 import NumberFormat from 'react-number-format';
 import Carousel from 'react-bootstrap/Carousel';

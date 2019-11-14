@@ -2,7 +2,7 @@ import '../diseños/PrincipalUsuarios.css';
 import '../diseños/EstilosGenerales.css';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import React, { Component } from 'react';
-import { MDBCol, MDBRow, MDBAlert } from "mdbreact";
+import { MDBCol, MDBRow } from "mdbreact";
 import { Navbar, NavDropdown, Badge, Nav, InputGroup, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Notificaciones from './Notificaciones';
