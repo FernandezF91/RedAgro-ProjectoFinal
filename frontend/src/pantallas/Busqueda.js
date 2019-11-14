@@ -87,8 +87,8 @@ const Busqueda = ({ listaDeProductos, sumarProducto, restarProducto, agregarAlCa
                         <i className="fas fa-search iconoGrande" />
                         <br />
                         <br />
-                        <h5>Ups! No se encontraron productos para tu búsqueda! </h5>
-                        <h6>Probá cambiando la descripción por <Link to={'/principalConsumidores'}>acá</Link></h6>
+                        <h5>Ups! No se encontraron productos para tu búsqueda!</h5>
+                        <h6 className="grey-text">Probá cambiando la descripción</h6>
                     </div>
             }
         </div>
