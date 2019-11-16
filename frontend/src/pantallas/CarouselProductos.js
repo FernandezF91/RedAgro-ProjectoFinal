@@ -1,6 +1,7 @@
 import React from "react";
 import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCarousel, MDBCarouselItem, MDBCarouselInner, MDBCardImage, MDBContainer } from "mdbreact";
 import NumberFormat from 'react-number-format';
+import '../diseños/EstilosGenerales.css';
 
 const CarouselProductos = (props) => {
 
@@ -28,7 +29,7 @@ const CarouselProductos = (props) => {
                                                             <h6 className="grey-text">{item.tipo}</h6>
                                                             <MDBCardTitle>
                                                                 <strong>
-                                                                    <button type="button" className="dark-grey-text link-button" onClick={() => props.mostrarDetalleProducto(item)} title="Clickeá para ver el detalle del producto">{item.titulo}</button>
+                                                                    <button type="button" className="dark-grey-text link-button col-md overflowTexto" onClick={() => props.mostrarDetalleProducto(item)} title="Clickeá para ver el detalle del producto">{item.titulo}</button>
                                                                 </strong>
                                                             </MDBCardTitle>
                                                             <MDBCardText>

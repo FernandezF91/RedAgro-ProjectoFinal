@@ -312,8 +312,6 @@ input[type=text] {
 
 .overflowTexto {
     overflow: hidden;
-    display: inline-block;
-    border: none;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
