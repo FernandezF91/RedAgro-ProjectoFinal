@@ -76,7 +76,6 @@ class ModificarContraseña extends Component {
         var usuario = this.props.usuario.usuario;
         var passwordActual = this.state.fields["contraseñaActual"];
         var password = this.state.fields["contraseñaNueva"];
-        var id = this.state.user.id;
         const final_path = path_principal + usuario + "&ca=" + passwordActual + "&cn=" + password;
 
         var _this = this;
