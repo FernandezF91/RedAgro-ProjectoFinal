@@ -162,10 +162,10 @@ public class UsuarioControlador {
 		String rol = usuario.getRol();
 
 		if (rol.equals("Productor")) {
-			return new ResponseEntity<>("Ya existe un usuario productor registrado con este mail",
+			return new ResponseEntity<>("Ya existe un usuario productor registrado con este email",
 					HttpStatus.BAD_REQUEST);
 		} else {
-			return new ResponseEntity<>("Ya existe un usuario consumidor registrado con este mail",
+			return new ResponseEntity<>("Ya existe un usuario consumidor registrado con este email",
 					HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -246,7 +246,7 @@ public class UsuarioControlador {
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return new ResponseEntity<>("Ocurrió un error al recuperar tu mail. Reintentá en unos minutos. ",
+				return new ResponseEntity<>("Ocurrió un error al recuperar tu email. Reintentá en unos minutos. ",
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
@@ -255,7 +255,7 @@ public class UsuarioControlador {
 
 		} else {
 			return new ResponseEntity<>(
-					"Hey! El mail ingresado no existe en nuestro sistema. Comprobá si esta bien escrito y reintentá :) ",
+					"Hey! El email ingresado no existe en nuestro sistema. Comprobá si esta bien escrito y reintentá :) ",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

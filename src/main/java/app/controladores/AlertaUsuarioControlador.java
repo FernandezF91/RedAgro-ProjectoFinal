@@ -106,9 +106,9 @@ public class AlertaUsuarioControlador {
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return new ResponseEntity<>("Ocurrió un error en el envio del mail.", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>("Ocurrió un error en el envio del email.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
-		return new ResponseEntity<>("Mail enviado correctamente!", HttpStatus.OK);
+		return new ResponseEntity<>("Email enviado correctamente!", HttpStatus.OK);
 	}
 }

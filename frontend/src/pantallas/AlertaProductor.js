@@ -264,7 +264,7 @@ class AlertaProductor extends Component {
                 <div className="titulosPrincipales">Alertas</div>
                 <br />
                 <div className="descripcionPagina">
-                    <h5>Configurá las alertas que recibiras por mail:</h5>
+                    <h5>Configurá las alertas que recibiras por email:</h5>
                 </div>
                 <form onSubmit={this.handleFormSubmit}>
                     <div className="radioButtons" align="left">

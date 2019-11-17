@@ -121,7 +121,7 @@ class RecuperarEmail extends Component {
                         function (response) {
                             _this.setState({
                                 showModal: true,
-                                mensaje: "No te preocupes! Te enviamos un mail para que puedas restablecer tu contraseña",
+                                mensaje: "No te preocupes! Te enviamos un email para que puedas restablecer tu contraseña",
                                 resultadoRequest: 200,
                                 loading: false
                             });
@@ -158,7 +158,7 @@ class RecuperarEmail extends Component {
                     <Form ref="form" onSubmit={(e) => this.enviarMail(e)}>
                         <Form.Group className="col-md camposGeneral">
                             <MDBCol md="5" top>
-                                <Form.Label column>Mail</Form.Label>
+                                <Form.Label column>Email</Form.Label>
                             </MDBCol>
                             <MDBCol md="7">
                                 <MDBRow>

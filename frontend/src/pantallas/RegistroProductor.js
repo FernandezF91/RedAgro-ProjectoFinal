@@ -236,7 +236,7 @@ class RegistroProductor extends Component {
                                 function (response) {
                                     _this.setState({
                                         showModal: true,
-                                        mensaje: "Bienvenido/a! Para finalizar con el registro, te enviamos un mail para confirmar tu cuenta ;)",
+                                        mensaje: "Bienvenido/a! Para finalizar con el registro, te enviamos un email para confirmar tu cuenta ;)",
                                         loading: false,
                                         resultadoRequest: 200
                                     });
@@ -421,7 +421,7 @@ class RegistroProductor extends Component {
                                 </MDBCol>
                             </Form.Group>
                             <Form.Group as={Row} className="camposGeneral">
-                                <Form.Label column sm={2}>Mail</Form.Label>
+                                <Form.Label column sm={2}>Email</Form.Label>
                                 <MDBCol sm={10}>
                                     <MDBRow>
                                         <Form.Control

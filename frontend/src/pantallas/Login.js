@@ -217,7 +217,7 @@ class LoginForm extends Component {
                     <Form ref="form" onSubmit={(e) => this.iniciarSesion(e)}>
                         <Form.Group className="col-md camposGeneral">
                             <MDBCol md="5" top>
-                                <Form.Label column>Mail</Form.Label>
+                                <Form.Label column>Email</Form.Label>
                             </MDBCol>
                             <MDBCol md="7">
                                 <MDBRow>

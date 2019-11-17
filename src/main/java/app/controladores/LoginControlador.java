@@ -63,7 +63,7 @@ public class LoginControlador {
 			} else {
 				if (usuario.getActivo() != true) {
 					return new ResponseEntity<>(
-							"Hey! Tu usuario no está activo. Revisá tu mail para confirmar la cuenta.",
+							"Hey! Tu usuario no está activo. Revisá tu email para confirmar la cuenta.",
 							HttpStatus.BAD_REQUEST);
 				} else {
 					return new ResponseEntity<>(userMapper.mapFromEntity(usuario), HttpStatus.OK);
