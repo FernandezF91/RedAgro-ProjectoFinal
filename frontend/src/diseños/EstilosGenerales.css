@@ -164,6 +164,10 @@ input[type=text] {
     padding: 15px;
 }
 
+.modalEliminarFoto {
+    z-index: 100000 !important;
+}
+
 .mensajeModal {
     font-weight: bold;
 }
@@ -297,9 +301,9 @@ input[type=text] {
 
 .mensajeErrorForm {
     align-self: center;
-    color: #D31212;
+    color: red;
     margin-left: 5px;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .cursor {
@@ -410,8 +414,9 @@ input[type=text] {
 }
 
 .condicionesInputs {
-    color: #CC0000;
+    color: #9E9E9E;
     font-size: 13px;
+    text-align: end;
 }
 
 .condicionesInputsTitulo {
@@ -449,4 +454,15 @@ input[type=text] {
     text-align: left;
     line-height: 40px;
     margin-bottom: 20px;
+}
+
+.anchoColumnaTituloProductos {
+    max-width: 120px;
+    min-width: 120px;
+}
+
+.mensajeErrorCampos {
+    color: red;
+    font-size: 13px;
+    text-align: start;
 }
