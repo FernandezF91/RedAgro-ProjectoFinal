@@ -15,10 +15,6 @@
 	margin-left: 33%;
 }
 
-.tel, .email, .password, .razonSocial, .fechaNacimiento, .apellido {
-	margin-top: 3.5%;
-}
-
 .errorConsu {
 	color: #cc0000;
 	font-size: 13px;

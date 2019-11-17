@@ -2,10 +2,14 @@ import '../diseños/recuperaremail.css';
 import '../diseños/EstilosGenerales.css';
 
 import React, { Component } from 'react'
-import { Navbar, Container, Row, Form, Col, Button, Nav } from 'react-bootstrap';
-import { MDBModal, MDBCol } from 'mdbreact';
+import { Navbar, Container, Form, Button, Nav } from 'react-bootstrap';
+import { MDBModal, MDBCol, MDBRow } from 'mdbreact';
 
 import culturaVerde from '../imagenes/cultura-verde-2.png';
+
+const regularExp = {
+    mail: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+}
 
 class RecuperarEmail extends Component {
 
@@ -14,18 +18,23 @@ class RecuperarEmail extends Component {
 
         this.state = {
             campos: [],
-            titulo: "",
+            validaciones: [],
             mensaje: "",
-            error: "",
             showModal: false,
-            mensajeError: "",
             resultadoRequest: 0
         }
 
-        this.validarDatos = this.validarDatos.bind(this);
+        this.validarCampos = this.validarCampos.bind(this);
+        this.enviarMail = this.enviarMail.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
         this.cerrarModalError = this.cerrarModalError.bind(this);
         this.mostrarLogin = this.mostrarLogin.bind(this);
+    }
+
+    onKeyPress = e => {
+        if (e.key === 'Enter') {
+            this.enviarMail(e);
+        }
     }
 
     cerrarModal() {
@@ -49,54 +58,82 @@ class RecuperarEmail extends Component {
         })
     }
 
-    validarDatos() {
+    validarCampos() {
+        var showModal = false;
+        this.setState({
+            validaciones: []
+        });
+        let validaciones = [];
 
         if (!this.state.campos["emailuser"]) {
-
-            this.setState({ error: "*Campo inválido" });
-            return;
+            validaciones["emailuser"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.mail.test(this.state.campos["emailuser"])) {
+            validaciones["emailuser"] = "Formato inválido";
+            showModal = true;
         }
 
-        const path = "http://localhost:3000/redAgro/recuperar_email?email="
+        if (showModal) {
+            this.setState({
+                validaciones: validaciones,
+                showModal: showModal,
+                mensaje: "Ups! Campo incompleto o incorrecto",
+                loading: false,
+                resultadoRequest: 0
+            });
+            return false;
+        } else {
+            return true;
+        }
+    }
 
-        const final_path = path + this.state.campos["emailuser"];
-
+    enviarMail(e) {
         var _this = this;
 
-        fetch(final_path, {
-            method: "GET",
-
+        _this.setState({
+            loading: true
         })
-            .then(function (response) {
-                if (response.status !== 200) {
-                    //Cambiar aca
+
+        e.preventDefault();
+
+        if (_this.validarCampos()) {
+            const path = "http://localhost:3000/redAgro/recuperar_email?email=" + this.state.campos["emailuser"];
+
+            fetch(path, {
+                method: "GET",
+
+            })
+                .then(function (response) {
+                    if (response.status !== 200) {
+                        response.text().then(
+                            function (response) {
+                                _this.setState({
+                                    showModal: true,
+                                    mensaje: response,
+                                    resultadoRequest: 0,
+                                    loading: false
+                                });
+                            })
+                        return;
+                    }
+
                     response.text().then(
                         function (response) {
                             _this.setState({
                                 showModal: true,
-                                mensaje: response,
-                                resultadoRequest: 0
+                                mensaje: "No te preocupes! Te enviamos un mail para que puedas restablecer tu contraseña",
+                                resultadoRequest: 200,
+                                loading: false
                             });
-                        })
-                    return;
-                }
 
-                response.text().then(
-                    function (response) {
-                        _this.setState({
-                            showModal: true,
-                            mensaje: "No te preocupes! Te enviamos un email para que puedas reestablecer tu contraseña",
-                            resultadoRequest: 200
                         });
-
-                    });
-            });
+                });
+        }
     }
 
     mostrarLogin() {
         this.props.history.push({
-            pathname: '/login',
-
+            pathname: '/login'
         })
     }
 
@@ -117,39 +154,47 @@ class RecuperarEmail extends Component {
                     </MDBCol>
                 </Navbar>
                 <Container fluid className="contenedor">
-                    <div className="formularioLogin">
-                        <h2>Recuperar contraseña</h2>
-                        <div className="encabezadoRecucontra">
-                            <Form>
-                                <div className="contenidoRegistro">
-                                    <Form.Group as={Row} controlId="formHorizontalEmail">
-                                        <Form.Label column >Mail</Form.Label>
-                                        <Col sm={11}>
-                                            <Form.Control
-                                                type="username"
-                                                name="emailuser"
-                                                onChange={(e) => this.detectarCambios(e)}
-                                                className="camposDatosDeUsuario"
-                                            />
-                                            <div className="error">{this.state.error}</div>
-                                        </Col>
-                                    </Form.Group>
-                                </div>
-                            </Form>
+                    <h2 className="titulosPaginasLogin">Recuperar contraseña</h2>
+                    <Form ref="form" onSubmit={(e) => this.enviarMail(e)}>
+                        <Form.Group className="col-md camposGeneral">
+                            <MDBCol md="5" top>
+                                <Form.Label column>Mail</Form.Label>
+                            </MDBCol>
+                            <MDBCol md="7">
+                                <MDBRow>
+                                    <Form.Control
+                                        value={this.state.campos["emailuser"]}
+                                        name="emailuser"
+                                        onChange={(e) => this.detectarCambios(e)}
+                                        className="camposDatosDeUsuario"
+                                        onKeyPress={this.onKeyPress}
+                                    />
+                                    {
+                                        (this.state.validaciones["emailuser"]) &&
+                                        <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                    }
+                                </MDBRow>
+                                {
+                                    (this.state.validaciones["emailuser"]) &&
+                                    <MDBRow>
+                                        <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["emailuser"]}</div>
+                                    </MDBRow>
+                                }
+                            </MDBCol>
+                        </Form.Group>
+                        <div className="botones">
+                            <Button variant="light" href='/login'>Cancelar</Button>
+                            <Button variant="success" type="submit">Confirmar</Button>
                         </div>
-                    </div>
-                    <div className="botones">
-                        <Button variant="light" href='/login'>Cancelar</Button>
-                        <Button variant="success" onClick={this.validarDatos}>Confirmar</Button>
-                    </div>
+                    </Form>
                     {
                         <MDBModal isOpen={this.state.showModal} centered size="sm">
                             <div className="modalMargenes" tabindex="0">
-                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                                <br />
                                 {(this.state.resultadoRequest === 200) ?
                                     (
                                         <div>
+                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                            <br />
                                             <i className="fas fa-check-circle iconoModalOk" />
                                             <br />
                                             <br />
@@ -157,6 +202,8 @@ class RecuperarEmail extends Component {
                                         </div>
                                     ) : (
                                         <div>
+                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                                            <br />
                                             <i className="fas fa-exclamation-circle iconoModalError" />
                                             <br />
                                             <br />

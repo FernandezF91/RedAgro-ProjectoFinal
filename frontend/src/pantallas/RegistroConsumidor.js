@@ -3,16 +3,22 @@ import '../diseños/Registro.css';
 import '../diseños/EstilosGenerales.css';
 
 import React, { Component } from 'react'
-import { Navbar, Container, Form, Col, Row, Button, Nav } from 'react-bootstrap';
-import { MDBCol} from 'mdbreact'
+import { Navbar, Container, Form, Row, Button, Nav } from 'react-bootstrap';
+import { MDBCol, MDBRow, MDBModal } from 'mdbreact'
 import { DatePickerInput } from 'rc-datepicker';
-import { isDate } from 'moment';
-import Modal from 'react-awesome-modal';
+import moment from 'moment';
+import Loader from 'react-loader-spinner';
 
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import 'moment/locale/es';
 
 const maxDate = new Date();
+
+const regularExp = {
+    letras: /^[a-zA-Z\s]*$/,
+    telefono: /^[0-9]{8,14}$/,
+    mail: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+}
 
 class RegistroConsumidor extends Component {
 
@@ -21,48 +27,105 @@ class RegistroConsumidor extends Component {
 
         this.state = {
             campos: [],
-            errores: [],
-            visible: false,
+            validaciones: [],
+            showModal: false,
             mensaje: "",
-            titulo: "Error",
-            validated: false,
+            resultadoRequest: 0,
+            loading: false
         }
 
         this.limpiarCampos = this.limpiarCampos.bind(this);
         this.mostrarLogin = this.mostrarLogin.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarModalError = this.cerrarModalError.bind(this);
+        this.validarCampos = this.validarCampos.bind(this);
+    }
+
+    onKeyPress = e => {
+        if (e.key === 'Enter') {
+            this.handleSubmit(e);
+        }
+    }
+
+    validarCampos() {
+        var showModal = false;
+        this.setState({
+            validaciones: []
+        });
+        let validaciones = [];
+
+        if (!this.state.campos["nombre"]) {
+            validaciones["nombre"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.letras.test(this.state.campos["nombre"])) {
+            validaciones["nombre"] = "Formato inválido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["apellido"]) {
+            validaciones["apellido"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.letras.test(this.state.campos["apellido"])) {
+            validaciones["apellido"] = "Formato inválido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["fecha_nacimiento"]) {
+            validaciones["fecha_nacimiento"] = "Campo requerido";
+            showModal = true;
+        } else if (this.state.campos["fecha_nacimiento"] && moment(this.state.campos["fecha_nacimiento"], 'DD/MM/YYYY').format('YYYY-MM-DD') === "Invalid date") {
+            validaciones["fecha_nacimiento"] = "Formato inválido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["telefono"]) {
+            validaciones["telefono"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.telefono.test(this.state.campos["telefono"])) {
+            validaciones["telefono"] = "Formato inválido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["mail"]) {
+            validaciones["mail"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.mail.test(this.state.campos["mail"])) {
+            validaciones["mail"] = "Formato inválido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["password"]) {
+            validaciones["password"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (showModal) {
+            this.setState({
+                validaciones: validaciones,
+                showModal: showModal,
+                mensaje: "Ups! Campos incompletos o incorrectos",
+                loading: false,
+                resultadoRequest: 0
+            });
+            return false;
+        } else {
+            return true;
+        }
     }
 
     handleSubmit(e) {
         var _this = this;
-        const form = e.currentTarget;
 
         _this.setState({
-            errores: []
+            validaciones: [],
+            loading: true
         })
 
-        let errores = {}
+        e.preventDefault();
 
-        if ((form.checkValidity() === false) && ((!this.state.campos["fecha_nac"]) || (!isDate(this.state.campos["fecha_nac"])))) {
-            errores["fecha_nac"] = "*Campo inválido";
-            _this.setState({ errores });
-            e.preventDefault();
-            e.stopPropagation();
-
-        } else if ((!this.state.campos["fecha_nac"]) || (!isDate(this.state.campos["fecha_nac"]))) {
-            errores["fecha_nac"] = "*Campo inválido";
-            _this.setState({ errores });
-            e.preventDefault();
-            e.stopPropagation();
-
-        } else if (form.checkValidity() === false) {
-            e.preventDefault();
-            e.stopPropagation();
-
-        } else {
-            e.preventDefault();
+        if (_this.validarCampos()) {
             this.crearUsuario(e);
         }
-        _this.setState({ validated: true });
     }
 
     detectarCambios(e) {
@@ -73,37 +136,51 @@ class RegistroConsumidor extends Component {
         })
     }
 
-    closeModal() {
+    cerrarModal() {
         this.setState({
-            visible: false
-        });
+            showModal: false,
+        })
+        this.mostrarLogin();
+    }
+
+    cerrarModalError() {
+        this.setState({
+            showModal: false
+        })
     }
 
     cambiosFecha(e) {
         let campos = this.state.campos;
-        campos["fecha_nac"] = e;
+        campos["fecha_nacimiento"] = e;
         this.setState({ campos })
     }
 
     limpiarCampos() {
-        this.refs.form.reset();
-        let campos = {}
-        this.setState({ campos: campos });
+        let campos = this.state.campos;
+        campos["nombre"] = "";
+        campos["apellido"] = "";
+        campos["mail"] = "";
+        campos["password"] = "";
+        campos["fecha_nacimiento"] = "";
+        campos["telefono"] = "";
+
+        this.setState({
+            campos: campos,
+            validaciones: [],
+        });
     }
 
     mostrarLogin() {
-        window.setTimeout(() => {
-            this.props.history.push('/login')
-            // history is available by design in this.props when using react-router
-        }, 3000);
-
+        this.props.history.push({
+            pathname: '/login',
+        })
     }
 
     crearUsuario(e) {
         var _this = this;
 
         var path = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
-        path = path + _this.state.campos["email"];
+        path = path + _this.state.campos["mail"];
 
         fetch(path, {
             method: "GET",
@@ -116,9 +193,10 @@ class RegistroConsumidor extends Component {
                     response.text().then(
                         function (response) {
                             _this.setState({
-                                visible: true,
+                                showModal: true,
                                 mensaje: response,
-                                titulo: "Error"
+                                loading: false,
+                                resultadoRequest: 400
                             })
                             return;
                         }
@@ -132,36 +210,39 @@ class RegistroConsumidor extends Component {
                         body: JSON.stringify({
                             "nombre": _this.state.campos["nombre"],
                             "apellido": _this.state.campos["apellido"],
-                            "usuario": _this.state.campos["email"],
+                            "usuario": _this.state.campos["mail"],
                             "contraseña": _this.state.campos["password"],
-                            "fecha_nacimiento": _this.state.campos["fecha_nac"],
-                            "telefono": _this.state.campos["tel"],
+                            "fecha_nacimiento": _this.state.campos["fecha_nacimiento"],
+                            "telefono": _this.state.campos["telefono"],
                             "rol": "Consumidor"
                         }),
                     })
                         .then(function (response) {
                             if (response.status !== 200) {
                                 _this.setState({
-                                    visible: true,
-                                    mensaje: "Ups, hubo un error al generar tu cuenta. Intentá nuevamente"
+                                    showModal: true,
+                                    mensaje: "Ups, hubo un error al generar tu cuenta. Intentá nuevamente",
+                                    loading: false,
+                                    resultadoRequest: 0
                                 });
                                 return;
                             }
                             response.text().then(
                                 function (response) {
                                     _this.setState({
-                                        validated: true,
-                                        visible: true,
+                                        showModal: true,
                                         mensaje: "Bienvenido/a! Para finalizar con el registro, te enviamos un mail para confirmar tu cuenta ;)",
-                                        titulo: "Registro exitoso!"
+                                        loading: false,
+                                        resultadoRequest: 200
                                     });
-                                    _this.mostrarLogin();
                                 });
                         });
                 } else {
                     _this.setState({
-                        visible: true,
-                        mensaje: "Ups, hubo un error al generar tu cuenta. Intentá nuevamente"
+                        loading: false,
+                        showModal: true,
+                        mensaje: "Ups, hubo un error al generar tu cuenta. Intentá nuevamente",
+                        resultadoRequest: 0
                     })
                     return;
                 }
@@ -169,6 +250,19 @@ class RegistroConsumidor extends Component {
     }
 
     render() {
+        if (this.state.loading) return (
+            <div className="fondo">
+                <div className="divLoaderWhitesmoke">
+                    <Loader
+                        type="Grid"
+                        color="#28A745"
+                        height={150}
+                        width={150}
+                        className="loader loaderWhitesmoke"
+                    />
+                </div>
+            </div>
+        )
 
         return (
             <div className="fondo">
@@ -190,102 +284,156 @@ class RegistroConsumidor extends Component {
                         Creá tu cuenta en Cultura Verde
                     </div>
 
-                    <Form noValidate validated={this.state.validated} ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+                    <Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
                         <div className="contenidoRegistro">
-                            <div className="nombre" >
-                                <Form.Group as={Row} controlId="validationCustom01">
-                                    <Form.Label column sm={2}>Nombre</Form.Label>
-                                    <Col sm={10}>
+                            <Form.Group as={Row} className="camposGeneral">
+                                <Form.Label column sm={2}>Nombre</Form.Label>
+                                <MDBCol sm={10}>
+                                    <MDBRow>
                                         <Form.Control
-                                            required
+                                            value={this.state.campos["nombre"]}
                                             name="nombre"
-                                            pattern="^[a-zA-Z ]*$"
                                             onChange={(e) => this.detectarCambios(e)}
                                             className="camposDatosDeUsuario"
+                                            onKeyPress={this.onKeyPress}
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
-                                    </Col>
-                                </Form.Group>
-                            </div>
-                            <div className="apellido">
-                                <Form.Group as={Row}>
-                                    <Form.Label column sm={2}>Apellido</Form.Label>
-                                    <Col sm={10}>
+                                        {
+                                            (this.state.validaciones["nombre"]) &&
+                                            <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                        }
+                                    </MDBRow>
+                                    {
+                                        (this.state.validaciones["nombre"]) &&
+                                        <MDBRow>
+                                            <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["nombre"]}</div>
+                                        </MDBRow>
+                                    }
+                                </MDBCol>
+                            </Form.Group>
+                            <Form.Group as={Row} className="camposGeneral">
+                                <Form.Label column sm={2}>Apellido</Form.Label>
+                                <MDBCol sm={10}>
+                                    <MDBRow>
                                         <Form.Control
-                                            required
+                                            value={this.state.campos["apellido"]}
                                             name="apellido"
-                                            pattern="^[a-zA-Z ]*$"
                                             onChange={(e) => this.detectarCambios(e)}
                                             className="camposDatosDeUsuario"
+                                            onKeyPress={this.onKeyPress}
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
-                                    </Col>
-                                </Form.Group>
-                            </div>
-                            <div className="fechaNacimiento">
-                                <Form.Group as={Row}>
-                                    <Form.Label className="labelLargo" column sm={3}>Fecha de nacimiento</Form.Label>
-                                    <Col sm={10}>
+                                        {
+                                            (this.state.validaciones["apellido"]) &&
+                                            <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                        }
+                                    </MDBRow>
+                                    {
+                                        (this.state.validaciones["apellido"]) &&
+                                        <MDBRow>
+                                            <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["apellido"]}</div>
+                                        </MDBRow>
+                                    }
+                                </MDBCol>
+                            </Form.Group>
+                            <Form.Group as={Row} className="camposGeneral">
+                                <Form.Label className="labelLargo" column sm={3}>Fecha de nacimiento</Form.Label>
+                                <MDBCol sm={10}>
+                                    <MDBRow>
                                         <DatePickerInput
-                                            name="fecha_nac"
+                                            name="fecha_nacimiento"
                                             displayFormat='DD/MM/YYYY'
                                             maxDate={maxDate}
                                             className="calendario"
                                             onChange={(e) => this.cambiosFecha(e)}
-                                            value={this.state.campos["fecha_nac"]}
+                                            value={this.state.campos["fecha_nacimiento"]}
+                                            onKeyPress={this.onKeyPress}
                                         />
-                                        <div className="errorConsu">
-                                            {this.state.errores["fecha_nac"]}
-                                        </div>
-                                    </Col>
-                                </Form.Group>
-                            </div>
-                            <div className="tel">
-                                <Form.Group as={Row} >
-                                    <Form.Label className="labelLargo" column sm={3}>Teléfono de contacto</Form.Label>
-                                    <Col sm={10}>
+                                        {
+                                            (this.state.validaciones["fecha_nacimiento"]) &&
+                                            <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                        }
+                                    </MDBRow>
+                                    {
+                                        (this.state.validaciones["fecha_nacimiento"]) &&
+                                        <MDBRow>
+                                            <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["fecha_nacimiento"]}</div>
+                                        </MDBRow>
+                                    }
+                                </MDBCol>
+                            </Form.Group>
+                            <Form.Group as={Row} className="camposGeneral">
+                                <Form.Label className="labelLargo" column sm={3}>Teléfono de contacto</Form.Label>
+                                <MDBCol sm={10}>
+                                    <MDBRow>
                                         <Form.Control
-                                            required
-                                            name="tel"
-                                            pattern="[0-9]{8,14}"
-                                            onChange={(e) => this.detectarCambios(e)}
-                                            maxLength="14"
-                                            className="camposDatosDeUsuario"
-                                        />
-                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
-                                    </Col>
-                                </Form.Group>
-                            </div>
-                            <div className="email">
-                                <Form.Group as={Row}>
-                                    <Form.Label column sm={2}>Email</Form.Label>
-                                    <Col sm={10}>
-                                        <Form.Control
-                                            required
-                                            type="email"
-                                            name="email"
+                                            value={this.state.campos["telefono"]}
+                                            name="telefono"
+                                            type="number"
                                             onChange={(e) => this.detectarCambios(e)}
                                             className="camposDatosDeUsuario"
+                                            onKeyPress={this.onKeyPress}
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
-                                    </Col>
-                                </Form.Group>
-                            </div>
-                            <div className="password">
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm={2}>Password</Form.Label>
-                                    <Col sm={10}>
+                                        {
+                                            (this.state.validaciones["telefono"]) &&
+                                            <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                        }
+                                    </MDBRow>
+                                    {
+                                        (this.state.validaciones["telefono"]) &&
+                                        <MDBRow>
+                                            <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["telefono"]}</div>
+                                        </MDBRow>
+                                    }
+                                </MDBCol>
+                            </Form.Group>
+                            <Form.Group as={Row} className="camposGeneral">
+                                <Form.Label column sm={2}>Mail</Form.Label>
+                                <MDBCol sm={10}>
+                                    <MDBRow>
                                         <Form.Control
-                                            required
+                                            value={this.state.campos["mail"]}
+                                            name="mail"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                            className="camposDatosDeUsuario"
+                                            onKeyPress={this.onKeyPress}
+                                        />
+                                        {
+                                            (this.state.validaciones["mail"]) &&
+                                            <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                        }
+                                    </MDBRow>
+                                    {
+                                        (this.state.validaciones["mail"]) &&
+                                        <MDBRow>
+                                            <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["mail"]}</div>
+                                        </MDBRow>
+                                    }
+                                </MDBCol>
+                            </Form.Group>
+                            <Form.Group as={Row} className="camposGeneral">
+                                <Form.Label column sm={2}>Password</Form.Label>
+                                <MDBCol sm={10}>
+                                    <MDBRow>
+                                        <Form.Control
+                                            value={this.state.campos["password"]}
                                             name="password"
                                             type="password"
                                             onChange={(e) => this.detectarCambios(e)}
                                             className="camposDatosDeUsuario"
+                                            onKeyPress={this.onKeyPress}
                                         />
-                                        <Form.Control.Feedback className="errores" type="invalid">*Campo inválido</Form.Control.Feedback>
-                                    </Col>
-                                </Form.Group>
-                            </div>
+                                        {
+                                            (this.state.validaciones["password"]) &&
+                                            <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                        }
+                                    </MDBRow>
+                                    {
+                                        (this.state.validaciones["password"]) &&
+                                        <MDBRow>
+                                            <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["password"]}</div>
+                                        </MDBRow>
+                                    }
+                                </MDBCol>
+                            </Form.Group>
                         </div>
                         <div className="botones">
                             <Button variant="light" href='/seleccionUsuario'>Atrás</Button>
@@ -293,24 +441,30 @@ class RegistroConsumidor extends Component {
                             <Button variant="success" type="submit">Crear</Button>
                         </div>
                     </Form>
-                    <section>
-                        <Modal
-                            visible={this.state.visible}
-                            width="460"
-                            height="120"
-                            effect="fadeInUp"
-                        >
-                            <div>
-                                <h1>
-                                    {this.state.titulo}
-                                </h1>
-                                <p>
-                                    {this.state.mensaje}
-                                </p>
-                                <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
-                            </div>
-                        </Modal>
-                    </section>
+                    {
+                        (this.state.resultadoRequest === 200) ?
+                            <MDBModal isOpen={this.state.showModal} centered>
+                                <div className="modalMargenes" tabIndex="0">
+                                    <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                    <br />
+                                    <i className="fas fa-check-circle iconoModalOk" />
+                                    <br />
+                                    <br />
+                                    <h5>{this.state.mensaje}</h5>
+                                </div>
+                            </MDBModal>
+                            :
+                            <MDBModal isOpen={this.state.showModal} centered size="sm">
+                                <div className="modalMargenes" tabIndex="0">
+                                    <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                                    <br />
+                                    <i className="fas fa-exclamation-circle iconoModalError" />
+                                    <br />
+                                    <br />
+                                    <h5>{this.state.mensaje}</h5>
+                                </div>
+                            </MDBModal>
+                    }
                 </Container>
             </div>
         );

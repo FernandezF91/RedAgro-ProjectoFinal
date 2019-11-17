@@ -438,10 +438,6 @@ input[type=text] {
     padding-right: 0 !important;
 }
 
-.labelCampoTextarea {
-    align-self: start !important;
-}
-
 .text-aling-start {
     text-align: start;
 }
@@ -465,4 +461,17 @@ input[type=text] {
     color: red;
     font-size: 13px;
     text-align: start;
+}
+
+.camposGeneral {
+    margin-bottom: 20px !important;
+}
+
+.tituloCamposGeneral {
+    align-self: top;
+}
+
+.titulosPaginasLogin {
+    margin-top: 150px;
+    padding-bottom: 20px;
 }

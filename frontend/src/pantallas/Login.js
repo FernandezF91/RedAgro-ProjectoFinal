@@ -1,9 +1,16 @@
-import React, { Component } from 'react'
-import { MDBCol, MDBModal } from 'mdbreact';
-import { Navbar, Container, Form, Col, Row, Button, Nav } from 'react-bootstrap';
-import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/Login.css';
 import '../diseños/EstilosGenerales.css';
+
+import React, { Component } from 'react'
+import { MDBCol, MDBRow, MDBModal } from 'mdbreact';
+import { Navbar, Container, Form, Button, Nav } from 'react-bootstrap';
+import Loader from 'react-loader-spinner';
+
+import culturaVerde from '../imagenes/cultura-verde-2.png';
+
+const regularExp = {
+    mail: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+}
 
 class LoginForm extends Component {
     constructor(props) {
@@ -11,29 +18,38 @@ class LoginForm extends Component {
         super(props)
 
         this.state = {
-            fields: [],
-            errores: [],
+            campos: [],
+            validaciones: [],
             usuario: {},
             showModal: false,
-            mensajeError: "",
-            rolUsuario: ""
+            mensaje: "",
+            rolUsuario: "",
+            resultadoRequest: 0,
+            loading: false
         }
 
-        this.validarDatos = this.validarDatos.bind(this);
+        this.validarCampos = this.validarCampos.bind(this);
         this.mostrarPantallaProductor = this.mostrarPantallaProductor.bind(this);
         this.mostrarPantallaConsumidor = this.mostrarPantallaConsumidor.bind(this);
         this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarModalError = this.cerrarModalError.bind(this);
     }
 
     detectarCambios(e) {
-        let fields = this.state.fields;
-        fields[e.target.name] = e.target.value;
+        let campos = this.state.campos;
+        campos[e.target.name] = e.target.value;
         this.setState({
-            fields
+            campos
         })
     }
 
     cerrarModal() {
+        this.setState({
+            showModal: false,
+        })
+    }
+
+    cerrarModalError() {
         this.setState({
             showModal: false
         })
@@ -41,32 +57,59 @@ class LoginForm extends Component {
 
     onKeyPress = e => {
         if (e.key === 'Enter') {
-            this.validarDatos();
+            this.validarCampos();
         }
     }
 
-    validarDatos() {
+    validarCampos() {
+        var showModal = false;
         this.setState({
-            errores: []
+            validaciones: []
+        });
+        let validaciones = [];
+
+        if (!this.state.campos["username"]) {
+            validaciones["username"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.mail.test(this.state.campos["username"])) {
+            validaciones["username"] = "Formato inválido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["password"]) {
+            validaciones["password"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (showModal) {
+            this.setState({
+                validaciones: validaciones,
+                showModal: showModal,
+                mensaje: "Ups! Campo incompleto o incorrecto",
+                loading: false,
+                resultadoRequest: 0
+            });
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    iniciarSesion(e) {
+        var _this = this;
+
+        _this.setState({
+            validaciones: [],
+            loading: true
         })
 
-        let errores = {};
+        e.preventDefault();
 
-        if ((!this.state.fields["username"]) && (!this.state.fields["password"])) {
-            errores["username"] = "*Campo inválido";
-            errores["password"] = "*Campo inválido";
-
-        } else if (!this.state.fields["username"]) {
-            errores["username"] = "*Campo inválido";
-
-        } else if (!this.state.fields["password"]) {
-            errores["password"] = "*Campo inválido";
-
-        } else {
+        if (_this.validarCampos()) {
             const path_principal = "http://localhost:3000/redAgro/login/usuario?u=";
 
-            var username = this.state.fields["username"];
-            var password = this.state.fields["password"];
+            var username = this.state.campos["username"];
+            var password = this.state.campos["password"];
 
             const final_path = path_principal + username + "&c=" + password;
 
@@ -90,31 +133,31 @@ class LoginForm extends Component {
                                     _this.mostrarPantallaConsumidor();
                                 }
                             } else if (status === 400) {
-                                let mensajeError = response;
+                                let mensaje = response;
                                 _this.setState({
                                     showModal: true,
-                                    mensajeError: mensajeError
+                                    mensaje: mensaje,
+                                    loading: false
                                 });
                             } else if (status === 500) {
-                                let mensajeError = response;
+                                let mensaje = response;
                                 _this.setState({
                                     showModal: true,
-                                    mensajeError: mensajeError
+                                    mensaje: mensaje,
+                                    loading: false
                                 });
                             } else {
-                                let mensajeError = "Ocurrió un error al obtener los datos de tu usuario. Reintentá en unos minutos.";
+                                let mensaje = "Ocurrió un error al obtener los datos de tu usuario. Reintentá en unos minutos.";
                                 _this.setState({
                                     showModal: true,
-                                    mensajeError: mensajeError
+                                    mensaje: mensaje,
+                                    loading: false
                                 });
                             }
                         }
                     )
                 });
         }
-        this.setState({
-            errores
-        })
     }
 
     mostrarPantallaProductor() {
@@ -140,6 +183,20 @@ class LoginForm extends Component {
     }
 
     render() {
+        if (this.state.loading) return (
+            <div className="fondo">
+                <div className="divLoaderWhitesmoke">
+                    <Loader
+                        type="Grid"
+                        color="#28A745"
+                        height={150}
+                        width={150}
+                        className="loader loaderWhitesmoke"
+                    />
+                </div>
+            </div>
+        )
+
         return (
             <div className="fondo">
                 <Navbar className="barraNavegacion alturaBarra">
@@ -156,64 +213,80 @@ class LoginForm extends Component {
                     </MDBCol>
                 </Navbar>
                 <Container fluid className="contenedor">
-                    <div className="formularioLogin">
-                        <h2>Acceso de usuarios</h2>
-                        <div className="encabezadoLogin">
-                            <Form>
-                                <Form.Group as={Row} controlId="formHorizontalEmail">
-                                    <Form.Label column sm={2}>Usuario</Form.Label>
-                                    <Col sm={10}>
-                                        <Form.Control
-                                            name="username"
-                                            onChange={(e) => this.detectarCambios(e)}
-                                            onKeyPress={this.onKeyPress}
-                                            className="camposDatosDeUsuario"
-                                        />
-                                        <div className="error">
-                                            {this.state.errores["username"]}
-                                        </div>
-                                    </Col>
-                                </Form.Group>
-                                <Form.Group as={Row} controlId="formHorizontalPassword" className="passwordLogin">
-                                    <Form.Label column sm={2}>Password</Form.Label>
-                                    <Col sm={10}>
-                                        <Form.Control
-                                            name="password"
-                                            type="password"
-                                            onChange={(e) => this.detectarCambios(e)}
-                                            onKeyPress={this.onKeyPress}
-                                            className="camposDatosDeUsuario"
-                                        />
-                                        <div className="error">
-                                            {this.state.errores["password"]}
-                                        </div>
-                                    </Col>
-                                </Form.Group>
-                            </Form>
-                        </div>
+                    <h2 className="titulosPaginasLogin">Acceso de usuarios</h2>
+                    <Form ref="form" onSubmit={(e) => this.iniciarSesion(e)}>
+                        <Form.Group className="col-md camposGeneral">
+                            <MDBCol md="5" top>
+                                <Form.Label column>Mail</Form.Label>
+                            </MDBCol>
+                            <MDBCol md="7">
+                                <MDBRow>
+                                    <Form.Control
+                                        value={this.state.campos["username"]}
+                                        name="username"
+                                        onChange={(e) => this.detectarCambios(e)}
+                                        className="camposDatosDeUsuario"
+                                        onKeyPress={this.onKeyPress}
+                                    />
+                                    {
+                                        (this.state.validaciones["username"]) &&
+                                        <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                    }
+                                </MDBRow>
+                                {
+                                    (this.state.validaciones["username"]) &&
+                                    <MDBRow>
+                                        <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["username"]}</div>
+                                    </MDBRow>
+                                }
+                            </MDBCol>
+                        </Form.Group>
+                        <Form.Group className="col-md camposGeneral">
+                            <MDBCol md="5" top>
+                                <Form.Label column>Contraseña</Form.Label>
+                            </MDBCol>
+                            <MDBCol md="7">
+                                <MDBRow>
+                                    <Form.Control
+                                        value={this.state.campos["password"]}
+                                        name="password"
+                                        type="password"
+                                        onChange={(e) => this.detectarCambios(e)}
+                                        className="camposDatosDeUsuario"
+                                        onKeyPress={this.onKeyPress}
+                                    />
+                                    {
+                                        (this.state.validaciones["password"]) &&
+                                        <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                    }
+                                </MDBRow>
+                                {
+                                    (this.state.validaciones["password"]) &&
+                                    <MDBRow>
+                                        <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["password"]}</div>
+                                    </MDBRow>
+                                }
+                            </MDBCol>
+                        </Form.Group>
                         <div className="botones">
                             <Button variant="light" href="/seleccionUsuario">Registrar</Button>
-                            <Button variant="success" onClick={this.validarDatos}>Ingresar</Button>
+                            <Button variant="success" type="submit">Ingresar</Button>
                         </div>
-                        <a href="/recupero_email">Olvidé mi contraseña</a>
-                    </div>
+                    </Form>
+                    <a href="/recupero_email">Olvidé mi contraseña</a>
                     {
-                        (this.state.showModal) &&
-                        (
-                            <MDBModal isOpen={this.state.showModal} centered size="sm">
-                                <div className="modalMargenes">
-                                    <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                        <MDBModal isOpen={this.state.showModal} centered size="sm">
+                            <div className="modalMargenes" tabindex="0">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <br />
+                                <div>
+                                    <i className="fas fa-exclamation-circle iconoModalError" />
                                     <br />
-                                    <div>
-                                        <i className="fas fa-exclamation-circle iconoModalError" />
-                                        <br />
-                                        <br />
-                                        <h5>{this.state.mensajeError}</h5>
-                                    </div>
+                                    <br />
+                                    <h5>{this.state.mensaje}</h5>
                                 </div>
-
-                            </MDBModal>
-                        )
+                            </div>
+                        </MDBModal>
                     }
                 </Container>
             </div>
