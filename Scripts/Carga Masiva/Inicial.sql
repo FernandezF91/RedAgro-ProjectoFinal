@@ -127,11 +127,3 @@ INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Miel");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Pickles");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Aceitunas negras");
 INSERT INTO redagro.producto (categoria, tipo) VALUES ("Otros","Aceitunas verdes");
-insert redagro.usuario SET activo=1, apellido="Fernandez", nombre="Federico", rol="Consumidor", 
-usuario="ff@gmail.com", telefono=1515151515, fecha_nacimiento="1988-08-08", contraseña="1", fecha_creacion="2019-09-09";
-insert redagro.usuario SET activo=1, apellido="Bosso", nombre="Ezequiel", rol="Productor", 
-usuario="eze.bosso@gmail.com", telefono=1515151515, fecha_nacimiento="1982-06-03", contraseña="1", fecha_creacion="2019-10-10";
-insert redagro.usuario SET activo=1, apellido="Fernandez", nombre="Federido", rol="Productor", 
-usuario="feede91.-@live.com.ar", telefono=1515151515, fecha_nacimiento="1982-06-03", contraseña="a", fecha_creacion="2019-10-10";
-insert redagro.usuario SET activo=1, apellido="Fernandez", nombre="Federico gmail", rol="Consumidor", 
-usuario="Fernandezfede91@gmail.com", telefono=1515151515, fecha_nacimiento="1982-06-03", contraseña="a", fecha_creacion="2019-10-10";
