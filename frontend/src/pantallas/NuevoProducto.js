@@ -140,7 +140,7 @@ class NuevoProducto extends Component {
             validaciones["precio"] = "Precio inválido";
             showModal = true;
         } else if (!regularExp.numerosDecimales.test(this.state.campos["precio"])) {
-            validaciones["precio"] = "Formato invalido";
+            validaciones["precio"] = "Formato inválido";
             showModal = true;
         }
 
@@ -155,12 +155,12 @@ class NuevoProducto extends Component {
         }
 
         if (this.state.campos["fecha_vencimiento"] && moment(this.state.campos["fecha_vencimiento"], 'DD/MM/YYYY').format('YYYY-MM-DD') === "Invalid date") {
-            validaciones["fecha_vencimiento"] = "Formato incorrecto";
+            validaciones["fecha_vencimiento"] = "Formato inválido";
             showModal = true;
         }
 
         if (this.state.validaciones["fecha_vencimientoAUX"] === "Invalid date") {
-            validaciones["fecha_vencimiento"] = "Formato incorrecto";
+            validaciones["fecha_vencimiento"] = "Formato inválido";
             showModal = true;
         }
 
@@ -477,7 +477,7 @@ class NuevoProducto extends Component {
                 <br />
                 <Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4" className="labelCampoTextarea">
+                        <MDBCol md="4" top>
                             <Form.Label column>*Título</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -512,7 +512,7 @@ class NuevoProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4" className="labelCampoTextarea">
+                        <MDBCol md="4" top>
                             <Form.Label column>*Descripción</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -549,7 +549,7 @@ class NuevoProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>*Categoria</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -576,7 +576,7 @@ class NuevoProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>Tipo de producto</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -605,7 +605,7 @@ class NuevoProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>*Tipo de producción</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -632,7 +632,7 @@ class NuevoProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>*Unidad de venta</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -659,7 +659,7 @@ class NuevoProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>Contenido</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -686,7 +686,7 @@ class NuevoProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>*Cantidad disponible</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -713,7 +713,7 @@ class NuevoProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>*Precio (por unidad de venta)</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -743,7 +743,7 @@ class NuevoProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>Tiempo de preparación (en días)</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -770,7 +770,7 @@ class NuevoProducto extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>Fecha de vencimiento</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
