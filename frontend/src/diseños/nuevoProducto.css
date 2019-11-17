@@ -53,7 +53,7 @@
 
 .cajaImagenesWidth {
 	width: 70%;
-	margin: auto;
+	margin: auto !important;
 }
 
 .iconoInputGroupBordeIzquierdo {

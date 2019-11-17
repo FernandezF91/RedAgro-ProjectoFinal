@@ -77,8 +77,6 @@ class RecuperarContraseña extends Component {
                 resultadoRequest: 0,
                 loading: false
             });
-
-
             return false;
         }
         return true;
@@ -97,12 +95,7 @@ class RecuperarContraseña extends Component {
         if (_this.validarDatos()) {
 
             fetch(final_path, {
-                method: "PUT",
-                // headers: {
-
-                //     'Content-type': 'application/json;charset=UTF-8',
-
-                // },
+                method: "PUT"
             })
                 .then(function (response) {
                     if (response.status !== 200) {
@@ -194,7 +187,7 @@ class RecuperarContraseña extends Component {
                                         <Form.Control
                                             required
                                             type="password"
-                                            name="contraseñaNueva"
+                                            name="confirmarContraseña"
                                             onChange={(e) => this.detectarCambios(e)}
                                             className="camposDatosDeUsuario"
                                         />
@@ -208,34 +201,31 @@ class RecuperarContraseña extends Component {
                         <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
                     </div>
                     {
-                        (this.state.showModal) &&
-                        (
-                            <MDBModal isOpen={this.state.showModal} centered size="sm">
-                                <div className="modalMargenes">
-                                    {(this.state.resultadoRequest === 200) ?
-                                        (
-                                            <div>
-                                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                                                <br />
-                                                <i className="fas fa-check-circle iconoModalOk" />
-                                                <br />
-                                                <br />
-                                                <h5>{this.state.mensaje}</h5>
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
-                                                <br />
-                                                <i className="fas fa-exclamation-circle iconoModalError" />
-                                                <br />
-                                                <br />
-                                                <h5>{this.state.mensaje}</h5>
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                            </MDBModal>
-                        )
+                        <MDBModal isOpen={this.state.showModal} centered size="sm">
+                            <div className="modalMargenes" tabindex="0">
+                                {(this.state.resultadoRequest === 200) ?
+                                    (
+                                        <div>
+                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                            <br />
+                                            <i className="fas fa-check-circle iconoModalOk" />
+                                            <br />
+                                            <br />
+                                            <h5>{this.state.mensaje}</h5>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                                            <br />
+                                            <i className="fas fa-exclamation-circle iconoModalError" />
+                                            <br />
+                                            <br />
+                                            <h5>{this.state.mensaje}</h5>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </MDBModal>
                     }
                 </Container>
             </div>

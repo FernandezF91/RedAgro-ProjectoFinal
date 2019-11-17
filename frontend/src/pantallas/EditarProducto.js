@@ -190,7 +190,7 @@ class EditarProducto extends Component {
     }
 
     eliminarFoto() {
-        if (window.confirm("Estás seguro de eliminar esta foto?")) {
+        if (window.confirm("¿Estás seguro de eliminar esta foto?")) {
             var images = this.state.listadoImagenes.slice();
             images.splice(this.state.currentImage, 1);
 
@@ -205,7 +205,6 @@ class EditarProducto extends Component {
             });
         }
 
-        console.log(this.state.cantidadImagenesActuales);
         if (this.state.cantidadImagenesActuales === 1) {
             document.getElementById("lightboxBackdrop").remove();
         }
@@ -483,10 +482,24 @@ class EditarProducto extends Component {
                                 />
                                 {
                                     (this.state.validaciones["titulo"]) &&
-                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["titulo"]} />
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
                                 }
                             </MDBRow>
-                            <div className="condicionesInputs col-md-8">(*) 100 caracteres como máximo</div>
+                            {
+                                (this.state.validaciones["titulo"]) ?
+                                    <MDBRow>
+                                        <MDBCol md="4">
+                                            <div className="mensajeErrorCampos">{this.state.validaciones["titulo"]}</div>
+                                        </MDBCol>
+                                        <MDBCol md="4">
+                                            <div className="condicionesInputs">(*) 100 caracteres como máximo</div>
+                                        </MDBCol>
+                                    </MDBRow>
+                                    :
+                                    <MDBRow>
+                                        <div className="condicionesInputs col-md-8">(*) 100 caracteres como máximo</div>
+                                    </MDBRow>
+                            }
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -506,10 +519,24 @@ class EditarProducto extends Component {
                                 />
                                 {
                                     (this.state.validaciones["descripcion"]) &&
-                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["descripcion"]} />
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
                                 }
                             </MDBRow>
-                            <div className="condicionesInputs col-md-8">(*) 255 caracteres como máximo</div>
+                            {
+                                (this.state.validaciones["descripcion"]) ?
+                                    <MDBRow>
+                                        <MDBCol md="4">
+                                            <div className="mensajeErrorCampos">{this.state.validaciones["descripcion"]}</div>
+                                        </MDBCol>
+                                        <MDBCol md="4">
+                                            <div className="condicionesInputs">(*) 255 caracteres como máximo</div>
+                                        </MDBCol>
+                                    </MDBRow>
+                                    :
+                                    <MDBRow>
+                                        <div className="condicionesInputs col-md-8">(*) 255 caracteres como máximo</div>
+                                    </MDBRow>
+                            }
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -580,9 +607,15 @@ class EditarProducto extends Component {
                                 />
                                 {
                                     (this.state.validaciones["contenido"]) &&
-                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["contenido"]} />
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
                                 }
                             </MDBRow>
+                            {
+                                (this.state.validaciones["contenido"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["contenido"]}</div>
+                                </MDBRow>
+                            }
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -601,9 +634,15 @@ class EditarProducto extends Component {
                                 />
                                 {
                                     (this.state.validaciones["stock"]) &&
-                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["stock"]} />
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
                                 }
                             </MDBRow>
+                            {
+                                (this.state.validaciones["stock"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["stock"]}</div>
+                                </MDBRow>
+                            }
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -625,9 +664,15 @@ class EditarProducto extends Component {
                                 </InputGroup>
                                 {
                                     (this.state.validaciones["precio"]) &&
-                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["precio"]} />
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
                                 }
                             </MDBRow>
+                            {
+                                (this.state.validaciones["precio"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["precio"]}</div>
+                                </MDBRow>
+                            }
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -645,9 +690,15 @@ class EditarProducto extends Component {
                                 />
                                 {
                                     (this.state.validaciones["tiempo_preparacion"] && this.state.campos["tiempo_preparacion"] <= 0) &&
-                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title="El tiempo de preparación no puede ser menor a 0" />
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
                                 }
                             </MDBRow>
+                            {
+                                (this.state.validaciones["tiempo"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["tiempo"]}</div>
+                                </MDBRow>
+                            }
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
@@ -666,9 +717,15 @@ class EditarProducto extends Component {
                                 />
                                 {
                                     (this.state.validaciones["fecha_vencimiento"]) &&
-                                    <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["fecha_vencimiento"]} />
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
                                 }
                             </MDBRow>
+                            {
+                                (this.state.validaciones["fecha_vencimiento"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["fecha_vencimiento"]}</div>
+                                </MDBRow>
+                            }
                         </MDBCol>
                     </Form.Group>
                     <br />
@@ -686,9 +743,9 @@ class EditarProducto extends Component {
                     >
                         <Gallery
                             images={this.state.listadoImagenes}
+                            maxRows={1}
                             enableLightbox={true}
                             currentImageWillChange={this.onCurrentImageChange}
-                            maxRows={1}
 
                             customControls={[
                                 <button key="eliminarFoto" onClick={this.eliminarFoto}>Eliminar foto</button>
@@ -701,7 +758,7 @@ class EditarProducto extends Component {
                             <span md="3">*Imágenes</span>
                             {
                                 (this.state.validaciones["imagenes"]) &&
-                                <i className="fa fa-exclamation-circle mensajeErrorForm" title={this.state.validaciones["imagenes"]} />
+                                <i className="fa fa-exclamation-circle mensajeErrorForm" />
                             }
                         </MDBRow>
                         <br />
@@ -719,7 +776,21 @@ class EditarProducto extends Component {
                                     files: fileItems.map(fileItem => fileItem.file)
                                 });
                             }} />
-                        <div className="condicionesInputs">(*) 5 imágenes como máximo</div>
+                        {
+                            (this.state.validaciones["imagenes"]) ?
+                                <MDBRow center className="cajaImagenesWidth">
+                                    <MDBCol md="6">
+                                        <div className="mensajeErrorCampos">{this.state.validaciones["imagenes"]}</div>
+                                    </MDBCol>
+                                    <MDBCol md="6">
+                                        <div className="condicionesInputs">(*) 5 imágenes como máximo</div>
+                                    </MDBCol>
+                                </MDBRow>
+                                :
+                                <MDBRow>
+                                    <div className="condicionesInputs col-md-8 cajaImagenesWidth">(*) 5 imágenes como máximo</div>
+                                </MDBRow>
+                        }
                     </div>
                     <br />
                     <div className="botones">
@@ -729,38 +800,34 @@ class EditarProducto extends Component {
                     </div>
                 </Form>
                 {
-                    (this.state.showModal) &&
-                    (
-                        <MDBModal isOpen={this.state.showModal} centered size="sm">
-                            <div className="modalMargenes">
-                                {(this.state.resultadoRequest === 200) ?
-                                    (
-                                        <div>
-                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                                            <br />
-                                            <i className="fas fa-check-circle iconoModalOk" />
-                                            <br />
-                                            <br />
-                                            <h5>{this.state.mensaje}</h5>
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
-                                            <br />
-                                            <i className="fas fa-exclamation-circle iconoModalError" />
-                                            <br />
-                                            <br />
-                                            <h5>{this.state.mensaje}</h5>
-                                        </div>
-                                    )
-                                }
-                            </div>
-                        </MDBModal>
-                    )
+                    <MDBModal isOpen={this.state.showModal} centered size="sm">
+                        <div className="modalMargenes" tabindex="0">
+                            {(this.state.resultadoRequest === 200) ?
+                                (
+                                    <div>
+                                        <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                        <br />
+                                        <i className="fas fa-check-circle iconoModalOk" />
+                                        <br />
+                                        <br />
+                                        <h5>{this.state.mensaje}</h5>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                                        <br />
+                                        <i className="fas fa-exclamation-circle iconoModalError" />
+                                        <br />
+                                        <br />
+                                        <h5>{this.state.mensaje}</h5>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </MDBModal>
                 }
             </div>
         );
     };
 }
-
 export default EditarProducto;

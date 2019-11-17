@@ -244,6 +244,7 @@ public class ReservaControlador {
 			alertaNoti.setAlerta(alertas);
 			alertaNotiDAO.save(alertaNoti);
 
+			
 			notificarUsuario(reserva.getProductor().getUsuario(), "Nuevas reservas");
 
 			try {

@@ -143,32 +143,29 @@ class RecuperarEmail extends Component {
                         <Button variant="success" onClick={this.validarDatos}>Confirmar</Button>
                     </div>
                     {
-                        (this.state.showModal) &&
-                        (
-                            <MDBModal isOpen={this.state.showModal} centered size="sm">
-                                <div className="modalMargenes">
-                                    <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                                    <br />
-                                    {(this.state.resultadoRequest === 200) ?
-                                        (
-                                            <div>
-                                                <i className="fas fa-check-circle iconoModalOk" />
-                                                <br />
-                                                <br />
-                                                <h5>{this.state.mensaje}</h5>
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                <i className="fas fa-exclamation-circle iconoModalError" />
-                                                <br />
-                                                <br />
-                                                <h5>{this.state.mensaje}</h5>
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                            </MDBModal>
-                        )
+                        <MDBModal isOpen={this.state.showModal} centered size="sm">
+                            <div className="modalMargenes" tabindex="0">
+                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                <br />
+                                {(this.state.resultadoRequest === 200) ?
+                                    (
+                                        <div>
+                                            <i className="fas fa-check-circle iconoModalOk" />
+                                            <br />
+                                            <br />
+                                            <h5>{this.state.mensaje}</h5>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <i className="fas fa-exclamation-circle iconoModalError" />
+                                            <br />
+                                            <br />
+                                            <h5>{this.state.mensaje}</h5>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </MDBModal>
                     }
                 </Container>
             </div>

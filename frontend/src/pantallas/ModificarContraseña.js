@@ -40,9 +40,9 @@ class ModificarContraseña extends Component {
     }
 
     validarDatos() {
+
         if ((!this.state.fields["contraseñaNueva"] || !this.state.fields["contraseñaActual"] || !this.state.fields["confirmarContraseña"]) ||
-            ((this.state.fields["contraseñaNueva"]) !== (this.state.fields["confirmarContraseña"])) ||
-            ((this.state.fields["contraseñaActual"]) !== (this.state.user.contraseña))) {
+            ((this.state.fields["contraseñaNueva"]) !== (this.state.fields["confirmarContraseña"]))) {
             this.setState({
                 mensaje: "Datos incompletos o incorrectos",
                 resultadoRequest: 0,
@@ -72,10 +72,11 @@ class ModificarContraseña extends Component {
             loading: true
         });
 
-        const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
+        const path_principal = "http://localhost:3000/redAgro/usuario/modificar_contraseña?u=";
+        var usuario = this.props.usuario.usuario;
+        var passwordActual = this.state.fields["contraseñaActual"];
         var password = this.state.fields["contraseñaNueva"];
-        var id = this.state.user.id;
-        const final_path = path_principal + password + "&id=" + id;
+        const final_path = path_principal + usuario + "&ca=" + passwordActual + "&cn=" + password;
 
         var _this = this;
 
@@ -83,32 +84,28 @@ class ModificarContraseña extends Component {
 
             fetch(final_path, {
                 method: "PUT",
-                // headers: {
-                //     'Content-type': 'application/json;charset=UTF-8',
-                // },
             })
                 .then(function (response) {
-                    if (response.status !== 200) {
-                        let mensajeError = "Ocurrió un error al actualizar la contraseña. Reintentá en unos minutos."
-                        _this.setState({
-                            showModal: true,
-                            resultadoRequest: 0,
-                            mensaje: mensajeError,
-                            loading: false
-                        });
-
-                        return;
-                    }
-
+                    var status = response.status;
                     response.text().then(
                         function (response) {
-                            _this.setState({
-                                showModal: true,
-                                mensaje: "Contraseña actualizada correctamente",
-                                resultadoRequest: 200,
-                                loading: false,
-                                fields: []
-                            });
+                            if (status === 200) {
+                                _this.setState({
+                                    showModal: true,
+                                    resultadoRequest: 200,
+                                    mensaje: response,
+                                    loading: false,
+                                    fields: []
+                                });
+                            } else {
+                                _this.setState({
+                                    showModal: true,
+                                    resultadoRequest: 0,
+                                    mensaje: response,
+                                    loading: false
+                                });
+                                return;
+                            }
                         });
                 });
         }
@@ -176,32 +173,29 @@ class ModificarContraseña extends Component {
                     </div>
                 </div>
                 {
-                    (this.state.showModal) &&
-                    (
-                        <MDBModal isOpen={this.state.showModal} centered size="sm">
-                            <div className="modalMargenes">
-                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
-                                <br />
-                                {(this.state.resultadoRequest === 200) ?
-                                    (
-                                        <div>
-                                            <i className="fas fa-check-circle iconoModalOk" />
-                                            <br />
-                                            <br />
-                                            <h5>{this.state.mensaje}</h5>
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <i className="fas fa-exclamation-circle iconoModalError" />
-                                            <br />
-                                            <br />
-                                            <h5>{this.state.mensaje}</h5>
-                                        </div>
-                                    )
-                                }
-                            </div>
-                        </MDBModal>
-                    )
+                    <MDBModal isOpen={this.state.showModal} centered size="sm">
+                        <div className="modalMargenes" tabindex="0">
+                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                            <br />
+                            {(this.state.resultadoRequest === 200) ?
+                                (
+                                    <div>
+                                        <i className="fas fa-check-circle iconoModalOk" />
+                                        <br />
+                                        <br />
+                                        <h5>{this.state.mensaje}</h5>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <i className="fas fa-exclamation-circle iconoModalError" />
+                                        <br />
+                                        <br />
+                                        <h5>{this.state.mensaje}</h5>
+                                    </div>
+                                )
+                            }
+                        </div>
+                    </MDBModal>
                 }
             </div>
         );

@@ -66,10 +66,12 @@ class ListadoProductos extends Component {
         const abrirModalEstadoProducto = () => this.abrirModalEstadoProducto(item.id, item.activo);
 
         const itemRows = [
-            <tr onClick={clickCallback} key={"row-data-" + item.id}>
+            <tr onClick={clickCallback} key={"row-data-" + item.id} className="border-bottom">
                 <td>{item.categoria}</td>
                 <td>{item.tipo}</td>
-                <td>{item.titulo}</td>
+                <td className="overflowTexto anchoColumnaTituloProductos" title={item.titulo}>
+                    {item.titulo}
+                </td>
                 <td>{item.descripcion}</td>
                 <td>{item.stock}</td>
                 <td>{item.tipoDeUnidad}</td>
@@ -111,10 +113,12 @@ class ListadoProductos extends Component {
         const abrirModalEstadoProducto = () => this.abrirModalEstadoProducto(item.id, item.activo);
 
         const itemRows = [
-            <tr key={"row-data-" + item.id} title="Producto inactivo">
+            <tr key={"row-data-" + item.id} title="Producto inactivo" className="border-bottom">
                 <td className="productoInactivo">{item.categoria}</td>
                 <td className="productoInactivo">{item.tipo}</td>
-                <td className="productoInactivo">{item.titulo}</td>
+                <td className="productoInactivo overflowTexto anchoColumnaTituloProductos" title={item.titulo}>
+                    {item.titulo}
+                </td>
                 <td className="productoInactivo">{item.descripcion}</td>
                 <td className="productoInactivo">{item.stock}</td>
                 <td className="productoInactivo">{item.tipoDeUnidad}</td>
