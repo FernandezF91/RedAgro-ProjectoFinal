@@ -539,20 +539,20 @@ class Checkout extends Component {
 
         if (this.state.reservaOK === true) return (
             <div className="confirmacionReserva">
-                <h2>¡Felicitaciones! </h2>
+                <h2>¡Felicitaciones!</h2>
                 <h3>Tu reserva ha sido confirmada</h3>
                 <br />
                 <i className="fas fa-shopping-basket iconoGrande" />
                 <br />
                 <br />
-                <h5>Para conocer su estado, hacé click <Link to={'/principalConsumidores/ListadoReservas'}>acá</Link></h5>
+                <h5 className="grey-text">Para conocer su estado, hacé click <Link to={'/principalConsumidores/ListadoReservas'}>acá</Link></h5>
             </div>
         )
 
         if (activeStep === pasos.length && this.state.showModal === true) {
             return (
                 <MDBModal isOpen={this.state.showModal} centered size="sm">
-                    <div className="modalMargenes">
+                    <div className="modalMargenes" tabindex="0">
                         <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
                         <br />
                         {(this.state.resultadoRequest === 200) ?
@@ -631,7 +631,7 @@ class Checkout extends Component {
                 {
                     (this.state.showModal === true && this.state.resultadoRequest !== 200) ?
                         <MDBModal isOpen={this.state.showModal} centered size="sm">
-                            <div className="modalMargenes">
+                            <div className="modalMargenes" tabindex="0">
                                 <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalErrores} />
                                 <br />
                                 <i className="fas fa-exclamation-circle iconoModalError" />
