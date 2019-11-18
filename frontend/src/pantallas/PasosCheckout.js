@@ -27,7 +27,7 @@ const PasosCheckout = (props) => {
                     </div>
                     <div className="usuarioDU" >
                         <Form.Group as={Row}>
-                            <Form.Label column sm={4}> Usuario </Form.Label>
+                            <Form.Label column sm={4}> Email </Form.Label>
                             <Form.Control
                                 required
                                 name="nombre"
@@ -218,7 +218,7 @@ const PasosCheckout = (props) => {
                                                         mode='fit'
                                                         height="40px" width="auto" />
                                                 </Col>
-                                                <Col>
+                                                <Col className="overflowTexto anchoColumnaProductoCheckout" title={item.titulo}>
                                                     {item.titulo}
                                                 </Col>
                                                 {

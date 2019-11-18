@@ -292,7 +292,7 @@ class MiCuenta extends Component {
                     {item.valor}
                 </td>
                 <td>
-                    <div className="ultimaColumna alineacionResumenJustificado">
+                    <div className="overflowTexto columnaComentario ultimaColumna alineacionResumenJustificado" title={item.comentario}>
                         {item.comentario}
                     </div>
                 </td>
