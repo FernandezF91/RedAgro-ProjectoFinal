@@ -218,9 +218,12 @@ class NuevoPuntoEntrega extends Component {
         } else if (this.state.campos["fecha_entrega"] && moment(this.state.campos["fecha_entrega"], 'DD/MM/YYYY').format('YYYY-MM-DD') === "Invalid date") {
             validaciones["fecha_entrega"] = "Formato inválido";
             showModal = true;
-        } else if (this.state.campos["fecha_entrega"] && moment(this.state.campos["fecha_entrega"]).diff(moment(), "days") <= 0) {
-            validaciones["fecha_entrega"] = "Fecha inválida";
-            showModal = true;
+        } else {
+            var cantidad = moment(this.state.campos["fecha_entrega"]).isAfter(moment());
+            if (cantidad === false) {
+                validaciones["fecha_entrega"] = "Fecha inválida";
+                showModal = true;
+            }
         }
 
         if (!this.state.campos["hora_inicio"]) {
@@ -283,7 +286,7 @@ class NuevoPuntoEntrega extends Component {
                 this.setState({
                     loading: true
                 });
-                const path = "http://"+window.$ip+":3000/redAgro/subir_fecha_entrega?id_punto_entrega=";
+                const path = "http://" + window.$ip + ":3000/redAgro/subir_fecha_entrega?id_punto_entrega=";
 
                 const path_final = path + _this.state.id_punto_entrega
 
@@ -358,7 +361,7 @@ class NuevoPuntoEntrega extends Component {
 
                     _this.setState({ lat: lat, lng: lng });
 
-                    const path = "http://"+window.$ip+":3000/redAgro/subir_punto_entrega?id_productor=";
+                    const path = "http://" + window.$ip + ":3000/redAgro/subir_punto_entrega?id_productor=";
 
                     let fecha_entrega = this.state.campos["fecha_entrega"]
                     let dia;
