@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Form, Button } from 'react-bootstrap';
 import Select from 'react-select';
-import { MDBCol, MDBTable, MDBTableHead, MDBTableBody } from 'mdbreact';
+import { MDBModal, MDBCol, MDBTable, MDBTableHead, MDBTableBody, MDBRow } from 'mdbreact';
 import '../diseños/EstilosGenerales.css';
 import '../diseños/Planificacion.css';
+import Loader from 'react-loader-spinner';
 
 const mostrarZonas = [
     { label: "CABA y Gran Buenos Aires", value: "CABA" },
@@ -53,28 +54,45 @@ class Planificacion extends Component {
             campos: {},
             alimentosAProducir: [],
             formOk: false,
-            visibleOk: false,
-            periodo: String,
-            zona: String,
-            id: this.props.id_productor
+            showModal: false,
+            periodo: "",
+            zona: "",
+            id: this.props.id_productor,
+            loading: false,
+            valueZona: [],
+            valuePeriodo: [],
+            validaciones: []
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
+        this.validarCampos = this.validarCampos.bind(this);
+        this.cerrarModalError = this.cerrarModalError.bind(this);
+    }
 
+    cerrarModalError() {
+        this.setState({
+            showModal: false
+        })
     }
 
     cambiosSelectZona(opt, a, value) {
-        //let campos = this.state.campos;
-        //campos[a.periodo] = 
-        this.zona = opt.value;
-        //this.setState({ periodo })
+        let zona = this.state.zona;
+        zona = opt.value;
+
+        this.setState({
+            zona,
+            valueZona: value
+        });
     }
 
     cambiosSelectPeriodo(opt, a, value) {
-        //let campos = this.state.campos;
-        //campos[a.periodo] = 
-        this.periodo = opt.value;
-        //this.setState({ periodo })
+        let periodo = this.state.periodo;
+        periodo = opt.value;
+
+        this.setState({
+            periodo,
+            valuePeriodo: value
+        });
     }
 
     mostrarPantallaPrincipal() {
@@ -84,46 +102,83 @@ class Planificacion extends Component {
         })
     }
 
+    validarCampos() {
+        var showModal = false;
+        this.setState({
+            validaciones: []
+        });
+        let validaciones = [];
+
+        if (this.state.zona === "") {
+            validaciones["zona"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (this.state.periodo === "") {
+            validaciones["periodo"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (showModal) {
+            this.setState({
+                validaciones: validaciones,
+                showModal: showModal,
+                mensaje: "Ups! Campos incompletos o incorrectos",
+                loading: false
+            });
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     handleSubmit(e) {
         var _this = this;
         e.preventDefault();
 
-        _this.setState({ alimentosAProducir: [] })
+        _this.setState({
+            alimentosAProducir: [],
+            loading: true
+        });
+        if (_this.validarCampos()) {
+            var path_principal = "http://"+window.$ip+":3000/redAgro/obtenerResultados?periodo=";
+            var periodo = this.periodo;
+            //_this.props.id_productor;
+            var provincia = this.zona;
+            // _this.state.campos["tipo_producto"];
+            var path_final = path_principal + periodo + "&provincia=" + provincia;
 
-        var path_principal = "http://localhost:3000/redAgro/obtenerResultados?periodo=";
-        var periodo = this.periodo;
-        //_this.props.id_productor;
-        var provincia = this.zona;
-        // _this.state.campos["tipo_producto"];
-        var path_final = path_principal + periodo + "&provincia=" + provincia;
+            //alert(path_final);
 
-        //alert(path_final);
+            fetch(path_final, {
+                method: "GET",
+                headers: {
+                    'Content-type': 'application/json;charset=UTF-8',
+                },
+            })
+                .then(function (response) {
+                    if (response.status !== 200) {
 
-        fetch(path_final, {
-            method: "GET",
-            headers: {
-                'Content-type': 'application/json;charset=UTF-8',
-            },
-        })
-            .then(function (response) {
-                if (response.status !== 200) {
-
-                    _this.setState({
-                        visible: true,
-                        titulo: "Error",
-                        mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
-                    });
-                    return;
-                }
-                response.json().then(
-                    function (response) {
-                        response.forEach(element => {
-                            _this.setState({ alimentosAProducir: [..._this.state.alimentosAProducir, element] });
+                        _this.setState({
+                            showModal: true,
+                            mensaje: "Ocurrió un error al generar la planificación. Por favor, reintentá en unos minutos.",
+                            loading: false
                         });
+                        return;
+                    }
+                    response.json().then(
+                        function (response) {
+                            response.forEach(element => {
+                                _this.setState({
+                                    alimentosAProducir: [..._this.state.alimentosAProducir, element],
+                                    loading: false
+                                });
+                            });
 
-                        //   mostrarProduccion(_this.state.alimentosAProducir)
-                    });
-            });
+                            //   mostrarProduccion(_this.state.alimentosAProducir)
+                        });
+                });
+        }
     }
 
     retornaLista() {
@@ -160,40 +215,72 @@ class Planificacion extends Component {
 
 
     render() {
+        if (this.state.loading)
+            return <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />;
+
         return (
             <div>
                 <div className="titulosPrincipales">Planificar producción</div>
                 <Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
 
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4" className="labelCampoTextarea">
+                        <MDBCol md="4" top>
                             <Form.Label column>Periodo</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Select
-                                value={this.state.valueCat}
-                                className="selectFormularios col-md-8"
-                                name="periodo"
-                                options={mostrarPeriodo}
-                                placeholder="Seleccione un item..."
-                                onChange={(opt, a, value) => this.cambiosSelectPeriodo(opt, a, value)}
-                            />
+                            <MDBRow>
+                                <Select
+                                    value={this.state.valuePeriodo}
+                                    className="selectFormularios col-md-8"
+                                    name="periodo"
+                                    options={mostrarPeriodo}
+                                    placeholder="Seleccione un item..."
+                                    onChange={(opt, a, value) => this.cambiosSelectPeriodo(opt, a, value)}
+                                />
+                                {
+                                    (this.state.validaciones["periodo"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                }
+                            </MDBRow>
+                            {
+                                (this.state.validaciones["periodo"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["periodo"]}</div>
+                                </MDBRow>
+                            }
                         </MDBCol>
                     </Form.Group>
-
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4" className="labelCampoTextarea">
+                        <MDBCol md="4" top>
                             <Form.Label column>Zona de venta</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
-                            <Select
-                                value={this.state.valueCat}
-                                className="selectFormularios col-md-8"
-                                name="zonas"
-                                options={mostrarZonas}
-                                placeholder="Seleccione un item..."
-                                onChange={(opt, a, value) => this.cambiosSelectZona(opt, a, value)}
-                            />
+                            <MDBRow>
+                                <Select
+                                    value={this.state.valueZona}
+                                    className="selectFormularios col-md-8"
+                                    name="zonas"
+                                    options={mostrarZonas}
+                                    placeholder="Seleccione un item..."
+                                    onChange={(opt, a, value) => this.cambiosSelectZona(opt, a, value)}
+                                />
+                                {
+                                    (this.state.validaciones["zona"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                }
+                            </MDBRow>
+                            {
+                                (this.state.validaciones["zona"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["zona"]}</div>
+                                </MDBRow>
+                            }
                         </MDBCol>
                     </Form.Group>
                     <div className="botones">
@@ -218,6 +305,19 @@ class Planificacion extends Component {
                         </div>
                     }
                 </div>
+                {
+
+                    <MDBModal isOpen={this.state.showModal} centered size="sm">
+                        <div className="modalMargenes" tabindex="0">
+                            <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                            <br />
+                            <i className="fas fa-exclamation-circle iconoModalError" />
+                            <br />
+                            <br />
+                            <h5>{this.state.mensaje}</h5>
+                        </div>
+                    </MDBModal>
+                }
             </div >
 
         );
