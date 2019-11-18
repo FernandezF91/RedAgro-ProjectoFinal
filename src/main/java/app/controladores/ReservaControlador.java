@@ -248,7 +248,10 @@ public class ReservaControlador {
 			notificarUsuario(reserva.getProductor().getUsuario(), "Nuevas reservas");
 
 			try {
-				String puntoEntrega = entregas.getDireccion() + " " + entregas.getCod_postal() + ". " + entregas.getLocalidad() + ", " + entregas.getProvincia();
+				String puntoEntrega = "";
+				if (entregas != null) {
+					puntoEntrega = entregas.getDireccion() + " " + entregas.getCod_postal() + ". " + entregas.getLocalidad() + ", " + entregas.getProvincia();
+				}					
 				usuario = mapeo.mapFromEntity(nuevaReserva).getConsumidor().getUsuario().getUsuario();
 				MailNuevaReserva mailConsumidor = new MailNuevaReserva(usuario, mapeo.mapFromEntity(nuevaReserva), puntoEntrega,
 						"Consumidor");

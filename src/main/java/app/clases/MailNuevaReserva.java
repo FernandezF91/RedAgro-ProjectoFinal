@@ -37,12 +37,12 @@ public class MailNuevaReserva extends MailSender {
 		
 
 		String formaDeRetiro = "Forma de retiro: " + reserva.getForma_retiro();
-		if(reserva.getForma_retiro() != "Acuerda con Productor") {
+		if(reserva.getForma_retiro().equals("Por punto de entrega")) {
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 			String fecha = dateFormat.format(reserva.getFecha());
 			formaDeRetiro = "Retira <i>" + reserva.getPersona_retiro() + " </i> a partir del día "+ fecha + " por el punto de entrega: " + entrega + ".";
 		} else {
-			formaDeRetiro = "Retira <i>" + reserva.getPersona_retiro() + " </i>. Elegiste coordinar el punto y fecha de entrega con el productor";
+			formaDeRetiro = "Retira <i>" + reserva.getPersona_retiro() + "</i>. Elegiste coordinar el punto y fecha de entrega con el productor";
 		}
 
 		if (rol == "Consumidor") {
