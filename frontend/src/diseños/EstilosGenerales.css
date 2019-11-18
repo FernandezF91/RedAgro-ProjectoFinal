@@ -497,7 +497,7 @@ input[type=text] {
 }
 
 .anchoColumnaTituloCarrito {
-    max-width: 800px;
-    min-width: 800px;
+    max-width: 650px;
+    min-width: 650px;
     margin: auto !important;
 }
