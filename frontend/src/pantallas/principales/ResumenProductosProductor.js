@@ -60,7 +60,7 @@ const ResumenProductosProductor = ({ listadoProductosProductor, resultadoRequest
                             <br />
                             <br />
                             <br />
-                            <h6 className="grey-text">Ups! Ocurrió un error al obtener el listado de productos. Reintentá en unos minutos!</h6>
+                            <h6 className="grey-text">Ups! Ocurrió un error al obtener el listado de productos. Por favor, reintentá en unos minutos!</h6>
                         </div>
                     )
             }

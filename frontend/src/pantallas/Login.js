@@ -147,7 +147,7 @@ class LoginForm extends Component {
                                     loading: false
                                 });
                             } else {
-                                let mensaje = "Ocurrió un error al obtener los datos de tu usuario. Reintentá en unos minutos.";
+                                let mensaje = "Ocurrió un error al obtener los datos de tu usuario. Por favor, reintentá en unos minutos.";
                                 _this.setState({
                                     showModal: true,
                                     mensaje: mensaje,

@@ -76,7 +76,7 @@ public class ArchivosControlador {
 
 			return new ResponseEntity<>("Imagen eliminada correctamente!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrió un error al eliminar la imagen. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al eliminar la imagen. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 

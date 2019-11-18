@@ -244,7 +244,7 @@ class NuevoProducto extends Component {
                         _this.setState({
                             showModal: true,
                             resultadoRequest: response.status,
-                            mensaje: "Ocurrió un error al crear el producto. Reintentá en unos minutos.",
+                            mensaje: "Ocurrió un error al crear el producto. Por favor, reintentá en unos minutos.",
                             loading: false
                         });
                         return;
@@ -413,7 +413,7 @@ class NuevoProducto extends Component {
                     _this.setState({
                         showModal: true,
                         resultadoRequest: response.status,
-                        mensaje: "Ocurrió un error al cargar el listado de tipos de producto. Reintentá en unos minutos."
+                        mensaje: "Ocurrió un error al cargar el listado de tipos de producto. Por favor, reintentá en unos minutos."
                     });
                     return;
                 }

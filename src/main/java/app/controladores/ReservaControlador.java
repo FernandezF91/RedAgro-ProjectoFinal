@@ -270,7 +270,7 @@ public class ReservaControlador {
 			return new ResponseEntity<>("Reserva #" + id_reserva + " creada correctamente!", HttpStatus.OK);
 
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrió un error al crear tu reserva. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al crear tu reserva. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -385,7 +385,7 @@ public class ReservaControlador {
 			return new ResponseEntity<>("Reserva #" + id_reserva + " actualizada!", HttpStatus.OK);
 
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrió un error al actualizar tu reserva. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al actualizar tu reserva. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -398,7 +398,7 @@ public class ReservaControlador {
 			return new ResponseEntity<>(cantidad, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
-					"Ocurrió un error al buscar las reservas pendientes. Reintentá en unos minutos.",
+					"Ocurrió un error al buscar las reservas pendientes. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

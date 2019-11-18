@@ -336,7 +336,7 @@ class EditarProducto extends Component {
                         console.log("Otro error");
                     }
                     _this.setState({
-                        mensaje: "Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
+                        mensaje: "Ocurrió un error al actualizar el producto. Por favor, reintentá en unos minutos.",
                         showModal: true,
                         loading: false,
                         resultadoRequest: 0
@@ -377,7 +377,7 @@ class EditarProducto extends Component {
                         console.log("Otro error");
                     }
                     this.setState({
-                        mensaje: "Ocurrió un error al eliminar la imagen. Reintentá en unos minutos.",
+                        mensaje: "Ocurrió un error al eliminar la imagen. Por favor, reintentá en unos minutos.",
                         showModal: true,
                         resultadoRequest: 0
                     })

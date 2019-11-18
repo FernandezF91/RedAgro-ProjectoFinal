@@ -97,7 +97,7 @@ public class CalificacionControlador {
 
 			return new ResponseEntity<>("Calificación guardada correctamente!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrió un error al guardar la calificación. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al guardar la calificación. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -130,7 +130,7 @@ public class CalificacionControlador {
 			return new ResponseEntity<>("Aún no hay calificaciones", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
-					"Ocurrió un error al calcular el promedio de las calificaciones. Reintentá en unos minutos.",
+					"Ocurrió un error al calcular el promedio de las calificaciones. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -144,7 +144,7 @@ public class CalificacionControlador {
 			return new ResponseEntity<>(listadoCalificacione, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
-					"Ocurrió un error al buscar las últimas calificaciones. Reintentá en unos minutos.",
+					"Ocurrió un error al buscar las últimas calificaciones. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -167,7 +167,7 @@ public class CalificacionControlador {
 			return new ResponseEntity<>("Aún no hay calificaciones", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
-					"Ocurrió un error al calcular el promedio de las calificaciones. Reintentá en unos minutos.",
+					"Ocurrió un error al calcular el promedio de las calificaciones. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

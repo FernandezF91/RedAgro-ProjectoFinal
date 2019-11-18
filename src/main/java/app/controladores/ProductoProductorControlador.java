@@ -216,7 +216,7 @@ public class ProductoProductorControlador {
 			return new ResponseEntity<>("El estado del producto se actualizó correctamente!", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
-					"Ocurrió un error al actualizar el estado del producto. Reintentá en unos minutos.",
+					"Ocurrió un error al actualizar el estado del producto. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -245,7 +245,7 @@ public class ProductoProductorControlador {
 
 			return new ResponseEntity<>("Producto actualizado correctamente!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrió un error al actualizar el producto. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al actualizar el producto. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

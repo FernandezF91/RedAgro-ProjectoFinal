@@ -72,7 +72,7 @@ public class LoginControlador {
 
 		} catch (Exception e) {
 			return new ResponseEntity<>(
-					"Ocurrió un error al obtener los datos de tu usuario. Reintentá en unos minutos.",
+					"Ocurrió un error al obtener los datos de tu usuario. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

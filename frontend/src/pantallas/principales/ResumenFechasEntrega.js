@@ -70,7 +70,7 @@ const ResumenPuntosEntrega = ({ listadoPuntosEntrega, resultadoRequest, vistaPro
                             <br />
                             <br />
                             <br />
-                            <h6 className="grey-text">Ups! Ocurrió un error al obtener las fechas de entrega. Reintentá en unos minutos!</h6>
+                            <h6 className="grey-text">Ups! Ocurrió un error al obtener las fechas de entrega. Por favor, reintentá en unos minutos!</h6>
                         </div>
                     )
             }

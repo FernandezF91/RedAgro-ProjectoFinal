@@ -69,7 +69,7 @@ const ResumenCalificaciones = ({ cantidadEstrellas, listadoCalificaciones, resul
                             <br />
                             <br />
                             <br />
-                            <h6 className="grey-text">Ups! Ocurrió un error al calcular el promedio de las calificaciones. Reintentá en unos minutos!</h6>
+                            <h6 className="grey-text">Ups! Ocurrió un error al calcular el promedio de las calificaciones. Por favor, reintentá en unos minutos!</h6>
                         </div>
                     )
             }

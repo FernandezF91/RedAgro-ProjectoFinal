@@ -255,7 +255,7 @@ class PreferenciasConsumidor extends Component {
                                         <i className="fas fa-exclamation-circle iconoModalError" />
                                         <br />
                                         <br />
-                                        <h5>Ocurrió un error al guardar las preferencias. Reintentá en unos minutos.</h5>
+                                        <h5>Ocurrió un error al guardar las preferencias. Por favor, reintentá en unos minutos.</h5>
                                     </div>
                                 )
                             }

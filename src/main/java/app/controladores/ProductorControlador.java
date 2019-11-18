@@ -58,7 +58,7 @@ public class ProductorControlador {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch (Exception e) {
-			return new ResponseEntity<>("Ocurrió un error al actualizar el Productor. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al actualizar el Productor. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

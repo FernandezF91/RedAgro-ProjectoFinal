@@ -38,7 +38,7 @@ public class OfertaControlador {
 
 			return new ResponseEntity<>("Oferta guardada correctamente!", HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Ocurrió un error al guardar la oferta. Reintentá en unos minutos.",
+			return new ResponseEntity<>("Ocurrió un error al guardar la oferta. Por favor, reintentá en unos minutos.",
 					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

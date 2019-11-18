@@ -274,7 +274,7 @@ class MiCuenta extends Component {
                             )
                     )
             ) : (
-                    <h4 className="textoMiCuenta"> Ups! Ocurrió un error al obtener las reservas pendientes. Reintentá en unos minutos!</h4>
+                    <h4 className="textoMiCuenta"> Ups! Ocurrió un error al obtener las reservas pendientes. Por favor, reintentá en unos minutos!</h4>
                 )
         ]
         return mensaje;
