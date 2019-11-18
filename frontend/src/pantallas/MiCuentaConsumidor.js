@@ -56,7 +56,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path_usuario = "http://localhost:3000/redAgro/obtenerCantidadReservasDisponiblesConsumidor?id_consumidor=" + _this.state.id_usuario;
+        var path_usuario = "http://"+window.$ip+":3000/redAgro/obtenerCantidadReservasDisponiblesConsumidor?id_consumidor=" + _this.state.id_usuario;
 
         fetch(path_usuario)
             .catch(err => console.error(err))
@@ -109,7 +109,7 @@ class MiCuenta extends Component {
             loading: true
         });
 
-        var path = "http://localhost:3000/redAgro/preferencias/obtenerProductos?id=" + _this.state.id_usuario;
+        var path = "http://"+window.$ip+":3000/redAgro/preferencias/obtenerProductos?id=" + _this.state.id_usuario;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {

@@ -116,7 +116,7 @@ class RecuperarContraseña extends Component {
 
         e.preventDefault();
 
-        var path = "http://localhost:3000/redAgro/modificar_contraseña?c=" + this.state.campos["contraseñaNueva"];
+        var path = "http://"+window.$ip+":3000/redAgro/modificar_contraseña?c=" + this.state.campos["contraseñaNueva"];
         path = path + "&id=" + this.state.id;
 
         var _this = this;

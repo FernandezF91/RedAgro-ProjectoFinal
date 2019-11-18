@@ -102,7 +102,7 @@ class PreferenciasConsumidor extends Component {
 
         var _this = this;
         //Guardo las nuevas preferencias
-        var path = "http://localhost:3000/redAgro/guardarPreferencias?id=" + this.state.id;
+        var path = "http://"+window.$ip+":3000/redAgro/guardarPreferencias?id=" + this.state.id;
         fetch(path, {
             method: "POST",
             headers: { 'Content-type': 'application/json;charset=UTF-8' },
@@ -120,7 +120,7 @@ class PreferenciasConsumidor extends Component {
 
     componentDidMount() {
         //Obtengo las preferencias del Consumidor
-        var path = "http://localhost:3000/redAgro/obtenerPreferencias?id=" + this.state.id;
+        var path = "http://"+window.$ip+":3000/redAgro/obtenerPreferencias?id=" + this.state.id;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })
@@ -134,7 +134,8 @@ class PreferenciasConsumidor extends Component {
                 });
             })
         //Cargo los productos 'Frutas'
-        fetch('http://localhost:3000/redAgro/obtener_tipo_productos?categoria=frutas')
+        path = "http://"+window.$ip+":3000/redAgro/obtener_tipo_productos?categoria=frutas";
+        fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })
             .then(data => {
@@ -148,7 +149,8 @@ class PreferenciasConsumidor extends Component {
                 });
             })
         //Cargo los productos 'verduras'
-        fetch('http://localhost:3000/redAgro/obtener_tipo_productos?categoria=verduras')
+        path = "http://"+window.$ip+":3000/redAgro/obtener_tipo_productos?categoria=verduras";
+        fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })
             .then(data => {
@@ -162,7 +164,8 @@ class PreferenciasConsumidor extends Component {
                 });
             })
         //Cargo los productos 'Otros'
-        fetch('http://localhost:3000/redAgro/obtener_tipo_productos?categoria=otros')
+        path = "http://"+window.$ip+":3000/redAgro/obtener_tipo_productos?categoria=otros";
+        fetch(path)
             .catch(err => console.error(err))
             .then(response => { return response.json(); })
             .then(data => {

@@ -97,7 +97,7 @@ class RecuperarEmail extends Component {
         e.preventDefault();
 
         if (_this.validarCampos()) {
-            const path = "http://localhost:3000/redAgro/recuperar_email?email=" + this.state.campos["emailuser"];
+            const path = "http://"+window.$ip+":3000/redAgro/recuperar_email?email=" + this.state.campos["emailuser"];
 
             fetch(path, {
                 method: "GET",

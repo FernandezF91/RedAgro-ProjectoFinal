@@ -42,7 +42,7 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
-        var path = "http://localhost:3000/redAgro/ProductosProductor/obtenerProductosPantallaInicial";
+        var path = "http://"+window.$ip+":3000/redAgro/ProductosProductor/obtenerProductosPantallaInicial";
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {

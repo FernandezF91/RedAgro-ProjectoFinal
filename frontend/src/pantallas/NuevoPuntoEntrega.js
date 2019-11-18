@@ -182,13 +182,13 @@ class NuevoPuntoEntrega extends Component {
         if (!this.state.campos["direccion"]) {
             validaciones["direccion_entrega"] = "Campo requerido";
             showModal = true;
-        } else if (this.state.campos["pais"] !== "Argentina") {
-            validaciones["direccion_entrega"] = "Fuera de los límites permitidos";
-            showModal = true;
         }
 
         if (!this.state.campos["pais"]) {
             validaciones["pais"] = "Campo requerido";
+            showModal = true;
+        } else if (this.state.campos["pais"] !== "Argentina") {
+            validaciones["direccion_entrega"] = "Fuera de los límites permitidos";
             showModal = true;
         }
 
@@ -283,7 +283,7 @@ class NuevoPuntoEntrega extends Component {
                 this.setState({
                     loading: true
                 });
-                const path = "http://localhost:3000/redAgro/subir_fecha_entrega?id_punto_entrega=";
+                const path = "http://"+window.$ip+":3000/redAgro/subir_fecha_entrega?id_punto_entrega=";
 
                 const path_final = path + _this.state.id_punto_entrega
 
@@ -358,7 +358,7 @@ class NuevoPuntoEntrega extends Component {
 
                     _this.setState({ lat: lat, lng: lng });
 
-                    const path = "http://localhost:3000/redAgro/subir_punto_entrega?id_productor=";
+                    const path = "http://"+window.$ip+":3000/redAgro/subir_punto_entrega?id_productor=";
 
                     let fecha_entrega = this.state.campos["fecha_entrega"]
                     let dia;
@@ -503,7 +503,7 @@ class NuevoPuntoEntrega extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>País</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -528,7 +528,7 @@ class NuevoPuntoEntrega extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>Provincia</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -552,7 +552,7 @@ class NuevoPuntoEntrega extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>Localidad</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -577,7 +577,7 @@ class NuevoPuntoEntrega extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>Dirección</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
@@ -602,7 +602,7 @@ class NuevoPuntoEntrega extends Component {
                         </MDBCol>
                     </Form.Group>
                     <Form.Group className="col-md-12">
-                        <MDBCol md="4">
+                        <MDBCol md="4" top>
                             <Form.Label column>Código postal</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">

@@ -179,7 +179,7 @@ class RegistroConsumidor extends Component {
     crearUsuario(e) {
         var _this = this;
 
-        var path = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
+        var path = "http://"+window.$ip+":3000/redAgro/validar_usuario_duplicado?mail=";
         path = path + _this.state.campos["mail"];
 
         fetch(path, {
@@ -202,7 +202,7 @@ class RegistroConsumidor extends Component {
                         }
                     )
                 } else if (response.status === 200) {
-                    fetch("http://localhost:3000/redAgro/usuario_consumidor", {
+                    fetch("http://"+window.$ip+":3000/redAgro/usuario_consumidor", {
                         method: "POST",
                         headers: {
                             'Content-type': 'application/json;charset=UTF-8',

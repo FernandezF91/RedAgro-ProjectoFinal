@@ -25,7 +25,7 @@ class ConfirmacionCuenta extends Component {
             })
         }
 
-        const path_principal = "http://localhost:3000/redAgro/confirmar_cuenta?id=";
+        const path_principal = "http://"+window.$ip+":3000/redAgro/confirmar_cuenta?id=";
         var id = this.state.id;
         const final_path = path_principal + +id;
 

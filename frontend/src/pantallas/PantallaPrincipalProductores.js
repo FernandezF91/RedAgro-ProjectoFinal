@@ -89,7 +89,7 @@ class PantallaPrincipalProductores extends Component {
 
     obtenerNotificaciones() {
         var _this = this;
-        var path = "http://localhost:3000/redAgro/AlertaNotificaciones/obtenerAlertasByUsuario?id_usuario=" + localStorage.getItem('myLocalStorageIdProductor');
+        var path = "http://"+window.$ip+":3000/redAgro/AlertaNotificaciones/obtenerAlertasByUsuario?id_usuario=" + localStorage.getItem('myLocalStorageIdProductor');
         fetch(path, {
             method: "GET",
             headers: {

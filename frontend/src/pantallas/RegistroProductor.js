@@ -53,7 +53,7 @@ class RegistroProductor extends Component {
             validaciones: []
         });
         let validaciones = [];
-        
+
         if (!this.state.campos["nombre"]) {
             validaciones["nombre"] = "Campo requerido";
             showModal = true;
@@ -181,7 +181,7 @@ class RegistroProductor extends Component {
 
     crearUsuario(e) {
         var _this = this;
-        var path = "http://localhost:3000/redAgro/validar_usuario_duplicado?mail=";
+        var path = "http://"+window.$ip+":3000/redAgro/validar_usuario_duplicado?mail=";
         path = path + _this.state.campos["email"];
 
         fetch(path, {
@@ -204,7 +204,7 @@ class RegistroProductor extends Component {
                         }
                     )
                 } else if (response.status === 200) {
-                    var pathCrear = "http://localhost:3000/redAgro/usuario_productor?razon_social=";
+                    var pathCrear = "http://"+window.$ip+":3000/redAgro/usuario_productor?razon_social=";
                     pathCrear = pathCrear + _this.state.campos["razonSocial"];
 
                     fetch(pathCrear, {

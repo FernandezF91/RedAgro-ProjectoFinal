@@ -69,7 +69,7 @@ class PantallaPrincipalconsumidores extends Component {
 
         _this.obtenerNotificaciones();
 
-        fetch("http://localhost:3000/redAgro/obtener_productos", {
+        fetch("http://"+window.$ip+":3000/redAgro/obtener_productos", {
             method: "GET",
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
@@ -221,7 +221,7 @@ class PantallaPrincipalconsumidores extends Component {
 
     obtenerNotificaciones() {
         var _this = this;
-        var path = "http://localhost:3000/redAgro/AlertaNotificaciones/obtenerAlertasByUsuario?id_usuario=" + localStorage.getItem('myLocalStorageIdConsumidor');
+        var path = "http://"+window.$ip+":3000/redAgro/AlertaNotificaciones/obtenerAlertasByUsuario?id_usuario=" + localStorage.getItem('myLocalStorageIdConsumidor');
         fetch(path, {
             method: "GET",
             headers: {

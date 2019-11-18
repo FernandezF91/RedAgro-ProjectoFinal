@@ -69,7 +69,7 @@ class Geolocalizacion extends Component {
 
     componentDidMount() {
         var _this = this;
-        fetch("http://localhost:3000/redAgro/puntos_entrega_productor", {
+        fetch("http://"+window.$ip+":3000/redAgro/puntos_entrega_productor", {
             method: "GET",
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',

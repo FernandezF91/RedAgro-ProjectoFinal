@@ -72,7 +72,7 @@ class ModificarContraseña extends Component {
             loading: true
         });
 
-        const path_principal = "http://localhost:3000/redAgro/usuario/modificar_contraseña?u=";
+        const path_principal = "http://"+window.$ip+":3000/redAgro/usuario/modificar_contraseña?u=";
         var usuario = this.props.usuario.usuario;
         var passwordActual = this.state.fields["contraseñaActual"];
         var password = this.state.fields["contraseñaNueva"];

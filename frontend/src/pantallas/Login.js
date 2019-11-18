@@ -106,7 +106,7 @@ class LoginForm extends Component {
         e.preventDefault();
 
         if (_this.validarCampos()) {
-            const path_principal = "http://localhost:3000/redAgro/login/usuario?u=";
+            const path_principal = "http://"+window.$ip+":3000/redAgro/login/usuario?u=";
 
             var username = this.state.campos["username"];
             var password = this.state.campos["password"];

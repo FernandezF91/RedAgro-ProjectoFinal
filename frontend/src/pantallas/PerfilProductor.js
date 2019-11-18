@@ -40,7 +40,7 @@ class PerfilProductor extends Component {
     }
 
     componentDidMount() {
-        var path = "http://localhost:3000/redAgro/usuario/obtenerUsuarioByMail?usuario=" + this.state.nombrePerfil;
+        var path = "http://"+window.$ip+":3000/redAgro/usuario/obtenerUsuarioByMail?usuario=" + this.state.nombrePerfil;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -117,7 +117,7 @@ class PerfilProductor extends Component {
     }
 
     obtenerProductos(id_productor) {
-        var path = "http://localhost:3000/redAgro/obtenerProductosProductor?id=" + id_productor;
+        var path = "http://"+window.$ip+":3000/redAgro/obtenerProductosProductor?id=" + id_productor;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -173,7 +173,7 @@ class PerfilProductor extends Component {
     }
 
     obtenerCalificaciones(id_productor) {
-        var path = "http://localhost:3000/redAgro/obtenerPromedioCalificaciones?id_productor=" + id_productor;
+        var path = "http://"+window.$ip+":3000/redAgro/obtenerPromedioCalificaciones?id_productor=" + id_productor;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -208,7 +208,7 @@ class PerfilProductor extends Component {
     }
 
     obtenerCantidadDeReservasCalificadas(id_productor) {
-        var path = "http://localhost:3000/redAgro/obtenerCantidadDeReservasCalificadas?id_productor=" + id_productor;
+        var path = "http://"+window.$ip+":3000/redAgro/obtenerCantidadDeReservasCalificadas?id_productor=" + id_productor;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -250,7 +250,7 @@ class PerfilProductor extends Component {
         _this.setState({
             loading: true
         });
-        var path = "http://localhost:3000/redAgro/obtenerEntregasProximoMes?id_productor=" + id_productor;
+        var path = "http://"+window.$ip+":3000/redAgro/obtenerEntregasProximoMes?id_productor=" + id_productor;
 
         fetch(path)
             .catch(err => console.error(err))

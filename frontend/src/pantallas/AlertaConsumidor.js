@@ -38,7 +38,7 @@ class AlertaConsumidor extends Component {
 
     componentDidMount() {
         var _this = this;
-        var path = "http://localhost:3000/redAgro/obtenerConfiguracionAlertas?id_usuario=" + this.state.id;
+        var path = "http://"+window.$ip+":3000/redAgro/obtenerConfiguracionAlertas?id_usuario=" + this.state.id;
         fetch(path)
             .catch(err => console.error(err))
             .then(response => {
@@ -211,7 +211,7 @@ class AlertaConsumidor extends Component {
             loading: true
         })
 
-        var path = "http://localhost:3000/redAgro/guardarConfiguracionAlertas?id_usuario=" + this.state.id;
+        var path = "http://"+window.$ip+":3000/redAgro/guardarConfiguracionAlertas?id_usuario=" + this.state.id;
         fetch(path, {
             method: "POST",
             headers: { 'Content-type': 'application/json;charset=UTF-8' },

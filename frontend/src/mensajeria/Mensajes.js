@@ -36,7 +36,7 @@ class Mensajes extends React.Component {
     };
 
     sendNotification = () => {
-        var path = "http://localhost:3000/redAgro/Alertas/NuevoMensaje?id_Emisor=" + this.setState.usuarioEmisor.id + "&id_Receptor=" + this.setState.usuarioReceptor.id;
+        var path = "http://"+window.$ip+":3000/redAgro/Alertas/NuevoMensaje?id_Emisor=" + this.setState.usuarioEmisor.id + "&id_Receptor=" + this.setState.usuarioReceptor.id;
         fetch(path, {
             method: "POST",
             headers: { 'Content-type': 'application/json;charset=UTF-8' }
