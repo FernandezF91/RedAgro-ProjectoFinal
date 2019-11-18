@@ -372,14 +372,15 @@ input[type=text] {
     max-height: 270px !important;
 }
 
+.columnaComentario {
+    max-width: 150px !important;
+    min-width: 150px !important;
+}
+
 .table-wrapper-scroll-y {
     max-height: 270px !important;
     overflow-y: auto;
     overflow-x: hidden !important;
-}
-
-.alturaTablaCalificaciones {
-    max-height: 240px !important;
 }
 
 .table-wrapper-scroll-y::-webkit-scrollbar {
@@ -499,5 +500,16 @@ input[type=text] {
 .anchoColumnaTituloCarrito {
     max-width: 650px;
     min-width: 650px;
+    margin: auto !important;
+}
+
+.botonesCheckout {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+.anchoColumnaProductoCheckout {
+    max-width: 100px;
+    min-width: 100px;
     margin: auto !important;
 }

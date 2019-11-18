@@ -270,7 +270,7 @@ class ListadoReservas extends Component {
             loading: true
         })
 
-        var path = "http://localhost:3000/redAgro/actualizarEstadoReserva?id_reserva=" + _this.state.idReservaActualizar + "&id_estado=" + _this.state.estadoSeleccionado.value+"&rol="+this.props.usuario.rol;
+        var path = "http://localhost:3000/redAgro/actualizarEstadoReserva?id_reserva=" + _this.state.idReservaActualizar + "&id_estado=" + _this.state.estadoSeleccionado.value + "&rol=" + this.props.usuario.rol;
         fetch(path, {
             method: "PUT"
         })
@@ -523,7 +523,7 @@ class ListadoReservas extends Component {
                     >
                         <MDBModalHeader>
                             Calificá al productor
-                            <div className="cruzCerrar">
+                            <div className="cruzCerrar" tabIndex="0">
                                 <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalCalificacion} />
                             </div>
                         </MDBModalHeader>

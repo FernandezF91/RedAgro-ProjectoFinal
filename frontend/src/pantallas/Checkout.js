@@ -615,13 +615,17 @@ class Checkout extends Component {
                                 <Button
                                     variant="light"
                                     disabled={activeStep === 0}
-                                    onClick={this.handleBack}>
+                                    onClick={this.handleBack}
+                                    className="botonesCheckout"
+                                >
                                     Atras
-                                    </Button>
+                                </Button>
                                 <Button
                                     variant="success"
                                     type="submit"
-                                    onClick={this.handleNext}>
+                                    onClick={this.handleNext}
+                                    className="botonesCheckout"
+                                >
                                     {activeStep === pasos.length - 1 ? 'Finalizar' : 'Continuar'}
                                 </Button>
                             </div>

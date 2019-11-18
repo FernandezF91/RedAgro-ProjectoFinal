@@ -97,10 +97,14 @@
 
 .botonIzquierda {
     float: left;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
 }
 
 .botonDerecha {
     float: right;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
 }
 
 .precioCheckout {
