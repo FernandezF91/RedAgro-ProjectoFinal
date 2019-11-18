@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,12 +24,19 @@ public class HistoricoControlador {
 
 	@CrossOrigin(origins = "*")
 	@PostMapping(path = "redAgro/uploadFile")
-	public void submit(@RequestParam("file") MultipartFile file) throws IOException {
-		HistoricoMapper mapper = new HistoricoMapper();
-		ArrayList<EntidadHistorico> historicos = mapper.mapToEntity(file);
-		historicos.forEach(h -> historicoDao.save(h));
-		mapper.escribirCsv(historicoDao.findAll());
-		// insertarHistorico(h.getCantidad_vendida(), h.getTipo_certificacion(),
-		// h.getTipo_produccion(), h.getProducto().getId(), h.getProductor().getId()));
+	public ResponseEntity<String> submit(@RequestParam("file") MultipartFile file) throws IOException {
+		HistoricoMapper mapper = new HistoricoMapper();	
+			
+		try{
+			ArrayList<EntidadHistorico> historicos = mapper.mapToEntity(file);	
+			historicos.forEach(h -> historicoDao.save(h));
+			mapper.escribirCsv(historicoDao.findAll());
+			return new ResponseEntity<>("Archivo guardado correctamente", HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity<>(
+					"Ocurrió un error al guardar el archivo. Datos incorrectos.",
+					HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
 	}
 }
