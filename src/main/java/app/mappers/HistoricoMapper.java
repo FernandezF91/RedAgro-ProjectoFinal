@@ -33,6 +33,7 @@ public class HistoricoMapper {
 		File file = convertMultiPartToFile(multiPartFile);
 		BufferedReader csvReader = new BufferedReader (new FileReader (file));
 		ArrayList<EntidadHistorico> historicos = new ArrayList<EntidadHistorico>();
+		try {
 		while ((row = csvReader.readLine()) != null) {
 		    String[] data = row.split(",");
 			EntidadHistorico entidad = new EntidadHistorico ();
@@ -41,14 +42,11 @@ public class HistoricoMapper {
 			entidad.setCantidad_vendida(Integer.parseInt(data[2]));
 			entidad.setMes(Integer.parseInt(data[3]));
 			entidad.setZona(data[4]);
-//			EntidadProducto producto = new EntidadProducto();
-//			producto.setId(Integer.parseInt(data[3]));
-//			entidad.setProducto(producto);
-//			EntidadProductor productor = new EntidadProductor();
-//			producto.setId(Integer.parseInt(data[4]));
-//			entidad.setProductor(productor);
-		    
 			historicos.add(entidad);
+		}
+		}catch(smile.SMILEException e) {
+			
+			
 		}
 		
 		return historicos;

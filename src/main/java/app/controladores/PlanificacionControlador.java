@@ -28,14 +28,15 @@ public class PlanificacionControlador {
 		
 		List<String> lista = new ArrayList<String>();
 		Planificador p = new Planificador(periodo, provincia);
-		p.crearRed();
-				lista = p.obtenerResultados();
-				p.escribirResultados();
-//				p.run(lista);
-//				p.tutorial2();
-
 		
+		if(p.crearRed() == true) {
+				
+		lista = p.obtenerResultados();
+				
+				return lista;
+		
+		}
+		lista.add("No hay suficiente información para generar una planificación");
 		return lista;
 	}
 }
-

@@ -57,7 +57,7 @@ public class MailActualizacionReserva extends MailSender {
 					+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
 					+ "<br> <br>"
 					+ "Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Tu reserva #" + reserva.getId()
-					+ " se encuentra finalizada! Muchas gracias por ser parte de Cultura verde :) </p>" + "<br>Saludos,"
+					+ " se encuentra finalizada! Muchas gracias por ser parte de Cultura Verde :) </p>" + "<br>Saludos,"
 					+ "<br>" + "Equipo de Cultura Verde");
 			this.setAsunto("Tu reserva #" + reserva.getId() + " fue actualizada!");
 			break;

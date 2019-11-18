@@ -57,6 +57,6 @@ public interface ProductoProductorDao extends JpaRepository<EntidadProductoProdu
 	@Query(value = "SELECT * FROM Producto_Productor p where p.producto_id = ?1 ", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductosByProductoId(long id);
 	
-	@Query(value = "SELECT * FROM Producto_Productor ORDER BY id DESC LIMIT 30 ", nativeQuery = true)
+	@Query(value = "SELECT * FROM Producto_Productor WHERE stock > 0 AND (fecha_vencimiento >= CURDATE()) ORDER BY id DESC LIMIT 30 ", nativeQuery = true)
 	List<EntidadProductoProductor> obtenerProductosPantallaSinLogin();
 }
