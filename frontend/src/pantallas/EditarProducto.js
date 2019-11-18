@@ -273,7 +273,7 @@ class EditarProducto extends Component {
             showModal = true;
         }
 
-        if (!this.state.campos["fecha_vencimiento"]) {
+        if (this.state.productoAEditar.fechaDeVencimiento !== null && !this.state.campos["fecha_vencimiento"]) {
             validaciones["fecha_vencimiento"] = "Campo requerido";
             showModal = true;
         } else if (this.state.campos["fecha_vencimiento"] !== this.state.productoAEditar.fechaDeVencimiento) {
@@ -716,15 +716,19 @@ class EditarProducto extends Component {
                                     onChange={(e) => this.cambiosFecha(e)}
                                 />
                                 {
-                                    (this.state.validaciones["fecha_vencimiento"]) &&
-                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                    this.state.productoAEditar.fechaDeVencimiento !== null ?
+                                        (this.state.validaciones["fecha_vencimiento"]) &&
+                                        <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                        : " "
                                 }
                             </MDBRow>
                             {
-                                (this.state.validaciones["fecha_vencimiento"]) &&
-                                <MDBRow>
-                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["fecha_vencimiento"]}</div>
-                                </MDBRow>
+                                this.state.productoAEditar.fechaDeVencimiento !== null ?
+                                    (this.state.validaciones["fecha_vencimiento"]) &&
+                                    <MDBRow>
+                                        <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["fecha_vencimiento"]}</div>
+                                    </MDBRow>
+                                    : ""
                             }
                         </MDBCol>
                     </Form.Group>
