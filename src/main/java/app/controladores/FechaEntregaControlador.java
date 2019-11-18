@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +25,7 @@ import app.modelos.EntidadFechaEntrega;
 import app.modelos.EntidadPuntoEntrega;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class FechaEntregaControlador {
 
 	@Autowired
@@ -32,7 +35,11 @@ public class FechaEntregaControlador {
 	FechaEntregaDao fechaEntregaDAO;
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/subir_fecha_entrega")
+	@RequestMapping(
+			  value = "/subir_fecha_entrega", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/subir_fecha_entrega")
 	public void obtenerPuntosDeEntregaProductores(@RequestBody EntidadFechaEntrega entidad,
 			@RequestParam long id_punto_entrega) {
 
@@ -47,7 +54,11 @@ public class FechaEntregaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/fechas_punto_entrega")
+	@RequestMapping(
+			  value = "/fechas_punto_entrega", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/fechas_punto_entrega")
 	public List<FechaEntrega> obtenerFechasPuntoDeEntrega(@RequestParam long id_punto_entrega) {
 
 		List<EntidadFechaEntrega> ef = new ArrayList<EntidadFechaEntrega>();
@@ -65,7 +76,11 @@ public class FechaEntregaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/fechas_entrega/filtradasPor")
+	@RequestMapping(
+			  value = "/fechas_entrega/filtradasPor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/fechas_entrega/filtradasPor")
 	public List<FechaEntrega> obtenerFechasFiltradasPtoEntrega(@RequestParam long id_punto_entrega,
 			@RequestParam String fecha) {
 
@@ -81,7 +96,11 @@ public class FechaEntregaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerEntregasProximoMes")
+	@RequestMapping(
+			  value = "/obtenerEntregasProximoMes", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtenerEntregasProximoMes")
 	public ResponseEntity<Object> obtenerEntregasProximoMes(@RequestParam long id_productor) {
 		try {
 			List<Object[]> resultados = fechaEntregaDAO.obtenerEntregasProximoMes(id_productor);

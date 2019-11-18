@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +33,7 @@ import app.clases.Producto;
 import app.clases.ProductoProductor;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class PreferenciaControlador {
 
 	@Autowired
@@ -44,7 +47,11 @@ public class PreferenciaControlador {
 	ProductoProductorDao productoProductorDao;
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerPreferencias")
+	@RequestMapping(
+			  value = "/obtenerPreferencias", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtenerPreferencias")
 	@ResponseBody
 	public ArrayList<Preferencia> obtenerPreferencias(@RequestParam Long id) {
 		ArrayList<EntidadPreferencia> resultados = preferenciaDAO.obtenerPreferenciasConsumidor(id);
@@ -54,7 +61,11 @@ public class PreferenciaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/guardarPreferencias")
+	@RequestMapping(
+			  value = "/guardarPreferencias", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/guardarPreferencias")
 	public ResponseEntity<String> guardarPreferencias(@RequestParam long id,
 			@RequestBody ArrayList<Producto> ProductosSeleccionados) {
 
@@ -114,7 +125,11 @@ public class PreferenciaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/preferencias/obtenerProductos")
+	@RequestMapping(
+			  value = "/preferencias/obtenerProductos", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/preferencias/obtenerProductos")
 	public List<ProductoProductor> obtenerProductosDePreferencias(@RequestParam Long id) {
 		ArrayList<Preferencia> preferencias = this.obtenerPreferencias(id);
 		List<ProductoProductor> productos = new ArrayList<ProductoProductor>();

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class UsuarioControlador {
 
 //Los controladores son los que van a recibir la petición del front, es decir del fetch.
@@ -57,7 +60,11 @@ public class UsuarioControlador {
 	ProductorDao productorDAO;
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/usuario_consumidor")
+	@RequestMapping(
+			  value = "/usuario_consumidor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/usuario_consumidor")
 	public void agregarUsuarioConsumidor(@RequestBody EntidadUsuario usuario) {
 
 		String nombre = usuario.getNombre().substring(0, 1).toUpperCase() + usuario.getNombre().substring(1);
@@ -92,7 +99,11 @@ public class UsuarioControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/registrar_token")
+	@RequestMapping(
+			  value = "/registrar_token", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/registrar_token")
 	public void registrarToken(@RequestBody EntidadUsuario usuario) {
 		Optional<EntidadUsuario> optionalUser = usuarioDAO.findById(usuario.getId());
 		optionalUser.map(user -> {
@@ -102,7 +113,11 @@ public class UsuarioControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/usuario_productor")
+	@RequestMapping(
+			  value = "/usuario_productor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/usuario_productor")
 	public void agregarUsuarioProductor(@RequestBody EntidadUsuario usuario, @RequestParam String razon_social) {
 
 		EntidadUsuario userNuevo = new EntidadUsuario();
@@ -141,7 +156,11 @@ public class UsuarioControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PutMapping(path = "redAgro/update_usuario")
+	@RequestMapping(
+			  value = "/update_usuario", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT})
+	//@PutMapping(path = "redAgro/update_usuario")
 	public void updateUsuario(@RequestBody EntidadUsuario usuario, @RequestParam Long id) {
 
 		usuarioDAO.actualizaUsuario(usuario.getNombre(), usuario.getApellido(), usuario.getTelefono(),
@@ -149,7 +168,11 @@ public class UsuarioControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/validar_usuario_duplicado")
+	@RequestMapping(
+			  value = "/validar_usuario_duplicado", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/validar_usuario_duplicado")
 	public ResponseEntity<String> validarUsuarioDuplicado(@RequestParam String mail) {
 		UsuarioMapper userMapper = new UsuarioMapper();
 		EntidadUsuario usuario = usuarioDAO.validarUsuarioDuplicado(mail);
@@ -171,7 +194,11 @@ public class UsuarioControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PutMapping(path = "redAgro/modificar_contraseña")
+	@RequestMapping(
+			  value = "/modificar_contraseña", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT})
+	//@PutMapping(path = "redAgro/modificar_contraseña")
 	public void modificacionContraseña(@RequestParam String c, @RequestParam Long id) {
 
 		// Hasheo contraseña
@@ -181,7 +208,11 @@ public class UsuarioControlador {
 	}
 	
 	@CrossOrigin(origins = "*")
-	@PutMapping(path = "redAgro/usuario/modificar_contraseña")
+	@RequestMapping(
+			  value = "/usuario/modificar_contraseña", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT})
+	//@PutMapping(path = "redAgro/usuario/modificar_contraseña")
 	public ResponseEntity<Object> modificarContraseña(@RequestParam String u, @RequestParam String ca, @RequestParam String cn) {
 		
 		String passwordHasheada = Hashing.sha256().hashString(ca, StandardCharsets.UTF_8).toString();
@@ -204,7 +235,11 @@ public class UsuarioControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/get_tipo_usuario")
+	@RequestMapping(
+			  value = "/usuario/get_tipo_usuario", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.GET })
+	//@GetMapping(path = "redAgro/get_tipo_usuario")
 	public String obtenerTipoUsuario(@RequestParam long id) {
 		String tipoUsuario = usuarioDAO.obtenerTipoUsuario(id);
 		return tipoUsuario;
@@ -213,13 +248,21 @@ public class UsuarioControlador {
 
 
 	@CrossOrigin(origins = "*")
-	@DeleteMapping(path = "redAgro/borrar_usuario/{id}")
+	@RequestMapping(
+			  value = "/borrar_usuario/{id}", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.DELETE })
+	//@DeleteMapping(path = "redAgro/borrar_usuario/{id}")
 	public void deleteItem(@PathVariable long id) {
 		usuarioDAO.deleteById(id);
 	}
 
 	@CrossOrigin(origins = "*")
-	@PutMapping(path = "redAgro/confirmar_cuenta")
+	@RequestMapping(
+			  value = "/confirmar_cuenta", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT })
+	//@PutMapping(path = "redAgro/confirmar_cuenta")
 	public void confirmarCuenta(@RequestParam Long id) {
 
 		usuarioDAO.confirmarCuenta(id);
@@ -227,7 +270,11 @@ public class UsuarioControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/recuperar_email")
+	@RequestMapping(
+			  value = "/recuperar_email", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET })
+	//@GetMapping(path = "redAgro/recuperar_email")
 	public ResponseEntity<Object> confirmarCuenta(@RequestParam String email) {
 
 		EntidadUsuario eu = new EntidadUsuario();

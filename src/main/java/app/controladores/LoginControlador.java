@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,13 +23,18 @@ import app.mappers.UsuarioMapper;
 import app.modelos.EntidadUsuario;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class LoginControlador {
 
 	@Autowired
 	UsuarioDao usuarioDAO;
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/login")
+	@RequestMapping(
+			  value = "/login", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/login")
 	@ResponseBody
 	public Usuario autenticacion(@RequestParam String u, @RequestParam String c) {
 
@@ -44,7 +51,11 @@ public class LoginControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/login/usuario")
+	@RequestMapping(
+			  value = "/login/usuario", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/login/usuario")
 	@ResponseBody
 	public ResponseEntity<Object> loginUsuario(@RequestParam String u, @RequestParam String c) {
 		

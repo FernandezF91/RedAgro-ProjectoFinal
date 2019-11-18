@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +33,7 @@ import app.clases.Usuario;
 import app.clases.MailMensajes;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class AlertaUsuarioControlador {
 
 	@Autowired
@@ -40,7 +43,11 @@ public class AlertaUsuarioControlador {
 	UsuarioDao usuarioDAO;
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerConfiguracionAlertas")
+	@RequestMapping(
+			  value = "/obtenerConfiguracionAlertas", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtenerConfiguracionAlertas")
 	@ResponseBody
 	public ArrayList<AlertaUsuario> obtenerConfiguracionAlertas(@RequestParam long id_usuario) {
 		ArrayList<EntidadAlertaUsuario> resultados = alertaUsuarioDAO.obtenerConfiguracionAlertas(id_usuario);
@@ -50,7 +57,11 @@ public class AlertaUsuarioControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/guardarConfiguracionAlertas")
+	@RequestMapping(
+			  value = "/guardarConfiguracionAlertas", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT,RequestMethod.POST})
+	//@PostMapping(path = "redAgro/guardarConfiguracionAlertas")
 	public ResponseEntity<String> guardarConfiguracionAlertas(@RequestParam long id_usuario,
 			@RequestBody ArrayList<AlertaConfiguracion> alertasAGuardar) {
 
@@ -88,7 +99,11 @@ public class AlertaUsuarioControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/Alertas/NuevoMensaje")
+	@RequestMapping(
+			  value = "/Alertas/NuevoMensaje", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/Alertas/NuevoMensaje")
 	public ResponseEntity<String> notificarNuevoMensaje(@RequestParam long id_Emisor, @RequestParam long id_Receptor) {
 
 		UsuarioMapper userMapper = new UsuarioMapper();

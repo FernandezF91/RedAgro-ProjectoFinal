@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +33,9 @@ import app.modelos.EntidadProducto;
 import app.modelos.EntidadProductoProductor;
 import app.modelos.EntidadProductor;
 
+
 @RestController
+@RequestMapping(value="/redAgro")
 public class ProductoProductorControlador {
 
 	@Autowired
@@ -50,7 +54,11 @@ public class ProductoProductorControlador {
 	UsuarioDao usuarioDAO;
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
+	@RequestMapping(
+			  value = "/usuario_productor/nuevo_producto", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/usuario_productor/nuevo_producto")
 	public Long agregarProducto(@RequestBody EntidadProductoProductor producto, @RequestParam long id_productor,
 			@RequestParam long id_producto) {
 
@@ -110,7 +118,11 @@ public class ProductoProductorControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerProductosProductor")
+	@RequestMapping(
+			  value = "/obtenerProductosProductor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtenerProductosProductor")
 	public List<ProductoProductor> obtenerProductosProductor(@RequestParam long id) {
 
 		List<EntidadProductoProductor> listaProductos = productoProductorDao.obtenerProductosByProductor(id);
@@ -120,7 +132,11 @@ public class ProductoProductorControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerProductosProductorBusqueda")
+	@RequestMapping(
+			  value = "/obtenerProductosProductorBusqueda", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtenerProductosProductorBusqueda")
 	public List<ProductoProductor> obtenerProductosProductorBusqueda(@RequestParam long id) {
 
 		List<EntidadProductoProductor> listaProductos = productoProductorDao.obtenerProductosProductorBusqueda(id);
@@ -130,7 +146,11 @@ public class ProductoProductorControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerProductos")
+	@RequestMapping(
+			  value = "/obtenerProductos", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtenerProductos")
 	public List<ProductoProductor> obtenerProductos(@RequestParam String busqueda) {
 
 		List<EntidadProducto> p = new ArrayList<EntidadProducto>();
@@ -154,7 +174,11 @@ public class ProductoProductorControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerProductosPorLista")
+	@RequestMapping(
+			  value = "/obtenerProductosPorLista", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtenerProductosPorLista")
 	public List<ProductoProductor> obtenerProductosPorLista(@RequestParam List<Long> idProducto) {
 
 		List<ProductoProductor> listado = new ArrayList<ProductoProductor>();
@@ -170,7 +194,11 @@ public class ProductoProductorControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerProducto/{id}")
+	@RequestMapping(
+			  value = "/obtenerProducto/{id}", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+    //@GetMapping(path = "redAgro/obtenerProducto/{id}")
 	public ProductoProductor obtenerProductosPorId(@PathVariable Long id) {
 
 		ProductoProductorMapper productoMapper = new ProductoProductorMapper();
@@ -180,7 +208,11 @@ public class ProductoProductorControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerProductosARevisar")
+	@RequestMapping(
+			  value = "/obtenerProductosARevisar", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtenerProductosARevisar")
 	public ResponseEntity<Object> obtenerProductosARevisar(@RequestParam long id_productor) {
 		try {
 			List<EntidadProductoProductor> resultados = productoProductorDao.obtenerProductosARevisar(id_productor);
@@ -194,7 +226,11 @@ public class ProductoProductorControlador {
 	}
 
 	@CrossOrigin("*")
-	@GetMapping(path = "redAgro/ProductosProductor/obtenerProductosPantallaInicial")
+	@RequestMapping(
+			  value = "/ProductosProductor/obtenerProductosPantallaInicial", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/ProductosProductor/obtenerProductosPantallaInicial")
 	public ResponseEntity<Object> obtenerProductosPantallaInicial() {
 		try {
 			List<EntidadProductoProductor> resultados = productoProductorDao.obtenerProductosPantallaSinLogin();
@@ -208,7 +244,11 @@ public class ProductoProductorControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PutMapping(path = "redAgro/actualizarEstadoProducto")
+	@RequestMapping(
+			  value = "/actualizarEstadoProducto", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT})
+	//@PutMapping(path = "redAgro/actualizarEstadoProducto")
 	public ResponseEntity<String> actualizarEstadoProducto(@RequestParam long id_producto_productor,
 			@RequestParam boolean activo) {
 		try {
@@ -222,7 +262,11 @@ public class ProductoProductorControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/actualizarProductoProductor")
+	@RequestMapping(
+			  value = "/actualizarProductoProductor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.POST})
+	//@PostMapping(path = "redAgro/actualizarProductoProductor")
 	public ResponseEntity<String> actualizarProductoProductor(@RequestBody EntidadProductoProductor producto,
 			@RequestParam long id_producto_productor) {
 		try {

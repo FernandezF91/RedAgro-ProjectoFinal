@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +34,7 @@ import app.modelos.EntidadCalificacion;
 import app.modelos.EntidadUsuario;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class CalificacionControlador {
 
 	@Autowired
@@ -44,7 +47,11 @@ public class CalificacionControlador {
 	AlertaNotificacionesDao alertaNotiDAO;
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/guardarCalificacion")
+	@RequestMapping(
+			  value = "/guardarCalificacion", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/guardarCalificacion")
 	public ResponseEntity<String> guardarCalificacion(@RequestParam long reserva_id,
 			@RequestBody EntidadCalificacion calificacionAGuardar) {
 
@@ -103,7 +110,11 @@ public class CalificacionControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerCalificaciones")
+	@RequestMapping(
+			  value = "/obtenerCalificaciones", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.GET})
+	//@GetMapping(path = "redAgro/obtenerCalificaciones")
 	public List<ListadoCalificaciones> obtenerCalificaciones(@RequestParam long id_productor) {
 
 		List<Object[]> resultados = calificacionDao.obtenerCalificaciones(id_productor);
@@ -120,7 +131,11 @@ public class CalificacionControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerPromedioCalificaciones")
+	@RequestMapping(
+			  value = "/obtenerPromedioCalificaciones", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.GET})
+	//@GetMapping(path = "redAgro/obtenerPromedioCalificaciones")
 	public ResponseEntity<Object> obtenerPromedioCalificaciones(@RequestParam long id_productor) {
 		try {
 			String resultado = calificacionDao.obtenerPromedioCalificaciones(id_productor);
@@ -136,7 +151,11 @@ public class CalificacionControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerUltimasCalificacionesPorProductor")
+	@RequestMapping(
+			  value = "/obtenerUltimasCalificacionesPorProductor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.GET})
+	//@GetMapping(path = "redAgro/obtenerUltimasCalificacionesPorProductor")
 	public ResponseEntity<Object> obtenerUltimasCalificacionesPorProductor(@RequestParam long id_productor) {
 		try {
 			List<EntidadCalificacion> listadoCalificacione = calificacionDao
@@ -150,7 +169,11 @@ public class CalificacionControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerCantidadDeReservasCalificadas")
+	@RequestMapping(
+			  value = "/obtenerCantidadDeReservasCalificadas", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.GET})
+	//@GetMapping(path = "redAgro/obtenerCantidadDeReservasCalificadas")
 	public ResponseEntity<Object> obtenerCantidadDeReservasCalificadas(@RequestParam long id_productor) {
 		try {
 			String resultado = calificacionDao.obtenerCantidadDeReservasCalificadas(id_productor);

@@ -48,6 +48,7 @@ import app.mappers.UsuarioMapper;
 // "Actualización de reservas"
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class ReservaControlador {
 
 	@Autowired
@@ -79,7 +80,11 @@ public class ReservaControlador {
 	private Logger logger = LoggerFactory.getLogger(ReservaControlador.class);
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/get_reservas_usuario")
+	@RequestMapping(
+			  value = "/get_reservas_usuario", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/get_reservas_usuario")
 	@ResponseBody
 	public List<Reserva> obtenerReservasByUsuario(@RequestParam Long id) {
 
@@ -100,7 +105,7 @@ public class ReservaControlador {
 
 	// Solo contabiliza los ultimos 3 meses
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "redAgro/obtenerMetricasReservasPorEstado", method = RequestMethod.GET)
+	@RequestMapping(value = "/obtenerMetricasReservasPorEstado", produces = "application/json", method = {RequestMethod.GET, RequestMethod.PUT})
 	public List<ResultadosEstadisticas> obtenerMetricasReservasPorEstado(@RequestParam Long id_usuario) {
 		List<Object[]> resultados = reservaDao.obtenerMetricasReservasPorEstado(id_usuario);
 		List<ResultadosEstadisticas> estadisticas = new ArrayList<>();
@@ -115,7 +120,7 @@ public class ReservaControlador {
 
 	// Solo contabiliza los ultimos 3 meses
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "redAgro/obtenerMetricasProductosVendidos", method = RequestMethod.GET)
+	@RequestMapping(value = "/obtenerMetricasProductosVendidos", produces = "application/json", method = {RequestMethod.GET, RequestMethod.PUT})
 	public List<ResultadosEstadisticas> obtenerMetricasProductosVendidos(@RequestParam Long id_usuario) {
 		List<Object[]> resultados = reservaDao.obtenerMetricasProductosVendidos(id_usuario);
 		List<ResultadosEstadisticas> estadisticas = new ArrayList<>();
@@ -129,7 +134,7 @@ public class ReservaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "redAgro/obtenerMetricasReservasPorMes", method = RequestMethod.GET)
+	@RequestMapping(value = "/obtenerMetricasReservasPorMes", produces = "application/json", method = {RequestMethod.GET, RequestMethod.PUT})
 	public List<ResultadosEstadisticas> obtenerMetricasReservasPorMes(@RequestParam Long id_usuario) {
 		List<Object[]> resultados = reservaDao.obtenerMetricasReservasPorMes(id_usuario);
 		List<ResultadosEstadisticas> estadisticas = new ArrayList<>();
@@ -182,7 +187,8 @@ public class ReservaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/generarReserva")
+	@RequestMapping(value = "/generarReserva", produces = "application/json", method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/generarReserva")
 	public ResponseEntity<String> generarReserva(@RequestBody EntidadReserva reserva) {
 
 		EntidadPuntoEntrega entregas = puntoEntregaDAO.obtenerPuntoEntrega((reserva.getPunto_entrega().getId()));
@@ -276,7 +282,11 @@ public class ReservaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PutMapping(path = "redAgro/actualizarEstadoReserva")
+	@RequestMapping(
+			  value = "/actualizarEstadoReserva", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT})
+	//@PutMapping(path = "redAgro/actualizarEstadoReserva")
 	public ResponseEntity<String> actualizarEstadoReserva(@RequestParam long id_reserva, @RequestParam long id_estado,
 			@RequestParam(required = false) String rol) {
 		ReservaMapper mapeo = new ReservaMapper();
@@ -391,7 +401,11 @@ public class ReservaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(value = "redAgro/obtenerCantidadReservasDisponiblesConsumidor")
+	@RequestMapping(
+			  value = "/obtenerCantidadReservasDisponiblesConsumidor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.GET})
+	//@GetMapping(value = "redAgro/obtenerCantidadReservasDisponiblesConsumidor")
 	public ResponseEntity<Object> obtenerCantidadReservasDisponiblesConsumidor(@RequestParam Long id_consumidor) {
 		try {
 			Long cantidad = reservaDao.obtenerCantidadReservasDisponiblesConsumidor(id_consumidor);
@@ -404,7 +418,11 @@ public class ReservaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(value = "redAgro/obtenerCantidadReservasPendientesProductor")
+	@RequestMapping(
+			  value = "/obtenerCantidadReservasPendientesProductor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.GET})
+	//@GetMapping(value = "redAgro/obtenerCantidadReservasPendientesProductor")
 	public ResponseEntity<Object> obtenerCantidadReservasPendientesProductor(@RequestParam Long id_productor) {
 		try {
 			Long cantidad = reservaDao.obtenerCantidadReservasPendientesProductor(id_productor);

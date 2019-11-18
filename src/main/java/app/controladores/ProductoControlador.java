@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +21,7 @@ import app.mappers.ProductoMapper;
 import app.modelos.EntidadProducto;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class ProductoControlador {
 
 	@Autowired
@@ -31,7 +34,11 @@ public class ProductoControlador {
 	ProductorDao productorDao;
 
 	@CrossOrigin(origins = "*")
-    @GetMapping(path = "redAgro/obtenerTiposProducto")
+	@RequestMapping(
+			  value = "/obtenerTiposProducto", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+   // @GetMapping(path = "redAgro/obtenerTiposProducto")
     public List<Producto> obtenerTiposdeProducto(@RequestParam String categoria_producto){   	
     
 		List<EntidadProducto> tipos_de_producto = new ArrayList<EntidadProducto>();
@@ -47,7 +54,11 @@ public class ProductoControlador {
     }
 	
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtener_tipo_productos")
+	@RequestMapping(
+			  value = "/obtener_tipo_productos", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtener_tipo_productos")
 	public ArrayList<Producto> obtenerTipoProducto(@RequestParam String categoria) {
 
 		ArrayList<EntidadProducto> entidadProductos = productoDao.obtenerTipoProductos(categoria);
@@ -62,7 +73,11 @@ public class ProductoControlador {
 	}
 	
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtener_productos")
+	@RequestMapping(
+			  value = "/obtener_productos", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtener_productos")
 	public List<Producto> obtenerProductos() {
 
 		List<EntidadProducto> ep = new ArrayList<EntidadProducto>();

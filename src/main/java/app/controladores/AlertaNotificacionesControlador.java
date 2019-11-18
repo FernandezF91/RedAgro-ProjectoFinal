@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,7 @@ import app.modelos.EntidadAlertaNotificaciones;
 import app.modelos.EntidadReserva;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class AlertaNotificacionesControlador {
 	
 	@Autowired
@@ -29,7 +32,11 @@ public class AlertaNotificacionesControlador {
 	AlertaNotificacionesDao alertaNotificacionDAO;
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/AlertaNotificaciones/obtenerAlertasByUsuario")
+	@RequestMapping(
+			  value = "/AlertaNotificaciones/obtenerAlertasByUsuario", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/AlertaNotificaciones/obtenerAlertasByUsuario")
 	public ArrayList<EntidadAlertaNotificaciones> obtenerAlertasByUsuario(@RequestParam long id_usuario) {
 		ArrayList<EntidadAlertaNotificaciones> alertas = alertaNotificacionDAO
 				.obtenerNotificacionesByUsuario(id_usuario);
@@ -37,7 +44,11 @@ public class AlertaNotificacionesControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/AlertaNotificaciones/guardarAlertaReserva")
+	@RequestMapping(
+			  value = "/AlertaNotificaciones/guardarAlertaReserva", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.POST})
+	//@PostMapping(path = "/AlertaNotificaciones/guardarAlertaReserva")
 	public boolean guardarAlertaNuevaReserva(@RequestParam String tipoApp, @RequestParam Long idReserva) {
 		try {
 			EntidadReserva reserva = reservaDao.obtenerReservaById(idReserva);

@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,13 +17,18 @@ import app.daos.EstadoReservaDao;
 import app.mappers.EstadoReservaMapper;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class EstadoReservaControlador {
 	
 	@Autowired
 	EstadoReservaDao EstadoReservaDAO;
 	
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtenerEstadosReserva")
+	@RequestMapping(
+			  value = "/obtenerEstadosReserva", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/obtenerEstadosReserva")
 	@ResponseBody
 	public List<EstadoReserva> obtenerEstadosReserva() {
 

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,13 +17,17 @@ import app.mappers.HistoricoMapper;
 import app.modelos.EntidadHistorico;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class HistoricoControlador {
 
 	@Autowired
 	HistoricoDao historicoDao;
-
-	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/uploadFile")
+	@RequestMapping(
+			  value = "/uploadFile", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	@CrossOrigin(origins = "*")	
+	//@PostMapping(path = "redAgro/uploadFile")
 	public void submit(@RequestParam("file") MultipartFile file) throws IOException {
 		HistoricoMapper mapper = new HistoricoMapper();
 		ArrayList<EntidadHistorico> historicos = mapper.mapToEntity(file);

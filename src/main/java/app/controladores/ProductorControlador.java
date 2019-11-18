@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,7 @@ import app.modelos.EntidadProductor;
 import app.modelos.EntidadUsuario;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class ProductorControlador {
 
 	@Autowired
@@ -26,7 +29,11 @@ public class ProductorControlador {
 	UsuarioDao usuarioDAO;
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/usuario/obtenerUsuarioByMail")
+	@RequestMapping(
+			  value = "/usuario/obtenerUsuarioByMail", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/usuario/obtenerUsuarioByMail")
 	public Productor obtenerUsuarioByMail(@RequestParam String usuario) {
 		ProductorMapper mapeo = new ProductorMapper();
 		usuario = usuario + "#@%";
@@ -37,7 +44,11 @@ public class ProductorControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/productor/obtenerRazonSocial")
+	@RequestMapping(
+			  value = "/productor/obtenerRazonSocial", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/productor/obtenerRazonSocial")
 	public ResponseEntity<Object> obtenerRazonSocial(@RequestParam Long id) {
 		try {
 			EntidadProductor p = productorDAO.obtenerProductor(id);
@@ -51,7 +62,11 @@ public class ProductorControlador {
 	}
 	
 	@CrossOrigin(origins = "*")
-	@PutMapping(path = "redAgro/productor/actualizarRazonSocial")
+	@RequestMapping(
+			  value = "/productor/actualizarRazonSocial", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT})
+	//@PutMapping(path = "redAgro/productor/actualizarRazonSocial")
 	public ResponseEntity<Object> updateRazonSocial(@RequestParam Long id, @RequestParam String razon_social) {
 		try {
 			productorDAO.actualizarRazonSocial(razon_social, id);

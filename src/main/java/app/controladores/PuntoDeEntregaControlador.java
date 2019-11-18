@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import app.clases.PuntoEntrega;
@@ -24,6 +26,7 @@ import app.modelos.EntidadProductor;
 import app.modelos.EntidadPuntoEntrega;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class PuntoDeEntregaControlador {
 
 	@Autowired
@@ -36,7 +39,11 @@ public class PuntoDeEntregaControlador {
 	FechaEntregaDao fechaEntregaDAO;
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/puntos_productor")
+	@RequestMapping(
+			  value = "/puntos_productor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/puntos_productor")
 	public List<PuntoEntrega> listadoPuntosDeEntregaProductor(@RequestParam long id) {
 
 		PuntoEntregaMapper punto_entrega_mapper = new PuntoEntregaMapper();
@@ -55,7 +62,11 @@ public class PuntoDeEntregaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/puntos_entrega_productor")
+	@RequestMapping(
+			  value = "/puntos_entrega_productor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/puntos_entrega_productor")
 	public List<PuntoEntrega> obtenerPuntosDeEntregaProductores() {
 
 		PuntoEntregaMapper punto_entrega_mapper = new PuntoEntregaMapper();
@@ -71,7 +82,11 @@ public class PuntoDeEntregaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/puntos_productor_activos")
+	@RequestMapping(
+			  value = "/puntos_productor_activos", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET, RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/puntos_productor_activos")
 	public List<PuntoEntrega> listadoPuntosDeEntregaActivos(@RequestParam String fecha, @RequestParam long id) {
 
 		PuntoEntregaMapper punto_entrega_mapper = new PuntoEntregaMapper();
@@ -87,7 +102,11 @@ public class PuntoDeEntregaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/subir_punto_entrega")
+	@RequestMapping(
+			  value = "/subir_punto_entrega", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/subir_punto_entrega")
 	public ResponseEntity<Object> subirPuntoDeEntrega(@RequestBody EntidadPuntoEntrega punto_entrega,
 			@RequestParam long id_productor, @RequestParam String descripcion, @RequestParam String fecha_entrega,
 			@RequestParam String hora_inicio, @RequestParam String hora_fin) {
@@ -148,7 +167,11 @@ public class PuntoDeEntregaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PutMapping(path = "redAgro/modificar_punto")
+	@RequestMapping(
+			  value = "/modificar_punto", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT})
+	//@PutMapping(path = "redAgro/modificar_punto")
 	public void modificarEstadoDePunto(@RequestParam long id, @RequestParam String accion) {
 
 		if (accion.equals("Alta")) {
@@ -162,7 +185,11 @@ public class PuntoDeEntregaControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/listadoPuntosEntregaProductor")
+	@RequestMapping(
+			  value = "/listadoPuntosEntregaProductor", 
+			  produces = "application/json", 
+			  method = {RequestMethod.GET,RequestMethod.PUT})
+	//@GetMapping(path = "redAgro/listadoPuntosEntregaProductor")
 	public List<PuntoEntrega> listadoPuntosEntregaProductor(@RequestParam long productor_id) {
 
 		PuntoEntregaMapper punto_entrega_mapper = new PuntoEntregaMapper();

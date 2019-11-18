@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,13 +28,18 @@ import app.modelos.EntidadImagen;
 import app.modelos.EntidadProductoProductor;
 
 @RestController
+@RequestMapping(value="/redAgro")
 public class ArchivosControlador {
 
 	@Autowired
 	ImagenDao imagenDao;
 
 	@CrossOrigin(origins = "*")
-	@PostMapping(path = "redAgro/subir_archivos")
+	@RequestMapping(
+			  value = "/subir_archivos", 
+			  produces = "application/json", 
+			  method = {RequestMethod.POST, RequestMethod.PUT})
+	//@PostMapping(path = "redAgro/subir_archivos")
 	public ResponseEntity<Void> procesamientoDeArchivos(@NotNull @RequestParam("file") MultipartFile multipartFile,
 			@RequestParam("producto_productor") EntidadProductoProductor producto_productor) throws IOException {
 
@@ -48,7 +55,11 @@ public class ArchivosControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@GetMapping(path = "redAgro/obtener_imagen")
+	@RequestMapping(
+			  value = "/obtener_imagen", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.GET})
+	//@GetMapping(path = "redAgro/obtener_imagen")
 	public ResponseEntity<byte[]> obtenerImagen(@RequestParam Long id) {
 
 		EntidadImagen i = new EntidadImagen();
@@ -68,7 +79,11 @@ public class ArchivosControlador {
 	}
 
 	@CrossOrigin(origins = "*")
-	@PutMapping(path = "redAgro/eliminarFoto")
+	@RequestMapping(
+			  value = "/eliminarFoto", 
+			  produces = "application/json", 
+			  method = {RequestMethod.PUT, RequestMethod.GET})
+//	@PutMapping(path = "redAgro/eliminarFoto")
 	public ResponseEntity<String> eliminarFoto(@RequestParam Long id) {
 		try {
 
