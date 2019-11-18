@@ -495,3 +495,9 @@ input[type=text] {
     right: -2%;
     color: #777
 }
+
+.anchoColumnaTituloCarrito {
+    max-width: 800px;
+    min-width: 800px;
+    margin: auto !important;
+}

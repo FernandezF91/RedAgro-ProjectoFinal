@@ -53,7 +53,7 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                                         height="80px" width="auto" />
                                 </td>
                                 <td>
-                                    <h5>{producto.titulo}</h5>
+                                    <h5 className="overflowTexto anchoColumnaTituloCarrito">{producto.titulo}</h5>
                                     {producto.descripcion}
                                     <br />
                                     Producido por {producto.productor.razon_social}
@@ -133,7 +133,7 @@ const ItemCarrito = ({ listaDeProductos, sumarProducto, restarProducto, quitarPr
                 Total <NumberFormat value={getTotalCarrito(listaDeProductos)} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix=" $ " decimalScale={2} fixedDecimalScale={true} />
             </h5>
             <br />
-            <div>
+            <div className="botones">
                 <Button variant="light" type="submit" href="javascript:history.back()" className="botonIzquierda">Atras</Button>
                 <Link to={'/principalConsumidores/Checkout'}>
                     <Button variant="success" type="submit" onClick={() => validarItemsCarrito()} className="botonDerecha">Finalizar Reserva</Button>
