@@ -4,13 +4,11 @@ import { MDBCol, MDBRow, MDBModal } from "mdbreact";
 import { GoogleApiWrapper } from 'google-maps-react';
 import { DatePickerInput } from 'rc-datepicker';
 import TimeField from 'react-simple-timefield';
-import Modal from 'react-awesome-modal';
 import Geocode from "react-geocode";
 import Loader from 'react-loader-spinner';
 import moment from 'moment';
 
 import '../diseños/NuevoPuntoEntrega.css';
-import { isDate } from 'moment';
 
 const minDate = new Date();
 minDate.setDate(minDate.getDate() + 1);
@@ -32,8 +30,6 @@ class NuevoPuntoEntrega extends Component {
             disabled: "true",
             disabeld2: "",
             mensaje: "",
-            visible: "",
-            visible2: "",
             direccion: "",
             direccOk: "",
             formOk: "",
@@ -113,29 +109,23 @@ class NuevoPuntoEntrega extends Component {
         let formatted_address = place.formatted_address;
 
         try {
-
             campos["direccion"] = place.name;
             campos["localidad"] = address[2].short_name;
             campos["provincia"] = address[4].long_name;
             campos["codigoPostal"] = address[6].short_name;
             campos["pais"] = address[5].long_name;
 
-            this.setState({ campos: campos, direccion: formatted_address, direccOk: true });
-
+            this.setState({
+                campos: campos,
+                direccion: formatted_address,
+                direccOk: true
+            });
         } catch{
 
-            this.setState({ direccOk: false });
+            this.setState({
+                direccOk: false
+            });
         }
-    }
-
-    closeModal() {
-        if (this.state.formOk === true) {
-            this.mostrarPantallaPrincipal();
-        }
-
-        this.setState({
-            visible: false
-        });
     }
 
     limpiarCampos() {
@@ -341,17 +331,6 @@ class NuevoPuntoEntrega extends Component {
 
                 return;
 
-            }
-
-
-            if (this.state.direccOk === false) {
-                this.setState({
-                    visible: true,
-                    mensaje: "Ingresaste una dirección incorrecta",
-                    titulo: "Error"
-                });
-
-                return;
             }
 
             Geocode.fromAddress(_this.state.direccion).then(

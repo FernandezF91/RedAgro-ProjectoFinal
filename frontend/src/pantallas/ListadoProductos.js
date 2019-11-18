@@ -486,10 +486,8 @@ class ListadoProductos extends Component {
                     </MDBModal>
                 }
                 {
-                    (this.state.showModalEstado) &&
                     <MDBModal isOpen={this.state.showModalEstado} centered>
                         <div className="modalMargenes">
-                            <br />
                             <div>
                                 <i className="fas fa-exclamation-triangle iconoModalWarning" />
                                 <br />
@@ -504,7 +502,7 @@ class ListadoProductos extends Component {
                                         <h5>¿Estás seguro de que querés activar el producto?</h5>
                                 }
                             </div>
-                            <div className="botones">
+                            <div className="botonesModal">
                                 <Button variant="light" type="submit" onClick={this.cerrarModalEstado}>No</Button>
                                 <Button variant="success" type="submit" onClick={this.guardarEstadoProducto}>Si</Button>
                             </div>

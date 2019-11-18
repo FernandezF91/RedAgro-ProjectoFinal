@@ -2,7 +2,7 @@ import '../diseños/DatosDeUsuario.css';
 import '../diseños/EstilosGenerales.css';
 
 import React, { Component } from 'react'
-import { Form, Row, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { MDBCol, MDBRow, MDBModal } from 'mdbreact';
 import { DatePickerInput } from 'rc-datepicker';
 import Loader from 'react-loader-spinner';
@@ -335,7 +335,7 @@ class DatosDeUsuario extends Component {
                                     value={this.state.campos["nombre"]}
                                     name="nombre"
                                     onChange={(e) => this.detectarCambios(e)}
-                                    className="col-md-8"
+                                    className="col-md-6"
                                 />
                                 {
                                     (this.state.validaciones["nombre"]) &&
@@ -360,7 +360,7 @@ class DatosDeUsuario extends Component {
                                     value={this.state.campos["apellido"]}
                                     name="apellido"
                                     onChange={(e) => this.detectarCambios(e)}
-                                    className="col-md-8"
+                                    className="col-md-6"
                                 />
                                 {
                                     (this.state.validaciones["apellido"]) &&
@@ -415,7 +415,7 @@ class DatosDeUsuario extends Component {
                                             value={this.state.campos["razon_social"]}
                                             name="razon_social"
                                             onChange={(e) => this.detectarCambios(e)}
-                                            className="col-md-8"
+                                            className="col-md-6"
                                         />
                                         {
                                             (this.state.validaciones["razon_social"]) &&
@@ -442,7 +442,7 @@ class DatosDeUsuario extends Component {
                                     value={this.state.campos["telefono"]}
                                     name="telefono"
                                     onChange={(e) => this.detectarCambios(e)}
-                                    className="col-md-8"
+                                    className="col-md-6"
                                     type="number"
                                 />
                                 {

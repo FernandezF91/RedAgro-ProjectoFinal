@@ -8,7 +8,7 @@ import Paginacion from './Paginacion';
 import { Button } from 'react-bootstrap';
 import Select from 'react-select';
 import Loader from 'react-loader-spinner';
-import Modal from 'react-awesome-modal';
+import { MDBModal } from 'mdbreact';
 
 const tamañosListado = [
     { label: "5", value: "5" },
@@ -28,19 +28,25 @@ class ListadoPuntosEntrega extends Component {
             loading: true,
             titulo: "",
             mensaje: "",
-            visible: "",
-            visible2: "",
             accion: "",
             expandedRows: [],
             id_punto: "",
             currentPage: 1,
             puntosPerPage: 5,
-            defaultListado: [{ label: "5", value: "5" }]
+            defaultListado: [{ label: "5", value: "5" }],
+            showModal: false,
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.handleRowAccion = this.handleRowAccion.bind(this);
         this.actualizarEstadoPunto = this.actualizarEstadoPunto.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
+    }
+
+    cerrarModal() {
+        this.setState({
+            showModal: false
+        })
     }
 
     mostrarPantallaPrincipal() {
@@ -50,8 +56,8 @@ class ListadoPuntosEntrega extends Component {
         })
     }
 
-    actualizarEstadoPunto(accion) {
-        const path_principal = "http://"+window.$ip+":3000/redAgro/modificar_punto?id=" + this.state.id_punto + "&accion=" + accion;
+    actualizarEstadoPunto() {
+        const path_principal = "http://" + window.$ip + ":3000/redAgro/modificar_punto?id=" + this.state.id_punto + "&accion=" + this.state.accion;
 
         var _this = this;
 
@@ -59,52 +65,12 @@ class ListadoPuntosEntrega extends Component {
             method: "PUT"
         })
             .then(function (response) {
-                if (response.status !== 200) {
-                    let mensajeError = "Ocurrió algún error inesperado. Intentá nuevamente"
-                    _this.setState({
-                        visible2: true,
-                        titulo: "Error",
-                        mensaje: mensajeError
-                    });
-                    return;
-                }
-
-                response.text().then(
-                    function (response) {
-                        _this.setState({
-                            visible2: true,
-                            titulo: "Actualización exitosa",
-                            mensaje: "",
-                            actualizacion: "Ok"
-                        });
-                    });
-            });
-    }
-
-    closeModal() {
-        if (this.state.accion !== "") {
-            this.actualizarEstadoPunto(this.state.accion)
-            this.setState({
-                visible: false,
-                accion: ""
+                _this.setState({
+                    showModal: false
+                })
             })
-        }
-
-        if (this.state.actualizacion === "Ok") {
-            this.mostrarPantallaPrincipal();
-            return;
-        }
-
-        this.setState({
-            visible2: false
-        })
-    }
-
-    closeModalNo() {
-        this.setState({
-            visible: false,
-            accion: ""
-        })
+        //TODO: cambiarlo para que solo actualice la parte del listado.
+        window.location.reload();
     }
 
     handleRowAccion(rowId, activo) {
@@ -112,17 +78,17 @@ class ListadoPuntosEntrega extends Component {
             this.setState({
                 id_punto: rowId,
                 accion: "Baja",
-                visible: true,
-                titulo: "Baja de punto de entrega",
-                mensaje: "¿Estás seguro que no vas a vender/entregar tus productos en esta ubicación?"
+                showModal: true,
+                titulo: "¿Estás seguro de que querés deshabilitar el punto de entrega?",
+                mensaje: "Los puntos de entrega deshabilitados no estarán disponibles para ser seleccionados por los consumidores."
             })
         } else {
             this.setState({
                 id_punto: rowId,
                 accion: "Alta",
-                visible: true,
-                titulo: "Alta de punto de entrega",
-                mensaje: "¿Estás seguro que vas a vender/entregar tus productos en esta ubicación?"
+                showModal: true,
+                titulo: "¿Estás seguro de que querés habilitar el punto de entrega?",
+                mensaje: ""
             })
         }
     }
@@ -135,8 +101,8 @@ class ListadoPuntosEntrega extends Component {
             currentExpandedRows.filter(id => id !== rowId) :
             currentExpandedRows.concat(rowId);
 
-        this.setState({ 
-            expandedRows: newExpandedRows 
+        this.setState({
+            expandedRows: newExpandedRows
         });
     }
 
@@ -145,7 +111,7 @@ class ListadoPuntosEntrega extends Component {
         const clickAltaBaja = () => this.handleRowAccion(item.id, item.activo);
 
         const itemRows = [
-            <tr key={"row-data-" + item.id}>
+            <tr key={"row-data-" + item.id} className="border-bottom">
                 <td>
                     {item.descripcion}
                 </td>
@@ -180,10 +146,50 @@ class ListadoPuntosEntrega extends Component {
         return itemRows;
     }
 
+    generoItemDeshabilitado(item) {
+        const clickCallback = () => this.handleRowClick(item.id);
+        const clickAltaBaja = () => this.handleRowAccion(item.id, item.activo);
+
+        const itemRows = [
+            <tr key={"row-data-" + item.id} title="Punto deshabilitado" className="border-bottom">
+                <td className="productoInactivo">
+                    {item.descripcion}
+                </td>
+                <td className="productoInactivo">
+                    {item.provincia}
+                </td>
+                <td className="productoInactivo">
+                    {item.localidad}
+                </td>
+                <td className="productoInactivo">
+                    {item.direccion}
+                </td>
+                <td className="productoInactivo">
+                    <i className="far fa-calendar-alt iconosTabla cursorManito" title="Ver fechas" onClick={clickCallback} />
+                </td>
+                <td>
+                    {
+                        item.activo === false ?
+                            <i className="fa fa-times-circle rojo iconosTabla cursorManito" onClick={clickAltaBaja} title="Baja" />
+                            :
+                            <i className="fa fa-check-circle verde iconosTabla cursorManito" onClick={clickAltaBaja} title="Alta" />
+                    }
+                </td>
+            </tr>
+        ];
+
+        if (this.state.expandedRows.includes(item.id)) {
+            itemRows.push(
+                <DetalleFechasEntrega item={item} />
+            );
+        }
+        return itemRows;
+    }
+
     componentDidMount() {
         var _this = this;
 
-        var path = "http://"+window.$ip+":3000/redAgro/listadoPuntosEntregaProductor?productor_id=" + this.state.id
+        var path = "http://" + window.$ip + ":3000/redAgro/listadoPuntosEntregaProductor?productor_id=" + this.state.id
         fetch(path, {
             method: "GET",
             headers: {
@@ -256,7 +262,11 @@ class ListadoPuntosEntrega extends Component {
         const lista = puntos_entrega.slice(indexOfFirstPunto, indexOfLastPunto);
         let body = [];
         lista.forEach(item => {
-            body.push(this.generoItem(item));
+            if (item.activo) {
+                body.push(this.generoItem(item));
+            } else {
+                body.push(this.generoItemDeshabilitado(item));
+            }
         })
 
         if (this.state.loading) return (
@@ -292,38 +302,24 @@ class ListadoPuntosEntrega extends Component {
                             currentPage={this.state.currentPage} />
                         : ''
                 }
-                <section>
-                    <Modal
-                        visible={this.state.visible}
-                        width="400"
-                        height="230"
-                        effect="fadeInUp"
-                    >
-                        <div>
-                            <h1>{this.state.titulo}</h1>
-                            <p>
-                                {this.state.mensaje}
-                            </p>
-                            <Button variant="success" onClick={() => this.closeModal()}>Si</Button>
-                            <Button variant="success" onClick={() => this.closeModalNo()}>No</Button>
+                {
+                    <MDBModal isOpen={this.state.showModal} centered>
+                        <div className="modalMargenes">
+                            <div>
+                                <i className="fas fa-exclamation-triangle iconoModalWarning" />
+                                <br />
+                                <br />
+                                <h5>{this.state.titulo}</h5>
+                                <h6 className="grey-text">{this.state.mensaje}</h6>
+                            </div>
+                            <div className="botonesModal">
+                                <Button variant="light" type="submit" onClick={this.cerrarModal}>No</Button>
+                                <Button variant="success" type="submit" onClick={this.actualizarEstadoPunto}>Si</Button>
+                            </div>
                         </div>
-                    </Modal>
-                    <Modal
-                        visible={this.state.visible2}
-                        width="400"
-                        height="120"
-                        effect="fadeInUp"
-                    >
-                        <div>
-                            <h1>{this.state.titulo}</h1>
-                            <p>
-                                {this.state.mensaje}
-                            </p>
-                            <a href="javascript:void(0);" onClick={() => this.closeModal()}>Volver</a>
-                        </div>
-                    </Modal>
-                </section>
-            </div>
+                    </MDBModal>
+                }
+            </div >
         );
     };
 }

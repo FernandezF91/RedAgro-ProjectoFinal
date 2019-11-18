@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format';
 import Image from 'react-bootstrap/Image';
 import { Form, Row, Col } from 'react-bootstrap';
 import Select from 'react-select';
+import { MDBCol, MDBRow } from 'mdbreact';
 import '../diseños/Checkout.css'
 
 const PasosCheckout = (props) => {
@@ -14,95 +15,122 @@ const PasosCheckout = (props) => {
         case 0:
             return (
                 <div className="containerCheckout">
-                    <div className="personaRetiro">
-                        <Form.Group as={Row}>
-                            <Form.Check column sm={4}
-                                inline
-                                label="Retira otra persona"
-                                type="checkbox"
-                                id="checkbox"
-                                checked={props.datosPersonaRetiro.checkbox}
-                                onChange={props.handleCheckboxRetiro} />
-                        </Form.Group>
-                    </div>
-                    <div className="usuarioDU" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}> Email </Form.Label>
-                            <Form.Control
-                                required
-                                name="nombre"
-                                defaultValue={props.usuario.usuario}
-                                disabled
-                                className="camposDatosDeUsuario"
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="nombreDU" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}> Nombre </Form.Label>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" />
+                        <MDBCol md="7">
+                            <MDBRow>
+                                <Form.Check column sm={4}
+                                    inline
+                                    label="Retira otra persona"
+                                    type="checkbox"
+                                    id="checkbox"
+                                    checked={props.datosPersonaRetiro.checkbox}
+                                    onChange={props.handleCheckboxRetiro} />
+                            </MDBRow>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" top>
+                            <Form.Label column>Email</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="7">
+                            <MDBRow>
+                                <Form.Control
+                                    name="mail"
+                                    defaultValue={props.usuario.usuario}
+                                    disabled
+                                    className="col-md-8"
+                                />
+                            </MDBRow>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" top>
+                            <Form.Label column>Nombre</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="7">
+                            <MDBRow>
+                                {
+                                    (props.datosPersonaRetiro.disabled === true) ?
+                                        <Form.Control
+                                            name="nombre"
+                                            value={props.datosPersonaRetiro.nombre}
+                                            onChange={props.handleDatosPersonales}
+                                            disabled
+                                            className="col-md-8"
+                                        />
+                                        :
+                                        <Form.Control
+                                            name="nombre"
+                                            value={props.datosPersonaRetiro.nombre}
+                                            onChange={props.handleDatosPersonales}
+                                            className="col-md-8"
+                                        />
+                                }
+                                {
+                                    (props.validaciones["nombre"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                }
+                            </MDBRow>
                             {
-                                (props.datosPersonaRetiro.disabled === true) ?
-                                    <Form.Control
-                                        required
-                                        name="nombre"
-                                        value={props.datosPersonaRetiro.nombre}
-                                        pattern="^[a-zA-Z ]*$"
-                                        onChange={props.handleDatosPersonales}
-                                        disabled
-                                        className="camposDatosDeUsuario"
-                                    />
-                                    :
-                                    <Form.Control
-                                        required
-                                        name="nombre"
-                                        value={props.datosPersonaRetiro.nombre}
-                                        pattern="^[a-zA-Z ]*$"
-                                        onChange={props.handleDatosPersonales}
-                                        className="camposDatosDeUsuario"
-                                    />
+                                (props.validaciones["nombre"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{props.validaciones["nombre"]}</div>
+                                </MDBRow>
                             }
-                        </Form.Group>
-                    </div>
-                    <div className="apellidoDU" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>Apellido</Form.Label>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" top>
+                            <Form.Label column>Apellido</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="7">
+                            <MDBRow>
+                                {
+                                    (props.datosPersonaRetiro.disabled === true) ?
+                                        <Form.Control
+                                            name="apellido"
+                                            value={props.datosPersonaRetiro.apellido}
+                                            onChange={props.handleDatosPersonales}
+                                            disabled
+                                            className="col-md-8"
+                                        />
+                                        :
+                                        <Form.Control
+                                            name="apellido"
+                                            value={props.datosPersonaRetiro.apellido}
+                                            onChange={props.handleDatosPersonales}
+                                            className="col-md-8"
+                                        />
+                                }
+                                {
+                                    (props.validaciones["apellido"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                }
+                            </MDBRow>
                             {
-                                (props.datosPersonaRetiro.disabled === true) ?
-                                    <Form.Control
-                                        required
-                                        name="apellido"
-                                        value={props.datosPersonaRetiro.apellido}
-                                        pattern="^[a-zA-Z ]*$"
-                                        onChange={props.handleDatosPersonales}
-                                        disabled
-                                        className="camposDatosDeUsuario"
-                                    />
-                                    :
-                                    <Form.Control
-                                        required
-                                        name="apellido"
-                                        value={props.datosPersonaRetiro.apellido}
-                                        pattern="^[a-zA-Z ]*$"
-                                        onChange={props.handleDatosPersonales}
-                                        className="camposDatosDeUsuario"
-                                    />
+                                (props.validaciones["apellido"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{props.validaciones["apellido"]}</div>
+                                </MDBRow>
                             }
-                        </Form.Group>
-                    </div>
-                    <div className="telefonoDU" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>Teléfono de contacto</Form.Label>
-                            <Form.Control
-                                required
-                                name="telefono"
-                                defaultValue={props.usuario.telefono}
-                                disabled
-                                pattern="[0-9]{8,14}"
-                                maxLength="14"
-                                className="camposDatosDeUsuario"
-                            />
-                        </Form.Group>
-                    </div>
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" top>
+                            <Form.Label column>Teléfono de contacto</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="7">
+                            <MDBRow>
+                                <Form.Control
+                                    name="telefono"
+                                    defaultValue={props.usuario.telefono}
+                                    disabled
+                                    className="col-md-8"
+                                />
+                            </MDBRow>
+                        </MDBCol>
+                    </Form.Group>
                 </div>
             );
         case 1:

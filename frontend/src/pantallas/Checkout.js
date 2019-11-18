@@ -10,13 +10,18 @@ import Loader from 'react-loader-spinner';
 import PasosCheckout from './PasosCheckout'
 import moment from 'moment';
 import '../diseños/EstilosGenerales.css';
-import '../diseños/Checkout.css'
+import '../diseños/Checkout.css';
+
+const regularExp = {
+    letras: /^[a-zA-Z\s]*$/
+}
 
 const pasos = [
     'Confirmá tus datos personales',
     'Elegí una forma de retiro',
     'Resumen de la reserva'
 ];
+
 const theme = createMuiTheme({
     overrides: {
         MuiStepIcon: {
@@ -60,11 +65,6 @@ const theme = createMuiTheme({
         useNextVariants: true,
     }
 });
-
-const regularExp = {
-    onlyLetters: /^[a-zA-Z\s]*$/,
-    onlyNumbers: /^[0-9]+$/
-}
 
 class Checkout extends Component {
     constructor(props) {
@@ -115,7 +115,8 @@ class Checkout extends Component {
             },
             selectorHorarios: {
                 selectorHorariosDisabled: true
-            }
+            },
+            validaciones: []
         }
         this.actualizarPuntoEntrega = this.actualizarPuntoEntrega.bind(this);
         this.actualizarFechaEntrega = this.actualizarFechaEntrega.bind(this);
@@ -129,12 +130,13 @@ class Checkout extends Component {
         this.crearReserva = this.crearReserva.bind(this);
         this.handleCheckboxRetiro = this.handleCheckboxRetiro.bind(this);
         this.handleDatosPersonales = this.handleDatosPersonales.bind(this);
+        this.validarCampos = this.validarCampos.bind(this);
     }
 
     componentDidMount() {
         this.actualizarDetalleReserva();
         var fechaPreparación = this.calculoFechaMinimaEntrega();
-        var path = "http://"+window.$ip+":3000/redAgro/puntos_productor_activos?id=";
+        var path = "http://" + window.$ip + ":3000/redAgro/puntos_productor_activos?id=";
         path = path + this.props.productosSeleccionados[0].productor.id + "&fecha=" + moment(fechaPreparación).format("DD-MM-YYYY");
         fetch(path)
             .catch(error => console.error(error))
@@ -198,7 +200,7 @@ class Checkout extends Component {
 
     obtenerFechasEntrega(idPtoEntrega) {
         var fechaPreparación = this.calculoFechaMinimaEntrega();
-        var path = "http://"+window.$ip+":3000/redAgro/fechas_entrega/filtradasPor?id_punto_entrega=" + idPtoEntrega + "&fecha=" + moment(fechaPreparación).format("DD-MM-YYYY");
+        var path = "http://" + window.$ip + ":3000/redAgro/fechas_entrega/filtradasPor?id_punto_entrega=" + idPtoEntrega + "&fecha=" + moment(fechaPreparación).format("DD-MM-YYYY");
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -329,20 +331,48 @@ class Checkout extends Component {
         })
     }
 
+    validarCampos() {
+        var showModal = false;
+        this.setState({
+            validaciones: []
+        });
+        let validaciones = [];
+
+        if (this.state.datosPersonaRetiro.nombre === "") {
+            validaciones["nombre"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.letras.test(this.state.datosPersonaRetiro.nombre)) {
+            validaciones["nombre"] = "Formato inválido";
+            showModal = true;
+        }
+
+        if (this.state.datosPersonaRetiro.apellido === "") {
+            validaciones["apellido"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.letras.test(this.state.datosPersonaRetiro.apellido)) {
+            validaciones["apellido"] = "Formato inválido";
+            showModal = true;
+        }
+
+
+        if (showModal) {
+            this.setState({
+                validaciones: validaciones,
+                showModal: showModal,
+                mensaje: "Ups! Campos incompletos o incorrectos",
+                loading: false,
+                resultadoRequest: 0
+            });
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     handleNext = () => {
         switch (this.state.activeStep) {
             case 0: {
-                if ((!this.state.datosPersonaRetiro.nombre) || (!this.state.datosPersonaRetiro.apellido) ||
-                    (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.nombre)) || (!regularExp.onlyLetters.test(this.state.datosPersonaRetiro.apellido))) {
-
-                    this.setState({
-                        resultadoRequest: 401,
-                        showModal: true,
-                        mensaje: 'Hey! Para continuar, necesitas completar con los datos de la persona que va a retirar la reserva'
-                    })
-                    return false;
-                }
-                else {
+                if (this.validarCampos()) {
                     //Actualizo los datos de la persona que retira
                     this.setState({
                         datosReserva: {
@@ -350,6 +380,13 @@ class Checkout extends Component {
                             persona_retiro: this.state.datosPersonaRetiro.nombre + " " + this.state.datosPersonaRetiro.apellido,
                         }
                     })
+                }
+                else {
+                    this.setState({
+                        resultadoRequest: 401,
+                        showModal: true
+                    })
+                    return false;
                 }
                 break;
             }
@@ -494,7 +531,7 @@ class Checkout extends Component {
     }
 
     crearReserva(datosReserva) {
-        var path = "http://"+window.$ip+":3000/redAgro/generarReserva";
+        var path = "http://" + window.$ip + ":3000/redAgro/generarReserva";
         var _this = this;
         fetch(path, {
             method: "POST",
@@ -611,6 +648,7 @@ class Checkout extends Component {
                                     actualizarHorarioEntrega={this.actualizarHorarioEntrega}
                                     selectorFecha={this.state.selectorFecha}
                                     selectorHorarios={this.state.selectorHorarios}
+                                    validaciones={this.state.validaciones}
                                 />
                                 <Button
                                     variant="light"

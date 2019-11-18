@@ -513,3 +513,7 @@ input[type=text] {
     min-width: 100px;
     margin: auto !important;
 }
+
+.botonesModal {
+    margin-top: 20px !important;
+}
