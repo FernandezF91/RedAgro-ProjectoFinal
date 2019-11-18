@@ -3,8 +3,8 @@ import '../diseños/recuperaremail.css';
 import '../diseños/EstilosGenerales.css';
 
 import React, { Component } from 'react'
-import { Navbar, Container, Row, Col, Form, Button, Nav } from 'react-bootstrap';
-import { MDBCol, MDBModal } from 'mdbreact';
+import { Navbar, Container, Form, Button, Nav } from 'react-bootstrap';
+import { MDBCol, MDBModal, MDBRow } from 'mdbreact';
 import Loader from 'react-loader-spinner';
 
 import culturaVerde from '../imagenes/cultura-verde-2.png';
@@ -15,8 +15,8 @@ class RecuperarContraseña extends Component {
         super(props)
 
         this.state = {
-            fields: [],
-            errores: [],
+            campos: [],
+            validaciones: [],
             usuario: {},
             showModal: false,
             mensaje: "",
@@ -29,6 +29,12 @@ class RecuperarContraseña extends Component {
         this.cerrarModal = this.cerrarModal.bind(this);
         this.cerrarModalError = this.cerrarModalError.bind(this);
         this.mostrarLogin = this.mostrarLogin.bind(this);
+    }
+
+    onKeyPress = e => {
+        if (e.key === 'Enter') {
+            this.handleSubmit(e);
+        }
     }
 
     cerrarModal() {
@@ -47,7 +53,6 @@ class RecuperarContraseña extends Component {
     mostrarLogin() {
         this.props.history.push({
             pathname: '/login',
-
         })
     }
 
@@ -60,48 +65,72 @@ class RecuperarContraseña extends Component {
     }
 
     detectarCambios(e) {
-        let fields = this.state.fields;
-        fields[e.target.name] = e.target.value;
+        let campos = this.state.campos;
+        campos[e.target.name] = e.target.value;
         this.setState({
-            fields
+            campos
         })
     }
 
     validarDatos() {
-        if ((!this.state.fields["contraseñaNueva"] || !this.state.fields["confirmarContraseña"]) ||
-            ((this.state.fields["contraseñaNueva"]) !== (this.state.fields["confirmarContraseña"]))) {
+        var showModal = false;
+        this.setState({
+            validaciones: []
+        });
+        let validaciones = [];
 
+        if (!this.state.campos["contraseñaNueva"]) {
+            validaciones["contraseñaNueva"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["confirmarContraseña"]) {
+            validaciones["confirmarContraseña"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if ((this.state.campos["contraseñaNueva"]) !== (this.state.campos["confirmarContraseña"])) {
+            validaciones["contraseñaNueva"] = " ";
+            validaciones["confirmarContraseña"] = "Las contraseñas no coinciden";
+            showModal = true;
+        }
+
+        if (showModal) {
             this.setState({
-                mensaje: "Datos incompletos o incorrectos",
-                showModal: true,
-                resultadoRequest: 0,
-                loading: false
+                validaciones: validaciones,
+                showModal: showModal,
+                mensaje: "Ups! Campos incompletos o incorrectos",
+                loading: false,
+                resultadoRequest: 0
             });
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
-    modificarContraseña() {
+    modificarContraseña(e) {
         this.setState({
             loading: true
         });
-        const path_principal = "http://localhost:3000/redAgro/modificar_contraseña?c=";
-        var password = this.state.fields["contraseñaNueva"];
-        var id = this.state.id;
-        const final_path = path_principal + password + "&id=" + id;
+
+        e.preventDefault();
+
+        var path = "http://localhost:3000/redAgro/modificar_contraseña?c=" + this.state.campos["contraseñaNueva"];
+        path = path + "&id=" + this.state.id;
+
         var _this = this;
 
         if (_this.validarDatos()) {
 
-            fetch(final_path, {
+            fetch(path, {
                 method: "PUT"
             })
                 .then(function (response) {
                     if (response.status !== 200) {
                         _this.setState({
                             showModal: true,
-                            mensaje: "Ocurrió un error al actualizar la contraseña. Reintentá en unos minutos.",
+                            mensaje: "Ocurrió un error al actualizar la contraseña. Por favor, reintentá en unos minutos.",
                             resultadoRequest: 0,
                             loading: false
                         });
@@ -124,28 +153,13 @@ class RecuperarContraseña extends Component {
     render() {
         if (this.state.loading) return (
             <div className="fondo">
-                <Navbar className="barraNavegacion alturaBarra">
-                    <MDBCol md="2" className="culturaVerde">
-                        <Navbar.Brand href="/">
-                            <img src={culturaVerde} width="130px" height="50px" alt="Cultura Verde" />
-                        </Navbar.Brand>
-                    </MDBCol>
-                    <MDBCol />
-                    <MDBCol md="1">
-                        <Nav.Item className="alturaSeccionesBarra">
-                            <i className="fas fa-info-circle iconosBarra" />
-                        </Nav.Item>
-                    </MDBCol>
-                </Navbar>
-                <Container fluid className="contenedor">
-                    <Loader
-                        type="Grid"
-                        color="#28A745"
-                        height={150}
-                        width={150}
-                        className="loader loaderWhitesmoke"
-                    />
-                </Container>
+                <Loader
+                    type="Grid"
+                    color="#28A745"
+                    height={150}
+                    width={150}
+                    className="loader loaderWhitesmoke"
+                />
             </div>
         )
 
@@ -165,41 +179,67 @@ class RecuperarContraseña extends Component {
                     </MDBCol>
                 </Navbar>
                 <Container fluid className="contenedor">
-                    <div className="formularioLogin">
-                        <h2>Modificar contraseña</h2>
-                        <div className="encabezadoRecucontra">
-                            <Form>
-                                <Form.Group as={Row}>
-                                    <Form.Label column>Contraseña nueva</Form.Label>
-                                    <Col sm={7}>
-                                        <Form.Control
-                                            required
-                                            type="password"
-                                            name="contraseñaNueva"
-                                            onChange={(e) => this.detectarCambios(e)}
-                                            className="camposDatosDeUsuario"
-                                        />
-                                    </Col>
-                                </Form.Group>
-                                <Form.Group as={Row}>
-                                    <Form.Label column>Confirmar contraseña</Form.Label>
-                                    <Col sm={7}>
-                                        <Form.Control
-                                            required
-                                            type="password"
-                                            name="confirmarContraseña"
-                                            onChange={(e) => this.detectarCambios(e)}
-                                            className="camposDatosDeUsuario"
-                                        />
-                                    </Col>
-                                </Form.Group>
-                            </Form>
+                    <h2 className="titulosPaginasLogin">Modificar contraseña</h2>
+                    <Form ref="form" onSubmit={(e) => this.modificarContraseña(e)}>
+                        <Form.Group className="col-md camposGeneral">
+                            <MDBCol md="5" top>
+                                <Form.Label column>Contraseña nueva</Form.Label>
+                            </MDBCol>
+                            <MDBCol md="7">
+                                <MDBRow>
+                                    <Form.Control
+                                        value={this.state.campos["contraseñaNueva"]}
+                                        type="password"
+                                        name="contraseñaNueva"
+                                        onChange={(e) => this.detectarCambios(e)}
+                                        className="camposDatosDeUsuario"
+                                        onKeyPress={this.onKeyPress}
+                                    />
+                                    {
+                                        (this.state.validaciones["contraseñaNueva"]) &&
+                                        <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                    }
+                                </MDBRow>
+                                {
+                                    (this.state.validaciones["contraseñaNueva"]) &&
+                                    <MDBRow>
+                                        <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["contraseñaNueva"]}</div>
+                                    </MDBRow>
+                                }
+                            </MDBCol>
+                        </Form.Group>
+                        <Form.Group className="col-md camposGeneral">
+                            <MDBCol md="5" top>
+                                <Form.Label column>Confirmar contraseña</Form.Label>
+                            </MDBCol>
+                            <MDBCol md="7">
+                                <MDBRow>
+                                    <Form.Control
+                                        value={this.state.campos["confirmarContraseña"]}
+                                        type="password"
+                                        name="confirmarContraseña"
+                                        onChange={(e) => this.detectarCambios(e)}
+                                        className="camposDatosDeUsuario"
+                                        onKeyPress={this.onKeyPress}
+                                    />
+                                    {
+                                        (this.state.validaciones["confirmarContraseña"]) &&
+                                        <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                    }
+                                </MDBRow>
+                                {
+                                    (this.state.validaciones["confirmarContraseña"]) &&
+                                    <MDBRow>
+                                        <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["confirmarContraseña"]}</div>
+                                    </MDBRow>
+                                }
+                            </MDBCol>
+                        </Form.Group>
+                        <div className="botones">
+                            <Button variant="light" onClick={this.mostrarLogin}>Cancelar</Button>
+                            <Button variant="success" type="submit">Guardar</Button>
                         </div>
-                    </div>
-                    <div className="botones">
-                        <Button variant="light" onClick={this.mostrarLogin}>Cancelar</Button>
-                        <Button variant="success" type="submit" onClick={(e) => this.modificarContraseña(e)}>Guardar</Button>
-                    </div>
+                    </Form>
                     {
                         <MDBModal isOpen={this.state.showModal} centered size="sm">
                             <div className="modalMargenes" tabindex="0">

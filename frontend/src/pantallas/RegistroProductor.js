@@ -4,7 +4,7 @@ import 'rc-datepicker/lib/style.css';
 
 import React, { Component } from 'react'
 import { Navbar, Container, Form, Row, Button, Nav } from 'react-bootstrap';
-import { MDBCol, MDBRow, MDBModal } from 'mdbreact'
+import { MDBCol, MDBRow, MDBModal } from 'mdbreact';
 import { DatePickerInput } from 'rc-datepicker';
 import moment from 'moment';
 import Loader from 'react-loader-spinner';
@@ -53,6 +53,7 @@ class RegistroProductor extends Component {
             validaciones: []
         });
         let validaciones = [];
+        
         if (!this.state.campos["nombre"]) {
             validaciones["nombre"] = "Campo requerido";
             showModal = true;

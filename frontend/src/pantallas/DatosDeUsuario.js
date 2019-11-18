@@ -1,15 +1,18 @@
 import '../diseños/DatosDeUsuario.css';
+import '../diseños/EstilosGenerales.css';
+
 import React, { Component } from 'react'
 import { Form, Row, Button } from 'react-bootstrap';
+import { MDBCol, MDBRow, MDBModal } from 'mdbreact';
 import { DatePickerInput } from 'rc-datepicker';
-import Modal from 'react-awesome-modal';
-import { isDate } from 'moment';
+import Loader from 'react-loader-spinner';
+import moment from 'moment';
 
 const maxDate = new Date();
 
 const regularExp = {
-    onlyLetters: /^[a-zA-Z ]*$/,
-    onlyNumbers: /^[0-9]+$/
+    letras: /^[a-zA-Z\s]*$/,
+    telefono: /^[0-9]{8,14}$/,
 }
 
 class DatosDeUsuario extends Component {
@@ -20,18 +23,27 @@ class DatosDeUsuario extends Component {
 
         this.state = {
             campos: [],
-            errores: [],
+            validaciones: [],
             usuario: this.props.usuario,
-            visible: false,
+            showModal: false,
             mensaje: "",
-            titulo: "",
-            formOk: false,
             razon_social: "",
+            resultadoRequest: 0,
+            loading: false,
             id: this.props.usuario.id //para ir pasando el ID del usuario de pantalla a pantalla
         }
 
         this.mostrarPantallaPrincipal = this.mostrarPantallaPrincipal.bind(this);
         this.actualizarStorage = this.actualizarStorage.bind(this);
+        this.cerrarModal = this.cerrarModal.bind(this);
+        this.cerrarModalError = this.cerrarModalError.bind(this);
+        this.validarCampos = this.validarCampos.bind(this);
+    }
+
+    onKeyPress = e => {
+        if (e.key === 'Enter') {
+            this.handleSubmit(e);
+        }
     }
 
     componentDidMount() {
@@ -39,7 +51,7 @@ class DatosDeUsuario extends Component {
 
         campos["nombre"] = this.state.usuario.nombre;
         campos["apellido"] = this.state.usuario.apellido;
-        campos["fecha_nac"] = new Date(this.state.usuario.fecha_nacimiento);
+        campos["fecha_nacimiento"] = new Date(this.state.usuario.fecha_nacimiento);
         campos["telefono"] = this.state.usuario.telefono;
 
         if (this.state.usuario.rol === "Productor") {
@@ -93,7 +105,9 @@ class DatosDeUsuario extends Component {
 
     cambiosFecha(e) {
         let campos = this.state.campos;
-        campos["fecha_nac"] = e;
+
+        campos["fecha_nacimiento"] = e;
+
         this.setState({ campos })
     }
 
@@ -105,7 +119,7 @@ class DatosDeUsuario extends Component {
                     "nombre": this.state.campos["nombre"],
                     "apellido": this.state.campos["apellido"],
                     "telefono": this.state.campos["telefono"],
-                    "fecha_nacimiento": this.state.campos["fecha_nac"],
+                    "fecha_nacimiento": this.state.campos["fecha_nacimiento"],
                     "usuario": this.state.usuario.usuario,
                     "contraseña": this.state.usuario.contraseña,
                     "rol": this.state.usuario.rol,
@@ -122,7 +136,7 @@ class DatosDeUsuario extends Component {
                     "nombre": this.state.campos["nombre"],
                     "apellido": this.state.campos["apellido"],
                     "telefono": this.state.campos["telefono"],
-                    "fecha_nacimiento": this.state.campos["fecha_nac"],
+                    "fecha_nacimiento": this.state.campos["fecha_nacimiento"],
                     "usuario": this.state.usuario.usuario,
                     "contraseña": this.state.usuario.contraseña,
                     "rol": this.state.usuario.rol,
@@ -136,18 +150,17 @@ class DatosDeUsuario extends Component {
         }
     }
 
-    closeModal() {
-        if (this.state.formOk === false) {
-            this.setState({
-                visible: false
-            });
-            return;
-        }
-
+    cerrarModal() {
         this.setState({
-            visible: false
-        });
+            showModal: false,
+        })
         this.mostrarPantallaPrincipal();
+    }
+
+    cerrarModalError() {
+        this.setState({
+            showModal: false
+        })
     }
 
     mostrarPantallaPrincipal() {
@@ -159,38 +172,67 @@ class DatosDeUsuario extends Component {
     }
 
     validarCampos() {
-        if ((!this.state.campos["nombre"]) || (!this.state.campos["apellido"]) || (!this.state.campos["telefono"]) || (!this.state.campos["fecha_nac"]) ||
-            (!regularExp.onlyLetters.test(this.state.campos["nombre"])) || (!regularExp.onlyLetters.test(this.state.campos["apellido"])) || (!isDate(this.state.campos["fecha_nac"])) ||
-            (!regularExp.onlyNumbers.test(this.state.campos["telefono"])) || (this.state.campos["telefono"].length < 8) || (this.state.campos["telefono"].length > 14)) {
+        var showModal = false;
+        this.setState({
+            validaciones: []
+        });
+        let validaciones = [];
 
-            this.setState({
-                titulo: "Error",
-                mensaje: "Datos incompletos o incorrectos",
-                visible: true
-            });
-
-            return false;
+        if (!this.state.campos["nombre"]) {
+            validaciones["nombre"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.letras.test(this.state.campos["nombre"])) {
+            validaciones["nombre"] = "Formato inválido";
+            showModal = true;
         }
 
-        if ((this.state.campos["nombre"] === this.state.usuario.nombre) &&
-            (this.state.campos["apellido"] === this.state.usuario.apellido) &&
-            (this.state.campos["telefono"] === this.state.usuario.telefono) &&
-            (this.state.campos["razon_social"] === this.razon_social) &&
-            (this.state.campos["fecha_nac"].getTime() === new Date(this.state.usuario.fecha_nacimiento).getTime())) {
-
-            this.setState({
-                titulo: "Error",
-                mensaje: "No modificaste ningún dato",
-                visible: true
-            });
-
-            return false;
+        if (!this.state.campos["apellido"]) {
+            validaciones["apellido"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.letras.test(this.state.campos["apellido"])) {
+            validaciones["apellido"] = "Formato inválido";
+            showModal = true;
         }
-        return true;
+
+        if (!this.state.campos["fecha_nacimiento"]) {
+            validaciones["fecha_nacimiento"] = "Campo requerido";
+            showModal = true;
+        } else if (this.state.campos["fecha_nacimiento"] && moment(this.state.campos["fecha_nacimiento"], 'DD/MM/YYYY').format('YYYY-MM-DD') === "Invalid date") {
+            validaciones["fecha_nacimiento"] = "Formato inválido";
+            showModal = true;
+        }
+
+        if (this.state.usuario.rol === "Productor" && !this.state.campos["razon_social"]) {
+            validaciones["razon_social"] = "Campo requerido";
+            showModal = true;
+        }
+
+        if (!this.state.campos["telefono"]) {
+            validaciones["telefono"] = "Campo requerido";
+            showModal = true;
+        } else if (!regularExp.telefono.test(this.state.campos["telefono"])) {
+            validaciones["telefono"] = "Formato inválido";
+            showModal = true;
+        }
+
+        if (showModal) {
+            this.setState({
+                validaciones: validaciones,
+                showModal: showModal,
+                mensaje: "Ups! Campos incompletos o incorrectos",
+                loading: false,
+                resultadoRequest: 0
+            });
+            return false;
+        } else {
+            return true;
+        }
     }
 
     handleSubmit(e) {
         var _this = this;
+
+        e.preventDefault();
 
         if (_this.validarCampos()) {
 
@@ -208,29 +250,29 @@ class DatosDeUsuario extends Component {
                             function (response) {
                                 if (status !== 200) {
                                     _this.setState({
-                                        visible: true,
-                                        titulo: "Error",
-                                        mensaje: response
+                                        showModal: true,
+                                        mensaje: response,
+                                        resultadoRequest: 0,
+                                        loading: false
                                     });
                                 }
                                 else {
                                     _this.actualizarStorage();
                                     _this.setState({
-                                        visible: true,
-                                        titulo: "Modificación exitosa",
-                                        mensaje: "",
-                                        formOk: true
+                                        showModal: true,
+                                        resultadoRequest: 200,
+                                        mensaje: "Datos actualizados correctamente!",
+                                        loading: false
                                     });
                                 }
                             }
                         )
                     })
             }
-            var path_principal = "http://localhost:3000/redAgro/update_usuario?id=";
 
-            var path_final = path_principal + _this.state.id;
+            var path = "http://localhost:3000/redAgro/update_usuario?id=" + _this.state.id;
 
-            fetch(path_final, {
+            fetch(path, {
                 method: "PUT",
                 headers: {
                     'Content-type': 'application/json;charset=UTF-8',
@@ -239,15 +281,16 @@ class DatosDeUsuario extends Component {
                     "nombre": this.state.campos["nombre"],
                     "apellido": this.state.campos["apellido"],
                     "telefono": this.state.campos["telefono"],
-                    "fecha_nacimiento": this.state.campos["fecha_nac"]
+                    "fecha_nacimiento": this.state.campos["fecha_nacimiento"]
                 }),
             })
                 .then(function (response) {
                     if (response.status !== 200) {
                         _this.setState({
-                            visible: true,
-                            titulo: "Error",
-                            mensaje: "Ocurrió algún error inesperado. Intenta nuevamente"
+                            showModal: true,
+                            mensaje: "Ocurrió un error al actualizar tus datos. Por favor, reintentá en unos minutos.",
+                            resultadoRequest: 0,
+                            loading: false
                         });
                         return;
                     }
@@ -256,10 +299,10 @@ class DatosDeUsuario extends Component {
                         function (response) {
                             _this.actualizarStorage();
                             _this.setState({
-                                visible: true,
-                                titulo: "Modificación exitosa",
-                                mensaje: "",
-                                formOk: true
+                                showModal: true,
+                                resultadoRequest: 200,
+                                mensaje: "Datos actualizados correctamente!",
+                                loading: false
                             });
 
                         });
@@ -268,102 +311,186 @@ class DatosDeUsuario extends Component {
     }
 
     render() {
+        if (this.state.loading) return (
+            <Loader
+                type="Grid"
+                color="#28A745"
+                height={150}
+                width={150}
+                className="loader"
+            />
+        )
+
         return (
             <div>
                 <div className="titulosPrincipales">Datos de usuario</div>
-                <div className="contenidoDU">
-                    <div className="nombreDU" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>Nombre</Form.Label>
-                            <Form.Control
-                                required
-                                name="nombre"
-                                defaultValue={this.state.usuario.nombre}
-                                pattern="^[a-zA-Z ]*$"
-                                onChange={(e) => this.detectarCambios(e)}
-                                className="camposDatosDeUsuario"
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="apellidoDU" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>Apellido</Form.Label>
-                            <Form.Control
-                                required
-                                name="apellido"
-                                defaultValue={this.state.usuario.apellido}
-                                pattern="^[a-zA-Z ]*$"
-                                onChange={(e) => this.detectarCambios(e)}
-                                className="camposDatosDeUsuario"
-                            />
-                        </Form.Group>
-                    </div>
+                <Form ref="form" onSubmit={(e) => this.handleSubmit(e)}>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" top>
+                            <Form.Label column>Nombre</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["nombre"]}
+                                    name="nombre"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["nombre"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                }
+                            </MDBRow>
+                            {
+                                (this.state.validaciones["nombre"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["nombre"]}</div>
+                                </MDBRow>
+                            }
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" top>
+                            <Form.Label column>Apellido</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["apellido"]}
+                                    name="apellido"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                />
+                                {
+                                    (this.state.validaciones["apellido"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                }
+                            </MDBRow>
+                            {
+                                (this.state.validaciones["apellido"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["apellido"]}</div>
+                                </MDBRow>
+                            }
+                        </MDBCol>
+                    </Form.Group>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" top>
+                            <Form.Label column>Fecha de nacimiento</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
+                                <DatePickerInput
+                                    ref="datePicker"
+                                    defaultValue={this.state.usuario.fecha_nacimiento}
+                                    displayFormat='DD/MM/YYYY'
+                                    maxDate={maxDate}
+                                    onChange={(e) => this.cambiosFecha(e)}
+                                    className="col-md-3 padding0Inputs"
+                                />
+                                {
+                                    (this.state.validaciones["fecha_nacimiento"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                }
+                            </MDBRow>
+                            {
+                                (this.state.validaciones["fecha_nacimiento"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["fecha_nacimiento"]}</div>
+                                </MDBRow>
+                            }
+                        </MDBCol>
+                    </Form.Group>
                     {
-                        this.state.usuario.rol === "Productor" ?
-                            <div className="apellidoDU" >
-                                <Form.Group as={Row}>
-                                    <Form.Label column sm={4}>Razón Social</Form.Label>
-                                    <Form.Control
-                                        required
-                                        name="razon_social"
-                                        defaultValue={this.state.razon_social}
-                                        pattern="^[a-zA-Z ]*$"
-                                        onChange={(e) => this.detectarCambios(e)}
-                                        className="camposDatosDeUsuario"
-                                    />
-                                </Form.Group>
-                            </div>
-                            : ''
+                        this.state.usuario.rol === "Productor" &&
+                        (
+                            <Form.Group className="col-md-12">
+                                <MDBCol md="4" top>
+                                    <Form.Label column>Razón Social</Form.Label>
+                                </MDBCol>
+                                <MDBCol md="8">
+                                    <MDBRow>
+                                        <Form.Control
+                                            value={this.state.campos["razon_social"]}
+                                            name="razon_social"
+                                            onChange={(e) => this.detectarCambios(e)}
+                                            className="col-md-8"
+                                        />
+                                        {
+                                            (this.state.validaciones["razon_social"]) &&
+                                            <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                        }
+                                    </MDBRow>
+                                    {
+                                        (this.state.validaciones["razon_social"]) &&
+                                        <MDBRow>
+                                            <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["razon_social"]}</div>
+                                        </MDBRow>
+                                    }
+                                </MDBCol>
+                            </Form.Group>
+                        )
                     }
-                    <div className="fechaNac">
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={3}>Fecha de nacimiento</Form.Label>
-                            <DatePickerInput
-                                ref="datePicker"
-                                name="fecha_nac"
-                                defaultValue={this.state.usuario.fecha_nacimiento}
-                                displayFormat='DD/MM/YYYY'
-                                maxDate={maxDate}
-                                onChange={(e) => this.cambiosFecha(e)}
-                                className="col-md-3 padding0Inputs camposDatosDeUsuario"
-                            />
-                        </Form.Group>
-                    </div>
-                    <div className="telefonoDU" >
-                        <Form.Group as={Row}>
-                            <Form.Label column sm={4}>Teléfono de contacto</Form.Label>
-                            <Form.Control
-                                required
-                                name="telefono"
-                                defaultValue={this.state.usuario.telefono}
-                                pattern="[0-9]{8,14}"
-                                maxLength="14"
-                                onChange={(e) => this.detectarCambios(e)}
-                                className="camposDatosDeUsuario"
-                            />
-                        </Form.Group>
-                    </div>
+                    <Form.Group className="col-md-12">
+                        <MDBCol md="4" top>
+                            <Form.Label column>Teléfono de contacto</Form.Label>
+                        </MDBCol>
+                        <MDBCol md="8">
+                            <MDBRow>
+                                <Form.Control
+                                    value={this.state.campos["telefono"]}
+                                    name="telefono"
+                                    onChange={(e) => this.detectarCambios(e)}
+                                    className="col-md-8"
+                                    type="number"
+                                />
+                                {
+                                    (this.state.validaciones["telefono"]) &&
+                                    <i className="fa fa-exclamation-circle mensajeErrorForm" />
+                                }
+                            </MDBRow>
+                            {
+                                (this.state.validaciones["telefono"]) &&
+                                <MDBRow>
+                                    <div className="mensajeErrorCampos col-md-8">{this.state.validaciones["telefono"]}</div>
+                                </MDBRow>
+                            }
+                        </MDBCol>
+                    </Form.Group>
                     <div className="botones">
                         <Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
-                        <Button variant="success" type="submit" onClick={(e) => this.handleSubmit(e)}>Guardar</Button>
+                        <Button variant="success" type="submit">Guardar</Button>
                     </div>
-                </div>
-                <section>
-                    <Modal
-                        visible={this.state.visible}
-                        width="460"
-                        height="120"
-                        effect="fadeInUp"
-                        onClickAway={() => this.closeModal()}>
-
-                        <div>
-                            <h1>{this.state.titulo}</h1>
-                            <p>{this.state.mensaje}</p>
-                            <a href="javascript:void(0);" onClick={() => this.closeModal()}>Cerrar</a>
+                </Form>
+                {
+                    <MDBModal isOpen={this.state.showModal} centered size="sm">
+                        <div className="modalMargenes" tabindex="0">
+                            {(this.state.resultadoRequest === 200) ?
+                                (
+                                    <div>
+                                        <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
+                                        <br />
+                                        <i className="fas fa-check-circle iconoModalOk" />
+                                        <br />
+                                        <br />
+                                        <h5>{this.state.mensaje}</h5>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
+                                        <br />
+                                        <i className="fas fa-exclamation-circle iconoModalError" />
+                                        <br />
+                                        <br />
+                                        <h5>{this.state.mensaje}</h5>
+                                    </div>
+                                )
+                            }
                         </div>
-                    </Modal>
-                </section>
-            </div>
+                    </MDBModal>
+                }
+            </div >
         );
     };
 }
