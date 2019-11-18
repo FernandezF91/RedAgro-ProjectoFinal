@@ -197,7 +197,7 @@ public class UsuarioControlador {
 			
 			}catch(Exception e) {
 				return new ResponseEntity<>(
-						"Ocurrió un error al actualizar la contraseña. Reintentá en unos minutos.",
+						"Ocurrió un error al actualizar la contraseña. Por favor, reintentá en unos minutos.",
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -246,7 +246,7 @@ public class UsuarioControlador {
 			} catch (MessagingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return new ResponseEntity<>("Ocurrió un error al recuperar tu email. Reintentá en unos minutos. ",
+				return new ResponseEntity<>("Ocurrió un error al recuperar tu email. Por favor, reintentá en unos minutos. ",
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
