@@ -2,7 +2,7 @@ import '../diseños/EstilosGenerales.css';
 import '../diseños/DetalleProducto.css';
 import React, { Component } from 'react';
 import { Carousel, Container, Row, Col } from 'react-bootstrap';
-import ButterToast, { Cinnamon, POS_BOTTOM, POS_LEFT } from 'butter-toast';
+import ButterToast, { Cinnamon, POS_BOTTOM, POS_RIGHT } from 'butter-toast';
 import { MDBBtn } from "mdbreact";
 import NumberFormat from 'react-number-format';
 import Loader from 'react-loader-spinner';
@@ -228,7 +228,7 @@ class DetalleBusqueda extends Component {
                     <Col className="detalleDelProducto" sm={4}>
                         <br />
                         <h6 className="grey-text">{this.state.producto.categoria}</h6>
-                        <h3 className="tituloProducto">{this.state.producto.titulo}</h3>
+                        <h3 className="tituloProducto overflowTexto" title={this.state.producto.titulo}>{this.state.producto.titulo}</h3>
                         <h3 className="precioProducto">
 
                             {
@@ -254,7 +254,7 @@ class DetalleBusqueda extends Component {
                         {
                             this.state.producto.contenido !== null ? //|| this.state.producto.contenido.length > 0
                                 <div className="contenidoDelProducto">
-                                    <h6 className="grey-text">Cada {this.state.producto.tipoDeUnidad.toLowerCase()} contiene {this.state.producto.contenido}</h6>
+                                    <h6 className="grey-text">Cada {this.state.producto.tipoDeUnidad.toLowerCase()} contiene {this.state.producto.contenido.toLowerCase()}</h6>
                                 </div>
                                 : ''
                         }
@@ -297,7 +297,7 @@ class DetalleBusqueda extends Component {
                 </Row>
 
                 <div className="toastPosicion">
-                    <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_LEFT }} />
+                    <ButterToast position={{ vertical: POS_BOTTOM, horizontal: POS_RIGHT }} />
                 </div>
             </Container>
         )

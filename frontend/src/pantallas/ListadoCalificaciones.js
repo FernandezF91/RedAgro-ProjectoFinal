@@ -36,7 +36,7 @@ class ListadoCalificaciones extends Component {
 
     generoItem(item) {
         const itemRows = [
-            <tr key={"row-data-" + item.id}>
+            <tr key={"row-data-" + item.id} className="border-bottom">
                 <td>{item.reserva}</td>
                 <td>{item.fecha}</td>
                 <td>{item.estado}</td>

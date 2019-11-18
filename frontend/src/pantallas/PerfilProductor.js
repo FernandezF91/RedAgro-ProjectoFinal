@@ -377,16 +377,18 @@ class PerfilProductor extends Component {
                                 </MDBCard>
                             </MDBCol>
                         </MDBRow>
+                        <br />
                     </MDBCol>
                     <MDBCol md="8">
                         <MDBCard>
                             <MDBCardBody>
                                 <MDBCardTitle>
                                     <h4>
-                                        <i className="fas fa-store" /> Mis productos
+                                        <i className="fas fa-store iconoTituloResumen" /> Mis productos
                                     </h4>
                                 </MDBCardTitle>
                                 <MDBContainer className="listadoDeProductos">
+                                    <br />
                                     <CarouselProductos
                                         listadoProductos={lista}
                                         mostrarDetalleProducto={this.mostrarDetalleProducto} />

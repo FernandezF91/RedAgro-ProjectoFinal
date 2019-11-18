@@ -154,6 +154,10 @@ class NuevoProducto extends Component {
             showModal = true;
         }
 
+        if (!this.state.campos["fecha_vencimiento"]) {
+            validaciones["fecha_vencimiento"] = "Campo requerido";
+            showModal = true;
+        }
         if (this.state.campos["fecha_vencimiento"] && moment(this.state.campos["fecha_vencimiento"], 'DD/MM/YYYY').format('YYYY-MM-DD') === "Invalid date") {
             validaciones["fecha_vencimiento"] = "Formato inválido";
             showModal = true;

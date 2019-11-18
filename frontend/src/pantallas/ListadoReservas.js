@@ -99,7 +99,7 @@ class ListadoReservas extends Component {
         var tipoUsuario = this.props.usuario.rol;
 
         const itemRows = [
-            <tr key={"row-data-" + item.id}>
+            <tr key={"row-data-" + item.id} className="border-bottom">
                 <td>{item.id}</td>
                 <td>{moment(item.fecha_creacion, 'YYYY-MM-DD').format('DD/MM/YYYY')}</td>
                 <td>{item.estado}</td>
