@@ -42,7 +42,7 @@ class HomePage extends Component {
     }
 
     componentDidMount() {
-        var path = "http://"+window.$ip+":3000/redAgro/ProductosProductor/obtenerProductosPantallaInicial";
+        var path = "http://" + window.$ip + ":3000/redAgro/ProductosProductor/obtenerProductosPantallaInicial";
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -64,7 +64,7 @@ class HomePage extends Component {
                     console.log(error);
                     this.setState({
                         loading: false,
-                        resultadoRequest: response.status
+                        resultadoRequest: 504
                     });
                 }
             })
@@ -186,9 +186,29 @@ class HomePage extends Component {
                             :
                             <div>
                                 <div className="titulosPrincipales">Novedades</div>
-                                <CarouselProductos
-                                    listadoProductos={lista}
-                                    mostrarDetalleProducto={this.mostrarDetalleProducto} />
+                                {
+                                    (lista.length > 0) ?
+                                        <CarouselProductos
+                                            listadoProductos={lista}
+                                            mostrarDetalleProducto={this.mostrarDetalleProducto} />
+                                        :
+                                        (this.state.resultadoRequest !== 504) ?
+                                            <div className="notFound">
+                                                <i className="fas fa-search iconoGrande" />
+                                                <br />
+                                                <br />
+                                                <h5>Ups! No se encontraron novedades!</h5>
+                                            </div>
+                                            :
+                                            <div className="notFound">
+                                                <i className="fas fa-exclamation-circle iconoGrandeError" />
+                                                <br />
+                                                <br />
+                                                <h5>Ups! Ocurrió un error al buscar las novedades! </h5>
+                                                <h6 className="grey-text">Por favor, reintentá en unos minutos.</h6>
+                                            </div>
+                                }
+
                             </div>
                     }
                     {

@@ -45,7 +45,7 @@ const ResumenProductosProductor = ({ listadoProductosProductor, resultadoRequest
                                 <br />
                                 <br />
                                 <br />
-                                <h6>No tenes productos fuera de stock o vencidos!</h6>
+                                <h6>No tenés productos fuera de stock o vencidos!</h6>
                                 <h6 className="grey-text">Revisá tus productos por <Link to={'./ListadoProductos'}>acá</Link></h6>
                             </div>
                         )

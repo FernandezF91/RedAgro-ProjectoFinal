@@ -165,10 +165,16 @@ input[type=text] {
     padding: 15px;
 }
 
+.iconoGrande {
+    color: #79CB79;
+    font-size: 175px;
+    margin-top: 50px;
+}
+
 .iconoGrandeError {
     color: red;
     font-size: 175px;
-    margin-top: 100px;
+    margin-top: 50px;
 }
 
 .columnaCentrado {

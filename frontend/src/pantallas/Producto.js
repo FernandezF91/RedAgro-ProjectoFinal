@@ -72,7 +72,7 @@ const Producto = ({ productos }) => {
                     <i className="fas fa-store iconoGrande"></i>
                     <br />
                     <br />
-                    <h5>Ups! No tenes productos cargados! </h5>
+                    <h5>Ups! No tenés productos cargados! </h5>
                     <h6 className="grey-text">Cargá tus productos <Link to={'/principalProductores/NuevoProducto'}>acá</Link> </h6>
                 </div>
             }

@@ -15,11 +15,6 @@
     margin-top: 3px;
 }
 
-.iconoGrande {
-    color: #79CB79;
-    font-size: 175px;
-}
-
 .pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
     background-color: #28a745 !important;
     border-color: #28a745 !important;

@@ -17,7 +17,7 @@ public class MailMensajes extends MailSender {
 				+ "Ingresá a Cultura Verde para responder.</p>" + "<br>" + "Saludos," + "<br>"
 				+ "Equipo de Cultura Verde");
 
-		this.setAsunto("Tenes un nuevo mensaje en Cultura Verde");
+		this.setAsunto("Tenés un nuevo mensaje en Cultura Verde");
 	}
 
 	public void enviarMail() throws AddressException, MessagingException {

@@ -54,7 +54,7 @@ const ResumenCalificaciones = ({ cantidadEstrellas, listadoCalificaciones, resul
                                 <br />
                                 <br />
                                 <br />
-                                <h6>No tenes calificaciones!</h6>
+                                <h6>No tenés calificaciones!</h6>
                                 <h6 className="grey-text">Revisá el estado de tus reservas por <Link to={'./ListadoReservas'}>acá</Link></h6>
                             </div>
                         )

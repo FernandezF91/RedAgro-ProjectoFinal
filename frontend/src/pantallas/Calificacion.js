@@ -43,7 +43,7 @@ const calificacion = ({ lista }) => {
                     <i className="fas fa-star iconoGrande" />
                     <br />
                     <br />
-                    <h5>Ups! No tenes calificaciones! </h5>
+                    <h5>Ups! No tenés calificaciones! </h5>
                     <h6 className="grey-text">Revisá el estado de tus reservas por <Link to={'./ListadoReservas'}>acá</Link></h6>
                 </div>
             }

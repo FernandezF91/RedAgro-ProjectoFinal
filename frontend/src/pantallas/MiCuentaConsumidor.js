@@ -168,12 +168,12 @@ class MiCuenta extends Component {
         const mensaje = [
             this.state.resultadoRequestReservas === 200 ? (
                 (this.state.cantidadReservasDisponibles === 0) ? (
-                    <h4 className="textoMiCuenta"> No tenes reservas disponibles para retirar!</h4>
+                    <h4 className="textoMiCuenta"> No tenés reservas disponibles para retirar!</h4>
                 ) : (
                         (this.state.cantidadReservasDisponibles === 1) ? (
-                            <h4 className="textoMiCuenta"> Tenes {this.state.cantidadReservasDisponibles} reserva disponible para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
+                            <h4 className="textoMiCuenta"> Tenés {this.state.cantidadReservasDisponibles} reserva disponible para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
                         ) : (
-                                <h4 className="textoMiCuenta"> Tenes {this.state.cantidadReservasDisponibles} reservas disponibles para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
+                                <h4 className="textoMiCuenta"> Tenés {this.state.cantidadReservasDisponibles} reservas disponibles para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
                             )
                     )
             ) : (
