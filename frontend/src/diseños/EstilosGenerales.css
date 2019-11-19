@@ -165,14 +165,6 @@ input[type=text] {
     padding: 15px;
 }
 
-.modalEliminarFoto {
-    z-index: 100000 !important;
-}
-
-.mensajeModal {
-    font-weight: bold;
-}
-
 .iconoGrandeError {
     color: red;
     font-size: 175px;
