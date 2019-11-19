@@ -355,6 +355,10 @@ input[type=text] {
     color: #555;
 }
 
+.textoTituloResumen {
+    color: #555;
+}
+
 .alturaTarjetasResumen {
     height: 400px !important;
 }
@@ -512,4 +516,52 @@ input[type=text] {
 
 .margenesCheckout {
     margin-bottom: 25px !important;
+}
+
+.iconoBotones {
+    margin-right: 10px;
+    font-size: 18px !important;
+}
+
+.divLoaderWhitesmoke {
+    width: calc(100vw - 78px) !important;
+}
+
+.loaderWhitesmoke {
+    background-color: whitesmoke !important;
+    left: 50%;
+    margin-left: -75px !important;
+}
+
+.textoProductos {
+    height: 50px !important;
+}
+
+.textoProductosMargen {
+    padding-top: 12px !important;
+}
+
+.iconoBoxGris {
+    font-size: 40px;
+    margin: auto;
+    margin-left: 0! important;
+    margin-right: 0px !important;
+    color: #555;
+}
+
+.boxSinPreferencias {
+    padding-left: 30px;
+    padding-right: 30px;
+    min-height: 70px;
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+.textoMiCuenta {
+    text-align: left;
+    line-height: 40px;
+    margin-left: 20px;
+    color: #555 !important;
+    align-self: center;
+    margin-bottom: 0px !important;
 }

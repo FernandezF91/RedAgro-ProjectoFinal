@@ -33,27 +33,29 @@ const CarouselProductos = (props) => {
                                                                 </strong>
                                                             </MDBCardTitle>
                                                             <MDBCardText>
-                                                                <strong className="float-center">
-                                                                    {
-                                                                        (item.oferta === null || item.oferta === undefined) ?
-                                                                            <div>
-                                                                                <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                                                            </div>
-                                                                            :
-                                                                            (item.oferta.activo) ?
-                                                                                <div title="Producto en oferta!">
-                                                                                    <strike>
-                                                                                        <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                                                                    </strike>
-                                                                                    <br />
-                                                                                    <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
-                                                                                </div>
-                                                                                :
-                                                                                <div>
+                                                                <div className="textoProductos">
+                                                                    <strong className="float-center">
+                                                                        {
+                                                                            (item.oferta === null || item.oferta === undefined) ?
+                                                                                <div className="textoProductosMargen">
                                                                                     <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
                                                                                 </div>
-                                                                    }
-                                                                </strong>
+                                                                                :
+                                                                                (item.oferta.activo) ?
+                                                                                    <div title="Producto en oferta!">
+                                                                                        <strike>
+                                                                                            <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                                                                        </strike>
+                                                                                        <br />
+                                                                                        <NumberFormat value={item.precio - item.precio * item.oferta.porcentaje / 100} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                                                                    </div>
+                                                                                    :
+                                                                                    <div className="textoProductosMargen">
+                                                                                        <NumberFormat value={item.precio} displayType={'text'} thousandSeparator={"."} decimalSeparator={","} prefix="$ " decimalScale={2} fixedDecimalScale={true} /> x {item.tipoDeUnidad}
+                                                                                    </div>
+                                                                        }
+                                                                    </strong>
+                                                                </div>
                                                             </MDBCardText>
                                                         </MDBCardBody>
                                                     </MDBCard>

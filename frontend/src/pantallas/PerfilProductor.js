@@ -40,7 +40,7 @@ class PerfilProductor extends Component {
     }
 
     componentDidMount() {
-        var path = "http://"+window.$ip+":3000/redAgro/usuario/obtenerUsuarioByMail?usuario=" + this.state.nombrePerfil;
+        var path = "http://" + window.$ip + ":3000/redAgro/usuario/obtenerUsuarioByMail?usuario=" + this.state.nombrePerfil;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -117,7 +117,7 @@ class PerfilProductor extends Component {
     }
 
     obtenerProductos(id_productor) {
-        var path = "http://"+window.$ip+":3000/redAgro/obtenerProductosProductor?id=" + id_productor;
+        var path = "http://" + window.$ip + ":3000/redAgro/obtenerProductosProductor?id=" + id_productor;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -173,7 +173,7 @@ class PerfilProductor extends Component {
     }
 
     obtenerCalificaciones(id_productor) {
-        var path = "http://"+window.$ip+":3000/redAgro/obtenerPromedioCalificaciones?id_productor=" + id_productor;
+        var path = "http://" + window.$ip + ":3000/redAgro/obtenerPromedioCalificaciones?id_productor=" + id_productor;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -208,7 +208,7 @@ class PerfilProductor extends Component {
     }
 
     obtenerCantidadDeReservasCalificadas(id_productor) {
-        var path = "http://"+window.$ip+":3000/redAgro/obtenerCantidadDeReservasCalificadas?id_productor=" + id_productor;
+        var path = "http://" + window.$ip + ":3000/redAgro/obtenerCantidadDeReservasCalificadas?id_productor=" + id_productor;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -250,7 +250,7 @@ class PerfilProductor extends Component {
         _this.setState({
             loading: true
         });
-        var path = "http://"+window.$ip+":3000/redAgro/obtenerEntregasProximoMes?id_productor=" + id_productor;
+        var path = "http://" + window.$ip + ":3000/redAgro/obtenerEntregasProximoMes?id_productor=" + id_productor;
 
         fetch(path)
             .catch(err => console.error(err))
@@ -341,7 +341,8 @@ class PerfilProductor extends Component {
                                 <MDBCard className="mb-4">
                                     <MDBCardBody>
                                         <MDBCardTitle className="margenTitulosResumen">
-                                            <i className="fas fa-star iconoTituloResumen" /> Mis calificaciones
+                                            <i className="fas fa-star iconoTituloResumen" />
+                                            <span className="textoTituloResumen"> Mi calificación</span>
                                         </MDBCardTitle>
                                         <div className="resumenCentrado columnaTablaCentrada">
                                             <BeautyStars
@@ -364,7 +365,8 @@ class PerfilProductor extends Component {
                                 <MDBCard>
                                     <MDBCardBody className="text-center margenTitulosResumen">
                                         <MDBCardTitle className="margenTitulosResumen">
-                                            <i className="fas fa-map-marker-alt iconoTituloResumen" /> Próximas fechas de entrega
+                                            <i className="fas fa-map-marker-alt iconoTituloResumen" />
+                                            <span className="textoTituloResumen"> Próximas fechas de entrega</span>
                                         </MDBCardTitle>
                                         <MDBCardText className="resumenCentrado">
                                             <ResumenFechasEntrega
@@ -384,7 +386,8 @@ class PerfilProductor extends Component {
                             <MDBCardBody>
                                 <MDBCardTitle>
                                     <h4>
-                                        <i className="fas fa-store iconoTituloResumen" /> Mis productos
+                                        <i className="fas fa-store iconoTituloResumen" />
+                                        <span className="textoTituloResumen"> Mis productos</span>
                                     </h4>
                                 </MDBCardTitle>
                                 <MDBContainer className="listadoDeProductos">
