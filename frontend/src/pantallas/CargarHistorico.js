@@ -83,10 +83,14 @@ class CargarHistorico extends Component {
 	}
 
 	subirArchivos() {
+		
 		var _this = this
 
+		this.setState({
+            loading: true
+		});
+		
 		var file = _this.state.files[0]
-
 		const path = "http://"+window.$ip+":3000/redAgro/uploadFile";
 
 		if (_this.validarCampos()) {
@@ -111,7 +115,8 @@ class CargarHistorico extends Component {
 							showModal: true,
 							mensaje: "Ocurrió algún error inesperado. Intenta nuevamente",
 							formOK: false,
-							resultadoRequest: false
+							resultadoRequest: false,
+							loading:false
 						});
 						return;
 					}
@@ -122,7 +127,8 @@ class CargarHistorico extends Component {
 								showModal: true,
 								mensaje: "El archivo se guardo correctamente",
 								formOK: true,
-								resultadoRequest: true
+								resultadoRequest: true,
+								loading:false
 							});
 
 						});
@@ -135,6 +141,7 @@ class CargarHistorico extends Component {
 					showModal: true,
 					mensaje: "El archivo debe ser .csv",
 					formOK: false,
+					loading:false
 				});
 			}
 
@@ -151,7 +158,8 @@ class CargarHistorico extends Component {
 
 		}
 		this.setState({
-			showModal: false
+			showModal: false,
+			loading:false
 		})
 	}
 
@@ -170,8 +178,20 @@ class CargarHistorico extends Component {
 
 		return (
 			<div>
+				
 				<div className="titulosPrincipales">Cargar archivos históricos</div>
-				<span md="3">Seleccione los archivos históricos a cargar</span>
+
+				<span md="3">En esta sección se podrán cargar archivos del tipo "valores separados por coma(ejemplo.csv)". </span>
+				<br></br>
+				<span md="3">Un ejemplo de cómo debe ser dicho archivo es el siguiente.</span><br></br>
+				<span md="3">frutas,Banana,100,1,CABA,2018</span><br></br>
+				<span md="3">frutas,Manzana,500,2,CABA,2018</span><br></br>
+				<span md="3">Dónde los valores corresponden respectivamente a:</span><br></br>
+				<span md="3">categoría, producto, cantidad vendida, mes, zona de venta, año</span><br></br>
+				<br></br>
+				<br></br>
+				<div><h5>Seleccione los archivos históricos a cargar</h5></div>
+
 				<FilePond
 					className="cursorManito cajaImagenesWidth"
 					ref="filep"
@@ -186,6 +206,7 @@ class CargarHistorico extends Component {
 					}}
 				/>
 				<div>
+					<br></br>
 					<Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
 					<Button variant="success" onClick={() => this.subirArchivos()}>Guardar</Button>
 				</div>

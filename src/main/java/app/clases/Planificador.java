@@ -55,10 +55,9 @@ public class Planificador {
 
 		Network net = new Network();
 		net.readFile("C:/Bayes/BayesCulturaVerde.xdsl");
+		System.out.println(this.getPeriodo());
 		net.setEvidence("periodo", this.getPeriodo());
-		
-		// System.out.println(this.getPeriodo());
-		
+	
 		try{net.setEvidence("provincia", this.getProvincia());}
 		catch (smile.SMILEException e) {
 			while(alimentos.size()<5)

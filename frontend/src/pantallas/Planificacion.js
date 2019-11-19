@@ -76,21 +76,16 @@ class Planificacion extends Component {
     }
 
     cambiosSelectZona(opt, a, value) {
-        let zona = this.state.zona;
-        zona = opt.value;
-
         this.setState({
-            zona,
+            zona:opt.value,
             valueZona: value
         });
     }
 
     cambiosSelectPeriodo(opt, a, value) {
-        let periodo = this.state.periodo;
-        periodo = opt.value;
 
         this.setState({
-            periodo,
+            periodo:opt.value,
             valuePeriodo: value
         });
     }
@@ -142,9 +137,9 @@ class Planificacion extends Component {
         });
         if (_this.validarCampos()) {
             var path_principal = "http://"+window.$ip+":3000/redAgro/obtenerResultados?periodo=";
-            var periodo = this.periodo;
+            var periodo = this.state.periodo;
             //_this.props.id_productor;
-            var provincia = this.zona;
+            var provincia = this.state.zona;
             // _this.state.campos["tipo_producto"];
             var path_final = path_principal + periodo + "&provincia=" + provincia;
 
@@ -174,8 +169,6 @@ class Planificacion extends Component {
                                     loading: false
                                 });
                             });
-
-                            //   mostrarProduccion(_this.state.alimentosAProducir)
                         });
                 });
         }
