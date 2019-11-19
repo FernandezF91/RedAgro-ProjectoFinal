@@ -109,7 +109,7 @@ const Reserva = ({ lista, rolUsuario }) => {
 					<i className="fas fa-tasks iconoGrande" />
 					<br />
 					<br />
-					<h5>Ups! No tenes reservas! </h5>
+					<h5>Ups! No tenés reservas! </h5>
 					{(rolUsuario === "Consumidor") ?
 						<h6 className="grey-text">Probá buscando productos por <Link to={'/principalConsumidores/MiCuenta'}>acá</Link></h6>
 						:

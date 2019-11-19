@@ -215,7 +215,7 @@ class DetalleBusqueda extends Component {
             <Container className="containerPrincipal">
                 <Row>
                     <Col className="imagenProducto" sm={8}>
-                        <Carousel >
+                        <Carousel>
                             {
                                 this.state.producto.imagenes.map((imagen, index) => (
                                     <Carousel.Item key={index}>

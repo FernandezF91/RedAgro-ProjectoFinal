@@ -55,7 +55,7 @@ public class MailNuevaReserva extends MailSender {
 					+ tablaDetalle + "<br> "
 					+ "Total de la Reserva: $" + reserva.getTotal_reserva() + "<br> "
 					+ formaDeRetiro + "<br> <br> " 
-					+ "Si tenes alguna duda, no dudes de contactar a tu productor. " 
+					+ "Si tenés alguna duda, no dudes de contactar a tu productor. " 
 					+ "<br> "
 					+ "<br> " 
 					+ "Saludos," + "<br>" + "Equipo de Cultura Verde </div>");
@@ -71,7 +71,7 @@ public class MailNuevaReserva extends MailSender {
 					+ tablaDetalle + "<br> "
 					+ "Total de la Reserva: $" + reserva.getTotal_reserva() + "<br> "
 					+ formaDeRetiro + "<br> <br> "
-					+ "Si tenes alguna duda, no dudes de contactar a tu consumidor." 
+					+ "Si tenés alguna duda, no dudes de contactar a tu consumidor." 
 					+ "<br> " 
 					+ "<br> " 
 					+ "Saludos," + "<br>" + "Equipo de Cultura Verde </div>");

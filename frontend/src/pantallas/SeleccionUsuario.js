@@ -3,7 +3,6 @@ import { Container, Button, Navbar, Nav } from 'react-bootstrap';
 import { MDBCol } from 'mdbreact';
 import culturaVerde from '../imagenes/cultura-verde-2.png';
 import '../diseños/EstilosGenerales.css';
-import '../diseños/seleccionUsuario.css';
 
 class SeleccionUsuario extends Component {
 
@@ -32,21 +31,19 @@ class SeleccionUsuario extends Component {
                     </MDBCol>
                 </Navbar>
                 <Container fluid className="contenedor">
-                    <div className="contenidoSeleccion">
-                        <div className="tituloSeleccion">
-                            <h3>Selecciona un tipo de usuario</h3>
-                        </div>
-                        <div className="botones">
-                            <Button variant="success" href="/registroProductor">
-                                <i className="fas fa-tractor iconoBotones" />
-                                Soy productor
-                            </Button>
-                            <Button variant="success" href="/registroConsumidor">
-                                <i className="fas fa-shopping-basket iconoBotones" />
-                                Soy consumidor
-                            </Button>
-                        </div>
-                        <Button variant="light" href="javascript:history.back()" className="atras">Atras</Button>
+                    <h2 className="titulosPaginasLogin">Selecciona un tipo de usuario</h2>
+                    <div className="botones">
+                        <Button variant="success" href="/registroProductor">
+                            <i className="fas fa-tractor iconoBotones" />
+                            Soy productor
+                        </Button>
+                        <Button variant="success" href="/registroConsumidor">
+                            <i className="fas fa-shopping-basket iconoBotones" />
+                            Soy consumidor
+                        </Button>
+                    </div>
+                    <div className="botones">
+                        <Button variant="light" href="javascript:history.back()">Atras</Button>
                     </div>
                 </Container>
             </div>

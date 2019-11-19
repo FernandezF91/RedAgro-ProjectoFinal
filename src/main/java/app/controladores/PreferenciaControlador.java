@@ -95,7 +95,7 @@ public class PreferenciaControlador {
 				try {
 					preferenciaDAO.borrarPreferenciaConsumidor(id, productoId);
 				} catch (Exception e) {
-					return new ResponseEntity<>("Ocurrio un error al borrar las preferencias",
+					return new ResponseEntity<>("Ocurrió un error al borrar las preferencias",
 							HttpStatus.INTERNAL_SERVER_ERROR);
 				}
 			}
@@ -116,7 +116,7 @@ public class PreferenciaControlador {
 				preferenciaDAO.saveAll(preferenciasAGuardar);
 				return new ResponseEntity<>("Prefencias guardadas", HttpStatus.OK);
 			} catch (Exception e) {
-				return new ResponseEntity<>("Ocurrio un error al guardar las nuevas preferencias",
+				return new ResponseEntity<>("Ocurrió un error al guardar las nuevas preferencias",
 						HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}

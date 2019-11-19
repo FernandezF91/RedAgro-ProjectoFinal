@@ -1,10 +1,3 @@
-.agregarcarrito {
-    font-size: 15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
 .iconosListado {
     padding-left: 10px;
     padding-right: 10px;
@@ -42,16 +35,6 @@
     background-color: white !important;
 }
 
-.divLoaderWhitesmoke {
-    width: calc(100vw - 78px) !important;
-}
-
-.loaderWhitesmoke {
-    background-color: whitesmoke !important;
-    left: 50%;
-    margin-left: -75px !important;
-}
-
 .cantidadDeBusqueda {
     padding-left: 5%;
     align-items: center;
@@ -73,4 +56,17 @@
 
 .link-button:hover, .link-button:focus {
     text-decoration: none;
+}
+
+.carousel .carousel-indicators li {
+    background-color: #fff;
+    background-color: #CCC;
+    width: 0.5rem !important;
+    height: 0.5rem !important;
+}
+
+.carousel .carousel-indicators .active {
+    background-color: #888;
+    width: 0.5rem !important;
+    height: 0.5rem !important;
 }

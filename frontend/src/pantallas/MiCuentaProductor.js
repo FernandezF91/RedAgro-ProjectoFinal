@@ -56,7 +56,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path_usuario = "http://"+window.$ip+":3000/redAgro/obtenerCantidadReservasPendientesProductor?id_productor=" + _this.state.id_usuario;
+        var path_usuario = "http://" + window.$ip + ":3000/redAgro/obtenerCantidadReservasPendientesProductor?id_productor=" + _this.state.id_usuario;
 
         fetch(path_usuario)
             .catch(err => console.error(err))
@@ -94,7 +94,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path_usuario = "http://"+window.$ip+":3000/redAgro/obtenerPromedioCalificaciones?id_productor=" + _this.state.id_usuario;
+        var path_usuario = "http://" + window.$ip + ":3000/redAgro/obtenerPromedioCalificaciones?id_productor=" + _this.state.id_usuario;
 
         fetch(path_usuario)
             .catch(err => console.error(err))
@@ -126,7 +126,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path = "http://"+window.$ip+":3000/redAgro/obtenerUltimasCalificacionesPorProductor?id_productor=" + _this.state.id_usuario;
+        var path = "http://" + window.$ip + ":3000/redAgro/obtenerUltimasCalificacionesPorProductor?id_productor=" + _this.state.id_usuario;
 
         fetch(path)
             .catch(err => console.error(err))
@@ -166,7 +166,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path = "http://"+window.$ip+":3000/redAgro/obtenerEntregasProximoMes?id_productor=" + _this.state.id_usuario;
+        var path = "http://" + window.$ip + ":3000/redAgro/obtenerEntregasProximoMes?id_productor=" + _this.state.id_usuario;
 
         fetch(path)
             .catch(err => console.error(err))
@@ -206,7 +206,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path = "http://"+window.$ip+":3000/redAgro/obtenerProductosARevisar?id_productor=" + _this.state.id_usuario;
+        var path = "http://" + window.$ip + ":3000/redAgro/obtenerProductosARevisar?id_productor=" + _this.state.id_usuario;
 
         fetch(path)
             .catch(err => console.error(err))
@@ -265,12 +265,12 @@ class MiCuenta extends Component {
         const mensaje = [
             this.state.resultadoRequestReservas === 200 ? (
                 (this.state.cantidadReservasDisponibles === 0) ? (
-                    <h4 className="textoMiCuenta"> No tenes reservas pendientes!</h4>
+                    <h4 className="textoMiCuenta"> No tenés reservas pendientes!</h4>
                 ) : (
                         (this.state.cantidadReservasDisponibles === 1) ? (
-                            <h4 className="textoMiCuenta"> Tenes {this.state.cantidadReservasDisponibles} reserva pendiente. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
+                            <h4 className="textoMiCuenta"> Tenés {this.state.cantidadReservasDisponibles} reserva pendiente. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
                         ) : (
-                                <h4 className="textoMiCuenta"> Tenes {this.state.cantidadReservasDisponibles} reservas pendientes. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito">reservas</span>!</h4>
+                                <h4 className="textoMiCuenta"> Tenés {this.state.cantidadReservasDisponibles} reservas pendientes. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito">reservas</span>!</h4>
                             )
                     )
             ) : (
@@ -383,7 +383,8 @@ class MiCuenta extends Component {
                         <MDBCard className="mb-4">
                             <MDBCardBody className="text-center alturaTarjetasResumen">
                                 <MDBCardTitle className="margenTitulosResumen">
-                                    <i className="fas fa-store iconoTituloResumen" /> Productos a revisar
+                                    <i className="fas fa-store iconoTituloResumen" />
+                                    <span className="textoTituloResumen"> Productos a revisar</span>
                                 </MDBCardTitle>
                                 <MDBCardText className="resumenCentrado">
                                     <ResumenProductosProductor
@@ -398,7 +399,8 @@ class MiCuenta extends Component {
                         <MDBCard className="mb-4">
                             <MDBCardBody className="text-center alturaTarjetasResumen">
                                 <MDBCardTitle className="margenTitulosResumen">
-                                    <i className="fas fa-map-marker-alt iconoTituloResumen" /> Próximas fechas
+                                    <i className="fas fa-map-marker-alt iconoTituloResumen" />
+                                    <span className="textoTituloResumen"> Próximas fechas</span>
                                 </MDBCardTitle>
                                 <MDBCardText className="resumenCentrado">
                                     <ResumenFechasEntrega
@@ -414,7 +416,8 @@ class MiCuenta extends Component {
                         <MDBCard className="mb-4">
                             <MDBCardBody className="text-center alturaTarjetasResumen">
                                 <MDBCardTitle className="margenTitulosResumen">
-                                    <i className="fas fa-star iconoTituloResumen" /> Calificaciones
+                                    <i className="fas fa-star iconoTituloResumen" />
+                                    <span className="textoTituloResumen"> Calificaciones</span>
                                 </MDBCardTitle>
                                 <MDBCardText className="resumenCentrado">
                                     <ResumenCalificaciones

@@ -3,7 +3,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import CarouselProductos from './CarouselProductos'
 import React, { Component } from 'react';
 import Loader from 'react-loader-spinner';
-import { MDBRow, MDBCol, MDBCard } from "mdbreact";
+import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdbreact";
 
 class MiCuenta extends Component {
 
@@ -56,7 +56,7 @@ class MiCuenta extends Component {
         _this.setState({
             loading: true
         });
-        var path_usuario = "http://"+window.$ip+":3000/redAgro/obtenerCantidadReservasDisponiblesConsumidor?id_consumidor=" + _this.state.id_usuario;
+        var path_usuario = "http://" + window.$ip + ":3000/redAgro/obtenerCantidadReservasDisponiblesConsumidor?id_consumidor=" + _this.state.id_usuario;
 
         fetch(path_usuario)
             .catch(err => console.error(err))
@@ -109,7 +109,7 @@ class MiCuenta extends Component {
             loading: true
         });
 
-        var path = "http://"+window.$ip+":3000/redAgro/preferencias/obtenerProductos?id=" + _this.state.id_usuario;
+        var path = "http://" + window.$ip + ":3000/redAgro/preferencias/obtenerProductos?id=" + _this.state.id_usuario;
         fetch(path)
             .catch(error => console.error(error))
             .then(response => {
@@ -168,12 +168,12 @@ class MiCuenta extends Component {
         const mensaje = [
             this.state.resultadoRequestReservas === 200 ? (
                 (this.state.cantidadReservasDisponibles === 0) ? (
-                    <h4 className="textoMiCuenta"> No tenes reservas disponibles para retirar!</h4>
+                    <h4 className="textoMiCuenta"> No tenés reservas disponibles para retirar!</h4>
                 ) : (
                         (this.state.cantidadReservasDisponibles === 1) ? (
-                            <h4 className="textoMiCuenta"> Tenes {this.state.cantidadReservasDisponibles} reserva disponible para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
+                            <h4 className="textoMiCuenta"> Tenés {this.state.cantidadReservasDisponibles} reserva disponible para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
                         ) : (
-                                <h4 className="textoMiCuenta"> Tenes {this.state.cantidadReservasDisponibles} reservas disponibles para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
+                                <h4 className="textoMiCuenta"> Tenés {this.state.cantidadReservasDisponibles} reservas disponibles para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
                             )
                     )
             ) : (
@@ -221,9 +221,31 @@ class MiCuenta extends Component {
                         </MDBCard>
                     </MDBCol>
                 </MDBRow>
-                <CarouselProductos
-                    listadoProductos={lista}
-                    mostrarDetalleProducto={this.mostrarDetalleProducto} />
+                <MDBRow>
+                    <MDBCol>
+                        {
+                            (lista.length > 0) ?
+                                <MDBCard>
+                                    <MDBCardBody className="text-center">
+                                        <MDBCardTitle className="margenTitulosResumen">
+                                            <i className="fas fa-shopping-basket iconoTituloResumen" />
+                                            <span className="textoTituloResumen"> Preferencias</span>
+                                        </MDBCardTitle>
+                                        <MDBCardText className="resumenCentrado">
+                                            <CarouselProductos
+                                                listadoProductos={lista}
+                                                mostrarDetalleProducto={this.mostrarDetalleProducto} />
+                                        </MDBCardText>
+                                    </MDBCardBody>
+                                </MDBCard>
+                                :
+                                <MDBCard className="boxSinPreferencias">
+                                    <i className="fas fa-shopping-basket iconoBoxGris" />
+                                    <h4 className="textoMiCuenta"> Ups! No se encontraron productos publicados acordes a tus preferencias!</h4>
+                                </MDBCard>
+                        }
+                    </MDBCol>
+                </MDBRow>
             </div>
         );
     };

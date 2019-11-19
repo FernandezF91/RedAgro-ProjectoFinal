@@ -43,7 +43,7 @@ const PuntoDeEntrega = ({ puntosDeEntrega }) => {
                     <i className="fas fa-map-marker-alt iconoGrande" />
                     <br />
                     <br />
-                    <h5>Ups! No tenes puntos de venta cargados! </h5>
+                    <h5>Ups! No tenés puntos de venta cargados! </h5>
                     <h6 className="grey-text">Cargá tus puntos de venta <Link to={'/principalProductores/NuevoPuntoEntrega'}>acá</Link></h6>
                 </div>
             }
