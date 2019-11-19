@@ -28,7 +28,7 @@
     "rc-datepicker": "^5.0.14",
     "react": "^16.12.0",
     "react-awesome-modal": "^2.0.5",
-    "react-bootstrap": "^1.0.0-beta.14",
+    "react-bootstrap": "^1.0.0-beta.15",
     "react-bootstrap-date-picker": "^5.1.0",
     "react-bootstrap-pagination": "^1.0.7",
     "react-bootstrap-table": "^4.3.1",
