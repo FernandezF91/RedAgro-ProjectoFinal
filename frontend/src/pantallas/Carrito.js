@@ -249,7 +249,7 @@ class Carrito extends Component {
                         }
                     </ul>
                     {
-                        <MDBModal isOpen={this.state.productosSinStock} centered size="sm">
+                        <MDBModal isOpen={this.state.productosSinStock} centered>
                             <div className="modalMargenes" tabindex="0">
                                 <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
                                 <br />
@@ -257,10 +257,10 @@ class Carrito extends Component {
                                     <i className="fas fa-exclamation-circle iconoModalError" />
                                     <br />
                                     <br />
-                                    <h5> Whoa!
+                                    <h5> Ups!
                                     <br />Hay productos en tu carrito que no tienen stock.</h5>
                                     <br />
-                                    <h6> Actualizá las cantidades para continuar.</h6>
+                                    <h6 className="grey-text"> Actualizá las cantidades para continuar.</h6>
                                 </div>
                             </div>
                         </MDBModal>

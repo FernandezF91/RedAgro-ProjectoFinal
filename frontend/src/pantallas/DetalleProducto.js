@@ -139,7 +139,7 @@ class DetalleBusqueda extends Component {
         var producto = this.state.producto;
         let productosSeleccionados = this.props.productosSeleccionados;
 
-        if (this.validarMismoProductor(producto) === true) {
+        if (this.validarMismoProductor(producto)) {
             //Chequeo que la cantidad ingresada sea mayor al stock
             if (parseInt(producto.cantidad) > parseInt(producto.stock)) {
                 ButterToast.raise({
@@ -182,7 +182,13 @@ class DetalleBusqueda extends Component {
 
             }
         } else {
-            this.restarProducto();
+            ButterToast.raise({
+                content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_RED}
+                    content={() => <div className="mensajeToast">En tu carrito hay productos de otro productor. Por favor, finalizá tu reserva para continuar</div>}
+                    title="Cultura Verde"
+                    icon={<i className="fa fa-shopping-cart iconoToast" />}
+                />
+            });
         }
     }
 

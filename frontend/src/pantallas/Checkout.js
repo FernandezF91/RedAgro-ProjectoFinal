@@ -617,73 +617,75 @@ class Checkout extends Component {
         return (
             <div className="containerPrincipal">
                 <div className="titulosPrincipales">Finalizar la reserva</div>
-                <MuiThemeProvider theme={theme}>
-                    <Stepper alternativeLabel nonLinear activeStep={activeStep} >
-                        {pasos.map(label => (
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
-                    {
-                        activeStep < pasos.length ?
+                <div className="margenesCheckout">
+                    <MuiThemeProvider theme={theme}>
+                        <Stepper alternativeLabel nonLinear activeStep={activeStep} >
+                            {pasos.map(label => (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                        {
+                            activeStep < pasos.length ?
 
-                            <div>
-                                <PasosCheckout
-                                    indexPasos={activeStep}
-                                    usuario={this.props.user}
-                                    selector={this.state.selector}
-                                    seleccionado={this.state.seleccionado}
-                                    puntosEntrega={this.state.puntosEntrega}
-                                    datosReserva={this.state.datosReserva}
-                                    datosPersonaRetiro={this.state.datosPersonaRetiro}
-                                    selectedRadioButtonRetiro={this.state.selectedRadioButtonRetiro}
-                                    handleCheckboxRetiro={this.handleCheckboxRetiro}
-                                    handleDatosPersonales={this.handleDatosPersonales}
-                                    handleRadioRetiroChange={this.handleRadioRetiroChange}
-                                    productosSeleccionados={this.props.productosSeleccionados}
-                                    getTotalReserva={this.getTotalReserva}
-                                    actualizarPuntoEntrega={this.actualizarPuntoEntrega}
-                                    actualizarFechaEntrega={this.actualizarFechaEntrega}
-                                    actualizarHorarioEntrega={this.actualizarHorarioEntrega}
-                                    selectorFecha={this.state.selectorFecha}
-                                    selectorHorarios={this.state.selectorHorarios}
-                                    validaciones={this.state.validaciones}
-                                />
-                                <Button
-                                    variant="light"
-                                    disabled={activeStep === 0}
-                                    onClick={this.handleBack}
-                                    className="botonesCheckout"
-                                >
-                                    Atras
+                                <div>
+                                    <PasosCheckout
+                                        indexPasos={activeStep}
+                                        usuario={this.props.user}
+                                        selector={this.state.selector}
+                                        seleccionado={this.state.seleccionado}
+                                        puntosEntrega={this.state.puntosEntrega}
+                                        datosReserva={this.state.datosReserva}
+                                        datosPersonaRetiro={this.state.datosPersonaRetiro}
+                                        selectedRadioButtonRetiro={this.state.selectedRadioButtonRetiro}
+                                        handleCheckboxRetiro={this.handleCheckboxRetiro}
+                                        handleDatosPersonales={this.handleDatosPersonales}
+                                        handleRadioRetiroChange={this.handleRadioRetiroChange}
+                                        productosSeleccionados={this.props.productosSeleccionados}
+                                        getTotalReserva={this.getTotalReserva}
+                                        actualizarPuntoEntrega={this.actualizarPuntoEntrega}
+                                        actualizarFechaEntrega={this.actualizarFechaEntrega}
+                                        actualizarHorarioEntrega={this.actualizarHorarioEntrega}
+                                        selectorFecha={this.state.selectorFecha}
+                                        selectorHorarios={this.state.selectorHorarios}
+                                        validaciones={this.state.validaciones}
+                                    />
+                                    <Button
+                                        variant="light"
+                                        disabled={activeStep === 0}
+                                        onClick={this.handleBack}
+                                        className="botonesCheckout"
+                                    >
+                                        Atras
                                 </Button>
-                                <Button
-                                    variant="success"
-                                    type="submit"
-                                    onClick={this.handleNext}
-                                    className="botonesCheckout"
-                                >
-                                    {activeStep === pasos.length - 1 ? 'Finalizar' : 'Continuar'}
-                                </Button>
-                            </div>
+                                    <Button
+                                        variant="success"
+                                        type="submit"
+                                        onClick={this.handleNext}
+                                        className="botonesCheckout"
+                                    >
+                                        {activeStep === pasos.length - 1 ? 'Finalizar' : 'Continuar'}
+                                    </Button>
+                                </div>
+                                : ''
+                        }
+                    </MuiThemeProvider>
+                    {
+                        (this.state.showModal === true && this.state.resultadoRequest !== 200) ?
+                            <MDBModal isOpen={this.state.showModal} centered size="sm">
+                                <div className="modalMargenes" tabindex="0">
+                                    <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalErrores} />
+                                    <br />
+                                    <i className="fas fa-exclamation-circle iconoModalError" />
+                                    <br />
+                                    <br />
+                                    <h5>{this.state.mensaje} </h5>
+                                </div>
+                            </MDBModal>
                             : ''
                     }
-                </MuiThemeProvider>
-                {
-                    (this.state.showModal === true && this.state.resultadoRequest !== 200) ?
-                        <MDBModal isOpen={this.state.showModal} centered size="sm">
-                            <div className="modalMargenes" tabindex="0">
-                                <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalErrores} />
-                                <br />
-                                <i className="fas fa-exclamation-circle iconoModalError" />
-                                <br />
-                                <br />
-                                <h5>{this.state.mensaje} </h5>
-                            </div>
-                        </MDBModal>
-                        : ''
-                }
+                </div>
             </div>
         );
     }

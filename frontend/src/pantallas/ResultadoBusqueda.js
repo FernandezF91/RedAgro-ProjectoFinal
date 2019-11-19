@@ -72,7 +72,7 @@ class ResultadoBusqueda extends Component {
     realizarBusqueda(busqueda) {
 
         if (typeof (busqueda) === "number") {
-            var path = "http://"+window.$ip+":3000/redAgro/obtenerProductosProductorBusqueda?id=" + busqueda;
+            var path = "http://" + window.$ip + ":3000/redAgro/obtenerProductosProductorBusqueda?id=" + busqueda;
             fetch(path)
                 .catch(error => console.error(error))
                 .then(response => {
@@ -134,7 +134,7 @@ class ResultadoBusqueda extends Component {
             return
         }
 
-        var path2 = "http://"+window.$ip+":3000/redAgro/obtenerProductos?busqueda=" + busqueda;
+        var path2 = "http://" + window.$ip + ":3000/redAgro/obtenerProductos?busqueda=" + busqueda;
         fetch(path2)
             .catch(error => console.error(error))
             .then(response => {
@@ -262,7 +262,13 @@ class ResultadoBusqueda extends Component {
 
             }
         } else {
-            this.restarProducto(position);
+            ButterToast.raise({
+                content: <Cinnamon.Crunch scheme={Cinnamon.Crunch.SCHEME_RED}
+                    content={() => <div className="mensajeToast">En tu carrito hay productos de otro productor. Por favor, finalizá tu reserva para continuar</div>}
+                    title="Cultura Verde"
+                    icon={<i className="fa fa-shopping-cart iconoToast" />}
+                />
+            });
         }
     }
 
