@@ -563,11 +563,16 @@ input[type=text] {
     flex-direction: row !important;
 }
 
-.textoMiCuenta {
+.textoMiCuentaPreferencias {
     text-align: left;
     line-height: 40px;
     margin-left: 20px;
     color: #555 !important;
     align-self: center;
     margin-bottom: 0px !important;
+}
+
+.listaInstruccionesHistorico {
+    text-align: left !important;
+    margin: auto;
 }
