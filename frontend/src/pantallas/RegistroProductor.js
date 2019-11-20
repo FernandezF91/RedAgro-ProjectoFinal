@@ -446,7 +446,7 @@ class RegistroProductor extends Component {
                                 </MDBCol>
                             </Form.Group>
                             <Form.Group as={Row} className="camposGeneral">
-                                <Form.Label column sm={2}>Password</Form.Label>
+                                <Form.Label column sm={2}>Contraseña</Form.Label>
                                 <MDBCol sm={10}>
                                     <MDBRow>
                                         <Form.Control
