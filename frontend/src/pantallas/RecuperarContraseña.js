@@ -242,7 +242,7 @@ class RecuperarContraseña extends Component {
                     </Form>
                     {
                         <MDBModal isOpen={this.state.showModal} centered size="sm">
-                            <div className="modalMargenes" tabindex="0">
+                            <div className="modalMargenes" tabIndex="0">
                                 {(this.state.resultadoRequest === 200) ?
                                     (
                                         <div>

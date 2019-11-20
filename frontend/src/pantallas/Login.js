@@ -113,8 +113,6 @@ class LoginForm extends Component {
 
             const final_path = path_principal + username + "&c=" + password;
 
-            var _this = this;
-
             fetch(final_path, {
                 method: "GET",
                 headers: {
@@ -276,7 +274,7 @@ class LoginForm extends Component {
                     <a href="/recupero_email">Olvidé mi contraseña</a>
                     {
                         <MDBModal isOpen={this.state.showModal} centered size="sm">
-                            <div className="modalMargenes" tabindex="0">
+                            <div className="modalMargenes" tabIndex="0">
                                 <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
                                 <br />
                                 <div>

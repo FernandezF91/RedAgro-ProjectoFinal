@@ -250,7 +250,7 @@ class Carrito extends Component {
                     </ul>
                     {
                         <MDBModal isOpen={this.state.productosSinStock} centered>
-                            <div className="modalMargenes" tabindex="0">
+                            <div className="modalMargenes" tabIndex="0">
                                 <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
                                 <br />
                                 <div className="modal-body">

@@ -464,7 +464,7 @@ class AlertaConsumidor extends Component {
                 </div>
                 {
                     <MDBModal isOpen={this.state.showModal} centered size="sm">
-                        <div className="modalMargenes" tabindex="0">
+                        <div className="modalMargenes" tabIndex="0">
                             <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
                             <br />
                             {(this.state.resultadoRequest === 200) ?

@@ -589,7 +589,7 @@ class Checkout extends Component {
         if (activeStep === pasos.length && this.state.showModal === true) {
             return (
                 <MDBModal isOpen={this.state.showModal} centered size="sm">
-                    <div className="modalMargenes" tabindex="0">
+                    <div className="modalMargenes" tabIndex="0">
                         <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
                         <br />
                         {(this.state.resultadoRequest === 200) ?
@@ -674,7 +674,7 @@ class Checkout extends Component {
                     {
                         (this.state.showModal === true && this.state.resultadoRequest !== 200) ?
                             <MDBModal isOpen={this.state.showModal} centered size="sm">
-                                <div className="modalMargenes" tabindex="0">
+                                <div className="modalMargenes" tabIndex="0">
                                     <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalErrores} />
                                     <br />
                                     <i className="fas fa-exclamation-circle iconoModalError" />

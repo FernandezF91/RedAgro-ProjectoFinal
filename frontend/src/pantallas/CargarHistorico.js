@@ -11,33 +11,6 @@ import { Button } from 'react-bootstrap';
 // Note: These need to be installed separately
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 
-const mostrarZonas = [
-	{ label: "CABA y Gran Buenos Aires", value: "CABA" },
-	{ label: "Buenos Aires", value: "BUENOSAIRES" },
-	{ label: "Catamarca", value: "CATAMARCA" },
-	{ label: "Chaco", value: "CHACO" },
-	{ label: "Chubut", value: "CHUBUT" },
-	{ label: "Córdoba", value: "CORDOBA" },
-	{ label: "Corrientes", value: "CORRIENTES" },
-	{ label: "Entre Ríos", value: "ENTRERIOS" },
-	{ label: "Formosa", value: "FORMOSA" },
-	{ label: "Jujuy", value: "JUJUY" },
-	{ label: "La Pampa", value: "LAPAMPA" },
-	{ label: "La Rioja", value: "LARIOJA" },
-	{ label: "Mendoza", value: "MENDOZA" },
-	{ label: "Misiones", value: "MISIONES" },
-	{ label: "Neuquén", value: "NEUQUEN" },
-	{ label: "Rio Negro", value: "RIO NEGRO" },
-	{ label: "Salta", value: "SALTA" },
-	{ label: "San Juan", value: "SANJUAN" },
-	{ label: "San Luis", value: "SANLUIS" },
-	{ label: "Santa Cruz", value: "SANTACRUZ" },
-	{ label: "Santa Fe", value: "SANTAFE" },
-	{ label: "Santiago del Estero", value: "SANTIAGO" },
-	{ label: "Tierra del Fuego", value: "TIERRA" },
-	{ label: "Tucumán", value: "TUCUMAN" }
-];
-
 class CargarHistorico extends Component {
 	constructor(props) {
 		super(props);
@@ -212,7 +185,7 @@ class CargarHistorico extends Component {
 				</div>
 				{
 					<MDBModal isOpen={this.state.showModal} centered size="sm">
-						<div className="modalMargenes" tabindex="0">
+						<div className="modalMargenes" tabIndex="0">
 							<i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModal} />
 							<br />
 							{(this.state.resultadoRequest === true) ?

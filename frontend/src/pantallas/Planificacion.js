@@ -301,7 +301,7 @@ class Planificacion extends Component {
                 {
 
                     <MDBModal isOpen={this.state.showModal} centered size="sm">
-                        <div className="modalMargenes" tabindex="0">
+                        <div className="modalMargenes" tabIndex="0">
                             <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
                             <br />
                             <i className="fas fa-exclamation-circle iconoModalError" />
