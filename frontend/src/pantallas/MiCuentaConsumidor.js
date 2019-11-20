@@ -15,7 +15,7 @@ class MiCuenta extends Component {
             rolUsuario: this.props.rolUsuario,
             usuario: this.props.usuario,
             loading: true,
-            cantidadReservasDisponibles: 0,
+            cantidadReservasDisponibles: "0",
             resultadoRequestReservas: 0,
             resultadoRequestProductos: 0,
             productosDePreferencia: [],
@@ -65,27 +65,25 @@ class MiCuenta extends Component {
                     resultadoRequestReservas: response.status
                 })
                 if (response.status === 200) {
-                    return JSON.stringify(response);
-                } else if (response.status === 504) {
-                    console.log("Timeout");
+                    response.text().then(
+                        function (response) {
+                            if (response > 0) {
+                                _this.setState({
+                                    cantidadReservasDisponibles: response
+                                });
+                            }
+                            else {
+                                _this.setState({
+                                    cantidadReservasDisponibles: "0"
+                                });
+                            }
+                            _this.setState({
+                                loading: false
+                            });
+                        })
                 } else {
-                    console.log("Otro error");
+                    console.log("Ocurrió un problema al obtener las reservas.");
                 }
-            })
-            .then(data => {
-                if (data > 0) {
-                    _this.setState({
-                        cantidadReservasDisponibles: data
-                    });
-                }
-                else {
-                    _this.setState({
-                        cantidadReservasDisponibles: 0
-                    });
-                }
-                _this.setState({
-                    loading: false
-                });
             })
     }
 
@@ -167,10 +165,10 @@ class MiCuenta extends Component {
     generarMensajeReservas() {
         const mensaje = [
             this.state.resultadoRequestReservas === 200 ? (
-                (this.state.cantidadReservasDisponibles === 0) ? (
+                (this.state.cantidadReservasDisponibles === "0") ? (
                     <h4 className="textoMiCuenta"> No tenés reservas disponibles para retirar!</h4>
                 ) : (
-                        (this.state.cantidadReservasDisponibles === 1) ? (
+                        (this.state.cantidadReservasDisponibles === "1") ? (
                             <h4 className="textoMiCuenta"> Tenés {this.state.cantidadReservasDisponibles} reserva disponible para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
                         ) : (
                                 <h4 className="textoMiCuenta"> Tenés {this.state.cantidadReservasDisponibles} reservas disponibles para retirar. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
@@ -241,7 +239,7 @@ class MiCuenta extends Component {
                                 :
                                 <MDBCard className="boxSinPreferencias">
                                     <i className="fas fa-shopping-basket iconoBoxGris" />
-                                    <h4 className="textoMiCuenta"> Ups! No se encontraron productos publicados acordes a tus preferencias!</h4>
+                                    <h4 className="textoMiCuentaPreferencias"> Ups! No se encontraron productos publicados acordes a tus preferencias!</h4>
                                 </MDBCard>
                         }
                     </MDBCol>

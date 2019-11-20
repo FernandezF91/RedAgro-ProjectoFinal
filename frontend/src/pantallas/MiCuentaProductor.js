@@ -18,7 +18,7 @@ class MiCuenta extends Component {
             rolUsuario: this.props.rolUsuario,
             usuario: this.props.usuario,
             loading: true,
-            cantidadReservasDisponibles: 0,
+            cantidadReservasDisponibles: "0",
             resultadoRequestReservas: 0,
             cantidadEstrellas: 0,
             listaCalificaciones: [],
@@ -65,28 +65,27 @@ class MiCuenta extends Component {
                     resultadoRequestReservas: response.status
                 })
                 if (response.status === 200) {
-                    return JSON.stringify(response);
-                } else if (response.status === 504) {
-                    console.log("Timeout");
+                    response.text().then(
+                        function (response) {
+                            if (response > 0) {
+                                _this.setState({
+                                    cantidadReservasDisponibles: response
+                                });
+                            }
+                            else {
+                                _this.setState({
+                                    cantidadReservasDisponibles: "0"
+                                });
+                            }
+                            _this.setState({
+                                loading: false
+                            });
+                        })
                 } else {
-                    console.log("Otro error");
-                }
+                    console.log("Ocurrió un problema al obtener las reservas.");
+                } 
             })
-            .then(data => {
-                if (data > 0) {
-                    _this.setState({
-                        cantidadReservasDisponibles: data
-                    });
-                }
-                else {
-                    _this.setState({
-                        cantidadReservasDisponibles: 0
-                    });
-                }
-                _this.setState({
-                    loading: false
-                });
-            })
+
     }
 
     obtenerPromedioCalificaciones() {
@@ -264,17 +263,17 @@ class MiCuenta extends Component {
     generarMensajeReservas() {
         const mensaje = [
             this.state.resultadoRequestReservas === 200 ? (
-                (this.state.cantidadReservasDisponibles === 0) ? (
+                (this.state.cantidadReservasDisponibles === "0") ? (
                     <h4 className="textoMiCuenta"> No tenés reservas pendientes!</h4>
                 ) : (
-                        (this.state.cantidadReservasDisponibles === 1) ? (
+                        (this.state.cantidadReservasDisponibles === "1") ? (
                             <h4 className="textoMiCuenta"> Tenés {this.state.cantidadReservasDisponibles} reserva pendiente. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito"> reservas</span>!</h4>
                         ) : (
                                 <h4 className="textoMiCuenta"> Tenés {this.state.cantidadReservasDisponibles} reservas pendientes. Para más detalle, consulta tus <span onClick={this.mostrarReservas} className="linkBox cursorManito">reservas</span>!</h4>
                             )
                     )
             ) : (
-                    <h4 className="textoMiCuenta"> Ups! Ocurrió un error al obtener las reservas pendientes. Por favor, reintentá en unos minutos!</h4>
+                    <h4 className="textoMiCuenta" key={0}> Ups! Ocurrió un error al obtener las reservas pendientes. Por favor, reintentá en unos minutos!</h4>
                 )
         ]
         return mensaje;
