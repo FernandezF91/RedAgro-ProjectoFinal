@@ -128,6 +128,7 @@ class NuevoProducto extends Component {
             validaciones: []
         });
         let validaciones = [];
+        
         if (!this.state.campos["stock"]) {
             validaciones["stock"] = "Campo requerido";
             showModal = true;

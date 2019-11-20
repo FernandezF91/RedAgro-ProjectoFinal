@@ -19,7 +19,7 @@ public class MailActualizacionReserva extends MailSender {
 						+ "Hola " + usuario.getNombre() + ", " + "<br>"
 						+ "<p> Se ha actualizado el estado de tu reserva #" + reserva.getId() + " a <em><strong>"
 						+ reserva.getEstado_reserva().getNombre()
-						+ "</strong></em>. Acordate que podes contactar a tu consumidor "
+						+ "</strong></em>. Acordate que podés contactar a tu consumidor "
 						+ " y seguir el estado de tu reserva ingresando a tu cuenta en Cultura Verde. </p>"
 						+ "<br>Saludos," + "<br>" + "Equipo de Cultura Verde");
 
@@ -31,7 +31,7 @@ public class MailActualizacionReserva extends MailSender {
 					this.setContenido_email("<div>"
 							+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
 							+ "<br> <br>"
-							+ "Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Ya podes retirar tu reserva #"
+							+ "Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Ya podés retirar tu reserva #"
 							+ reserva.getId() + " por el punto de entrega acordado! "
 							+ "No te olvides de llevar los datos de tu reserva para que no haya inconvenientes al momento del retiro. </p>"
 							+ "<br>" + "Saludos," + "<br>" + "Equipo de Cultura Verde");
@@ -40,7 +40,7 @@ public class MailActualizacionReserva extends MailSender {
 					this.setContenido_email("<div>"
 							+ "<center> <img src=\"https://i.ibb.co/z5Dtpqh/cultura-verde.png\" alt=\"cultura-verde\" width=\"250px\" height=\"auto\" alt=\"Cultura Verde\" border=\"0\" /> </center>"
 							+ "<br> <br>"
-							+ "Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Ya podes retirar tu reserva #"
+							+ "Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Ya podés retirar tu reserva #"
 							+ reserva.getId() + " por " + reserva.getPunto_entrega().getDireccion() + ", "
 							+ reserva.getPunto_entrega().getLocalidad()
 							+ "No te olvides de chequear el horario de atención y de llevar los datos de tu reserva para que no haya inconvenientes al momento del retiro. </p>"
@@ -86,7 +86,7 @@ public class MailActualizacionReserva extends MailSender {
 					+ "<br> <br>"
 					+ "Hola " + usuario.getNombre() + ", " + "</br>"
 					+ "<p> Se ha actualizado el estado de tu reserva #" + reserva.getId() + " a <em><strong>"
-					+ reserva.getEstado_reserva().getNombre() + "</strong></em>. Acordate que podes contactar a tu "
+					+ reserva.getEstado_reserva().getNombre() + "</strong></em>. Acordate que podés contactar a tu "
 					+ rol + " y seguir el estado de tu reserva ingresando a tu cuenta en Cultura Verde. </p>"
 					+ "<br>Saludos," + "<br>" + "Equipo de Cultura Verde");
 

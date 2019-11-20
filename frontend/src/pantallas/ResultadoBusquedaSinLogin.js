@@ -244,7 +244,7 @@ class ResultadoBusquedaSinLogin extends Component {
                                 </h5>
                                 <br />
                                 <h6 className="grey-text">
-                                    Podes hacerlo por <Link to={'/login'}>acá</Link>
+                                    Podés hacerlo por <Link to={'/login'}>acá</Link>
                                 </h6>
                             </div>
                         </div>
