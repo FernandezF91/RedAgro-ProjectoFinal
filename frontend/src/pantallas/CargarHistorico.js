@@ -163,9 +163,9 @@ class CargarHistorico extends Component {
 						<li>Desde esta sección, se podrán importar archivos con el formato CSV (Valores separados por coma). Por ejemplo, "MiArchivo.csv".</li>
 						<li>Los datos que se deben incluir en el mismo son los siguientes: Categoría, Producto, Cantidad vendida, Mes, Zona de venta y año.</li>
 						<li>El siguiente es un ejemplo de como se debería ver el archivo:
-						<ul>
+							<ul>
 								<li>Frutas,Banana,100,1,CABA,2018</li>
-								<li>Frutas,Banana,100,1,CABA,2018</li>
+								<li>Frutas,Manzana,500,2,CABA,2018</li>
 							</ul>
 						</li>
 					</ul>
