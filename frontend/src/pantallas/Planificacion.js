@@ -42,9 +42,14 @@ const mostrarPeriodo = [
 
 const columnas = [
     {
-        label: 'Ranking de productos con más probabilidad de venderse en el período solicitado',
-        field: 'productos'
-    }]
+        label: 'Ranking',
+        field: 'Ranking'
+    },
+    {
+        label: 'Productos con más probabilidad de venderse en el período solicitado',
+        field: 'Productos'
+    }
+]
 
 class Planificacion extends Component {
     constructor(props) {
@@ -77,7 +82,7 @@ class Planificacion extends Component {
 
     cambiosSelectZona(opt, a, value) {
         this.setState({
-            zona:opt.value,
+            zona: opt.value,
             valueZona: value
         });
     }
@@ -85,7 +90,7 @@ class Planificacion extends Component {
     cambiosSelectPeriodo(opt, a, value) {
 
         this.setState({
-            periodo:opt.value,
+            periodo: opt.value,
             valuePeriodo: value
         });
     }
@@ -136,7 +141,7 @@ class Planificacion extends Component {
             loading: true
         });
         if (_this.validarCampos()) {
-            var path_principal = "http://"+window.$ip+":3000/redAgro/obtenerResultados?periodo=";
+            var path_principal = "http://" + window.$ip + ":3000/redAgro/obtenerResultados?periodo=";
             var periodo = this.state.periodo;
             //_this.props.id_productor;
             var provincia = this.state.zona;
@@ -176,27 +181,19 @@ class Planificacion extends Component {
 
     retornaLista() {
         var i = 1
+
         return this.state.alimentosAProducir.map(producto => {
             var itemRow = []
-            //[<tr key={"row-data-"} >
-            //     <td>
-            //         {"producto"}
-            //     </td>
-            // </tr>
-
-            //  ];
 
             itemRow.push(
-                <tr>
-
-                    <td> {i + " " + producto} </td>
+                <tr key={i}>
+                    <td>{i}</td>
+                    <td>{producto}</td>
                 </tr>
             );
             i++
             return itemRow;
-
         })
-
     }
 
     mostrarMensajeOk() {
@@ -224,7 +221,7 @@ class Planificacion extends Component {
 
                     <Form.Group className="col-md-12">
                         <MDBCol md="4" top>
-                            <Form.Label column>Periodo</Form.Label>
+                            <Form.Label column>Período</Form.Label>
                         </MDBCol>
                         <MDBCol md="8">
                             <MDBRow>
@@ -282,9 +279,9 @@ class Planificacion extends Component {
                     </div>
                 </Form>
                 <div className="titulosPrincipales">Productos a producir</div>
-                <div className="tabla_puntos">
+                <div className="col-md-6 tablaPlanificacion">
                     {this.state.alimentosAProducir.length > 0 ?
-                        <MDBTable striped hover>
+                        <MDBTable striped small hover>
                             <MDBTableHead columns={columnas} />
                             <MDBTableBody>
                                 {this.retornaLista()}
@@ -299,7 +296,6 @@ class Planificacion extends Component {
                     }
                 </div>
                 {
-
                     <MDBModal isOpen={this.state.showModal} centered size="sm">
                         <div className="modalMargenes" tabIndex="0">
                             <i className="fas fa-times botonCerrarModal cursorManito" onClick={this.cerrarModalError} />
@@ -311,8 +307,7 @@ class Planificacion extends Component {
                         </div>
                     </MDBModal>
                 }
-            </div >
-
+            </div>
         );
     };
 }

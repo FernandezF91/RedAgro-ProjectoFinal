@@ -576,3 +576,7 @@ input[type=text] {
     text-align: left !important;
     margin: auto;
 }
+
+.tablaPlanificacion {
+    margin: auto;
+}
