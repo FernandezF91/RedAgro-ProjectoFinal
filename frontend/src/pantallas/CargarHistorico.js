@@ -160,9 +160,9 @@ class CargarHistorico extends Component {
 				<MDBCard className="boxSinPreferencias mb-4 py-3">
 					<i className="fas fa-info-circle iconoBoxGris" />
 					<ul className="listaInstruccionesHistorico">
-						<li>Desde esta sección, se podrán importar archivos con el formato CSV (Valores separados por coma). Por ejemplo, "MiArchivo.csv".</li>
+						<li>Desde esta sección, se podrán importar archivos con el formato CSV (valores separados por comas). Por ejemplo, "MiArchivo.csv".</li>
 						<li>Los datos que se deben incluir en el mismo son los siguientes: Categoría, Producto, Cantidad vendida, Mes, Zona de venta y año.</li>
-						<li>El siguiente es un ejemplo de como se debería ver el archivo:
+						<li>El siguiente es un ejemplo de cómo se debería ver el archivo:
 							<ul>
 								<li>Frutas,Banana,100,1,CABA,2018</li>
 								<li>Frutas,Manzana,500,2,CABA,2018</li>

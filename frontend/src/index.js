@@ -19,7 +19,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 
-window.$ip = "192.168.0.133" //IP global
+window.$ip = "localhost" //IP global
 
 ReactDOM.render(
     <BrowserRouter>
