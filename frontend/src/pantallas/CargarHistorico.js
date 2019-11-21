@@ -208,7 +208,7 @@ class CargarHistorico extends Component {
 				}
 				<div className="botones">
 					<Button variant="light" onClick={this.mostrarPantallaPrincipal}>Cancelar</Button>
-					<Button variant="success" onClick={() => this.subirArchivos()}>Guardar</Button>
+					<Button variant="success" onClick={() => this.subirArchivos()}>Importar</Button>
 				</div>
 				{
 					<MDBModal isOpen={this.state.showModal} centered size="sm">
