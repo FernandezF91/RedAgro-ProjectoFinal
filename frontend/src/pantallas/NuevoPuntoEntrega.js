@@ -287,7 +287,11 @@ class NuevoPuntoEntrega extends Component {
                 } else {
                     dia = fecha_entrega.getDate().toString();
                 }
-                let mes = fecha_entrega.getMonth() + 1;
+                let mesInt = fecha_entrega.getMonth() + 1;
+                let mes;
+                if (mesInt < 10) {
+                    mes = "0" + mesInt.toString();
+                }
                 let año = fecha_entrega.getFullYear();
                 var fecha = dia + '-' + mes + '-' + año;
 
@@ -349,7 +353,11 @@ class NuevoPuntoEntrega extends Component {
                     } else {
                         dia = fecha_entrega.getDate().toString();
                     }
-                    let mes = fecha_entrega.getMonth() + 1;
+                    let mesInt = fecha_entrega.getMonth() + 1;
+                    let mes;
+                    if (mesInt < 10) {
+                        mes = "0" + mesInt.toString();
+                    }
                     let año = fecha_entrega.getFullYear();
                     var fecha = dia + '-' + mes + '-' + año;
 
