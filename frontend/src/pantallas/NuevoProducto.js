@@ -856,7 +856,7 @@ class NuevoProducto extends Component {
                                     <h5>{this.state.mensaje}</h5>
                                     <h5>¿Querés seguir cargando productos?</h5>
 
-                                    <div className="botones">
+                                    <div className="botonesModal">
                                         <Button variant="light" type="submit" onClick={this.cerrarModal}>No</Button>
                                         <Button variant="success" type="submit" onClick={this.cerrarSeguirCargando}>Si</Button>
                                     </div>

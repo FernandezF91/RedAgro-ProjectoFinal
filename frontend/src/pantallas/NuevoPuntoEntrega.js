@@ -704,7 +704,7 @@ class NuevoPuntoEntrega extends Component {
                                     <h5>{this.state.mensaje}</h5>
                                     <h5>¿Vas a estar en el mismo lugar en otra fecha? Agendala!</h5>
 
-                                    <div className="botones">
+                                    <div className="botonesModal">
                                         <Button variant="light" type="submit" onClick={this.cerrarModal}>No</Button>
                                         <Button variant="success" type="submit" onClick={this.cerrarSeguirCargando}>Si</Button>
                                     </div>
