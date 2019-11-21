@@ -21,7 +21,7 @@ const columnas = [
         field: 'Dirección'
     },
     {
-        label: 'Fecha',
+        label: 'Fechas',
         field: 'Fechas'
     },
     {
