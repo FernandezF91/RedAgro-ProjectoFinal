@@ -36,7 +36,7 @@ class Mensajes extends React.Component {
     };
 
     sendNotification = () => {
-        var path = "http://"+window.$ip+":3000/redAgro/Alertas/NuevoMensaje?id_Emisor=" + this.setState.usuarioEmisor.id + "&id_Receptor=" + this.setState.usuarioReceptor.id;
+        var path = "http://"+window.$ip+":3000/redAgro/Alertas/NuevoMensaje?id_Emisor=" + this.props.usuarioEmisor.id + "&id_Receptor=" + this.props.usuarioReceptor.id;
         fetch(path, {
             method: "POST",
             headers: { 'Content-type': 'application/json;charset=UTF-8' }
@@ -51,7 +51,7 @@ class Mensajes extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
         this.sendMessage();
-        //   this.sendNotification();
+        this.sendNotification();
         event.target.reset();
     };
 
