@@ -42,7 +42,7 @@ public class MailActualizacionReserva extends MailSender {
 							+ "<br> <br>"
 							+ "Hola " + usuario.getNombre() + ", " + "</br>" + "<p>Ya podés retirar tu reserva #"
 							+ reserva.getId() + " por " + reserva.getPunto_entrega().getDireccion() + ", "
-							+ reserva.getPunto_entrega().getLocalidad()
+							+ reserva.getPunto_entrega().getLocalidad() +". "
 							+ "No te olvides de chequear el horario de atención y de llevar los datos de tu reserva para que no haya inconvenientes al momento del retiro. </p>"
 							+ "<br>" + "Saludos," + "<br>" + "Equipo de Cultura Verde");
 				}
