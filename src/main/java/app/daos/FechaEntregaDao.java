@@ -14,7 +14,7 @@ public interface FechaEntregaDao extends JpaRepository<EntidadFechaEntrega, Long
 	@Query("select fe from EntidadFechaEntrega fe where fe.punto_entrega = ?1")
 	List<EntidadFechaEntrega> obtenerFechasDePunto(EntidadPuntoEntrega pe);
 
-	@Query(value = "SELECT * FROM Fecha_Entrega fe WHERE fe.punto_entrega_id = :id_pto_entrega AND (STR_TO_DATE(fe.fecha,'%d-%m-%Y')) >= (STR_TO_DATE(:fecha,'%d-%m-%Y'))", nativeQuery = true)
+	@Query(value = "SELECT * FROM Fecha_Entrega fe WHERE fe.punto_entrega_id = :id_pto_entrega AND (STR_TO_DATE(fe.fecha,'%d-%m-%Y')) >= (STR_TO_DATE(:fecha,'%d-%m-%Y')) ORDER BY (STR_TO_DATE(fe.fecha,'%d-%m-%Y')) ASC", nativeQuery = true)
 	List<EntidadFechaEntrega> obtenerFechasFiltradas(@Param("id_pto_entrega") long id_pto_entrega,
 			@Param("fecha") String fecha);
 
