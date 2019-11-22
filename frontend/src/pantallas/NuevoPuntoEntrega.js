@@ -291,6 +291,8 @@ class NuevoPuntoEntrega extends Component {
                 let mes;
                 if (mesInt < 10) {
                     mes = "0" + mesInt.toString();
+                } else {
+                    mes = mesInt.toString();
                 }
                 let año = fecha_entrega.getFullYear();
                 var fecha = dia + '-' + mes + '-' + año;
@@ -357,6 +359,8 @@ class NuevoPuntoEntrega extends Component {
                     let mes;
                     if (mesInt < 10) {
                         mes = "0" + mesInt.toString();
+                    } else {
+                        mes = mesInt.toString();
                     }
                     let año = fecha_entrega.getFullYear();
                     var fecha = dia + '-' + mes + '-' + año;

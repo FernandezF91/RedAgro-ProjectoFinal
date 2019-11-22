@@ -23,7 +23,7 @@ public interface PuntoEntregaDao extends JpaRepository<EntidadPuntoEntrega, Long
 	List<EntidadPuntoEntrega> obtenerPuntosEntregaProductor(EntidadProductor productor);
 
 	@Query(value = "SELECT DISTINCT p.* FROM Punto_entrega AS p JOIN Fecha_entrega as F ON p.id = F.punto_entrega_id "
-			+ "WHERE F.fecha >= (:fecha) AND p.productor_id =:id_productor AND p.activo = true ", nativeQuery = true)
+			+ "WHERE (STR_TO_DATE(F.fecha,'%d-%m-%Y') >= STR_TO_DATE(:fecha,'%d-%m-%Y') ) AND p.productor_id =:id_productor AND p.activo = true ", nativeQuery = true)
 	List<EntidadPuntoEntrega> obtenerPuntosEntregaActivos(@Param("fecha") String fecha,
 			@Param("id_productor") long id_productor);
 
