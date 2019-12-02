@@ -48,8 +48,10 @@ public class FCMService {
         AndroidConfig androidConfig = getAndroidConfig(request.getTopic());
         ApnsConfig apnsConfig = getApnsConfig(request.getTopic());
         return Message.builder()
-                .setApnsConfig(apnsConfig).setAndroidConfig(androidConfig).setNotification(
-                        new Notification(request.getTitle(), request.getMessage()));
+                .setApnsConfig(apnsConfig).setAndroidConfig(androidConfig)
+                .putData('title', request.getTitle())
+                .putData('content', request.getMessage())
+                .setNotification(new Notification(request.getTitle(), request.getMessage()));
     }
 
 
