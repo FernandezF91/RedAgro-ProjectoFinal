@@ -24,7 +24,7 @@
     "iana-tz-data": "^2019.1.0",
     "jss": "^10.0.0",
     "mdbreact": "^4.22.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "rc-datepicker": "^5.0.14",
     "react": "^16.12.0",
     "react-awesome-modal": "^2.0.5",
